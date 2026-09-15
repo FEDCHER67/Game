@@ -2,7 +2,7 @@
 
 description: DeepSeek research worker for public web, documentation, GitHub issues and releases
 
-mode: primary
+mode: subagent
 
 model: deepseek/deepseek-flash#low
 
