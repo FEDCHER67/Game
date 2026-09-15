@@ -1,11 +1,26 @@
 # Architecture
 
-Future layers (documentation only; not implemented yet):
+The reusable multiplayer architecture is frozen for Stage 12.2. Implementation has not started.
 
-- **Friendslop.Core** — reusable runtime contracts, input, lifecycle, and utilities.
-- **Friendslop.Network** — host-client session, replication, ownership, and player state.
-- **Friendslop.Physics** — deterministic-enough multiplayer physics, carried objects, and authority rules.
-- **Friendslop.Steam** — future Steam/lobby integration boundary.
-- **Game-specific layer** — replaceable content and rules built on the reusable layers.
+`A -> B` means assembly A may reference assembly B.
 
-Game-specific code must not be a dependency of reusable layers.
+```text
+Friendslop.Core
+
+Friendslop.Network -> Friendslop.Core + FishNet runtime
+Friendslop.Physics -> Friendslop.Core
+Friendslop.Network.Physics -> Friendslop.Core + Friendslop.Network + Friendslop.Physics
+Friendslop.Steam -> Friendslop.Network + Steam/FishySteamworks dependencies
+
+Game-specific layer -> any required reusable assembly
+```
+
+`Friendslop.Network.Physics` is an optional integration bridge, not a general-purpose dumping ground. It prevents a direct `Physics <-> Network` cycle. It is created only when networked physics is implemented.
+
+No reusable assembly may reference the game-specific layer. `Core` may not reference any higher layer. `Network` and `Physics` may not reference each other directly. `Network` may not reference `Steam`; platform integration points inward from `Steam` to `Network`. Cyclic assembly references are forbidden.
+
+Assembly definitions will be introduced with the first Stage 12.2 code so these rules are compiler-enforced. Stage 12.2 creates `Friendslop.Network` and its test assemblies. Core, Physics, Network.Physics, and Steam assemblies wait until they contain real code with a real consumer; empty marker assemblies are forbidden.
+
+Detailed responsibilities, authority, public boundaries, Stage 12.2 scope, and pass criteria are in [MULTIPLAYER_FOUNDATION.md](MULTIPLAYER_FOUNDATION.md).
+
+The game-specific STOP-GATE remains CLOSED.
