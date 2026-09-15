@@ -4,6 +4,8 @@ description: DeepSeek research worker for public web, documentation, GitHub issu
 
 mode: primary
 
+model: deepseek/deepseek-flash#low
+
 permissions:
 
 &#x20; - action: edit
