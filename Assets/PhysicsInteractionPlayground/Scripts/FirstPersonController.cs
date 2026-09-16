@@ -15,6 +15,7 @@ namespace Friendslop.PhysicsPlayground
         [SerializeField, Min(0f)] private float mouseSensitivity = 0.08f;
         [SerializeField] private float gravity = -25f;
         [SerializeField, Min(0f)] private float jumpHeight = 1.3f;
+        [SerializeField, Range(0.05f, 0.1f)] private float jumpInputBufferTime = 0.08f;
         [SerializeField, Min(0.1f)] private float standingHeight = 1.8f;
         [SerializeField, Min(0.1f)] private float crouchingHeight = 1.1f;
         [SerializeField, Min(0f)] private float crouchTransitionSpeed = 8f;
@@ -30,6 +31,8 @@ namespace Friendslop.PhysicsPlayground
         private float pitch;
         private Vector3 horizontalVelocity;
         private float verticalVelocity;
+        private float bufferedJumpExpiresAt = float.NegativeInfinity;
+        private float airborneTuckOffset;
         private bool isCrouched;
 
         private void Awake()
@@ -75,20 +78,42 @@ namespace Friendslop.PhysicsPlayground
                 Look();
             }
 
-            UpdateCrouch();
+            CaptureJumpRequest();
+            bool wasGrounded = characterController.isGrounded;
+            UpdateCrouch(wasGrounded);
             Move();
         }
 
-        private void UpdateCrouch()
+        private void CaptureJumpRequest()
+        {
+            Keyboard keyboard = Keyboard.current;
+            Mouse mouse = Mouse.current;
+            bool jumpPressed = keyboard != null && keyboard.spaceKey.wasPressedThisFrame;
+            jumpPressed |= mouse != null && mouse.scroll.ReadValue().y != 0f;
+
+            if (jumpPressed)
+            {
+                bufferedJumpExpiresAt = Time.time + jumpInputBufferTime;
+            }
+        }
+
+        private void UpdateCrouch(bool wasGrounded)
         {
             Keyboard keyboard = Keyboard.current;
             bool crouchHeld = keyboard != null && keyboard.leftCtrlKey.isPressed;
             bool belowStandingHeight = characterController.height < standingHeight - 0.01f;
-            isCrouched = crouchHeld || (belowStandingHeight && !HasStandingClearance());
+            bool canStand = !belowStandingHeight || HasStandingClearance(!wasGrounded);
+            isCrouched = crouchHeld || (belowStandingHeight && !canStand);
+
+            if (wasGrounded)
+            {
+                airborneTuckOffset = 0f;
+            }
 
             float targetHeight = isCrouched ? crouchingHeight : standingHeight;
+            float previousHeight = characterController.height;
             float nextHeight = Mathf.MoveTowards(
-                characterController.height,
+                previousHeight,
                 targetHeight,
                 crouchTransitionSpeed * Time.deltaTime);
 
@@ -96,6 +121,27 @@ namespace Friendslop.PhysicsPlayground
             nextCenter.y = controllerBottom + nextHeight * 0.5f;
             characterController.height = nextHeight;
             characterController.center = nextCenter;
+
+            // On an airborne duck, counter-move the shortened capsule upward. Its top and the
+            // camera therefore stay stable while the lower hull tucks up for ledge clearance.
+            // Releasing crouch reverses only that tuck displacement, so repeated presses cannot
+            // create vertical or horizontal velocity.
+            float heightChange = nextHeight - previousHeight;
+            if (!wasGrounded && !Mathf.Approximately(heightChange, 0f))
+            {
+                float scaleY = Mathf.Max(0.0001f, Mathf.Abs(transform.lossyScale.y));
+                if (heightChange < 0f)
+                {
+                    float requestedTuck = -heightChange;
+                    airborneTuckOffset += MoveForAirborneTuck(requestedTuck * scaleY) / scaleY;
+                }
+                else
+                {
+                    float requestedRelease = Mathf.Min(heightChange, airborneTuckOffset);
+                    airborneTuckOffset -= MoveForAirborneTuck(-requestedRelease * scaleY) / -scaleY;
+                    airborneTuckOffset = Mathf.Max(0f, airborneTuckOffset);
+                }
+            }
 
             if (cameraTransform != null)
             {
@@ -108,14 +154,32 @@ namespace Friendslop.PhysicsPlayground
             }
         }
 
-        private bool HasStandingClearance()
+        private float MoveForAirborneTuck(float distance)
+        {
+            Vector3 up = transform.up;
+            Vector3 previousPosition = transform.position;
+            characterController.Move(up * distance);
+            return Vector3.Dot(transform.position - previousPosition, up);
+        }
+
+        private bool HasStandingClearance(bool keepCurrentTop)
         {
             Vector3 worldCenter = transform.TransformPoint(standingControllerCenter);
             Vector3 up = transform.up;
             Vector3 scale = transform.lossyScale;
             float radiusScale = Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.z));
+            float heightScale = Mathf.Abs(scale.y);
             float worldRadius = characterController.radius * radiusScale;
-            float worldHeight = Mathf.Max(standingHeight * Mathf.Abs(scale.y), worldRadius * 2f);
+            float worldHeight = Mathf.Max(standingHeight * heightScale, worldRadius * 2f);
+
+            if (keepCurrentTop)
+            {
+                float releasedTuck = Mathf.Min(
+                    standingHeight - characterController.height,
+                    airborneTuckOffset);
+                worldCenter -= up * releasedTuck * heightScale;
+            }
+
             float halfCylinder = worldHeight * 0.5f - worldRadius;
             float clearanceRadius = Mathf.Max(0.01f, worldRadius - characterController.skinWidth * radiusScale);
             Vector3 bottom = worldCenter - up * halfCylinder;
@@ -174,7 +238,6 @@ namespace Friendslop.PhysicsPlayground
         {
             Vector2 movementInput = Vector2.zero;
             Keyboard keyboard = Keyboard.current;
-            Mouse mouse = Mouse.current;
 
             if (keyboard != null)
             {
@@ -194,57 +257,74 @@ namespace Friendslop.PhysicsPlayground
             {
                 // Sprint is a grounded-only speed multiplier, applied multiplicatively with crouch.
                 float groundedWishSpeed = wishSpeed * (sprintHeld ? sprintSpeedMultiplier : 1f);
+                bool jumpRequested = TryConsumeBufferedJump();
 
-                float horizontalSpeed = horizontalVelocity.magnitude;
-                if (horizontalSpeed > 0f)
+                // A valid landing-frame jump skips that frame's ground friction. This preserves
+                // earned momentum without turning a held Space key into automatic bunnyhopping.
+                if (!jumpRequested)
                 {
-                    float drop = Mathf.Max(horizontalSpeed, currentMovementSpeed) * groundFriction * Time.deltaTime;
-                    float retainedSpeed = Mathf.Max(0f, horizontalSpeed - drop);
-                    horizontalVelocity *= retainedSpeed / horizontalSpeed;
+                    ApplyGroundFriction();
                 }
 
                 if (groundedWishSpeed > 0f)
                 {
-                    // Projection cap: stop accelerating once velocity projected onto wishDirection reaches groundedWishSpeed.
-                    float addSpeed = groundedWishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
-                    if (addSpeed > 0f)
-                    {
-                        horizontalVelocity +=
-                            wishDirection * Mathf.Min(groundAcceleration * groundedWishSpeed * Time.deltaTime, addSpeed);
-                    }
+                    Accelerate(wishDirection, groundedWishSpeed, groundAcceleration);
                 }
 
-                if (verticalVelocity < 0f)
-                {
-                    verticalVelocity = -2f;
-                }
-
-                bool jumpPressed = keyboard != null && keyboard.spaceKey.wasPressedThisFrame;
-                if (!jumpPressed)
-                {
-                    jumpPressed = mouse != null && mouse.scroll.ReadValue().y != 0f;
-                }
-
-                if (jumpPressed)
+                if (jumpRequested)
                 {
                     verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                }
+                else if (verticalVelocity < 0f)
+                {
+                    verticalVelocity = -2f;
                 }
             }
             else if (wishSpeed > 0f)
             {
                 // Air branch intentionally uses the unsprinted wishSpeed so airborne Shift cannot inject a boost.
                 float cappedWishSpeed = Mathf.Min(wishSpeed, maxAirWishSpeed);
-                float addSpeed = cappedWishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
-                if (addSpeed > 0f)
-                {
-                    horizontalVelocity +=
-                        wishDirection * Mathf.Min(airAcceleration * wishSpeed * Time.deltaTime, addSpeed);
-                }
+                Accelerate(wishDirection, cappedWishSpeed, airAcceleration * wishSpeed);
             }
 
             verticalVelocity += gravity * Time.deltaTime;
             Vector3 velocity = horizontalVelocity + Vector3.up * verticalVelocity;
             characterController.Move(velocity * Time.deltaTime);
+        }
+
+        private bool TryConsumeBufferedJump()
+        {
+            if (Time.time > bufferedJumpExpiresAt)
+            {
+                bufferedJumpExpiresAt = float.NegativeInfinity;
+                return false;
+            }
+
+            bufferedJumpExpiresAt = float.NegativeInfinity;
+            return true;
+        }
+
+        private void ApplyGroundFriction()
+        {
+            float horizontalSpeed = horizontalVelocity.magnitude;
+            if (horizontalSpeed <= 0f)
+            {
+                return;
+            }
+
+            float retainedSpeed = Mathf.Max(0f, horizontalSpeed - groundFriction * Time.deltaTime);
+            horizontalVelocity *= retainedSpeed / horizontalSpeed;
+        }
+
+        private void Accelerate(Vector3 wishDirection, float wishSpeed, float acceleration)
+        {
+            float addSpeed = wishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
+            if (addSpeed <= 0f)
+            {
+                return;
+            }
+
+            horizontalVelocity += wishDirection * Mathf.Min(acceleration * Time.deltaTime, addSpeed);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
