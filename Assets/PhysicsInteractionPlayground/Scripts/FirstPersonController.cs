@@ -8,8 +8,8 @@ namespace Friendslop.PhysicsPlayground
     {
         [SerializeField] private Transform cameraTransform;
         [SerializeField, Min(0f)] private float movementSpeed = 5f;
-        [SerializeField, Min(0f)] private float groundAcceleration = 10f;
-        [SerializeField, Min(0f)] private float groundFriction = 6f;
+        [SerializeField, Min(0f)] private float groundAcceleration = 40f;
+        [SerializeField, Min(0f)] private float groundFriction = 20f;
         [SerializeField, Min(0f)] private float airAcceleration = 10f;
         [SerializeField, Min(0f)] private float maxAirWishSpeed = 0.5f;
         [SerializeField, Min(0f)] private float mouseSensitivity = 0.08f;
@@ -19,6 +19,7 @@ namespace Friendslop.PhysicsPlayground
         [SerializeField, Min(0.1f)] private float crouchingHeight = 1.1f;
         [SerializeField, Min(0f)] private float crouchTransitionSpeed = 8f;
         [SerializeField, Range(0.1f, 1f)] private float crouchMovementSpeedMultiplier = 0.7f;
+        [SerializeField, Min(0f)] private float sprintSpeedMultiplier = 1.5f;
         [SerializeField, Min(0f)] private float pushPower = 12f;
 
         private CharacterController characterController;
@@ -173,6 +174,7 @@ namespace Friendslop.PhysicsPlayground
         {
             Vector2 movementInput = Vector2.zero;
             Keyboard keyboard = Keyboard.current;
+            Mouse mouse = Mouse.current;
 
             if (keyboard != null)
             {
@@ -186,9 +188,13 @@ namespace Friendslop.PhysicsPlayground
             Vector3 planarWish = transform.right * movementInput.x + transform.forward * movementInput.y;
             Vector3 wishDirection = planarWish.sqrMagnitude > 0f ? planarWish.normalized : Vector3.zero;
             float wishSpeed = currentMovementSpeed * inputMagnitude;
+            bool sprintHeld = keyboard != null && keyboard.leftShiftKey.isPressed;
 
             if (characterController.isGrounded)
             {
+                // Sprint is a grounded-only speed multiplier, applied multiplicatively with crouch.
+                float groundedWishSpeed = wishSpeed * (sprintHeld ? sprintSpeedMultiplier : 1f);
+
                 float horizontalSpeed = horizontalVelocity.magnitude;
                 if (horizontalSpeed > 0f)
                 {
@@ -197,14 +203,14 @@ namespace Friendslop.PhysicsPlayground
                     horizontalVelocity *= retainedSpeed / horizontalSpeed;
                 }
 
-                if (wishSpeed > 0f)
+                if (groundedWishSpeed > 0f)
                 {
-                    // Projection cap: stop accelerating once velocity projected onto wishDirection reaches wishSpeed.
-                    float addSpeed = wishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
+                    // Projection cap: stop accelerating once velocity projected onto wishDirection reaches groundedWishSpeed.
+                    float addSpeed = groundedWishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
                     if (addSpeed > 0f)
                     {
                         horizontalVelocity +=
-                            wishDirection * Mathf.Min(groundAcceleration * wishSpeed * Time.deltaTime, addSpeed);
+                            wishDirection * Mathf.Min(groundAcceleration * groundedWishSpeed * Time.deltaTime, addSpeed);
                     }
                 }
 
@@ -213,13 +219,20 @@ namespace Friendslop.PhysicsPlayground
                     verticalVelocity = -2f;
                 }
 
-                if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
+                bool jumpPressed = keyboard != null && keyboard.spaceKey.wasPressedThisFrame;
+                if (!jumpPressed)
+                {
+                    jumpPressed = mouse != null && mouse.scroll.ReadValue().y != 0f;
+                }
+
+                if (jumpPressed)
                 {
                     verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 }
             }
             else if (wishSpeed > 0f)
             {
+                // Air branch intentionally uses the unsprinted wishSpeed so airborne Shift cannot inject a boost.
                 float cappedWishSpeed = Mathf.Min(wishSpeed, maxAirWishSpeed);
                 float addSpeed = cappedWishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
                 if (addSpeed > 0f)
