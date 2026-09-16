@@ -8,6 +8,10 @@ namespace Friendslop.PhysicsPlayground
     {
         [SerializeField] private Transform cameraTransform;
         [SerializeField, Min(0f)] private float movementSpeed = 5f;
+        [SerializeField, Min(0f)] private float groundAcceleration = 10f;
+        [SerializeField, Min(0f)] private float groundFriction = 6f;
+        [SerializeField, Min(0f)] private float airAcceleration = 10f;
+        [SerializeField, Min(0f)] private float maxAirWishSpeed = 0.5f;
         [SerializeField, Min(0f)] private float mouseSensitivity = 0.08f;
         [SerializeField] private float gravity = -25f;
         [SerializeField, Min(0f)] private float jumpHeight = 1.3f;
@@ -23,6 +27,7 @@ namespace Friendslop.PhysicsPlayground
         private Vector3 standingControllerCenter;
         private float controllerBottom;
         private float pitch;
+        private Vector3 horizontalVelocity;
         private float verticalVelocity;
         private bool isCrouched;
 
@@ -177,21 +182,55 @@ namespace Friendslop.PhysicsPlayground
             }
 
             float currentMovementSpeed = movementSpeed * (isCrouched ? crouchMovementSpeedMultiplier : 1f);
-            Vector3 planarVelocity =
-                (transform.right * movementInput.x + transform.forward * movementInput.y) * currentMovementSpeed;
+            float inputMagnitude = movementInput.magnitude;
+            Vector3 planarWish = transform.right * movementInput.x + transform.forward * movementInput.y;
+            Vector3 wishDirection = planarWish.sqrMagnitude > 0f ? planarWish.normalized : Vector3.zero;
+            float wishSpeed = currentMovementSpeed * inputMagnitude;
 
-            if (characterController.isGrounded && verticalVelocity < 0f)
+            if (characterController.isGrounded)
             {
-                verticalVelocity = -2f;
+                float horizontalSpeed = horizontalVelocity.magnitude;
+                if (horizontalSpeed > 0f)
+                {
+                    float drop = Mathf.Max(horizontalSpeed, currentMovementSpeed) * groundFriction * Time.deltaTime;
+                    float retainedSpeed = Mathf.Max(0f, horizontalSpeed - drop);
+                    horizontalVelocity *= retainedSpeed / horizontalSpeed;
+                }
+
+                if (wishSpeed > 0f)
+                {
+                    // Projection cap: stop accelerating once velocity projected onto wishDirection reaches wishSpeed.
+                    float addSpeed = wishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
+                    if (addSpeed > 0f)
+                    {
+                        horizontalVelocity +=
+                            wishDirection * Mathf.Min(groundAcceleration * wishSpeed * Time.deltaTime, addSpeed);
+                    }
+                }
+
+                if (verticalVelocity < 0f)
+                {
+                    verticalVelocity = -2f;
+                }
+
+                if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
+                {
+                    verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                }
             }
-
-            if (characterController.isGrounded && keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
+            else if (wishSpeed > 0f)
             {
-                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                float cappedWishSpeed = Mathf.Min(wishSpeed, maxAirWishSpeed);
+                float addSpeed = cappedWishSpeed - Vector3.Dot(horizontalVelocity, wishDirection);
+                if (addSpeed > 0f)
+                {
+                    horizontalVelocity +=
+                        wishDirection * Mathf.Min(airAcceleration * wishSpeed * Time.deltaTime, addSpeed);
+                }
             }
 
             verticalVelocity += gravity * Time.deltaTime;
-            Vector3 velocity = planarVelocity + Vector3.up * verticalVelocity;
+            Vector3 velocity = horizontalVelocity + Vector3.up * verticalVelocity;
             characterController.Move(velocity * Time.deltaTime);
         }
 
