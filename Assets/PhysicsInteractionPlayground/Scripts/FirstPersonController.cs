@@ -12,6 +12,7 @@ namespace Friendslop.PhysicsPlayground
         [SerializeField, Min(0f)] private float groundFriction = 20f;
         [SerializeField, Min(0f)] private float airAcceleration = 10f;
         [SerializeField, Min(0f)] private float maxAirWishSpeed = 0.5f;
+        [SerializeField, Min(0f)] private float maxHorizontalSpeed = 12f;
         [SerializeField, Min(0f)] private float mouseSensitivity = 0.08f;
         [SerializeField] private float gravity = -25f;
         [SerializeField, Min(0f)] private float jumpHeight = 1.3f;
@@ -101,9 +102,15 @@ namespace Friendslop.PhysicsPlayground
         {
             Keyboard keyboard = Keyboard.current;
             bool crouchHeld = keyboard != null && keyboard.leftCtrlKey.isPressed;
+            bool wasCrouched = isCrouched;
             bool belowStandingHeight = characterController.height < standingHeight - 0.01f;
             bool canStand = !belowStandingHeight || HasStandingClearance(!wasGrounded);
             isCrouched = crouchHeld || (belowStandingHeight && !canStand);
+
+            if (crouchHeld && !wasCrouched && wasGrounded)
+            {
+                LimitHorizontalSpeed(movementSpeed * crouchMovementSpeedMultiplier);
+            }
 
             if (wasGrounded)
             {
@@ -287,6 +294,8 @@ namespace Friendslop.PhysicsPlayground
                 Accelerate(wishDirection, cappedWishSpeed, airAcceleration * wishSpeed);
             }
 
+            LimitHorizontalSpeed(maxHorizontalSpeed);
+
             verticalVelocity += gravity * Time.deltaTime;
             Vector3 velocity = horizontalVelocity + Vector3.up * verticalVelocity;
             characterController.Move(velocity * Time.deltaTime);
@@ -325,6 +334,17 @@ namespace Friendslop.PhysicsPlayground
             }
 
             horizontalVelocity += wishDirection * Mathf.Min(acceleration * Time.deltaTime, addSpeed);
+        }
+
+        private void LimitHorizontalSpeed(float speedLimit)
+        {
+            float horizontalSpeed = horizontalVelocity.magnitude;
+            if (horizontalSpeed <= speedLimit || horizontalSpeed <= 0f)
+            {
+                return;
+            }
+
+            horizontalVelocity *= speedLimit / horizontalSpeed;
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
