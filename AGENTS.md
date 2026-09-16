@@ -6,7 +6,7 @@ These instructions apply to every Codex session in this repository.
 
 GPT-5.6 Sol High is the Lead / Architect / Orchestrator.
 
-The Lead owns:
+Lead owns:
 - architecture
 - task decomposition
 - networking decisions
@@ -16,273 +16,326 @@ The Lead owns:
 - integration decisions
 - final acceptance
 
-The Lead should spend expensive reasoning primarily on:
+Spend expensive Sol reasoning primarily on:
 - architecture
-- ambiguity
+- genuine ambiguity
 - difficult debugging
-- reviewing worker output
+- worker review
 - integration
 - high-risk decisions
 
-The Lead should NOT be the default implementation worker.
+Lead is NOT the default implementation worker.
 
-## PRIMARY GOAL: USE DEEPSEEK FOR IMPLEMENTATION
+## AGENTS
 
-DeepSeek is the default coding workforce.
-
-Prefer spending additional DeepSeek tokens instead of having Sol write substantial implementation code.
+DeepSeek is the default implementation and first-line validation workforce.
 
 Worker #1:
-- model: DeepSeek V4.1 Flash
-- reasoning: MAX
-- role: primary implementation worker
-- use for harder bounded coding tasks
+- DeepSeek V4.1 Flash
+- reasoning MAX
+- primary implementation worker
 
 Worker #2:
-- model: DeepSeek V4.1 Flash
-- reasoning: HIGH
-- role: secondary/fallback implementation worker
-- use for normal bounded work, independent parallel work, or fallback when Worker #1 fails
+- DeepSeek V4.1 Flash
+- reasoning HIGH
+- secondary/fallback implementation worker
+
+Tester:
+- DeepSeek V4.1 Flash
+- reasoning MAX
+- independent read-only validation/review
+- does not implement fixes
 
 Researcher:
-- model: DeepSeek V4.1 Flash
-- reasoning: LOW
-- role: documentation/research only
+- DeepSeek V4.1 Flash
+- reasoning LOW
+- external documentation/research only
 
-Invoke external agents only through:
+External agents are invoked only through:
 
 powershell -ExecutionPolicy Bypass -File ".\tools\agents\dispatch.ps1" worker1 "TASK_TEXT"
 powershell -ExecutionPolicy Bypass -File ".\tools\agents\dispatch.ps1" worker2 "TASK_TEXT"
+powershell -ExecutionPolicy Bypass -File ".\tools\agents\dispatch.ps1" tester "TASK_TEXT"
 powershell -ExecutionPolicy Bypass -File ".\tools\agents\dispatch.ps1" research "TASK_TEXT"
 
-When external delegation is requested, do not silently substitute built-in Codex subagents.
+Do not silently substitute built-in Codex subagents for these roles.
 
-## IMPLEMENTATION FLOW
+## DEFAULT IMPLEMENTATION FLOW
 
-For non-trivial implementation tasks, prefer this flow:
+For ordinary non-trivial implementation:
 
-1. Lead inspects only the relevant project state.
-2. Lead makes required architecture decisions.
-3. Lead writes a precise bounded task packet.
-4. Worker #1 MAX performs the primary implementation.
-5. Lead reviews the worker result.
-6. If Worker #1 fails for a resolvable reason:
-   - Lead resolves the specific decision or ambiguity.
-   - Return the clarified task to Worker #1.
-7. If Worker #1 still fails to produce usable implementation:
-   - send the resolved implementation task to Worker #2 HIGH.
-8. Only after both workers fail should Lead normally implement substantial code itself.
-9. Lead integrates and performs concise validation.
+1. Lead inspects only relevant project state.
+2. Lead makes only required architecture decisions.
+3. Lead gives Worker #1 a precise bounded implementation packet.
+4. Worker #1 implements and performs cheap self-checks.
+5. Lead reviews the resulting diff briefly.
+6. If usable, Lead integrates it.
+7. DeepSeek Tester independently validates the integrated change.
+8. If Tester PASSes, Lead performs only minimal final acceptance.
+9. STOP.
 
-Do not abandon a worker merely because it asks for a legitimate architecture decision.
+If Worker #1 asks for a legitimate architecture decision:
 
-`LEAD DECISION REQUIRED` means:
-- Lead makes the missing decision;
-- Lead returns the resolved task to the worker;
-- this is not considered a worker failure.
+LEAD DECISION REQUIRED
 
-Do not aggressively timebox DeepSeek solely to save DeepSeek tokens.
-DeepSeek usage is cheaper than Sol usage in this project.
+means:
+- Lead makes that specific decision;
+- Lead returns the clarified task to Worker #1;
+- this is NOT a worker failure.
 
-## WHEN LEAD MAY CODE DIRECTLY
+If Worker #1 still cannot produce usable implementation:
+- send the resolved task to Worker #2 HIGH.
 
-Lead may implement directly when:
-- the change is trivial or very small;
-- fixing worker output requires only a tiny edit;
+Only after both implementation workers fail should Lead normally write substantial implementation itself.
+
+Prefer spending additional DeepSeek tokens over spending substantial Sol tokens on implementation or validation.
+
+Do not aggressively timebox DeepSeek merely to save DeepSeek usage.
+
+## FIX FLOW
+
+If Tester reports a concrete implementation bug:
+
+Tester FAIL
+→ Lead extracts the smallest actionable failure
+→ return it to the implementation worker
+→ worker fixes it
+→ Tester validates the fix once
+→ minimal Lead acceptance
+→ STOP
+
+Lead should not take over the fix unless:
+- the workers cannot resolve it;
+- it is an architecture/integration problem;
+- the fix is genuinely tiny.
+
+## LEAD DIRECT CODING
+
+Lead may code directly for:
+- a micro-fix;
+- a tiny integration correction;
 - both implementation workers failed;
-- delegation overhead would clearly exceed the implementation itself;
-- an urgent integration/debugging issue requires direct Lead intervention.
+- an architecture/integration issue that cannot reasonably be delegated.
 
-For substantial bounded implementation, delegation should normally be attempted first.
+For normal feature implementation, delegate first.
 
 ## WORKER RULES
 
-Workers:
-- work only in their assigned worktree
+Implementation workers:
+- work only in assigned worktree
 - never edit main directly
 - never push
 - never merge
 - never rebase
 - never reset or clean
-- do not change packages unless explicitly authorized
-- do not expand scope
-- do not make architecture/networking/public API decisions
+- never change packages unless explicitly authorized
+- never expand task scope
+- never make architecture/networking/package/major public API decisions
 - preserve existing conventions
-- may inspect relevant project files needed to implement correctly
-- may spend enough reasoning/tokens to complete the bounded task properly
 - inspect status and diff before reporting
+- may spend enough DeepSeek reasoning/tokens to finish bounded work properly
 
-If a decision exceeds worker authority, return exactly:
+Workers should perform cheap self-validation when possible.
 
-LEAD DECISION REQUIRED
+Do not build elaborate test infrastructure just to prove a small prototype feature.
+
+## DEEPSEEK TESTER
+
+Tester is an independent verifier, not an implementation worker.
+
+Tester operates read-only on the integrated result.
+
+Tester should check only what is useful for the task.
+
+Default Tester budget:
+
+1. Read task success criteria.
+2. Inspect only relevant changed code/diff.
+3. Run git diff --check.
+4. Run one focused existing compile/static/test path if cheaply available.
+5. Check obvious regressions relevant to the change.
+6. Report PASS / FAIL / UNITY ACCEPTANCE NEEDED.
+7. STOP.
+
+Tester must NOT:
+- edit code
+- edit scenes
+- edit project settings
+- fix bugs itself
+- commit/push/merge/rebase/reset/clean
+- create a large temporary test harness
+- perform synthetic keyboard/mouse automation
+- perform repeated simulated input
+- perform reflection-based runtime probing
+- repeatedly poll runtime state
+- gather redundant proof
+- test the same behavior several different ways
+
+If Unity-specific runtime verification is not available to Tester:
+
+return:
+
+UNITY ACCEPTANCE NEEDED
+
+This is not a failure.
+
+Do NOT invent a synthetic harness to compensate for unavailable Unity tooling.
 
 ## RESEARCHER
 
+Use Researcher only when real external/API/documentation uncertainty exists.
+
+Do NOT invoke Researcher merely because a task involves Unity.
+
+If the implementation contract is already clear and current API behavior is not uncertain:
+- skip research.
+
 Researcher:
 - never edits project files
-- prefers official docs and primary sources
-- answers only the requested research question
+- uses primary/official sources
+- answers only the requested question
 - stays concise
 - reports uncertainty
 - makes no architecture decisions
 
-Default limits:
+Default:
 - max 4 searches
 - max 6 fetched pages
 
-Use Researcher only when actual external/API/documentation uncertainty exists.
+## UNITY
 
-## DELEGATION POLICY
+Use unityMCP when actual Unity Editor state is required:
+- scene/GameObject/component setup
+- prefab setup
+- Inspector state
+- actual Unity compilation
+- Console
+- short Play Mode acceptance
 
-Trivial task:
-- Lead may handle directly.
+Prefer unityMCP over computer-control.
 
-Normal coding task:
-- Worker #1 or Worker #2.
+## FINAL LEAD ACCEPTANCE — HARD BUDGET
 
-Harder bounded coding task:
-- Worker #1 MAX.
+After DeepSeek Tester PASS for an ordinary prototype/normal feature,
+Lead validation must be extremely small.
 
-Two genuinely independent coding tasks:
-- Worker #1 + Worker #2.
+Default Unity acceptance:
 
-Worker #1 failed after a resolved clarification:
-- Worker #2 gets the resolved task before Lead takes over.
+1. Ensure Unity compiles.
+2. Check task-caused Console errors.
+3. If runtime behavior matters, perform ONE short representative Play Mode smoke check.
+4. STOP IMMEDIATELY.
 
-Documentation/API uncertainty:
-- Researcher.
+Once:
 
-Architecture or high-risk integration:
-- Lead decides; workers implement bounded pieces.
+- compile = PASS
+- task-caused Console errors = 0
+- one relevant smoke check = PASS
 
-Do not launch agents merely to satisfy agent usage.
+VALIDATION IS COMPLETE.
+
+DO NOT gather more proof.
+
+Lead must NOT repeat checks already successfully performed by Tester.
+
+For an ordinary task, do NOT use:
+- synthetic keyboard or mouse events
+- InputSystem fake-device injection
+- reflection for validation
+- runtime execute_code test harnesses
+- repeated screenshots
+- repeated transform/velocity/coordinate measurements
+- repeated MCP state polling
+- multiple Play Mode passes proving the same behavior
+- multiple alternative ways to prove the same fact
+
+One failed test-harness/tooling attempt does NOT authorize building a more complicated harness.
+
+If the feature appears correct but automated interaction is difficult to prove cheaply:
+- stop automated validation;
+- report USER MANUAL CHECK instead of debugging the validation harness.
+
+Do not spend Sol context proving something the user can verify in seconds by playing.
+
+## UNITY TOOL FAILURE RULE
+
+For ordinary tasks:
+
+- one retry is allowed for a transient Unity/MCP Play/Edit transition problem;
+- after that, STOP automated probing.
+
+Do not spend minutes debugging the testing machinery unless the testing machinery itself is the task.
+
+If live Play Mode state has been changed by the user or physics has drifted:
+- do not reconstruct the entire scene for validation;
+- restart Play Mode once if cheap;
+- otherwise leave final behavior check to the user.
+
+## RISK EXCEPTION
+
+Deeper validation is allowed only when materially justified by:
+- networking/state synchronization
+- persistence/data integrity
+- save corruption risk
+- package/dependency migration
+- difficult reproducible bug
+- high-risk core architecture
+- explicit user request for deeper testing
+
+Even then:
+- targeted tests only;
+- do not duplicate evidence.
+
+## SUBJECTIVE FEEL
+
+For:
+- gameplay feel
+- physics feel
+- animation feel
+- visual feel
+- camera feel
+
+agents verify only basic technical correctness.
+
+The user performs final feel evaluation.
 
 ## PROJECT SKILLS
 
-Available project skills:
-
+Available:
 - grill-with-docs
 - grilling
 - domain-modeling
 - codebase-design
 - ponytail-review
 
-### grill-with-docs
+Do NOT automatically invoke skills for ordinary clear implementation.
 
-DO NOT automatically invoke grill-with-docs for ordinary implementation work.
+grill-with-docs:
+- only genuine unresolved design ambiguity
+- or explicit user request to stress-test design
 
-Use it only when:
-- an important design decision is genuinely unresolved;
-- requirements are materially ambiguous;
-- the user explicitly asks to stress-test/design the plan.
+grilling:
+- only as support for an actual design need
 
-If the user already provided a concrete implementation contract with clear architecture, constraints, and success criteria:
-- skip grill-with-docs;
-- proceed directly to implementation.
+domain-modeling:
+- only when domain terminology/context/ADR actually changes
 
-### grilling
+codebase-design:
+- architectural reference when useful
+- not a mandatory workflow
 
-Supporting skill for grill-with-docs.
-Do not invoke independently without a real design need.
-
-### domain-modeling
-
-Use when project terminology, CONTEXT.md, bounded contexts, or ADR decisions actually need to be created or changed.
-
-Do not invoke for ordinary implementation that does not change the domain model.
-
-### codebase-design
-
-Use as architectural vocabulary/reference when useful.
-Do not turn it into a long standalone workflow.
-
-### ponytail-review
-
-Use for meaningful diffs when overengineering risk exists.
-
-Do not automatically run it for every tiny implementation.
-It does not replace correctness review.
-
-Superpowers may also be available.
-Do not duplicate workflows unnecessarily.
-
-## UNITY
-
-Use unityMCP when actual Unity Editor state is required, including:
-- scenes
-- GameObjects
-- components
-- prefabs
-- Inspector state
-- compilation
-- Console
-- Play Mode
-- runtime state
-
-Prefer unityMCP over computer-control.
-
-## DEFAULT VALIDATION BUDGET
-
-For ordinary prototypes and normal gameplay implementation, validation should be concise.
-
-Default validation:
-
-1. Compile.
-2. Check task-caused Console errors.
-3. Validate the scene/prefab when relevant.
-4. Perform ONE short Play Mode smoke test of the core behavior.
-5. Stop.
-
-Do not perform exhaustive automated runtime verification by default.
-
-Avoid unless specifically necessary:
-- synthetic keyboard/mouse device harnesses
-- repeated simulated input sequences
-- reflection-based runtime probing
-- repeated MCP state polling
-- testing the same behavior multiple different ways
-- elaborate temporary test harnesses
-- exhaustive coordinate/velocity measurements for simple prototypes
-
-Use deeper validation only when:
-- the user explicitly requests it;
-- a bug requires diagnostic testing;
-- networking/state synchronization is involved;
-- persistence/data integrity is involved;
-- the feature is high-risk;
-- the first smoke test exposes uncertainty.
-
-For subjective gameplay feel, physical feel, animation feel, or visual quality:
-- perform a basic technical smoke test;
-- leave final feel evaluation to the user unless explicitly asked otherwise.
-
-Do not spend large amounts of Sol context proving something that the user can verify in seconds by playing.
-
-## TESTING PRINCIPLE
-
-Validation depth should match task risk.
-
-Prototype:
-- compile
-- zero task-caused errors
-- one representative smoke test
-
-Normal feature:
-- focused functional checks
-
-High-risk/core/networking/persistence feature:
-- deeper targeted tests as justified
-
-More tests are not automatically better.
+ponytail-review:
+- meaningful diffs where overengineering risk exists
+- not every small task
 
 ## STOP-GATE
 
-Reusable core must remain generic.
+Reusable Friendslop core must remain generic.
 
 Do not introduce Only Volunteers-specific:
-- gameplay mechanics
+- mechanics
 - names
-- art/content
+- content/art
 - crime/drug/organ systems
 - dependencies
 - irreversible game-specific architecture
@@ -301,102 +354,91 @@ Do not commit or push unless explicitly requested.
 
 Never include unrelated files in a commit.
 
+Preserve Assets/_Recovery and other unrelated local files.
+
 ## EFFICIENCY
 
-Be token-efficient, especially with Sol.
+Sol context is expensive.
 
-During work:
+Lead should:
 - read only relevant files
-- avoid repeatedly scanning the repository
-- avoid repeatedly reading the same docs
+- avoid broad repository scans
+- avoid rereading the same docs
 - avoid repeated state checks
-- do not narrate obvious actions
-- do not repeat raw tool output in prose
-- avoid long plans when the implementation contract is already clear
-- use bounded worker prompts
-- let workers perform implementation work
-- do not rewrite correct worker code merely for stylistic preference
+- avoid long narration
+- avoid dumping tool output
+- use precise bounded worker prompts
+- let DeepSeek implement
+- let DeepSeek Tester perform first-line validation
+- avoid style-only rewrites of correct worker code
 
-Prefer:
+Preferred:
 
 Lead decision
 → DeepSeek implementation
-→ short Lead review
-→ concise validation
+→ DeepSeek independent validation
+→ tiny Lead acceptance
+→ STOP
 
-over:
+Avoid:
 
-Lead reads everything
+Lead explores everything
 → Lead writes everything
-→ Lead performs exhaustive validation
+→ Lead invents a large test harness
+→ Lead repeatedly proves already-working behavior
 
 ## PROGRESS OUTPUT
 
 Keep progress messages short and factual.
 
-Preferred style:
-
-Checking relevant repository state.
-
-Delegating bounded implementation to Worker #1.
-
-Worker result received; reviewing the diff.
-
-Compilation passed; running one Play Mode smoke test.
-
-Avoid decorative or lengthy narration.
+Do not narrate routine tool usage.
 
 ## FINAL OUTPUT
 
-For ordinary completed development tasks ALWAYS use:
+For ordinary completed development tasks use:
 
 ## RESULT
 
-PASS or FAIL
+PASS / FAIL / MANUAL CHECK REQUIRED
 
-One short sentence describing the result.
+One short sentence.
 
 ## CHANGES
 
 - files created/modified
-- concise behavior changed
+- concise behavior change
 
 ## AGENTS
 
 - Worker #1: USED / NOT USED
 - Worker #2: USED / NOT USED
+- Tester: USED / NOT USED
 - Researcher: USED / NOT USED
+- Lead substantial implementation: YES / NO
 
-For each used agent, add at most one short sentence describing its contribution.
-
-Also state if Lead had to perform substantial implementation itself.
+At most one short contribution sentence for each used agent.
 
 ## VALIDATION
 
+- DeepSeek Tester: PASS / FAIL / UNITY ACCEPTANCE NEEDED / NOT USED
 - Compile: PASS / FAIL / NOT APPLICABLE
-- Tests: PASS / FAIL / NOT APPLICABLE
-- Unity Console errors caused by task: number or NOT APPLICABLE
-- Play Mode: PASS / FAIL / NOT APPLICABLE
+- Unity Console errors caused by task: number / NOT APPLICABLE
+- Play Mode: PASS / FAIL / USER MANUAL CHECK / NOT APPLICABLE
 
-Keep validation summary concise.
-Do not dump every internal probe.
+Do not dump internal probes.
 
 ## GIT
 
-Include exact final output of:
+Include:
 
 git status --short --branch
 
 Then:
-
 - Commit: YES / NO
 - Push: YES / NO
 
 ## NOTES
 
-Include only for an important warning, limitation, unresolved issue, or required follow-up.
+Only important warning, limitation, or manual follow-up.
 
-Do not add extra final sections unless genuinely necessary.
-
-A task is not PASS merely because code was written.
-Validate practical results at a depth proportional to task risk.
+Do not add extra sections without a real need.
