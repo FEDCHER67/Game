@@ -20,7 +20,7 @@ Write-Host ""
     --dir $Worktree `
     --agent deepseek-worker `
     --model deepseek/deepseek-flash `
-    --variant high `
+    --variant max `
     $Task
 
 if ($LASTEXITCODE -ne 0) {
