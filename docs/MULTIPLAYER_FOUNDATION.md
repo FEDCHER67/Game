@@ -1,6 +1,6 @@
 # Reusable multiplayer foundation
 
-Status: Stage 12.1 architecture freeze, 2026-09-16. This document defines the next implementation boundary; it does not claim that any described runtime system exists.
+Status: Stage 12.1 architecture remains frozen. The minimal Stage 12.2 bootstrap described below was implemented on 2026-09-16; final retained-build verification is PARTIAL because reconnect remains inconclusive. Deferred physics and platform policies remain unresolved.
 
 ## 1. Architectural invariants
 
@@ -220,6 +220,18 @@ These behaviors require Unity runtime verification; static inspection or Unity M
 6. Stop the client and host, then start a host again in the same process. The transport/port is released, state returns cleanly through `Stopped`, and no stale callbacks or players remain.
 7. Exercise one failed client connection. One actionable error is surfaced, partial state is cleaned, and a subsequent valid attempt can start without restarting the Editor/process.
 8. Across the sequence there are no unhandled exceptions, red Console errors, duplicate NetworkManagers, duplicate player objects, or unbounded per-frame/tick logs.
+
+### Stage 12.2 verification record (2026-09-16)
+
+- UPM resolved `#4.7.3` to official tag commit `73f30cf2425dc808a4f463f0a233d386010810b3`; the imported runtime asmdef is `FishNet.Runtime`.
+- Upstream tag metadata still reports version `4.7.2`, so the pinned URL and immutable commit hash are the authoritative version evidence.
+- Unity `6000.5.11f1` compiled the runtime and both test assemblies with no C# errors.
+- Focused tests previously passed: EditMode 8/8 and PlayMode 1/1. The subsequent production shutdown-race fix retains focused `StopCompletionTracker` regression coverage; the finalization-only pass did not rerun tests.
+- The retained strict Windows development build at `C:\Dev\GameBuilds\Stage12_2_FinalVerified\FriendslopMultiplayerValidation.exe` completed with 0 build errors. Unrelated warnings included the unlinked Unity Services project and deprecated In App Purchasing package.
+- A manual run of distinct retained-build host and client processes proved host-only startup with one player, external connection with two observed participants, correct remote ownership, bounded failed-connection recovery, server-side remote cleanup, and preservation of the host player.
+- Reconnect is inconclusive on the retained build. The validation runner failed an early two-connection assertion, invoked host shutdown, and only then did the client attempt reconnect. That sequence proves neither a production reconnect failure nor final reconnect success.
+- Stage 12.2 is PARTIAL solely because final retained-build reconnect proof is absent. No further harness iteration was performed.
+- No game-specific, Steam, interaction, Rigidbody synchronization, prediction, or Network.Physics implementation was added.
 
 Unity MCP may assist observation, but it is not required. The two-peer ownership and lifecycle proof must use distinct network instances.
 
