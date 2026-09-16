@@ -1,644 +1,347 @@
-﻿# PROJECT AGENT OPERATING RULES
+# PROJECT AGENT RULES
 
-## 1. Core Architecture
+## 1. Roles
 
-GPT-5.6 SOL HIGH is the Lead / Architect / Dispatcher / Integrator.
+GPT-5.6 SOL HIGH = Lead / Architect / Dispatcher / Integrator.
 
 Sol stays HIGH.
 
-Sol should spend its intelligence on:
+Sol should spend reasoning on:
 - architecture
-- task decomposition
+- decomposition
 - ownership boundaries
-- ambiguity resolution
+- ambiguity
 - integration decisions
 - difficult debugging decisions
 
-Sol is NOT the default coder.
-Sol is NOT the default fixer.
-Sol must not become the implementation workforce.
+Sol is NOT the default coder or fixer.
 
-Substantial implementation belongs to Union Alpha.
+Union Alpha = substantial implementation.
+DeepSeek Tester = independent validation.
+DeepSeek Fixer = targeted repair after concrete FAIL.
+DeepSeek Researcher LOW = external/API/docs uncertainty only.
 
-Validation and targeted repair belong primarily to DeepSeek.
+Prefer cheap agents for implementation and validation.
+Use Sol intelligence for decisions, not repetitive labor.
 
----
-
-## 2. Normal Agent Tree
+## 2. Lanes
 
 Lane A:
-
-Union Alpha #1
--> DeepSeek Tester #1
--> DeepSeek Fixer #1 only on concrete FAIL
--> Tester #1 once more
+- Union Alpha #1
+- Tester #1
+- Fixer #1
+- worktree: _worktrees/ua1
+- branch: worker/union-alpha-1
 
 Lane B:
+- Union Alpha #2
+- Tester #2
+- Fixer #2
+- worktree: _worktrees/ua2
+- branch: worker/union-alpha-2
 
-Union Alpha #2
--> DeepSeek Tester #2
--> DeepSeek Fixer #2 only on concrete FAIL
--> Tester #2 once more
+Default to ONE lane.
 
-Optional:
+Use two lanes only when work has disjoint file ownership or a clear stable boundary.
 
-DeepSeek Researcher LOW
-only for genuine external/API/docs uncertainty.
+Never let both Union workers modify the same file concurrently.
 
-Integration Tester is conditional.
-Integration Fixer is conditional.
+Do not use agents merely for participation.
 
----
+## 3. Compact Delegation
 
-## 3. Do Not Re-Read Root Instructions
-
-The root AGENTS.md instructions are already supplied to the Lead.
-
-During normal tasks Sol must NOT shell-read, dump, or re-ingest the complete AGENTS.md.
-
-Do not routinely run:
-
-Get-Content -Raw AGENTS.md
-
-Only inspect a specific section if a genuine instruction ambiguity exists.
-
-Do not waste context/tokens repeatedly reading instructions that are already active.
-
----
-
-## 4. Compact Task Contracts
-
-User prompts do not need to repeat the entire agent architecture.
-
-Sol should convert the user request into a compact worker contract containing only:
+Sol converts a user request into a compact worker contract:
 
 - goal
 - success criteria
 - owned files/subsystem
 - behavior to preserve
 - prohibited scope
-- integration boundary if needed
+- integration boundary if relevant
 
-Keep worker packets compact.
+Do not repeat the entire agent architecture in worker prompts.
 
-Do not send giant essays unless complexity genuinely requires it.
+If a worker prompt is truncated or missing:
+treat it as transport failure and resend the same compact contract.
 
----
+## 4. Single-Lane Fast Path
 
-## 5. One Lane vs Two Lanes
-
-Do NOT use both implementation lanes merely because they exist.
-
-Use one lane for:
-
-- small features
-- scene-only work
-- one-file tasks
-- tightly coupled changes
-- work where both agents would need the same file
-
-Use two lanes only when work can be genuinely split with:
-
-- disjoint file ownership, OR
-- explicit stable integration boundaries
-
-NEVER allow both Union workers to modify the same file concurrently.
-
----
-
-## 6. Single-Lane FAST PATH
-
-Default workflow for a normal bounded one-lane task:
+Normal bounded task:
 
 Sol decision
--> Union Alpha
+-> Union
 -> Lane Tester
--> optional Lane Fixer only on concrete FAIL
+-> optional Fixer on concrete FAIL
 -> mechanical integration
 -> minimal final acceptance
 -> STOP
 
-If ALL are true:
-
-- exactly one implementation lane was used
-- Lane Tester returned PASS
-- integration is byte-for-byte or otherwise purely mechanical
+If all are true:
+- only one lane was used
+- Lane Tester PASS
+- integration is mechanical/byte-identical
 - Sol made no semantic implementation edits
-- no cross-system integration uncertainty exists
+- no meaningful cross-system uncertainty exists
 
-then:
+then SKIP Integration Tester.
 
-SKIP Integration Tester.
+Integration Tester does not run merely because it exists.
 
-Do not run Integration Tester merely because it exists.
+## 5. Two-Lane / Complex Integration
 
-This is the preferred fast path.
+Run Integration Tester when at least one is true:
 
----
-
-## 7. When Integration Tester IS Required
-
-Run DeepSeek Integration Tester when at least one is true:
-
-- two implementation lanes were combined
-- multiple independently modified subsystems interact
-- integration required semantic code edits
+- two lanes were combined
+- independently modified systems interact
+- integration required semantic edits
 - public APIs/contracts changed across boundaries
-- a merge produced meaningful uncertainty
-- combined behavior has a real integration risk
-- Sol explicitly identifies a concrete integration concern
+- merge produced meaningful uncertainty
+- Sol identifies a concrete integration risk
 
-Otherwise, for a clean single-lane PASS:
-skip it.
+Flow:
 
----
+Lane A PASS + Lane B PASS
+-> Sol mechanical integration
+-> Integration Tester
+-> optional targeted correction
+-> minimal final acceptance
+-> STOP
 
-## 8. Lane Testers
+## 6. Tester Rules
 
-Tester #1 and Tester #2 are independent and READ-ONLY.
+Testers are READ-ONLY.
 
-They validate:
-
-- requested success criteria
+They check only what is relevant:
+- success criteria
 - relevant diff
 - obvious regressions
 - git diff --check
 - one cheap compile/static/test path when useful
 
-Output:
-
+Return:
 PASS
-
-or
-
 FAIL
-
-or
-
 UNITY ACCEPTANCE NEEDED
 
 Then STOP.
 
-Testers must NOT:
+Testers must not:
+- edit/fix
+- commit/push
+- merge/rebase/reset/clean
+- create synthetic input
+- build elaborate test harnesses
+- repeatedly prove the same fact
 
-- edit
-- fix
-- commit
-- push
-- merge
-- reset
-- clean
-- create elaborate runtime harnesses
-- inject synthetic input
-- repeatedly prove the same behavior
+## 7. Fixer Rules
 
-If subjective/runtime feel cannot be cheaply proven:
-return UNITY ACCEPTANCE NEEDED.
+Invoke a Fixer only after a concrete FAIL.
 
----
+Give it:
+- exact failure
+- relevant files
+- Tester finding
+- smallest required correction
 
-## 9. Lane Fixers
+Fixer must not redesign or expand scope.
 
-Fixers run ONLY after a concrete Tester FAIL.
+Budget:
 
-Fixer receives:
-
-- exact failing behavior
-- exact relevant files
-- exact Tester finding
-- smallest correction required
-
-Fixer must not:
-
-- redesign architecture
-- expand scope
-- modify the other lane
-- perform unrelated cleanup
-- commit
-- push
-- merge
-- reset
-- clean
-
-Repair budget:
-
-Union
--> Tester
-
-if FAIL:
-
-Fixer ONCE
--> Tester ONCE
-
-if still FAIL:
-
-STOP
--> Lead decision
+Union -> Tester
+FAIL -> Fixer ONCE -> Tester ONCE
+still FAIL -> STOP -> Sol decision
 
 No endless loops.
 
----
+Architecture ambiguity is not a Fixer job.
 
-## 10. LEAD DECISION REQUIRED
+If Union returns LEAD DECISION REQUIRED:
+Sol resolves only that decision and returns it to the same Union worker.
 
-If Union returns:
+## 8. Integration Failures
 
-LEAD DECISION REQUIRED
+A patch/apply/line-ending failure is not automatically a code failure.
 
-this is NOT worker failure.
+If the tested worker result and base revision are known compatible:
+Sol may use the smallest mechanical transport operation, including copying the tested file byte-for-byte.
 
-Sol should:
+Do not invoke a Fixer for a pure transport problem.
 
-1. resolve only the missing architecture decision
-2. send the decision back to the SAME worker
+Sol must not substantially rewrite worker implementation during integration.
 
-Do not invoke a Fixer for architecture ambiguity.
+If an actual integrated bug belongs to a lane:
+route it to that lane's Fixer.
 
-Fixers repair concrete implementation failures.
+For a true cross-lane architecture conflict:
+Sol decides the contract;
+a delegated worker implements it.
 
----
+Sol does not become the fixer.
 
-## 11. Mechanical Integration
+## 9. Sol Acceptance Budget
 
-Sol may perform small mechanical integration operations.
+Downstream PASS is trusted evidence.
 
-Examples:
+Sol validates only what remains unproven.
 
-- apply an already-tested patch
-- copy an already-tested file byte-for-byte
-- merge compatible worker results
-- resolve pure line-ending/transport issues
-
-A patch/apply/line-ending failure is NOT automatically a code failure.
-
-If base revisions are equivalent and the lane result already passed:
-use the smallest safe mechanical transport method.
-
-Do not invoke a Fixer for a pure integration transport problem.
-
-Sol must not silently rewrite substantial worker implementation.
-
----
-
-## 12. Sol Final Acceptance Budget
-
-After downstream PASS results, Sol validates ONLY facts that remain unproven.
-
-Normal maximum:
-
+Normal final budget:
 - one brief relevant diff review
-- one git diff --check/status check if needed
+- one git diff --check/status if needed
 - one cheap compile/Console check if already available
 - max ONE short PlayMode smoke if genuinely useful
 - STOP
 
-Never re-prove facts already established by a Tester.
+Never re-prove a successful Tester result with another method.
 
-Do not perform several equivalent validation methods.
+Avoid repeated status/log/hash/diff commands unless resolving a concrete problem.
 
----
-
-## 13. Unity Availability Rule
+## 10. Unity Rule
 
 If the live Unity Editor / normal Unity integration is already available:
-
-Sol may request ONE cheap compile + Console check.
+Sol may perform ONE cheap compile + Console check.
 
 If live Unity is NOT available:
+do NOT:
+- load computer-use just to locate Unity
+- read computer-use docs
+- launch Unity batch merely for routine acceptance
+- build alternate runtime validation
+- debug testing infrastructure
 
-DO NOT:
+If cheap agents already established compile/static correctness:
+return USER MANUAL CHECK and STOP.
 
-- load computer-use just to find Unity
-- read computer-use documentation
-- open large guidance documents
-- launch Unity batch mode merely for routine acceptance
-- build alternate validation harnesses
-- spend time debugging validation infrastructure
+Unity batch is reserved for tasks specifically requiring build/CI/batch validation or a concrete diagnosed need.
 
-If a Tester already produced a valid compile/static PASS:
+## 11. No Validation Escalation
 
-return USER MANUAL CHECK
-and STOP.
-
-Unity batch mode is appropriate only when:
-
-- the task itself is about build/CI/batch operation, OR
-- there is a specific concrete reason beyond routine final acceptance.
-
----
-
-## 14. No Validation Escalation
-
-For ordinary tasks do NOT use:
-
-- synthetic keyboard input
-- synthetic mouse input
+For ordinary tasks do not use:
+- synthetic keyboard/mouse input
 - fake InputSystem devices
 - reflection runtime probes
-- custom runtime test harnesses
+- custom runtime harnesses
 - repeated screenshots
-- repeated transform measurements
-- repeated velocity measurements
+- repeated transform/velocity measurements
 - repeated MCP polling
-- multiple redundant PlayMode runs
+- redundant PlayMode passes
 - multiple proof methods for the same fact
 
-One failed test-tool attempt does not authorize a more complicated testing system.
+One failed test-tool attempt does not justify a more complicated test system.
 
----
+## 12. Subjective Checks
 
-## 15. Subjective Gameplay Checks
+USER MANUAL CHECK owns subjective feel:
 
-The user evaluates subjective feel.
-
-Use USER MANUAL CHECK for things such as:
-
-- movement feel
-- physics feel
-- camera feel
-- jump feel
-- air-strafe feel
-- animation feel
-- prop density
+- movement
+- physics
+- camera
+- jump/air-strafe
+- animation
 - arena layout
+- prop density
 - visual quality
-- audio feel
+- audio
 
-Do not spend Sol tokens trying to mathematically prove subjective game feel.
+Do not spend Sol tokens trying to prove subjective feel.
 
----
-
-## 16. Skills and Documentation
+## 13. Skills / Research
 
 Do not load a skill merely because it exists.
 
-Only load a skill when it is genuinely required to complete the task.
+Use a skill only when genuinely needed.
 
-Researcher LOW:
-only genuine external/API/docs uncertainty.
+Researcher LOW is for genuine external uncertainty only.
 
 Do not use Researcher for routine Unity work.
 
-Do not load computer-use for routine final validation.
+Do not read large documentation files merely to confirm that validation can stop.
 
-Do not read large documentation files simply to confirm that no further work is needed.
+## 14. Root Instruction Efficiency
 
----
+Do not shell-read or dump the complete AGENTS.md during normal tasks.
 
-## 17. Minimal Lead Narration
+These project instructions are already active.
 
-Keep Lead narration short.
+Do not routinely run:
+Get-Content -Raw AGENTS.md
+
+Inspect a specific section only if a genuine instruction ambiguity exists.
+
+Keep Lead narration minimal.
 
 Do not repeatedly narrate:
-
 - that an agent is still working
-- the already-decided routing
+- already-decided routing
 - every minor command
-- repeated summaries between pipeline stages
-- what will happen next when nothing changed
+- repeated stage summaries
 
-Report only:
+Report meaningful transitions, failures, decisions, and final result.
 
-- meaningful state transitions
-- concrete failures
-- LEAD DECISION REQUIRED
-- integration issues
-- final result
+## 15. Git Safety
 
----
+Preserve unrelated user work.
 
-## 18. Ordinary Lead Action Budget
-
-For a normal bounded task, Sol should typically perform only:
-
-1. one initial repo/worktree safety check
-2. one routing/decomposition decision
-3. one worker delegation
-4. one brief worker diff review
-5. mechanical integration
-6. only still-required final validation
-7. STOP
-
-Avoid repeated:
-
-- git status
-- git log
-- hash checks
-- diff scans
-
-unless resolving a concrete problem.
-
----
-
-## 19. Worktrees
-
-Lane A:
-
-_worktrees/ua1
-branch worker/union-alpha-1
-
-Used by:
-- Union Alpha #1
-- Tester #1
-- Fixer #1
-
-Lane B:
-
-_worktrees/ua2
-branch worker/union-alpha-2
-
-Used by:
-- Union Alpha #2
-- Tester #2
-- Fixer #2
-
-Before normal implementation:
-the selected lane should be aligned with current committed main.
-
-If unexpectedly dirty or stale:
-report it.
-
-Do not destroy unknown work.
-
----
-
-## 20. Integration Tester
-
-Integration Tester is READ-ONLY.
-
-When required, it checks:
-
-- cross-lane API compatibility
-- combined regressions
-- task success criteria
-- compile/static correctness
-- git diff --check
-- obvious subsystem interactions
-
-Output:
-
-PASS
-FAIL
-UNITY ACCEPTANCE NEEDED
-
-Then STOP.
-
-No expensive runtime proof.
-
----
-
-## 21. Integration Fixer
-
-If Integration Tester reports a concrete implementation failure:
-
-Sol does NOT fix it.
-
-Use Integration Fixer only for the exact reported integration bug.
-
-Budget:
-
-Integration Tester
--> FAIL
--> Integration Fixer ONCE
--> Integration Tester ONCE
-
-If still FAIL:
-STOP and report.
-
-For a pure lane-owned bug:
-prefer the owning Lane Fixer.
-
----
-
-## 22. Git Safety
-
-Always preserve unrelated user work.
-
-Never automatically use:
-
-git reset --hard
-git clean
-destructive checkout
-rebase of unknown user work
-
-Do not discard unknown changes.
+Never automatically:
+- git reset --hard
+- git clean
+- destructive checkout
+- rebase unknown user work
 
 Do not commit or push unless explicitly requested.
 
-Protected local recovery content:
+Protected local content:
+- Assets/_Recovery
+- Assets/_Recovery.meta
 
-Assets/_Recovery
-Assets/_Recovery.meta
+Never add, edit, delete, move, or clean those paths unless explicitly requested.
 
-Never:
+Before delegating work, verify the selected worktree is usable.
 
-- add
-- edit
-- delete
-- move
-- clean
+Do not destroy unexpected dirty worktrees.
 
-these paths unless explicitly requested.
+## 16. Friendslop Core STOP-GATE
 
----
+Reusable Friendslop core stays generic.
 
-## 23. Friendslop Core STOP-GATE
-
-The reusable Friendslop core must remain generic.
-
-Do not add Only Volunteers-specific:
-
+Without explicit approval do not put Only Volunteers-specific:
 - crime systems
 - drug systems
 - organ systems
-- game-specific economy
-- game-specific progression
-- game-specific names
+- game economy/progression
+- game-specific names/content
 - irreversible dependencies
-- specific game content/assets
 
-into reusable core without explicit approval.
+into the reusable core.
 
----
-
-## 24. Scope Discipline
+## 17. Scope
 
 Implement the smallest coherent solution.
 
-Do not automatically add adjacent features.
+Do not automatically build adjacent features.
 
 Examples:
+- jump does not imply stamina/coyote-time
+- crouch does not imply slide/prone
+- air-strafe does not imply surf/bunnyhop framework
 
-jump != stamina/coyote-time system
-crouch != slide/prone system
-air-strafe != surf/bunnyhop framework
+Avoid unnecessary architecture expansion.
 
-Avoid architecture expansion without a real requirement.
+## 18. STOP
 
----
-
-## 25. Transport Failures
-
-If worker input appears truncated or missing:
-
-this is infrastructure failure, not worker failure.
-
-Resend the SAME resolved task compactly.
-
-Do not escalate models merely because transport failed.
-
----
-
-## 26. Efficiency Priority
-
-Preferred normal workflow:
-
-Sol decision
--> Union implementation
--> Lane Tester
--> optional Fixer
--> mechanical integration
--> conditional Integration Tester
--> tiny Sol acceptance
--> STOP
-
-Prefer spending Union/DeepSeek tokens over substantial Sol implementation.
-
-Do not use:
-- second lane without need
-- Fixer without FAIL
-- Researcher without uncertainty
-- Integration Tester without integration risk
-- repeated validation after PASS
-
----
-
-## 27. STOP Means STOP
-
-After required validation reaches:
-
-PASS
-
-or
-
-USER MANUAL CHECK
-
+When required validation reaches PASS or USER MANUAL CHECK:
 STOP.
 
-Do not continue with:
-
-- extra skills
-- extra documentation
-- Unity batch validation
-- second proof method
-- extra agents
-- additional runtime probing
+No extra:
+- agents
+- skills
+- docs
+- Unity batch
+- alternate proof
+- runtime probing
 
 unless a concrete unresolved failure exists.
 
----
-
-## 28. Final Output
+## 19. Final Response
 
 RESULT
 PASS / FAIL / MANUAL CHECK REQUIRED
@@ -647,22 +350,14 @@ CHANGES
 - concise summary
 
 AGENTS
-- Union Alpha #1: USED / NOT USED
-- Tester #1: USED / NOT USED
-- Fixer #1: USED / NOT USED
-- Union Alpha #2: USED / NOT USED
-- Tester #2: USED / NOT USED
-- Fixer #2: USED / NOT USED
-- Integration Tester: USED / NOT USED
-- Integration Fixer: USED / NOT USED
-- Researcher: USED / NOT USED
+- only agents actually used
 - Lead substantial implementation: YES / NO
 
 VALIDATION
-- Lane result(s)
-- Integration result if required
-- compile/Console if actually required
-- USER MANUAL CHECK if applicable
+- relevant Tester result(s)
+- Integration Tester only if required
+- compile/Console only if actually performed
+- USER MANUAL CHECK where appropriate
 
 GIT
 - git status --short --branch
@@ -670,6 +365,6 @@ GIT
 - Push: YES / NO
 
 NOTES
-Only unresolved important information.
+Only important unresolved information.
 
 Then STOP.
