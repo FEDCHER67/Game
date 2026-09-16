@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Friendslop.PhysicsPlayground
 {
+    [DefaultExecutionOrder(100)]
     public sealed class PhysicsGrabber : MonoBehaviour
     {
         [SerializeField] private Camera interactionCamera;
@@ -19,6 +20,8 @@ namespace Friendslop.PhysicsPlayground
 
         public Rigidbody GrabbedBody => grabbedBody;
 
+        public bool HasValidGrabTarget { get; private set; }
+
         private void Awake()
         {
             if (interactionCamera == null)
@@ -34,6 +37,8 @@ namespace Friendslop.PhysicsPlayground
 
         private void Update()
         {
+            HasValidGrabTarget = TryFindGrabTarget(out _, out _);
+
             Mouse mouse = Mouse.current;
             if (mouse == null)
             {
@@ -69,19 +74,7 @@ namespace Friendslop.PhysicsPlayground
 
         private void TryGrab()
         {
-            if (interactionCamera == null)
-            {
-                return;
-            }
-
-            Ray ray = interactionCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-            if (!Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-            {
-                return;
-            }
-
-            Rigidbody body = hit.rigidbody;
-            if (body == null || body.isKinematic)
+            if (!TryFindGrabTarget(out Rigidbody body, out RaycastHit hit))
             {
                 return;
             }
@@ -89,6 +82,26 @@ namespace Friendslop.PhysicsPlayground
             grabbedBody = body;
             localGrabPoint = body.transform.InverseTransformPoint(hit.point);
             grabbedBody.WakeUp();
+        }
+
+        private bool TryFindGrabTarget(out Rigidbody body, out RaycastHit hit)
+        {
+            body = null;
+
+            if (interactionCamera == null)
+            {
+                hit = default;
+                return false;
+            }
+
+            Ray ray = interactionCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+            if (!Physics.Raycast(ray, out hit, maxGrabDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            {
+                return false;
+            }
+
+            body = hit.rigidbody;
+            return body != null && !body.isKinematic;
         }
 
         private void Release()
@@ -99,6 +112,7 @@ namespace Friendslop.PhysicsPlayground
 
         private void OnDisable()
         {
+            HasValidGrabTarget = false;
             Release();
         }
 
