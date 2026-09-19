@@ -1,5 +1,5 @@
 using System.Globalization;
-using TheFirstPerson;
+using OnlyVolunteers.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,10 +12,10 @@ namespace OnlyVolunteers.Debugging
     public sealed class ControllerTestVelocityHud : MonoBehaviour
     {
         const string ControllerTestPath = "Assets/OnlyVolunteers/Scenes/ControllerTest.unity";
-        static readonly Rect PanelRect = new Rect(12f, 12f, 220f, 94f);
-        static readonly Rect TextRect = new Rect(22f, 20f, 200f, 78f);
+        static readonly Rect PanelRect = new Rect(12f, 12f, 250f, 112f);
+        static readonly Rect TextRect = new Rect(24f, 22f, 226f, 90f);
 
-        FPSController fpsController;
+        KccFirstPersonInput player;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void CreateForControllerTest()
@@ -32,17 +32,29 @@ namespace OnlyVolunteers.Debugging
 
         void Awake()
         {
-            fpsController = Object.FindFirstObjectByType<FPSController>();
+            player = Object.FindFirstObjectByType<KccFirstPersonInput>();
         }
 
         void OnGUI()
         {
-            Vector3 measuredVelocity = fpsController != null
-                ? fpsController.MeasuredVelocity
+            var character = player != null ? player.Character : null;
+            var motor = character != null ? character.Motor : null;
+            Vector3 measuredVelocity = motor != null
+                ? motor.Velocity
                 : Vector3.zero;
-            float horizontalSpeed = new Vector2(measuredVelocity.x, measuredVelocity.z).magnitude;
-            string state = GetStateLabel();
-            string crouchState = GetCrouchStateLabel();
+            float horizontalSpeed = motor != null
+                ? Vector3.ProjectOnPlane(measuredVelocity, motor.CharacterUp).magnitude
+                : 0f;
+            float verticalSpeed = motor != null
+                ? Vector3.Dot(measuredVelocity, motor.CharacterUp)
+                : 0f;
+            string state = motor != null && motor.GroundingStatus.IsStableOnGround
+                ? "Grounded"
+                : "Airborne";
+            string crouchState = motor != null &&
+                motor.Capsule.height <= character.CrouchedCapsuleHeight + 0.01f
+                    ? "Crouched"
+                    : "Standing";
 
             GUI.Box(PanelRect, GUIContent.none);
             GUI.Label(
@@ -51,39 +63,9 @@ namespace OnlyVolunteers.Debugging
                     CultureInfo.InvariantCulture,
                     "Velocity: {0:F2} m/s\nVertical: {1:F2} m/s\nState: {2}\nCrouch: {3}",
                     horizontalSpeed,
-                    measuredVelocity.y,
+                    verticalSpeed,
                     state,
                     crouchState));
-        }
-
-        string GetStateLabel()
-        {
-            if (fpsController == null)
-            {
-                return "No Controller";
-            }
-            if (!fpsController.HasValidGroundSupport)
-            {
-                return "Airborne";
-            }
-            return fpsController.IsCrouched ? "Crouched" : "Grounded";
-        }
-
-        string GetCrouchStateLabel()
-        {
-            if (fpsController == null)
-            {
-                return "Standing";
-            }
-            if (fpsController.IsStandingBlocked)
-            {
-                return "Blocked";
-            }
-            if (fpsController.IsCrouched)
-            {
-                return "Crouched";
-            }
-            return fpsController.HasCrouchLandingIntent ? "Landing Intent" : "Standing";
         }
     }
 }
