@@ -22,6 +22,13 @@ namespace OnlyVolunteers.Player
         private const float BhopPreGroundGrace = 0.08f;
         private const float BhopCapGrowth = 1.035f;
         private const float BhopMaxSpeed = 11.75f;
+        private const float LongJumpMaxGain = 1.10f;
+        private const float LongJumpMinArcDegrees = 8f;
+        private const float LongJumpIdealArcMinDegrees = 12f;
+        private const float LongJumpIdealArcMaxDegrees = 22f;
+        private const float LongJumpMaxArcDegrees = 35f;
+        private const float LongJumpReversalDegrees = 2f;
+        private const int LongJumpIdealArcCount = 4;
         private const float AirTuckDistance = 0.35f;
         private const float AirTuckPathStep = 0.05f;
 
@@ -39,6 +46,11 @@ namespace OnlyVolunteers.Player
         private float _airborneSpeedLimit;
         private float _normalAirMoveSpeed;
         private float _bhopCap;
+        private float _longJumpReferenceSpeed;
+        private float _longJumpArcDegrees;
+        private float _longJumpReversalDegrees;
+        private float _longJumpQuality;
+        private int _longJumpDirection;
         private float _lastAirJumpPressTime = float.NegativeInfinity;
         private float _landingHopTime;
         private float _stableMovementSharpness;
@@ -69,7 +81,7 @@ namespace OnlyVolunteers.Player
             _airborneSpeedLimit = WalkSpeed;
             _normalAirMoveSpeed = WalkSpeed;
             _stableMovementSharpness = Character.StableMovementSharpness;
-            Character.AirAccelerationSpeed = 50f;
+            Character.AirAccelerationSpeed = 100f;
             Character.JumpScalableForwardSpeed = 0f;
             Character.JumpPreGroundingGraceTime = BhopPreGroundGrace;
             Character.JumpPostGroundingGraceTime = 0f;
@@ -103,9 +115,11 @@ namespace OnlyVolunteers.Player
             if (Input.GetMouseButtonDown(0))
                 LockCursor();
 
+            float yawDelta = 0f;
             if (Cursor.lockState == CursorLockMode.Locked)
             {
-                _yaw = Mathf.Repeat(_yaw + Input.GetAxisRaw("Mouse X") * MouseSensitivity, 360f);
+                yawDelta = Input.GetAxisRaw("Mouse X") * MouseSensitivity;
+                _yaw = Mathf.Repeat(_yaw + yawDelta, 360f);
                 _pitch = Mathf.Clamp(_pitch - Input.GetAxisRaw("Mouse Y") * MouseSensitivity,
                     -PitchLimit, PitchLimit);
             }
@@ -126,6 +140,7 @@ namespace OnlyVolunteers.Player
                 _airborneSpeedLimit = Mathf.Max(Character.MaxAirMoveSpeed,
                     Vector3.ProjectOnPlane(Character.Motor.BaseVelocity,
                         Character.Motor.CharacterUp).magnitude);
+                _longJumpReferenceSpeed = Mathf.Min(BhopMaxSpeed, _airborneSpeedLimit);
             }
 
             bool beginAirTuck = !grounded && crouchHeld &&
@@ -155,6 +170,8 @@ namespace OnlyVolunteers.Player
             bool effectiveCrouchHeld = crouchHeld || _airborneCrouchLatched;
             bool crouched = effectiveCrouchHeld || physicallyCrouched;
             bool jumpDown = !crouched && Input.GetKeyDown(KeyCode.Space);
+            if (crouched || (!_wasStableGrounded && grounded) || (jumpDown && grounded))
+                ResetLongJump();
             if (jumpDown && !grounded)
                 _lastAirJumpPressTime = Time.time;
 
@@ -179,6 +196,7 @@ namespace OnlyVolunteers.Player
                  (_preserveLandingMomentum &&
                   Time.time - _landingHopTime > BhopPreGroundGrace))))
             {
+                ResetLongJump();
                 _canChainBhop = false;
                 _bhopChainActive = false;
                 _preserveLandingMomentum = false;
@@ -232,6 +250,23 @@ namespace OnlyVolunteers.Player
                 Character.MaxAirMoveSpeed = _bhopCap;
                 _airborneSpeedLimit = _bhopCap;
             }
+            if (!grounded && !crouched && moveForward > 0.5f)
+                ScoreLongJumpArc(yawDelta);
+            else if (!grounded)
+            {
+                _longJumpArcDegrees = 0f;
+                _longJumpReversalDegrees = 0f;
+                _longJumpDirection = 0;
+            }
+            if (!grounded && !crouched && _longJumpReferenceSpeed > 0f)
+            {
+                float mouseCap = Mathf.Min(BhopMaxSpeed, _longJumpReferenceSpeed *
+                    Mathf.Lerp(1f, LongJumpMaxGain, _longJumpQuality / LongJumpIdealArcCount));
+                Character.MaxAirMoveSpeed = Mathf.Min(BhopMaxSpeed,
+                    Mathf.Max(Character.MaxAirMoveSpeed, mouseCap));
+                _airborneSpeedLimit = Mathf.Min(BhopMaxSpeed,
+                    Mathf.Max(_airborneSpeedLimit, mouseCap));
+            }
 
             var inputs = new PlayerCharacterInputs
             {
@@ -246,6 +281,50 @@ namespace OnlyVolunteers.Player
 
             if (beginAirTuck)
                 TryAirTuck();
+        }
+
+        private void ResetLongJump()
+        {
+            _longJumpReferenceSpeed = 0f;
+            _longJumpArcDegrees = 0f;
+            _longJumpReversalDegrees = 0f;
+            _longJumpQuality = 0f;
+            _longJumpDirection = 0;
+        }
+
+        private void ScoreLongJumpArc(float yawDelta)
+        {
+            if (yawDelta == 0f)
+                return;
+
+            int direction = yawDelta > 0f ? 1 : -1;
+            float degrees = Mathf.Abs(yawDelta);
+            if (_longJumpDirection == 0)
+                _longJumpDirection = direction;
+            if (direction == _longJumpDirection)
+            {
+                _longJumpReversalDegrees = 0f;
+                _longJumpArcDegrees += degrees;
+                return;
+            }
+
+            _longJumpReversalDegrees += degrees;
+            if (_longJumpReversalDegrees < LongJumpReversalDegrees)
+                return;
+
+            float arc = _longJumpArcDegrees;
+            float quality = arc < LongJumpMinArcDegrees ? 0f
+                : arc < LongJumpIdealArcMinDegrees
+                    ? (arc - LongJumpMinArcDegrees) /
+                      (LongJumpIdealArcMinDegrees - LongJumpMinArcDegrees)
+                    : arc <= LongJumpIdealArcMaxDegrees ? 1f
+                    : Mathf.Clamp01((LongJumpMaxArcDegrees - arc) /
+                      (LongJumpMaxArcDegrees - LongJumpIdealArcMaxDegrees));
+            _longJumpQuality = Mathf.Min(LongJumpIdealArcCount,
+                _longJumpQuality + quality);
+            _longJumpArcDegrees = _longJumpReversalDegrees;
+            _longJumpReversalDegrees = 0f;
+            _longJumpDirection = direction;
         }
 
         private void TryAirTuck()
