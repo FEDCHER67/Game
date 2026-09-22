@@ -1,1002 +1,856 @@
-﻿# VOLUNTEERS ONLY — PROJECT AGENT RULES
+﻿# VOLUNTEERS ONLY — AGENT OPERATING SYSTEM
 
-These instructions apply to work performed inside this repository.
+This file defines the mandatory repository-local agent workflow.
 
-Repository root:
+The default interactive Codex session is the ORCHESTRATOR.
 
-C:\Users\chern_0eqkb03\Desktop\GAME
+==================================================
+MODEL ROLES
+==================================================
 
----
+ORCHESTRATOR / INTEGRATOR:
+- GPT-5.6 Sol
+- Reasoning: High
 
-## 1. Project identity
+PRIMARY CODER — LINE A:
+- GPT-5.6 Terra
+- Reasoning: Medium
 
-This repository contains the Unity project for:
+PRIMARY CODER — LINE B:
+- GPT-5.6 Terra
+- Reasoning: Medium
 
-VOLUNTEERS ONLY
+FAILED-LINE REPAIR:
+- GPT-5.6 Terra
+- Reasoning: High
 
-Production game code and assets belong under:
+RESEARCH:
+- DeepSeek
+- Reasoning: MAX
 
-Assets/OnlyVolunteers/
+PER-LINE QA:
+- DeepSeek
+- Reasoning: MAX
 
-Reusable generic networking/core infrastructure lives under:
+FINAL QA:
+- DeepSeek
+- Reasoning: MAX
 
-Assets/Friendslop/
+GIT / COMMIT:
+- DeepSeek
+- Reasoning: MAX
 
-Prototype/reference material may exist under:
+QUICK PATCH:
+- DeepSeek
+- Reasoning: MAX
 
-Assets/PhysicsInteractionPlayground/
+There is no Union Alpha system.
+There is no agent swarm.
+There is no committee.
+Do not introduce extra permanent agent roles unless explicitly requested by the user.
 
-Do not scatter new production gameplay systems across the root Assets folder.
+==================================================
+CORE PRINCIPLE
+==================================================
 
-Shared gameplay systems must be reusable production code/prefabs,
-not scene-specific copies.
+The normal development flow is:
 
----
+USER
+  ->
+SOL HIGH ORCHESTRATOR
+  ->
+ONE or TWO parallel TERRA MEDIUM coding lines
+  ->
+DEEPSEEK MAX QA on EACH line
+  ->
+failed line goes to TERRA HIGH
+  ->
+DEEPSEEK MAX retest
+  ->
+SOL HIGH integration
+  ->
+DEEPSEEK MAX final integrated QA
+  ->
+USER manual acceptance when appropriate
+  ->
+DEEPSEEK MAX commit
 
-## 2. Source-of-truth order
+DeepSeek MAX research runs alongside task preparation whenever external information may improve implementation.
 
-When information conflicts, prefer sources in this order:
+==================================================
+1. SOL HIGH — ORCHESTRATOR
+==================================================
 
-1. explicit current user instruction;
-2. current local working tree and actual runtime behavior;
-3. current bounded task contract under tasks/ or current prompt;
-4. this AGENTS.md;
-5. docs/CURRENT_STATE.md;
-6. technical/project documentation;
-7. older task reports or previous automated PASS results.
+The main Codex session acts as GPT-5.6 Sol High orchestrator.
 
-A current user-reproduced runtime failure overrides an older PASS.
+The orchestrator:
 
-Do not assume documentation is newer than the actual local worktree.
+- receives the user task
+- understands the requested result
+- inspects only enough repository context to divide the work correctly
+- identifies dependencies
+- decides whether safe parallelism exists
+- chooses ONE or TWO coding lines
+- assigns each line a precise scope
+- prevents overlapping ownership of central files
+- receives line QA results
+- integrates approved line results
+- diagnoses final integration failures
+- does not normally implement production code itself
 
----
+Before implementation, output internally/for subagents:
 
-## 3. Documentation routing
+TASK SUMMARY
 
-Do NOT read every documentation file for every task.
+LINE COUNT: 1 or 2
 
-Read only what the task actually requires.
+LINE A:
+- goal
+- owned files / subsystem
+- dependencies
+- acceptance criteria
 
-For quick product/gameplay context:
+LINE B:
+- goal
+- owned files / subsystem
+- dependencies
+- acceptance criteria
 
-docs/PRODUCT.md
+SHARED DO-NOT-TOUCH
 
-Read PRODUCT.md when a task benefits from a quick understanding of the game.
-For detailed mechanics, lore, world rules, or canon decisions, use the full canon specification.
+INTEGRATION PLAN
 
-For full gameplay/lore/canon decisions:
+Use only ONE Terra line when the work cannot be safely separated.
 
-docs/VOLUNTEERS_ONLY_GAME_SPEC_AND_LORE_CURRENT_CANON.md
+Use TWO Terra lines only when both can work largely independently.
 
-For technical architecture:
+Never create two lines merely for the sake of parallelism.
 
-docs/ARCHITECTURE.md
+==================================================
+2. PARALLEL CODING LINES
+==================================================
 
-For current project state / active work:
+When one line is enough:
 
-docs/CURRENT_STATE.md
+SOL
+  |
+  v
+TERRA MEDIUM A
 
-For multiplayer/networking architecture:
+When parallelism is safe:
 
-docs/MULTIPLAYER_FOUNDATION.md
+SOL
+  |
+  +-------------------+
+  |                   |
+  v                   v
+TERRA MEDIUM A    TERRA MEDIUM B
 
-For long-term architectural/project decisions:
+Both coding lines run concurrently.
 
-docs/DECISIONS.md
+Both first-pass coding lines use:
 
-For resumable task-specific state:
+GPT-5.6 Terra
+Reasoning: Medium
 
-tasks/
+Terra is the implementation worker.
 
-If docs/WORKFLOW.md exists,
-use it for detailed agent/worktree workflow.
+Terra may:
 
-Do not load the large canon file for routine technical work unless necessary.
+- write code
+- edit Unity assets where required
+- edit scenes/prefabs when assigned
+- implement the exact assigned feature
+- inspect local code required for implementation
 
-Do not silently invent canon when the specification already answers the question.
+Terra must NOT:
 
----
+- commit
+- push
+- redesign unrelated systems
+- expand its assigned scope
+- modify files owned by the other Terra line without orchestrator approval
 
-## 4. Git safety
+==================================================
+3. PARALLEL WORKSPACE ISOLATION
+==================================================
 
-Preserve unrelated user work.
+Two Terra lines must never write concurrently into the same mutable working tree.
 
-Never automatically run:
+When LINE COUNT = 2:
+
+use isolated git worktrees / temporary branches.
+
+Temporary worktrees should preferably live OUTSIDE tracked game content, for example under:
+
+$env:TEMP\OV-Agent-Worktrees\
+
+Conceptually:
+
+terra-a
+terra-b
+integration
+
+Do not place temporary worktrees inside Assets/.
+
+Do not allow Terra A and Terra B to edit the same physical working directory.
+
+Do not use:
 
 git reset --hard
 git clean
-destructive checkout
-rebase over unknown user work
+force checkout
+force push
+
+Never destroy user changes.
+
+==================================================
+4. DEEPSEEK MAX — RESEARCH
+==================================================
+
+A dedicated DeepSeek MAX research role runs whenever external information may materially improve the task.
+
+It may research:
+
+- official documentation
+- GitHub repositories
+- source code
+- issue trackers
+- engine/package documentation
+- release notes
+- forums
+- known bugs
+- implementation examples
+- best practices
+
+Research should start as early as possible.
+
+When relevant, research runs in parallel with Sol task decomposition.
+
+Research findings that affect implementation must reach the relevant Terra line BEFORE that part is implemented whenever possible.
+
+DeepSeek research gives recommendations.
+
+It does NOT replace Sol as architect.
+
+It does NOT directly command project architecture.
+
+Research output format:
+
+RESEARCH TARGET
+
+KEY FINDINGS
+
+RECOMMENDED APPROACH
+
+KNOWN PITFALLS
+
+USEFUL APIS / IMPLEMENTATIONS
+
+SOURCES
+
+RECOMMENDATIONS FOR LINE A
+
+RECOMMENDATIONS FOR LINE B
+
+DeepSeek may use a very large internal context.
+
+The information passed to Terra should be concise and implementation-focused.
+
+==================================================
+5. DEEPSEEK MAX — PER-LINE QA
+==================================================
+
+Every NORMAL coding line is actively tested by DeepSeek MAX.
+
+LINE A:
+
+Terra Medium A
+  ->
+DeepSeek MAX QA A
+
+LINE B:
+
+Terra Medium B
+  ->
+DeepSeek MAX QA B
+
+DeepSeek is the primary tester.
+
+When practical, DeepSeek should test:
+
+- compilation
+- static correctness
+- focused runtime behavior
+- Unity Play Mode
+- bug reproduction
+- before/after measurements
+- edge cases
+- regressions
+- acceptance criteria
+- unexpected file changes
+- relevant git diff
+
+For bug-fix tasks, prefer:
+
+REPRODUCE BEFORE FIX
+  ->
+IMPLEMENTATION
+  ->
+VERIFY AFTER FIX
+
+when practical.
+
+QA output:
+
+RESULT: PASS or FAIL
+
+TESTED
+
+EXPECTED
+
+ACTUAL
+
+REGRESSIONS
+
+ROOT CAUSE IF FAILED
+
+REPAIR CONTEXT
+
+==================================================
+6. FAILED LINE = TERRA HIGH
+==================================================
+
+If DeepSeek MAX QA reports FAIL:
+
+DO NOT return the line to Terra Medium.
+
+Escalate that exact failed line to:
+
+GPT-5.6 Terra
+Reasoning: High
+
+Terra High receives:
+
+- original task
+- current implementation
+- current diff
+- DeepSeek failing tests
+- expected behavior
+- actual behavior
+- root-cause evidence
+- research recommendations
+
+Terra High performs the repair.
+
+Then:
+
+DeepSeek MAX retests that line.
+
+Do not restart the feature from zero unless the evidence proves the approach is invalid.
+
+Maximum automatic repair cycles per line:
+
+2
+
+After two failed High repair cycles:
+
+STOP and report the problem to the user.
+
+==================================================
+7. SOL HIGH — INTEGRATION
+==================================================
+
+Only after every active coding line passes DeepSeek MAX QA:
+
+Sol High performs integration.
+
+Inputs:
+
+- Line A approved result
+- Line B approved result if used
+- DeepSeek research summary
+- DeepSeek QA summaries
+- relevant diffs
+
+Sol:
+
+- verifies compatibility
+- integrates both approved lines
+- resolves integration-level planning
+- identifies conflicts
+- keeps unrelated systems untouched
+
+Sol should NOT rewrite both implementations itself.
+
+If integration reveals a code defect:
+
+route the correction to Terra High.
+
+==================================================
+8. DEEPSEEK MAX — FINAL QA
+==================================================
+
+After integration, DeepSeek MAX performs thorough integrated testing.
+
+Final QA is broader than line QA.
+
+It should verify wherever practical:
+
+- compilation
+- integrated behavior
+- interactions between Line A and Line B
+- runtime behavior
+- Unity behavior
+- regressions
+- edge cases
+- acceptance criteria
+- unexpected modified files
+- diff sanity
+
+Output:
+
+FINAL_QA: PASS or FAIL
+
+If FAIL:
+
+Sol diagnoses the failing subsystem.
+
+Then:
+
+TERRA HIGH repair
+  ->
+DEEPSEEK MAX retest
+
+Maximum automatic integration repair cycles:
+
+2
+
+After that:
+
+STOP and ask the user.
+
+==================================================
+9. USER MANUAL ACCEPTANCE
+==================================================
+
+After DeepSeek MAX FINAL_QA PASS:
+
+if the task affects:
+
+- gameplay feel
+- player movement
+- visuals
+- audio
+- UI feel
+- networking feel
+- physical interaction
+
+request user manual validation.
+
+Do not silently declare subjective game feel accepted.
+
+Normal flow:
+
+FINAL QA PASS
+  ->
+USER TEST
+  ->
+USER APPROVES
+  ->
+COMMIT
+
+==================================================
+10. DEEPSEEK MAX — GIT STEWARD
+==================================================
+
+DeepSeek MAX owns final commit preparation.
+
+After user approval, unless the user explicitly requested an automatic commit:
+
+run:
+
+git status
+git diff
+git diff --check
+
+Verify:
+
+- intended files only
+- no generated junk
+- no accidental unrelated edits
+- no missing required files
+- no unresolved conflicts
+- no forbidden files
+
+Default staging:
+
+git add <explicit intended paths>
+
+Do NOT use:
+
 git add .
 git add -A
 
-Do not overwrite or discard unexpected dirty worktrees.
+unless the user explicitly requests committing ALL current changes.
 
-Do not commit or push pending gameplay work unless explicitly authorized
-through the user acceptance workflow.
+DeepSeek writes the commit message and performs:
 
-Before substantial editing, inspect only the relevant git status/diff needed
-to understand the current task state.
+git commit
 
-Do not perform repository-wide cleanup as part of an unrelated task.
+PUSH requires explicit user instruction.
 
----
+Never use:
 
-## 5. Protected local content
+git reset --hard
+git clean
+force push
 
-Never add, edit, delete, move, restore, stage, clean,
-or otherwise touch:
+unless explicitly authorized by the user.
 
-Assets/_Recovery/
-Assets/_Recovery.meta
+==================================================
+11. QUICK PATCH MODE
+==================================================
 
-unless the user explicitly requests it.
-
-This rule is absolute.
-
----
-
-## 6. Production boundaries
-
-### Production game
-
-Assets/OnlyVolunteers/
-
-All new VOLUNTEERS ONLY-specific production gameplay should normally live here.
+The user may explicitly request a QUICK PATCH.
 
 Examples:
 
-- player systems
-- interactions
-- NPC systems
-- inventory
-- items
-- economy
-- progression
-- game-specific UI
-- game-specific scenes
-- production prefabs
-- production art/audio
-- third-party code adapted specifically for the game
-
-### Reusable core
-
-Assets/Friendslop/
-
-Friendslop must remain generic reusable infrastructure.
-
-Do not put Only Volunteers-specific systems into Friendslop without
-explicit architectural approval.
-
-Examples of content that must NOT leak into Friendslop by default:
-
-- crime systems
-- drug systems
-- organ systems
-- Only Volunteers economy/progression
-- game-specific names/content
-- irreversible dependencies on Only Volunteers gameplay
-
-### Prototype/reference
-
-Assets/PhysicsInteractionPlayground/
-
-This is prototype/reference material.
-
-Useful concepts/code may be studied or adapted when appropriate.
-
-New production gameplay belongs under:
-
-Assets/OnlyVolunteers/
-
----
-
-## 7. Shared gameplay rule
-
-If a gameplay feature is intended to exist throughout the game,
-implement it as reusable production code/prefabs.
-
-A test scene is only a place to test a system.
-
-A test scene must not become the owner of:
-
-- movement
-- interaction
-- NPC behavior
-- inventory
-- item systems
-- economy
-- networking
-- save/game state
-- other global gameplay architecture
-
-Avoid scene-specific duplicate implementations.
-
----
-
-## 8. Task scope
-
-Implement the smallest coherent solution that satisfies the requested behavior.
-
-Do not automatically build adjacent features.
-
-Examples:
-
-jump does not imply stamina
-
-jump does not imply coyote-time
-
-jump does not imply variable jump height
-
-crouch does not imply slide
-
-crouch does not imply prone
-
-air-strafe does not imply bunnyhop
-
-movement does not imply mantle
-
-movement does not imply vault
-
-movement does not imply ledge-grab
-
-Avoid unnecessary architecture expansion.
-
-One task should remain independently understandable and testable.
-
----
-
-# AGENT SYSTEM
-
-## 9. Roles
-
-GPT-5.6 SOL HIGH
-= Lead / Architect / Dispatcher / Integrator / Critical Debugger
-
-Use Sol primarily for:
-
-- architecture
-- decomposition
-- difficult debugging
-- physics/collision reasoning
-- ownership boundaries
-- ambiguity resolution
-- integration decisions
-- cross-system problems
-- final critical review
-
-Sol is not required to delegate every implementation.
-
-For critical architecture, physics, collision, corruption,
-or repeatedly misdiagnosed runtime failures,
-Sol may implement/fix directly.
-
----
-
-Union Alpha
-= substantial bounded implementation worker.
-
-Use for:
-
-- well-defined implementation
-- mechanical/substantial coding
-- bounded subsystem work
-- work with clear ownership
-
----
-
-DeepSeek Tester
-= independent READ-ONLY validation.
-
-Tester does not modify code.
-
----
-
-DeepSeek Fixer
-= smallest targeted repair after a concrete FAIL.
-
-Fixer must not redesign the architecture.
-
----
-
-DeepSeek Researcher
-= external/API/docs uncertainty only.
-
-Do not use Researcher for routine Unity work.
-
----
-
-DeepSeek Committer
-= acceptance/commit/push workflow after explicit user acceptance.
-
-Committer is NOT part of normal implementation.
-
----
-
-## 10. Current implementation lanes
-
-Default to ONE implementation lane.
-
-### Lane A
-
-Union Alpha #1
-Tester #1
-Fixer #1
-
-worktree:
-
-_worktrees/ua1
-
-branch:
-
-worker/union-alpha-1
-
-### Lane B
-
-Union Alpha #2
-Tester #2
-Fixer #2
-
-worktree:
-
-_worktrees/ua2
-
-branch:
-
-worker/union-alpha-2
-
-Before using a lane:
-
-verify its worktree is usable.
-
-If the worktree is unexpectedly dirty:
-
-do not destroy or clean it.
-
-Choose another valid path or return to Sol for a decision.
-
-Never let two implementation workers modify the same file concurrently.
-
-Use two lanes only when file/subsystem ownership is genuinely disjoint.
-
----
-
-## 11. Agent execution tree
-
-Default routing:
-
-USER REQUEST
-|
-`-- GPT-5.6 SOL HIGH
-    Lead / Architect / Dispatcher / Integrator
-    |
-    |-- Understand request
-    |-- Inspect relevant current state
-    |-- Define scope and success criteria
-    |-- Decide whether delegation is useful
-    |
-    |-- SIMPLE / CRITICAL / ARCHITECTURE TASK
-    |   |
-    |   `-- SOL may work directly
-    |       |
-    |       |-- diagnose / implement
-    |       |-- bounded validation
-    |       |-- optional ONE read-only Tester
-    |       `-- USER MANUAL CHECK if subjective
-    |
-    |-- NORMAL IMPLEMENTATION TASK
-    |   |
-    |   `-- ONE Union Alpha lane by default
-    |       |
-    |       |-- Union Alpha implements
-    |       |
-    |       `-- DeepSeek Tester
-    |           |
-    |           |-- PASS
-    |           |   |
-    |           |   `-- return to SOL
-    |           |       |
-    |           |       `-- integration / final review
-    |           |
-    |           `-- FAIL
-    |               |
-    |               `-- DeepSeek Fixer
-    |                   |
-    |                   |-- smallest targeted correction
-    |                   |
-    |                   `-- DeepSeek Tester ONCE again
-    |                       |
-    |                       |-- PASS
-    |                       |   `-- return to SOL
-    |                       |
-    |                       `-- FAIL
-    |                           `-- STOP
-    |                               `-- SOL decides next step
-    |
-    |-- TWO INDEPENDENT SUBSYSTEMS
-    |   |
-    |   |-- Union Alpha #1
-    |   |   `-- Tester #1
-    |   |
-    |   `-- Union Alpha #2
-    |       `-- Tester #2
-    |
-    |   Both lanes must have disjoint ownership.
-    |
-    |   Then:
-    |
-    |   SOL integrates
-    |   |
-    |   `-- Integration Tester ONLY if genuine
-    |       cross-lane/integration risk exists
-    |
-    |-- EXTERNAL / API / DOCUMENTATION UNCERTAINTY
-    |   |
-    |   `-- DeepSeek Researcher
-    |       |
-    |       `-- returns evidence to SOL
-    |
-    `-- FINAL STATE
-        |
-        |-- automated correctness established
-        |
-        |-- SOL bounded final review
-        |
-        |-- if subjective/runtime feel matters
-        |   |
-        |   `-- USER MANUAL CHECK
-        |
-        `-- task remains PENDING until user decision
-            |
-            |-- .\yes
-            |   |
-            |   `-- acceptance workflow
-            |       |
-            |       `-- DeepSeek Committer
-            |           |
-            |           `-- commit/push/sync exact accepted task
-            |
-            `-- .\no
-                |
-                `-- reject only exact pending task
-
----
-
-## 12. Agent routing rules
-
-Default to ONE implementation lane.
-
-Two Union lanes are only for genuinely independent work.
-
-Testers are always READ-ONLY.
-
-Fixers are only used after a concrete FAIL.
-
-Normal fixer budget:
-
-Union
--> Tester
--> Fixer ONCE
--> Tester ONCE
--> STOP
-
-If it still fails:
-
+"quick patch"
+"без тестов"
+"просто поменяй значение"
+"50f -> 100f"
+"change this bool"
+"change one config value"
+
+QUICK PATCH pipeline:
+
+USER
+  ->
+DEEPSEEK MAX
+  ->
+DIRECT EDIT
+  ->
 STOP
--> Sol decision.
 
-Do not create endless fixer loops.
+QUICK PATCH uses:
 
-Sol owns architectural decisions.
+DeepSeek MAX only.
 
-Sol may directly implement critical architecture/physics/collision fixes.
+NO SOL.
 
-Researcher is not part of every task.
+NO TERRA.
 
-Integration Tester is not part of every task.
+NO RESEARCH PASS.
 
-Do not invoke agents merely because they exist.
+NO QA.
 
-Do not use agents for performative participation.
+NO TESTS.
 
----
+NO PLAY MODE.
 
-## 13. Compact worker contract
+NO COMPILE.
 
-When delegating, Sol should give the worker only the relevant contract:
+NO COMMIT.
 
-- goal
-- success criteria
-- owned files/subsystem
-- behavior to preserve
-- prohibited scope
-- relevant architecture boundary
+NO PUSH.
 
-Do not dump the entire repository context into every worker prompt.
-
-Do not repeat the whole AGENTS.md in worker prompts.
-
-If a delegated prompt is truncated or lost,
-resend the same compact contract.
-
----
-
-# VALIDATION
-
-## 14. Validation principles
-
-Use the cheapest validation that actually proves the required behavior.
-
-For ordinary tasks prefer:
-
-- relevant diff review
-- git diff --check
-- compile/static validation
-- relevant Unity Console check
-- one bounded PlayMode smoke when justified
-
-Do not repeatedly prove the same fact using multiple methods.
-
-Do not perform validation merely because a tool exists.
-
-Do not repeatedly run:
-
-- status
-- diff
-- hashes
-- console reads
-- screenshots
-- PlayMode
-
-unless resolving a concrete uncertainty.
-
----
-
-## 15. Runtime failure rule
-
-A USER-REPRODUCED runtime failure overrides an earlier:
-
-PASS
-static PASS
-tester PASS
-compile PASS
-automated PASS
-
-Do not defend an earlier PASS when the actual game reproduces the bug.
-
-When runtime behavior contradicts automated/static validation:
-
-1. treat the runtime reproduction as authoritative evidence;
-2. identify the exact failing behavior;
-3. diagnose the actual cause;
-4. make the narrowest justified correction;
-5. rerun relevant validation.
-
-Previous PASS evidence may still be useful,
-but it does not invalidate the reproduced runtime failure.
-
----
-
-## 16. Runtime diagnostics
-
-For ordinary tasks avoid unnecessary:
-
-- synthetic keyboard/mouse input
-- fake InputSystem devices
-- reflection runtime probes
-- custom runtime harnesses
-- repeated screenshots
-- repeated transform measurements
-- repeated velocity measurements
-- repeated MCP polling
-
-However, a bounded temporary runtime diagnostic or stress harness IS allowed
-when all of the following are true:
-
-- a concrete runtime bug exists;
-- static validation was insufficient;
-- the diagnostic directly reproduces/measures that bug;
-- its scope is bounded;
-- it does not become unrelated production architecture;
-- unnecessary temporary test-only code is removed afterward.
-
-Do not escalate test complexity without a concrete reason.
-
----
-
-## 17. Tester rules
-
-Testers are READ-ONLY.
-
-Tester may inspect:
-
-- success criteria
-- relevant diff
-- obvious regressions
-- git diff --check
-- one cheap compile/static/test path when useful
-
-Tester returns:
-
-PASS
-
-or
-
-FAIL
-
-or
-
-USER MANUAL CHECK REQUIRED
-
-Then STOP.
-
-Tester must not:
-
-- edit/fix
-- commit/push
-- merge/rebase/reset/clean
-- redesign architecture
-- expand scope
-- create unrelated features
-
----
-
-## 18. Subjective checks
-
-USER MANUAL CHECK owns subjective feel.
-
-Examples:
-
-- movement feel
-- crouch/stand feel
-- camera feel
-- jump feel
-- air movement feel
-- physics feel
-- animation feel
-- arena/layout feel
-- prop density
-- visual quality
-- audio feel
-
-Automated validation may prove technical correctness.
-
-It must NOT claim subjective feel has been accepted.
-
----
-
-## 19. Unity validation
-
-If live Unity Editor / normal Unity integration is already available,
-use it directly.
-
-Do not build expensive alternate validation infrastructure
-for routine tasks.
-
-Unity batch mode is reserved for:
-
-- explicitly requested build/batch work
-- CI validation
-- build validation
-- concrete diagnosed need
-
-If compile/static correctness is already established
-and remaining uncertainty is subjective:
-
-return:
-
-USER MANUAL CHECK REQUIRED
-
-and STOP.
-
----
-
-# TASK ACCEPTANCE
-
-## 20. Pending task policy
-
-Gameplay work normally remains PENDING
-until the user manually accepts it.
-
-Preferred flow:
-
-implement
--> validate
--> USER MANUAL CHECK when needed
--> user decides accept/reject
-
-Do not automatically commit or push gameplay tasks after automated PASS.
-
----
-
-## 21. .\yes
-
-.\yes means:
-
-accept the exact pending task.
-
-Run it ONLY after explicit user instruction.
-
-The acceptance workflow may:
-
-- invoke DeepSeek Committer
-- stage only exact accepted task files
-- commit
-- push
-- sync as defined by the project workflow
-
-Do not include unrelated dirty files.
-
-Do not infer acceptance from:
-
-"looks okay"
-"probably fine"
-automated PASS
-tester PASS
-
-Acceptance must be explicit.
-
----
-
-## 22. .\no
-
-.\no means:
-
-reject the exact pending task.
-
-Run it ONLY after explicit user instruction.
-
-Rejection must be scoped to the exact pending task.
-
-Do not discard unrelated user work.
-
-Do not use repository-wide destructive cleanup.
-
----
-
-# PROJECT-SPECIFIC RULES
-
-## 23. FPS policy
-
-Never introduce or preserve an artificial gameplay FPS/frame-rate cap
 unless explicitly requested by the user.
 
-Forbidden as normal gameplay FPS limiting mechanisms:
+Valid QUICK PATCH examples:
 
-Application.targetFrameRate
+- one numeric constant
+- one bool
+- one string
+- one simple serialized/config value
+- one obvious rename
+- one tiny localized deterministic edit
 
-QualitySettings.vSyncCount
+If the task turns out to involve:
 
-OnDemandRendering.renderFrameInterval
+- multiple systems
+- architecture
+- uncertain behavior
+- non-obvious side effects
+- substantial multi-file work
 
-Time.captureFramerate
+STOP immediately with:
 
-custom frame caps
+QUICK_PATCH_ABORTED
+USE_NORMAL_PIPELINE
 
-editor/test scene FPS caps
+Do not silently expand Quick Patch into a full development task.
 
-networking-driven global render FPS caps
+==================================================
+12. MODEL ROUTING — FIXED
+==================================================
 
-Default expectation:
+ORCHESTRATOR:
+GPT-5.6 Sol High
 
-gameplay and test scenes run uncapped.
+FIRST-PASS CODING:
+GPT-5.6 Terra Medium
 
-Performance problems must be fixed by diagnosing the actual cost,
-not by hiding them behind a frame-rate cap.
+MAXIMUM PARALLEL CODING LINES:
+2
 
-If an FPS cap is discovered:
+FAILED LINE:
+GPT-5.6 Terra High
 
-1. identify its exact source;
-2. report it;
-3. remove it if it belongs to the current task or is clearly obsolete;
-4. never replace it with another cap without explicit approval.
+RESEARCH:
+DeepSeek MAX
 
----
+PER-LINE QA:
+DeepSeek MAX
 
-## 24. Skills and external research
+FINAL QA:
+DeepSeek MAX
 
-Do not load a skill merely because it exists.
+GIT:
+DeepSeek MAX
 
-Use a skill only when genuinely relevant.
+QUICK PATCH:
+DeepSeek MAX
 
-Use external research only when:
+Do not substitute Luna.
 
-- current public/API behavior matters;
-- documentation uncertainty exists;
-- an external source is necessary to resolve a technical question.
+Do not make Sol a normal implementation worker.
 
-Do not perform broad internet research for routine repository work.
+Do not send failed QA back to Terra Medium.
 
-Do not repeat research already completed by the current task
-unless new evidence invalidates it.
+==================================================
+13. EXISTING TOOLING
+==================================================
 
----
+Use the existing working Codex / subagent / DeepSeek invocation mechanisms available in the environment.
 
-## 25. Instruction efficiency
+Do NOT invent nonexistent executables, APIs, MCP tools, commands, or model names.
 
-These project instructions are already active.
+If a required Terra or DeepSeek invocation mechanism is unavailable:
 
-Do not routinely shell-dump the complete AGENTS.md.
+STOP and report exactly what is unavailable.
 
-Do not repeatedly run:
+Do not silently simulate another agent with Sol.
 
-Get-Content -Raw AGENTS.md
+==================================================
+14. PROJECT SAFETY
+==================================================
 
-unless a genuine instruction ambiguity exists.
+Protect:
 
-Inspect only relevant sections when needed.
+Assets/_Recovery/
 
-Keep Lead narration concise.
+Never casually modify KCC Core or another established third-party core.
 
-Do not repeatedly narrate:
+Do not modify unrelated dirty files.
 
-- every shell command
-- waiting states
-- already-decided routing
-- repeated status summaries
-- trivial transitions
+Do not destroy local user work.
 
-Report meaningful:
+Do not perform broad repository cleanup unless requested.
 
-- discoveries
-- failures
-- architecture decisions
-- important transitions
-- final result
+For Unity tasks:
 
----
+use the project's actual Unity version and existing tooling.
 
-## 26. Current-state handling
+For movement tasks:
 
-Do not permanently encode temporary task details in AGENTS.md.
+treat the accepted current movement implementation as frozen unless the task explicitly requests movement changes.
 
-Examples of temporary state that belongs elsewhere:
+==================================================
+15. TOKEN / CONTEXT EFFICIENCY
+==================================================
+
+DeepSeek may use large MAX reasoning/context internally.
+
+Do not pass enormous raw research/test logs to Sol or Terra.
+
+Compress handoffs into evidence-focused summaries.
+
+Terra should receive:
+
+GOAL
+FILES
+RESEARCH RECOMMENDATIONS
+IMPLEMENTATION REQUIREMENTS
+DO-NOT-TOUCH
+ACCEPTANCE CRITERIA
 
-- current movement bug
-- temporary stress test
-- current branch repair
-- one-off migration
-- incomplete feature state
-- a specific resume prompt
+Failed Terra High handoff should receive:
 
-Use:
+ORIGINAL GOAL
+CURRENT DIFF
+FAILING TEST
+EXPECTED
+ACTUAL
+ROOT CAUSE EVIDENCE
+REPAIR REQUIREMENTS
 
-docs/CURRENT_STATE.md
+Sol integration should receive concise PASS reports rather than full raw logs.
 
-and/or:
+==================================================
+16. USER OVERRIDES
+==================================================
 
-tasks/
+Explicit instructions from the user for the current task override this workflow.
 
-for changing task state.
+Examples:
 
-AGENTS.md should contain durable project rules.
+"no tests"
+"don't commit"
+"use one line only"
+"commit all"
+"push"
+"quick patch"
 
----
+Follow the explicit current request.
 
-At the end of each meaningful session, update docs/CURRENT_STATE.md in 2–3 short lines only.
-Keep only current state + next step. Do not append history.
+==================================================
+SUMMARY
+==================================================
 
----
+NORMAL:
 
-## 27. Final review
+SOL HIGH
+   |
+   +-------------------------+
+   |                         |
+TERRA MEDIUM A          TERRA MEDIUM B
+   |                         |
+DEEPSEEK MAX QA         DEEPSEEK MAX QA
+   |                         |
+FAIL -> TERRA HIGH      FAIL -> TERRA HIGH
+   |                         |
+DEEPSEEK RETEST         DEEPSEEK RETEST
+   +------------+------------+
+                |
+          SOL INTEGRATION
+                |
+        DEEPSEEK MAX FINAL QA
+                |
+             USER TEST
+                |
+        DEEPSEEK MAX COMMIT
 
-Before reporting completion,
-verify only what is relevant to the current task.
+Alongside task preparation:
 
-A typical bounded final review may include:
+DEEPSEEK MAX RESEARCH
+   ->
+recommendations to Terra A / Terra B
 
-- relevant production diff
-- git diff --check
-- Unity compile/Console when relevant
-- runtime validation when relevant
-- one read-only Tester when justified
-- USER MANUAL CHECK when subjective behavior remains
+QUICK:
 
-Do not run unrelated validation.
+USER
+  ->
+DEEPSEEK MAX
+  ->
+DIRECT EDIT
+  ->
+STOP
 
-Do not silently expand scope.
+==================================================
+PHYSICAL AGENT WORKSPACE LAYOUT
+==================================================
 
----
+Repository agent runtime directories:
 
-## 28. STOP rule
+.agents/ov/handoffs/terra-a/
+.agents/ov/handoffs/terra-b/
 
-When required validation reaches:
+.agents/ov/research/deepseek/
 
-PASS
+.agents/ov/qa/terra-a/
+.agents/ov/qa/terra-b/
+.agents/ov/qa/final/
 
-or
+.agents/ov/integration/
+.agents/ov/git/
+.agents/ov/reports/
 
-USER MANUAL CHECK REQUIRED
+Temporary Git worktrees:
 
-STOP.
+_agent_worktrees/
 
-Do not automatically add:
+When LINE COUNT = 2, use temporary branches:
 
-- more agents
-- more research
-- more documentation work
-- alternate validation
-- extra runtime probing
-- adjacent features
+agent/terra-a/<task-slug>
+agent/terra-b/<task-slug>
 
-unless a concrete unresolved failure remains.
+and temporary worktrees:
 
----
+_agent_worktrees/terra-a-<task-slug>
+_agent_worktrees/terra-b-<task-slug>
 
-## 29. Final response format
+After both lines pass DeepSeek MAX QA, integration may use:
 
-Use a concise final report.
+agent/integration/<task-slug>
 
-RESULT
+with:
 
-PASS / FAIL / USER MANUAL CHECK REQUIRED
+_agent_worktrees/integration-<task-slug>
 
-CHANGES
+Terra A and Terra B MUST work in separate Git worktrees.
 
-- relevant changes only
+Research and QA reports may be written into .agents/ov only when persistent handoff material is useful. Do not dump huge raw logs there.
 
-AGENTS
+After successful integration and final QA:
 
-- agents actually used
-- Lead substantial implementation: YES / NO
+- remove temporary Terra worktrees
+- remove temporary integration worktree
+- delete temporary agent branches after their work is safely integrated
+- keep the main working tree clean
 
-VALIDATION
+Do not use old:
 
-- tests/checks actually performed
-- Tester result if used
-- runtime validation if performed
-- USER MANUAL CHECK requirement if applicable
+_worktrees/ua1
+_worktrees/ua2
+Union Alpha
+.opencode Union agents
 
-GIT
+They are obsolete.
 
-- relevant git status
-- Commit: hash / NO
-- Push: YES / NO
+==================================================
+TEMPORARY AGENT BRANCH COMMITS
+==================================================
 
-NOTES
+Terra itself NEVER commits.
 
-- only important unresolved information
+However, isolated worktree integration requires temporary branch checkpoints.
 
-Then STOP.
-<!-- SESSION-STATE-MAINTENANCE-START -->
+After a Terra line receives:
 
-## Session state maintenance
+DEEPSEEK MAX QA: PASS
 
-Before ending a meaningful work session, review project state once.
+DeepSeek MAX Git is allowed to create a TEMPORARY CHECKPOINT COMMIT
+inside that Terra line's temporary agent branch.
 
-### tasks/
+Examples:
 
-Use tasks/ only for significant unfinished work that needs resumable context.
+agent/terra-a/<task>
+agent/terra-b/<task>
 
-Before STOP:
+These are internal transport commits only.
 
-- if a significant task is still unfinished, create or update its existing task file;
-- if the same task already has a file, update it instead of creating a duplicate;
-- keep task files short: goal, current state, next step, important constraints;
-- do not create task files for small one-session work;
-- if USER MANUAL CHECK or explicit acceptance is still pending, keep the task file;
-- delete a task file only when that task is actually complete and, when applicable, explicitly accepted by the user;
-- do not delete unrelated task files.
+They are NOT the final user-facing project commit.
 
-### docs/CURRENT_STATE.md
+They exist only so Sol High can integrate isolated worktrees safely.
 
-At the end of each meaningful session, rewrite docs/CURRENT_STATE.md.
+Integration process:
 
-Keep it to 2–3 short lines only.
+1. Terra Medium implements in its isolated worktree.
+2. DeepSeek MAX QA tests the line.
+3. If FAIL:
+   Terra High repairs it.
+4. DeepSeek MAX retests.
+5. After PASS:
+   DeepSeek MAX creates a temporary checkpoint commit on that agent branch.
+6. Sol High creates the integration branch.
+7. Approved line commits are integrated into the integration branch.
+8. DeepSeek MAX performs FINAL QA.
+9. User performs manual acceptance when required.
+10. After user approval:
+    the integration result is SQUASHED onto the real base branch.
+11. DeepSeek MAX creates ONE final user-facing commit.
+12. Temporary agent worktrees and branches are deleted.
 
-It should contain only:
-
-- what is currently active;
-- current status;
-- next step.
-
-Do not append history.
-
-Do not turn CURRENT_STATE.md into a session log.
-
-If the active task changes, replace the old state with the new current state.
-
-Perform this state-maintenance step once near the end of the session, then continue to the normal final response and STOP.
-
-<!-- SESSION-STATE-MAINTENANCE-END -->
+Temporary agent commits must never be pushed.
 
