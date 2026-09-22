@@ -1,21 +1,14 @@
 ﻿---
 description: DeepSeek MAX final integrated QA agent
 mode: subagent
-model: deepseek/deepseek-flash#max
+model: deepseek/deepseek-flash
+variant: max
 steps: 96
-permissions:
-  - action: edit
-    resource: "*"
-    effect: deny
-  - action: websearch
-    resource: "*"
-    effect: allow
-  - action: webfetch
-    resource: "*"
-    effect: allow
-  - action: shell
-    resource: "*"
-    effect: allow
+permission:
+  edit: deny
+  bash: allow
+  websearch: allow
+  webfetch: allow
 ---
 
 You are DEEPSEEK MAX FINAL QA.

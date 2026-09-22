@@ -6,25 +6,43 @@
 $ErrorActionPreference = "Stop"
 
 $root = (& git rev-parse --show-toplevel).Trim()
+
+if (-not $root) {
+    throw "Not inside a Git repository."
+}
+
 Set-Location $root
 
 $slug = $Task.ToLowerInvariant()
 $slug = $slug -replace '[^a-z0-9-]+', '-'
 $slug = $slug.Trim('-')
 
-$wtRoot = Join-Path $root "_agent_worktrees"
+if (-not $slug) {
+    throw "Invalid task name."
+}
+
+$wtRoot = [System.IO.Path]::GetFullPath((Join-Path $root "_agent_worktrees"))
 $stateFile = Join-Path $wtRoot "task-$slug.json"
 
-if (-not (Test-Path $stateFile)) {
+if (-not (Test-Path -LiteralPath $stateFile -PathType Leaf)) {
     throw "Task state not found: $stateFile"
 }
 
-$state = Get-Content $stateFile -Raw | ConvertFrom-Json
+$state = Get-Content -LiteralPath $stateFile -Raw | ConvertFrom-Json
+
+if ($state.task -ne $slug -or [int]$state.lines -notin 1, 2 -or -not $state.baseCommit) {
+    throw "Task state is invalid for '$slug'."
+}
 
 $branch = "agent/integration/$slug"
-$path = Join-Path $wtRoot "integration-$slug"
+$path = [System.IO.Path]::GetFullPath((Join-Path $wtRoot "integration-$slug"))
+$wtPrefix = $wtRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
 
-if (Test-Path $path) {
+if (-not $path.StartsWith($wtPrefix, [System.StringComparison]::OrdinalIgnoreCase) -or (Split-Path -Leaf $path) -ne "integration-$slug") {
+    throw "Refusing to create an unexpected integration worktree path: $path"
+}
+
+if (Test-Path -LiteralPath $path) {
     throw "Integration worktree already exists."
 }
 

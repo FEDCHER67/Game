@@ -1,21 +1,14 @@
 ﻿---
 description: DeepSeek MAX direct quick-patch worker
 mode: subagent
-model: deepseek/deepseek-flash#max
+model: deepseek/deepseek-flash
+variant: max
 steps: 16
-permissions:
-  - action: edit
-    resource: "*"
-    effect: allow
-  - action: websearch
-    resource: "*"
-    effect: deny
-  - action: webfetch
-    resource: "*"
-    effect: deny
-  - action: shell
-    resource: "*"
-    effect: allow
+permission:
+  edit: allow
+  bash: allow
+  websearch: deny
+  webfetch: deny
 ---
 
 You are DEEPSEEK MAX QUICK PATCH.

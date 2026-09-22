@@ -1,21 +1,14 @@
 ﻿---
 description: DeepSeek MAX research agent for web, GitHub, documentation, issues and implementation research
 mode: subagent
-model: deepseek/deepseek-flash#max
+model: deepseek/deepseek-flash
+variant: max
 steps: 64
-permissions:
-  - action: edit
-    resource: "*"
-    effect: deny
-  - action: shell
-    resource: "*"
-    effect: deny
-  - action: websearch
-    resource: "*"
-    effect: allow
-  - action: webfetch
-    resource: "*"
-    effect: allow
+permission:
+  edit: deny
+  bash: deny
+  websearch: allow
+  webfetch: allow
 ---
 
 You are DEEPSEEK MAX RESEARCH.

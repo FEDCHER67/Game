@@ -40,6 +40,14 @@ $baseCommit = (& git rev-parse HEAD).Trim()
 
 $wtRoot = Join-Path $root "_agent_worktrees"
 
+$wtRoot = [System.IO.Path]::GetFullPath($wtRoot)
+$rootPath = [System.IO.Path]::GetFullPath($root)
+$rootPrefix = $rootPath.TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
+
+if (-not $wtRoot.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "Refusing to use a worktree root outside this repository: $wtRoot"
+}
+
 New-Item -ItemType Directory -Force -Path $wtRoot | Out-Null
 
 function New-AgentLine {
@@ -48,9 +56,14 @@ function New-AgentLine {
     )
 
     $branch = "agent/$Line/$slug"
-    $path = Join-Path $wtRoot "$Line-$slug"
+    $path = [System.IO.Path]::GetFullPath((Join-Path $wtRoot "$Line-$slug"))
+    $wtPrefix = $wtRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
 
-    if (Test-Path $path) {
+    if (-not $path.StartsWith($wtPrefix, [System.StringComparison]::OrdinalIgnoreCase) -or (Split-Path -Leaf $path) -ne "$Line-$slug") {
+        throw "Refusing to create an unexpected worktree path: $path"
+    }
+
+    if (Test-Path -LiteralPath $path) {
         throw "Worktree already exists: $path"
     }
 
