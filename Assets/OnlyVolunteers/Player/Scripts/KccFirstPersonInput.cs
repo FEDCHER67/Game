@@ -83,7 +83,7 @@ namespace OnlyVolunteers.Player
             _airborneSpeedLimit = WalkSpeed;
             _normalAirMoveSpeed = WalkSpeed;
             _stableMovementSharpness = Character.StableMovementSharpness;
-            Character.AirAccelerationSpeed = 29f;
+            Character.AirAccelerationSpeed = 31.03f;
             Character.JumpScalableForwardSpeed = 0f;
             Character.JumpPreGroundingGraceTime = BhopPreGroundGrace;
             Character.JumpPostGroundingGraceTime = 0f;
