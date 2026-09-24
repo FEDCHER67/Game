@@ -194,6 +194,12 @@ namespace KinematicCharacterController
 
         [Header("Grounding settings")]
         /// <summary>
+        /// Uses an inscribed flat-base box instead of the capsule for downward ground checks.
+        /// Movement collisions still use the capsule.
+        /// </summary>
+        [Tooltip("Use a flat-base shape for downward ground checks without changing movement collisions")]
+        public bool UseFlatBaseForGroundChecks = false;
+        /// <summary>
         /// Increases the range of ground detection, to allow snapping to ground at very high speeds
         /// </summary>    
         [Tooltip("Increases the range of ground detection, to allow snapping to ground at very high speeds")]
@@ -527,6 +533,8 @@ namespace KinematicCharacterController
         public const float CorrelationForVerticalObstruction = 0.01f;
         public const float ExtraSteppingForwardDistance = 0.01f;
         public const float ExtraStepHeightPadding = 0.01f;
+        private const float FlatBaseBoxHalfExtentFactor = 0.70710678f;
+        private static readonly Quaternion FlatBaseDiagonalRotation = Quaternion.Euler(0f, 45f, 0f);
 #pragma warning restore 0414 
 
         private void OnEnable()
@@ -1276,12 +1284,12 @@ namespace KinematicCharacterController
             while (groundProbeDistanceRemaining > 0 && (groundSweepsMade <= MaxGroundingSweepIterations) && !groundSweepingIsOver)
             {
                 // Sweep for ground detection
-                if (CharacterGroundSweep(
-                        groundSweepPosition, // position
-                        atRotation, // rotation
-                        groundSweepDirection, // direction
-                        groundProbeDistanceRemaining, // distance
-                        out groundSweepHit)) // hit
+                bool foundGround = UseFlatBaseForGroundChecks && groundSweepsMade == 0
+                    ? CharacterFlatBaseGroundSweep(groundSweepPosition, atRotation,
+                        groundSweepDirection, groundProbeDistanceRemaining, out groundSweepHit)
+                    : CharacterGroundSweep(groundSweepPosition, atRotation,
+                        groundSweepDirection, groundProbeDistanceRemaining, out groundSweepHit);
+                if (foundGround)
                 {
                     Vector3 targetPosition = groundSweepPosition + (groundSweepDirection * groundSweepHit.distance);
                     HitStabilityReport groundHitStabilityReport = new HitStabilityReport();
@@ -2627,6 +2635,46 @@ namespace KinematicCharacterController
                     }
                 }
             }
+
+            return foundValidHit;
+        }
+
+        /// <summary>
+        /// Casts two flat-base boxes for the initial downward ground probe only.
+        /// </summary>
+        private bool CharacterFlatBaseGroundSweep(Vector3 position, Quaternion rotation,
+            Vector3 direction, float distance, out RaycastHit closestHit)
+        {
+            closestHit = new RaycastHit();
+            float halfWidth = Capsule.radius * FlatBaseBoxHalfExtentFactor;
+            Vector3 halfExtents = new Vector3(halfWidth, Capsule.height * 0.5f, halfWidth);
+            Vector3 center = position + (rotation * Capsule.center) -
+                (direction * GroundProbingBackstepDistance);
+            float closestDistance = Mathf.Infinity;
+            bool foundValidHit = false;
+
+            for (int cast = 0; cast < 2; cast++)
+            {
+                Quaternion boxRotation = cast == 0 ? rotation : rotation * FlatBaseDiagonalRotation;
+                int hitCount = Physics.BoxCastNonAlloc(center, halfExtents, direction,
+                    _internalCharacterHits, boxRotation, distance + GroundProbingBackstepDistance,
+                    CollidableLayers & StableGroundLayers, QueryTriggerInteraction.Ignore);
+
+                for (int i = 0; i < hitCount; i++)
+                {
+                    RaycastHit hit = _internalCharacterHits[i];
+                    if (hit.distance > 0f && hit.distance < closestDistance &&
+                        CheckIfColliderValidForCollisions(hit.collider))
+                    {
+                        closestHit = hit;
+                        closestDistance = hit.distance;
+                        foundValidHit = true;
+                    }
+                }
+            }
+
+            if (foundValidHit)
+                closestHit.distance -= GroundProbingBackstepDistance;
 
             return foundValidHit;
         }

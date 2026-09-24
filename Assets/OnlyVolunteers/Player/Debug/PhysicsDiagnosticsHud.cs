@@ -1,42 +1,25 @@
-using OnlyVolunteers.Player;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace OnlyVolunteers.Debugging
+namespace OnlyVolunteers.Player.Debugging
 {
-    // ControllerTest-only diagnostics; the Player prefab stays free of debug UI.
     [DisallowMultipleComponent]
-    public sealed class ControllerTestVelocityHud : MonoBehaviour
+    public sealed class PhysicsDiagnosticsHud : MonoBehaviour
     {
-        private const string ControllerTestPath =
-            "Assets/OnlyVolunteers/Scenes/ControllerTest.unity";
-        private const float TextRefreshSeconds = 0.1f;
-
         [SerializeField, Min(0.01f)] private float smoothingSeconds = 0.25f;
 
+        private const float TextRefreshSeconds = 0.1f;
+
         private readonly GUIContent content = new GUIContent();
-        private KccFirstPersonInput player;
+        private OnlyVolunteers.Player.KccFirstPersonInput player;
         private GUIStyle labelStyle;
         private GUIStyle shadowStyle;
         private float smoothedFrameSeconds;
         private float textRefreshTimer;
         private int cachedFontSize;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void CreateForControllerTest()
-        {
-            if (SceneManager.GetActiveScene().path != ControllerTestPath ||
-                Object.FindAnyObjectByType<ControllerTestVelocityHud>() != null ||
-                Object.FindAnyObjectByType<OnlyVolunteers.Player.Debugging.PhysicsDiagnosticsHud>()
-                    != null)
-                return;
-
-            new GameObject("[Debug] Velocity HUD").AddComponent<ControllerTestVelocityHud>();
-        }
-
         private void Awake()
         {
-            player = Object.FindAnyObjectByType<KccFirstPersonInput>();
+            player = FindAnyObjectByType<OnlyVolunteers.Player.KccFirstPersonInput>();
             content.text = "FPS: --\nVelocity: 0.00 m/s";
         }
 

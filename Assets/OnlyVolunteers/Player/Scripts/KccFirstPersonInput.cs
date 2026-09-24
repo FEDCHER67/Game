@@ -18,8 +18,8 @@ namespace OnlyVolunteers.Player
         private const float EyeInset = 0.15f;
         private const float CrouchCameraTransitionTime = 0.125f;
         private const float CrouchJumpResolveTime = 0.08f;
-        private const float JumpPostGroundingGraceTime = 0.067f;
-        private const float BhopPreGroundGrace = 0.08f;
+        private const float JumpPostGroundingGraceTime = 0.077f;
+        private const float BhopPreGroundGrace = 0.09f;
         private const float BhopCapGrowth = 1.035f;
         private const float BhopMaxSpeed = 11.75f;
         private const float LongJumpMaxGain = 1.10f;
@@ -76,12 +76,14 @@ namespace OnlyVolunteers.Player
             _eyeTransitionSpeed = Mathf.Abs(_standingEyeHeight - _crouchedEyeHeight) /
                 CrouchCameraTransitionTime;
             _wasStableGrounded = Character.Motor.GroundingStatus.IsStableOnGround;
+            Character.Motor.MaxVelocityForLedgeSnap = 12f;
+            Character.Motor.UseFlatBaseForGroundChecks = true;
             Character.MaxStableMoveSpeed = WalkSpeed;
             Character.MaxAirMoveSpeed = WalkSpeed;
             _airborneSpeedLimit = WalkSpeed;
             _normalAirMoveSpeed = WalkSpeed;
             _stableMovementSharpness = Character.StableMovementSharpness;
-            Character.AirAccelerationSpeed = 100f;
+            Character.AirAccelerationSpeed = 29f;
             Character.JumpScalableForwardSpeed = 0f;
             Character.JumpPreGroundingGraceTime = BhopPreGroundGrace;
             Character.JumpPostGroundingGraceTime = 0f;
@@ -220,8 +222,16 @@ namespace OnlyVolunteers.Player
 
             if (!_wasStableGrounded && grounded && crouched)
                 NormalizeCrouchedLandingVelocity();
-            if (_hadMovementInput && !hasMovementInput && grounded && physicallyCrouched)
-                Character.Motor.BaseVelocity = Vector3.zero;
+            bool preserveTakeoffMomentum = jumpDown || landingHop ||
+                _bhopChainActive || _preserveLandingMomentum ||
+                (_canChainBhop && !crouched && timedAirPress);
+            if (_hadMovementInput && !hasMovementInput && grounded &&
+                !preserveTakeoffMomentum)
+            {
+                Vector3 up = Character.Motor.CharacterUp;
+                Character.Motor.BaseVelocity = Vector3.Project(
+                    Character.Motor.BaseVelocity, up);
+            }
             _hadMovementInput = hasMovementInput;
             _wasStableGrounded = grounded;
 
