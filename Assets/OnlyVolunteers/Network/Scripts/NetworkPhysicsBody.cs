@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using FishNet.Object;
+using OnlyVolunteers.Player.Physics;
 using UnityEngine;
 
 namespace OnlyVolunteers.Network
@@ -8,13 +9,7 @@ namespace OnlyVolunteers.Network
     [RequireComponent(typeof(NetworkObject), typeof(Rigidbody))]
     public sealed class NetworkPhysicsBody : NetworkBehaviour
     {
-        private const float SpringStrength = 220f;
-        private const float DampingRatio = 1f;
-        private const float MaxForce = 900f;
-        private const float MaxSpeed = 12f;
-        private const float MaxAngularSpeed = 25f;
-        private const float BreakDistance = 4.5f;
-
+        [SerializeField] private GrabPhysicsProfile profile;
         private Rigidbody body;
         private NetworkGrabber holder;
         private Vector3 localGrabPoint;
@@ -25,7 +20,12 @@ namespace OnlyVolunteers.Network
         public Rigidbody Body => body;
         public bool HasHolder => holder != null;
 
-        private void Awake() => body = GetComponent<Rigidbody>();
+        private void Awake()
+        {
+            body = GetComponent<Rigidbody>();
+            if (profile == null)
+                Debug.LogError("NetworkPhysicsBody requires a GrabPhysicsProfile", this);
+        }
 
         public override void OnStartServer()
         {
@@ -83,7 +83,7 @@ namespace OnlyVolunteers.Network
 
         public bool TryAcquire(NetworkGrabber requester, Vector3 worldPoint, Vector3 initialTarget)
         {
-            if (!IsServerStarted || !NetworkObject.IsSpawned || holder != null ||
+            if (!IsServerStarted || !NetworkObject.IsSpawned || holder != null || profile == null ||
                 requester == null || !requester.IsValidHolder || body == null ||
                 body.isKinematic || body.mass <= 0f)
                 return false;
@@ -139,30 +139,15 @@ namespace OnlyVolunteers.Network
                 return;
             }
 
-            Vector3 worldPoint = transform.TransformPoint(localGrabPoint);
-            Vector3 error = target - worldPoint;
-            if (!Finite(error) || error.sqrMagnitude > BreakDistance * BreakDistance)
+            if (!GrabPhysicsSolver.TryCalculate(body, localGrabPoint, target, profile,
+                out Vector3 worldPoint, out Vector3 force))
             {
                 Release();
                 return;
             }
 
-            Vector3 velocity = body.GetPointVelocity(worldPoint);
-            float damping = 2f * DampingRatio * Mathf.Sqrt(SpringStrength * Mathf.Max(0.01f, body.mass));
-            Vector3 force = error * SpringStrength - velocity * damping;
-            if (!Finite(force)) { Release(); return; }
-
-            body.WakeUp();
-            body.AddForceAtPosition(Vector3.ClampMagnitude(force, MaxForce), worldPoint, ForceMode.Force);
-            if (body.linearVelocity.sqrMagnitude > MaxSpeed * MaxSpeed)
-                body.linearVelocity = body.linearVelocity.normalized * MaxSpeed;
-            if (body.angularVelocity.sqrMagnitude > MaxAngularSpeed * MaxAngularSpeed)
-                body.angularVelocity = body.angularVelocity.normalized * MaxAngularSpeed;
+            GrabPhysicsSolver.ApplyForce(body, worldPoint, force);
+            GrabPhysicsSolver.LimitVelocities(body, profile);
         }
-
-        internal static bool Finite(Vector3 v) =>
-            !float.IsNaN(v.x) && !float.IsInfinity(v.x) &&
-            !float.IsNaN(v.y) && !float.IsInfinity(v.y) &&
-            !float.IsNaN(v.z) && !float.IsInfinity(v.z);
     }
 }

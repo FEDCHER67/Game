@@ -8,15 +8,7 @@ namespace OnlyVolunteers.Player.Physics
     {
         [SerializeField] private ExampleCharacterController character;
         [SerializeField] private Camera viewCamera;
-        [SerializeField, Min(0.1f)] private float maxAcquireDistance = 2.8f;
-        [SerializeField, Min(0.1f)] private float holdDistance = 2.25f;
-        [SerializeField, Min(1f)] private float springStrength = 220f;
-        [SerializeField, Range(0.1f, 2f)] private float dampingRatio = 1f;
-        [SerializeField, Min(1f)] private float maxHoldingForce = 900f;
-        [SerializeField, Min(1f)] private float maxHeldSpeed = 12f;
-        [SerializeField, Min(1f)] private float maxHeldAngularSpeed = 25f;
-        [SerializeField, Min(0.5f)] private float breakDistance = 4.5f;
-        [SerializeField] private LayerMask acquisitionLayers = ~0;
+        [SerializeField] private GrabPhysicsProfile profile;
 
         private Rigidbody grabbedBody;
         private Vector3 localGrabPoint;
@@ -53,6 +45,12 @@ namespace OnlyVolunteers.Player.Physics
 
             if (character != null && character.Motor != null)
                 playerCollider = character.Motor.Capsule;
+
+            if (profile == null)
+            {
+                Debug.LogError("PhysicsGrabber requires a GrabPhysicsProfile", this);
+                enabled = false;
+            }
         }
 
         private void Update()
@@ -86,49 +84,27 @@ namespace OnlyVolunteers.Player.Physics
                 return;
             }
 
-            Vector3 worldGrabPoint = grabbedBody.transform.TransformPoint(localGrabPoint);
             Vector3 target = viewCamera.transform.position +
-                viewCamera.transform.forward * holdDistance;
-            Vector3 error = target - worldGrabPoint;
-            if (!IsFinite(error) || error.sqrMagnitude > breakDistance * breakDistance)
+                viewCamera.transform.forward * profile.HoldDistance;
+            if (!GrabPhysicsSolver.TryCalculate(grabbedBody, localGrabPoint, target, profile,
+                out Vector3 worldGrabPoint, out Vector3 force))
             {
                 Release();
                 return;
             }
 
-            Vector3 pointVelocity = grabbedBody.GetPointVelocity(worldGrabPoint);
-            float damping = 2f * dampingRatio *
-                Mathf.Sqrt(springStrength * Mathf.Max(0.01f, grabbedBody.mass));
-            Vector3 force = error * springStrength - pointVelocity * damping;
-            if (!IsFinite(force))
-            {
-                Release();
-                return;
-            }
-
-            grabbedBody.WakeUp();
-            grabbedBody.AddForceAtPosition(
-                Vector3.ClampMagnitude(force, maxHoldingForce),
-                worldGrabPoint,
-                ForceMode.Force);
-
-            if (grabbedBody.linearVelocity.sqrMagnitude > maxHeldSpeed * maxHeldSpeed)
-                grabbedBody.linearVelocity =
-                    grabbedBody.linearVelocity.normalized * maxHeldSpeed;
-            if (grabbedBody.angularVelocity.sqrMagnitude >
-                maxHeldAngularSpeed * maxHeldAngularSpeed)
-                grabbedBody.angularVelocity =
-                    grabbedBody.angularVelocity.normalized * maxHeldAngularSpeed;
+            GrabPhysicsSolver.ApplyForce(grabbedBody, worldGrabPoint, force);
+            GrabPhysicsSolver.LimitVelocities(grabbedBody, profile);
         }
 
         private void TryAcquire()
         {
-            if (viewCamera == null)
+            if (viewCamera == null || profile == null)
                 return;
 
             Ray ray = new Ray(viewCamera.transform.position, viewCamera.transform.forward);
             if (!UnityEngine.Physics.Raycast(ray, out RaycastHit hit,
-                maxAcquireDistance, acquisitionLayers, QueryTriggerInteraction.Ignore))
+                profile.AcquireDistance, profile.AcquisitionLayers, QueryTriggerInteraction.Ignore))
                 return;
 
             Rigidbody body = hit.rigidbody;
@@ -145,7 +121,7 @@ namespace OnlyVolunteers.Player.Physics
             body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             body.interpolation = RigidbodyInterpolation.Interpolate;
             body.maxAngularVelocity = Mathf.Min(
-                originalMaxAngularVelocity, maxHeldAngularSpeed);
+                originalMaxAngularVelocity, profile.MaxAngularSpeed);
             SetPlayerCollisionIgnored(true);
             body.WakeUp();
         }
@@ -190,13 +166,6 @@ namespace OnlyVolunteers.Player.Physics
                     UnityEngine.Physics.IgnoreCollision(
                         heldCollider, playerCollider, ignored);
             }
-        }
-
-        private static bool IsFinite(Vector3 value)
-        {
-            return !float.IsNaN(value.x) && !float.IsInfinity(value.x) &&
-                !float.IsNaN(value.y) && !float.IsInfinity(value.y) &&
-                !float.IsNaN(value.z) && !float.IsInfinity(value.z);
         }
 
         private void OnDisable()

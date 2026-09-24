@@ -3,6 +3,7 @@ using System.Collections;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Transporting;
+using OnlyVolunteers.Player.Physics;
 using UnityEngine;
 
 namespace OnlyVolunteers.Network
@@ -10,10 +11,9 @@ namespace OnlyVolunteers.Network
     [RequireComponent(typeof(NetworkPlayer))]
     public sealed class NetworkGrabber : NetworkBehaviour
     {
-        private const float AcquireDistance = 2.8f;
-        private const float HoldDistance = 2.25f;
         private const float SendInterval = 0.05f;
 
+        [SerializeField] private GrabPhysicsProfile profile;
         private NetworkPlayer player;
         private NetworkPhysicsBody serverHeld;
         private NetworkObject clientHeld;
@@ -26,7 +26,12 @@ namespace OnlyVolunteers.Network
         public Collider PlayerCollider => player != null ? player.PlayerCollider : null;
         public bool IsValidHolder => IsServerStarted && Owner != null && Owner.IsActive;
 
-        private void Awake() => player = GetComponent<NetworkPlayer>();
+        private void Awake()
+        {
+            player = GetComponent<NetworkPlayer>();
+            if (profile == null)
+                Debug.LogError("NetworkGrabber requires a GrabPhysicsProfile", this);
+        }
 
         public override void OnStartClient()
         {
@@ -53,7 +58,7 @@ namespace OnlyVolunteers.Network
 
         private void Update()
         {
-            if (!IsOwner || player == null || player.ViewCamera == null) return;
+            if (!IsOwner || player == null || player.ViewCamera == null || profile == null) return;
             if (Cursor.lockState != CursorLockMode.Locked && !smokeHolding)
             {
                 if (clientHeld != null || pending) ReleaseClient();
@@ -74,7 +79,7 @@ namespace OnlyVolunteers.Network
             {
                 nextSend = Time.unscaledTime + SendInterval;
                 Vector3 target = smokeHolding ? smokeTarget : player.ViewCamera.transform.position +
-                    player.ViewCamera.transform.forward * HoldDistance;
+                    player.ViewCamera.transform.forward * profile.HoldDistance;
                 ServerHoldTarget(target, Channel.Unreliable);
             }
         }
@@ -82,7 +87,8 @@ namespace OnlyVolunteers.Network
         private void TryGrabRay(Ray ray)
         {
             Debug.Log($"[OV Grab] request input owner={OwnerId}, cursor={Cursor.lockState}, origin={ray.origin}, direction={ray.direction}");
-            if (Physics.Raycast(ray, out RaycastHit hit, AcquireDistance, ~0, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out RaycastHit hit, profile.AcquireDistance,
+                profile.AcquisitionLayers, QueryTriggerInteraction.Ignore))
             {
                 var networkBody = hit.rigidbody != null
                     ? hit.rigidbody.GetComponent<NetworkPhysicsBody>() : null;
@@ -111,8 +117,8 @@ namespace OnlyVolunteers.Network
             NetworkConnection sender = null)
         {
             if (sender == null || sender != Owner || !sender.IsActive ||
-                serverHeld != null || candidate == null || !candidate.IsSpawned ||
-                !NetworkPhysicsBody.Finite(origin) || !NetworkPhysicsBody.Finite(direction) ||
+                profile == null || serverHeld != null || candidate == null || !candidate.IsSpawned ||
+                !GrabPhysicsSolver.IsFinite(origin) || !GrabPhysicsSolver.IsFinite(direction) ||
                 direction.sqrMagnitude < 0.9f || direction.sqrMagnitude > 1.1f ||
                 Vector3.Distance(origin, player.MotorPosition) > 2.4f)
             {
@@ -127,7 +133,7 @@ namespace OnlyVolunteers.Network
             if (body == null || !body.IsServerStarted || body.Body == null ||
                 NetworkSession.Active == null || !NetworkSession.Active.IsAllowedBody(body) ||
                 body.transform.IsChildOf(transform) ||
-                Vector3.Distance(body.transform.position, player.MotorPosition) > AcquireDistance + 2f)
+                Vector3.Distance(body.transform.position, player.MotorPosition) > profile.AcquireDistance + 2f)
             {
                 Debug.Log($"[OV Grab] server target rejected: body={body?.name}, " +
                     $"allowed={body != null && NetworkSession.Active != null && NetworkSession.Active.IsAllowedBody(body)}, " +
@@ -137,7 +143,8 @@ namespace OnlyVolunteers.Network
             }
 
             Ray ray = new Ray(origin, direction.normalized);
-            bool hitBody = Physics.Raycast(ray, out RaycastHit hit, AcquireDistance, ~0, QueryTriggerInteraction.Ignore);
+            bool hitBody = Physics.Raycast(ray, out RaycastHit hit, profile.AcquireDistance,
+                profile.AcquisitionLayers, QueryTriggerInteraction.Ignore);
             if (!hitBody || hit.rigidbody != body.Body)
             {
                 Debug.Log($"[OV Grab] server ray rejected: hit={hitBody}, collider={(hitBody ? hit.collider.name : "none")}, " +
@@ -146,7 +153,7 @@ namespace OnlyVolunteers.Network
                 return;
             }
 
-            if (!body.TryAcquire(this, hit.point, origin + direction.normalized * HoldDistance))
+            if (!body.TryAcquire(this, hit.point, origin + direction.normalized * profile.HoldDistance))
             {
                 Debug.Log($"[OV Grab] server acquire rejected: body={body.name}, held={body.HasHolder}");
                 TargetGrabResult(sender, null);
@@ -180,7 +187,7 @@ namespace OnlyVolunteers.Network
         private void ServerHoldTarget(Vector3 target, Channel channel = Channel.Unreliable)
         {
             if (serverHeld == null || Owner == null || !Owner.IsActive ||
-                !NetworkPhysicsBody.Finite(target) ||
+                !GrabPhysicsSolver.IsFinite(target) ||
                 Vector3.Distance(target, player.MotorPosition) > 5f)
                 return;
             serverHeld.SetTarget(this, target);
