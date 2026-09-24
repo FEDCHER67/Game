@@ -13,12 +13,13 @@ namespace OnlyVolunteers.Network
     public sealed class NetworkSession : MonoBehaviour
     {
         private const int MaxPlayers = 4;
+        private const int TestBodyCount = 8;
         private const ushort DefaultPort = 7770;
 
         [SerializeField] private NetworkPlayer playerPrefab;
         [SerializeField] private NetworkPhysicsBody bodyPrefab;
         [SerializeField] private Transform[] playerSpawns = new Transform[MaxPlayers];
-        [SerializeField] private Transform[] bodySpawns = new Transform[MaxPlayers];
+        [SerializeField] private Transform[] bodySpawns = new Transform[TestBodyCount];
         [SerializeField] private Camera menuCamera;
 
         private readonly Dictionary<int, NetworkPlayer> players = new();
@@ -219,12 +220,12 @@ namespace OnlyVolunteers.Network
         private void SpawnBodies()
         {
             if (bodyPrefab == null || bodies.Count != 0) return;
-            float[] masses = { 5f, 20f, 50f, 100f };
+            float[] masses = { 5f, 5f, 5f, 20f, 20f, 50f, 50f, 100f };
             for (int i = 0; i < masses.Length && i < bodySpawns.Length; i++)
             {
                 if (bodySpawns[i] == null) continue;
                 var body = Instantiate(bodyPrefab, bodySpawns[i].position, bodySpawns[i].rotation);
-                body.name = "NetworkBody_" + masses[i] + "kg";
+                body.name = "NetworkBody_" + masses[i] + "kg_" + i;
                 body.Body.mass = masses[i];
                 manager.ServerManager.Spawn(body.NetworkObject);
                 bodies.Add(body);

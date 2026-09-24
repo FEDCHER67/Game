@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using FishNet.Object;
 using UnityEngine;
@@ -44,6 +45,11 @@ namespace OnlyVolunteers.Network
             }
             Debug.Log($"[OV Network] observed body={NetworkObject.ObjectId}, server={IsServerStarted}, kinematic={body.isKinematic}");
             StartCoroutine(LogSettledPosition());
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (NetworkObject.ObjectId == 0 &&
+                Array.Exists(Environment.GetCommandLineArgs(), x => x == "-ov-smoke-grab"))
+                StartCoroutine(GrabPositionProbe());
+#endif
         }
 
         private IEnumerator LogSettledPosition()
@@ -52,6 +58,22 @@ namespace OnlyVolunteers.Network
             if (IsClientStarted)
                 Debug.Log($"[OV Network] body position id={NetworkObject.ObjectId}, pos={transform.position}");
         }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private IEnumerator GrabPositionProbe()
+        {
+            float[] times = { 4f, 8f, 12f, 16f, 20f };
+            float previous = 0f;
+            foreach (float time in times)
+            {
+                yield return new WaitForSeconds(time - previous);
+                previous = time;
+                if (!IsClientStarted) yield break;
+                Debug.Log($"[OV Smoke] body id={NetworkObject.ObjectId}, time={time:F0}, " +
+                    $"server={IsServerStarted}, kinematic={body.isKinematic}, held={HasHolder}, position={transform.position}");
+            }
+        }
+#endif
 
         public override void OnStopServer()
         {
