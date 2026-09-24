@@ -1,6 +1,16 @@
 # Reusable multiplayer foundation
 
-Status: Stage 12.1 architecture remains frozen. The minimal Stage 12.2 bootstrap described below was implemented on 2026-09-16; final retained-build verification is PARTIAL because reconnect remains inconclusive. Deferred physics and platform policies remain unresolved.
+Status (2026-09-24): The original Friendslop.Network implementation described below is retired history. The active first playable co-op prototype lives under `Assets/OnlyVolunteers/Network/` and uses the retained FishNet/Tugboat package. The historical design below is not a description of the active code.
+
+## Current OnlyVolunteers.Network slice
+
+- `NetworkTest` is the development startup scene. One FishNet NetworkManager and Tugboat transport run host or client sessions. A client can enter a hostname or IPv4 address and port; `-ov-host`, `-ov-client <address>`, and `-ov-port <port>` support development launches. Tugboat limits the session to four participants.
+- The server spawns one `NetworkPlayer` for each connection after start scenes load and assigns one of four free spawn slots. The owning client runs the unchanged KCC input, camera, and network-specific grab input. Other instances disable their local KCC motor, input, camera, and AudioListener. FishNet NetworkTransform relays owner position/yaw; a small visual shows remote players, with view pitch sent to its head.
+- The server alone simulates four `NetworkPhysicsBody` Rigidbody instances (5, 20, 50, and 100 kg). Clients keep the bodies kinematic and observe their FishNet NetworkTransform state. The server verifies an LMB grab ray, connection ownership, range, allowed body, and free holder slot. Exactly one holder is recorded per body; only server FixedUpdate applies hold forces. Release and disconnect clear that holder.
+- The preserved `Assets/DefaultPrefabObjects.asset` registers exactly `NetworkPlayer` and `NetworkPhysicsBody`. Its GUID is unchanged. The old Friendslop.Network assemblies and scenes remain removed.
+- Verification on 2026-09-24: Unity compilation and Windows development build succeeded. Editor Host/Stop/Host produced 1/0/1 players and 4/0/4 bodies with no duplicate. Separate host plus two client processes observed the same three players and four bodies; server bodies were dynamic, client copies kinematic, with matching settled positions. Client disconnect/despawn/reconnect, fourth participant, and fifth-client rejection were observed in process logs. Real keyboard/mouse movement and LMB grab competition across two humans remain unverified.
+
+Historical status: The minimal Stage 12.2 bootstrap was implemented on 2026-09-16; final retained-build verification was PARTIAL because reconnect remained inconclusive. Deferred physics and platform policies were unresolved.
 
 ## 1. Architectural invariants
 

@@ -3,7 +3,7 @@
 Production game:
 Assets/OnlyVolunteers/
 
-Reusable networking/core:
+Reusable code area (legacy networking retired; FishNet remains installed, replacement not yet implemented):
 Assets/Friendslop/
 
 Prototype/reference only:
