@@ -1,0 +1,491 @@
+{
+  "task_id": "PLAYER-CHAR-003",
+  "blender": "5.2.1 LTS",
+  "blend": "C:\\Dev\\Game\\_worktrees\\fedya-player\\Assets\\OnlyVolunteers\\Art\\Characters\\Player_01\\Blender\\Player_01.blend",
+  "images": [
+    {
+      "file": "Player_01_Front.png",
+      "view": "front",
+      "camera_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ]
+    },
+    {
+      "file": "Player_01_Side.png",
+      "view": "side",
+      "camera_direction": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "file": "Player_01_ThreeQuarter.png",
+      "view": "three_quarter",
+      "camera_direction": [
+        0.63059,
+        -0.77611,
+        0.0
+      ]
+    },
+    {
+      "file": "Player_01_Back.png",
+      "view": "back",
+      "camera_direction": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "file": "Player_01_Wireframe.png",
+      "view": "three_quarter",
+      "camera_direction": [
+        0.63059,
+        -0.77611,
+        0.0
+      ],
+      "overlay": "solid mesh + black Wireframe modifier shell (offset outward)"
+    },
+    {
+      "file": "Player_01_Rig.png",
+      "view": "front",
+      "camera_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "overlay": "octahedral bone markers for all 20 bones + origin RGB axis triad, pushed 0.454 m toward the camera for legibility"
+    },
+    {
+      "file": "Player_01_BentArmLeg.png",
+      "view": "three_quarter",
+      "camera_direction": [
+        0.63059,
+        -0.77611,
+        0.0
+      ]
+    },
+    {
+      "file": "Player_01_Crouch.png",
+      "view": "side",
+      "camera_direction": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "poses": [
+    {
+      "name": "BentArmLeg",
+      "image": "Player_01_BentArmLeg.png",
+      "view": "three_quarter",
+      "camera_direction": [
+        0.63059,
+        -0.77611,
+        0.0
+      ],
+      "bone_angles": [
+        {
+          "bone": "UpperArm.L",
+          "axis": "X",
+          "degrees": -40.0
+        },
+        {
+          "bone": "LowerArm.L",
+          "axis": "X",
+          "degrees": 75.0
+        },
+        {
+          "bone": "UpperLeg.L",
+          "axis": "X",
+          "degrees": -45.0
+        },
+        {
+          "bone": "LowerLeg.L",
+          "axis": "X",
+          "degrees": 80.0
+        },
+        {
+          "bone": "Foot.L",
+          "axis": "X",
+          "degrees": -25.0
+        }
+      ],
+      "bones_posed": [
+        "UpperArm.L",
+        "LowerArm.L",
+        "UpperLeg.L",
+        "LowerLeg.L",
+        "Foot.L"
+      ],
+      "joints_m": {
+        "Hips": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "Head": [
+          0.0,
+          0.0,
+          1.72
+        ],
+        "Hand.L": [
+          0.76978,
+          -0.0111,
+          1.47532
+        ],
+        "Hand.R": [
+          -0.925,
+          -0.13,
+          1.43
+        ],
+        "Foot.L": [
+          0.0992,
+          -0.2161,
+          0.19208
+        ],
+        "Foot.R": [
+          -0.0992,
+          -0.14,
+          0.045
+        ]
+      },
+      "mesh_bounds_m": {
+        "min": [
+          -0.93292,
+          -0.31557,
+          0.0
+        ],
+        "max": [
+          0.79741,
+          0.20428,
+          1.8
+        ],
+        "size": [
+          1.73033,
+          0.51985,
+          1.8
+        ]
+      },
+      "checks": {
+        "vertices_checked": 675,
+        "non_finite_values": 0,
+        "finite_coordinates_ok": true,
+        "bounds_m": {
+          "min": [
+            -0.93292,
+            -0.31557,
+            0.0
+          ],
+          "max": [
+            0.79741,
+            0.20428,
+            1.8
+          ],
+          "size": [
+            1.73033,
+            0.51985,
+            1.8
+          ]
+        },
+        "max_abs_coordinate_m": 1.8,
+        "max_vertex_displacement_m": 0.31321,
+        "extent_ratio_vs_rest": 0.96471,
+        "ok": true,
+        "reasons": [],
+        "rest_restored_before_pose": true,
+        "rest_restore_delta_m": 0.0
+      }
+    },
+    {
+      "name": "Crouch",
+      "image": "Player_01_Crouch.png",
+      "view": "side",
+      "camera_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "bone_angles": [
+        {
+          "bone": "Root",
+          "axis": "Y",
+          "degrees": 0.0,
+          "location": [
+            0.0,
+            -0.25,
+            0.0
+          ]
+        },
+        {
+          "bone": "UpperLeg.L",
+          "axis": "X",
+          "degrees": -55.0
+        },
+        {
+          "bone": "UpperLeg.R",
+          "axis": "X",
+          "degrees": -55.0
+        },
+        {
+          "bone": "LowerLeg.L",
+          "axis": "X",
+          "degrees": 95.0
+        },
+        {
+          "bone": "LowerLeg.R",
+          "axis": "X",
+          "degrees": 95.0
+        },
+        {
+          "bone": "Foot.L",
+          "axis": "X",
+          "degrees": -40.0
+        },
+        {
+          "bone": "Foot.R",
+          "axis": "X",
+          "degrees": -40.0
+        }
+      ],
+      "bones_posed": [
+        "Root",
+        "UpperLeg.L",
+        "UpperLeg.R",
+        "LowerLeg.L",
+        "LowerLeg.R",
+        "Foot.L",
+        "Foot.R"
+      ],
+      "joints_m": {
+        "Hips": [
+          0.0,
+          0.0,
+          0.75
+        ],
+        "Head": [
+          0.0,
+          0.0,
+          1.47
+        ],
+        "Hand.L": [
+          0.925,
+          -0.13,
+          1.18
+        ],
+        "Hand.R": [
+          -0.925,
+          -0.13,
+          1.18
+        ],
+        "Foot.L": [
+          0.0992,
+          -0.26621,
+          0.03231
+        ],
+        "Foot.R": [
+          -0.0992,
+          -0.26621,
+          0.03231
+        ]
+      },
+      "mesh_bounds_m": {
+        "min": [
+          -0.93292,
+          -0.35321,
+          -0.01269
+        ],
+        "max": [
+          0.93292,
+          0.20428,
+          1.55
+        ],
+        "size": [
+          1.86585,
+          0.55749,
+          1.56269
+        ]
+      },
+      "checks": {
+        "vertices_checked": 675,
+        "non_finite_values": 0,
+        "finite_coordinates_ok": true,
+        "bounds_m": {
+          "min": [
+            -0.93292,
+            -0.35321,
+            -0.01269
+          ],
+          "max": [
+            0.93292,
+            0.20428,
+            1.55
+          ],
+          "size": [
+            1.86585,
+            0.55749,
+            1.56269
+          ]
+        },
+        "max_abs_coordinate_m": 1.55,
+        "max_vertex_displacement_m": 0.35522,
+        "extent_ratio_vs_rest": 1.0,
+        "ok": true,
+        "reasons": [],
+        "rest_restored_before_pose": true,
+        "rest_restore_delta_m": 0.0
+      }
+    }
+  ],
+  "caveats": [
+    "rig preview bones are pushed toward the camera so they stay visible over the solid body; the image is a legibility overlay, not x-ray depth"
+  ],
+  "ok": true,
+  "mesh_object": "Player_01",
+  "armature_object": "Armature",
+  "armature_data": "Player_01_Armature",
+  "pose_position": "POSE",
+  "pose_transforms_initially_identity": true,
+  "vertices": 675,
+  "triangles": 1332,
+  "materials": [
+    "pants.004",
+    "pants.005",
+    "top.002",
+    "shoe.002"
+  ],
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Shoulder.L",
+    "UpperArm.L",
+    "LowerArm.L",
+    "Hand.L",
+    "Shoulder.R",
+    "UpperArm.R",
+    "LowerArm.R",
+    "Hand.R",
+    "UpperLeg.L",
+    "LowerLeg.L",
+    "Foot.L",
+    "UpperLeg.R",
+    "LowerLeg.R",
+    "Foot.R"
+  ],
+  "deform_bones": [
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Shoulder.L",
+    "UpperArm.L",
+    "LowerArm.L",
+    "Hand.L",
+    "Shoulder.R",
+    "UpperArm.R",
+    "LowerArm.R",
+    "Hand.R",
+    "UpperLeg.L",
+    "LowerLeg.L",
+    "Foot.L",
+    "UpperLeg.R",
+    "LowerLeg.R",
+    "Foot.R"
+  ],
+  "vertex_groups": 19,
+  "rest": {
+    "bounds_m": {
+      "min": [
+        -0.93292,
+        -0.20428,
+        0.0
+      ],
+      "max": [
+        0.93292,
+        0.20428,
+        1.8
+      ],
+      "size": [
+        1.86585,
+        0.40856,
+        1.8
+      ]
+    },
+    "checks": {
+      "vertices_checked": 675,
+      "non_finite_values": 0,
+      "finite_coordinates_ok": true,
+      "bounds_m": {
+        "min": [
+          -0.93292,
+          -0.20428,
+          0.0
+        ],
+        "max": [
+          0.93292,
+          0.20428,
+          1.8
+        ],
+        "size": [
+          1.86585,
+          0.40856,
+          1.8
+        ]
+      },
+      "max_abs_coordinate_m": 1.8,
+      "max_vertex_displacement_m": 0.0,
+      "extent_ratio_vs_rest": 1.0,
+      "ok": true,
+      "reasons": []
+    },
+    "joints_m": {
+      "Hips": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Head": [
+        0.0,
+        0.0,
+        1.72
+      ],
+      "Hand.L": [
+        0.925,
+        -0.13,
+        1.43
+      ],
+      "Hand.R": [
+        -0.925,
+        -0.13,
+        1.43
+      ],
+      "Foot.L": [
+        0.0992,
+        -0.14,
+        0.045
+      ],
+      "Foot.R": [
+        -0.0992,
+        -0.14,
+        0.045
+      ]
+    }
+  },
+  "camera": {
+    "type": "ORTHO",
+    "ortho_scale_m": 2.5189,
+    "distance_m": 5.59755
+  },
+  "rest_restored_at_end": true,
+  "rest_restore_delta_at_end_m": 0.0,
+  "blend_saved": false
+}
