@@ -1,5 +1,9 @@
 # Gurney grab playtest — 2026-09-30
 
+The scene is `Assets/OnlyVolunteers/Scenes/NetworkTest.unity`. It references
+the network gurney and scalpel prefabs. Unity build settings now use this as
+the sole enabled scene, and ProjectSettings names it as the default scene.
+
 The NetworkTest gurney keeps its 50 kg Rigidbody and existing visual caster
 motion. A solo LMB grab now keeps the hit point at a fixed height and follows
 the camera's horizontal heading. This removes the need to aim up to pull the
