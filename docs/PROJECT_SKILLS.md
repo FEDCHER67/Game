@@ -16,7 +16,8 @@ were retained without replacement.
 `agent-foundry-unity-cli` is the Agent Foundry skill renamed locally to avoid
 overwriting the existing Unity plugin `unity-cli`. Its relative links were
 updated to point to the renamed directory. License and notice files copied
-from the plugin installations are in `.agents/skills/_licenses/`.
+from the plugin installations, plus the upstream Agency Agents license for
+the user-installed role skills, are in `.agents/skills/_licenses/`.
 
 The user has asked the project workflow to avoid MCP. Skills that describe MCP
 still provide general guidance, but MCP steps are not part of this project's
