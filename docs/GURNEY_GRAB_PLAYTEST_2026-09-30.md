@@ -25,8 +25,12 @@ camera movement, player collision, and feel still require a two-person trial.
 
 ## Manual trial
 
-Use the complete folder `C:\Dev\GameBuilds\GurneyFollowCandidate` or its ZIP
-`C:\Dev\GameBuilds\GurneyFollowCandidate-20260930.zip`. The folder contains
+Use the complete folder `C:\Dev\GameBuilds\VolunteersOnlyGurneyPlaytest` or its ZIP
+`C:\Dev\GameBuilds\VolunteersOnlyGurneyPlaytest.zip`. The folder contains
 `PLAYTEST_RU.txt` with the host/client steps. Test both players' LMB hold,
 walking and sprinting across and along the cart, joint pulling, opposed
 pulling, and one-at-a-time release. Also try one cube and the scalpel.
+
+The Unity product name is `VOLUNTEERS ONLY`. The old `DivorceParty` value was
+left in `ProjectSettings.asset` and produced a stale Burst debug folder in the
+first test package. The renamed ZIP omits all Burst `DoNotShip` data.
