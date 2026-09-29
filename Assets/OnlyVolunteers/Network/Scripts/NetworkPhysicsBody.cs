@@ -25,6 +25,9 @@ namespace OnlyVolunteers.Network
         private Collider[] bodyColliders;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         private bool measureFeel;
+        private bool measureSprint;
+        private float nextSprintLog;
+        private int sprintContacts;
         private float feelWindowStart;
         private float feelErrorSum;
         private float feelSpeedSum;
@@ -45,6 +48,7 @@ namespace OnlyVolunteers.Network
         }
 
         public Rigidbody Body => body;
+        public bool GroundPlaneFollow => profile != null && profile.GroundPlaneFollow;
         public int ActiveHolderCount
         {
             get
@@ -64,6 +68,8 @@ namespace OnlyVolunteers.Network
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             measureFeel = Array.Exists(Environment.GetCommandLineArgs(), x =>
                 x == "-ov-smoke-feel" || x == "-ov-smoke-feel-opposed");
+            measureSprint = Array.Exists(Environment.GetCommandLineArgs(), x =>
+                x == "-ov-smoke-gurney-sprint" || x == "-ov-smoke-gurney-sprint-z");
 #endif
             if (profile == null)
                 Debug.LogError("NetworkPhysicsBody requires a GrabPhysicsProfile", this);
@@ -179,8 +185,9 @@ namespace OnlyVolunteers.Network
                 float dt = Mathf.Max(0.02f, Time.time - hold.LastTargetTime);
                 Vector3 velocity = (newTarget - hold.Target) / dt;
                 if (!GrabPhysicsSolver.IsFinite(velocity)) return;
-                velocity = Vector3.ClampMagnitude(velocity,
-                    Mathf.Min(MaxTargetVelocity, profile.MaxLinearSpeed));
+                float maxTargetSpeed = profile.GroundPlaneFollow ? profile.SoloMaxLinearSpeed :
+                    Mathf.Min(MaxTargetVelocity, profile.MaxLinearSpeed);
+                velocity = Vector3.ClampMagnitude(velocity, maxTargetSpeed);
                 float alpha = dt / (TargetVelocityFilter + dt);
                 hold.TargetVelocity = Vector3.Lerp(hold.TargetVelocity, velocity, alpha);
                 hold.Target = newTarget;
@@ -235,6 +242,14 @@ namespace OnlyVolunteers.Network
             }
         }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private void OnCollisionStay(Collision collision)
+        {
+            if (measureSprint && name.StartsWith("NetworkTableAstra"))
+                sprintContacts += collision.contactCount;
+        }
+#endif
+
         private void FixedUpdate()
         {
             if (!IsServerStarted || !HasHolder) return;
@@ -250,12 +265,22 @@ namespace OnlyVolunteers.Network
                     !GrabPhysicsSolver.IsFinite(hold.Target) ||
                     Vector3.Distance(hold.Target, motor) > 5f)
                 {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    if (measureSprint && name.StartsWith("NetworkTableAstra"))
+                        Debug.Log($"[OV Gurney Sprint] server release preflight valid={hold.Grabber.IsValidHolder}, " +
+                            $"targetAge={Time.time - hold.LastTargetTime:F3}, target={hold.Target}, motor={motor}, " +
+                            $"targetMotorDistance={Vector3.Distance(hold.Target, motor):F3}");
+#endif
                     ReleaseAt(i);
                     continue;
                 }
                 Vector3 worldPoint = transform.TransformPoint(hold.LocalPoint);
                 if (!GrabPhysicsSolver.IsFinite(worldPoint))
                 {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    if (measureSprint && name.StartsWith("NetworkTableAstra"))
+                        Debug.Log($"[OV Gurney Sprint] server release nonfinite point={worldPoint}");
+#endif
                     ReleaseAt(i);
                     continue;
                 }
@@ -266,6 +291,13 @@ namespace OnlyVolunteers.Network
                     error.sqrMagnitude > profile.BreakDistance * profile.BreakDistance ||
                     Vector3.Distance(worldPoint, motor) > profile.AcquireDistance + 2.4f)
                 {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    if (measureSprint && name.StartsWith("NetworkTableAstra"))
+                        Debug.Log($"[OV Gurney Sprint] server release physics target={hold.Target}, " +
+                            $"point={worldPoint}, error={error.magnitude:F3}, motor={motor}, " +
+                            $"pointMotorDistance={Vector3.Distance(worldPoint, motor):F3}, " +
+                            $"velocity={body.linearVelocity}, contacts={sprintContacts}");
+#endif
                     ReleaseAt(i);
                     continue;
                 }
@@ -280,17 +312,26 @@ namespace OnlyVolunteers.Network
                 count++;
             }
             if (count == 0) return;
+            if (count > 1 && profile.GroundPlaneFollow)
+                for (int i = 0; i < count; i++)
+                    targetVelocities[i] = Vector3.ClampMagnitude(targetVelocities[i],
+                        profile.MaxLinearSpeed);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (measureFeel && name.StartsWith("NetworkTableAstra"))
                 RecordFeelSample(count, errorSum / count);
 #endif
-            // Keep the accepted solo solver; multiple holders damp relative to their moving targets.
+            // The gurney follows a moving holder even with only one hand on it.
             for (int i = 0; i < count; i++)
             {
-                bool calculated = count == 1
-                    ? GrabPhysicsSolver.TryCalculate(errors[i], pointVelocities[i], body.mass,
-                        profile, out forces[i])
-                    : GrabPhysicsSolver.TryCalculateRelative(errors[i], targetVelocities[i],
+                bool calculated;
+                if (count == 1 && profile.GroundPlaneFollow)
+                    calculated = GrabPhysicsSolver.TryCalculateRelativeGrounded(errors[i],
+                        targetVelocities[i], pointVelocities[i], body.mass, profile, out forces[i]);
+                else if (count == 1)
+                    calculated = GrabPhysicsSolver.TryCalculate(errors[i], pointVelocities[i],
+                        body.mass, profile, out forces[i]);
+                else
+                    calculated = GrabPhysicsSolver.TryCalculateRelative(errors[i], targetVelocities[i],
                         pointVelocities[i], body.mass / count, profile, out forces[i]);
                 if (!calculated)
                 {
@@ -298,8 +339,21 @@ namespace OnlyVolunteers.Network
                     continue;
                 }
                 GrabPhysicsSolver.ApplyForce(body, forcePoints[i], forces[i]);
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                if (measureSprint && name.StartsWith("NetworkTableAstra") && Time.time >= nextSprintLog)
+                {
+                    nextSprintLog = Time.time + 0.1f;
+                    Debug.Log($"[OV Gurney Sprint] server force target={validHolds[i].Target}, " +
+                        $"point={forcePoints[i]}, error={errors[i].magnitude:F3}, " +
+                        $"targetVelocity={targetVelocities[i]}, bodyVelocity={body.linearVelocity}, " +
+                        $"force={forces[i]}, contacts={sprintContacts}");
+                    sprintContacts = 0;
+                }
+#endif
             }
-            GrabPhysicsSolver.LimitVelocities(body, profile);
+            GrabPhysicsSolver.LimitVelocities(body, profile,
+                count == 1 && profile.GroundPlaneFollow
+                    ? profile.SoloMaxLinearSpeed : profile.MaxLinearSpeed);
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD

@@ -25,6 +25,10 @@ namespace OnlyVolunteers.Network
         private uint targetSequence;
         private float pendingHoldDistance;
         private float clientHoldDistance;
+        private float pendingHoldHeight;
+        private float clientHoldHeight;
+        private bool pendingGroundPlaneFollow;
+        private bool clientGroundPlaneFollow;
         private bool pending;
         private bool targetLogged;
         private bool smokeHolding;
@@ -49,7 +53,11 @@ namespace OnlyVolunteers.Network
             if (IsOwner)
             {
                 string[] args = Environment.GetCommandLineArgs();
-                if (Array.Exists(args, x => x == "-ov-smoke-feel-opposed"))
+                if (Array.Exists(args, x => x == "-ov-smoke-gurney-sprint-z"))
+                    StartCoroutine(GurneySprintProbe(true));
+                else if (Array.Exists(args, x => x == "-ov-smoke-gurney-sprint"))
+                    StartCoroutine(GurneySprintProbe(false));
+                else if (Array.Exists(args, x => x == "-ov-smoke-feel-opposed"))
                     StartCoroutine(CoopFeelProbe(true));
                 else if (Array.Exists(args, x => x == "-ov-smoke-feel"))
                     StartCoroutine(CoopFeelProbe(false));
@@ -75,6 +83,10 @@ namespace OnlyVolunteers.Network
             targetSequence = 0;
             pendingHoldDistance = 0f;
             clientHoldDistance = 0f;
+            pendingHoldHeight = 0f;
+            clientHoldHeight = 0f;
+            pendingGroundPlaneFollow = false;
+            clientGroundPlaneFollow = false;
             pending = false;
             smokeHolding = false;
             base.OnStopClient();
@@ -102,12 +114,26 @@ namespace OnlyVolunteers.Network
             if (clientHeld != null && Time.unscaledTime >= nextSend)
             {
                 nextSend = Time.unscaledTime + SendInterval;
-                Vector3 target = smokeHolding ? smokeTarget : player.ViewCamera.transform.position +
-                    player.ViewCamera.transform.forward * clientHoldDistance;
+                Transform camera = player.ViewCamera.transform;
+                Vector3 target = smokeHolding ? smokeTarget : clientGroundPlaneFollow
+                    ? GroundPlaneTarget(camera.position, camera.forward, camera.right,
+                        clientHoldDistance, clientHoldHeight)
+                    : camera.position + camera.forward * clientHoldDistance;
                 targetSequence++;
                 if (targetSequence == 0) targetSequence++;
                 ServerHoldTarget(clientHoldId, targetSequence, target, Channel.Unreliable);
             }
+        }
+
+        private static Vector3 GroundPlaneTarget(Vector3 cameraPosition, Vector3 cameraForward,
+            Vector3 cameraRight, float horizontalDistance, float holdHeight)
+        {
+            Vector3 horizontalForward = Vector3.ProjectOnPlane(cameraForward, Vector3.up);
+            if (horizontalForward.sqrMagnitude < 0.0001f)
+                horizontalForward = Vector3.Cross(cameraRight, Vector3.up);
+            horizontalForward.Normalize();
+            return new Vector3(cameraPosition.x + horizontalForward.x * horizontalDistance,
+                holdHeight, cameraPosition.z + horizontalForward.z * horizontalDistance);
         }
 
         private void TryGrabRay(Ray ray)
@@ -126,7 +152,12 @@ namespace OnlyVolunteers.Network
                     nextRequestId++;
                     if (nextRequestId == 0) nextRequestId++;
                     pendingId = nextRequestId;
-                    pendingHoldDistance = hit.distance;
+                    pendingGroundPlaneFollow = networkBody.GroundPlaneFollow;
+                    pendingHoldDistance = pendingGroundPlaneFollow
+                        ? Vector2.Distance(new Vector2(ray.origin.x, ray.origin.z),
+                            new Vector2(hit.point.x, hit.point.z))
+                        : hit.distance;
+                    pendingHoldHeight = hit.point.y;
                     pending = true;
                     Debug.Log($"[OV Grab] request sent owner={OwnerId}, body={networkBody.name}");
                     ServerTryGrab(pendingId, networkBody.NetworkObject, ray.origin, ray.direction);
@@ -144,6 +175,10 @@ namespace OnlyVolunteers.Network
             targetSequence = 0;
             pendingHoldDistance = 0f;
             clientHoldDistance = 0f;
+            pendingHoldHeight = 0f;
+            clientHoldHeight = 0f;
+            pendingGroundPlaneFollow = false;
+            clientGroundPlaneFollow = false;
             pending = false;
             smokeHolding = false;
             if (IsClientStarted && releasedId != 0) ServerRelease(releasedId);
@@ -220,6 +255,8 @@ namespace OnlyVolunteers.Network
                 clientHeld = body;
                 clientHoldId = requestId;
                 clientHoldDistance = pendingHoldDistance;
+                clientHoldHeight = pendingHoldHeight;
+                clientGroundPlaneFollow = pendingGroundPlaneFollow;
                 targetSequence = 0;
                 nextSend = 0f;
             }
@@ -229,6 +266,8 @@ namespace OnlyVolunteers.Network
             }
             else smokeHolding = false;
             pendingHoldDistance = 0f;
+            pendingHoldHeight = 0f;
+            pendingGroundPlaneFollow = false;
         }
 
         [ServerRpc]
@@ -276,11 +315,123 @@ namespace OnlyVolunteers.Network
             targetSequence = 0;
             pendingHoldDistance = 0f;
             clientHoldDistance = 0f;
+            pendingHoldHeight = 0f;
+            clientHoldHeight = 0f;
+            pendingGroundPlaneFollow = false;
+            clientGroundPlaneFollow = false;
             pending = false;
             smokeHolding = false;
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private IEnumerator GurneySprintProbe(bool longitudinal)
+        {
+            if (OwnerId != 0 || !IsServerStarted) yield break;
+            yield return new WaitForSecondsRealtime(3f);
+
+            NetworkPhysicsBody table = null;
+            foreach (var candidate in FindObjectsByType<NetworkPhysicsBody>(FindObjectsSortMode.None))
+                if (candidate.NetworkObject.IsSpawned && candidate.name.StartsWith("NetworkTableAstra"))
+                {
+                    table = candidate;
+                    break;
+                }
+            if (table == null)
+            {
+                Debug.Log("[OV Gurney Sprint] table unavailable");
+                yield break;
+            }
+            if (table.HasHolder)
+            {
+                Debug.Log("[OV Gurney Sprint] table already held");
+                yield break;
+            }
+
+            var input = GetComponent<OnlyVolunteers.Player.KccFirstPersonInput>();
+            var motor = input.Character.Motor;
+            Vector3 foot = table.transform.position + (longitudinal
+                ? new Vector3(0f, -table.transform.position.y + 0.02f, -1.75f)
+                : new Vector3(1.25f, -table.transform.position.y + 0.02f, 0f));
+            motor.SetPosition(foot);
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            Vector3 localGrabPoint = Vector3.zero;
+            Vector3 aimDirection = Vector3.forward;
+            float attemptsEnd = Time.unscaledTime + 5f;
+            while (IsClientStarted && clientHeld == null && Time.unscaledTime < attemptsEnd)
+            {
+                if (!pending)
+                {
+                    Transform camera = player.ViewCamera.transform;
+                    Vector3 aim = table.transform.position + Vector3.up * 0.7f;
+                    Ray ray = new Ray(camera.position, (aim - camera.position).normalized);
+                    if (Physics.Raycast(ray, out RaycastHit hit, profile.AcquireDistance,
+                        profile.AcquisitionLayers, QueryTriggerInteraction.Ignore) &&
+                        hit.rigidbody == table.Body)
+                    {
+                        localGrabPoint = table.transform.InverseTransformPoint(hit.point);
+                        aimDirection = ray.direction;
+                        smokeHolding = true;
+                        smokeTarget = hit.point;
+                        TryGrabRay(ray);
+                    }
+                }
+                yield return new WaitForSecondsRealtime(0.25f);
+            }
+            if (clientHeld != table.NetworkObject)
+            {
+                Debug.Log($"[OV Gurney Sprint] acquire failed, held={clientHeld != null}");
+                ReleaseClient();
+                yield break;
+            }
+            if (table.ActiveHolderCount != 1)
+            {
+                Debug.Log($"[OV Gurney Sprint] expected one holder, actual={table.ActiveHolderCount}");
+                ReleaseClient();
+                yield break;
+            }
+
+            Vector3 bodyStart = table.transform.position;
+            Vector3 motorStart = motor.transform.position;
+            Vector3 cameraStart = player.ViewCamera.transform.position;
+            Vector3 away = Vector3.ProjectOnPlane(motorStart - bodyStart, Vector3.up).normalized;
+            Vector3 aimRight = Vector3.Cross(Vector3.up, aimDirection).normalized;
+            float maxError = 0f;
+            float releaseAt = -1f;
+            const float sprintSpeed = 8.6625f;
+            const float sprintDuration = 1.5f;
+            float started = Time.unscaledTime;
+            Debug.Log($"[OV Gurney Sprint] acquired axis={(longitudinal ? "Z" : "X")}, " +
+                $"body={bodyStart}, motor={motorStart}, " +
+                $"holdDistance={clientHoldDistance:F3}, holdHeight={clientHoldHeight:F3}");
+            while (IsClientStarted && Time.unscaledTime - started < sprintDuration)
+            {
+                float elapsed = Mathf.Min(sprintDuration, Time.unscaledTime - started);
+                if (clientHeld == null)
+                {
+                    releaseAt = elapsed;
+                    break;
+                }
+                Vector3 displacement = away * (elapsed * sprintSpeed);
+                motor.SetPosition(motorStart + displacement);
+                smokeTarget = GroundPlaneTarget(cameraStart + displacement, aimDirection,
+                    aimRight, clientHoldDistance, clientHoldHeight);
+                float error = Vector3.Distance(smokeTarget,
+                    table.transform.TransformPoint(localGrabPoint));
+                maxError = Mathf.Max(maxError, error);
+                yield return null;
+            }
+
+            motor.BaseVelocity = Vector3.zero;
+            Vector3 bodyDisplacement = table.transform.position - bodyStart;
+            Debug.Log($"[OV Gurney Sprint] result axis={(longitudinal ? "Z" : "X")}, " +
+                $"held={clientHeld != null}, " +
+                $"releasedAt={releaseAt:F2}s, maxGrabError={maxError:F3}m, " +
+                $"tableDisplacement={bodyDisplacement}, distance={bodyDisplacement.magnitude:F3}m, " +
+                $"motorDisplacement={Vector3.Distance(motor.transform.position, motorStart):F3}m");
+            ReleaseClient();
+        }
+
         private IEnumerator CoopFeelProbe(bool opposed)
         {
             if (OwnerId > 1) yield break;

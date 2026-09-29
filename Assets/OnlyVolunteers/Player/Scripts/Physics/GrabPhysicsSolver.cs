@@ -54,6 +54,27 @@ namespace OnlyVolunteers.Player.Physics
             return true;
         }
 
+        public static bool TryCalculateRelativeGrounded(Vector3 error, Vector3 targetVelocity,
+            Vector3 pointVelocity, float mass, GrabPhysicsProfile profile, out Vector3 force)
+        {
+            force = Vector3.zero;
+            if (!IsFinite(error) || !IsFinite(targetVelocity) || !IsFinite(pointVelocity) ||
+                error.sqrMagnitude > profile.BreakDistance * profile.BreakDistance)
+                return false;
+
+            float damping = 2f * profile.DampingRatio *
+                Mathf.Sqrt(profile.SpringStrength * Mathf.Max(0.01f, mass));
+            Vector3 rawForce = error * profile.SpringStrength +
+                (targetVelocity - pointVelocity) * damping;
+            if (!IsFinite(rawForce)) return false;
+
+            Vector3 horizontal = Vector3.ClampMagnitude(
+                Vector3.ProjectOnPlane(rawForce, Vector3.up), profile.SoloHorizontalMaxForce);
+            force = horizontal + Vector3.up * Mathf.Clamp(rawForce.y,
+                -profile.MaxForce, profile.MaxForce);
+            return true;
+        }
+
         public static void ApplyForce(Rigidbody body, Vector3 worldGrabPoint, Vector3 force)
         {
             body.WakeUp();
@@ -62,8 +83,13 @@ namespace OnlyVolunteers.Player.Physics
 
         public static void LimitVelocities(Rigidbody body, GrabPhysicsProfile profile)
         {
-            if (body.linearVelocity.sqrMagnitude > profile.MaxLinearSpeed * profile.MaxLinearSpeed)
-                body.linearVelocity = body.linearVelocity.normalized * profile.MaxLinearSpeed;
+            LimitVelocities(body, profile, profile.MaxLinearSpeed);
+        }
+
+        public static void LimitVelocities(Rigidbody body, GrabPhysicsProfile profile, float maxLinearSpeed)
+        {
+            if (body.linearVelocity.sqrMagnitude > maxLinearSpeed * maxLinearSpeed)
+                body.linearVelocity = body.linearVelocity.normalized * maxLinearSpeed;
             if (body.angularVelocity.sqrMagnitude > profile.MaxAngularSpeed * profile.MaxAngularSpeed)
                 body.angularVelocity = body.angularVelocity.normalized * profile.MaxAngularSpeed;
         }
