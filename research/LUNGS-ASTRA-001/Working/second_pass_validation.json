@@ -1,0 +1,318 @@
+{
+  "blend": {
+    "fps": 30.0,
+    "meshes": {
+      "Lungs_BranchFront_L": {
+        "vertices": 515,
+        "triangles": 769,
+        "materials": [
+          "03 | Berry burgundy vessels"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_BranchFront_R": {
+        "vertices": 505,
+        "triangles": 754,
+        "materials": [
+          "03 | Berry burgundy vessels"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_BranchRear_R": {
+        "vertices": 517,
+        "triangles": 771,
+        "materials": [
+          "03 | Berry burgundy vessels"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_Lobe_L": {
+        "vertices": 1522,
+        "triangles": 2775,
+        "materials": [
+          "01B | Cartoon coral with rear burgundy"
+        ],
+        "uv_layers": [
+          "UV0"
+        ],
+        "skin": true
+      },
+      "Lungs_Lobe_R": {
+        "vertices": 996,
+        "triangles": 1988,
+        "materials": [
+          "01 | Cartoon coral lung"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_Trachea_Bronchi": {
+        "vertices": 1218,
+        "triangles": 2410,
+        "materials": [
+          "02 | Soft pink airway"
+        ],
+        "uv_layers": [],
+        "skin": true
+      }
+    },
+    "rigs": {
+      "Lungs_Breath_Rig": [
+        "Root_Static_Airway",
+        "Lobe_L",
+        "Lobe_R"
+      ]
+    },
+    "materials": {
+      "01 | Cartoon coral lung": {
+        "base_color": [
+          0.7799999713897705,
+          0.18000000715255737,
+          0.18000000715255737,
+          1.0
+        ],
+        "roughness": 0.8399999737739563,
+        "images": []
+      },
+      "01B | Cartoon coral with rear burgundy": {
+        "base_color": [
+          0.7799999713897705,
+          0.18000000715255737,
+          0.18000000715255737,
+          1.0
+        ],
+        "roughness": 0.8399999737739563,
+        "images": [
+          "Rear vessel colour study"
+        ]
+      },
+      "02 | Soft pink airway": {
+        "base_color": [
+          0.7799999713897705,
+          0.36000001430511475,
+          0.4300000071525574,
+          1.0
+        ],
+        "roughness": 0.8500000238418579,
+        "images": []
+      },
+      "03 | Berry burgundy vessels": {
+        "base_color": [
+          0.3199999928474426,
+          0.04500000178813934,
+          0.08699999749660492,
+          1.0
+        ],
+        "roughness": 0.8600000143051147,
+        "images": []
+      }
+    },
+    "actions": {
+      "BREATH_BAD": [
+        1.0,
+        25.0
+      ],
+      "BREATH_GOOD": [
+        1.0,
+        50.0
+      ],
+      "Preview_GOOD_to_BAD_Transition": [
+        1.0,
+        150.0
+      ],
+      "STATIC": [
+        1.0,
+        2.0
+      ]
+    },
+    "clips": {
+      "STATIC": {
+        "duration_seconds": 0.03333333333333333,
+        "frequency_hz": 0,
+        "min_width": 0.21989256143569946,
+        "max_width": 0.21989256143569946,
+        "peak_frame": 1,
+        "end_width_error": 0.0,
+        "max_adjacent_width_change": 0.0
+      },
+      "BREATH_GOOD": {
+        "duration_seconds": 1.6333333333333333,
+        "frequency_hz": 0.6122448979591837,
+        "min_width": 0.2183065265417099,
+        "max_width": 0.23363806307315826,
+        "peak_frame": 20,
+        "end_width_error": 0.0,
+        "max_adjacent_width_change": 0.0012092739343643188
+      },
+      "BREATH_BAD": {
+        "duration_seconds": 0.8,
+        "frequency_hz": 1.25,
+        "min_width": 0.21724918484687805,
+        "max_width": 0.23786745965480804,
+        "peak_frame": 9,
+        "end_width_error": 0.0,
+        "max_adjacent_width_change": 0.0037854015827178955
+      }
+    }
+  },
+  "fbx_reimport": {
+    "fps": 30.0,
+    "meshes": {
+      "Lungs_BranchFront_L": {
+        "vertices": 515,
+        "triangles": 769,
+        "materials": [
+          "03 | Berry burgundy vessels"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_BranchFront_R": {
+        "vertices": 505,
+        "triangles": 754,
+        "materials": [
+          "03 | Berry burgundy vessels"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_BranchRear_R": {
+        "vertices": 517,
+        "triangles": 771,
+        "materials": [
+          "03 | Berry burgundy vessels"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_Lobe_L": {
+        "vertices": 1522,
+        "triangles": 2775,
+        "materials": [
+          "01B | Cartoon coral with rear burgundy"
+        ],
+        "uv_layers": [
+          "UV0"
+        ],
+        "skin": true
+      },
+      "Lungs_Lobe_R": {
+        "vertices": 996,
+        "triangles": 1988,
+        "materials": [
+          "01 | Cartoon coral lung"
+        ],
+        "uv_layers": [],
+        "skin": true
+      },
+      "Lungs_Trachea_Bronchi": {
+        "vertices": 1218,
+        "triangles": 2410,
+        "materials": [
+          "02 | Soft pink airway"
+        ],
+        "uv_layers": [],
+        "skin": true
+      }
+    },
+    "rigs": {
+      "Lungs_Breath_Rig": [
+        "Root_Static_Airway",
+        "Lobe_L",
+        "Lobe_R"
+      ]
+    },
+    "materials": {
+      "01 | Cartoon coral lung": {
+        "base_color": [
+          0.7799999713897705,
+          0.18000000715255737,
+          0.18000000715255737,
+          1.0
+        ],
+        "roughness": 0.8399999737739563,
+        "images": []
+      },
+      "01B | Cartoon coral with rear burgundy": {
+        "base_color": [
+          0.800000011920929,
+          0.800000011920929,
+          0.800000011920929,
+          1.0
+        ],
+        "roughness": 0.8399999737739563,
+        "images": [
+          "Rear vessel colour study",
+          "Rear vessel colour study.001"
+        ]
+      },
+      "02 | Soft pink airway": {
+        "base_color": [
+          0.7799999713897705,
+          0.36000001430511475,
+          0.4300000071525574,
+          1.0
+        ],
+        "roughness": 0.8500000238418579,
+        "images": []
+      },
+      "03 | Berry burgundy vessels": {
+        "base_color": [
+          0.3199999928474426,
+          0.04500000178813934,
+          0.08699999749660492,
+          1.0
+        ],
+        "roughness": 0.8600000143051147,
+        "images": []
+      }
+    },
+    "actions": {
+      "Lungs_Breath_Rig|Lungs_Breath_Rig|BREATH_BAD": [
+        1.0,
+        25.0
+      ],
+      "Lungs_Breath_Rig|Lungs_Breath_Rig|BREATH_GOOD": [
+        1.0,
+        50.0
+      ],
+      "Lungs_Breath_Rig|Lungs_Breath_Rig|STATIC": [
+        1.0,
+        2.0
+      ]
+    },
+    "clips": {
+      "STATIC": {
+        "duration_seconds": 0.03333333333333333,
+        "frequency_hz": 0,
+        "min_width": 0.21989257633686066,
+        "max_width": 0.21989257633686066,
+        "peak_frame": 1,
+        "end_width_error": 0.0,
+        "max_adjacent_width_change": 0.0
+      },
+      "BREATH_GOOD": {
+        "duration_seconds": 1.6333333333333333,
+        "frequency_hz": 0.6122448979591837,
+        "min_width": 0.2183065563440323,
+        "max_width": 0.23363808542490005,
+        "peak_frame": 20,
+        "end_width_error": 0.0,
+        "max_adjacent_width_change": 0.0012092813849449158
+      },
+      "BREATH_BAD": {
+        "duration_seconds": 0.8,
+        "frequency_hz": 1.25,
+        "min_width": 0.21724921464920044,
+        "max_width": 0.23786748200654984,
+        "peak_frame": 9,
+        "end_width_error": 0.0,
+        "max_adjacent_width_change": 0.0037853941321372986
+      }
+    }
+  },
+  "result": "PASS"
+}

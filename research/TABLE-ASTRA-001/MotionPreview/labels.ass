@@ -1,0 +1,26 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1320
+PlayResY: 720
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Arial,27,&H00F4F1EB,&H000000FF,&H00231912,&H00231912,-1,0,0,0,100,100,0,0,1,1,1,7,30,30,25,1
+Style: Small,Arial,22,&H00DED6C9,&H000000FF,&H00231912,&H00231912,0,0,0,0,100,100,0,0,1,1,0,7,20,20,20,1
+Style: Phase,Arial,29,&H00FFFFFF,&H000000FF,&H00231912,&H70231912,-1,0,0,0,100,100,0,0,3,9,0,7,30,30,25,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:18.00,Title,,0,0,0,,{\pos(30,25)}КАТАЛКА · ДВИЖЕНИЕ
+Dialogue: 0,0:00:00.00,0:00:18.00,Small,,0,0,0,,{\pos(982,93)}КОЛЕСО КРУПНО
+Dialogue: 0,0:00:00.00,0:00:18.00,Small,,0,0,0,,{\pos(982,540)}Жёлтая метка\Nпоказывает вращение.
+Dialogue: 0,0:00:00.00,0:00:18.00,Small,,0,0,0,,{\pos(982,610)}Вилка следует\Nнаправлению движения.
+Dialogue: 0,0:00:00.00,0:00:03.00,Phase,,0,0,0,,{\pos(32,650)}ПРЯМОЙ ХОД
+Dialogue: 0,0:00:03.00,0:00:06.00,Phase,,0,0,0,,{\pos(32,650)}ПОВОРОТ
+Dialogue: 0,0:00:06.00,0:00:07.00,Phase,,0,0,0,,{\pos(32,650)}ОСТАНОВКА
+Dialogue: 0,0:00:07.00,0:00:11.00,Phase,,0,0,0,,{\pos(32,650)}НАЗАД · РАЗВОРОТ ВИЛОК
+Dialogue: 0,0:00:11.00,0:00:14.00,Phase,,0,0,0,,{\pos(32,650)}ДВИЖЕНИЕ ВБОК
+Dialogue: 0,0:00:14.00,0:00:17.00,Phase,,0,0,0,,{\pos(32,650)}РАЗВОРОТ НА МЕСТЕ
+Dialogue: 0,0:00:17.00,0:00:18.00,Phase,,0,0,0,,{\pos(32,650)}ПОЛНАЯ ОСТАНОВКА

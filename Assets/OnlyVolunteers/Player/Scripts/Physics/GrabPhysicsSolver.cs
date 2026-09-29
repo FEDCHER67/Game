@@ -36,6 +36,24 @@ namespace OnlyVolunteers.Player.Physics
             return true;
         }
 
+        public static bool TryCalculateRelative(Vector3 error, Vector3 targetVelocity,
+            Vector3 pointVelocity, float effectiveMass, GrabPhysicsProfile profile,
+            out Vector3 force)
+        {
+            force = Vector3.zero;
+            if (!IsFinite(error) || !IsFinite(targetVelocity) || !IsFinite(pointVelocity) ||
+                error.sqrMagnitude > profile.BreakDistance * profile.BreakDistance)
+                return false;
+
+            float damping = 2f * profile.DampingRatio *
+                Mathf.Sqrt(profile.SpringStrength * Mathf.Max(0.01f, effectiveMass));
+            Vector3 rawForce = error * profile.SpringStrength +
+                (targetVelocity - pointVelocity) * damping;
+            if (!IsFinite(rawForce)) return false;
+            force = Vector3.ClampMagnitude(rawForce, profile.MaxForce);
+            return true;
+        }
+
         public static void ApplyForce(Rigidbody body, Vector3 worldGrabPoint, Vector3 force)
         {
             body.WakeUp();
