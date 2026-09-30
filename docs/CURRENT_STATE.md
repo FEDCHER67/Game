@@ -1,3 +1,40 @@
-Current (2026-09-24): Two humans passed the real two-PC Tailscale test of commit `3fa69c2d972b7aa0aca70bc5f574769941dd22a7`: host/client connection, mutual movement visibility, accepted local KCC movement, and shared physics interaction work. FishNet/Tugboat and the four-player NetworkTest prototype remain the active networking baseline. The local PhysicsGrabber and server-authoritative NetworkPhysicsBody now read the same GrabPhysicsProfile asset and use the same stateless GrabPhysicsSolver; input, RPC validation, holder ownership, and body authority remain separate. No multi-holder NPC grab exists yet.
+# Current state — 2026-09-30
 
-This uncommitted cleanup compiled in Unity 6000.5.11f1 and produced a Windows development build with zero errors. The local PhysicsInteractionTest player resolved the shared profile, acquired and released a 20 kg crate, and the crate gained velocity after a physics step. Editor Host spawned one player and eight server bodies. Separate localhost Host + two-client processes replicated player movement and visual yaw; a development grab probe moved one server body on the observer, refused a competing holder, released on disconnect, and allowed another holder. Four fixed solver inputs matched the pre-refactor force outputs exactly. The refactored build has not received a new two-human Tailscale feel test. Both original test scenes and accepted movement tuning remain unchanged.
+3D first-person co-op prototype in Unity 6000.5.11f1 / URP / FishNet + Tugboat. PRODUCT.md now contains the structured working specification; the detailed canon has a navigation note and retains its substantive sections.
+
+## What remains
+
+- KCC movement with sprint, crouch, air control, bunnyhop and long jump. Existing tuning retained.
+- Shared force solver/profile, local object grabbing, server-owned network physics.
+- The newer cooperative prop code from local commit 892d7ca was consolidated from FEDYA_PROPS into the main project. It supports up to FOUR holders on generic props, request/hold IDs, target sequence checks and disconnect/timeout release. This is not the canon's finished THREE-holder NPC capture mechanic.
+- Three useful test scenes: ControllerTest (movement), PhysicsInteractionTest (local grabbing), NetworkTest (co-op, cubes, table and scalpel). NetworkTest is the only build scene.
+- Player_01 art prototype under Assets/OnlyVolunteers/Art; seven prop prototypes under ArtSource/Props: brain v2, kidney, liver, lungs, cash, scalpel and table. Only table/scalpel are integrated as network props.
+
+## Assessment
+
+The movement motor and separation of force calculation from networking are worth retaining. NetworkSession currently mixes connection lifecycle, test spawns and debug UI; split those responsibilities when extending the playable slice. Local and network grabs still differ in hold-distance and multi-holder behavior. The table wheel controller assumes an upright planar surface; it is not a general solution for tumbling objects.
+
+Art remains subject to the upcoming style review. Existing asset reports describe historical checks; removed Working paths in those reports are not current dependencies. No NPC resistance, GripAnchor system, van capture loop, living city, laboratory economy or save system exists yet.
+
+## Cleanup
+
+Removed obsolete agent machinery, three temporary worktrees and the duplicate FEDYA_PROPS checkout, old builds, recovery scenes, unused KCC demos, the superseded physics playground, stale tasks/design documents, old art build intermediates and brain v1. No backups created. Active Unity caches are generated working data and remain while the editor is open. Git history remains intact. Publication of the cleaned team baseline is recorded in Git history.
+
+## Next decisions
+
+1. Agree on a small visual target: one adult NPC, a street fragment, one prop and the van.
+2. Review the retained movement, grab and network code against explicit acceptance criteria, including two-machine latency and disconnect behavior.
+3. Build NPC + VAN FUN TEST: body grab points -> up to three holders -> resistance -> environmental grips -> physical loading -> closed doors.
+4. Add the first business loop only after the capture scene is enjoyable in solo and co-op.
+
+## Verification after cleanup
+
+Unity compilation and a Windows development build succeeded with zero errors. Five warnings remain: four obsolete API warnings in development probes and one KCC serialization warning. All three test scenes and six game prefabs loaded without missing scripts.
+
+Two separate localhost build processes connected, simultaneously held and moved NetworkTableAstra, rejected stale target sequence packets and released back to zero holders. This is not two-PC latency or subjective feel acceptance. Four-player/disconnect/reconnect cases were not rerun.
+
+A final optional removal batch was blocked by automatic policy review without a detailed reason. The retained files are the isolated-project table validation runner/report and older cash/scalpel/table handoff/proposal notes. The runner still expects its separate validation project; do not run it in the main Editor. The principal cleanup and consolidation described above completed before that block.
+
+## Shared development baseline
+
+The user chose Blender prop creation as Fedya's separate workstream. See docs/FEDYA_ART_TASKS.md for the proposed first three models and portable delivery requirements, and docs/TEAM_WORKFLOW.md for branch ownership and clean synchronization. Character production is deferred; the supplied image is only a rough direction, with simple shapes and strongly expressive, simple faces. Final city, lighting and surface style remain open. Unity productName is now VOLUNTEERS ONLY. Gameplay code is unchanged from the tested consolidated baseline; serialized whitespace was normalized for the newly tracked assets.

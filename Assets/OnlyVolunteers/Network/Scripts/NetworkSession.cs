@@ -18,6 +18,8 @@ namespace OnlyVolunteers.Network
 
         [SerializeField] private NetworkPlayer playerPrefab;
         [SerializeField] private NetworkPhysicsBody bodyPrefab;
+        [SerializeField] private NetworkPhysicsBody tablePrefab;
+        [SerializeField] private NetworkPhysicsBody scalpelPrefab;
         [SerializeField] private Transform[] playerSpawns = new Transform[MaxPlayers];
         [SerializeField] private Transform[] bodySpawns = new Transform[TestBodyCount];
         [SerializeField] private Camera menuCamera;
@@ -230,7 +232,18 @@ namespace OnlyVolunteers.Network
                 manager.ServerManager.Spawn(body.NetworkObject);
                 bodies.Add(body);
             }
+            SpawnProp(tablePrefab, new Vector3(0f, 0.03f, 9.5f), "NetworkTableAstra");
+            SpawnProp(scalpelPrefab, new Vector3(0f, 1.0f, 9.5f), "NetworkScalpelAstra");
             Debug.Log($"[OV Network] server bodies spawned={bodies.Count}");
+        }
+
+        private void SpawnProp(NetworkPhysicsBody prefab, Vector3 position, string objectName)
+        {
+            if (prefab == null) return;
+            var prop = Instantiate(prefab, position, Quaternion.identity);
+            prop.name = objectName;
+            manager.ServerManager.Spawn(prop.NetworkObject);
+            bodies.Add(prop);
         }
 
         private void DespawnSessionObjects()

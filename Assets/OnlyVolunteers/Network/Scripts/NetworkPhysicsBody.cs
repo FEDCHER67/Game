@@ -11,18 +11,60 @@ namespace OnlyVolunteers.Network
     {
         [SerializeField] private GrabPhysicsProfile profile;
         private Rigidbody body;
-        private NetworkGrabber holder;
-        private Vector3 localGrabPoint;
-        private Vector3 target;
-        private float lastTargetTime;
-        private Collider holderCollider;
+        private const int MaxHolders = 4;
+        private const float TargetTimeout = 0.8f;
+        private const float TargetVelocityFilter = 0.05f;
+        private const float MaxTargetVelocity = 6f;
+        private readonly Hold[] holds = new Hold[MaxHolders];
+        private readonly Vector3[] forcePoints = new Vector3[MaxHolders];
+        private readonly Vector3[] forces = new Vector3[MaxHolders];
+        private readonly Vector3[] errors = new Vector3[MaxHolders];
+        private readonly Vector3[] pointVelocities = new Vector3[MaxHolders];
+        private readonly Vector3[] targetVelocities = new Vector3[MaxHolders];
+        private readonly Hold[] validHolds = new Hold[MaxHolders];
+        private Collider[] bodyColliders;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private bool measureFeel;
+        private float feelWindowStart;
+        private float feelErrorSum;
+        private float feelSpeedSum;
+        private int feelSamples;
+#endif
+
+        private sealed class Hold
+        {
+            public NetworkGrabber Grabber;
+            public uint Id;
+            public Vector3 LocalPoint;
+            public Vector3 Target;
+            public Vector3 TargetVelocity;
+            public float LastTargetTime;
+            public uint LastSequence;
+            public Collider PlayerCollider;
+            public bool[] IgnoredBeforeGrab;
+        }
 
         public Rigidbody Body => body;
-        public bool HasHolder => holder != null;
+        public int ActiveHolderCount
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < holds.Length; i++)
+                    if (holds[i] != null) count++;
+                return count;
+            }
+        }
+        public bool HasHolder => ActiveHolderCount > 0;
 
         private void Awake()
         {
             body = GetComponent<Rigidbody>();
+            bodyColliders = GetComponentsInChildren<Collider>();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            measureFeel = Array.Exists(Environment.GetCommandLineArgs(), x =>
+                x == "-ov-smoke-feel" || x == "-ov-smoke-feel-opposed");
+#endif
             if (profile == null)
                 Debug.LogError("NetworkPhysicsBody requires a GrabPhysicsProfile", this);
         }
@@ -77,77 +119,211 @@ namespace OnlyVolunteers.Network
 
         public override void OnStopServer()
         {
-            Release();
+            for (int i = 0; i < holds.Length; i++)
+                ReleaseAt(i);
             base.OnStopServer();
         }
 
-        public bool TryAcquire(NetworkGrabber requester, Vector3 worldPoint, Vector3 initialTarget)
+        public bool TryAcquire(NetworkGrabber requester, uint holdId, Vector3 worldPoint, Vector3 initialTarget)
         {
-            if (!IsServerStarted || !NetworkObject.IsSpawned || holder != null || profile == null ||
+            if (!IsServerStarted || !NetworkObject.IsSpawned || holdId == 0 || profile == null ||
                 requester == null || !requester.IsValidHolder || body == null ||
-                body.isKinematic || body.mass <= 0f)
+                body.isKinematic || float.IsNaN(body.mass) || float.IsInfinity(body.mass) || body.mass <= 0f ||
+                !GrabPhysicsSolver.IsFinite(worldPoint) || !GrabPhysicsSolver.IsFinite(initialTarget))
                 return false;
 
-            holder = requester;
-            localGrabPoint = transform.InverseTransformPoint(worldPoint);
-            target = initialTarget;
-            lastTargetTime = Time.time;
-            holderCollider = requester.PlayerCollider;
-            SetHolderCollisionIgnored(true);
+            int free = -1;
+            for (int i = 0; i < holds.Length; i++)
+            {
+                if (holds[i] != null && holds[i].Grabber == requester) return false;
+                if (holds[i] == null && free < 0) free = i;
+            }
+            if (free < 0) return false;
+
+            Vector3 localPoint = transform.InverseTransformPoint(worldPoint);
+            if (!GrabPhysicsSolver.IsFinite(localPoint)) return false;
+            var hold = new Hold
+            {
+                Grabber = requester,
+                Id = holdId,
+                LocalPoint = localPoint,
+                Target = initialTarget,
+                LastTargetTime = Time.time,
+                PlayerCollider = requester.PlayerCollider,
+                IgnoredBeforeGrab = new bool[bodyColliders.Length]
+            };
+            holds[free] = hold;
+            IgnoreHolderCollisions(hold);
             body.WakeUp();
-            Debug.Log($"[OV Network] grab granted: body={name}, connection={requester.OwnerId}");
+            Debug.Log($"[OV Network] grab granted: body={name}, connection={requester.OwnerId}, " +
+                $"activeHolders={ActiveHolderCount}, initialGap={Vector3.Distance(worldPoint, initialTarget):F3}");
             return true;
         }
 
-        public void SetTarget(NetworkGrabber requester, Vector3 newTarget)
+        public void SetTarget(NetworkGrabber requester, uint holdId, uint sequence, Vector3 newTarget)
         {
-            if (holder != requester) return;
-            target = newTarget;
-            lastTargetTime = Time.time;
+            if (sequence == 0 || !GrabPhysicsSolver.IsFinite(newTarget)) return;
+            for (int i = 0; i < holds.Length; i++)
+            {
+                Hold hold = holds[i];
+                if (hold == null || hold.Grabber != requester || hold.Id != holdId) continue;
+                if (sequence <= hold.LastSequence)
+                {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    if (measureFeel)
+                        Debug.Log($"[OV Feel] stale target rejected body={name}, connection={requester.OwnerId}, " +
+                            $"sequence={sequence}, newest={hold.LastSequence}");
+#endif
+                    return;
+                }
+                float dt = Mathf.Max(0.02f, Time.time - hold.LastTargetTime);
+                Vector3 velocity = (newTarget - hold.Target) / dt;
+                if (!GrabPhysicsSolver.IsFinite(velocity)) return;
+                velocity = Vector3.ClampMagnitude(velocity,
+                    Mathf.Min(MaxTargetVelocity, profile.MaxLinearSpeed));
+                float alpha = dt / (TargetVelocityFilter + dt);
+                hold.TargetVelocity = Vector3.Lerp(hold.TargetVelocity, velocity, alpha);
+                hold.Target = newTarget;
+                hold.LastTargetTime = Time.time;
+                hold.LastSequence = sequence;
+                return;
+            }
         }
 
-        public void Release(NetworkGrabber requester)
+        public void Release(NetworkGrabber requester, uint holdId)
         {
-            if (holder == requester) Release();
+            for (int i = 0; i < holds.Length; i++)
+                if (holds[i] != null && holds[i].Grabber == requester && holds[i].Id == holdId)
+                {
+                    ReleaseAt(i);
+                    return;
+                }
         }
 
-        public void Release()
+        private void ReleaseAt(int index)
         {
-            if (holder == null) return;
-            var previous = holder;
-            SetHolderCollisionIgnored(false);
-            holder = null;
-            holderCollider = null;
-            previous.ServerBodyReleased(this);
-            Debug.Log($"[OV Network] grab released: body={name}");
+            Hold hold = holds[index];
+            if (hold == null) return;
+            holds[index] = null;
+            RestoreHolderCollisions(hold);
+            hold.Grabber.ServerBodyReleased(this, hold.Id);
+            Debug.Log($"[OV Network] grab released: body={name}, connection={hold.Grabber.OwnerId}, activeHolders={ActiveHolderCount}");
         }
 
-        private void SetHolderCollisionIgnored(bool ignored)
+        private void IgnoreHolderCollisions(Hold hold)
         {
-            if (holderCollider == null) return;
-            foreach (var collider in GetComponentsInChildren<Collider>())
-                if (collider != holderCollider)
-                    Physics.IgnoreCollision(collider, holderCollider, ignored);
+            if (hold.PlayerCollider == null) return;
+            for (int i = 0; i < bodyColliders.Length; i++)
+            {
+                Collider collider = bodyColliders[i];
+                if (collider != null && collider != hold.PlayerCollider)
+                {
+                    hold.IgnoredBeforeGrab[i] = Physics.GetIgnoreCollision(collider, hold.PlayerCollider);
+                    Physics.IgnoreCollision(collider, hold.PlayerCollider, true);
+                }
+            }
+        }
+
+        private void RestoreHolderCollisions(Hold hold)
+        {
+            if (hold.PlayerCollider == null) return;
+            for (int i = 0; i < bodyColliders.Length; i++)
+            {
+                Collider collider = bodyColliders[i];
+                if (collider != null && collider != hold.PlayerCollider)
+                    Physics.IgnoreCollision(collider, hold.PlayerCollider, hold.IgnoredBeforeGrab[i]);
+            }
         }
 
         private void FixedUpdate()
         {
-            if (!IsServerStarted || holder == null) return;
-            if (!holder.IsValidHolder || Time.time - lastTargetTime > 0.8f)
+            if (!IsServerStarted || !HasHolder) return;
+            int count = 0;
+            float errorSum = 0f;
+            for (int i = 0; i < holds.Length; i++)
             {
-                Release();
-                return;
+                Hold hold = holds[i];
+                if (hold == null) continue;
+                Vector3 motor = hold.Grabber.MotorPosition;
+                if (!hold.Grabber.IsValidHolder || Time.time - hold.LastTargetTime > TargetTimeout ||
+                    !GrabPhysicsSolver.IsFinite(motor) ||
+                    !GrabPhysicsSolver.IsFinite(hold.Target) ||
+                    Vector3.Distance(hold.Target, motor) > 5f)
+                {
+                    ReleaseAt(i);
+                    continue;
+                }
+                Vector3 worldPoint = transform.TransformPoint(hold.LocalPoint);
+                if (!GrabPhysicsSolver.IsFinite(worldPoint))
+                {
+                    ReleaseAt(i);
+                    continue;
+                }
+                Vector3 error = hold.Target - worldPoint;
+                Vector3 pointVelocity = body.GetPointVelocity(worldPoint);
+                if (!GrabPhysicsSolver.IsFinite(error) ||
+                    !GrabPhysicsSolver.IsFinite(pointVelocity) ||
+                    error.sqrMagnitude > profile.BreakDistance * profile.BreakDistance ||
+                    Vector3.Distance(worldPoint, motor) > profile.AcquireDistance + 2.4f)
+                {
+                    ReleaseAt(i);
+                    continue;
+                }
+                forcePoints[count] = worldPoint;
+                errors[count] = error;
+                pointVelocities[count] = pointVelocity;
+                float targetAge = Time.time - hold.LastTargetTime;
+                targetVelocities[count] = hold.TargetVelocity *
+                    Mathf.Clamp01((0.25f - targetAge) / 0.1f);
+                validHolds[count] = hold;
+                errorSum += error.magnitude;
+                count++;
             }
-
-            if (!GrabPhysicsSolver.TryCalculate(body, localGrabPoint, target, profile,
-                out Vector3 worldPoint, out Vector3 force))
+            if (count == 0) return;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (measureFeel && name.StartsWith("NetworkTableAstra"))
+                RecordFeelSample(count, errorSum / count);
+#endif
+            // Keep the accepted solo solver; multiple holders damp relative to their moving targets.
+            for (int i = 0; i < count; i++)
             {
-                Release();
-                return;
+                bool calculated = count == 1
+                    ? GrabPhysicsSolver.TryCalculate(errors[i], pointVelocities[i], body.mass,
+                        profile, out forces[i])
+                    : GrabPhysicsSolver.TryCalculateRelative(errors[i], targetVelocities[i],
+                        pointVelocities[i], body.mass / count, profile, out forces[i]);
+                if (!calculated)
+                {
+                    Release(validHolds[i].Grabber, validHolds[i].Id);
+                    continue;
+                }
+                GrabPhysicsSolver.ApplyForce(body, forcePoints[i], forces[i]);
             }
-
-            GrabPhysicsSolver.ApplyForce(body, worldPoint, force);
             GrabPhysicsSolver.LimitVelocities(body, profile);
         }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private void RecordFeelSample(int count, float meanError)
+        {
+            if (count != 2)
+            {
+                feelSamples = 0;
+                feelErrorSum = 0f;
+                feelSpeedSum = 0f;
+                feelWindowStart = Time.time;
+                return;
+            }
+            if (feelSamples == 0) feelWindowStart = Time.time;
+            feelErrorSum += meanError;
+            feelSpeedSum += body.linearVelocity.magnitude;
+            feelSamples++;
+            if (Time.time - feelWindowStart < 1f) return;
+            Debug.Log($"[OV Feel] server body={name}, holders=2, meanError={feelErrorSum / feelSamples:F3}, " +
+                $"meanSpeed={feelSpeedSum / feelSamples:F3}, samples={feelSamples}, t={Time.time:F1}");
+            feelSamples = 0;
+            feelErrorSum = 0f;
+            feelSpeedSum = 0f;
+        }
+#endif
     }
 }
