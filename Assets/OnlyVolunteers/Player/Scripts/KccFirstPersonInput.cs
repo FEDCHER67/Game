@@ -9,9 +9,9 @@ namespace OnlyVolunteers.Player
         public ExampleCharacterController Character;
         public Camera ViewCamera;
 
-        private const float WalkSpeed = 4.95f;
-        private const float SprintSpeed = 8.6625f;
-        private const float CrouchSpeed = 1.98f;
+        private const float WalkSpeed = 4.7025f;
+        private const float SprintSpeed = 8.229375f;
+        private const float CrouchSpeed = 1.881f;
         private const float DiagonalSpeedMultiplier = 1.05f;
         private const float MouseSensitivity = 1.3f;
         private const float PitchLimit = 85f;
@@ -21,7 +21,7 @@ namespace OnlyVolunteers.Player
         private const float JumpPostGroundingGraceTime = 0.077f;
         private const float BhopPreGroundGrace = 0.09f;
         private const float BhopCapGrowth = 1.035f;
-        private const float BhopMaxSpeed = 11.75f;
+        private const float BhopMaxSpeed = 11.1625f;
         private const float LongJumpMaxGain = 1.10f;
         private const float LongJumpMinArcDegrees = 8f;
         private const float LongJumpIdealArcMinDegrees = 12f;

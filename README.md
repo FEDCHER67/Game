@@ -15,7 +15,7 @@
 - [Состояние и проверки](docs/CURRENT_STATE.md)
 - [Архитектура](docs/ARCHITECTURE.md)
 - [Работа вдвоём и синхронизация](docs/TEAM_WORKFLOW.md)
-- [Модели для Феди](docs/FEDYA_ART_TASKS.md)
+- [Передача задач между Вадимом и Федей](WORK_SYNC.md)
 - [Исходники моделей](ArtSource/README.md)
 
 Sources, Unity assets with .meta, packages, project settings, art sources and documentation are tracked. Unity/IDE caches, local preferences and builds are generated separately on each PC. Pull does not remove unrelated local files; read the synchronization guide before updating a dirty checkout.

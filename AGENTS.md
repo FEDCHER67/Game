@@ -9,3 +9,5 @@
 - Movement tuning changes and subjective physics/visual acceptance require actual playtesting. Compilation is not proof of fun or network quality.
 - Do not create backups, duplicate projects, agent orchestration frameworks, or speculative subsystem scaffolding during cleanup.
 - Do not modify unrelated user changes. Do not commit or push without the user's request. Model routing and delegation are determined by the active chat, not a repository-specific agent pipeline.
+
+- Follow docs/TEAM_WORKFLOW.md: strictly sequential work on main; WORK_SYNC.md is the only handoff log. Record each working prompt verbatim in a globally numbered TASK; read and mark only unseen incoming tasks. In Vadim's chat NEVER stage, commit or push: Vadim does this himself; provide commands for all non-ignored changes from the repository root. This overrides the older conditional commit rule above.

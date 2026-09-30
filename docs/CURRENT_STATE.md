@@ -4,7 +4,7 @@
 
 ## What remains
 
-- KCC movement with sprint, crouch, air control, bunnyhop and long jump. Existing tuning retained.
+- KCC movement with sprint, crouch, air control, bunnyhop and long jump. Planar movement speeds reduced by 5% in TASK-000001; subjective feel acceptance pending.
 - Shared force solver/profile, local object grabbing, server-owned network physics.
 - The newer cooperative prop code from local commit 892d7ca was consolidated from FEDYA_PROPS into the main project. It supports up to FOUR holders on generic props, request/hold IDs, target sequence checks and disconnect/timeout release. This is not the canon's finished THREE-holder NPC capture mechanic.
 - Three useful test scenes: ControllerTest (movement), PhysicsInteractionTest (local grabbing), NetworkTest (co-op, cubes, table and scalpel). NetworkTest is the only build scene.
@@ -37,4 +37,4 @@ A final optional removal batch was blocked by automatic policy review without a 
 
 ## Shared development baseline
 
-The user chose Blender prop creation as Fedya's separate workstream. See docs/FEDYA_ART_TASKS.md for the proposed first three models and portable delivery requirements, and docs/TEAM_WORKFLOW.md for branch ownership and clean synchronization. Character production is deferred; the supplied image is only a rough direction, with simple shapes and strongly expressive, simple faces. Final city, lighting and surface style remain open. Unity productName is now VOLUNTEERS ONLY. Gameplay code is unchanged from the tested consolidated baseline; serialized whitespace was normalized for the newly tracked assets.
+The user chose Blender prop creation as Fedya's separate workstream. See WORK_SYNC.md for task handoffs and docs/TEAM_WORKFLOW.md for sequential work on main and manual publication by Vadim. Character production is deferred; the supplied image is only a rough direction, with simple shapes and strongly expressive, simple faces. Final city, lighting and surface style remain open. Unity productName is now VOLUNTEERS ONLY. Movement tuning differs from the tested consolidated baseline as recorded in TASK-000001; serialized whitespace was normalized for the newly tracked assets.
