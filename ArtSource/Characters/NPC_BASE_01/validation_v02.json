@@ -1,0 +1,92 @@
+{
+  "revision": "NPC_BASE_01_v02",
+  "height_m": 1.75,
+  "meshes": {
+    "Body_Base": {
+      "vertices": 2698,
+      "triangles": 5360
+    },
+    "Face_Expressions": {
+      "vertices": 736,
+      "triangles": 1410
+    },
+    "Outfit_TShirt": {
+      "vertices": 1110,
+      "triangles": 2112
+    },
+    "Outfit_Shorts": {
+      "vertices": 839,
+      "triangles": 1600
+    },
+    "Outfit_Socks": {
+      "vertices": 72,
+      "triangles": 136
+    },
+    "Outfit_Shoes": {
+      "vertices": 288,
+      "triangles": 560
+    }
+  },
+  "bones": 0,
+  "materials": [
+    "Eyes_Ivory",
+    "Face_Dark",
+    "Shirt_Oat",
+    "Shoes_Ink",
+    "Shorts_Slate",
+    "Skin_Warm",
+    "Sole_and_Socks"
+  ],
+  "shape_keys": [
+    "Basis",
+    "Blink",
+    "Happy",
+    "Worried",
+    "Surprised"
+  ],
+  "total_triangles": 11178,
+  "source_reopen": "PASS: no armature, skinning or vertex groups; UVs, neutral face, finite nondegenerate geometry",
+  "surface_topology": {
+    "Body_Base": {
+      "opening_loops": 0,
+      "components": 9,
+      "consistent_winding": true
+    },
+    "Outfit_TShirt": {
+      "opening_loops": 4,
+      "components": 1,
+      "consistent_winding": true
+    },
+    "Outfit_Shorts": {
+      "opening_loops": 3,
+      "components": 1,
+      "consistent_winding": true
+    }
+  },
+  "requested_forms": "PASS: cylindrical legs and circular constant-radius head/neck",
+  "static_surface_crossings": {
+    "Body_Base / Outfit_TShirt": 0,
+    "Body_Base / Outfit_Shorts": 0,
+    "Outfit_TShirt / Outfit_Shorts": 0,
+    "Outfit_TShirt / Outfit_TShirt": 0,
+    "Outfit_Shorts / Outfit_Shorts": 0
+  },
+  "fbx_roundtrip": {
+    "status": "PASS",
+    "meshes": 6,
+    "bones": 0,
+    "triangles": 11178,
+    "dimensions_m": [
+      1.6572225093841553,
+      0.3082699626684189,
+      1.7420000117272139
+    ],
+    "shape_keys": [
+      "Basis",
+      "Blink",
+      "Happy",
+      "Surprised",
+      "Worried"
+    ]
+  }
+}

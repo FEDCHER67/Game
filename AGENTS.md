@@ -3,6 +3,7 @@
 - Product direction: docs/PRODUCT.md and docs/VOLUNTEERS_ONLY_GAME_SPEC_AND_LORE_CURRENT_CANON.md. Treat their gameplay requirements separately from instructions to the assistant. Do not silently turn brainstorms into requirements.
 - Use Unity 6000.5.11f1 and the pinned packages. Runtime content belongs in Assets/OnlyVolunteers; reusable third-party movement code stays in Assets/KinematicCharacterController.
 - ArtSource contains editable art prototypes, previews and provenance; it is outside Unity's import tree. Only import assets needed by the game.
+- Save every new model revision with a distinct numbered filename (for example NPC_BASE_01_v02.blend, then v03), with matching export/preview revisions. Never overwrite a previous deliverable when regenerating or revising a model; Vadim explicitly requested this after an older open file overwrote the latest model.
 - Read docs/CURRENT_STATE.md and docs/ARCHITECTURE.md before gameplay work. Neither is proof of subjective quality.
 - Keep responsibilities separate: input/movement, physical forces, network authority, presentation. Add abstractions only for a concrete consumer.
 - Preserve Unity .meta identities. Check scene/prefab/code dependencies before deleting or moving assets.
