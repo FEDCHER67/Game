@@ -1,6 +1,14 @@
 ﻿# BRAIN-ASTRA-002 — colorful cartoon organ-family pass
 
-## Source and scope
+## Accepted low-poly shape revision — 2026-10-01
+
+Fedya personally accepted brain_revision02 in WORK_SYNC TASK-000029. Root .blend/.fbx now contain the accepted version; all twelve existing previews were updated. Original: 8,296 render triangles / 4,870 faces / 4,138 vertices. Accepted: 1,500 triangles / 1,491 faces / 752 vertices (-81.9% triangles).
+
+The accepted correction narrows the preceding candidate by 9%, softens convex lateral lumps, shortens the exposed stem by 20%, and strengthens existing concave grooves without adding geometry. Materials remain the same matte pink brain and deeper coral stem. No image textures or UV layer were introduced. The rebuilt mesh has zero boundary/nonmanifold edges, zero face-normal flips in the corrective pass, and finite coordinates. Reimported accepted FBX: one mesh, two materials, 1,500 triangles, zero boundary/nonmanifold edges. Visual acceptance is separate from numeric validation.
+
+Previous candidates remain outside the repository for the requested comparison; no Working backup folders were recreated. No Unity integration, paid generation, commit or push. Earlier counts, pending acceptance and removed Working locations below are historical.
+
+## Historical source and color pass
 
 The approved `BRAIN-ASTRA-002.blend` was the working source for this pass. Its prior blend, FBX, report, and previews were copied to `Working/BeforeCartoonFamilyPass/`. The original supplied source remains `Working/Tripo/pink brain 3d model.fbx`; it was not reimported or used to rebuild the asset. `BRAIN-ASTRA-001` was not used. The approved `LUNGS-ASTRA-001` finish guided the brighter, clean color and dry matte response.
 

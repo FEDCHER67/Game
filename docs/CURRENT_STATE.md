@@ -7,8 +7,10 @@
 - KCC movement with sprint, crouch, air control, bunnyhop and long jump. Planar movement speeds reduced by 5% in TASK-000001; subjective feel acceptance pending.
 - Shared force solver/profile, local object grabbing, server-owned network physics.
 - The newer cooperative prop code from local commit 892d7ca was consolidated from FEDYA_PROPS into the main project. It supports up to FOUR holders on generic props, request/hold IDs, target sequence checks and disconnect/timeout release. This is not the canon's finished THREE-holder NPC capture mechanic.
+- TASK-000013 restores the accepted solo table-follow changes from 54aacff on this baseline: the grabbed table point follows horizontal camera heading at fixed height, four wheel contacts use a low-friction material, and the solo profile uses 850 N / 10 m/s limits. The existing multi-holder profile remains 450 N / 6 m/s. TASK-000001 movement constants remain in place.
 - Three useful test scenes: ControllerTest (movement), PhysicsInteractionTest (local grabbing), NetworkTest (co-op, cubes, table and scalpel). NetworkTest is the only build scene.
 - Player_01 art prototype under Assets/OnlyVolunteers/Art; seven prop prototypes under ArtSource/Props: brain v2, kidney, liver, lungs, cash, scalpel and table. Only table/scalpel are integrated as network props.
+- Additional heart and syringe authoring sources were restored by Fedya's explicit backup/restore request; neither was imported into Unity. Heart provenance restrictions remain in its PROVENANCE.md. Existing seven prop exports/previews and used mesh/material data match the saved source versions; unused scalpel materials removed by the cleanup remain removed.
 
 ## Assessment
 

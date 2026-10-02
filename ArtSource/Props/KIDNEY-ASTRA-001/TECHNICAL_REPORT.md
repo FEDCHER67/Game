@@ -1,6 +1,22 @@
 ﻿# KIDNEY-ASTRA-001 — darker balanced cartoon color correction
 
-## Current pass — 2026-09-29
+## Accepted low-poly revision — 2026-10-01
+
+Fedya personally approved the strong simplification in WORK_SYNC TASK-000025. This supersedes geometry counts and pending acceptance below. Angular silhouettes and coarse bends are intentional; recognizability takes priority over perfect roundness.
+
+| Pair total | Original | Accepted revision |
+| --- | ---: | ---: |
+| Vertices | 18,209 | 276 |
+| Polygon faces | 18,399 | 532 |
+| Render triangles | 36,410 | 544 |
+
+Left: 139 vertices / 266 faces / 274 triangles. Right: 137 vertices / 266 faces / 270 triangles. Triangle reduction: 98.5% from the original; 85.1% from the previous 3,640-triangle review candidate. The two meshes, matte body/tube materials and UV0 remain. Automatic topology checks: zero boundary/nonmanifold edges on both. Sampled bidirectional vertex-to-surface error reached approximately 1.11 mm; this is not a full Hausdorff distance or proof of identical images. Visual acceptance was explicitly given by Fedya.
+
+The root .blend and .fbx now contain the accepted revision; all ten current previews were refreshed to the reduced geometry. FBX was reimported and verified to contain 544 triangles. No Unity import was introduced: the organ remains in ArtSource awaiting intentional gameplay integration. Prior temporary candidates remain outside the repository for the requested comparison/return; no Working backup directories were recreated. No paid generation, commit or push.
+
+## Historical color pass — 2026-09-29
+
+The following records earlier geometry and removed Working paths; it is history, not the current counts or runnable file locations.
 
 This pass begins from the approved and previously recolored `KIDNEY-ASTRA-001.blend`. The immediately preceding blend, FBX, report, and previews are preserved in `Working/BeforeIntermediateColorPass/`; the earlier pre-cartoon version remains in `Working/BeforeCartoonPass/`. The shape was not rebuilt. The user requested a color between the preceding bright berry version and the older darker version, closer to the older one. The chosen body and tube colors are 60% of the earlier darker values plus 40% of the recent bright values in Blender linear RGB. This gives the pair a quieter warm berry-red body with muted rose tubes while retaining the cleaner cartoon palette and matte presentation.
 

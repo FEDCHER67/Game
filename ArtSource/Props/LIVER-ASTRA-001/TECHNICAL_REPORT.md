@@ -1,6 +1,18 @@
 ﻿# LIVER-ASTRA-001 — colorful cartoon organ-family pass
 
-## Source and scope
+## Current approved low-poly revision — 2026-10-01
+
+Fedya personally accepted the reduced liver in WORK_SYNC TASK-000026. The current root .blend/.fbx and nine Previews contain this accepted revision; the prior color-pass descriptions/counts and removed Working paths below are historical.
+
+| Metric | Previous | Accepted |
+| --- | ---: | ---: |
+| Vertices | 7,002 | 177 |
+| Polygon faces | 9,865 | 345 |
+| Render triangles | 14,000 | 350 |
+
+97.5% fewer render triangles. One mesh, UV0 and the matte terracotta material remain. Automatic geometry checks: zero boundary/nonmanifold edges. Sampled bidirectional vertex-to-surface error approximately 1.02 mm; not a full Hausdorff distance or proof of visual equivalence. The broad lobes and exterior silhouette remain recognizable, with intentionally angular contours. Personal acceptance is separate from these numeric checks. FBX reimport confirmed 350 triangles. No Unity import, paid generation, commit or push was introduced.
+
+## Historical source and color pass
 
 This pass started from the existing approved/current `LIVER-ASTRA-001.blend`; it did not rebuild the liver. The pre-pass blend, FBX, report, and previews are preserved under `Working/BeforeCartoonFamilyPass/`. The asset's underlying simplified exterior silhouette was previously adapted from Faqihcuk's liver body, with ElliotSS used only as a broad color reference; details and required attribution are in `PROVENANCE.md`. Neither source archive was reimported for this pass. The approved `LUNGS-ASTRA-001` finish guided the brighter, clean cartoon color and dry material response.
 

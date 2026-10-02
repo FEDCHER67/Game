@@ -13,6 +13,9 @@ namespace OnlyVolunteers.Player.Physics
         [SerializeField, Min(1f)] private float maxLinearSpeed = 12f;
         [SerializeField, Min(1f)] private float maxAngularSpeed = 25f;
         [SerializeField, Min(0.5f)] private float breakDistance = 4.5f;
+        [SerializeField] private bool groundPlaneFollow;
+        [SerializeField, Min(0f)] private float soloHorizontalMaxForce;
+        [SerializeField, Min(0f)] private float soloMaxLinearSpeed;
         [SerializeField] private LayerMask acquisitionLayers = ~0;
 
         public float AcquireDistance => acquireDistance;
@@ -23,6 +26,9 @@ namespace OnlyVolunteers.Player.Physics
         public float MaxLinearSpeed => maxLinearSpeed;
         public float MaxAngularSpeed => maxAngularSpeed;
         public float BreakDistance => breakDistance;
+        public bool GroundPlaneFollow => groundPlaneFollow;
+        public float SoloHorizontalMaxForce => soloHorizontalMaxForce;
+        public float SoloMaxLinearSpeed => soloMaxLinearSpeed > 0f ? soloMaxLinearSpeed : maxLinearSpeed;
         public LayerMask AcquisitionLayers => acquisitionLayers;
     }
 }
