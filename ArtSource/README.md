@@ -17,7 +17,7 @@ The restored heart source is `Props/HEART-ASTRA-007/HEART-ASTRA-007.blend` (form
 
 Unity currently imports table/scalpel under Assets/OnlyVolunteers/Props. Other props await style review and intentional integration. The player prototype and its source/license evidence remain under Assets/OnlyVolunteers/Art/Characters/Player_01.
 
-- Characters/NPC_BASE_01 — shared NPC body, plain outfit and facial shape keys. Current: NPC_BASE_01_v06.blend / .fbx, Previews/v06. v06 locally repairs saved v05: rigid sausage head/face/collar binding to Spine2, a fitted circular neckline, shoulder weights and mouth surface. 16,458 triangles; the 65-bone Mixamo rig and both Run Look Back variants remain. All-frame, diagnostic-pose and animated FBX checks passed. Visual acceptance and Unity integration remain pending. New animation imports must retain this skinning; human Neck/Head motion does not independently deform the sausage volume. Use distinct numbered filenames for every new revision.
+- Characters/NPC_BASE_01 — shared NPC body and facial keys. Current: NPC_BASE_01_v09.blend / .fbx, Previews/v09 (TASK-000049; v08 = TASK-000043–000048). From v07: light crew collar, sloped shoulders and closer sleeves; compact full-thickness elbows; thumb skinned to the hand; head-neck block 4.5 cm shorter; soft rounded cartoon hands (wider fuller palm, shorter thicker closed fingers); the sausage now bends softly on the existing Neck/Head bones with a baked spring lag. 16,458 triangles, 65 Mixamo bones (names/parents unchanged) and both Run Look Back variants retained. Visual acceptance and Unity integration remain pending. Use a distinct numbered filename for each revision.
 
 ## Fedya's next prop choices
 

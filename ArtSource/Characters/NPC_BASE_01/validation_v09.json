@@ -1,0 +1,959 @@
+{
+  "revision": "NPC_BASE_01_v09",
+  "source_model": "NPC_BASE_01_v07.blend",
+  "source_motion": "Run Look Back.fbx",
+  "topology_update": {
+    "elbow_control_rows": [
+      0.32,
+      0.365,
+      0.39,
+      0.41,
+      0.43,
+      0.455,
+      0.5
+    ],
+    "collar": "Low crew neckline with thin folded edge; original connectivity and rigid Spine2 rim weights retained.",
+    "lower_neck_extra_loops": 2,
+    "wrist_control_rows": [
+      0.59,
+      0.615,
+      0.63,
+      0.64,
+      0.655,
+      0.675,
+      0.705,
+      0.745
+    ],
+    "hands": "connected palm and four digits; six main-finger rows, five thumb rows; topology-authored digit masks protect the palm"
+  },
+  "source_motion_sha256": "b9d8bb3c0f25bb5e20fda14cb35df035810bc0748dbca2ae394d6251fdc45d4e",
+  "bones": 65,
+  "bone_parents": {
+    "mixamorig:Hips": null,
+    "mixamorig:Spine": "mixamorig:Hips",
+    "mixamorig:Spine1": "mixamorig:Spine",
+    "mixamorig:Spine2": "mixamorig:Spine1",
+    "mixamorig:Neck": "mixamorig:Spine2",
+    "mixamorig:Head": "mixamorig:Neck",
+    "mixamorig:HeadTop_End": "mixamorig:Head",
+    "mixamorig:RightShoulder": "mixamorig:Spine2",
+    "mixamorig:RightArm": "mixamorig:RightShoulder",
+    "mixamorig:RightForeArm": "mixamorig:RightArm",
+    "mixamorig:RightHand": "mixamorig:RightForeArm",
+    "mixamorig:RightHandThumb1": "mixamorig:RightHand",
+    "mixamorig:RightHandThumb2": "mixamorig:RightHandThumb1",
+    "mixamorig:RightHandThumb3": "mixamorig:RightHandThumb2",
+    "mixamorig:RightHandThumb4": "mixamorig:RightHandThumb3",
+    "mixamorig:RightHandIndex1": "mixamorig:RightHand",
+    "mixamorig:RightHandIndex2": "mixamorig:RightHandIndex1",
+    "mixamorig:RightHandIndex3": "mixamorig:RightHandIndex2",
+    "mixamorig:RightHandIndex4": "mixamorig:RightHandIndex3",
+    "mixamorig:RightHandMiddle1": "mixamorig:RightHand",
+    "mixamorig:RightHandMiddle2": "mixamorig:RightHandMiddle1",
+    "mixamorig:RightHandMiddle3": "mixamorig:RightHandMiddle2",
+    "mixamorig:RightHandMiddle4": "mixamorig:RightHandMiddle3",
+    "mixamorig:RightHandRing1": "mixamorig:RightHand",
+    "mixamorig:RightHandRing2": "mixamorig:RightHandRing1",
+    "mixamorig:RightHandRing3": "mixamorig:RightHandRing2",
+    "mixamorig:RightHandRing4": "mixamorig:RightHandRing3",
+    "mixamorig:RightHandPinky1": "mixamorig:RightHand",
+    "mixamorig:RightHandPinky2": "mixamorig:RightHandPinky1",
+    "mixamorig:RightHandPinky3": "mixamorig:RightHandPinky2",
+    "mixamorig:RightHandPinky4": "mixamorig:RightHandPinky3",
+    "mixamorig:LeftShoulder": "mixamorig:Spine2",
+    "mixamorig:LeftArm": "mixamorig:LeftShoulder",
+    "mixamorig:LeftForeArm": "mixamorig:LeftArm",
+    "mixamorig:LeftHand": "mixamorig:LeftForeArm",
+    "mixamorig:LeftHandThumb1": "mixamorig:LeftHand",
+    "mixamorig:LeftHandThumb2": "mixamorig:LeftHandThumb1",
+    "mixamorig:LeftHandThumb3": "mixamorig:LeftHandThumb2",
+    "mixamorig:LeftHandThumb4": "mixamorig:LeftHandThumb3",
+    "mixamorig:LeftHandIndex1": "mixamorig:LeftHand",
+    "mixamorig:LeftHandIndex2": "mixamorig:LeftHandIndex1",
+    "mixamorig:LeftHandIndex3": "mixamorig:LeftHandIndex2",
+    "mixamorig:LeftHandIndex4": "mixamorig:LeftHandIndex3",
+    "mixamorig:LeftHandMiddle1": "mixamorig:LeftHand",
+    "mixamorig:LeftHandMiddle2": "mixamorig:LeftHandMiddle1",
+    "mixamorig:LeftHandMiddle3": "mixamorig:LeftHandMiddle2",
+    "mixamorig:LeftHandMiddle4": "mixamorig:LeftHandMiddle3",
+    "mixamorig:LeftHandRing1": "mixamorig:LeftHand",
+    "mixamorig:LeftHandRing2": "mixamorig:LeftHandRing1",
+    "mixamorig:LeftHandRing3": "mixamorig:LeftHandRing2",
+    "mixamorig:LeftHandRing4": "mixamorig:LeftHandRing3",
+    "mixamorig:LeftHandPinky1": "mixamorig:LeftHand",
+    "mixamorig:LeftHandPinky2": "mixamorig:LeftHandPinky1",
+    "mixamorig:LeftHandPinky3": "mixamorig:LeftHandPinky2",
+    "mixamorig:LeftHandPinky4": "mixamorig:LeftHandPinky3",
+    "mixamorig:RightUpLeg": "mixamorig:Hips",
+    "mixamorig:RightLeg": "mixamorig:RightUpLeg",
+    "mixamorig:RightFoot": "mixamorig:RightLeg",
+    "mixamorig:RightToeBase": "mixamorig:RightFoot",
+    "mixamorig:RightToe_End": "mixamorig:RightToeBase",
+    "mixamorig:LeftUpLeg": "mixamorig:Hips",
+    "mixamorig:LeftLeg": "mixamorig:LeftUpLeg",
+    "mixamorig:LeftFoot": "mixamorig:LeftLeg",
+    "mixamorig:LeftToeBase": "mixamorig:LeftFoot",
+    "mixamorig:LeftToe_End": "mixamorig:LeftToeBase"
+  },
+  "fps": 30,
+  "frames": [
+    1,
+    68
+  ],
+  "actions": [
+    "RunLookBack_RootMotion",
+    "RunLookBack_InPlace"
+  ],
+  "stride_scale": 0.7091831103064794,
+  "ground_offset_m": 0.037074929654598236,
+  "finger_mapping": "Index, Middle, Ring; Thumb and Pinky retained without skin weights",
+  "meshes": {
+    "Body_Base": {
+      "vertices": 4474,
+      "triangles": 8912
+    },
+    "Face_Expressions": {
+      "vertices": 736,
+      "triangles": 1410
+    },
+    "Outfit_Shorts": {
+      "vertices": 839,
+      "triangles": 1600
+    },
+    "Outfit_Socks": {
+      "vertices": 72,
+      "triangles": 136
+    },
+    "Outfit_Shoes": {
+      "vertices": 288,
+      "triangles": 560
+    },
+    "Outfit_TShirt": {
+      "vertices": 1998,
+      "triangles": 3840
+    }
+  },
+  "materials": [
+    "Eyes_Ivory",
+    "Face_Dark",
+    "Shirt_Oat",
+    "Shoes_Ink",
+    "Shorts_Slate",
+    "Skin_Warm",
+    "Sole_and_Socks"
+  ],
+  "total_triangles": 16458,
+  "finger_pose_adaptation": {
+    "main_digit_local_rotation_scale": 0.55,
+    "thumb_and_wrist_motion": "unchanged",
+    "reason": "short thick cartoon fingers cannot accommodate the source human closed-fist curl"
+  },
+  "upper_repair": {
+    "rigid_bone": "mixamorig:Spine2",
+    "rigid_head_vertices": 654,
+    "mouth_vertices": [
+      716,
+      717,
+      718,
+      719,
+      720,
+      721,
+      722,
+      723,
+      724,
+      725,
+      726,
+      727,
+      728,
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735
+    ],
+    "mouth_surface": "ten paired strips, conforming to head with 2 mm offset in every shape key",
+    "collar_boundary_vertices": 48,
+    "collar_shape": "Replaced by v07 low crew opening; see joint_refinement."
+  },
+  "joint_refinement": {
+    "neckline": "flat crew opening, lower in front; hidden head base extended to meet it",
+    "elbow_blend_x_m": [
+      0.33,
+      0.49
+    ],
+    "thumb": "broad metacarpal/proximal/distal blends; palm core unchanged"
+  },
+  "appearance_refinement": {
+    "skin_material": "Skin_Warm",
+    "skin_base_color_linear_rgba": [
+      0.63,
+      0.24,
+      0.105,
+      1
+    ],
+    "main_finger_length_scale_from_knuckle": 1.12,
+    "main_finger_root_abs_x_m": 0.745,
+    "finger_bones": "rest lengths matched; names, hierarchy, weights and rotation tracks retained"
+  },
+  "v08_refinement": {
+    "head": {
+      "removed_neck_band_m": 0.045,
+      "compressed_z_m": [
+        1.245,
+        1.37
+      ],
+      "head_top_z_m": 1.7050000429153442,
+      "bones_moved": [
+        "mixamorig:Head tail",
+        "mixamorig:HeadTop_End"
+      ],
+      "face_unchanged": true
+    },
+    "shirt": {
+      "collar": "thin crew band at the neck base: front dip 0.028 m, about 0.004 m thick lip, no rolled edge",
+      "shoulders": "slope from the collar band to the sleeves, no flat yoke ledge",
+      "sleeve_gap_to_arm_m": "about 0.007-0.015 (v07: 0.010-0.031)",
+      "sleeve_vertices_weighted_from_arm": 742,
+      "topology": "identical to v07; weights kept by vertex index"
+    },
+    "elbows": {
+      "method": "per-vertex least-squares fit to an evenly thick bent tube, hinge at the existing elbow joint",
+      "tube_centreline_radius_m": 0.05,
+      "fit_angles_deg": [
+        30,
+        50,
+        70,
+        90,
+        105,
+        120
+      ],
+      "blend_span_abs_x_m": [
+        0.37,
+        0.45
+      ],
+      "vertices": 768
+    },
+    "thumb": {
+      "thumb_skin": "bound to Hand only; Thumb1-4 bones and their tracks stay in the rig without skin influence",
+      "vertices": 322
+    },
+    "hidden_body": {
+      "vertices": 119,
+      "parts": "thighs above z 0.60 inside the shorts and the hidden torso core"
+    }
+  },
+  "v09_refinement": {
+    "hands": {
+      "main_finger_length_scale_from_v07": 0.9,
+      "finger_width_scale": 1.25,
+      "finger_thickness_scale": 1.12,
+      "finger_spacing_scale": 1.04,
+      "palm_width_scale": 1.06,
+      "palm_mid_thickness_scale": 1.2,
+      "thumb_thickness_scale": 1.12,
+      "thumb": "skinned to Hand, rests 25 deg toward the palm and 12 deg toward the fingers"
+    },
+    "fingers_in_clips": {
+      "kept": "curl about each finger bone local X",
+      "max_removed_spread_twist_deg": 34.57
+    },
+    "soft_sausage": {
+      "weights": {
+        "spine2_to_neck_z_m": [
+          1.245,
+          1.4
+        ],
+        "neck_to_head_z_m": [
+          1.4,
+          1.56
+        ]
+      },
+      "bones": {
+        "Neck": [
+          1.21,
+          1.45
+        ],
+        "Head_pivot": 1.45
+      },
+      "spring": {
+        "frequency_hz": 2.2,
+        "damping_ratio": 0.35,
+        "tip_z_m": 1.62,
+        "max_bend_deg": 10
+      },
+      "clips": {
+        "max_bend_deg": 10.0,
+        "mean_bend_deg": 4.37
+      },
+      "unity": "clips carry the baked lag; gameplay-driven lag (turns/stops in game) needs a small runtime spring on Neck/Head at integration"
+    }
+  },
+  "skin_validation": {
+    "status": "PASS",
+    "unweighted_vertices": 0,
+    "max_influences": 4,
+    "max_weight_sum_error": 4.377216100692749e-08,
+    "all_68_frames_finite": true,
+    "in_place_min_shoe_z_m": 0.008000003173947334
+  },
+  "animated_fbx_roundtrip": {
+    "status": "PASS",
+    "bones": 65,
+    "meshes": 6,
+    "actions": [
+      "RunLookBack_RootMotion",
+      "RunLookBack_InPlace"
+    ],
+    "sample_frames": [
+      1,
+      20,
+      40,
+      68
+    ],
+    "max_vertex_error_m": 1.5104297972357017e-06
+  },
+  "joint_refinement_validation": {
+    "rigid_head_face_collar_max_drift_m": 1.2644054553268208e-07,
+    "mouth_min_clearance_m": 0.0019358694553375244,
+    "run_frames": 68,
+    "diagnostic_poses": [
+      "Rest",
+      "ArmsDown",
+      "ArmsRaised",
+      "Reach",
+      "TorsoTwist",
+      "HumanNeckMotionIgnored",
+      "Elbow90",
+      "Elbow120",
+      "ThumbSpread",
+      "ThumbFlex"
+    ],
+    "crossings": {
+      "run_1": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_2": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_3": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_4": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_5": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_6": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_7": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_8": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_9": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_10": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_11": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_12": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_13": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_14": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_15": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_16": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_17": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_18": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_19": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_20": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_21": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_22": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_23": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_24": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_25": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_26": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_27": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_28": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_29": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_30": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_31": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_32": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_33": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_34": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_35": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_36": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_37": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_38": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_39": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_40": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_41": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_42": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_43": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_44": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_45": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_46": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_47": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_48": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_49": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_50": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_51": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_52": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_53": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_54": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_55": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_56": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_57": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_58": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_59": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_60": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_61": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_62": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_63": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_64": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_65": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_66": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_67": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "run_68": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "Rest": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "ArmsDown": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "ArmsRaised": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "Reach": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "TorsoTwist": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "HumanNeckMotionIgnored": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "Elbow90": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "Elbow120": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "ThumbSpread": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      },
+      "ThumbFlex": {
+        "body_shirt": 0,
+        "shirt_self": 0,
+        "arm_hand_self": 0,
+        "shorts_body": 0
+      }
+    },
+    "elbow_crease_contacts": {
+      "run_1": 59,
+      "run_2": 61,
+      "run_3": 65,
+      "run_4": 65,
+      "run_5": 73,
+      "run_6": 76,
+      "run_7": 71,
+      "run_8": 65,
+      "run_9": 59,
+      "run_10": 61,
+      "run_11": 61,
+      "run_12": 59,
+      "run_13": 59,
+      "run_14": 59,
+      "run_15": 108,
+      "run_16": 120,
+      "run_17": 118,
+      "run_18": 118,
+      "run_19": 119,
+      "run_20": 114,
+      "run_21": 108,
+      "run_22": 108,
+      "run_23": 108,
+      "run_24": 112,
+      "run_25": 112,
+      "run_26": 118,
+      "run_27": 118,
+      "run_28": 116,
+      "run_29": 118,
+      "run_30": 114,
+      "run_31": 106,
+      "run_32": 67,
+      "run_33": 65,
+      "run_34": 65,
+      "run_35": 67,
+      "run_36": 98,
+      "run_37": 112,
+      "run_38": 114,
+      "run_39": 114,
+      "run_40": 110,
+      "run_41": 102,
+      "run_42": 108,
+      "run_43": 108,
+      "run_44": 108,
+      "run_45": 110,
+      "run_46": 120,
+      "run_47": 121,
+      "run_48": 120,
+      "run_49": 120,
+      "run_50": 120,
+      "run_51": 122,
+      "run_52": 120,
+      "run_53": 118,
+      "run_54": 118,
+      "run_55": 112,
+      "run_56": 112,
+      "run_57": 122,
+      "run_58": 120,
+      "run_59": 122,
+      "run_60": 126,
+      "run_61": 131,
+      "run_62": 135,
+      "run_63": 135,
+      "run_64": 126,
+      "run_65": 120,
+      "run_66": 59,
+      "run_67": 61,
+      "run_68": 59,
+      "Elbow90": 126,
+      "Elbow120": 154
+    },
+    "hand_garment_contacts": {
+      "run_67": 32
+    },
+    "finger_side_contacts": {
+      "run_1": 64,
+      "run_2": 64,
+      "run_3": 64,
+      "run_4": 64,
+      "run_5": 66,
+      "run_6": 66,
+      "run_7": 68,
+      "run_8": 68,
+      "run_9": 66,
+      "run_10": 68,
+      "run_11": 68,
+      "run_12": 68,
+      "run_13": 68,
+      "run_14": 68,
+      "run_15": 68,
+      "run_16": 66,
+      "run_17": 66,
+      "run_18": 66,
+      "run_19": 66,
+      "run_20": 66,
+      "run_21": 66,
+      "run_22": 64,
+      "run_23": 64,
+      "run_24": 64,
+      "run_25": 64,
+      "run_26": 64,
+      "run_27": 64,
+      "run_28": 64,
+      "run_29": 64,
+      "run_30": 64,
+      "run_31": 64,
+      "run_32": 64,
+      "run_33": 64,
+      "run_34": 64,
+      "run_35": 64,
+      "run_36": 64,
+      "run_37": 64,
+      "run_38": 64,
+      "run_39": 64,
+      "run_40": 64,
+      "run_41": 64,
+      "run_42": 64,
+      "run_43": 64,
+      "run_44": 64,
+      "run_45": 66,
+      "run_46": 66,
+      "run_47": 66,
+      "run_48": 66,
+      "run_49": 66,
+      "run_50": 66,
+      "run_51": 66,
+      "run_52": 66,
+      "run_53": 66,
+      "run_54": 68,
+      "run_55": 68,
+      "run_56": 68,
+      "run_57": 68,
+      "run_58": 66,
+      "run_59": 66,
+      "run_60": 66,
+      "run_61": 66,
+      "run_62": 66,
+      "run_63": 66,
+      "run_64": 66,
+      "run_65": 66,
+      "run_66": 64,
+      "run_67": 64,
+      "run_68": 64,
+      "Rest": 68,
+      "ArmsDown": 76,
+      "ArmsRaised": 76,
+      "Reach": 75,
+      "TorsoTwist": 78,
+      "HumanNeckMotionIgnored": 78,
+      "Elbow90": 73,
+      "Elbow120": 77,
+      "ThumbSpread": 68,
+      "ThumbFlex": 68
+    }
+  }
+}

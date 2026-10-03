@@ -16,7 +16,7 @@ assert scene['npc_asset_revision']==stem
 rig=next(o for o in scene.objects if o.type=='ARMATURE')
 meshes=[o for o in bpy.data.collections['NPC_BASE_01'].objects if o.type=='MESH']
 assert len(meshes)==6 and len(rig.data.bones)==65
-assert len([ac for ac in bpy.data.actions if any(s.target_id_type=='OBJECT' for s in ac.slots)])==2
+assert len([ac for ac in bpy.data.actions if any(s.target_id_type=='OBJECT' for s in ac.slots)])==len(report['actions'])
 assert {b.name:b.parent.name if b.parent else None for b in rig.data.bones}==report['bone_parents']
 assert not rig.constraints and not any(p.constraints for p in rig.pose.bones)
 stats={};max_error=0;max_influences=0
@@ -38,7 +38,8 @@ triangle_count=sum(d['triangles'] for d in stats.values())
 assert triangle_count==report['total_triangles'] and triangle_count<17000
 assert stats==report['meshes']
 face=bpy.data.objects['Face_Expressions']
-assert {'Blink','Happy','Worried','Surprised'}.issubset(face.data.shape_keys.key_blocks.keys())
+face_keys=set(report['v10_face']['shape_keys']) if 'v10_face' in report else {'Blink','Happy','Worried','Surprised'}
+assert face_keys.issubset(face.data.shape_keys.key_blocks.keys())
 assert all(k.value==0 for k in face.data.shape_keys.key_blocks)
 def use(action):
     rig.animation_data.action=action
@@ -49,9 +50,10 @@ def points(obj):
 expected={};root_locations={};min_sole=999
 for name in report['actions']:
     action=bpy.data.actions[name];use(action)
-    assert tuple(round(v) for v in action.frame_range)==(1,68)
+    last=report.get('clip_frames',{}).get(name,[1,68])[1]
+    assert tuple(round(v) for v in action.frame_range)==(1,last)
     expected[name]={};root_locations[name]=[]
-    for frame in range(1,69):
+    for frame in range(1,last+1):
         scene.frame_set(frame)
         root_locations[name].append((rig.matrix_world@rig.pose.bones['mixamorig:Hips'].matrix).translation.copy())
         for pb in rig.pose.bones:
@@ -62,7 +64,7 @@ for name in report['actions']:
             if name.endswith('InPlace'):
                 assert all(-2<point.x<2 and -2<point.y<2 and -.01<point.z<2.5 for point in ps),(frame,obj.name)
                 if obj.name=='Outfit_Shoes':min_sole=min(min_sole,min(point.z for point in ps))
-            if frame in [1,20,40,68]:expected[name].setdefault(frame,{})[obj.name]=ps
+            if frame in [1,20,40,68] or frame==last:expected[name].setdefault(frame,{})[obj.name]=ps
     if name.endswith('InPlace'):
         assert all(abs(p.x)<1e-5 and abs(p.y)<1e-5 for p in root_locations[name])
     else:assert (root_locations[name][-1]-root_locations[name][0]).length>.5
@@ -73,18 +75,18 @@ bpy.ops.import_scene.fbx(filepath=str(folder/(stem+'.fbx')),ignore_leaf_bones=Fa
 scene=bpy.context.scene;rig=next(o for o in scene.objects if o.type=='ARMATURE')
 meshes=[o for o in scene.objects if o.type=='MESH']
 assert len(rig.data.bones)==65 and len(meshes)==6
-assert len([ac for ac in bpy.data.actions if any(s.target_id_type=='OBJECT' for s in ac.slots)])==2
+assert len([ac for ac in bpy.data.actions if any(s.target_id_type=='OBJECT' for s in ac.slots)])==len(report['actions'])
 for obj in meshes:obj.data.calc_loop_triangles()
 assert sum(len(o.data.loop_triangles) for o in meshes)==triangle_count
 assert {m.name for o in meshes for m in o.data.materials}==set(report['materials'])
 assert {b.name:b.parent.name if b.parent else None for b in rig.data.bones}==report['bone_parents']
 assert sum(len(o.data.polygons) for o in meshes)>0
-assert {'Blink','Happy','Worried','Surprised'}.issubset(bpy.data.objects['Face_Expressions'].data.shape_keys.key_blocks.keys())
+assert face_keys.issubset(bpy.data.objects['Face_Expressions'].data.shape_keys.key_blocks.keys())
 max_distance=0
 for name,frames in expected.items():
     action=next(ac for ac in bpy.data.actions if ac.name.endswith(name) and any(s.target_id_type=='OBJECT' for s in ac.slots))
     use(action)
-    assert tuple(round(v) for v in action.frame_range)==(1,68)
+    assert tuple(round(v) for v in action.frame_range)==(1,report.get('clip_frames',{}).get(name,[1,68])[1])
     for frame,original in frames.items():
         scene.frame_set(frame)
         for obj in meshes:

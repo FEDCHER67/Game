@@ -46,7 +46,7 @@ def bridge(faces,a,b):
     for j in range(len(a)):
         faces.append((a[j],a[(j+1)%len(a)],b[(j+1)%len(a)],b[j]))
 
-def tshirt(mat,collection):
+def tshirt(mat,collection,crew=False,light=False):
     vs=[];fs=[];rings=[];neck=[];n=24
     # Broad shoulder saddle, two complete rows around each armhole, and a
     # circular turned collar. The collar field survives the applied subdivision.
@@ -55,10 +55,35 @@ def tshirt(mat,collection):
               (1.180,.174,.115,0),(1.235,.173,.125,1),
               (1.247,.151,.138,1),(1.259,.138,.138,1),
               (1.260,.132,.132,1),(1.255,.127,.127,1),(1.244,.127,.127,1)]
-    for z,rx,ry,bind in sections:
+    if crew:
+        sections[6]=(1.180,.174,.134,0)
+        sections[7]=(1.235,.173,.140,1)
+        sections[8]=(1.224,.145,.142,1)
+        sections[9]=(1.217,.135,.135,1)
+        sections[10]=(1.217,.130,.130,1)
+        sections[11]=(1.216,.126,.126,1)
+        sections[12]=(1.213,.126,.126,1)
+    if light:
+        # v08: thin crew band at the neck base, shoulders sloping to the sleeves.
+        sections[6]=(1.180,.172,.130,0)
+        sections[7]=(1.224,.168,.135,1)
+        for k,r in zip(range(8,13),[.133,.1295,.1262,.1232,.1222]):sections[k]=(0,r,r,1)
+    for k,(z,rx,ry,bind) in enumerate(sections):
         ring=[]
         for j in range(n):
-            a=j*2*math.pi/n;ring.append(len(vs));vs.append((rx*math.cos(a),ry*math.sin(a),z))
+            a=j*2*math.pi/n;zz=z
+            if crew:
+                front=max(0,-math.sin(a))**1.5;back=max(0,math.sin(a))**1.5
+                if k==6:zz-=.045*front
+                elif k==7:zz-=.073*front+.015*back
+                elif k==8:zz-=.050*front+.005*back
+                elif k>=9:zz-=.036*front+.005*back
+            if light:
+                front=max(0,-math.sin(a));back=max(0,math.sin(a))
+                if k==6:zz-=.015*front**1.5
+                elif k==7:zz-=.032*front**2+.010*back**2
+                elif k>=8:zz=1.242-.028*front**1.5-.004*back**1.5+[-.011,-.003,.001,-.004,-.016][k-8]
+            ring.append(len(vs));vs.append((rx*math.cos(a),ry*math.sin(a),zz))
             neck.append(bind)
         rings.append(ring)
     side_panels={(center+j)%n for center in (0,12) for j in range(-3,3)}
@@ -73,11 +98,15 @@ def tshirt(mat,collection):
         start=-3*math.pi/4 if sign==1 else -math.pi/4
         angles=[start+sign*j*2*math.pi/len(boundary) for j in range(len(boundary))]
         last=boundary
-        for x,ry,rz in [(.193,.067,.066),(.215,.062,.062),(.242,.057,.058),
-                        (.272,.052,.055),(.285,.050,.053),(.282,.047,.050)]:
+        sleeve=[(.193,.067,.066,1.180),(.215,.062,.062,1.180),(.242,.057,.058,1.180),
+                (.272,.052,.055,1.180),(.285,.050,.053,1.180),(.282,.047,.050,1.180)]
+        if light:
+            sleeve=[(.190,.057,.053,1.176),(.212,.0535,.0505,1.177),(.238,.051,.048,1.177),
+                    (.262,.0495,.047,1.177),(.279,.0505,.048,1.177),(.276,.0475,.0455,1.177)]
+        for x,ry,rz,zc in sleeve:
             new=[]
             for a in angles:
-                new.append(len(vs));vs.append((sign*x,ry*math.cos(a),1.180+rz*math.sin(a)));neck.append(0)
+                new.append(len(vs));vs.append((sign*x,ry*math.cos(a),zc+rz*math.sin(a)));neck.append(0)
             bridge(fs,last,new);last=new
     # Turned lower hem, smooth and horizontal.
     inner=[]
