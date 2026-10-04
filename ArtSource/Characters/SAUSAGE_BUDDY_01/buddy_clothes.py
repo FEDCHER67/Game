@@ -141,9 +141,9 @@ def legwear(name, waist, crotch_z, legs, mats, cuff=None, leg_x=B.LEG_X, n=16, s
     return G.from_data(name, vs, fs, mats[0], True, idx, mats[1:], subdiv=subdiv)
 
 
-def socks(name, base, stripe, stripes, top=0.300, seg=14):
+def socks(name, base, stripe, stripes, top=0.300, seg=14, rows=(0.090, 0.120, 0.170, 0.220), lip=True):
     vs, fs, idx = [], [], []
-    zs = sorted({0.090, 0.120, 0.170, 0.220, top - 0.004, top} | {z for s in stripes for z in s})
+    zs = sorted(set(rows) | ({top - 0.004} if lip else set()) | {top} | {z for s in stripes for z in s})
     for sign in (1, -1):
         rings = []
         for z in zs:
@@ -174,7 +174,8 @@ def sneaker(name, sign, upper, sole, high=False, seg=14):
     """Chunky cartoon sneaker around the foot: thick sole slab + rounded upper; toes turned out 6 deg."""
     yaw = Matrix.Rotation(math.radians(-6 * sign), 3, 'Z')
     cx = sign * B.LEG_X
-    ys = [0.096, 0.086, 0.060, 0.022, -0.020, -0.064, -0.108, -0.150, -0.184, -0.208, -0.224, -0.231]
+    rsh = G.res('shoe', ys=(0.096, 0.086, 0.060, 0.022, -0.020, -0.064, -0.108, -0.150, -0.184, -0.208, -0.224, -0.231), bottom=4)
+    ys = list(rsh['ys'])
     def half_w(y):
         t = (0.096 - y) / 0.327
         return 0.055 + 0.026 * math.sin(math.pi * min(1.0, t * 1.12)) - (0.030 * smoothstep(0.82, 1.0, t))
@@ -207,8 +208,9 @@ def sneaker(name, sign, upper, sole, high=False, seg=14):
             a = math.pi * j / (ru['seg'] - 1)
             ring.append(len(vs)); vs.append((cx + w * math.cos(a), y, z0 + (h - z0) * (max(0.0, math.sin(a)) ** 0.85)))
         ring_b = []
-        for j in range(4):
-            x = cx + w * (-1 + 2 * (j + 1) / 5)
+        nb = rsh['bottom']
+        for j in range(nb):
+            x = cx + w * (-1 + 2 * (j + 1) / (nb + 1))
             ring_b.append(len(vs)); vs.append((x, y, z0))
         rings.append(ring + ring_b)
     for a, b in zip(rings, rings[1:]):
@@ -234,12 +236,16 @@ def shoe_weights(sign):
 def laces(name, sign, top_h, yaw, material):
     cx = sign * B.LEG_X
     out = []
+    r = G.res('lace', seg=6, pts=4, caps=True)
     for k, y in enumerate((-0.005, -0.035, -0.065, -0.095)):
         z = top_h(y) + 0.002
-        pts = [Vector((cx - 0.030, y, z - 0.010)), Vector((cx - 0.012, y - 0.003, z + 0.003)), Vector((cx + 0.012, y - 0.003, z + 0.003)), Vector((cx + 0.030, y, z - 0.010))]
+        if r['pts'] == 3:   # one arched span; the ends sink into the upper, so no caps are needed
+            pts = [Vector((cx - 0.030, y, z - 0.010)), Vector((cx, y - 0.003, z + 0.004)), Vector((cx + 0.030, y, z - 0.010))]
+        else:
+            pts = [Vector((cx - 0.030, y, z - 0.010)), Vector((cx - 0.012, y - 0.003, z + 0.003)), Vector((cx + 0.012, y - 0.003, z + 0.003)), Vector((cx + 0.030, y, z - 0.010))]
         piv = Vector((cx, 0, 0))
         pts = [piv + yaw @ (p - piv) for p in pts]
-        out.append(G.tube(f'{name}_{k}', pts, 0.0042, material, **G.res('lace', seg=6)))
+        out.append(G.tube(f'{name}_{k}', pts, 0.0042, material, seg=r['seg'], caps=r['caps']))
     return out
 
 
@@ -313,16 +319,18 @@ def ellipse(cx, cz, rx, rz, n=20, rot=0.0):
 def hotdog(prefix, cx, cz, length, height, rot, targets, offset, mats, outline=None):
     """Flat sausage print/patch: optional white outline, sausage body, three dark grill marks, light shine."""
     body_m, grill_m, shine_m = mats
+    r = G.res('print', n=24, grill=10, shine=12, step=0.010)
     parts = []
     if outline:
-        parts.append(G.decal(prefix + '_Outline', ellipse(cx, cz, length / 2 + 0.008, height / 2 + 0.008, 24, rot), FRONT(), targets, offset, outline))
+        parts.append(G.decal(prefix + '_Outline', ellipse(cx, cz, length / 2 + 0.008, height / 2 + 0.008, r['n'], rot), FRONT(), targets, offset, outline, step=r['step']))
         offset += 0.0015
-    parts.append(G.decal(prefix + '_Body', ellipse(cx, cz, length / 2, height / 2, 24, rot), FRONT(), targets, offset, body_m))
+    parts.append(G.decal(prefix + '_Body', ellipse(cx, cz, length / 2, height / 2, r['n'], rot), FRONT(), targets, offset, body_m, step=r['step']))
     c, s = math.cos(rot), math.sin(rot)
     for k in (-1, 0, 1):
         gx, gz = cx + k * length * 0.22 * c, cz + k * length * 0.22 * s
-        parts.append(G.decal(f'{prefix}_Grill_{k}', ellipse(gx, gz, height * 0.10, height * 0.34, 10, rot + 0.5), FRONT(), targets, offset + 0.0015, grill_m))
-    parts.append(G.decal(prefix + '_Shine', ellipse(cx - length * 0.05 * c, cz + height * 0.22, length * 0.30, height * 0.08, 12, rot), FRONT(), targets, offset + 0.0015, shine_m))
+        parts.append(G.decal(f'{prefix}_Grill_{k}', ellipse(gx, gz, height * 0.10, height * 0.34, r['grill'], rot + 0.5), FRONT(), targets, offset + 0.0015, grill_m))
+    parts.append(G.decal(prefix + '_Shine', ellipse(cx - length * 0.05 * c, cz + height * 0.22, length * 0.30, height * 0.08, r['shine'], rot), FRONT(), targets,
+                         offset + 0.0015, shine_m))
     return parts
 
 
@@ -333,7 +341,7 @@ def text_arc(name, text, cz, radius, a0, a1, up, ink, target, size=0.034):
         ang = math.radians(a0 + (a1 - a0) * (i + 0.5) / len(text))
         ang = math.pi - ang if up else ang
         cu = bpy.data.curves.new(f'{name}_{i}', 'FONT')
-        cu.body = ch; cu.size = size; cu.align_x = 'CENTER'; cu.align_y = 'CENTER'; cu.resolution_u = 3
+        cu.body = ch; cu.size = size; cu.align_x = 'CENTER'; cu.align_y = 'CENTER'; cu.resolution_u = G.res('text', resolution=3)['resolution']
         try:
             cu.offset = 0.0012
         except Exception:
@@ -368,7 +376,8 @@ TEE_SLEEVE = [(.212, .074), (.24, .070), (.28, .067), (.32, .065), (.338, .063),
 
 def tee(name, color):
     m = mat(name + '_Fabric', color, 0.85)
-    return torso_garment(name, TEE_ROWS, 6, TEE_SLEEVE, (.806, .180, .120, -.010), [m], **G.res('top', n=24, subdiv=1))
+    r = G.res('tee', rows=TEE_ROWS, arm_row=6, sleeve=TEE_SLEEVE)
+    return torso_garment(name, r['rows'], r['arm_row'], r['sleeve'], (.806, .180, .120, -.010), [m], **G.res('top', n=24, subdiv=1))
 
 
 WAIST = [(.880, .182, .124), (.868, .184, .125), (.822, .186, .124), (.784, .188, .123)]
@@ -403,14 +412,16 @@ def variant_a(body):
             (1.266, .162, .160, .002), (1.258, .157, .154, .002), (1.246, .157, .152, .002)]
     sleeve = [(.22, .080), (.25, .078), (.29, .076), (.34, .074), (.39, .072), (.44, .070), (.49, .068), (.54, .066), (.575, .064),
               (.586, .056), (.600, .055), (.622, .054), (.630, .050), (.622, .046)]
-    hoodie = torso_garment('A_Hoodie', rows, 7, sleeve, (.750, .174, .118, -.010), [red, rib], rib_rows=(0,), cuff_from=9, **G.res('top', n=24, subdiv=1))
+    rh = G.res('hoodie', rows=rows, arm_row=7, sleeve=sleeve, cuff_from=9)
+    hoodie = torso_garment('A_Hoodie', rh['rows'], rh['arm_row'], rh['sleeve'], (.750, .174, .118, -.010), [red, rib], rib_rows=(0,),
+                           cuff_from=rh['cuff_from'], **G.res('top', n=24, subdiv=1))
     transfer(hoodie, src)
     out = [hoodie]
     # Hood: soft roll around the back of the neck, open at the front where the drawstrings come out.
-    rh = G.res('hood', seg=14, subdiv=1)
+    rh = G.res('hood', seg=14, subdiv=1, rings=27)
     vs, fs, rings = [], [], []
-    for k in range(27):
-        phi = math.radians(-152 + 304 * k / 26)
+    for k in range(rh['rings']):
+        phi = math.radians(-152 + 304 * k / (rh['rings'] - 1))
         t = math.cos(phi / 2) ** 2
         R = 0.176 + 0.050 * t
         c = Vector((R * math.sin(phi), 0.004 + R * math.cos(phi) * 1.02, 1.268 - 0.068 * t))
@@ -434,17 +445,19 @@ def variant_a(body):
         c2 = G.tube(f'A_Aglet_{s}', [(s * 0.045, -0.199, 1.048), (s * 0.045, -0.199, 1.022)], 0.0082, cord, **G.res('cord', seg=8))
         for o in (c1, c2):
             transfer(o, src, lambda p, w: {P + 'Spine2': 1.0} if p.z > 1.16 else w); out.append(o)
-    pocket = G.decal('A_Pocket', [(-0.135, 0.795), (0.135, 0.795), (0.108, 0.975), (-0.108, 0.975)], FRONT(), [hoodie], 0.004, red, thickness=0.010,
-                     **G.res('big_decal', step=0.010))
+    rp = G.res('pocket', **G.res('big_decal', step=0.010))
+    pocket = G.decal('A_Pocket', [(-0.135, 0.795), (0.135, 0.795), (0.108, 0.975), (-0.108, 0.975)], FRONT(), [hoodie], 0.004, red, thickness=0.010, **rp)
     out.append(transfer(pocket, weight_source([hoodie])))
     for s in (1, -1):
         slot = G.decal(f'A_PocketSlot_{s}', [(s * 0.126, 0.822), (s * 0.136, 0.822), (s * 0.111, 0.970), (s * 0.101, 0.970)], FRONT(), [pocket, hoodie], 0.0025, dark)
         out.append(transfer(slot, weight_source([hoodie])))
     denim = mat('A_Shorts_Denim', (84, 112, 152), 0.9)
-    shorts = legwear('A_Shorts', WAIST, .742, [(.70, .084), (.65, .082), (.61, .080), (.600, .076), (.606, .071)], [denim],
+    shorts = legwear('A_Shorts', WAIST, .742, G.res('shorts_a', legs=[(.70, .084), (.65, .082), (.61, .080), (.600, .076), (.606, .071)])['legs'], [denim],
                      **G.res('bottoms', n=16, subdiv=1))
     out.append(transfer(shorts, src))
-    sk = socks('A_Socks', mat('A_Socks_White', (242, 240, 234), 0.85), mat('A_Socks_Red', (196, 54, 50), 0.85), [(0.250, 0.263), (0.274, 0.287)], **G.res('socks', seg=14))
+    rs = G.res('socks', seg=14, base=(0.090, 0.120, 0.170, 0.220), lip=True)
+    sk = socks('A_Socks', mat('A_Socks_White', (242, 240, 234), 0.85), mat('A_Socks_Red', (196, 54, 50), 0.85), [(0.250, 0.263), (0.274, 0.287)],
+               seg=rs['seg'], rows=rs['base'], lip=rs['lip'])
     out.append(transfer(sk, src))
     stripe = mat('A_Shoe_Stripe', (196, 62, 54), 0.7)
     for s, (up, so, top_h, yaw), objs in shoes_pair('A', (238, 228, 210), (246, 242, 232)):
@@ -453,7 +466,7 @@ def variant_a(body):
             for k, off in enumerate((-0.012, 0.012)):
                 pts = [(-0.050 + off, 0.040), (-0.034 + off, 0.040), (0.010 + off, 0.108), (-0.006 + off, 0.108)]
                 axes = ((side_sign * 0.7 + s * B.LEG_X, 0, 0), (0, -side_sign, 0), (0, 0, 1), (-side_sign, 0, 0))
-                d = G.decal(f'A_ShoeStripe_{s}_{side_sign}_{k}', pts, axes, [up], 0.0018, stripe)
+                d = G.decal(f'A_ShoeStripe_{s}_{side_sign}_{k}', pts, axes, [up], 0.0018, stripe, **G.res('shoe_stripe'))
                 set_weights(d, [shoe_weights(s)(d.matrix_world @ v.co) for v in d.data.vertices]); out.append(d)
     return out
 
@@ -510,23 +523,28 @@ def variant_b(body, face):
         transfer(o, ssrc); out.append(o)
     olive = mat('B_Cargo_Olive', (96, 106, 62), 0.9)
     olive_d = mat('B_Cargo_Pocket', (80, 90, 50), 0.9)
-    cargo = legwear('B_CargoShorts', WAIST, .742, [(.70, .094), (.62, .092), (.55, .090), (.505, .088), (.492, .084), (.499, .079)], [olive],
-                     **G.res('bottoms', n=16, subdiv=1))
+    cargo = legwear('B_CargoShorts', WAIST, .742, G.res('cargo_b', legs=[(.70, .094), (.62, .092), (.55, .090), (.505, .088), (.492, .084), (.499, .079)])['legs'],
+                    [olive], **G.res('bottoms', n=16, subdiv=1))
     transfer(cargo, src); out.append(cargo)
     csrc = weight_source([cargo])
     for s in (1, -1):
         axes = ((s * 0.7 + s * B.LEG_X, 0, 0), (0, -s, 0), (0, 0, 1), (-s, 0, 0))
-        pk = G.decal(f'B_CargoPocket_{s}', [(-0.052, 0.545), (0.052, 0.545), (0.052, 0.655), (-0.052, 0.655)], axes, [cargo], 0.004, olive_d, thickness=0.009)
-        fl = G.decal(f'B_CargoFlap_{s}', [(-0.056, 0.640), (0.056, 0.640), (0.056, 0.672), (-0.056, 0.672)], axes, [cargo], 0.014, olive, thickness=0.006)
+        pk = G.decal(f'B_CargoPocket_{s}', [(-0.052, 0.545), (0.052, 0.545), (0.052, 0.655), (-0.052, 0.655)], axes, [cargo], 0.004, olive_d, thickness=0.009,
+                     **G.res('cargo_pocket'))
+        fl = G.decal(f'B_CargoFlap_{s}', [(-0.056, 0.640), (0.056, 0.640), (0.056, 0.672), (-0.056, 0.672)], axes, [cargo], 0.014, olive, thickness=0.006,
+                     **G.res('cargo_flap'))
         out += [transfer(pk, csrc), transfer(fl, csrc)]
-    sk = socks('B_Socks', mat('B_Socks_White', (242, 240, 234), 0.85), mat('B_Socks_Blue', (52, 86, 156), 0.85), [(0.240, 0.252), (0.262, 0.274)], top=0.285, **G.res('socks', seg=14))
+    rs = G.res('socks', seg=14, base=(0.090, 0.120, 0.170, 0.220), lip=True)
+    sk = socks('B_Socks', mat('B_Socks_White', (242, 240, 234), 0.85), mat('B_Socks_Blue', (52, 86, 156), 0.85), [(0.240, 0.252), (0.262, 0.274)], top=0.285,
+               seg=rs['seg'], rows=rs['base'], lip=rs['lip'])
     out.append(transfer(sk, src))
     white = mat('B_Toe_White', (244, 240, 230), 0.6)
     for s, (up, so, top_h, yaw), objs in shoes_pair('B', (44, 64, 118), (244, 240, 230), high=True):
         out += objs
         cx = s * B.LEG_X
-        cap = G.decal(f'B_ToeCap_{s}', [(cx + 0.060 * math.cos(a), 0.034 + 0.040 * math.sin(a)) for a in [math.pi * k / 12 for k in range(13)]],
-                      FRONT(), [up], 0.0022, white)
+        rt = G.res('toe_cap', n=13, step=0.010)
+        cap = G.decal(f'B_ToeCap_{s}', [(cx + 0.060 * math.cos(a), 0.034 + 0.040 * math.sin(a)) for a in [math.pi * k / (rt['n'] - 1) for k in range(rt['n'])]],
+                      FRONT(), [up], 0.0022, white, step=rt['step'])
         set_weights(cap, [shoe_weights(s)(cap.matrix_world @ v.co) for v in cap.data.vertices]); out.append(cap)
     return out
 

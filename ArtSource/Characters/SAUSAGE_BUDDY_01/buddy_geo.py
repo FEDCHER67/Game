@@ -8,6 +8,7 @@ from mathutils.geometry import delaunay_2d_cdt
 COLLECTION = None
 MATS = {}
 PART_TRIS = {}      # part object name -> triangles, recorded by join() for the per-part report
+RANGES = {}         # joined object name -> [(part name, first vertex, vertex count)], for drop()
 
 # Resolution per procedural part. 'full' = the v03 geometry (every builder default); 'crowd' (v04+) replaces the
 # Catmull-Clark pass with denser exact rings where the silhouette needs them and drops hidden detail.
@@ -24,6 +25,52 @@ LODS = {
         'sole': dict(seg=12, subdiv=0, round_ends=True), 'upper': dict(seg=14, subdiv=0, round_ends=True), 'lace': dict(seg=4),
         'cap_crown': dict(seg=32, rows=8), 'cap_peak': dict(u=10, v=4), 'cap_button': dict(seg=10, rings=6),
         'tongue': dict(seg=12, rings=8), 'big_decal': dict(step=0.020),
+    },
+    # v05: ~6-7.5k tris. The face (eyes, rims, pupils, shines, brows, mouth) keeps the 'crowd' resolution; the head ring is
+    # dense only across the face (front +-56 deg); hands, clothes and shoes get far fewer rings; skin hidden under the
+    # clothes is built (the clothes take their weights from it) and then dropped ('drop', per variant).
+    'low': {
+        'head': dict(seg=24, subdiv=0, dome=7, front=(56.25, 10),
+                     rows=((1.10, 0.66), (1.17, 0.88), (1.215, 0.99), (1.25, 1.0), (1.608, 1.0))),
+        'nose': dict(seg=14, rings=9), 'ear': dict(seg=10, rings=6), 'ear_inner': dict(seg=8, rings=5),
+        'torso': dict(seg=12, subdiv=0),
+        'arm': dict(seg=10, subdiv=0, rows=((.10, .046), (.21, .046), (.32, .044), (.40, .042), (.46, .040), (.54, .037),
+                                             (.62, .033), (.645, .031))),
+        'palm': dict(seg=12, subdiv=0, rows=((.625, .032, .029), (.645, .045, .030), (.668, .054, .030), (.705, .058, .028), (.744, .052, .024),
+                                             (.754, .044, .021))),
+        'finger': dict(seg=8, subdiv=0, shaft=3, tip=3),
+        'leg': dict(seg=10, subdiv=0, cap_start=False, cap_end=False,
+                    rows=((.72, .055), (.60, .051), (.52, .048), (.44, .046), (.36, .044), (.28, .043), (.20, .041))),
+        'eye': dict(seg=16, rings=10), 'pupil': dict(seg=12, rings=8), 'shine': dict(seg=8, rings=6),
+        'brow': dict(seg=6), 'mouth': dict(seg=6),
+        'top': dict(n=16, subdiv=0),
+        'hoodie': dict(arm_row=5, cuff_from=6,
+                       rows=((.735, .184, .126, -.012), (.750, .192, .132, -.012), (.770, .204, .140, -.014), (.86, .211, .147, -.016),
+                             (.98, .212, .149, -.012), (1.10, .218, .152, 0.0), (1.17, .218, .156, .002), (1.235, .206, .158, .002),
+                             (1.255, .174, .165, .002), (1.266, .162, .160, .002), (1.246, .157, .152, .002)),
+                       sleeve=((.22, .080), (.30, .076), (.38, .073), (.44, .070), (.50, .068), (.575, .064),
+                               (.586, .056), (.622, .054), (.630, .049), (.620, .045))),
+        'tee': dict(arm_row=4,
+                    rows=((.795, .188, .126, -.010), (.806, .192, .128, -.010), (.90, .194, .130, -.012), (1.02, .194, .130, -.008),
+                          (1.10, .200, .140, 0.0), (1.17, .198, .146, .002), (1.235, .186, .150, .002), (1.253, .158, .154, .001),
+                          (1.259, .151, .146, 0), (1.250, .149, .142, 0)),
+                    sleeve=((.212, .074), (.27, .068), (.325, .064), (.338, .062), (.332, .057))),
+        'hood': dict(seg=12, subdiv=0, rings=13), 'hood_pouch': dict(seg=10, rings=6),
+        'cord': dict(seg=4), 'pocket': dict(step=0.045, edge=0.045),
+        'bottoms': dict(n=16, subdiv=0, crotch=0.95),
+        'shorts_a': dict(legs=((.66, .082), (.600, .077), (.606, .071))),
+        'cargo_b': dict(legs=((.62, .092), (.505, .088), (.492, .083), (.499, .078))),
+        'socks': dict(seg=10, base=(0.120,), lip=False),
+        'shoe': dict(ys=(0.096, 0.060, 0.022, -0.020, -0.075, -0.130, -0.184, -0.218, -0.231), bottom=2),
+        'sole': dict(seg=8, subdiv=0, round_ends=True), 'upper': dict(seg=9, subdiv=0, round_ends=True),
+        'lace': dict(seg=3, pts=3, caps=False), 'shoe_stripe': dict(step=0.05, edge=0.02), 'toe_cap': dict(n=7, step=0.03),
+        'cap_crown': dict(seg=16, rows=5), 'cap_peak': dict(u=8, v=2), 'cap_button': dict(seg=6, rings=4),
+        'print': dict(n=12, grill=6, shine=8, step=0.02), 'text': dict(resolution=2),
+        'cargo_pocket': dict(step=0.026, edge=0.026), 'cargo_flap': dict(step=0.03, edge=0.028),
+        'tongue': dict(seg=12, rings=8),
+        # hidden skin, removed after the clothes copied its weights: (part, test, value); test on the rest-pose position
+        'drop': {'A': (('Skin_Torso', None, 0), ('Skin_Arm', 'absx<', 0.55)),
+                 'B': (('Skin_Torso', None, 0), ('Skin_Arm', 'absx<', 0.15), ('Skin_Head', 'z>', 1.69))},
     },
 }
 LOD = LODS['full']
@@ -139,13 +186,25 @@ def ellipsoid(name, center, radii, material, rot=None, seg=16, rings=10, smooth=
     return from_bm(name, bm, material, smooth)
 
 
-def loft(name, sections, material, seg=16, cap_start=True, cap_end=True, subdiv=0, smooth=True, mat_rows=None, extra=()):
+def ring_angles(seg, front=None):
+    """Ring vertex angles. front=(half_deg, n): n even steps across +-half_deg around -v (the face side), the rest spread
+    over the back. Symmetric in u."""
+    if not front:
+        return [2 * math.pi * j / seg for j in range(seg)]
+    half, n = math.radians(front[0]), front[1]
+    a0 = -math.pi / 2 - half
+    out = [a0 + 2 * half * j / n for j in range(n)]
+    back = seg - n
+    return out + [-math.pi / 2 + half + (2 * math.pi - 2 * half) * j / back for j in range(back)]
+
+
+def loft(name, sections, material, seg=16, cap_start=True, cap_end=True, subdiv=0, smooth=True, mat_rows=None, extra=(), front=None):
     """sections: list of (center Vector, axis_u Vector, axis_v Vector, ru, rv) -> rings bridged in order."""
     vs, fs, rings, idx = [], [], [], []
+    angles = ring_angles(seg, front)
     for c, u, v, ru, rv in sections:
         ring = []
-        for j in range(seg):
-            a = 2 * math.pi * j / seg
+        for a in angles:
             ring.append(len(vs)); vs.append(Vector(c) + Vector(u) * (ru * math.cos(a)) + Vector(v) * (rv * math.sin(a)))
         rings.append(ring)
     for k, (a, b) in enumerate(zip(rings, rings[1:])):
@@ -179,6 +238,7 @@ def tube(name, path, radius, material, seg=8, caps=True, subdiv=0, frame_up=None
 def join(target, parts):
     """Join mesh objects into target (world space), keeping materials and vertex groups by name."""
     PART_TRIS.setdefault(target.name, sum(len(f.vertices) - 2 for f in target.data.polygons))
+    ranges = RANGES.setdefault(target.name, [(target.name, 0, len(target.data.vertices))])
     for p in parts:
         mw = target.matrix_world.inverted() @ p.matrix_world
         names = [m.name for m in target.data.materials]
@@ -197,6 +257,7 @@ def join(target, parts):
             f.material_index = remap[f.material_index]
         tmp = bpy.data.meshes.new('tmp'); pb.to_mesh(tmp); pb.free()
         PART_TRIS.setdefault(p.name, sum(len(f.vertices) - 2 for f in tmp.polygons))
+        ranges.append((p.name, off, len(tmp.vertices)))
         bm.from_mesh(tmp); bm.to_mesh(target.data); bm.free()
         bpy.data.meshes.remove(tmp)
         # vertex groups by name
@@ -207,9 +268,34 @@ def join(target, parts):
             for gg in v.groups:
                 target.vertex_groups[p.vertex_groups[gg.group].name].add([off + i], gg.weight, 'REPLACE')
         bpy.data.objects.remove(p)
-    for poly in target.data.polygons:
-        pass
     return target
+
+
+def drop(ob, key, rules):
+    """Delete vertices (and their faces) of joined parts hidden under clothes. rules: (part prefix, test, value) with test
+    None (whole part), 'absx<' or 'z>' on the world position. Weights of the remaining vertices are kept. Returns tris removed."""
+    def hit(name, p):
+        for prefix, test, val in rules:
+            if name.startswith(prefix) and (test is None or (test == 'absx<' and abs(p.x) < val) or (test == 'z>' and p.z > val)):
+                return True
+        return False
+    owner = {}
+    for name, first, count in RANGES[key]:
+        for i in range(first, first + count):
+            owner[i] = name
+    mw = ob.matrix_world
+    bm = bmesh.new(); bm.from_mesh(ob.data); bm.verts.ensure_lookup_table()
+    dead = {v.index for v in bm.verts if hit(owner[v.index], mw @ v.co)}
+    removed = {}
+    for f in bm.faces:
+        if any(v.index in dead for v in f.verts):
+            n = owner[f.verts[0].index]
+            removed[n] = removed.get(n, 0) + len(f.verts) - 2
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.index in dead], context='VERTS')
+    bm.to_mesh(ob.data); bm.free()
+    for n, t in removed.items():
+        PART_TRIS[n] -= t
+    return removed
 
 
 def bvh_of(objs):
@@ -230,10 +316,18 @@ def inside(q, poly):
     return c
 
 
-def decal(name, outline, axes, targets, offset, material, step=0.010, thickness=0.0, smooth=False):
-    """2D outline in a plane (origin, u, v, ray) projected onto target surfaces at `offset`."""
+def decal(name, outline, axes, targets, offset, material, step=0.010, thickness=0.0, smooth=False, edge=0.0):
+    """2D outline in a plane (origin, u, v, ray) projected onto target surfaces at `offset`.
+    edge > 0 adds outline points at about that spacing (a coarse interior grid then still follows a curved target)."""
     origin, u, v, ray = (Vector(a) for a in axes)
     pts = [Vector(p) for p in outline]
+    if edge:
+        dense = []
+        for i, a in enumerate(pts):
+            b = pts[(i + 1) % len(pts)]
+            k = max(1, round((b - a).length / edge))
+            dense += [a.lerp(b, j / k) for j in range(k)]
+        pts = dense
     edges = [(i, (i + 1) % len(pts)) for i in range(len(pts))]
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts)))

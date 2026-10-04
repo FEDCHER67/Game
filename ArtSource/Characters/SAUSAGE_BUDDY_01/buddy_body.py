@@ -59,14 +59,15 @@ def side_of(p):
 def head_capsule(skin):
     secs = []
     # below the collar the capsule narrows so it never shows through tight shirts
-    for z, k in ((1.08, 0.62), (1.13, 0.74), (1.175, 0.90), (1.205, 0.99), (1.25, 1.0), (1.32, 1.0), (1.40, 1.0), (1.48, 1.0), (1.55, 1.0), (HEAD_CYL_TOP, 1.0)):
+    r = G.res('head', seg=24, subdiv=1, dome=6, front=None,
+              rows=((1.08, 0.62), (1.13, 0.74), (1.175, 0.90), (1.205, 0.99), (1.25, 1.0), (1.32, 1.0), (1.40, 1.0), (1.48, 1.0), (1.55, 1.0), (HEAD_CYL_TOP, 1.0)))
+    for z, k in r['rows']:
         secs.append(((0, 0, z), (1, 0, 0), (0, 1, 0), HEAD_R * k, HEAD_RY * k))
-    r = G.res('head', seg=24, subdiv=1, dome=6)
     # without subdivision the zero-radius pole ring is dropped: the end cap closes the dome instead
     for k in range(1, r['dome'] + (1 if r['subdiv'] else 0)):
         th = math.radians(90 * k / r['dome'])
         secs.append(((0, 0, HEAD_CYL_TOP + HEAD_R * math.sin(th)), (1, 0, 0), (0, 1, 0), HEAD_R * math.cos(th), HEAD_RY * math.cos(th)))
-    ob = G.loft('Skin_Head', secs, skin, seg=r['seg'], cap_start=True, cap_end=True, subdiv=r['subdiv'])
+    ob = G.loft('Skin_Head', secs, skin, seg=r['seg'], cap_start=True, cap_end=True, subdiv=r['subdiv'], front=r['front'])
     return weigh(ob, lambda p: chain(p.z, [(1.12, 'Spine2'), (1.20, 'Neck'), (1.26, 'Head')]))
 
 
@@ -102,9 +103,10 @@ def arms(skin):
     out = []
     for s in (1, -1):
         side = 'Left' if s > 0 else 'Right'
-        rows = [(.10, .046), (.16, .047), (.21, .046), (.28, .045), (.36, .043), (.43, .041), (.50, .039), (.57, .036), (.62, .033), (.645, .031)]
-        secs = [((s * x, 0, arm_z(x)), (0, 1, 0), (0, 0, 1), r, r * 1.02) for x, r in rows]
-        a = G.loft(f'Skin_Arm_{side}', secs, skin, **G.res('arm', seg=16, subdiv=1))
+        ra = G.res('arm', seg=16, subdiv=1, rows=((.10, .046), (.16, .047), (.21, .046), (.28, .045), (.36, .043), (.43, .041), (.50, .039),
+                                                     (.57, .036), (.62, .033), (.645, .031)))
+        secs = [((s * x, 0, arm_z(x)), (0, 1, 0), (0, 0, 1), r, r * 1.02) for x, r in ra.pop('rows')]
+        a = G.loft(f'Skin_Arm_{side}', secs, skin, **ra)
         weigh(a, lambda p, side=side: chain(abs(p.x), [(.12, 'Spine2'), (.17, side + 'Shoulder'), (.23, side + 'Arm'), (.40, side + 'Arm'),
                                                          (.47, side + 'ForeArm'), (.60, side + 'ForeArm'), (.655, side + 'Hand')]))
         out.append(a)
@@ -112,25 +114,27 @@ def arms(skin):
     return out
 
 
-def capsule_along(name, start, direction, length, radius, material, seg=12, tip_taper=0.92, subdiv=1):
+def capsule_along(name, start, direction, length, radius, material, seg=12, tip_taper=0.92, subdiv=1, shaft=5, tip=4):
     d = Vector(direction).normalized()
     u = d.orthogonal().normalized(); v = d.cross(u).normalized()
     secs = []
-    for k in range(5):
-        t = length * (k / 4) * 0.82
-        secs.append((Vector(start) + d * t, u, v, radius * (1 - (1 - tip_taper) * k / 4), radius * (1 - (1 - tip_taper) * k / 4) * 0.92))
+    n = shaft - 1
+    for k in range(shaft):
+        t = length * (k / n) * 0.82
+        secs.append((Vector(start) + d * t, u, v, radius * (1 - (1 - tip_taper) * k / n), radius * (1 - (1 - tip_taper) * k / n) * 0.92))
     base = Vector(start) + d * length * 0.82
     rt = radius * tip_taper
-    for k in range(1, 5 if subdiv else 4):       # unsubdivided: the end cap replaces the zero-radius tip ring
-        th = math.radians(22.5 * k)
+    for k in range(1, tip + 1 if subdiv else tip):       # unsubdivided: the end cap replaces the zero-radius tip ring
+        th = math.radians(90 / tip * k)
         secs.append((base + d * (rt * math.sin(th)), u, v, rt * math.cos(th), rt * math.cos(th) * 0.92))
     return G.loft(name, secs, material, seg=seg, cap_start=True, cap_end=True, subdiv=subdiv)
 
 
 def hand(s, side, skin):
-    rows = [(.625, .032, .029), (.645, .045, .030), (.668, .054, .030), (.695, .058, .029), (.722, .057, .027), (.744, .052, .024), (.754, .044, .021)]
-    secs = [((s * x, 0, 1.157), (0, 1, 0), (0, 0, 1), ry, rz) for x, ry, rz in rows]
-    palm = G.loft(f'Skin_Palm_{side}', secs, skin, **G.res('palm', seg=16, subdiv=1))
+    rp = G.res('palm', seg=16, subdiv=1, rows=((.625, .032, .029), (.645, .045, .030), (.668, .054, .030), (.695, .058, .029), (.722, .057, .027),
+                                               (.744, .052, .024), (.754, .044, .021)))
+    secs = [((s * x, 0, 1.157), (0, 1, 0), (0, 0, 1), ry, rz) for x, ry, rz in rp.pop('rows')]
+    palm = G.loft(f'Skin_Palm_{side}', secs, skin, **rp)
     weigh(palm, lambda p: chain(abs(p.x), [(.632, side + 'ForeArm'), (.662, side + 'Hand')]))
     parts = [palm]
     for digit, y, length in (('Index', -.035, .072), ('Middle', 0.0, .078), ('Ring', .035, .068)):
@@ -149,9 +153,10 @@ def legs(skin):
     out = []
     for s in (1, -1):
         side = 'Left' if s > 0 else 'Right'
-        rows = [(.82, .058), (.76, .056), (.66, .053), (.54, .049), (.44, .046), (.34, .044), (.22, .041), (.12, .039), (.085, .039)]
-        secs = [((s * LEG_X, 0, z), (1, 0, 0), (0, 1, 0), r, r) for z, r in rows]
-        l = G.loft(f'Skin_Leg_{side}', secs, skin, **G.res('leg', seg=14, subdiv=1))
+        rl = G.res('leg', seg=14, subdiv=1, rows=((.82, .058), (.76, .056), (.66, .053), (.54, .049), (.44, .046), (.34, .044), (.22, .041),
+                                                  (.12, .039), (.085, .039)))
+        secs = [((s * LEG_X, 0, z), (1, 0, 0), (0, 1, 0), r, r) for z, r in rl.pop('rows')]
+        l = G.loft(f'Skin_Leg_{side}', secs, skin, **rl)
         weigh(l, lambda p, side=side: mix(chain(p.z, [(.38, side + 'Leg'), (.48, side + 'UpLeg')]), {'Hips': 1.0}, smoothstep(.74, .86, p.z)))
         out.append(l)
     return out
@@ -163,6 +168,7 @@ def build_body(skin, nose_mat, inner_mat):
     G.join(body, parts[1:])
     body.name = 'Body'
     body.data.name = 'Body'
+    G.RANGES['Body'] = G.RANGES.pop('Skin_Torso')
     for p in body.data.polygons:
         p.use_smooth = True
     return body
