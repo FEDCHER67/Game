@@ -55,7 +55,7 @@ def rigid(ob, bone='Head'):
     return ob
 
 # ------------------------------------------------------------------ garment builders
-def torso_garment(name, rows, arm_row, sleeve, hem_inner, mats, rib_rows=(), cuff_from=None, n=24):
+def torso_garment(name, rows, arm_row, sleeve, hem_inner, mats, rib_rows=(), cuff_from=None, n=24, subdiv=1):
     """Rings around the torso, armholes cut from the side panels, sleeves grown along the arms."""
     vs, fs, idx, rings = [], [], [], []
     for z, rx, ry, dy in rows:
@@ -95,10 +95,10 @@ def torso_garment(name, rows, arm_row, sleeve, hem_inner, mats, rib_rows=(), cuf
     for j in range(n):
         fs.append((inner[j], inner[(j + 1) % n], rings[0][(j + 1) % n], rings[0][j]))
         idx.append(1 if 0 in rib_rows else 0)
-    return G.from_data(name, vs, fs, mats[0], True, idx, mats[1:], subdiv=1)
+    return G.from_data(name, vs, fs, mats[0], True, idx, mats[1:], subdiv=subdiv)
 
 
-def legwear(name, waist, crotch_z, legs, mats, cuff=None, leg_x=B.LEG_X, n=16):
+def legwear(name, waist, crotch_z, legs, mats, cuff=None, leg_x=B.LEG_X, n=16, subdiv=1, crotch=1.0):
     vs, fs, idx, rings = [], [], [], []
     for z, rx, ry in waist:
         ring = []
@@ -108,7 +108,7 @@ def legwear(name, waist, crotch_z, legs, mats, cuff=None, leg_x=B.LEG_X, n=16):
         rings.append(ring)
     for a, b in zip(rings, rings[1:]):
         G.bridge(fs, a, b); idx += [0] * n
-    rxb, ryb = waist[-1][1], waist[-1][2] - 0.006
+    rxb, ryb = waist[-1][1] * crotch, (waist[-1][2] - 0.006) * crotch     # crotch < 1: the pull-in subdivision used to give
     bottom = []
     for j in range(n):
         a = j * 2 * math.pi / n
@@ -138,7 +138,7 @@ def legwear(name, waist, crotch_z, legs, mats, cuff=None, leg_x=B.LEG_X, n=16):
         a = j * 2 * math.pi / n
         inner.append(len(vs)); vs.append(((rx0 - 0.008) * math.cos(a), (ry0 - 0.005) * math.sin(a), z0 - 0.004))
     G.bridge(fs, inner, rings[0]); idx += [0] * n
-    return G.from_data(name, vs, fs, mats[0], True, idx, mats[1:], subdiv=1)
+    return G.from_data(name, vs, fs, mats[0], True, idx, mats[1:], subdiv=subdiv)
 
 
 def socks(name, base, stripe, stripes, top=0.300, seg=14):
@@ -164,6 +164,12 @@ def socks(name, base, stripe, stripes, top=0.300, seg=14):
     return G.from_data(name, vs, fs, base, True, idx, [stripe], subdiv=0)
 
 
+def round_ends(ys, heel, toe):
+    """Unsubdivided stand-in for the rounding Catmull-Clark gave the shoe ends: one shrunken section just beyond
+    the heel (+y) and the toe (-y). Returns [(y, shrink)]."""
+    return [(ys[0] + heel, 0.62)] + [(y, 1.0) for y in ys] + [(ys[-1] - toe, 0.62)]
+
+
 def sneaker(name, sign, upper, sole, high=False, seg=14):
     """Chunky cartoon sneaker around the foot: thick sole slab + rounded upper; toes turned out 6 deg."""
     yaw = Matrix.Rotation(math.radians(-6 * sign), 3, 'Z')
@@ -180,18 +186,25 @@ def sneaker(name, sign, upper, sole, high=False, seg=14):
         return max(base, 0.076 + 0.03 * smoothstep(-0.231, -0.185, y))
     lift = lambda y: 0.011 * smoothstep(-0.16, -0.231, y)
     # sole
+    rs = G.res('sole', seg=12, subdiv=1, round_ends=False)
+    s_rows = round_ends(ys, 0.010, 0.008) if rs['round_ends'] else [(y, 1.0) for y in ys]
     s_secs = []
-    for y in ys:
-        w = half_w(y) + 0.004
-        s_secs.append(((cx, y, 0.021 + lift(y)), (1, 0, 0), (0, 0, 1), w, 0.022))
-    sole_ob = G.loft(name + '_Sole', s_secs, sole, seg=12, subdiv=1)
+    for y, k in s_rows:
+        yc = max(min(y, ys[0]), ys[-1])
+        w = (half_w(yc) + 0.004) * k
+        s_secs.append(((cx, y, 0.021 + lift(yc) + 0.004 * (1 - k)), (1, 0, 0), (0, 0, 1), w, 0.022 * (0.5 + 0.5 * k)))
+    sole_ob = G.loft(name + '_Sole', s_secs, sole, seg=rs['seg'], subdiv=rs['subdiv'])
     # upper: half-ellipse arch over the sole
+    ru = G.res('upper', seg=seg, subdiv=1, round_ends=False)
+    u_rows = round_ends(ys, 0.008, 0.006) if ru['round_ends'] else [(y, 1.0) for y in ys]
     vs, fs, rings = [], [], []
-    for y in ys:
-        w, h, z0 = half_w(y), top_h(y), 0.036 + lift(y)
+    for y, k in u_rows:
+        yc = max(min(y, ys[0]), ys[-1])
+        w, h, z0 = half_w(yc) * k, top_h(yc), 0.036 + lift(yc)
+        h = z0 + (h - z0) * (0.55 + 0.45 * k)
         ring = []
-        for j in range(seg):
-            a = math.pi * j / (seg - 1)
+        for j in range(ru['seg']):
+            a = math.pi * j / (ru['seg'] - 1)
             ring.append(len(vs)); vs.append((cx + w * math.cos(a), y, z0 + (h - z0) * (max(0.0, math.sin(a)) ** 0.85)))
         ring_b = []
         for j in range(4):
@@ -201,7 +214,7 @@ def sneaker(name, sign, upper, sole, high=False, seg=14):
     for a, b in zip(rings, rings[1:]):
         G.bridge(fs, a, b)
     fs.append(tuple(reversed(rings[0]))); fs.append(tuple(rings[-1]))
-    up = G.from_data(name + '_Upper', vs, fs, upper, True, subdiv=1)
+    up = G.from_data(name + '_Upper', vs, fs, upper, True, subdiv=ru['subdiv'])
     for o in (sole_ob, up):
         me = o.data
         piv = Vector((cx, 0, 0))
@@ -226,11 +239,11 @@ def laces(name, sign, top_h, yaw, material):
         pts = [Vector((cx - 0.030, y, z - 0.010)), Vector((cx - 0.012, y - 0.003, z + 0.003)), Vector((cx + 0.012, y - 0.003, z + 0.003)), Vector((cx + 0.030, y, z - 0.010))]
         piv = Vector((cx, 0, 0))
         pts = [piv + yaw @ (p - piv) for p in pts]
-        out.append(G.tube(f'{name}_{k}', pts, 0.0042, material, seg=6))
+        out.append(G.tube(f'{name}_{k}', pts, 0.0042, material, **G.res('lace', seg=6)))
     return out
 
 
-def dome(name, center, rx, ry, rz, z_cut, material, seg=32, ribs=0.0, cuff=None, front=None):
+def dome(name, center, rx, ry, rz, z_cut, material, seg=32, ribs=0.0, cuff=None, front=None, bands=10):
     vs, fs, idx, rings = [], [], [], []
     cx, cy, cz = center
     t_cut = math.acos(max(-1, min(1, (z_cut - cz) / rz)))
@@ -239,8 +252,8 @@ def dome(name, center, rx, ry, rz, z_cut, material, seg=32, ribs=0.0, cuff=None,
         z0, z1, rc = cuff
         rows += [(z0, rc * rx / max(rx, ry), rc * ry / max(rx, ry)), ((z0 + z1) / 2, (rc + 0.003) * rx / max(rx, ry), (rc + 0.003) * ry / max(rx, ry)),
                  (z1, rc * rx / max(rx, ry), rc * ry / max(rx, ry))]
-    for k in range(10):
-        t = t_cut * (1 - k / 10)
+    for k in range(bands):
+        t = t_cut * (1 - k / bands)
         rows.append((cz + rz * math.cos(t), rx * math.sin(t), ry * math.sin(t)))
     for z, ax, ay in rows:
         ring = []
@@ -355,7 +368,7 @@ TEE_SLEEVE = [(.212, .074), (.24, .070), (.28, .067), (.32, .065), (.338, .063),
 
 def tee(name, color):
     m = mat(name + '_Fabric', color, 0.85)
-    return torso_garment(name, TEE_ROWS, 6, TEE_SLEEVE, (.806, .180, .120, -.010), [m])
+    return torso_garment(name, TEE_ROWS, 6, TEE_SLEEVE, (.806, .180, .120, -.010), [m], **G.res('top', n=24, subdiv=1))
 
 
 WAIST = [(.880, .182, .124), (.868, .184, .125), (.822, .186, .124), (.784, .188, .123)]
@@ -390,10 +403,11 @@ def variant_a(body):
             (1.266, .162, .160, .002), (1.258, .157, .154, .002), (1.246, .157, .152, .002)]
     sleeve = [(.22, .080), (.25, .078), (.29, .076), (.34, .074), (.39, .072), (.44, .070), (.49, .068), (.54, .066), (.575, .064),
               (.586, .056), (.600, .055), (.622, .054), (.630, .050), (.622, .046)]
-    hoodie = torso_garment('A_Hoodie', rows, 7, sleeve, (.750, .174, .118, -.010), [red, rib], rib_rows=(0,), cuff_from=9)
+    hoodie = torso_garment('A_Hoodie', rows, 7, sleeve, (.750, .174, .118, -.010), [red, rib], rib_rows=(0,), cuff_from=9, **G.res('top', n=24, subdiv=1))
     transfer(hoodie, src)
     out = [hoodie]
     # Hood: soft roll around the back of the neck, open at the front where the drawstrings come out.
+    rh = G.res('hood', seg=14, subdiv=1)
     vs, fs, rings = [], [], []
     for k in range(27):
         phi = math.radians(-152 + 304 * k / 26)
@@ -403,32 +417,34 @@ def variant_a(body):
         radial = Vector((math.sin(phi), math.cos(phi), 0))
         a, b = 0.026 + 0.046 * t, 0.034 + 0.066 * t
         ring = []
-        for j in range(14):
-            ang = 2 * math.pi * j / 14
+        for j in range(rh['seg']):
+            ang = 2 * math.pi * j / rh['seg']
             ring.append(len(vs)); vs.append(c + radial * (a * math.cos(ang)) + Vector((0, 0, b * math.sin(ang))))
         rings.append(ring)
     for a_, b_ in zip(rings, rings[1:]):
         G.bridge(fs, a_, b_)
     fs.append(tuple(reversed(rings[0]))); fs.append(tuple(rings[-1]))
-    hood = G.from_data('A_Hood', vs, fs, red, True, subdiv=1)
-    pouch = G.ellipsoid('A_HoodPouch', (0, 0.170, 1.165), (0.125, 0.032, 0.100), red, seg=20, rings=12)
+    hood = G.from_data('A_Hood', vs, fs, red, True, subdiv=rh['subdiv'])
+    pouch = G.ellipsoid('A_HoodPouch', (0, 0.170, 1.165), (0.125, 0.032, 0.100), red, **G.res('hood_pouch', seg=20, rings=12))
     G.join(hood, [pouch])
     rigid(hood, 'Spine2'); out.append(hood)
     for s in (1, -1):
         path = [(s * 0.040, -0.168, 1.236), (s * 0.044, -0.192, 1.17), (s * 0.046, -0.198, 1.10), (s * 0.045, -0.199, 1.045)]
-        c1 = G.tube(f'A_Drawstring_{s}', path, 0.0062, cord, seg=8)
-        c2 = G.tube(f'A_Aglet_{s}', [(s * 0.045, -0.199, 1.048), (s * 0.045, -0.199, 1.022)], 0.0082, cord, seg=8)
+        c1 = G.tube(f'A_Drawstring_{s}', path, 0.0062, cord, **G.res('cord', seg=8))
+        c2 = G.tube(f'A_Aglet_{s}', [(s * 0.045, -0.199, 1.048), (s * 0.045, -0.199, 1.022)], 0.0082, cord, **G.res('cord', seg=8))
         for o in (c1, c2):
             transfer(o, src, lambda p, w: {P + 'Spine2': 1.0} if p.z > 1.16 else w); out.append(o)
-    pocket = G.decal('A_Pocket', [(-0.135, 0.795), (0.135, 0.795), (0.108, 0.975), (-0.108, 0.975)], FRONT(), [hoodie], 0.004, red, thickness=0.010)
+    pocket = G.decal('A_Pocket', [(-0.135, 0.795), (0.135, 0.795), (0.108, 0.975), (-0.108, 0.975)], FRONT(), [hoodie], 0.004, red, thickness=0.010,
+                     **G.res('big_decal', step=0.010))
     out.append(transfer(pocket, weight_source([hoodie])))
     for s in (1, -1):
         slot = G.decal(f'A_PocketSlot_{s}', [(s * 0.126, 0.822), (s * 0.136, 0.822), (s * 0.111, 0.970), (s * 0.101, 0.970)], FRONT(), [pocket, hoodie], 0.0025, dark)
         out.append(transfer(slot, weight_source([hoodie])))
     denim = mat('A_Shorts_Denim', (84, 112, 152), 0.9)
-    shorts = legwear('A_Shorts', WAIST, .742, [(.70, .084), (.65, .082), (.61, .080), (.600, .076), (.606, .071)], [denim])
+    shorts = legwear('A_Shorts', WAIST, .742, [(.70, .084), (.65, .082), (.61, .080), (.600, .076), (.606, .071)], [denim],
+                     **G.res('bottoms', n=16, subdiv=1))
     out.append(transfer(shorts, src))
-    sk = socks('A_Socks', mat('A_Socks_White', (242, 240, 234), 0.85), mat('A_Socks_Red', (196, 54, 50), 0.85), [(0.250, 0.263), (0.274, 0.287)])
+    sk = socks('A_Socks', mat('A_Socks_White', (242, 240, 234), 0.85), mat('A_Socks_Red', (196, 54, 50), 0.85), [(0.250, 0.263), (0.274, 0.287)], **G.res('socks', seg=14))
     out.append(transfer(sk, src))
     stripe = mat('A_Shoe_Stripe', (196, 62, 54), 0.7)
     for s, (up, so, top_h, yaw), objs in shoes_pair('A', (238, 228, 210), (246, 242, 232)):
@@ -450,10 +466,12 @@ def variant_b(body, face):
     saus = mat('B_Sausage', (196, 88, 66), 0.6)
     grill = mat('B_Sausage_Grill', (128, 50, 38), 0.7)
     shine = mat('B_Sausage_Shine', (226, 142, 112), 0.6)
-    crown = dome('B_Cap_Crown', (0, 0.006, 1.672), 0.141, 0.135, 0.136, 1.664, blue, seg=32, front=cream)
+    rc = G.res('cap_crown', seg=32, rows=10)
+    crown = dome('B_Cap_Crown', (0, 0.006, 1.672), 0.141, 0.135, 0.136, 1.664, blue, seg=rc['seg'], front=cream, bands=rc['rows'])
     G.solidify(crown, 0.007, offset=1.0)
     vs, fs = [], []
-    U, V = 12, 6
+    rp = G.res('cap_peak', u=12, v=6)
+    U, V = rp['u'], rp['v']
     for i in range(U + 1):
         th = math.radians(-62 + 124 * i / U)
         u = (i / U) * 2 - 1
@@ -469,10 +487,10 @@ def variant_b(body, face):
             fs.append((a, a + V + 1, a + V + 2, a + 1))
     peak = G.from_data('B_Cap_Peak', vs, fs, blue, True)
     G.solidify(peak, 0.009, offset=0.0)
-    button = G.ellipsoid('B_Cap_Button', (0, 0.006, 1.672 + 0.136 + 0.003), (0.013, 0.013, 0.006), blue)
+    button = G.ellipsoid('B_Cap_Button', (0, 0.006, 1.672 + 0.136 + 0.003), (0.013, 0.013, 0.006), blue, **G.res('cap_button', seg=16, rings=10))
     logo = hotdog('B_Cap_Logo', 0.0, 1.728, 0.090, 0.033, math.radians(6), [crown], 0.0025, (saus, grill, shine))
     tongue = G.ellipsoid('B_Tongue', (-0.031, B.head_surface_y(-0.031, 1.388, 0.014), 1.382), (0.0175, 0.0075, 0.025), mat('B_Tongue', (226, 112, 120), 0.4),
-                         rot=Matrix.Rotation(math.radians(-58), 3, 'X') @ Matrix.Rotation(math.radians(16), 3, 'Y'), seg=16, rings=10)
+                         rot=Matrix.Rotation(math.radians(-58), 3, 'X') @ Matrix.Rotation(math.radians(16), 3, 'Y'), **G.res('tongue', seg=16, rings=10))
     tongue_line = G.tube('B_Tongue_Groove', [(-0.031, B.head_surface_y(-0.031, 1.383, 0.024), 1.383), (-0.032, B.head_surface_y(-0.032, 1.370, 0.026), 1.369)],
                          0.0016, mat('B_Tongue_Groove', (176, 74, 84), 0.5), seg=6)
     for o in [crown, peak, button, tongue, tongue_line] + logo:
@@ -492,7 +510,8 @@ def variant_b(body, face):
         transfer(o, ssrc); out.append(o)
     olive = mat('B_Cargo_Olive', (96, 106, 62), 0.9)
     olive_d = mat('B_Cargo_Pocket', (80, 90, 50), 0.9)
-    cargo = legwear('B_CargoShorts', WAIST, .742, [(.70, .094), (.62, .092), (.55, .090), (.505, .088), (.492, .084), (.499, .079)], [olive])
+    cargo = legwear('B_CargoShorts', WAIST, .742, [(.70, .094), (.62, .092), (.55, .090), (.505, .088), (.492, .084), (.499, .079)], [olive],
+                     **G.res('bottoms', n=16, subdiv=1))
     transfer(cargo, src); out.append(cargo)
     csrc = weight_source([cargo])
     for s in (1, -1):
@@ -500,7 +519,7 @@ def variant_b(body, face):
         pk = G.decal(f'B_CargoPocket_{s}', [(-0.052, 0.545), (0.052, 0.545), (0.052, 0.655), (-0.052, 0.655)], axes, [cargo], 0.004, olive_d, thickness=0.009)
         fl = G.decal(f'B_CargoFlap_{s}', [(-0.056, 0.640), (0.056, 0.640), (0.056, 0.672), (-0.056, 0.672)], axes, [cargo], 0.014, olive, thickness=0.006)
         out += [transfer(pk, csrc), transfer(fl, csrc)]
-    sk = socks('B_Socks', mat('B_Socks_White', (242, 240, 234), 0.85), mat('B_Socks_Blue', (52, 86, 156), 0.85), [(0.240, 0.252), (0.262, 0.274)], top=0.285)
+    sk = socks('B_Socks', mat('B_Socks_White', (242, 240, 234), 0.85), mat('B_Socks_Blue', (52, 86, 156), 0.85), [(0.240, 0.252), (0.262, 0.274)], top=0.285, **G.res('socks', seg=14))
     out.append(transfer(sk, src))
     white = mat('B_Toe_White', (244, 240, 230), 0.6)
     for s, (up, so, top_h, yaw), objs in shoes_pair('B', (44, 64, 118), (244, 240, 230), high=True):
