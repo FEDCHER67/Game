@@ -3,7 +3,8 @@
 
   blender -b --factory-startup --python ArtSource/Characters/SAUSAGE_BUDDY_01/build_buddy.py -- --variant A --revision 1
   --stage look   : body + face + rig only, quick review renders into Previews/look_vNN
-  --lod full     : v03 geometry (Catmull-Clark on every loft); default 'crowd' is the v04 NPC budget (~12-15k tris)
+  --lod full     : v03 geometry (Catmull-Clark on every loft); default 'crowd' is the v04 NPC budget (~12-15k tris);
+  --lod low      : v05 budget (~6-7.5k tris): face as in 'crowd', coarser everything else, hidden skin removed
 Never overwrites an existing revision.
 """
 import argparse, json, re, sys
@@ -27,7 +28,7 @@ ap.add_argument('--variant', choices=['A', 'B', 'C'], default='A')
 ap.add_argument('--revision', type=int, required=True)
 ap.add_argument('--stage', choices=['look', 'dress', 'full'], default='full')
 ap.add_argument('--no-render', action='store_true')
-ap.add_argument('--lod', choices=['full', 'crowd'], default='crowd')
+ap.add_argument('--lod', choices=['full', 'crowd', 'low'], default='crowd')
 args, _ = ap.parse_known_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 REV = f'v{args.revision:02d}'
 if args.stage in ('look', 'dress'):
@@ -90,6 +91,8 @@ if args.stage != 'look':
     G.join(outfit, garments[1:])
     outfit.name = 'Outfit'; outfit.data.name = 'Outfit'
     skin_to_rig(outfit)
+    rules = G.LOD.get('drop', {}).get(args.variant)
+    dropped = G.drop(body, 'Body', rules) if rules else {}      # after the clothes copied their weights from this skin
 
 if args.stage in ('look', 'dress'):
     idle = A.pose_from_joints(rig, rest, A.idle_joints())
@@ -141,7 +144,8 @@ scene.frame_set(1)
 report = {'asset': STEM, 'variant': args.variant, 'height_m': None, 'bones': len(rig.data.bones),
           'rig_source': 'Mixamo "Run Look Back" skeleton (names, parents, rolls kept)', 'mixamo_leg_ratio': round(stride, 4),
           'animation': 'procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)',
-          'lod': args.lod, 'actions': {}, 'meshes': {}, 'grounding_offset_m': grounding}
+          'lod': args.lod, 'actions': {}, 'meshes': {}, 'grounding_offset_m': grounding,
+          'hidden_skin_removed_triangles': dict(sorted(dropped.items()))}
 for name in clips:
     a = bpy.data.actions[name]
     report['actions'][name] = [int(a.frame_range[0]), int(a.frame_range[1])]

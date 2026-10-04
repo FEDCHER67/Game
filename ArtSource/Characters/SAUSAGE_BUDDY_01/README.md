@@ -1,6 +1,6 @@
 # SAUSAGE_BUDDY_01 — NPC по картинке Феди (варианты A и B)
 
-Статус: **v04 — облегчённая v03 (~14 тыс. треугольников, см. `OPTIMIZATION_REPORT_v04.md`)**; v03 — сделано по прямому решению Феди (TASK-000086–000090)**, показано Феде; окончательная приёмка внешнего вида и согласование с линией Вадима (`NPC_BASE_01`) — открытый вопрос, см. TASK-000091.
+Статус: **v05 — low-poly черновик из облака (~7,3–7,4 тыс. треугольников, лицо как в v04, см. `OPTIMIZATION_REPORT_v05.md`)**, не принят; v04 — облегчённая v03 (~14 тыс., см. `OPTIMIZATION_REPORT_v04.md`); v03 — сделано по прямому решению Феди (TASK-000086–000090)**, показано Феде; окончательная приёмка внешнего вида и согласование с линией Вадима (`NPC_BASE_01`) — открытый вопрос, см. TASK-000091.
 
 ## Что это
 
@@ -15,17 +15,18 @@
 | Файл | Что это |
 | --- | --- |
 | `build_buddy.py` + `buddy_*.py` | Источник: тело/лицо (`buddy_body`), одежда (`buddy_clothes`), скелет и перенос движения (`buddy_rig`), анимация (`buddy_anim`), превью (`buddy_render`). |
+| `SAUSAGE_BUDDY_A_v05.blend/.fbx`, `SAUSAGE_BUDDY_B_v05.blend/.fbx` | Low-poly (`--lod low`): лицо и формы лица как в v04, всё остальное грубее, скрытая под одеждой кожа удалена. Пока не в репозитории — собрать локально, см. `OPTIMIZATION_REPORT_v05.md`. |
 | `SAUSAGE_BUDDY_A_v04.blend/.fbx`, `SAUSAGE_BUDDY_B_v04.blend/.fbx` | Облегчённые персонажи (`--lod crowd`): скелет + меши `Body`, `Outfit`, `Face`. Пока не в репозитории — собрать локально, см. `OPTIMIZATION_REPORT_v04.md`. |
 | `SAUSAGE_BUDDY_A_v03.blend/.fbx`, `SAUSAGE_BUDDY_B_v03.blend/.fbx` | Предыдущая ревизия (`--lod full`), 39–43 тыс. треугольников. |
-| `validation_{A,B}_v04.json`, `validation_{A,B}_v03.json` | Треугольники (в v04 и по частям, `part_triangles`), влияния костей, клипы, посадка на пол. |
-| `Previews/A_v04`, `Previews/B_v04`, `Previews/A_v03`, `Previews/B_v03` | Листы спереди/сбоку/сзади (T-поза), стойка 3/4, голова, `Panic_TurnFlee.gif`, `sheet.png`. |
+| `validation_{A,B}_v05.json`, `validation_{A,B}_v04.json`, `validation_{A,B}_v03.json` | Треугольники (с v04 и по частям, `part_triangles`; в v05 ещё `hidden_skin_removed_triangles`), влияния костей, клипы, посадка на пол. |
+| `Previews/A_v05`, `Previews/B_v05`, `Previews/A_v04`, `Previews/B_v04`, `Previews/A_v03`, `Previews/B_v03` | Листы спереди/сбоку/сзади (T-поза), стойка 3/4, голова, `Panic_TurnFlee.gif`, `sheet.png`; в v05 ещё `06_face_v04_vs_v05.png` (`buddy_face_compare.py`). |
 
 Сборка (из корня репозитория), никогда не перезаписывает существующую ревизию:
 
 ```
 blender -b --factory-startup --python ArtSource/Characters/SAUSAGE_BUDDY_01/build_buddy.py -- --variant B --revision 4
 ```
-`--stage look|dress` — быстрые обзорные рендеры без анимации и экспорта. `--lod crowd` (по умолчанию) — бюджет NPC толпы, `--lod full` — геометрия v03.
+`--stage look|dress` — быстрые обзорные рендеры без анимации и экспорта. `--lod crowd` (по умолчанию) — бюджет NPC толпы (v04), `--lod low` — v05 (~7 тыс.), `--lod full` — геометрия v03.
 
 ## Риг и анимация
 
@@ -37,6 +38,6 @@ blender -b --factory-startup --python ArtSource/Characters/SAUSAGE_BUDDY_01/buil
 
 ## Ограничения
 
-- v04: ~14 тыс. треугольников на персонажа; собрано `bpy` 5.0.1 (не Blender 5.2) и ещё не проверено в Unity.
+- v05: ~7,3–7,4 тыс. треугольников, v04: ~14 тыс.; оба собраны `bpy` 5.0.1 (не Blender 5.2) и ещё не проверены в Unity.
 - В Unity персонажи ещё не импортированы (нет префабов, Avatar/Animator, скрипта лица).
 - Набор эмоций Вадима (TASK-000050–000056, черновик v10) на это лицо не переносился.

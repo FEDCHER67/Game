@@ -1,0 +1,123 @@
+{
+  "asset": "SAUSAGE_BUDDY_A_v05",
+  "variant": "A",
+  "height_m": 1.747,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "low",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 2308,
+      "vertices": 1218,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose",
+        "Buddy_Skin_Inner"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 3020,
+      "vertices": 1675,
+      "materials": [
+        "A_Hoodie_Red",
+        "A_Hoodie_Rib",
+        "A_Drawstring",
+        "A_Hoodie_Shadow",
+        "A_Shorts_Denim",
+        "A_Socks_White",
+        "A_Socks_Red",
+        "A_Shoe_Upper",
+        "A_Shoe_Sole",
+        "A_Shoe_Lace",
+        "A_Shoe_Stripe"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 1972,
+      "vertices": 1008,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.001,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552
+  },
+  "hidden_skin_removed_triangles": {
+    "Skin_Arm_Left": 130,
+    "Skin_Arm_Right": 130,
+    "Skin_Torso": 240
+  },
+  "total_triangles": 7300,
+  "part_triangles": {
+    "A_Hoodie": 800,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Head": 528,
+    "A_Shoe_Upper": 476,
+    "A_Shoe_Sole": 352,
+    "Pupil": 336,
+    "A_Hood": 308,
+    "A_Shorts": 304,
+    "Skin_Palm": 288,
+    "Skin_Leg": 240,
+    "A_Socks": 240,
+    "Skin_Nose": 224,
+    "Skin_Ear": 200,
+    "Brow": 168,
+    "Skin_Index": 160,
+    "Skin_Middle": 160,
+    "Skin_Ring": 160,
+    "Skin_Thumb": 160,
+    "Shine": 160,
+    "Mouth": 156,
+    "A_Pocket": 132,
+    "Skin_EarInner": 128,
+    "A_HoodPouch": 100,
+    "A_Lace": 96,
+    "A_Drawstring": 64,
+    "A_ShoeStripe": 64,
+    "Skin_Arm": 60,
+    "A_PocketSlot": 52,
+    "A_Aglet": 32,
+    "Skin_Torso": 0
+  }
+}
