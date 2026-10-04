@@ -1,0 +1,894 @@
+{
+  "family": "MAP-FENCES-001",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); moving parts are children with the pivot on the hinge",
+  "uv": "metre-scale box projection (1 UV unit = 1 m)",
+  "description": "Tileable fence modules + posts + gates: Soviet concrete panel, village picket, elite stone/metal, canal railing.",
+  "assets": {
+    "FN_Concrete_Panel": {
+      "triangles": 396,
+      "triangle_budget": 600,
+      "size_m": [
+        2.84,
+        0.155,
+        2.4
+      ],
+      "bounds_min": [
+        -1.42,
+        -0.085,
+        0.0
+      ],
+      "bounds_max": [
+        1.42,
+        0.07,
+        2.4
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Concrete_Stain"
+      ],
+      "objects": {
+        "FN_Concrete_Panel": {
+          "triangles": 396,
+          "vertices": 264,
+          "faces": 198,
+          "materials": [
+            "MP_Concrete",
+            "MP_Concrete_Stain"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.8938,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Panel only; posts are FN_Concrete_Post. Relief on the -Y (street) side.",
+      "row": 3,
+      "tile_length_m": 3.0,
+      "height_m": 2.5,
+      "fbx": "FN_Concrete_Panel_v01.fbx"
+    },
+    "FN_Concrete_Post": {
+      "triangles": 56,
+      "triangle_budget": 100,
+      "size_m": [
+        0.3,
+        0.3,
+        2.5
+      ],
+      "bounds_min": [
+        -0.15,
+        -0.15,
+        0.0
+      ],
+      "bounds_max": [
+        0.15,
+        0.15,
+        2.5
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Concrete_Dark"
+      ],
+      "objects": {
+        "FN_Concrete_Post": {
+          "triangles": 56,
+          "vertices": 32,
+          "faces": 20,
+          "materials": [
+            "MP_Concrete_Dark",
+            "MP_Concrete"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1433,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Place at every panel joint (x = k*3.0 + 1.5).",
+      "row": 3,
+      "height_m": 2.5,
+      "fbx": "FN_Concrete_Post_v01.fbx"
+    },
+    "FN_Concrete_Gate": {
+      "triangles": 420,
+      "triangle_budget": 1000,
+      "size_m": [
+        4.86,
+        0.46,
+        2.7
+      ],
+      "bounds_min": [
+        -2.43,
+        -0.23,
+        0.0
+      ],
+      "bounds_max": [
+        2.43,
+        0.23,
+        2.7
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Concrete_Dark",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey",
+        "MP_Paint_Green",
+        "MP_Rust"
+      ],
+      "objects": {
+        "FN_Concrete_Gate": {
+          "triangles": 192,
+          "vertices": 112,
+          "faces": 72,
+          "materials": [
+            "MP_Concrete_Dark",
+            "MP_Concrete",
+            "MP_Metal_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.8719,
+          "mesh_validate_changed": false
+        },
+        "FN_Concrete_Gate_LeafL": {
+          "triangles": 108,
+          "vertices": 72,
+          "faces": 54,
+          "materials": [
+            "MP_Paint_Green",
+            "MP_Metal_Dark",
+            "MP_Rust"
+          ],
+          "origin_world": [
+            -2.01,
+            -0.08,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1906,
+          "mesh_validate_changed": false
+        },
+        "FN_Concrete_Gate_LeafR": {
+          "triangles": 120,
+          "vertices": 80,
+          "faces": 60,
+          "materials": [
+            "MP_Paint_Green",
+            "MP_Metal_Dark",
+            "MP_Rust",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            2.01,
+            -0.08,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1916,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Opening 4.0 m; leaves pivot on the hinge; rotating the left leaf +Z and the right leaf -Z (Blender) opens them inwards (+Y), negative angles open outwards (-Y); up to ~100 deg.",
+      "row": 3,
+      "gate_pitch_m": 4.4,
+      "opening_m": 4.0,
+      "fbx": "FN_Concrete_Gate_v01.fbx"
+    },
+    "FN_Wood_Panel": {
+      "triangles": 296,
+      "triangle_budget": 600,
+      "size_m": [
+        2.38,
+        0.079,
+        1.57
+      ],
+      "bounds_min": [
+        -1.19,
+        -0.086,
+        0.059
+      ],
+      "bounds_max": [
+        1.19,
+        -0.007,
+        1.629
+      ],
+      "materials": [
+        "MP_Wood",
+        "MP_Wood_Grey"
+      ],
+      "objects": {
+        "FN_Wood_Panel": {
+          "triangles": 296,
+          "vertices": 186,
+          "faces": 131,
+          "materials": [
+            "MP_Wood",
+            "MP_Wood_Grey"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0669,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "above_ground_min_z_ge_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Pickets + two rails; posts are FN_Wood_Post. Pickets on the -Y side, 6 cm above the ground.",
+      "row": 1,
+      "tile_length_m": 2.5,
+      "height_m": 1.6,
+      "fbx": "FN_Wood_Panel_v01.fbx"
+    },
+    "FN_Wood_Post": {
+      "triangles": 18,
+      "triangle_budget": 60,
+      "size_m": [
+        0.12,
+        0.12,
+        1.68
+      ],
+      "bounds_min": [
+        -0.06,
+        -0.06,
+        0.0
+      ],
+      "bounds_max": [
+        0.06,
+        0.06,
+        1.68
+      ],
+      "materials": [
+        "MP_Wood_Dark"
+      ],
+      "objects": {
+        "FN_Wood_Post": {
+          "triangles": 18,
+          "vertices": 13,
+          "faces": 11,
+          "materials": [
+            "MP_Wood_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0234,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Place at every joint (x = k*2.5 + 1.25).",
+      "row": 1,
+      "height_m": 1.6800000000000002,
+      "fbx": "FN_Wood_Post_v01.fbx"
+    },
+    "FN_Wood_Gate": {
+      "triangles": 196,
+      "triangle_budget": 600,
+      "size_m": [
+        1.26,
+        0.195,
+        1.8
+      ],
+      "bounds_min": [
+        -0.63,
+        -0.125,
+        0.0
+      ],
+      "bounds_max": [
+        0.63,
+        0.07,
+        1.8
+      ],
+      "materials": [
+        "MP_Metal_Dark",
+        "MP_Wood",
+        "MP_Wood_Dark"
+      ],
+      "objects": {
+        "FN_Wood_Gate": {
+          "triangles": 36,
+          "vertices": 26,
+          "faces": 22,
+          "materials": [
+            "MP_Wood_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0685,
+          "mesh_validate_changed": false
+        },
+        "FN_Wood_Gate_Leaf": {
+          "triangles": 160,
+          "vertices": 102,
+          "faces": 73,
+          "materials": [
+            "MP_Wood",
+            "MP_Metal_Dark"
+          ],
+          "origin_world": [
+            -0.5,
+            -0.03,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0306,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Wicket gate, opening 1.0 m, hinge on the left post; +Z rotation opens it inwards (+Y), -Z outwards.",
+      "row": 1,
+      "gate_pitch_m": 1.12,
+      "opening_m": 1.0,
+      "fbx": "FN_Wood_Gate_v01.fbx"
+    },
+    "FN_Elite_Panel": {
+      "triangles": 432,
+      "triangle_budget": 1000,
+      "size_m": [
+        2.5,
+        0.44,
+        2.39
+      ],
+      "bounds_min": [
+        -1.25,
+        -0.22,
+        0.0
+      ],
+      "bounds_max": [
+        1.25,
+        0.22,
+        2.39
+      ],
+      "materials": [
+        "MP_Gold",
+        "MP_Metal_Black",
+        "MP_Stone_Grey",
+        "MP_Stone_Light"
+      ],
+      "objects": {
+        "FN_Elite_Panel": {
+          "triangles": 432,
+          "vertices": 296,
+          "faces": 272,
+          "materials": [
+            "MP_Stone_Grey",
+            "MP_Stone_Light",
+            "MP_Metal_Black",
+            "MP_Gold"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.633,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Stone plinth with coping + wrought bars and gold spear tips; pillars are FN_Elite_Post.",
+      "row": 2,
+      "tile_length_m": 3.0,
+      "height_m": 2.4,
+      "fbx": "FN_Elite_Panel_v01.fbx"
+    },
+    "FN_Elite_Post": {
+      "triangles": 166,
+      "triangle_budget": 300,
+      "size_m": [
+        0.66,
+        0.66,
+        2.73
+      ],
+      "bounds_min": [
+        -0.33,
+        -0.33,
+        0.0
+      ],
+      "bounds_max": [
+        0.33,
+        0.33,
+        2.73
+      ],
+      "materials": [
+        "MP_Stone_Grey",
+        "MP_Stone_Light"
+      ],
+      "objects": {
+        "FN_Elite_Post": {
+          "triangles": 166,
+          "vertices": 97,
+          "faces": 81,
+          "materials": [
+            "MP_Stone_Grey",
+            "MP_Stone_Light"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.7951,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Stone pillar with cornice and ball; place at every joint (x = k*3.0 + 1.5).",
+      "row": 2,
+      "height_m": 2.73,
+      "fbx": "FN_Elite_Post_v01.fbx"
+    },
+    "FN_Elite_Gate": {
+      "triangles": 1136,
+      "triangle_budget": 1500,
+      "size_m": [
+        5.74,
+        0.82,
+        3.13
+      ],
+      "bounds_min": [
+        -2.87,
+        -0.41,
+        0.0
+      ],
+      "bounds_max": [
+        2.87,
+        0.41,
+        3.13
+      ],
+      "materials": [
+        "MP_Gold",
+        "MP_Metal_Black",
+        "MP_Stone_Grey",
+        "MP_Stone_Light"
+      ],
+      "objects": {
+        "FN_Elite_Gate": {
+          "triangles": 332,
+          "vertices": 194,
+          "faces": 162,
+          "materials": [
+            "MP_Stone_Grey",
+            "MP_Stone_Light"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 3.0164,
+          "mesh_validate_changed": false
+        },
+        "FN_Elite_Gate_LeafL": {
+          "triangles": 402,
+          "vertices": 259,
+          "faces": 239,
+          "materials": [
+            "MP_Metal_Black",
+            "MP_Gold"
+          ],
+          "origin_world": [
+            -2.08,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0597,
+          "mesh_validate_changed": false
+        },
+        "FN_Elite_Gate_LeafR": {
+          "triangles": 402,
+          "vertices": 259,
+          "faces": 239,
+          "materials": [
+            "MP_Metal_Black",
+            "MP_Gold"
+          ],
+          "origin_world": [
+            2.08,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0597,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Double wrought gate with arched top, opening 4.2 m; left leaf +Z / right leaf -Z rotation (Blender) opens them inwards (+Y).",
+      "row": 2,
+      "gate_pitch_m": 4.92,
+      "opening_m": 4.2,
+      "fbx": "FN_Elite_Gate_v01.fbx"
+    },
+    "FN_Railing_Panel": {
+      "triangles": 196,
+      "triangle_budget": 400,
+      "size_m": [
+        1.94,
+        0.07,
+        0.975
+      ],
+      "bounds_min": [
+        -0.97,
+        -0.035,
+        0.12
+      ],
+      "bounds_max": [
+        0.97,
+        0.035,
+        1.095
+      ],
+      "materials": [
+        "MP_Paint_Green",
+        "MP_Rust"
+      ],
+      "objects": {
+        "FN_Railing_Panel": {
+          "triangles": 196,
+          "vertices": 128,
+          "faces": 94,
+          "materials": [
+            "MP_Paint_Green",
+            "MP_Rust"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0137,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "above_ground_min_z_ge_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Painted pipe railing for the concrete canal edge; posts are FN_Railing_Post.",
+      "row": 0,
+      "tile_length_m": 2.0,
+      "height_m": 1.1,
+      "fbx": "FN_Railing_Panel_v01.fbx"
+    },
+    "FN_Railing_Post": {
+      "triangles": 72,
+      "triangle_budget": 120,
+      "size_m": [
+        0.16,
+        0.16,
+        1.13
+      ],
+      "bounds_min": [
+        -0.08,
+        -0.08,
+        0.0
+      ],
+      "bounds_max": [
+        0.08,
+        0.08,
+        1.13
+      ],
+      "materials": [
+        "MP_Metal_Dark",
+        "MP_Paint_Green"
+      ],
+      "objects": {
+        "FN_Railing_Post": {
+          "triangles": 72,
+          "vertices": 42,
+          "faces": 40,
+          "materials": [
+            "MP_Metal_Dark",
+            "MP_Paint_Green"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0057,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Round post on a base plate; place at every joint (x = k*2.0 + 1.0).",
+      "row": 0,
+      "height_m": 1.1300000000000001,
+      "fbx": "FN_Railing_Post_v01.fbx"
+    },
+    "FN_Railing_Gate": {
+      "triangles": 392,
+      "triangle_budget": 600,
+      "size_m": [
+        1.44,
+        0.16,
+        1.23
+      ],
+      "bounds_min": [
+        -0.72,
+        -0.08,
+        0.0
+      ],
+      "bounds_max": [
+        0.72,
+        0.08,
+        1.23
+      ],
+      "materials": [
+        "MP_Metal_Dark",
+        "MP_Paint_Green",
+        "MP_Rust"
+      ],
+      "objects": {
+        "FN_Railing_Gate": {
+          "triangles": 144,
+          "vertices": 84,
+          "faces": 80,
+          "materials": [
+            "MP_Metal_Dark",
+            "MP_Paint_Green"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0123,
+          "mesh_validate_changed": false
+        },
+        "FN_Railing_Gate_Leaf": {
+          "triangles": 248,
+          "vertices": 160,
+          "faces": 116,
+          "materials": [
+            "MP_Paint_Green",
+            "MP_Rust",
+            "MP_Metal_Dark"
+          ],
+          "origin_world": [
+            -0.59,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0128,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Swing gate to canal steps, opening 1.2 m; hinge on the left post; +Z rotation opens it towards +Y.",
+      "row": 0,
+      "gate_pitch_m": 1.28,
+      "opening_m": 1.2,
+      "fbx": "FN_Railing_Gate_v01.fbx"
+    }
+  },
+  "total_assets": 12,
+  "all_checks_passed": true,
+  "notes": [
+    "Overlapping closed shells (pickets on rails, bars through rails, panel ends inside posts) are intentional.",
+    "The review .blend has the assets laid out in a row along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "MAP-FENCES-001_v01.blend"
+  }
+}
