@@ -1,0 +1,281 @@
+{
+  "asset": "WATER-TOWER-ASTRA-001",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "all objects: centre of the footing on the ground (0,0,0), parented to empty WT_WaterTower_01",
+  "objects": {
+    "WT_Body": {
+      "triangles": 382,
+      "vertices": 193,
+      "faces": 193,
+      "materials": [
+        "WT_Paint",
+        "WT_Paint_Old",
+        "WT_Rust"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -1.77,
+        -1.77,
+        0.25
+      ],
+      "bounds_max": [
+        1.77,
+        1.77,
+        21.3
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 73.7021,
+      "mesh_validate_changed": false
+    },
+    "WT_Base": {
+      "triangles": 28,
+      "vertices": 16,
+      "faces": 10,
+      "materials": [
+        "WT_Concrete"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -1.3396,
+        -1.3396,
+        0.0
+      ],
+      "bounds_max": [
+        1.3396,
+        1.3396,
+        0.4
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 2.3787,
+      "mesh_validate_changed": false
+    },
+    "WT_Platform": {
+      "triangles": 136,
+      "vertices": 68,
+      "faces": 66,
+      "materials": [
+        "WT_Steel_Dark"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -2.4,
+        -2.4,
+        13.8
+      ],
+      "bounds_max": [
+        2.4,
+        2.4,
+        13.9
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 1.5306,
+      "mesh_validate_changed": false
+    },
+    "WT_Railing": {
+      "triangles": 352,
+      "vertices": 192,
+      "faces": 176,
+      "materials": [
+        "WT_Steel_Dark"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -2.385,
+        -2.385,
+        13.9
+      ],
+      "bounds_max": [
+        2.385,
+        2.385,
+        15.035
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 0.1841,
+      "mesh_validate_changed": false
+    },
+    "WT_Ladder_Lower": {
+      "triangles": 308,
+      "vertices": 224,
+      "faces": 182,
+      "materials": [
+        "WT_Steel_Dark",
+        "WT_Rust"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -0.35,
+        -1.0,
+        0.38
+      ],
+      "bounds_max": [
+        0.35,
+        -0.55,
+        14.4
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 0.4584,
+      "mesh_validate_changed": false
+    },
+    "WT_Ladder_Upper": {
+      "triangles": 160,
+      "vertices": 116,
+      "faces": 94,
+      "materials": [
+        "WT_Steel_Dark",
+        "WT_Rust"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -1.6617,
+        -1.6617,
+        13.88
+      ],
+      "bounds_max": [
+        -0.8485,
+        -0.8485,
+        21.2
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 0.2242,
+      "mesh_validate_changed": false
+    },
+    "WT_Details": {
+      "triangles": 80,
+      "vertices": 48,
+      "faces": 32,
+      "materials": [
+        "WT_Steel_Dark"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -1.3626,
+        -1.3626,
+        0.4
+      ],
+      "bounds_max": [
+        0.32,
+        0.32,
+        21.66
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0,
+      "signed_volume_m3": 0.3052,
+      "mesh_validate_changed": false
+    }
+  },
+  "total_triangles": 1446,
+  "triangle_budget": 1500,
+  "materials": [
+    "WT_Concrete",
+    "WT_Paint",
+    "WT_Paint_Old",
+    "WT_Rust",
+    "WT_Steel_Dark"
+  ],
+  "dimensions_m": {
+    "height_total": 21.66,
+    "height_tank_wall_top": 20.6,
+    "height_roof_apex": 21.3,
+    "size_x": 4.8,
+    "size_y": 4.8,
+    "bounds_min": [
+      -2.4,
+      -2.4,
+      0.0
+    ],
+    "bounds_max": [
+      2.4,
+      2.4,
+      21.66
+    ],
+    "tank_diameter": 3.4,
+    "tank_wall_height": 5.0,
+    "column_diameter": 1.4,
+    "column_height": 13.9,
+    "footing_diameter_across_corners": 2.9,
+    "footing_height": 0.4,
+    "walkway_level": 13.9,
+    "walkway_outer_diameter": 4.8,
+    "railing_height": 1.1,
+    "ladder_stringer_section": 0.1,
+    "ladder_rung_step": 0.5,
+    "ladder_rungs": {
+      "lower": 28,
+      "upper": 14
+    }
+  },
+  "checks": {
+    "triangles_within_budget": true,
+    "height_18_24_m": true,
+    "tank_diameter_3_4_m": true,
+    "materials_max_5": true,
+    "all_names_prefixed_WT_": true,
+    "all_meshes_manifold": true,
+    "all_normals_outward": true,
+    "no_zero_area_faces": true,
+    "mesh_validate_clean": true,
+    "stands_on_ground_min_z_0": true,
+    "pivots_at_origin": true
+  },
+  "all_checks_passed": true,
+  "notes": [
+    "Intentional shallow embeddings (hidden, no visible intersection): column bottom 15 cm inside the footing; ladder stringers 2 cm into footing / walkway; bracket plates 15 cm into column / tank wall; door back face 3 cm inside the column; roof hatch sunk 4 cm into the roof; vent pipe bottom inside the roof cone; rails pass through posts.",
+    "Rust / peeled paint are flat per-face material patches on the lathe body (no textures); UVs are a metre-scale box projection.",
+    "Lower ladder at azimuth 270 (-Y) rises through a hatch bite in the walkway; upper ladder at azimuth 225 climbs the tank wall to the roof edge."
+  ],
+  "files": {
+    "blend": "WATER-TOWER-ASTRA-001_v01.blend",
+    "fbx": "WATER-TOWER-ASTRA-001_v01.fbx",
+    "fbx_size_bytes": 59388
+  }
+}

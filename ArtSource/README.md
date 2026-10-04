@@ -8,6 +8,7 @@ Current editable prototypes for the upcoming visual review. These are working as
 - Props/SCALPEL-ASTRA-001 — scalpel and upgrade concept images.
 - Props/TABLE-ASTRA-001 — wheeled table.
 - Props/VAN-TIER0-ASTRA-001 — tier-0 van (T4-like proportions), procedural Blender source build_van.py; current v02 (owner-accepted 04.10.2026), five opening doors, hollow cab/cargo, imported into Unity. See its PRODUCTION_REPORT.md.
+- Props/WATER-TOWER-ASTRA-001 — village water tower landmark (Rozhnovsky type), procedural Blender source build_water_tower.py; v01 chosen by Fedya 04.10.2026 from three model variants, 1,446 triangles, not yet imported into Unity. See its PRODUCTION_REPORT.md.
 - Props/SYRINGE-ASTRA-001 — restored syringe source/export and fill-animation previews; not imported into Unity.
 - Props/HEART-ASTRA-007 — restored editable heart and export with historical provenance limitations; not imported into Unity.
 - References/SausageBuddy_reference.png — character reference.

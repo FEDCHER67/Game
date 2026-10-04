@@ -138,6 +138,7 @@ namespace OnlyVolunteers.Vehicles.EditorTools
                 controller.Rear.LeftVisual = rl;
                 controller.Rear.RightVisual = rr;
                 controller.SteeringWheel = Find(model.transform, "VAN_SteeringWheel");
+                root.AddComponent<VanUpgrades>();
                 controller.CenterOfMass = new Vector3(0f, 0.6f, 0.2f);
 
                 SetupDoor(model.transform, root.transform, "VAN_Door_Front_Left", VanDoor.Kind.Hinge, 70f, Vector3.left);
