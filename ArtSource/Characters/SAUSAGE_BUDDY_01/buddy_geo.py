@@ -7,6 +7,33 @@ from mathutils.geometry import delaunay_2d_cdt
 
 COLLECTION = None
 MATS = {}
+PART_TRIS = {}      # part object name -> triangles, recorded by join() for the per-part report
+
+# Resolution per procedural part. 'full' = the v03 geometry (every builder default); 'crowd' (v04+) replaces the
+# Catmull-Clark pass with denser exact rings where the silhouette needs them and drops hidden detail.
+LODS = {
+    'full': {},
+    'crowd': {
+        'head': dict(seg=32, subdiv=0, dome=8), 'nose': dict(seg=16, rings=10), 'ear': dict(seg=12, rings=8),
+        'ear_inner': dict(seg=10, rings=6), 'torso': dict(seg=16, subdiv=0), 'arm': dict(seg=12, subdiv=0),
+        'palm': dict(seg=20, subdiv=0), 'finger': dict(seg=12, subdiv=0), 'leg': dict(seg=16, subdiv=0),
+        'eye': dict(seg=16, rings=10), 'pupil': dict(seg=12, rings=8), 'shine': dict(seg=8, rings=6),
+        'brow': dict(seg=6), 'mouth': dict(seg=6),
+        'top': dict(n=32, subdiv=0), 'hood': dict(seg=16, subdiv=0), 'hood_pouch': dict(seg=16, rings=10),
+        'cord': dict(seg=6), 'bottoms': dict(n=24, subdiv=0, crotch=0.95), 'socks': dict(seg=12),
+        'sole': dict(seg=12, subdiv=0, round_ends=True), 'upper': dict(seg=14, subdiv=0, round_ends=True), 'lace': dict(seg=4),
+        'cap_crown': dict(seg=32, rows=8), 'cap_peak': dict(u=10, v=4), 'cap_button': dict(seg=10, rings=6),
+        'tongue': dict(seg=12, rings=8), 'big_decal': dict(step=0.020),
+    },
+}
+LOD = LODS['full']
+
+
+def res(part, **defaults):
+    """Resolution of a procedural part: the builder's v03 defaults unless the active LOD overrides them."""
+    out = dict(defaults)
+    out.update(LOD.get(part, {}))
+    return out
 
 
 def srgb(c):
@@ -151,6 +178,7 @@ def tube(name, path, radius, material, seg=8, caps=True, subdiv=0, frame_up=None
 
 def join(target, parts):
     """Join mesh objects into target (world space), keeping materials and vertex groups by name."""
+    PART_TRIS.setdefault(target.name, sum(len(f.vertices) - 2 for f in target.data.polygons))
     for p in parts:
         mw = target.matrix_world.inverted() @ p.matrix_world
         names = [m.name for m in target.data.materials]
@@ -168,6 +196,7 @@ def join(target, parts):
         for f in pb.faces:
             f.material_index = remap[f.material_index]
         tmp = bpy.data.meshes.new('tmp'); pb.to_mesh(tmp); pb.free()
+        PART_TRIS.setdefault(p.name, sum(len(f.vertices) - 2 for f in tmp.polygons))
         bm.from_mesh(tmp); bm.to_mesh(target.data); bm.free()
         bpy.data.meshes.remove(tmp)
         # vertex groups by name

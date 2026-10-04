@@ -1,0 +1,134 @@
+{
+  "asset": "SAUSAGE_BUDDY_B_v04",
+  "variant": "B",
+  "height_m": 1.818,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5384,
+      "vertices": 2734,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose",
+        "Buddy_Skin_Inner"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 7123,
+      "vertices": 3896,
+      "materials": [
+        "B_Cap_Blue",
+        "B_Cap_Cream",
+        "B_Tongue",
+        "B_Tongue_Groove",
+        "B_Sausage",
+        "B_Sausage_Grill",
+        "B_Sausage_Shine",
+        "B_Tee_Fabric",
+        "B_Print_Ink",
+        "B_Cargo_Olive",
+        "B_Cargo_Pocket",
+        "B_Socks_White",
+        "B_Socks_Blue",
+        "B_Shoe_Upper",
+        "B_Shoe_Sole",
+        "B_Shoe_Lace",
+        "B_Toe_White"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 1972,
+      "vertices": 1008,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552
+  },
+  "total_triangles": 14479,
+  "part_triangles": {
+    "B_Tee": 1248,
+    "Skin_Head": 1088,
+    "B_Cap_Crown": 1024,
+    "B_Shoe_Upper": 1000,
+    "B_CargoPocket": 672,
+    "B_Shoe_Sole": 672,
+    "B_CargoShorts": 624,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "B_Socks": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Skin_Ear": 336,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Skin_Nose": 288,
+    "B_Lace": 256,
+    "B_Cap_Peak": 216,
+    "Skin_EarInner": 200,
+    "B_CargoFlap": 184,
+    "Brow": 168,
+    "B_Tongue": 168,
+    "Shine": 160,
+    "Mouth": 156,
+    "B_Cap_Button": 100,
+    "B_Print_GOOD": 94,
+    "B_ToeCap": 94,
+    "B_Print_Body": 78,
+    "B_Print_TIMES": 67,
+    "B_Cap_Logo_Body": 46,
+    "B_Tongue_Groove": 24,
+    "B_Cap_Logo_Grill": 24,
+    "B_Print_Grill": 24,
+    "B_Cap_Logo_Shine": 10,
+    "B_Print_Shine": 10,
+    "B_Print_Dash": 8
+  }
+}

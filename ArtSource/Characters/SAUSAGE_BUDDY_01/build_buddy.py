@@ -3,9 +3,10 @@
 
   blender -b --factory-startup --python ArtSource/Characters/SAUSAGE_BUDDY_01/build_buddy.py -- --variant A --revision 1
   --stage look   : body + face + rig only, quick review renders into Previews/look_vNN
+  --lod full     : v03 geometry (Catmull-Clark on every loft); default 'crowd' is the v04 NPC budget (~12-15k tris)
 Never overwrites an existing revision.
 """
-import argparse, json, sys
+import argparse, json, re, sys
 from pathlib import Path
 import bpy
 from mathutils import Vector
@@ -26,6 +27,7 @@ ap.add_argument('--variant', choices=['A', 'B', 'C'], default='A')
 ap.add_argument('--revision', type=int, required=True)
 ap.add_argument('--stage', choices=['look', 'dress', 'full'], default='full')
 ap.add_argument('--no-render', action='store_true')
+ap.add_argument('--lod', choices=['full', 'crowd'], default='crowd')
 args, _ = ap.parse_known_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 REV = f'v{args.revision:02d}'
 if args.stage in ('look', 'dress'):
@@ -46,6 +48,7 @@ scene = bpy.context.scene
 scene.render.fps = 30
 col = bpy.data.collections.new('SausageBuddy'); scene.collection.children.link(col)
 G.COLLECTION = col
+G.LOD = G.LODS[args.lod]
 
 # ------------------------------------------------------------------ body, face, rig
 skin = G.mat('Buddy_Skin', (236, 152, 106), 0.5, sss=0.12)
@@ -138,7 +141,7 @@ scene.frame_set(1)
 report = {'asset': STEM, 'variant': args.variant, 'height_m': None, 'bones': len(rig.data.bones),
           'rig_source': 'Mixamo "Run Look Back" skeleton (names, parents, rolls kept)', 'mixamo_leg_ratio': round(stride, 4),
           'animation': 'procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)',
-          'actions': {}, 'meshes': {}, 'grounding_offset_m': grounding}
+          'lod': args.lod, 'actions': {}, 'meshes': {}, 'grounding_offset_m': grounding}
 for name in clips:
     a = bpy.data.actions[name]
     report['actions'][name] = [int(a.frame_range[0]), int(a.frame_range[1])]
@@ -152,6 +155,14 @@ for o in meshes:
                                 'shape_keys': [k.name for k in me.shape_keys.key_blocks] if me.shape_keys else []}
     total += tris
 report['total_triangles'] = total
+# per-part triangles before joining; mirrored parts and the expression copies of the face are summed / skipped
+parts = {}
+for n, t in G.PART_TRIS.items():
+    if re.search(r'\.\d+$', n):
+        continue
+    g = re.sub(r'_(-?\d+|Left|Right)(?=_|$)', '', n)
+    parts[g] = parts.get(g, 0) + t
+report['part_triangles'] = dict(sorted(parts.items(), key=lambda kv: -kv[1]))
 rig.data.pose_position = 'REST'
 bpy.context.view_layer.update()
 dg = bpy.context.evaluated_depsgraph_get()
@@ -208,5 +219,10 @@ for f in range(1, 151, 2):
     scene.render.filepath = str(frames_dir / f'f{f:03d}.png')
     bpy.ops.render.render(write_still=True)
 gif = PREV / 'Panic_TurnFlee.gif'
-subprocess.run(['magick', '-delay', '7', '-loop', '0', str(frames_dir / 'f*.png'), '-layers', 'Optimize', str(gif)], check=False)
+for tool in (['magick'], ['convert']):      # ImageMagick 7, else 6
+    try:
+        subprocess.run(tool + ['-delay', '7', '-loop', '0', str(frames_dir / 'f*.png'), '-layers', 'Optimize', str(gif)], check=True)
+        break
+    except (OSError, subprocess.CalledProcessError):
+        continue
 print('[BUDDY] previews in', PREV)
