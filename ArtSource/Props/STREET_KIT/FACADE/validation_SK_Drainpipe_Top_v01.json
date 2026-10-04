@@ -1,0 +1,66 @@
+{
+  "asset": "SK_Drainpipe_Top",
+  "family": "SK-FACADE",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 224,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.1237,
+    -0.4637,
+    0.0
+  ],
+  "bounds_max": [
+    0.1237,
+    0.0,
+    0.83
+  ],
+  "size_xyz_m": [
+    0.247,
+    0.464,
+    0.83
+  ],
+  "objects": {
+    "SK_Drainpipe_Top_Mesh": {
+      "triangles": 224,
+      "vertices": 126,
+      "faces": 100,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Top drainpipe module (0.83 m): offset gooseneck out to a square gutter funnel; bottom joins SK_Drainpipe_Straight top.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Drainpipe_Top_v01.fbx",
+    "fbx_size_bytes": 23228,
+    "blend": "SK-FACADE_v01.blend"
+  }
+}

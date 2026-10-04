@@ -1,0 +1,70 @@
+{
+  "asset": "SK_ShopSign_Vertical_1x4",
+  "family": "SK-COMMERCE",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 204,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.1,
+    -0.75,
+    0.0
+  ],
+  "bounds_max": [
+    0.1,
+    0.0,
+    2.4161
+  ],
+  "size_xyz_m": [
+    0.2,
+    0.75,
+    2.416
+  ],
+  "objects": {
+    "SK_ShopSign_Vertical_1x4_Mesh": {
+      "triangles": 204,
+      "vertices": 120,
+      "faces": 108,
+      "materials": [
+        "SK_Palette",
+        "SK_Signage"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette",
+    "SK_Signage"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Projecting double-sided vertical board 0.5 x 2.0 m (e.g. APTEKA), faces +X/-X, signage vertical_1x4 slot 0. Wall-mounted: wall plane y = 0, pivot at the bottom of the piece on the wall.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "signage_atlas": "SK_Signage: 2048x2048 atlas, 256 px per metre, layout in _lib/signage_atlas_layout.json",
+  "files": {
+    "fbx": "SK_ShopSign_Vertical_1x4_v01.fbx",
+    "fbx_size_bytes": 25660,
+    "blend": "SK-COMMERCE_v01.blend"
+  }
+}

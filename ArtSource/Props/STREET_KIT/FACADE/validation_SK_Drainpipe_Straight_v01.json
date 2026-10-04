@@ -1,0 +1,66 @@
+{
+  "asset": "SK_Drainpipe_Straight",
+  "family": "SK-FACADE",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 228,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.0685,
+    -0.212,
+    0.0
+  ],
+  "bounds_max": [
+    0.0685,
+    0.0,
+    2.8
+  ],
+  "size_xyz_m": [
+    0.137,
+    0.212,
+    2.8
+  ],
+  "objects": {
+    "SK_Drainpipe_Straight_Mesh": {
+      "triangles": 228,
+      "vertices": 132,
+      "faces": 84,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "One-floor drainpipe module, z 0..2.8 m, stackable; axis 0.14 m off the wall, two clamps, joint socket at the top.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Drainpipe_Straight_v01.fbx",
+    "fbx_size_bytes": 22764,
+    "blend": "SK-FACADE_v01.blend"
+  }
+}
