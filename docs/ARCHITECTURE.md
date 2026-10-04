@@ -7,6 +7,7 @@ Unity 6000.5.11f1, URP, FishNet/Tugboat. Keep one game project and extend a smal
 | Assets/OnlyVolunteers/Player | First-person input, movement integration, local grab, shared force solver and tuning profile |
 | Assets/OnlyVolunteers/Network | Sessions/spawning, player replication, validated grab requests, server simulation of shared bodies |
 | Assets/OnlyVolunteers/Props | Imported table/scalpel assets, per-prop tuning, table wheel presentation |
+| Assets/OnlyVolunteers/Vehicles | Van model/prefab, local WheelCollider driving (VanController), animated doors (VanDoor), test-only input/camera, editor rebuild tool |
 | Assets/OnlyVolunteers/Scenes | Movement, local physics and co-op test scenes |
 | Assets/OnlyVolunteers/Art | Current player model prototype |
 | Assets/KinematicCharacterController | Third-party motor and the ExampleCharacter component/prefab actually used by the players |

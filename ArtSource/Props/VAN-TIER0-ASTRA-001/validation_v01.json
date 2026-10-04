@@ -1,0 +1,230 @@
+{
+  "asset": "VAN-TIER0-ASTRA-001",
+  "revision": "v01",
+  "axes": "Blender Z up, -Y forward, metres; vehicle left=+X",
+  "objects": {
+    "VAN_Body": {
+      "triangles": 1074,
+      "vertices": 582,
+      "nonmanifold_edges": 28,
+      "materials": [
+        "VAN_Body_Cream",
+        "VAN_Trim_Dark",
+        "VAN_Body_Crease",
+        "VAN_Interior",
+        "VAN_Glass_Dark",
+        "VAN_Grille_Black",
+        "VAN_Light_White",
+        "VAN_Indicator_Orange",
+        "VAN_Tail_Red"
+      ],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_min": [
+        -1.07,
+        -2.42,
+        0.28
+      ],
+      "bounds_max": [
+        1.07,
+        2.36,
+        2.08
+      ]
+    },
+    "VAN_Door_Slide": {
+      "triangles": 64,
+      "vertices": 36,
+      "nonmanifold_edges": 0,
+      "materials": [
+        "VAN_Body_Cream",
+        "VAN_Trim_Dark",
+        "VAN_Body_Crease",
+        "VAN_Interior"
+      ],
+      "origin": [
+        -0.94,
+        -0.42,
+        0.4
+      ],
+      "bounds_min": [
+        -0.958,
+        -0.414,
+        0.406
+      ],
+      "bounds_max": [
+        -0.772,
+        0.894,
+        1.924
+      ]
+    },
+    "VAN_Door_Rear_Left": {
+      "triangles": 34,
+      "vertices": 22,
+      "nonmanifold_edges": 4,
+      "materials": [
+        "VAN_Body_Cream",
+        "VAN_Trim_Dark",
+        "VAN_Body_Crease",
+        "VAN_Interior",
+        "VAN_Glass_Dark"
+      ],
+      "origin": [
+        0.8,
+        2.19,
+        0.62
+      ],
+      "bounds_min": [
+        0.003,
+        2.1,
+        0.626
+      ],
+      "bounds_max": [
+        0.794,
+        2.194,
+        1.934
+      ]
+    },
+    "VAN_Door_Rear_Right": {
+      "triangles": 46,
+      "vertices": 30,
+      "nonmanifold_edges": 4,
+      "materials": [
+        "VAN_Body_Cream",
+        "VAN_Trim_Dark",
+        "VAN_Body_Crease",
+        "VAN_Interior",
+        "VAN_Glass_Dark"
+      ],
+      "origin": [
+        -0.8,
+        2.19,
+        0.62
+      ],
+      "bounds_min": [
+        -0.794,
+        2.1,
+        0.626
+      ],
+      "bounds_max": [
+        -0.003,
+        2.215,
+        1.934
+      ]
+    },
+    "VAN_Wheel_Front_Left": {
+      "triangles": 164,
+      "vertices": 88,
+      "nonmanifold_edges": 0,
+      "materials": [
+        "VAN_Tire",
+        "VAN_Hub_Cream",
+        "VAN_Grille_Black"
+      ],
+      "origin": [
+        0.8,
+        -1.6,
+        0.37
+      ],
+      "bounds_min": [
+        0.68,
+        -1.97,
+        0.0
+      ],
+      "bounds_max": [
+        0.952,
+        -1.23,
+        0.74
+      ]
+    },
+    "VAN_Wheel_Front_Right": {
+      "triangles": 164,
+      "vertices": 88,
+      "nonmanifold_edges": 0,
+      "materials": [
+        "VAN_Tire",
+        "VAN_Hub_Cream",
+        "VAN_Grille_Black"
+      ],
+      "origin": [
+        -0.8,
+        -1.6,
+        0.37
+      ],
+      "bounds_min": [
+        -0.952,
+        -1.97,
+        0.0
+      ],
+      "bounds_max": [
+        -0.68,
+        -1.23,
+        0.74
+      ]
+    },
+    "VAN_Wheel_Rear_Left": {
+      "triangles": 164,
+      "vertices": 88,
+      "nonmanifold_edges": 0,
+      "materials": [
+        "VAN_Tire",
+        "VAN_Hub_Cream",
+        "VAN_Grille_Black"
+      ],
+      "origin": [
+        0.8,
+        1.56,
+        0.37
+      ],
+      "bounds_min": [
+        0.68,
+        1.19,
+        0.0
+      ],
+      "bounds_max": [
+        0.952,
+        1.93,
+        0.74
+      ]
+    },
+    "VAN_Wheel_Rear_Right": {
+      "triangles": 164,
+      "vertices": 88,
+      "nonmanifold_edges": 0,
+      "materials": [
+        "VAN_Tire",
+        "VAN_Hub_Cream",
+        "VAN_Grille_Black"
+      ],
+      "origin": [
+        -0.8,
+        1.56,
+        0.37
+      ],
+      "bounds_min": [
+        -0.952,
+        1.19,
+        0.0
+      ],
+      "bounds_max": [
+        -0.68,
+        1.93,
+        0.74
+      ]
+    }
+  },
+  "total_triangles": 1874,
+  "overall_size_m": [
+    2.14,
+    4.78,
+    2.08
+  ],
+  "pivots": {
+    "VAN_Door_Rear_Left": "hinge axis world Z through origin; opens with negative Z rotation (about -100 deg)",
+    "VAN_Door_Rear_Right": "hinge axis world Z through origin; opens with positive Z rotation (about +100 deg)",
+    "VAN_Door_Slide": "origin at front-bottom outer corner; opens by moving about -0.08 X then +1.0 Y",
+    "VAN_Wheel_*": "origin at wheel centre, roll axis X"
+  }
+}

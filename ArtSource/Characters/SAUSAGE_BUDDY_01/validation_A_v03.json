@@ -1,0 +1,84 @@
+{
+  "asset": "SAUSAGE_BUDDY_A_v03",
+  "variant": "A",
+  "height_m": 1.75,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 20568,
+      "vertices": 10326,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose",
+        "Buddy_Skin_Inner"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 19952,
+      "vertices": 10189,
+      "materials": [
+        "A_Hoodie_Red",
+        "A_Hoodie_Rib",
+        "A_Drawstring",
+        "A_Hoodie_Shadow",
+        "A_Shorts_Denim",
+        "A_Socks_White",
+        "A_Socks_Red",
+        "A_Shoe_Upper",
+        "A_Shoe_Sole",
+        "A_Shoe_Lace",
+        "A_Shoe_Stripe"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2968,
+      "vertices": 1506,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": -0.0001,
+    "Panic_Run_Loop": 0.0546,
+    "Panic_TurnFlee": 0.0513
+  },
+  "total_triangles": 43488
+}

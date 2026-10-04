@@ -7,6 +7,7 @@ Current editable prototypes for the upcoming visual review. These are working as
 - Props/CASH-ASTRA-001 — cash bundle.
 - Props/SCALPEL-ASTRA-001 — scalpel and upgrade concept images.
 - Props/TABLE-ASTRA-001 — wheeled table.
+- Props/VAN-TIER0-ASTRA-001 — tier-0 van (T4-like proportions), procedural Blender source build_van.py; current v02 (owner-accepted 04.10.2026), five opening doors, hollow cab/cargo, imported into Unity. See its PRODUCTION_REPORT.md.
 - Props/SYRINGE-ASTRA-001 — restored syringe source/export and fill-animation previews; not imported into Unity.
 - Props/HEART-ASTRA-007 — restored editable heart and export with historical provenance limitations; not imported into Unity.
 - References/SausageBuddy_reference.png — character reference.
@@ -18,6 +19,7 @@ The restored heart source is `Props/HEART-ASTRA-007/HEART-ASTRA-007.blend` (form
 Unity currently imports table/scalpel under Assets/OnlyVolunteers/Props. Other props await style review and intentional integration. The player prototype and its source/license evidence remain under Assets/OnlyVolunteers/Art/Characters/Player_01.
 
 - Characters/NPC_BASE_01 — shared NPC body and facial keys. Current: NPC_BASE_01_v09.blend / .fbx, Previews/v09 (TASK-000049; v08 = TASK-000043–000048). From v07: light crew collar, sloped shoulders and closer sleeves; compact full-thickness elbows; thumb skinned to the hand; head-neck block 4.5 cm shorter; soft rounded cartoon hands (wider fuller palm, shorter thicker closed fingers); the sausage now bends softly on the existing Neck/Head bones with a baked spring lag. 16,458 triangles, 65 Mixamo bones (names/parents unchanged) and both Run Look Back variants retained. Visual acceptance and Unity integration remain pending. Use a distinct numbered filename for each revision.
+- Characters/SAUSAGE_BUDDY_01 — Fedya's new NPC from the reference image (TASK-000086–000091): variants A and B v03 with Mixamo 65-bone rig and the panic turn-and-flee animation; parallel to NPC_BASE_01, decision on the canonical body pending. See its README.md.
 
 ## Fedya's next prop choices
 
