@@ -1,0 +1,504 @@
+{
+  "family": "MAP-GARAGES-001",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); moving parts are children with the pivot on the hinge",
+  "uv": "metre-scale box projection (1 UV unit = 1 m)",
+  "description": "Tileable Soviet metal garage units (3.0 m pitch) with hinged double doors; closed variants and one open.",
+  "assets": {
+    "GR_MetalGarage_Green": {
+      "triangles": 888,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.004,
+        6.056,
+        2.527
+      ],
+      "bounds_min": [
+        -1.502,
+        -3.18,
+        0.0
+      ],
+      "bounds_max": [
+        1.502,
+        2.876,
+        2.527
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Metal_Black",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey",
+        "MP_Paint_Green",
+        "MP_Rust",
+        "MP_White"
+      ],
+      "objects": {
+        "GR_MetalGarage_Green": {
+          "triangles": 636,
+          "vertices": 424,
+          "faces": 318,
+          "materials": [
+            "MP_Concrete",
+            "MP_Paint_Green",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_White",
+            "MP_Metal_Black"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 4.6546,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Green_DoorLeafL": {
+          "triangles": 112,
+          "vertices": 72,
+          "faces": 52,
+          "materials": [
+            "MP_Paint_Green",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            -1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Green_DoorLeafR": {
+          "triangles": 140,
+          "vertices": 88,
+          "faces": 62,
+          "materials": [
+            "MP_Paint_Green",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Closed, padlocked. Doors open outwards: left leaf -Z, right leaf +Z rotation (Blender), up to ~110 deg.",
+      "tile_length_m": 3.0,
+      "depth_m": 5.6,
+      "opening_m": [
+        2.5,
+        2.05
+      ],
+      "fbx": "GR_MetalGarage_Green_v01.fbx"
+    },
+    "GR_MetalGarage_Blue": {
+      "triangles": 888,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.004,
+        6.056,
+        2.527
+      ],
+      "bounds_min": [
+        -1.502,
+        -3.18,
+        0.0
+      ],
+      "bounds_max": [
+        1.502,
+        2.876,
+        2.527
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Metal_Black",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey",
+        "MP_Paint_Blue",
+        "MP_Rust",
+        "MP_White"
+      ],
+      "objects": {
+        "GR_MetalGarage_Blue": {
+          "triangles": 636,
+          "vertices": 424,
+          "faces": 318,
+          "materials": [
+            "MP_Concrete",
+            "MP_Paint_Blue",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_White",
+            "MP_Metal_Black"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 4.6552,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Blue_DoorLeafL": {
+          "triangles": 112,
+          "vertices": 72,
+          "faces": 52,
+          "materials": [
+            "MP_Paint_Blue",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            -1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Blue_DoorLeafR": {
+          "triangles": 140,
+          "vertices": 88,
+          "faces": 62,
+          "materials": [
+            "MP_Paint_Blue",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Closed, padlocked. Doors open outwards: left leaf -Z, right leaf +Z rotation (Blender), up to ~110 deg.",
+      "tile_length_m": 3.0,
+      "depth_m": 5.6,
+      "opening_m": [
+        2.5,
+        2.05
+      ],
+      "fbx": "GR_MetalGarage_Blue_v01.fbx"
+    },
+    "GR_MetalGarage_Rust": {
+      "triangles": 924,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.004,
+        6.056,
+        2.527
+      ],
+      "bounds_min": [
+        -1.502,
+        -3.18,
+        0.0
+      ],
+      "bounds_max": [
+        1.502,
+        2.876,
+        2.527
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Metal_Black",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey",
+        "MP_Paint_Rust",
+        "MP_Rust",
+        "MP_White"
+      ],
+      "objects": {
+        "GR_MetalGarage_Rust": {
+          "triangles": 672,
+          "vertices": 448,
+          "faces": 336,
+          "materials": [
+            "MP_Concrete",
+            "MP_Paint_Rust",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_White",
+            "MP_Metal_Black"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 4.707,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Rust_DoorLeafL": {
+          "triangles": 112,
+          "vertices": 72,
+          "faces": 52,
+          "materials": [
+            "MP_Paint_Rust",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            -1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Rust_DoorLeafR": {
+          "triangles": 140,
+          "vertices": 88,
+          "faces": 62,
+          "materials": [
+            "MP_Paint_Rust",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Closed, heavily rusted. Doors open outwards: left leaf -Z, right leaf +Z rotation (Blender), up to ~110 deg.",
+      "tile_length_m": 3.0,
+      "depth_m": 5.6,
+      "opening_m": [
+        2.5,
+        2.05
+      ],
+      "fbx": "GR_MetalGarage_Rust_v01.fbx"
+    },
+    "GR_MetalGarage_Open": {
+      "triangles": 1262,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.266,
+        6.933,
+        2.527
+      ],
+      "bounds_min": [
+        -1.626,
+        -4.057,
+        0.0
+      ],
+      "bounds_max": [
+        1.64,
+        2.876,
+        2.527
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Concrete_Stain",
+        "MP_Metal_Black",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey",
+        "MP_Paint_Blue",
+        "MP_Red",
+        "MP_Rust",
+        "MP_Teal",
+        "MP_White",
+        "MP_Wood",
+        "MP_Wood_Dark",
+        "MP_Yellow"
+      ],
+      "objects": {
+        "GR_MetalGarage_Open": {
+          "triangles": 1038,
+          "vertices": 651,
+          "faces": 513,
+          "materials": [
+            "MP_Concrete",
+            "MP_Paint_Blue",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_White",
+            "MP_Metal_Black",
+            "MP_Wood",
+            "MP_Wood_Dark",
+            "MP_Red",
+            "MP_Teal",
+            "MP_Yellow",
+            "MP_Metal_Grey",
+            "MP_Concrete_Stain"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 4.9445,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Open_DoorLeafL": {
+          "triangles": 112,
+          "vertices": 72,
+          "faces": 52,
+          "materials": [
+            "MP_Paint_Blue",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            -1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1083,
+          "mesh_validate_changed": false
+        },
+        "GR_MetalGarage_Open_DoorLeafR": {
+          "triangles": 112,
+          "vertices": 72,
+          "faces": 52,
+          "materials": [
+            "MP_Paint_Blue",
+            "MP_Rust",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey"
+          ],
+          "origin_world": [
+            1.25,
+            -2.83,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1081,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Doors open 105 deg, tyres/shelf/jerrycan inside. Doors open outwards: left leaf -Z, right leaf +Z rotation (Blender), up to ~110 deg.",
+      "tile_length_m": 3.0,
+      "depth_m": 5.6,
+      "opening_m": [
+        2.5,
+        2.05
+      ],
+      "fbx": "GR_MetalGarage_Open_v01.fbx"
+    }
+  },
+  "total_assets": 4,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in a row along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "MAP-GARAGES-001_v01.blend"
+  }
+}

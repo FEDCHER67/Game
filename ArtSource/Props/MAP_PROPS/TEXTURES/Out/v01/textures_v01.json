@@ -1,0 +1,649 @@
+{
+  "revision": "v01",
+  "size": 1024,
+  "seed": 1,
+  "generator": "gen_textures.py",
+  "normal_convention": "OpenGL (+Y up, Unity)",
+  "textures": [
+    {
+      "name": "SeaWater",
+      "files": {
+        "albedo": "TX_SeaWater_Albedo_v01.png",
+        "normal": "TX_SeaWater_Normal_v01.png",
+        "preview": "Previews/SeaWater_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 8.0,
+      "mean_rgb": [
+        50.4,
+        128.8,
+        146.6
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 1.008,
+            "seam_max": 4,
+            "interior_mean": 0.702,
+            "interior_line_mean_max": 1.309,
+            "interior_p99": 4.0,
+            "interior_max": 10,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.499,
+            "seam_max": 3,
+            "interior_mean": 0.834,
+            "interior_line_mean_max": 2.549,
+            "interior_p99": 6.0,
+            "interior_max": 19,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 3.104,
+            "seam_max": 27,
+            "interior_mean": 2.887,
+            "interior_line_mean_max": 7.636,
+            "interior_p99": 25.0,
+            "interior_max": 81,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 1.968,
+            "seam_max": 30,
+            "interior_mean": 2.935,
+            "interior_line_mean_max": 7.822,
+            "interior_p99": 24.0,
+            "interior_max": 80,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Sand",
+      "files": {
+        "albedo": "TX_Sand_Albedo_v01.png",
+        "normal": "TX_Sand_Normal_v01.png",
+        "preview": "Previews/Sand_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 4.0,
+      "mean_rgb": [
+        217.1,
+        195.6,
+        147.4
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.754,
+            "seam_max": 23,
+            "interior_mean": 2.446,
+            "interior_line_mean_max": 4.474,
+            "interior_p99": 40.0,
+            "interior_max": 69,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.901,
+            "seam_max": 20,
+            "interior_mean": 2.689,
+            "interior_line_mean_max": 4.855,
+            "interior_p99": 40.0,
+            "interior_max": 69,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 0.462,
+            "seam_max": 3,
+            "interior_mean": 0.345,
+            "interior_line_mean_max": 0.534,
+            "interior_p99": 1.0,
+            "interior_max": 3,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.587,
+            "seam_max": 2,
+            "interior_mean": 0.906,
+            "interior_line_mean_max": 1.67,
+            "interior_p99": 4.0,
+            "interior_max": 8,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Ground",
+      "files": {
+        "albedo": "TX_Ground_Albedo_v01.png",
+        "normal": "TX_Ground_Normal_v01.png",
+        "preview": "Previews/Ground_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 3.0,
+      "mean_rgb": [
+        135.8,
+        109.0,
+        80.3
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.513,
+            "seam_max": 12,
+            "interior_mean": 0.692,
+            "interior_line_mean_max": 1.489,
+            "interior_p99": 10.0,
+            "interior_max": 74,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.532,
+            "seam_max": 14,
+            "interior_mean": 0.614,
+            "interior_line_mean_max": 1.47,
+            "interior_p99": 7.0,
+            "interior_max": 75,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 1.697,
+            "seam_max": 89,
+            "interior_mean": 3.145,
+            "interior_line_mean_max": 7.379,
+            "interior_p99": 54.0,
+            "interior_max": 210,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 2.611,
+            "seam_max": 101,
+            "interior_mean": 2.511,
+            "interior_line_mean_max": 5.901,
+            "interior_p99": 44.0,
+            "interior_max": 212,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Dirt",
+      "files": {
+        "albedo": "TX_Dirt_Albedo_v01.png",
+        "normal": "TX_Dirt_Normal_v01.png",
+        "preview": "Previews/Dirt_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 4.0,
+      "mean_rgb": [
+        81.9,
+        64.0,
+        47.8
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.499,
+            "seam_max": 34,
+            "interior_mean": 0.641,
+            "interior_line_mean_max": 1.553,
+            "interior_p99": 11.0,
+            "interior_max": 55,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.604,
+            "seam_max": 49,
+            "interior_mean": 0.589,
+            "interior_line_mean_max": 1.29,
+            "interior_p99": 7.0,
+            "interior_max": 57,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 2.043,
+            "seam_max": 113,
+            "interior_mean": 3.449,
+            "interior_line_mean_max": 7.551,
+            "interior_p99": 77.0,
+            "interior_max": 208,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 3.121,
+            "seam_max": 121,
+            "interior_mean": 2.839,
+            "interior_line_mean_max": 5.218,
+            "interior_p99": 60.0,
+            "interior_max": 225,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Grass",
+      "files": {
+        "albedo": "TX_Grass_Albedo_v01.png",
+        "normal": "TX_Grass_Normal_v01.png",
+        "preview": "Previews/Grass_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 3.0,
+      "mean_rgb": [
+        75.7,
+        127.4,
+        56.0
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.762,
+            "seam_max": 53,
+            "interior_mean": 1.042,
+            "interior_line_mean_max": 3.991,
+            "interior_p99": 30.0,
+            "interior_max": 137,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.61,
+            "seam_max": 43,
+            "interior_mean": 0.673,
+            "interior_line_mean_max": 1.196,
+            "interior_p99": 3.0,
+            "interior_max": 136,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 5.145,
+            "seam_max": 219,
+            "interior_mean": 5.426,
+            "interior_line_mean_max": 17.241,
+            "interior_p99": 115.0,
+            "interior_max": 251,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 2.274,
+            "seam_max": 152,
+            "interior_mean": 2.888,
+            "interior_line_mean_max": 5.0,
+            "interior_p99": 79.0,
+            "interior_max": 251,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Asphalt",
+      "files": {
+        "albedo": "TX_Asphalt_Albedo_v01.png",
+        "normal": "TX_Asphalt_Normal_v01.png",
+        "preview": "Previews/Asphalt_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 4.0,
+      "mean_rgb": [
+        93.3,
+        94.0,
+        95.4
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.727,
+            "seam_max": 22,
+            "interior_mean": 2.411,
+            "interior_line_mean_max": 4.832,
+            "interior_p99": 34.0,
+            "interior_max": 57,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.965,
+            "seam_max": 22,
+            "interior_mean": 2.419,
+            "interior_line_mean_max": 4.786,
+            "interior_p99": 34.0,
+            "interior_max": 56,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 20.248,
+            "seam_max": 212,
+            "interior_mean": 22.41,
+            "interior_line_mean_max": 34.334,
+            "interior_p99": 158.0,
+            "interior_max": 231,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 24.623,
+            "seam_max": 213,
+            "interior_mean": 22.42,
+            "interior_line_mean_max": 30.381,
+            "interior_p99": 157.0,
+            "interior_max": 228,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Concrete",
+      "files": {
+        "albedo": "TX_Concrete_Albedo_v01.png",
+        "normal": "TX_Concrete_Normal_v01.png",
+        "preview": "Previews/Concrete_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 3.0,
+      "mean_rgb": [
+        156.9,
+        152.9,
+        143.0
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.795,
+            "seam_max": 40,
+            "interior_mean": 0.819,
+            "interior_line_mean_max": 1.662,
+            "interior_p99": 25.0,
+            "interior_max": 49,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.611,
+            "seam_max": 38,
+            "interior_mean": 0.941,
+            "interior_line_mean_max": 7.916,
+            "interior_p99": 25.0,
+            "interior_max": 48,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 3.888,
+            "seam_max": 113,
+            "interior_mean": 4.504,
+            "interior_line_mean_max": 8.6,
+            "interior_p99": 100.0,
+            "interior_max": 228,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 4.479,
+            "seam_max": 117,
+            "interior_mean": 6.348,
+            "interior_line_mean_max": 77.644,
+            "interior_p99": 107.0,
+            "interior_max": 227,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Bark",
+      "files": {
+        "albedo": "TX_Bark_Albedo_v01.png",
+        "normal": "TX_Bark_Normal_v01.png",
+        "preview": "Previews/Bark_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 1.0,
+      "mean_rgb": [
+        94.7,
+        73.7,
+        56.2
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 1.573,
+            "seam_max": 7,
+            "interior_mean": 1.219,
+            "interior_line_mean_max": 2.848,
+            "interior_p99": 6.0,
+            "interior_max": 9,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 0.791,
+            "seam_max": 3,
+            "interior_mean": 0.493,
+            "interior_line_mean_max": 0.847,
+            "interior_p99": 2.0,
+            "interior_max": 3,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 7.932,
+            "seam_max": 92,
+            "interior_mean": 6.305,
+            "interior_line_mean_max": 19.15,
+            "interior_p99": 51.0,
+            "interior_max": 145,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 2.488,
+            "seam_max": 83,
+            "interior_mean": 1.44,
+            "interior_line_mean_max": 2.75,
+            "interior_p99": 15.0,
+            "interior_max": 116,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "BirchBark",
+      "files": {
+        "albedo": "TX_BirchBark_Albedo_v01.png",
+        "normal": "TX_BirchBark_Normal_v01.png",
+        "preview": "Previews/BirchBark_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 1.0,
+      "mean_rgb": [
+        210.9,
+        206.6,
+        196.7
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 0.505,
+            "seam_max": 131,
+            "interior_mean": 0.49,
+            "interior_line_mean_max": 1.486,
+            "interior_p99": 9.0,
+            "interior_max": 151,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 9.73,
+            "seam_max": 124,
+            "interior_mean": 3.026,
+            "interior_line_mean_max": 21.982,
+            "interior_p99": 95.0,
+            "interior_max": 152,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 0.604,
+            "seam_max": 149,
+            "interior_mean": 0.553,
+            "interior_line_mean_max": 2.189,
+            "interior_p99": 12.0,
+            "interior_max": 196,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 4.017,
+            "seam_max": 132,
+            "interior_mean": 5.28,
+            "interior_line_mean_max": 27.258,
+            "interior_p99": 105.0,
+            "interior_max": 235,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    },
+    {
+      "name": "Leaves",
+      "files": {
+        "albedo": "TX_Leaves_Albedo_v01.png",
+        "normal": "TX_Leaves_Normal_v01.png",
+        "preview": "Previews/Leaves_preview.png"
+      },
+      "size": [
+        1024,
+        1024
+      ],
+      "seed": 1,
+      "metres_per_tile": 1.5,
+      "mean_rgb": [
+        64.8,
+        112.6,
+        53.5
+      ],
+      "seam_check": {
+        "albedo": {
+          "columns": {
+            "seam_mean": 2.59,
+            "seam_max": 87,
+            "interior_mean": 2.422,
+            "interior_line_mean_max": 4.136,
+            "interior_p99": 34.0,
+            "interior_max": 101,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 1.981,
+            "seam_max": 52,
+            "interior_mean": 2.426,
+            "interior_line_mean_max": 4.887,
+            "interior_p99": 34.0,
+            "interior_max": 101,
+            "ok": true
+          },
+          "tileable_ok": true
+        },
+        "normal": {
+          "columns": {
+            "seam_mean": 18.902,
+            "seam_max": 223,
+            "interior_mean": 14.653,
+            "interior_line_mean_max": 26.175,
+            "interior_p99": 166.0,
+            "interior_max": 253,
+            "ok": true
+          },
+          "rows": {
+            "seam_mean": 10.188,
+            "seam_max": 228,
+            "interior_mean": 14.626,
+            "interior_line_mean_max": 24.88,
+            "interior_p99": 166.0,
+            "interior_max": 254,
+            "ok": true
+          },
+          "tileable_ok": true
+        }
+      },
+      "tileable_ok": true
+    }
+  ]
+}

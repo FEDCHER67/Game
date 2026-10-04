@@ -1,0 +1,773 @@
+{
+  "family": "MAP-TREES-001",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); moving parts are children with the pivot on the hinge",
+  "uv": "metre-scale box projection (1 UV unit = 1 m)",
+  "description": "Stylised faceted low-poly trees: birch, pine, oak, poplar, apple, palm; A = large, B = smaller variant. One object per tree (trunk + crown, multi-material), flat matte MP_* colours, closed shells.",
+  "assets": {
+    "TR_Birch_A": {
+      "triangles": 1316,
+      "triangle_budget": 1500,
+      "size_m": [
+        4.05,
+        3.743,
+        12.467
+      ],
+      "bounds_min": [
+        -1.209,
+        -1.843,
+        0.0
+      ],
+      "bounds_max": [
+        2.841,
+        1.9,
+        12.467
+      ],
+      "materials": [
+        "MP_Bark_Birch",
+        "MP_Bark_Mark",
+        "MP_Leaf",
+        "MP_Leaf_Light"
+      ],
+      "objects": {
+        "TR_Birch_A": {
+          "triangles": 1316,
+          "vertices": 702,
+          "faces": 1085,
+          "materials": [
+            "MP_Bark_Birch",
+            "MP_Bark_Mark",
+            "MP_Leaf_Light",
+            "MP_Leaf"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 57.519,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Birch, large (~12 m). White trunk with black per-face marks, slim, airy crown of elongated clumps. Forest staple.",
+      "row": 1,
+      "fbx": "TR_Birch_A_v01.fbx"
+    },
+    "TR_Birch_B": {
+      "triangles": 1124,
+      "triangle_budget": 1500,
+      "size_m": [
+        2.792,
+        3.159,
+        8.426
+      ],
+      "bounds_min": [
+        -1.093,
+        -1.724,
+        0.0
+      ],
+      "bounds_max": [
+        1.699,
+        1.435,
+        8.426
+      ],
+      "materials": [
+        "MP_Bark_Birch",
+        "MP_Bark_Mark",
+        "MP_Leaf",
+        "MP_Leaf_Light"
+      ],
+      "objects": {
+        "TR_Birch_B": {
+          "triangles": 1124,
+          "vertices": 598,
+          "faces": 911,
+          "materials": [
+            "MP_Bark_Birch",
+            "MP_Bark_Mark",
+            "MP_Leaf_Light",
+            "MP_Leaf"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 20.1564,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Birch, small (~8 m), young and more leaning, fewer and relatively bigger clumps.",
+      "row": 0,
+      "fbx": "TR_Birch_B_v01.fbx"
+    },
+    "TR_Pine_A": {
+      "triangles": 748,
+      "triangle_budget": 1500,
+      "size_m": [
+        7.026,
+        8.006,
+        15.152
+      ],
+      "bounds_min": [
+        -2.408,
+        -4.404,
+        0.0
+      ],
+      "bounds_max": [
+        4.618,
+        3.603,
+        15.152
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Leaf_Dark",
+        "MP_Leaf_Pine"
+      ],
+      "objects": {
+        "TR_Pine_A": {
+          "triangles": 748,
+          "vertices": 400,
+          "faces": 646,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf_Pine",
+            "MP_Leaf_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 71.3417,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Scots pine, large (~14 m): tall bare trunk, flat cloud-like needle pads on upward branches, dome top. Forest staple.",
+      "row": 1,
+      "fbx": "TR_Pine_A_v01.fbx"
+    },
+    "TR_Pine_B": {
+      "triangles": 556,
+      "triangle_budget": 1500,
+      "size_m": [
+        4.482,
+        5.42,
+        10.147
+      ],
+      "bounds_min": [
+        -1.874,
+        -2.935,
+        0.0
+      ],
+      "bounds_max": [
+        2.608,
+        2.485,
+        10.147
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Leaf_Dark",
+        "MP_Leaf_Pine"
+      ],
+      "objects": {
+        "TR_Pine_B": {
+          "triangles": 556,
+          "vertices": 296,
+          "faces": 472,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf_Pine",
+            "MP_Leaf_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 30.7109,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Scots pine, small (~9 m): shorter trunk, bigger top dome relative to height, 3 side pads.",
+      "row": 0,
+      "fbx": "TR_Pine_B_v01.fbx"
+    },
+    "TR_Oak_A": {
+      "triangles": 720,
+      "triangle_budget": 1500,
+      "size_m": [
+        8.685,
+        8.422,
+        11.923
+      ],
+      "bounds_min": [
+        -4.212,
+        -4.058,
+        0.0
+      ],
+      "bounds_max": [
+        4.473,
+        4.365,
+        11.923
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Leaf",
+        "MP_Leaf_Dark"
+      ],
+      "objects": {
+        "TR_Oak_A": {
+          "triangles": 720,
+          "vertices": 386,
+          "faces": 626,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf",
+            "MP_Leaf_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 293.1891,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Oak, large (~11 m): thick flared trunk, 5 limbs, wide heavy round crown.",
+      "row": 1,
+      "fbx": "TR_Oak_A_v01.fbx"
+    },
+    "TR_Oak_B": {
+      "triangles": 620,
+      "triangle_budget": 1500,
+      "size_m": [
+        7.102,
+        6.504,
+        7.889
+      ],
+      "bounds_min": [
+        -3.49,
+        -2.944,
+        0.0
+      ],
+      "bounds_max": [
+        3.611,
+        3.56,
+        7.889
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Leaf",
+        "MP_Leaf_Dark"
+      ],
+      "objects": {
+        "TR_Oak_B": {
+          "triangles": 620,
+          "vertices": 332,
+          "faces": 538,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf",
+            "MP_Leaf_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 109.9846,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Oak, small (~7 m): squatter, 4 limbs, crown relatively wider.",
+      "row": 0,
+      "fbx": "TR_Oak_B_v01.fbx"
+    },
+    "TR_Poplar_A": {
+      "triangles": 772,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.564,
+        3.49,
+        16.499
+      ],
+      "bounds_min": [
+        -1.718,
+        -1.794,
+        0.0
+      ],
+      "bounds_max": [
+        1.846,
+        1.696,
+        16.499
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Leaf",
+        "MP_Leaf_Dark",
+        "MP_Leaf_Light"
+      ],
+      "objects": {
+        "TR_Poplar_A": {
+          "triangles": 772,
+          "vertices": 406,
+          "faces": 743,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf_Light",
+            "MP_Leaf",
+            "MP_Leaf_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 108.7672,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Lombardy poplar, large (~16 m): columnar spire of stacked elongated clumps.",
+      "row": 1,
+      "fbx": "TR_Poplar_A_v01.fbx"
+    },
+    "TR_Poplar_B": {
+      "triangles": 612,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.221,
+        2.695,
+        11.501
+      ],
+      "bounds_min": [
+        -1.593,
+        -1.519,
+        0.0
+      ],
+      "bounds_max": [
+        1.629,
+        1.176,
+        11.501
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Leaf",
+        "MP_Leaf_Dark",
+        "MP_Leaf_Light"
+      ],
+      "objects": {
+        "TR_Poplar_B": {
+          "triangles": 612,
+          "vertices": 322,
+          "faces": 583,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf_Light",
+            "MP_Leaf",
+            "MP_Leaf_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 49.8823,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Lombardy poplar, small (~11 m): a bit plumper in proportion.",
+      "row": 0,
+      "fbx": "TR_Poplar_B_v01.fbx"
+    },
+    "TR_AppleTree_A": {
+      "triangles": 742,
+      "triangle_budget": 1500,
+      "size_m": [
+        5.23,
+        4.774,
+        4.615
+      ],
+      "bounds_min": [
+        -2.366,
+        -2.328,
+        0.0
+      ],
+      "bounds_max": [
+        2.865,
+        2.446,
+        4.615
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Fruit_Red",
+        "MP_Leaf",
+        "MP_Leaf_Dark"
+      ],
+      "objects": {
+        "TR_AppleTree_A": {
+          "triangles": 742,
+          "vertices": 415,
+          "faces": 684,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf_Dark",
+            "MP_Leaf",
+            "MP_Fruit_Red"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 30.3563,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Apple tree, large (~5 m): short bent trunk, 4 limbs, low wide crown with red fruit blobs on the surface.",
+      "row": 1,
+      "fbx": "TR_AppleTree_A_v01.fbx"
+    },
+    "TR_AppleTree_B": {
+      "triangles": 586,
+      "triangle_budget": 1500,
+      "size_m": [
+        3.186,
+        3.297,
+        3.298
+      ],
+      "bounds_min": [
+        -1.351,
+        -1.724,
+        0.0
+      ],
+      "bounds_max": [
+        1.835,
+        1.573,
+        3.298
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Fruit_Red",
+        "MP_Leaf"
+      ],
+      "objects": {
+        "TR_AppleTree_B": {
+          "triangles": 586,
+          "vertices": 327,
+          "faces": 537,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf",
+            "MP_Fruit_Red"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 9.8627,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Apple tree, small (~3.5 m): 3 limbs, fewer fruit.",
+      "row": 0,
+      "fbx": "TR_AppleTree_B_v01.fbx"
+    },
+    "TR_Palm_A": {
+      "triangles": 1004,
+      "triangle_budget": 1500,
+      "size_m": [
+        7.174,
+        6.73,
+        8.94
+      ],
+      "bounds_min": [
+        -1.42,
+        -3.29,
+        0.0
+      ],
+      "bounds_max": [
+        5.754,
+        3.44,
+        8.94
+      ],
+      "materials": [
+        "MP_Bark_Palm",
+        "MP_Leaf_Palm",
+        "MP_Wood_Dark"
+      ],
+      "objects": {
+        "TR_Palm_A": {
+          "triangles": 1004,
+          "vertices": 550,
+          "faces": 596,
+          "materials": [
+            "MP_Bark_Palm",
+            "MP_Leaf_Palm",
+            "MP_Wood_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 3.2249,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Palm, large (~9 m): curved segmented trunk, 9 drooping fronds + 3 upright, 3 coconuts. Beach / elite hill.",
+      "row": 1,
+      "fbx": "TR_Palm_A_v01.fbx"
+    },
+    "TR_Palm_B": {
+      "triangles": 880,
+      "triangle_budget": 1500,
+      "size_m": [
+        5.797,
+        5.875,
+        5.92
+      ],
+      "bounds_min": [
+        -1.996,
+        -2.714,
+        0.0
+      ],
+      "bounds_max": [
+        3.801,
+        3.162,
+        5.92
+      ],
+      "materials": [
+        "MP_Bark_Palm",
+        "MP_Leaf_Palm",
+        "MP_Wood_Dark"
+      ],
+      "objects": {
+        "TR_Palm_B": {
+          "triangles": 880,
+          "vertices": 480,
+          "faces": 526,
+          "materials": [
+            "MP_Bark_Palm",
+            "MP_Leaf_Palm",
+            "MP_Wood_Dark"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 1.8541,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Palm, small (~6 m): straighter and stubbier, 8 fronds, 2 coconuts.",
+      "row": 0,
+      "fbx": "TR_Palm_B_v01.fbx"
+    }
+  },
+  "total_assets": 12,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in a row along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "MAP-TREES-001_v01.blend"
+  }
+}

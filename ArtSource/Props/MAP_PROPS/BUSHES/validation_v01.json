@@ -1,0 +1,266 @@
+{
+  "family": "MAP-BUSHES-001",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); moving parts are children with the pivot on the hinge",
+  "uv": "metre-scale box projection (1 UV unit = 1 m)",
+  "description": "Stylised faceted low-poly bushes: round shrub, lilac with blossom, tileable box hedge module, scruffy wild bush. One object per asset, flat matte MP_* colours, closed shells, pivot at the base centre.",
+  "assets": {
+    "BU_Bush_Round": {
+      "triangles": 480,
+      "triangle_budget": 600,
+      "size_m": [
+        1.73,
+        1.73,
+        1.168
+      ],
+      "bounds_min": [
+        -0.859,
+        -0.797,
+        0.0
+      ],
+      "bounds_max": [
+        0.871,
+        0.933,
+        1.168
+      ],
+      "materials": [
+        "MP_Leaf",
+        "MP_Leaf_Light"
+      ],
+      "objects": {
+        "BU_Bush_Round": {
+          "triangles": 480,
+          "vertices": 252,
+          "faces": 480,
+          "materials": [
+            "MP_Leaf_Light",
+            "MP_Leaf"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 2.8164,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Round trimmed-ish shrub ~1.2 m: 6 overlapping clumps, two greens. Yards, parks, sleeping district.",
+      "fbx": "BU_Bush_Round_v01.fbx"
+    },
+    "BU_Bush_Lilac": {
+      "triangles": 576,
+      "triangle_budget": 600,
+      "size_m": [
+        1.897,
+        1.849,
+        2.322
+      ],
+      "bounds_min": [
+        -0.952,
+        -1.06,
+        0.0
+      ],
+      "bounds_max": [
+        0.945,
+        0.789,
+        2.322
+      ],
+      "materials": [
+        "MP_Bark",
+        "MP_Blossom",
+        "MP_Leaf",
+        "MP_Leaf_Dark"
+      ],
+      "objects": {
+        "BU_Bush_Lilac": {
+          "triangles": 576,
+          "vertices": 328,
+          "faces": 528,
+          "materials": [
+            "MP_Bark",
+            "MP_Leaf",
+            "MP_Leaf_Dark",
+            "MP_Blossom"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 2.5776,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Lilac ~2 m: 4 bent stems, 4 leaf heads, 8 pink MP_Blossom panicles. Soviet yards / old town.",
+      "fbx": "BU_Bush_Lilac_v01.fbx"
+    },
+    "BU_Hedge_Box": {
+      "triangles": 460,
+      "triangle_budget": 600,
+      "size_m": [
+        2.0,
+        0.713,
+        1.145
+      ],
+      "bounds_min": [
+        -1.0,
+        -0.359,
+        0.0
+      ],
+      "bounds_max": [
+        1.0,
+        0.354,
+        1.145
+      ],
+      "materials": [
+        "MP_Leaf",
+        "MP_Leaf_Dark",
+        "MP_Leaf_Light"
+      ],
+      "objects": {
+        "BU_Hedge_Box": {
+          "triangles": 460,
+          "vertices": 240,
+          "faces": 386,
+          "materials": [
+            "MP_Leaf_Dark",
+            "MP_Leaf",
+            "MP_Leaf_Light"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 1.5132,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Trimmed box hedge module 2.0 x 0.7 x 1.1 m, tileable along X: ends are exactly flat at x = +-1.0, lumps stay inside. Elite hill, old town.",
+      "tile_length_m": 2.0,
+      "fbx": "BU_Hedge_Box_v01.fbx"
+    },
+    "BU_Bush_Wild": {
+      "triangles": 564,
+      "triangle_budget": 600,
+      "size_m": [
+        2.028,
+        2.258,
+        1.75
+      ],
+      "bounds_min": [
+        -1.095,
+        -1.101,
+        0.0
+      ],
+      "bounds_max": [
+        0.933,
+        1.157,
+        1.75
+      ],
+      "materials": [
+        "MP_Leaf",
+        "MP_Leaf_Autumn",
+        "MP_Leaf_Dark",
+        "MP_Wood_Grey"
+      ],
+      "objects": {
+        "BU_Bush_Wild": {
+          "triangles": 564,
+          "vertices": 308,
+          "faces": 522,
+          "materials": [
+            "MP_Leaf_Dark",
+            "MP_Leaf",
+            "MP_Leaf_Autumn",
+            "MP_Wood_Grey"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 2.0423,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Scruffy wild bush ~1.5 m: irregular dark/autumn clumps, 7 dead grey twigs. Wastelands, village edges.",
+      "fbx": "BU_Bush_Wild_v01.fbx"
+    }
+  },
+  "total_assets": 4,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in a row along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "MAP-BUSHES-001_v01.blend"
+  }
+}
