@@ -1,0 +1,1643 @@
+{
+  "generator": "ArtSource/Textures/Map/tools/make_map_textures.py",
+  "conventions": {
+    "albedo": "sRGB; RGBA for decals (alpha = coverage)",
+    "normal": "tangent space, OpenGL (+Y up) as Unity expects",
+    "roughness": "linear grey, 1 = rough",
+    "mask": "URP Metallic map: R metallic, G painted AO, B unused, A smoothness (1 - roughness)",
+    "emission": "sRGB, only lit windows / signs"
+  },
+  "fonts": "Rubik ExtraBold/Medium + PT Sans Narrow Bold (OFL, Google Fonts); DejaVu fallback",
+  "textures": [
+    {
+      "name": "facade_panel_slab",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        12.0,
+        12.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_panel_slab_albedo.png",
+        "normal": "facades/facade_panel_slab_normal.png",
+        "roughness": "facades/facade_panel_slab_roughness.png",
+        "mask_urp": "facades/facade_panel_slab_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_panel_slab_albedo.png": "Default, sRGB on",
+          "facades/facade_panel_slab_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_panel_slab_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_panel_slab_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.0833,
+          0.0833
+        ]
+      },
+      "notes": "4x4 window bays (3 m each). Seams with black mastic, balcony stack in column 2, two glazed balconies, sill streaks. For 5/9-storey blocks."
+    },
+    {
+      "name": "facade_brick_soviet",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_brick_soviet_albedo.png",
+        "normal": "facades/facade_brick_soviet_normal.png",
+        "roughness": "facades/facade_brick_soviet_roughness.png",
+        "mask_urp": "facades/facade_brick_soviet_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_brick_soviet_albedo.png": "Default, sRGB on",
+          "facades/facade_brick_soviet_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_brick_soviet_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_brick_soviet_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Pale silicate brick of Khrushchyovka 5-storeys; chain bond, grey joints."
+    },
+    {
+      "name": "facade_brick_factory_red",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_brick_factory_red_albedo.png",
+        "normal": "facades/facade_brick_factory_red_normal.png",
+        "roughness": "facades/facade_brick_factory_red_roughness.png",
+        "mask_urp": "facades/facade_brick_factory_red_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_brick_factory_red_albedo.png": "Default, sRGB on",
+          "facades/facade_brick_factory_red_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_brick_factory_red_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_brick_factory_red_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Red pre-war factory brick: dark joints, soot, efflorescence, patched bricks."
+    },
+    {
+      "name": "facade_plaster_ochre",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_plaster_ochre_albedo.png",
+        "normal": "facades/facade_plaster_ochre_normal.png",
+        "roughness": "facades/facade_plaster_ochre_roughness.png",
+        "mask_urp": "facades/facade_plaster_ochre_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_plaster_ochre_albedo.png": "Default, sRGB on",
+          "facades/facade_plaster_ochre_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_plaster_ochre_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_plaster_ochre_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Old-town townhouse plaster, chipped to brick. One of 6 pastel tints."
+    },
+    {
+      "name": "facade_plaster_salmon",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_plaster_salmon_albedo.png",
+        "normal": "facades/facade_plaster_salmon_normal.png",
+        "roughness": "facades/facade_plaster_salmon_roughness.png",
+        "mask_urp": "facades/facade_plaster_salmon_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_plaster_salmon_albedo.png": "Default, sRGB on",
+          "facades/facade_plaster_salmon_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_plaster_salmon_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_plaster_salmon_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Old-town townhouse plaster, chipped to brick. One of 6 pastel tints."
+    },
+    {
+      "name": "facade_plaster_mint",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_plaster_mint_albedo.png",
+        "normal": "facades/facade_plaster_mint_normal.png",
+        "roughness": "facades/facade_plaster_mint_roughness.png",
+        "mask_urp": "facades/facade_plaster_mint_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_plaster_mint_albedo.png": "Default, sRGB on",
+          "facades/facade_plaster_mint_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_plaster_mint_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_plaster_mint_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Old-town townhouse plaster, chipped to brick. One of 6 pastel tints."
+    },
+    {
+      "name": "facade_plaster_skyblue",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_plaster_skyblue_albedo.png",
+        "normal": "facades/facade_plaster_skyblue_normal.png",
+        "roughness": "facades/facade_plaster_skyblue_roughness.png",
+        "mask_urp": "facades/facade_plaster_skyblue_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_plaster_skyblue_albedo.png": "Default, sRGB on",
+          "facades/facade_plaster_skyblue_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_plaster_skyblue_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_plaster_skyblue_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Old-town townhouse plaster, chipped to brick. One of 6 pastel tints."
+    },
+    {
+      "name": "facade_plaster_cream",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_plaster_cream_albedo.png",
+        "normal": "facades/facade_plaster_cream_normal.png",
+        "roughness": "facades/facade_plaster_cream_roughness.png",
+        "mask_urp": "facades/facade_plaster_cream_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_plaster_cream_albedo.png": "Default, sRGB on",
+          "facades/facade_plaster_cream_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_plaster_cream_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_plaster_cream_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Old-town townhouse plaster, chipped to brick. One of 6 pastel tints."
+    },
+    {
+      "name": "facade_plaster_lilac",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_plaster_lilac_albedo.png",
+        "normal": "facades/facade_plaster_lilac_normal.png",
+        "roughness": "facades/facade_plaster_lilac_roughness.png",
+        "mask_urp": "facades/facade_plaster_lilac_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_plaster_lilac_albedo.png": "Default, sRGB on",
+          "facades/facade_plaster_lilac_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_plaster_lilac_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_plaster_lilac_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Old-town townhouse plaster, chipped to brick. One of 6 pastel tints."
+    },
+    {
+      "name": "facade_wood_planks",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        3.0,
+        3.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_wood_planks_albedo.png",
+        "normal": "facades/facade_wood_planks_normal.png",
+        "roughness": "facades/facade_wood_planks_roughness.png",
+        "mask_urp": "facades/facade_wood_planks_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_wood_planks_albedo.png": "Default, sRGB on",
+          "facades/facade_wood_planks_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_wood_planks_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_wood_planks_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.3333,
+          0.3333
+        ]
+      },
+      "notes": "Village clapboard, faded blue-green paint worn to grey wood; nails every 0.6 m."
+    },
+    {
+      "name": "facade_mansion_render",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        8.0,
+        8.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_mansion_render_albedo.png",
+        "normal": "facades/facade_mansion_render_normal.png",
+        "roughness": "facades/facade_mansion_render_roughness.png",
+        "mask_urp": "facades/facade_mansion_render_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_mansion_render_albedo.png": "Default, sRGB on",
+          "facades/facade_mansion_render_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_mansion_render_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_mansion_render_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.125,
+          0.125
+        ]
+      },
+      "notes": "Elite hill villa: white render, floor-to-ceiling glazing in anthracite frames, larch slat panel in the right bay, stone slab band between floors."
+    },
+    {
+      "name": "facade_corrugated_metal",
+      "category": "facades",
+      "kind": "tile",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "facades/facade_corrugated_metal_albedo.png",
+        "normal": "facades/facade_corrugated_metal_normal.png",
+        "roughness": "facades/facade_corrugated_metal_roughness.png",
+        "mask_urp": "facades/facade_corrugated_metal_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "facades/facade_corrugated_metal_albedo.png": "Default, sRGB on",
+          "facades/facade_corrugated_metal_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "facades/facade_corrugated_metal_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "facades/facade_corrugated_metal_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Industrial profiled sheet: faded blue-grey paint, one galvanised replacement sheet, lap joints with bolts, rust streaks. Metallic varies by area."
+    },
+    {
+      "name": "window_atlas",
+      "category": "windows",
+      "kind": "decal_atlas",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "none",
+      "world_size_m": null,
+      "maps": {
+        "albedo": "windows/window_atlas_albedo.png",
+        "normal": "windows/window_atlas_normal.png",
+        "roughness": "windows/window_atlas_roughness.png",
+        "mask_urp": "windows/window_atlas_mask.png",
+        "emission": "windows/window_atlas_emission.png"
+      },
+      "unity": {
+        "shader": "Shader Graphs/Decal (URP Decal Projector)",
+        "workflow": "Metallic",
+        "surface": "Transparent (alpha from albedo)",
+        "import": {
+          "windows/window_atlas_albedo.png": "Default, sRGB on, Alpha Is Transparency",
+          "windows/window_atlas_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "windows/window_atlas_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "windows/window_atlas_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha",
+          "windows/window_atlas_emission.png": "Default, sRGB on -> Emission Map (HDR colour ~1.5-3 at night)"
+        },
+        "wrap_mode": "Clamp",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0
+      },
+      "notes": "16 window decals, 4x4 grid, row-major from the top-left. Albedo alpha = coverage; emission only for *_lit cells. Use on URP Decal Projector or as alpha-clipped quads.",
+      "atlas": [
+        {
+          "name": "soviet_white_bare",
+          "rect_px": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.0,
+            0.75,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "soviet_white_tulle",
+          "rect_px": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.25,
+            0.75,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "soviet_white_lit",
+          "rect_px": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.5,
+            0.75,
+            0.25,
+            0.25
+          ],
+          "lit": true
+        },
+        {
+          "name": "soviet_brown_drape",
+          "rect_px": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.75,
+            0.75,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "soviet_brown_lit",
+          "rect_px": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.0,
+            0.5,
+            0.25,
+            0.25
+          ],
+          "lit": true
+        },
+        {
+          "name": "pvc_blinds",
+          "rect_px": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.25,
+            0.5,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "pvc_blinds_lit",
+          "rect_px": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.5,
+            0.5,
+            0.25,
+            0.25
+          ],
+          "lit": true
+        },
+        {
+          "name": "pvc_flowers",
+          "rect_px": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.75,
+            0.5,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "boarded_up",
+          "rect_px": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.0,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "broken_dark",
+          "rect_px": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "village_shutters",
+          "rect_px": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.5,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "village_lit",
+          "rect_px": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.75,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "lit": true
+        },
+        {
+          "name": "shop_window",
+          "rect_px": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.0,
+            0.0,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "shop_window_lit",
+          "rect_px": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.25,
+            0.0,
+            0.25,
+            0.25
+          ],
+          "lit": true
+        },
+        {
+          "name": "modern_tall",
+          "rect_px": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.5,
+            0.0,
+            0.25,
+            0.25
+          ],
+          "lit": false
+        },
+        {
+          "name": "modern_tall_lit",
+          "rect_px": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "uv_rect": [
+            0.75,
+            0.0,
+            0.25,
+            0.25
+          ],
+          "lit": true
+        }
+      ]
+    },
+    {
+      "name": "roof_clay_tiles",
+      "category": "roofs",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        2.0,
+        2.0
+      ],
+      "maps": {
+        "albedo": "roofs/roof_clay_tiles_albedo.png",
+        "normal": "roofs/roof_clay_tiles_normal.png",
+        "roughness": "roofs/roof_clay_tiles_roughness.png",
+        "mask_urp": "roofs/roof_clay_tiles_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "roofs/roof_clay_tiles_albedo.png": "Default, sRGB on",
+          "roofs/roof_clay_tiles_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "roofs/roof_clay_tiles_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "roofs/roof_clay_tiles_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.5,
+          0.5
+        ]
+      },
+      "notes": "Terracotta beaver-tail tiles, staggered rows (8 x 10 per tile), lichen spots."
+    },
+    {
+      "name": "roof_metal_sheet",
+      "category": "roofs",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "roofs/roof_metal_sheet_albedo.png",
+        "normal": "roofs/roof_metal_sheet_normal.png",
+        "roughness": "roofs/roof_metal_sheet_roughness.png",
+        "mask_urp": "roofs/roof_metal_sheet_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "roofs/roof_metal_sheet_albedo.png": "Default, sRGB on",
+          "roofs/roof_metal_sheet_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "roofs/roof_metal_sheet_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "roofs/roof_metal_sheet_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Standing-seam sheet, faded green paint, oil-canning, rust at seams and cross laps."
+    },
+    {
+      "name": "roof_tar_flat",
+      "category": "roofs",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        6.0,
+        6.0
+      ],
+      "maps": {
+        "albedo": "roofs/roof_tar_flat_albedo.png",
+        "normal": "roofs/roof_tar_flat_normal.png",
+        "roughness": "roofs/roof_tar_flat_roughness.png",
+        "mask_urp": "roofs/roof_tar_flat_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "roofs/roof_tar_flat_albedo.png": "Default, sRGB on",
+          "roofs/roof_tar_flat_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "roofs/roof_tar_flat_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "roofs/roof_tar_flat_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.1667,
+          0.1667
+        ]
+      },
+      "notes": "Flat bitumen roll roof of panel blocks: 1 m strips with seams, fresh shiny patches, dried puddle rings, dust."
+    },
+    {
+      "name": "roof_slate_wavy",
+      "category": "roofs",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "roofs/roof_slate_wavy_albedo.png",
+        "normal": "roofs/roof_slate_wavy_normal.png",
+        "roughness": "roofs/roof_slate_wavy_roughness.png",
+        "mask_urp": "roofs/roof_slate_wavy_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "roofs/roof_slate_wavy_albedo.png": "Default, sRGB on",
+          "roofs/roof_slate_wavy_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "roofs/roof_slate_wavy_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "roofs/roof_slate_wavy_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Post-Soviet asbestos-cement wavy slate (shifer): grey sheets, overlaps, nails on crests, moss in troughs and yellow lichen."
+    },
+    {
+      "name": "ground_paving_sidewalk",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_paving_sidewalk_albedo.png",
+        "normal": "ground/ground_paving_sidewalk_normal.png",
+        "roughness": "ground/ground_paving_sidewalk_roughness.png",
+        "mask_urp": "ground/ground_paving_sidewalk_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_paving_sidewalk_albedo.png": "Default, sRGB on",
+          "ground/ground_paving_sidewalk_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_paving_sidewalk_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_paving_sidewalk_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Soviet 0.5 m concrete sidewalk slabs, uneven heights, cracked slabs, dirt in joints."
+    },
+    {
+      "name": "ground_paving_square",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        2.0,
+        2.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_paving_square_albedo.png",
+        "normal": "ground/ground_paving_square_normal.png",
+        "roughness": "ground/ground_paving_square_roughness.png",
+        "mask_urp": "ground/ground_paving_square_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_paving_square_albedo.png": "Default, sRGB on",
+          "ground/ground_paving_square_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_paving_square_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_paving_square_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.5,
+          0.5
+        ]
+      },
+      "notes": "Old-town square pavers 20x10 cm, running bond, grey with red diamond pattern."
+    },
+    {
+      "name": "ground_curb_concrete",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "u",
+      "world_size_m": [
+        2.0,
+        2.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_curb_concrete_albedo.png",
+        "normal": "ground/ground_curb_concrete_normal.png",
+        "roughness": "ground/ground_curb_concrete_roughness.png",
+        "mask_urp": "ground/ground_curb_concrete_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_curb_concrete_albedo.png": "Default, sRGB on",
+          "ground/ground_curb_concrete_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_curb_concrete_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_curb_concrete_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat U / Clamp V",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.5,
+          0.5
+        ]
+      },
+      "notes": "Curb stone unwrap: U runs along the curb (1 m segments, repeats); V 0..0.45 = top, chamfer at 0.45-0.55, 0.55..1 = street face with grime toward the gutter."
+    },
+    {
+      "name": "ground_asphalt_lanes",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "v",
+      "world_size_m": [
+        8.0,
+        8.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_asphalt_lanes_albedo.png",
+        "normal": "ground/ground_asphalt_lanes_normal.png",
+        "roughness": "ground/ground_asphalt_lanes_roughness.png",
+        "mask_urp": "ground/ground_asphalt_lanes_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_asphalt_lanes_albedo.png": "Default, sRGB on",
+          "ground/ground_asphalt_lanes_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_asphalt_lanes_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_asphalt_lanes_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Clamp U / Repeat V",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.125,
+          0.125
+        ]
+      },
+      "notes": "Two-lane road strip, 8 m wide (U = road width, clamp), repeats along V every 8 m: dashed white centre line (4 m dash / 4 m gap), solid edge lines."
+    },
+    {
+      "name": "decal_zebra_crossing",
+      "category": "ground",
+      "kind": "decal",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "none",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "ground/decal_zebra_crossing_albedo.png",
+        "normal": "ground/decal_zebra_crossing_normal.png",
+        "roughness": "ground/decal_zebra_crossing_roughness.png",
+        "mask_urp": "ground/decal_zebra_crossing_mask.png"
+      },
+      "unity": {
+        "shader": "Shader Graphs/Decal (URP Decal Projector)",
+        "workflow": "Metallic",
+        "surface": "Transparent (alpha from albedo)",
+        "import": {
+          "ground/decal_zebra_crossing_albedo.png": "Default, sRGB on, Alpha Is Transparency",
+          "ground/decal_zebra_crossing_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/decal_zebra_crossing_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/decal_zebra_crossing_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Clamp",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Pedestrian crossing decal, 4 x 4 m: 0.5 m white stripes, worn. Stripes run along V (parallel to traffic); project with URP Decal Projector, alpha = paint."
+    },
+    {
+      "name": "decal_parking_stalls",
+      "category": "ground",
+      "kind": "decal",
+      "size": [
+        1024,
+        512
+      ],
+      "tiling": "u",
+      "world_size_m": [
+        10.0,
+        5.0
+      ],
+      "maps": {
+        "albedo": "ground/decal_parking_stalls_albedo.png",
+        "normal": "ground/decal_parking_stalls_normal.png",
+        "roughness": "ground/decal_parking_stalls_roughness.png",
+        "mask_urp": "ground/decal_parking_stalls_mask.png"
+      },
+      "unity": {
+        "shader": "Shader Graphs/Decal (URP Decal Projector)",
+        "workflow": "Metallic",
+        "surface": "Transparent (alpha from albedo)",
+        "import": {
+          "ground/decal_parking_stalls_albedo.png": "Default, sRGB on, Alpha Is Transparency",
+          "ground/decal_parking_stalls_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/decal_parking_stalls_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/decal_parking_stalls_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat U / Clamp V",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.1,
+          0.2
+        ]
+      },
+      "notes": "4 parking stalls 2.5 x 5 m, white 10 cm lines; repeats along U for longer rows."
+    },
+    {
+      "name": "ground_asphalt_cracked",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        6.0,
+        6.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_asphalt_cracked_albedo.png",
+        "normal": "ground/ground_asphalt_cracked_normal.png",
+        "roughness": "ground/ground_asphalt_cracked_roughness.png",
+        "mask_urp": "ground/ground_asphalt_cracked_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_asphalt_cracked_albedo.png": "Default, sRGB on",
+          "ground/ground_asphalt_cracked_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_asphalt_cracked_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_asphalt_cracked_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.1667,
+          0.1667
+        ]
+      },
+      "notes": "Old faded asphalt of the bad district: alligator cracks, repair patches, a pothole."
+    },
+    {
+      "name": "ground_gravel",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        2.0,
+        2.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_gravel_albedo.png",
+        "normal": "ground/ground_gravel_normal.png",
+        "roughness": "ground/ground_gravel_roughness.png",
+        "mask_urp": "ground/ground_gravel_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_gravel_albedo.png": "Default, sRGB on",
+          "ground/ground_gravel_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_gravel_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_gravel_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.5,
+          0.5
+        ]
+      },
+      "notes": "Rounded courtyard gravel, warm greys; for parking lots, rail beds, village roads."
+    },
+    {
+      "name": "ground_dirt_path",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_dirt_path_albedo.png",
+        "normal": "ground/ground_dirt_path_normal.png",
+        "roughness": "ground/ground_dirt_path_roughness.png",
+        "mask_urp": "ground/ground_dirt_path_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_dirt_path_albedo.png": "Default, sRGB on",
+          "ground/ground_dirt_path_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_dirt_path_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_dirt_path_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Trodden dirt path / country track: two ruts along V, sparse pebbles, damp patches."
+    },
+    {
+      "name": "ground_rubber_playground",
+      "category": "ground",
+      "kind": "tile",
+      "size": [
+        1024,
+        1024
+      ],
+      "tiling": "both",
+      "world_size_m": [
+        4.0,
+        4.0
+      ],
+      "maps": {
+        "albedo": "ground/ground_rubber_playground_albedo.png",
+        "normal": "ground/ground_rubber_playground_normal.png",
+        "roughness": "ground/ground_rubber_playground_roughness.png",
+        "mask_urp": "ground/ground_rubber_playground_mask.png"
+      },
+      "unity": {
+        "shader": "Universal Render Pipeline/Lit",
+        "workflow": "Metallic",
+        "surface": "Opaque",
+        "import": {
+          "ground/ground_rubber_playground_albedo.png": "Default, sRGB on",
+          "ground/ground_rubber_playground_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "ground/ground_rubber_playground_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "ground/ground_rubber_playground_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha"
+        },
+        "wrap_mode": "Repeat",
+        "filter": "Trilinear, Aniso 4",
+        "max_size": 1024,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0,
+        "tiling_per_metre": [
+          0.25,
+          0.25
+        ]
+      },
+      "notes": "Courtyard playground rubber tiles 0.5 m, terracotta and green checker with soft granule texture and faded patches."
+    },
+    {
+      "name": "sign_atlas",
+      "category": "signage",
+      "kind": "decal_atlas",
+      "size": [
+        2048,
+        2048
+      ],
+      "tiling": "none",
+      "world_size_m": null,
+      "maps": {
+        "albedo": "signage/sign_atlas_albedo.png",
+        "normal": "signage/sign_atlas_normal.png",
+        "roughness": "signage/sign_atlas_roughness.png",
+        "mask_urp": "signage/sign_atlas_mask.png",
+        "emission": "signage/sign_atlas_emission.png"
+      },
+      "unity": {
+        "shader": "Shader Graphs/Decal (URP Decal Projector)",
+        "workflow": "Metallic",
+        "surface": "Transparent (alpha from albedo)",
+        "import": {
+          "signage/sign_atlas_albedo.png": "Default, sRGB on, Alpha Is Transparency",
+          "signage/sign_atlas_normal.png": "Normal map (OpenGL +Y, no flip)",
+          "signage/sign_atlas_roughness.png": "Default, sRGB off (reference only; URP uses the mask)",
+          "signage/sign_atlas_mask.png": "Default, sRGB off -> Metallic Map, Smoothness Source = Metallic Alpha",
+          "signage/sign_atlas_emission.png": "Default, sRGB on -> Emission Map (HDR colour ~1.5-3 at night)"
+        },
+        "wrap_mode": "Clamp",
+        "filter": "Trilinear, Aniso 2",
+        "max_size": 2048,
+        "metallic_value": 1.0,
+        "smoothness_scale": 1.0,
+        "normal_scale": 1.0
+      },
+      "notes": "12 shop/municipal sign boards (no post office), 2 columns x 6 rows of 1024x340 px from the top-left; bottom 8 px unused. Use on alpha-clipped quads or as decals; emission only on signs that glow at night.",
+      "atlas": [
+        {
+          "name": "apteka",
+          "text": "АПТЕКА",
+          "rect_px": [
+            0,
+            0,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.0,
+            0.833984375,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "produkty24",
+          "text": "ПРОДУКТЫ 24 ЧАСА",
+          "rect_px": [
+            1024,
+            0,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.5,
+            0.833984375,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "bar",
+          "text": "БАР",
+          "rect_px": [
+            0,
+            340,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.0,
+            0.66796875,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "kazino",
+          "text": "КАЗИНО",
+          "rect_px": [
+            1024,
+            340,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.5,
+            0.66796875,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "policiya",
+          "text": "ПОЛИЦИЯ",
+          "rect_px": [
+            0,
+            680,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.0,
+            0.501953125,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": false
+        },
+        {
+          "name": "bolnica",
+          "text": "БОЛЬНИЦА",
+          "rect_px": [
+            1024,
+            680,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.5,
+            0.501953125,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": false
+        },
+        {
+          "name": "bank",
+          "text": "БАНК",
+          "rect_px": [
+            0,
+            1020,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.0,
+            0.3359375,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "kafe",
+          "text": "КАФЕ",
+          "rect_px": [
+            1024,
+            1020,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.5,
+            0.3359375,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": false
+        },
+        {
+          "name": "avtomaster",
+          "text": "АВТОМАСТЕРСКАЯ",
+          "rect_px": [
+            0,
+            1360,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.0,
+            0.169921875,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": false
+        },
+        {
+          "name": "supermarket",
+          "text": "СУПЕРМАРКЕТ",
+          "rect_px": [
+            1024,
+            1360,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.5,
+            0.169921875,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "nochnoy_klub",
+          "text": "НОЧНОЙ КЛУБ",
+          "rect_px": [
+            0,
+            1700,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.0,
+            0.00390625,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        },
+        {
+          "name": "bouling",
+          "text": "БОУЛИНГ",
+          "rect_px": [
+            1024,
+            1700,
+            1024,
+            340
+          ],
+          "uv_rect": [
+            0.5,
+            0.00390625,
+            0.5,
+            0.166015625
+          ],
+          "night_glow": true
+        }
+      ]
+    }
+  ]
+}
