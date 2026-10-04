@@ -1,0 +1,84 @@
+{
+  "asset": "SK_GarbageContainer_Closed",
+  "family": "SK-BINS",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 578,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.81,
+    -0.5,
+    0.0046
+  ],
+  "bounds_max": [
+    0.81,
+    0.4517,
+    1.175
+  ],
+  "size_xyz_m": [
+    1.62,
+    0.952,
+    1.17
+  ],
+  "objects": {
+    "SK_GarbageContainer_Closed_Body": {
+      "triangles": 438,
+      "vertices": 265,
+      "faces": 189,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_GarbageContainer_Closed_Lid": {
+      "triangles": 140,
+      "vertices": 80,
+      "faces": 74,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.43,
+        1.11
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "0.75 m3 street container with lid closed; lid pivot on the back hinge, rotate about local X (negative = open).",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_GarbageContainer_Closed_v01.fbx",
+    "fbx_size_bytes": 30876,
+    "blend": "SK-BINS_v01.blend"
+  }
+}

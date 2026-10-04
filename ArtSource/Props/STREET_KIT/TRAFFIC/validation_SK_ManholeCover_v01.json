@@ -1,0 +1,67 @@
+{
+  "asset": "SK_ManholeCover",
+  "family": "SK-TRAFFIC",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 674,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.4,
+    -0.4,
+    0.0
+  ],
+  "bounds_max": [
+    0.4,
+    0.4,
+    0.019
+  ],
+  "size_xyz_m": [
+    0.8,
+    0.8,
+    0.019
+  ],
+  "objects": {
+    "SK_ManholeCover_Mesh": {
+      "triangles": 674,
+      "vertices": 377,
+      "faces": 335,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Cast-iron manhole cover d 0.8 m (frame) / 0.67 m (lid), 2 cm high: relief ring, centre boss, 16 ribs, lifting slots. Sits on the ground (base at z = 0); can be sunk 1-2 cm into the road in Unity.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_ManholeCover_v01.fbx",
+    "fbx_size_bytes": 28476,
+    "blend": "SK-TRAFFIC_v01.blend"
+  }
+}

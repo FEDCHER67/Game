@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Play_Slide",
+  "family": "SK-PLAYGROUND",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 900,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.83,
+    -0.35,
+    0.0
+  ],
+  "bounds_max": [
+    2.15,
+    0.35,
+    2.333
+  ],
+  "size_xyz_m": [
+    3.98,
+    0.7,
+    2.333
+  ],
+  "objects": {
+    "SK_Play_Slide_Mesh": {
+      "triangles": 900,
+      "vertices": 516,
+      "faces": 450,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Ladder (5 rungs) from -X up to a 1.45 m platform with handrails, steel chute down to a flat run-out at +X (0.38 m).",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Play_Slide_v01.fbx",
+    "fbx_size_bytes": 32636,
+    "blend": "SK-PLAYGROUND_v01.blend"
+  }
+}

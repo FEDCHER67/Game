@@ -1,0 +1,84 @@
+{
+  "asset": "SK_ParkingBarrier",
+  "family": "SK-TRAFFIC",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 532,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.5,
+    -0.355,
+    0.0
+  ],
+  "bounds_max": [
+    4.08,
+    0.23,
+    1.08
+  ],
+  "size_xyz_m": [
+    4.58,
+    0.585,
+    1.08
+  ],
+  "objects": {
+    "SK_ParkingBarrier_Mesh": {
+      "triangles": 344,
+      "vertices": 200,
+      "faces": 176,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_ParkingBarrier_Boom": {
+      "triangles": 188,
+      "vertices": 116,
+      "faces": 92,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        -0.235,
+        0.86
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Boom barrier: white cabinet 0.35 x 0.35 x 1.0 m with lid and signal lamp, red/white 4 m boom along +X on the cabinet front (-Y), fork rest at x = 3.8 m. Boom is a child with its pivot on the axle (0, -0.235, 0.86); axle axis = Blender Y, rotating -90 deg about Blender Y raises the boom.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_ParkingBarrier_v01.fbx",
+    "fbx_size_bytes": 30252,
+    "blend": "SK-TRAFFIC_v01.blend"
+  }
+}

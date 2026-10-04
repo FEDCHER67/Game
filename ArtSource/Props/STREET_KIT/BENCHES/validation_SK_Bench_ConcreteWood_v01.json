@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Bench_ConcreteWood",
+  "family": "SK-BENCHES",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 508,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.0,
+    -0.28,
+    0.0
+  ],
+  "bounds_max": [
+    1.0,
+    0.3695,
+    0.8665
+  ],
+  "size_xyz_m": [
+    2.0,
+    0.649,
+    0.866
+  ],
+  "objects": {
+    "SK_Bench_ConcreteWood_Mesh": {
+      "triangles": 508,
+      "vertices": 280,
+      "faces": 298,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Courtyard bench: two concrete supports, three seat slats, two backrest slats; seat height 0.47 m.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Bench_ConcreteWood_v01.fbx",
+    "fbx_size_bytes": 27692,
+    "blend": "SK-BENCHES_v01.blend"
+  }
+}
