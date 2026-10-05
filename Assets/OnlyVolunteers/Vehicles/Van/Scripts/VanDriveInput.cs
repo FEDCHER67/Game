@@ -3,6 +3,8 @@ using UnityEngine;
 namespace OnlyVolunteers.Vehicles
 {
     // Keyboard driving, door and upgrade controls for the standalone van test scene (not networked).
+    // Unassigned doors are looked up by their VAN_Door_* names, so scenes that add this component
+    // at build time (e.g. the map grey-box) get working doors too.
     [RequireComponent(typeof(VanController))]
     public sealed class VanDriveInput : MonoBehaviour
     {
@@ -14,6 +16,10 @@ namespace OnlyVolunteers.Vehicles
         public VanCameraRig CameraRig;
         [Tooltip("Optional. Taken from this object, or added if the van has none (test scene only).")]
         public VanUpgrades Upgrades;
+        [Tooltip("Grey-box door rules (NPC capture stage 1, canon section 151): 3 asks the sliding door for the other state " +
+                 "(explicit request, so it never fights the handle in the cargo bay); 1, 2, 4 and F do nothing, the rear " +
+                 "doors open by hand only. Off = the test-scene keys as before.")]
+        public bool GreyboxDoorRules;
 
         private VanController _van;
         private Vector3 _spawnPosition;
@@ -25,6 +31,11 @@ namespace OnlyVolunteers.Vehicles
             _van = GetComponent<VanController>();
             if (Upgrades == null && !TryGetComponent(out Upgrades))
                 Upgrades = gameObject.AddComponent<VanUpgrades>();
+            if (FrontLeft == null) FrontLeft = FindDoor("VAN_Door_Front_Left");
+            if (FrontRight == null) FrontRight = FindDoor("VAN_Door_Front_Right");
+            if (Slide == null) Slide = FindDoor("VAN_Door_Slide");
+            if (RearLeft == null) RearLeft = FindDoor("VAN_Door_Rear_Left");
+            if (RearRight == null) RearRight = FindDoor("VAN_Door_Rear_Right");
             _spawnPosition = transform.position;
             _spawnYaw = transform.eulerAngles.y;
         }
@@ -41,11 +52,18 @@ namespace OnlyVolunteers.Vehicles
             _van.Steer = steer;
             _van.Handbrake = Input.GetKey(KeyCode.Space);
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) Toggle(FrontLeft);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) Toggle(FrontRight);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) Toggle(Slide);
-            if (Input.GetKeyDown(KeyCode.Alpha4)) { Toggle(RearLeft); Toggle(RearRight); }
-            if (Input.GetKeyDown(KeyCode.F)) ToggleAll();
+            if (GreyboxDoorRules)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha3) && Slide != null) Slide.Request(!Slide.TargetOpen);
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1)) Toggle(FrontLeft);
+                if (Input.GetKeyDown(KeyCode.Alpha2)) Toggle(FrontRight);
+                if (Input.GetKeyDown(KeyCode.Alpha3)) Toggle(Slide);
+                if (Input.GetKeyDown(KeyCode.Alpha4)) { Toggle(RearLeft); Toggle(RearRight); }
+                if (Input.GetKeyDown(KeyCode.F)) ToggleAll();
+            }
             if (Input.GetKeyDown(KeyCode.Alpha7)) CycleUpgrade(VanUpgradeCategory.Engine);
             if (Input.GetKeyDown(KeyCode.Alpha8)) CycleUpgrade(VanUpgradeCategory.Brakes);
             if (Input.GetKeyDown(KeyCode.Alpha9)) CycleUpgrade(VanUpgradeCategory.Handling);
@@ -55,6 +73,13 @@ namespace OnlyVolunteers.Vehicles
             if (Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
             if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
             Cursor.visible = Cursor.lockState != CursorLockMode.Locked;
+        }
+
+        private VanDoor FindDoor(string doorName)
+        {
+            foreach (VanDoor door in GetComponentsInChildren<VanDoor>(true))
+                if (door.name == doorName) return door;
+            return null;
         }
 
         private static void Toggle(VanDoor door)
@@ -97,9 +122,12 @@ namespace OnlyVolunteers.Vehicles
                 $"Тормоза {Upgrades.GetLevel(VanUpgradeCategory.Brakes)}/{max} · " +
                 $"Управление {Upgrades.GetLevel(VanUpgradeCategory.Handling)}/{max}");
             if (!_showHelp) return;
+            string doors = GreyboxDoorRules
+                ? "3 — сдвижная дверь (задние — только руками снаружи)\n"
+                : "1 — левая передняя, 2 — правая передняя, 3 — сдвижная, 4 — задние, F — все двери\n";
             GUI.Label(new Rect(16, 56, 640, 160),
                 "WASD / стрелки — ехать, Space — ручник, R — поставить на колёса\n" +
-                "1 — левая передняя, 2 — правая передняя, 3 — сдвижная, 4 — задние, F — все двери\n" +
+                doors +
                 "7 / 8 / 9 — уровень двигателя / тормозов / управления (0→1→2→3→0)\n" +
                 "C — камера сзади / из кабины, ЛКМ — захват мыши, Esc — отпустить, H — скрыть подсказку");
         }

@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Car_Burnt",
+  "family": "SK-WRECKS",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1392,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.1,
+    -2.0488,
+    0.0
+  ],
+  "bounds_max": [
+    0.8745,
+    2.0633,
+    1.2828
+  ],
+  "size_xyz_m": [
+    1.974,
+    4.112,
+    1.283
+  ],
+  "objects": {
+    "SK_Car_Burnt_Mesh": {
+      "triangles": 1392,
+      "vertices": 824,
+      "faces": 673,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Burnt-out shell of the same sedan: rust/soot/ash only, no glass and no tyres (sits low on bare rims), open pillar frame with sagged roof, scorched seat frames and steering wheel inside, warped doors (front-left ajar), buckled bonnet, popped trunk lid, front bumper hanging. Faces -Y.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Car_Burnt_v01.fbx",
+    "fbx_size_bytes": 48604,
+    "blend": "SK-WRECKS_v01.blend"
+  }
+}

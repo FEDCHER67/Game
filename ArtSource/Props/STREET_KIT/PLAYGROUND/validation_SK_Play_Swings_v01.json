@@ -1,0 +1,101 @@
+{
+  "asset": "SK_Play_Swings",
+  "family": "SK-PLAYGROUND",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 840,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.66,
+    -0.88,
+    0.0
+  ],
+  "bounds_max": [
+    1.66,
+    0.88,
+    2.3101
+  ],
+  "size_xyz_m": [
+    3.32,
+    1.76,
+    2.31
+  ],
+  "objects": {
+    "SK_Play_Swings_Frame": {
+      "triangles": 472,
+      "vertices": 268,
+      "faces": 214,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_Play_Swings_SeatA": {
+      "triangles": 184,
+      "vertices": 104,
+      "faces": 88,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        -0.65,
+        0.0,
+        2.25
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_Play_Swings_SeatB": {
+      "triangles": 184,
+      "vertices": 104,
+      "faces": 88,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.65,
+        0.0,
+        2.25
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "A-frame pipe swing set, top bar 2.25 m along X; two seats on rigid rods, seat height 0.45 m. SeatA/SeatB pivots on the top-bar axis: rotate around local X to swing.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Play_Swings_v01.fbx",
+    "fbx_size_bytes": 37772,
+    "blend": "SK-PLAYGROUND_v01.blend"
+  }
+}

@@ -1,0 +1,6 @@
+# Map art (cloud-built FBX, 1024-2048 px PNG sets, generated Detail/TL_ copies, baked prefab meshes): Git LFS.
+# The root .gitattributes has *.fbx in LFS but not *.png; this folder alone holds ~45 MB of PNG.
+*.png filter=lfs diff=lfs merge=lfs -text
+*.PNG filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+Prefabs/Meshes/*.asset filter=lfs diff=lfs merge=lfs -text

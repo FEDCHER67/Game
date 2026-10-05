@@ -1,0 +1,84 @@
+{
+  "asset": "SK_TrashBin_Tipping",
+  "family": "SK-BINS",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 386,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.36,
+    -0.29,
+    0.0
+  ],
+  "bounds_max": [
+    0.36,
+    0.25,
+    0.99
+  ],
+  "size_xyz_m": [
+    0.72,
+    0.54,
+    0.99
+  ],
+  "objects": {
+    "SK_TrashBin_Tipping_Frame": {
+      "triangles": 220,
+      "vertices": 124,
+      "faces": 100,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_TrashBin_Tipping_Bucket": {
+      "triangles": 166,
+      "vertices": 93,
+      "faces": 85,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.78
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Tipping litter bin between two posts; the bucket pivots on the axle (local X) at z = 0.78 m.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_TrashBin_Tipping_v01.fbx",
+    "fbx_size_bytes": 28412,
+    "blend": "SK-BINS_v01.blend"
+  }
+}

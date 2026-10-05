@@ -1,0 +1,308 @@
+{
+  "family": "MAP-LAMPS-001",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); moving parts are children with the pivot on the hinge",
+  "uv": "metre-scale box projection (1 UV unit = 1 m)",
+  "description": "Street lamps: Soviet concrete pole with cobra head (working and broken), old-town lantern (single and double).",
+  "assets": {
+    "LP_SovietConcrete": {
+      "triangles": 284,
+      "triangle_budget": 600,
+      "size_m": [
+        0.34,
+        2.605,
+        9.776
+      ],
+      "bounds_min": [
+        -0.17,
+        -2.448,
+        0.0
+      ],
+      "bounds_max": [
+        0.17,
+        0.157,
+        9.776
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Concrete_Dark",
+        "MP_Concrete_Stain",
+        "MP_Lamp_Glow",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey"
+      ],
+      "objects": {
+        "LP_SovietConcrete": {
+          "triangles": 284,
+          "vertices": 158,
+          "faces": 136,
+          "materials": [
+            "MP_Concrete_Stain",
+            "MP_Concrete",
+            "MP_Concrete_Dark",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey",
+            "MP_Lamp_Glow"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.5249,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {
+        "LP_SovietConcrete_Light": [
+          0.0,
+          -2.05,
+          9.5
+        ]
+      },
+      "all_checks_passed": true,
+      "notes": "Arm and head point to -Y (the road side). ",
+      "row": 0,
+      "height_m": 9.0,
+      "fbx": "LP_SovietConcrete_v01.fbx"
+    },
+    "LP_SovietConcrete_Broken": {
+      "triangles": 308,
+      "triangle_budget": 600,
+      "size_m": [
+        0.34,
+        3.024,
+        9.669
+      ],
+      "bounds_min": [
+        -0.17,
+        -2.867,
+        0.0
+      ],
+      "bounds_max": [
+        0.17,
+        0.157,
+        9.669
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Concrete_Dark",
+        "MP_Concrete_Stain",
+        "MP_Glass",
+        "MP_Metal_Dark",
+        "MP_Metal_Grey",
+        "MP_Paint_Rust"
+      ],
+      "objects": {
+        "LP_SovietConcrete_Broken": {
+          "triangles": 308,
+          "vertices": 174,
+          "faces": 148,
+          "materials": [
+            "MP_Concrete_Stain",
+            "MP_Concrete",
+            "MP_Concrete_Dark",
+            "MP_Metal_Dark",
+            "MP_Metal_Grey",
+            "MP_Glass",
+            "MP_Paint_Rust"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.5287,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Arm and head point to -Y (the road side). Leans 2.5 deg, smashed dark head, no light socket.",
+      "row": 0,
+      "height_m": 9.0,
+      "fbx": "LP_SovietConcrete_Broken_v01.fbx"
+    },
+    "LP_OldTown_Single": {
+      "triangles": 364,
+      "triangle_budget": 900,
+      "size_m": [
+        0.48,
+        0.48,
+        4.09
+      ],
+      "bounds_min": [
+        -0.24,
+        -0.24,
+        0.0
+      ],
+      "bounds_max": [
+        0.24,
+        0.24,
+        4.09
+      ],
+      "materials": [
+        "MP_Gold",
+        "MP_Lamp_Glow",
+        "MP_Metal_Black"
+      ],
+      "objects": {
+        "LP_OldTown_Single": {
+          "triangles": 364,
+          "vertices": 198,
+          "faces": 194,
+          "materials": [
+            "MP_Metal_Black",
+            "MP_Gold",
+            "MP_Lamp_Glow"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1309,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {
+        "LP_OldTown_Single_Light": [
+          0.0,
+          0.0,
+          3.555
+        ]
+      },
+      "all_checks_passed": true,
+      "notes": "Lantern glow panels are MP_Lamp_Glow.",
+      "row": 1,
+      "height_m": 4.09,
+      "fbx": "LP_OldTown_Single_v01.fbx"
+    },
+    "LP_OldTown_Double": {
+      "triangles": 718,
+      "triangle_budget": 1300,
+      "size_m": [
+        1.545,
+        0.48,
+        4.161
+      ],
+      "bounds_min": [
+        -0.773,
+        -0.24,
+        0.0
+      ],
+      "bounds_max": [
+        0.773,
+        0.24,
+        4.161
+      ],
+      "materials": [
+        "MP_Gold",
+        "MP_Lamp_Glow",
+        "MP_Metal_Black"
+      ],
+      "objects": {
+        "LP_OldTown_Double": {
+          "triangles": 718,
+          "vertices": 403,
+          "faces": 405,
+          "materials": [
+            "MP_Metal_Black",
+            "MP_Gold",
+            "MP_Lamp_Glow"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.1531,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {
+        "LP_OldTown_Double_Light1": [
+          -0.62,
+          0.0,
+          3.68
+        ],
+        "LP_OldTown_Double_Light2": [
+          0.62,
+          0.0,
+          3.68
+        ]
+      },
+      "all_checks_passed": true,
+      "notes": "Crossbar along X, lanterns at x = +-0.62 m.",
+      "row": 1,
+      "height_m": 3.9000000000000004,
+      "fbx": "LP_OldTown_Double_v01.fbx"
+    }
+  },
+  "total_assets": 4,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in a row along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "MAP-LAMPS-001_v01.blend"
+  }
+}

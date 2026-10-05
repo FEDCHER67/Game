@@ -1,0 +1,84 @@
+{
+  "asset": "SK_Play_Carousel",
+  "family": "SK-PLAYGROUND",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 650,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.0,
+    -1.0,
+    0.0
+  ],
+  "bounds_max": [
+    1.0,
+    1.0,
+    1.01
+  ],
+  "size_xyz_m": [
+    2.0,
+    2.0,
+    1.01
+  ],
+  "objects": {
+    "SK_Play_Carousel_Base": {
+      "triangles": 92,
+      "vertices": 52,
+      "faces": 32,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_Play_Carousel_Rotor": {
+      "triangles": 558,
+      "vertices": 297,
+      "faces": 261,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Hand-pushed round carousel, disc 2.0 m, top 0.38 m. Rotor pivot on the vertical axis (0,0,0): rotate around Z.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Play_Carousel_v01.fbx",
+    "fbx_size_bytes": 32508,
+    "blend": "SK-PLAYGROUND_v01.blend"
+  }
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KinematicCharacterController;
 using System;
+using OnlyVolunteers.Player; // OV stage1: Stance
 
 namespace KinematicCharacterController.Examples
 {
@@ -71,6 +72,20 @@ namespace KinematicCharacterController.Examples
         public Transform CameraFollowPoint;
         public float CrouchedCapsuleHeight = 1f;
 
+        // OV stage1: a stooped stance for the van's cargo bay (roof 1.43 m above the floor), and an optional radius per
+        // instance. CapsuleRadius <= 0 (the default) keeps Vadim's original behaviour exactly: the motor's serialized size
+        // at start, radius 0.5 on crouch/uncrouch as before (the former hard-coded 0.5 / 2). Only the map player sets a
+        // radius (0.35, GreyboxKccPawn -> ApplyCapsuleRadius), so a crouched player fits between the wheel arches.
+        [Header("OV Stance")]
+        [Tooltip("<= 0: original size (motor's serialized size, 0.5 on crouch/uncrouch). > 0: this radius (ApplyCapsuleRadius).")]
+        public float CapsuleRadius = 0f;
+        public float StandCapsuleHeight = 2f;
+        public float StoopedCapsuleHeight = 1.35f;
+
+        // OV stage1: plain state for other systems (and a SyncVar later). Seated is never set here: the van seat owns it.
+        public Stance CurrentStance { get; private set; } = Stance.Stand;
+        public bool IsStooped => _isStooped;
+
         public CharacterState CurrentCharacterState { get; private set; }
 
         private Collider[] _probedColliders = new Collider[8];
@@ -85,6 +100,7 @@ namespace KinematicCharacterController.Examples
         private Vector3 _internalVelocityAdd = Vector3.zero;
         private bool _shouldBeCrouching = false;
         private bool _isCrouching = false;
+        private bool _isStooped = false; // OV stage1
 
         private Vector3 lastInnerNormal = Vector3.zero;
         private Vector3 lastOuterNormal = Vector3.zero;
@@ -96,6 +112,59 @@ namespace KinematicCharacterController.Examples
 
             // Assign the characterController to the motor
             Motor.CharacterController = this;
+
+            // OV stage1: only an instance with its own radius is resized here; by default nothing changes (original).
+            if (CapsuleRadius > 0f)
+                ApplyCapsuleRadius(CapsuleRadius);
+        }
+
+        // OV stage1: radius 0.5 unless this instance set one (the original code hard-coded 0.5).
+        private float ActiveCapsuleRadius => CapsuleRadius > 0f ? CapsuleRadius : 0.5f;
+
+        /// <summary>OV stage1: gives this one character another capsule radius (the map player: 0.35), keeping its
+        /// current stance height. Works before or after this component's and the motor's Awake: SetCapsuleDimensions
+        /// also writes the motor's serialized size, which the motor's own Awake re-applies.</summary>
+        public void ApplyCapsuleRadius(float radius)
+        {
+            if (radius <= 0f || Motor == null)
+                return;
+            CapsuleRadius = radius;
+            // The motor clamps these two to the radius in its ValidateData; do it here too so the order does not matter.
+            Motor.MinRequiredStepDepth = Mathf.Min(Motor.MinRequiredStepDepth, radius);
+            Motor.MaxStableDistanceFromLedge = Mathf.Min(Motor.MaxStableDistanceFromLedge, radius);
+            if (Motor.Capsule == null)
+                Motor.Capsule = Motor.GetComponent<CapsuleCollider>();
+            SetCapsuleHeight(_isCrouching ? CrouchedCapsuleHeight : _isStooped ? StoopedCapsuleHeight : StandCapsuleHeight);
+        }
+
+        // OV stage1: one place for the capsule size (pivot at the feet).
+        private void SetCapsuleHeight(float height)
+        {
+            Motor.SetCapsuleDimensions(ActiveCapsuleRadius, height, height * 0.5f);
+        }
+
+        // OV stage1: the visual mesh follows the capsule height (Crouch 0.5, Stoop 0.675, Stand 1).
+        private void SetMeshHeight(float height)
+        {
+            if (MeshRoot != null)
+                MeshRoot.localScale = new Vector3(1f, height / StandCapsuleHeight, 1f);
+        }
+
+        // OV stage1: tries the capsule at this height in place; on failure the caller restores the previous size.
+        private bool CapsuleFits(float height)
+        {
+            SetCapsuleHeight(height);
+            return Motor.CharacterOverlap(
+                Motor.TransientPosition,
+                Motor.TransientRotation,
+                _probedColliders,
+                Motor.CollidableLayers,
+                QueryTriggerInteraction.Ignore) == 0;
+        }
+
+        private void UpdateStance()
+        {
+            CurrentStance = _isCrouching ? Stance.Crouch : _isStooped ? Stance.Stoop : Stance.Stand;
         }
 
         /// <summary>
@@ -185,8 +254,11 @@ namespace KinematicCharacterController.Examples
                             if (!_isCrouching)
                             {
                                 _isCrouching = true;
-                                Motor.SetCapsuleDimensions(0.5f, CrouchedCapsuleHeight, CrouchedCapsuleHeight * 0.5f);
-                                MeshRoot.localScale = new Vector3(1f, 0.5f, 1f);
+                                // OV stage1: radius 0.5 as before unless this instance set CapsuleRadius; crouching from Stoop leaves Stoop.
+                                _isStooped = false;
+                                SetCapsuleHeight(CrouchedCapsuleHeight);
+                                SetMeshHeight(CrouchedCapsuleHeight);
+                                UpdateStance();
                             }
                         }
                         else if (inputs.CrouchUp)
@@ -423,26 +495,44 @@ namespace KinematicCharacterController.Examples
                         }
 
                         // Handle uncrouching
+                        // OV stage1: three steps instead of two. Leaving Crouch tries Stand, then Stoop (low roof, e.g. the
+                        // van's cargo bay), otherwise stays crouched. The overlap pattern is the original one.
                         if (_isCrouching && !_shouldBeCrouching)
                         {
-                            // Do an overlap test with the character's standing height to see if there are any obstructions
-                            Motor.SetCapsuleDimensions(0.5f, 2f, 1f);
-                            if (Motor.CharacterOverlap(
-                                Motor.TransientPosition,
-                                Motor.TransientRotation,
-                                _probedColliders,
-                                Motor.CollidableLayers,
-                                QueryTriggerInteraction.Ignore) > 0)
+                            if (CapsuleFits(StandCapsuleHeight))
                             {
-                                // If obstructions, just stick to crouching dimensions
-                                Motor.SetCapsuleDimensions(0.5f, CrouchedCapsuleHeight, CrouchedCapsuleHeight * 0.5f);
+                                // If no obstructions, uncrouch
+                                SetMeshHeight(StandCapsuleHeight);
+                                _isCrouching = false;
+                            }
+                            else if (CapsuleFits(StoopedCapsuleHeight))
+                            {
+                                // Room to straighten up only partly: stoop
+                                SetMeshHeight(StoopedCapsuleHeight);
+                                _isCrouching = false;
+                                _isStooped = true;
                             }
                             else
                             {
-                                // If no obstructions, uncrouch
-                                MeshRoot.localScale = new Vector3(1f, 1f, 1f);
-                                _isCrouching = false;
+                                // If obstructions, just stick to crouching dimensions
+                                SetCapsuleHeight(CrouchedCapsuleHeight);
                             }
+                            UpdateStance();
+                        }
+                        // OV stage1: a stooped player straightens up by themselves as soon as there is room (stepping out
+                        // of the van). One extra overlap per tick, only while stooped.
+                        else if (_isStooped)
+                        {
+                            if (CapsuleFits(StandCapsuleHeight))
+                            {
+                                SetMeshHeight(StandCapsuleHeight);
+                                _isStooped = false;
+                            }
+                            else
+                            {
+                                SetCapsuleHeight(StoopedCapsuleHeight);
+                            }
+                            UpdateStance();
                         }
                         break;
                     }

@@ -1,0 +1,70 @@
+{
+  "asset": "SK_BusStop_Shelter_Vandalised",
+  "family": "SK-BUS_STOP",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 952,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -2.3614,
+    -1.37,
+    0.0
+  ],
+  "bounds_max": [
+    3.21,
+    1.2009,
+    2.8111
+  ],
+  "size_xyz_m": [
+    5.571,
+    2.571,
+    2.811
+  ],
+  "objects": {
+    "SK_BusStop_Shelter_Vandalised_Mesh": {
+      "triangles": 952,
+      "vertices": 574,
+      "faces": 493,
+      "materials": [
+        "SK_Palette",
+        "SK_Signage"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette",
+    "SK_Signage"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Bad-district variant: smashed back pane (shards), missing bench slat, graffiti, litter.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "signage_atlas": "SK_Signage: 2048x2048 atlas, 256 px per metre, layout in _lib/signage_atlas_layout.json",
+  "files": {
+    "fbx": "SK_BusStop_Shelter_Vandalised_v01.fbx",
+    "fbx_size_bytes": 42892,
+    "blend": "SK-BUS_STOP_v01.blend"
+  }
+}

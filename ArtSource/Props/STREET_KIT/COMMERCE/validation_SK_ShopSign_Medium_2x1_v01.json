@@ -1,0 +1,70 @@
+{
+  "asset": "SK_ShopSign_Medium_2x1",
+  "family": "SK-COMMERCE",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 344,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.05,
+    -0.64,
+    0.0
+  ],
+  "bounds_max": [
+    1.05,
+    0.0,
+    1.459
+  ],
+  "size_xyz_m": [
+    2.1,
+    0.64,
+    1.459
+  ],
+  "objects": {
+    "SK_ShopSign_Medium_2x1_Mesh": {
+      "triangles": 344,
+      "vertices": 200,
+      "faces": 204,
+      "materials": [
+        "SK_Palette",
+        "SK_Signage"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette",
+    "SK_Signage"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Facade board 2.0 x 1.0 m, signage medium_2x1 slot 0, two gooseneck lamps. Wall-mounted: wall plane y = 0, pivot at the bottom of the piece on the wall.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "signage_atlas": "SK_Signage: 2048x2048 atlas, 256 px per metre, layout in _lib/signage_atlas_layout.json",
+  "files": {
+    "fbx": "SK_ShopSign_Medium_2x1_v01.fbx",
+    "fbx_size_bytes": 27212,
+    "blend": "SK-COMMERCE_v01.blend"
+  }
+}

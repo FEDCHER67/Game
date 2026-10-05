@@ -1,0 +1,83 @@
+{
+  "asset": "SK_PowerPole_Concrete_10kV_Strut",
+  "family": "SK-POWER_POLES",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 450,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.95,
+    -0.155,
+    0.0
+  ],
+  "bounds_max": [
+    0.95,
+    2.45,
+    9.98
+  ],
+  "size_xyz_m": [
+    1.9,
+    2.605,
+    9.98
+  ],
+  "objects": {
+    "SK_PowerPole_Concrete_10kV_Strut_Mesh": {
+      "triangles": 450,
+      "vertices": 265,
+      "faces": 250,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {
+    "SK_PowerPole_Concrete_10kV_Strut_SOCKET_Wire_A": [
+      -0.85,
+      -0.12,
+      9.155
+    ],
+    "SK_PowerPole_Concrete_10kV_Strut_SOCKET_Wire_B": [
+      0.85,
+      -0.12,
+      9.155
+    ],
+    "SK_PowerPole_Concrete_10kV_Strut_SOCKET_Wire_C": [
+      0.0,
+      0.0,
+      9.93
+    ]
+  },
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Same pole with a concrete strut leaning from +Y (corner / end pole).",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_PowerPole_Concrete_10kV_Strut_v01.fbx",
+    "fbx_size_bytes": 28796,
+    "blend": "SK-POWER_POLES_v01.blend"
+  }
+}

@@ -1,0 +1,711 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997ba8e4b44d61546ab1c729e360fc54, type: 3}
+  m_Name: MapLookRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Map.Look.MapLookRegistry
+  ArtRoot: Assets/OnlyVolunteers/Art/Map
+  Prefabs:
+  - key: prop/lamp_street
+    prefab: {fileID: 7347850623406264865, guid: b59cce6951273c7459d78b837f2c7f4b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_iron
+    prefab: {fileID: 6604595545491433792, guid: f73de9233a44e3348bff8ac3782db827, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_bollard
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/power_pole
+    prefab: {fileID: 932633018323499937, guid: 5a550e4350742ef4d96895571c8f1523, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bench
+    prefab: {fileID: 1589781272935149224, guid: b63016b76563662429c0557790b831d1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bin
+    prefab: {fileID: 2834498535362731246, guid: e02380186b659784e88e38b409376f87, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garbage_container
+    prefab: {fileID: 6185325568358125999, guid: 6151dd30eb0b77f429e56a903ba06b58, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bus_stop
+    prefab: {fileID: 715785006780178728, guid: b1f7f87702f4dc946ab0a42102c361f2, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bus_stop_sign
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sign_crossing
+    prefab: {fileID: 6929774582116336541, guid: b8292cb47fc3046448e1138c9f4cfaeb, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sign_no_swimming
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/swings
+    prefab: {fileID: 5365921425792373073, guid: 707e27ae41eeb0f418b1891566743ee3, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/slide
+    prefab: {fileID: 18906572355605626, guid: 9635e2378de13b5419bccebf65e9eba3, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sandbox
+    prefab: {fileID: 7352086303699369360, guid: 17122c5ded58aff408174a7b6ced48c9, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/carpet_rack
+    prefab: {fileID: 6018642250199797221, guid: fee06b7e943003146bb41e9499a09261, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/pipe_support
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/kiosk
+    prefab: {fileID: 6495708276277689369, guid: 3536b0f105932d6418ca42c3c1084169, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/atm
+    prefab: {fileID: 7035168207314524032, guid: 39688480d9acec1468cd168eb31705e1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/ad_pole
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/rock
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/camera
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/_default
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/pine
+    prefab: {fileID: 3117259506032402001, guid: dc478a87f2d280a4ab2b10637226207e, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/spruce
+    prefab: {fileID: 3507120528032946343, guid: b033af6696a7a6748843ff9319d35a32, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/birch
+    prefab: {fileID: 7317224574566549971, guid: 77ba4b0a97c0f0c4bb94d6c86be7f220, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/oak
+    prefab: {fileID: 8180261755655880344, guid: 3f864ad34d5c2934d8a846a8116e9a52, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/linden
+    prefab: {fileID: 8405851792894660363, guid: 4ad365a0ae8a1304d800229af5891898, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/poplar
+    prefab: {fileID: 3322703184873152249, guid: 8c7fe7f6d5e77e24abf63d4966a9df8c, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/fruit
+    prefab: {fileID: 8943679746475344011, guid: 8132f7ecb3dcb164188b213c58d77142, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/willow
+    prefab: {fileID: 8405851792894660363, guid: 4ad365a0ae8a1304d800229af5891898, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/palm
+    prefab: {fileID: 1556357239060755409, guid: c788aa55149b1fb47bcfddabbb5fc520, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/cypress
+    prefab: {fileID: 1991818081748284185, guid: 89c38ce6a74d75c4581d567130de639b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/bush
+    prefab: {fileID: 7105096157889448716, guid: 98fde54c70ec22640a28dbb46f1060c6, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_street_broken
+    prefab: {fileID: 8969741815613560121, guid: 8b15d16a72c5a254db880ffe02840138, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_iron_double
+    prefab: {fileID: 1039893855603492960, guid: e086cf3e57012dc48a6f84f8cc5a6672, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/power_pole_strut
+    prefab: {fileID: 8379494265781468176, guid: 83f3bc02a855da3458a40753dcacb730, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/power_pole_wood
+    prefab: {fileID: 6350341704334477881, guid: 8f3784a996679604cb98f85553f2ee51, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bench_broken
+    prefab: {fileID: 8253824341124914714, guid: 3ee52d4ac9f13bd42917872c0f2c3cf9, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bench_park
+    prefab: {fileID: 7484227775817956783, guid: 210e661163fba5b4fb44df97d9ff81c7, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/log_bench
+    prefab: {fileID: 7484227775817956783, guid: 210e661163fba5b4fb44df97d9ff81c7, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bin_tipping
+    prefab: {fileID: 746117630858938634, guid: 7536bd8f492d9494ca2157f51796ddec, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garbage_container_open
+    prefab: {fileID: 7438013115801496486, guid: b2cfb412ec1eb4f4985eb34360f29e69, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bus_stop_vandalised
+    prefab: {fileID: 5902242115028701690, guid: 1045617a1e4374040a4b74b68d9c4c5a, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/birch_b
+    prefab: {fileID: 3538162631141711398, guid: ed2bcbb2c9930a34aa96779aae939fe4, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/pine_b
+    prefab: {fileID: 3507120528032946343, guid: b033af6696a7a6748843ff9319d35a32, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/oak_b
+    prefab: {fileID: 8405851792894660363, guid: 4ad365a0ae8a1304d800229af5891898, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/poplar_b
+    prefab: {fileID: 1991818081748284185, guid: 89c38ce6a74d75c4581d567130de639b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/fruit_b
+    prefab: {fileID: 5202157267622434558, guid: 1a8dcf7fd8100924bb7e4f1cb5a568a7, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: tree/palm_b
+    prefab: {fileID: 3330247936849131457, guid: b9ebc90a2ce3a4d4390ede29784426a1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_concrete_panel
+    prefab: {fileID: 5297971946349482729, guid: e9c040c4d9493964c82d082ab82b3b7c, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_concrete_post
+    prefab: {fileID: 4278891789302222044, guid: 1f9cf4e45d26561428f5c81a9f3fed4f, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_concrete_gate
+    prefab: {fileID: 2335635909874461973, guid: 4165e99d51045c640a1332f40d1e16d2, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_wood_panel
+    prefab: {fileID: 1311383767999353976, guid: 76a96e6859c929f4ab817208b6b09b14, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_wood_post
+    prefab: {fileID: 5564690831700020929, guid: 7d5c8766256a1014b9b682301fc1f425, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_wood_gate
+    prefab: {fileID: 8350642824199709735, guid: 2ce74cda793928340b935bd293ca16d1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_elite_panel
+    prefab: {fileID: 8865503292093834937, guid: 6cb68309fc7fb6e488cf457becf666bc, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_elite_post
+    prefab: {fileID: 6719700891428479676, guid: 2be3fddaa9a6e384289da8fd248a1bab, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_elite_gate
+    prefab: {fileID: 4411200383120562230, guid: dd8891e31d917134d95537fe4d92bca9, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_railing_panel
+    prefab: {fileID: 8520325173068959568, guid: 27c14c2a23f4d1c46896aa41607723dd, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_railing_post
+    prefab: {fileID: 3180184754691897617, guid: 9c3a58251a707c74fb778afec0dc79f5, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fence_railing_gate
+    prefab: {fileID: 2462872036707935112, guid: eb2ed2ecd91b0fa40b960e6fc5ff9567, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_soviet
+    prefab: {fileID: 7347850623406264865, guid: b59cce6951273c7459d78b837f2c7f4b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_soviet_broken
+    prefab: {fileID: 8969741815613560121, guid: 8b15d16a72c5a254db880ffe02840138, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_oldtown_single
+    prefab: {fileID: 6604595545491433792, guid: f73de9233a44e3348bff8ac3782db827, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/lamp_oldtown_double
+    prefab: {fileID: 1039893855603492960, guid: e086cf3e57012dc48a6f84f8cc5a6672, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garage_metal_green
+    prefab: {fileID: 3616066776902375870, guid: dc76f668a43133f449156e690f8db2af, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garage_metal_blue
+    prefab: {fileID: 7563456739241829510, guid: 50c7a1c5e79d6e940a368c474d63f45b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garage_metal_rust
+    prefab: {fileID: 4493804811754739028, guid: 7c6f2e0a49bc16a429a03fd42236714b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garage_metal_open
+    prefab: {fileID: 6907459645418958972, guid: 88bd37118d6038a4085bb4a3715c20c2, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bush_round
+    prefab: {fileID: 7105096157889448716, guid: 98fde54c70ec22640a28dbb46f1060c6, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bush_lilac
+    prefab: {fileID: 8560536329115789284, guid: e4282d6e6f996f641b3e07a74fb98ff3, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/hedge_box
+    prefab: {fileID: 5818428484678579253, guid: b3eae514d56c005479f25d90f99921aa, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bush_wild
+    prefab: {fileID: 2881056132354749620, guid: 7dfffde734233114b9caa740b1057f4a, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/beach_sunlounger
+    prefab: {fileID: 4691903481637811270, guid: 132d722258dbac04ba5ddd423339db37, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/beach_umbrella_red
+    prefab: {fileID: 6170175600364347331, guid: 8bf788ec2228f054587b282a67b03e59, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/beach_umbrella_teal
+    prefab: {fileID: 8191340185623266735, guid: d9bf159c05d800d4e94a1c7abe53ec07, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/beach_lifeguard_tower
+    prefab: {fileID: 761171075041614559, guid: 627257c6c1d1bcb40ace2c76fd6d1aab, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bench_soviet
+    prefab: {fileID: 1589781272935149224, guid: b63016b76563662429c0557790b831d1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/bench_soviet_broken
+    prefab: {fileID: 8253824341124914714, guid: 3ee52d4ac9f13bd42917872c0f2c3cf9, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/trashbin_concrete
+    prefab: {fileID: 2834498535362731246, guid: e02380186b659784e88e38b409376f87, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/trashbin_tipping
+    prefab: {fileID: 746117630858938634, guid: 7536bd8f492d9494ca2157f51796ddec, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/garbage_container_closed
+    prefab: {fileID: 6185325568358125999, guid: 6151dd30eb0b77f429e56a903ba06b58, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/busstop_shelter
+    prefab: {fileID: 715785006780178728, guid: b1f7f87702f4dc946ab0a42102c361f2, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/busstop_shelter_vandalised
+    prefab: {fileID: 5902242115028701690, guid: 1045617a1e4374040a4b74b68d9c4c5a, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/shopsign_wide
+    prefab: {fileID: 818527841421707550, guid: 50561de5ab804af4eac8c5f7d39852f5, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/shopsign_medium
+    prefab: {fileID: 7924684031376591730, guid: 2a4be1df4a5bd174c9b32fefe425f406, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/shopsign_lightbox
+    prefab: {fileID: 8289599405594894889, guid: 137180f97f895b14f9a0a93f6fd54bb1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/shopsign_vertical
+    prefab: {fileID: 22905325188200865, guid: bb21508c969f35a4ea0c5b09d0f8aedb, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/news_kiosk
+    prefab: {fileID: 6495708276277689369, guid: 3536b0f105932d6418ca42c3c1084169, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/atm_pavilion
+    prefab: {fileID: 7035168207314524032, guid: 39688480d9acec1468cd168eb31705e1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/parking_barrier
+    prefab: {fileID: 1979786509382482587, guid: 81e4f355c75b7ff4fbe64bc239197ecc, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sign_stop
+    prefab: {fileID: 92235179942066481, guid: 825021f91e6661247b02ea7fd0fcc94f, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sign_giveway
+    prefab: {fileID: 171694842732000610, guid: cc06f9974b6f91947a02711b9b7e6c2b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sign_noentry
+    prefab: {fileID: 8393901866869761502, guid: 4e7545a3af220824198dbbed109e224a, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/sign_speedbump
+    prefab: {fileID: 79097685062217411, guid: 9a530af9188162140bf3917b7b64023e, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/manhole_cover
+    prefab: {fileID: 7541686027573549277, guid: d8ddc442871e5ab4394381c194c220e1, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/fire_hydrant
+    prefab: {fileID: 1711921389760915895, guid: b91382d87f77950409ddfdc89ab676a2, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/balcony_open
+    prefab: {fileID: 4688549669021136397, guid: a589ad2d767d43a4192eb5b2498befec, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/balcony_glazed
+    prefab: {fileID: 1358528576286715539, guid: ebffac7592173b149907cb9cc93024c5, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/entrance_canopy
+    prefab: {fileID: 1683751709549168419, guid: c98fd48e1da8b6248a5d3e34fd99e1e8, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/ac_unit
+    prefab: {fileID: 1197655450819802611, guid: 7ada6b5adbee1684d8d4ce77768d62e2, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/satellite_dish
+    prefab: {fileID: 6885292914399943114, guid: 8c65417c7d8349e4ab6fe042d662f0fa, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/drainpipe_straight
+    prefab: {fileID: 4993473532254844487, guid: 0f5df091fb673794ea966eb0e4243411, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/drainpipe_bottom
+    prefab: {fileID: 8820004498503024661, guid: b6aaab1be7c299e4a846702c7080878d, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/drainpipe_top
+    prefab: {fileID: 2741115235286666032, guid: ec579e264fdb08e4ab52b8ba92bde6db, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/play_swings
+    prefab: {fileID: 5365921425792373073, guid: 707e27ae41eeb0f418b1891566743ee3, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/play_slide
+    prefab: {fileID: 18906572355605626, guid: 9635e2378de13b5419bccebf65e9eba3, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/play_carousel
+    prefab: {fileID: 7616841284747857753, guid: 4e6f462eab3608d43b297a99482069b0, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/play_sandbox
+    prefab: {fileID: 7352086303699369360, guid: 17122c5ded58aff408174a7b6ced48c9, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/play_horizontal_bar
+    prefab: {fileID: 6771443641824904686, guid: cef68fe081884c747a554f2950cfa18b, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/play_carpet_rack
+    prefab: {fileID: 6018642250199797221, guid: fee06b7e943003146bb41e9499a09261, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/powerpole_concrete
+    prefab: {fileID: 932633018323499937, guid: 5a550e4350742ef4d96895571c8f1523, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/powerpole_concrete_strut
+    prefab: {fileID: 8379494265781468176, guid: 83f3bc02a855da3458a40753dcacb730, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/powerpole_wood
+    prefab: {fileID: 6350341704334477881, guid: 8f3784a996679604cb98f85553f2ee51, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/car_wrecked
+    prefab: {fileID: 7920193658844511602, guid: 80655f8657a32ea4c95298465d12dfa9, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  - key: prop/car_burnt
+    prefab: {fileID: 8844770702445176341, guid: 0a34d33b7b30f6a4687f82b43360441a, type: 3}
+    scale: {x: 1, y: 1, z: 1}
+    collider: 1
+  Materials:
+  - key: mat/wall/panel
+    material: {fileID: 2100000, guid: 7e7c1ac48cc5efe418cbd38053e0e6d7, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 3
+  - key: mat/wall/oldtown
+    material: {fileID: 2100000, guid: 86f25d07dd5e6394a834352e878e0e85, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 4
+  - key: mat/wall/rural_wood
+    material: {fileID: 2100000, guid: 1e5157c8317d31840a48a96ac74c1a71, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 3
+  - key: mat/wall/shed
+    material: {fileID: 2100000, guid: 582af468c39bf764284fa68d2c176c48, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 4
+  - key: mat/wall/civic
+    material: {fileID: 2100000, guid: b33dec85ed1a35548b2da2e33d762071, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 4
+  - key: mat/wall/commercial
+    material: {fileID: 2100000, guid: 579eacfb3a160ab4e8fe070427941734, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 4
+  - key: mat/wall/neon
+    material: {fileID: 2100000, guid: ea11be17f75580246a978b0762b8aa7f, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 4
+  - key: mat/wall/villa
+    material: {fileID: 0}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 8
+  - key: mat/wall/industrial
+    material: {fileID: 2100000, guid: 704d7bff7b3da434cb34b62c53e63534, type: 2}
+    fallback: {r: 0.78431374, g: 0.7647059, b: 0.70980394, a: 1}
+    metresPerTile: 4
+  - key: mat/trim
+    material: {fileID: 0}
+    fallback: {r: 0.95686275, g: 0.93333334, b: 0.8862745, a: 1}
+    metresPerTile: 1
+  - key: mat/plinth
+    material: {fileID: 2100000, guid: 435c179660c0923479bfea7821b39be7, type: 2}
+    fallback: {r: 0.41960785, g: 0.4, b: 0.3764706, a: 1}
+    metresPerTile: 3
+  - key: mat/glass
+    material: {fileID: 0}
+    fallback: {r: 0.24313726, g: 0.29803923, b: 0.33333334, a: 1}
+    metresPerTile: 1
+  - key: mat/glass_lit
+    material: {fileID: 0}
+    fallback: {r: 0.22745098, g: 0.27450982, b: 0.3137255, a: 1}
+    metresPerTile: 1
+  - key: mat/door
+    material: {fileID: 0}
+    fallback: {r: 0.3529412, g: 0.27450982, b: 0.21176471, a: 1}
+    metresPerTile: 1
+  - key: mat/roof/flat
+    material: {fileID: 2100000, guid: ba8cdf5bcef39874c83a326bf5b0310f, type: 2}
+    fallback: {r: 0.43137255, g: 0.45490196, b: 0.47058824, a: 1}
+    metresPerTile: 6
+  - key: mat/roof/sheet
+    material: {fileID: 2100000, guid: 1feed20c7db8cdb40bd9f2ea422f5c91, type: 2}
+    fallback: {r: 0.43137255, g: 0.45490196, b: 0.47058824, a: 1}
+    metresPerTile: 4
+  - key: mat/roof/tile
+    material: {fileID: 2100000, guid: 2a7cfaf494205484c964deb6b8464fbd, type: 2}
+    fallback: {r: 0.43137255, g: 0.45490196, b: 0.47058824, a: 1}
+    metresPerTile: 2
+  - key: mat/roof/corrugated
+    material: {fileID: 2100000, guid: 8e573297358d5d8458439b67bc21d6c7, type: 2}
+    fallback: {r: 0.43137255, g: 0.45490196, b: 0.47058824, a: 1}
+    metresPerTile: 3
+  - key: mat/brick
+    material: {fileID: 2100000, guid: 354088e4ae21bc34890c2d70e8f22513, type: 2}
+    fallback: {r: 0.7058824, g: 0.41568628, b: 0.30980393, a: 1}
+    metresPerTile: 4
+  - key: mat/concrete
+    material: {fileID: 2100000, guid: eb2ba113799be594b9562526089a7b15, type: 2}
+    fallback: {r: 0.65882355, g: 0.6509804, b: 0.61960787, a: 1}
+    metresPerTile: 3
+  - key: mat/metal
+    material: {fileID: 0}
+    fallback: {r: 0.35686275, g: 0.38431373, b: 0.4, a: 1}
+    metresPerTile: 1
+  - key: mat/road/asphalt
+    material: {fileID: 2100000, guid: 0f893b5872a079d47beb719f86c1dd41, type: 2}
+    fallback: {r: 0.30980393, g: 0.32156864, b: 0.32941177, a: 1}
+    metresPerTile: 4
+  - key: mat/road/asphalt_worn
+    material: {fileID: 2100000, guid: 0ebb016c48b8b4f419b84d9b4bfa461d, type: 2}
+    fallback: {r: 0.3529412, g: 0.36078432, b: 0.36862746, a: 1}
+    metresPerTile: 6
+  - key: mat/road/dirt
+    material: {fileID: 2100000, guid: 4a0da0778d40ffd42a3b70af97e5cfd9, type: 2}
+    fallback: {r: 0.56078434, g: 0.5019608, b: 0.39215687, a: 1}
+    metresPerTile: 4
+  - key: mat/marking
+    material: {fileID: 0}
+    fallback: {r: 0.9254902, g: 0.9098039, b: 0.8627451, a: 1}
+    metresPerTile: 1
+  - key: mat/curb
+    material: {fileID: 2100000, guid: 3338828cf3ca3df4489330bde11d926d, type: 2}
+    fallback: {r: 0.72156864, g: 0.7058824, b: 0.6666667, a: 1}
+    metresPerTile: 2
+  - key: mat/sidewalk/old_town
+    material: {fileID: 2100000, guid: 6b9975417f89f414084bc5772d9001ff, type: 2}
+    fallback: {r: 0.74509805, g: 0.72156864, b: 0.65882355, a: 1}
+    metresPerTile: 3
+  - key: mat/sidewalk/residential
+    material: {fileID: 2100000, guid: d7553ffcbfc4bde47ba0fde9813d1bda, type: 2}
+    fallback: {r: 0.6039216, g: 0.6039216, b: 0.57254905, a: 1}
+    metresPerTile: 4
+  - key: mat/sidewalk/elite
+    material: {fileID: 2100000, guid: 197e1b477e636954f871255318bb2591, type: 2}
+    fallback: {r: 0.8117647, g: 0.7882353, b: 0.7372549, a: 1}
+    metresPerTile: 3
+  - key: mat/ground/paving
+    material: {fileID: 2100000, guid: 0bc4e297b794e664ea717e6bad2229aa, type: 2}
+    fallback: {r: 0.74509805, g: 0.72156864, b: 0.65882355, a: 1}
+    metresPerTile: 2
+  - key: mat/ground/concrete
+    material: {fileID: 2100000, guid: bc9d005a97e46404ab9b57d790e714cf, type: 2}
+    fallback: {r: 0.6039216, g: 0.6039216, b: 0.57254905, a: 1}
+    metresPerTile: 3
+  - key: mat/ground/cobble
+    material: {fileID: 2100000, guid: fe1fdf862762e1b45b354a5a3e903c48, type: 2}
+    fallback: {r: 0.54509807, g: 0.5137255, b: 0.47058824, a: 1}
+    metresPerTile: 2
+  - key: mat/water/lake
+    material: {fileID: 0}
+    fallback: {r: 0.30980393, g: 0.60784316, b: 0.70980394, a: 1}
+    metresPerTile: 1
+  - key: mat/water/sea
+    material: {fileID: 0}
+    fallback: {r: 0.24705882, g: 0.5254902, b: 0.6392157, a: 1}
+    metresPerTile: 1
+  - key: mat/fence/picket
+    material: {fileID: 0}
+    fallback: {r: 0.6627451, g: 0.5921569, b: 0.4509804, a: 1}
+    metresPerTile: 1
+  - key: mat/fence/wooden
+    material: {fileID: 0}
+    fallback: {r: 0.54901963, g: 0.4509804, b: 0.3372549, a: 1}
+    metresPerTile: 1
+  - key: mat/hedge
+    material: {fileID: 0}
+    fallback: {r: 0.30980393, g: 0.47843137, b: 0.24313726, a: 1}
+    metresPerTile: 1
+  - key: mat/elite/pier
+    material: {fileID: 0}
+    fallback: {r: 0.8509804, g: 0.83137256, b: 0.78431374, a: 1}
+    metresPerTile: 1
+  - key: mat/iron
+    material: {fileID: 0}
+    fallback: {r: 0.13725491, g: 0.14117648, b: 0.14901961, a: 1}
+    metresPerTile: 1
+  - key: mat/rock
+    material: {fileID: 0}
+    fallback: {r: 0.49019608, g: 0.47843137, b: 0.4392157, a: 1}
+    metresPerTile: 1
+  - key: mat/road/asphalt_elite
+    material: {fileID: 2100000, guid: e05af5abcc566a04585c824d8e0a1bc9, type: 2}
+    fallback: {r: 0.36862746, g: 0.3764706, b: 0.39215687, a: 1}
+    metresPerTile: 4
+  - key: mat/road/junction
+    material: {fileID: 2100000, guid: 84edfa268c4161f4da88a27bf77b5404, type: 2}
+    fallback: {r: 0.33333334, g: 0.34509805, b: 0.3529412, a: 1}
+    metresPerTile: 4
+  - key: mat/sidewalk/industrial
+    material: {fileID: 2100000, guid: 5a4d9142b4cb0c7469410dc086e1d883, type: 2}
+    fallback: {r: 0.54901963, g: 0.54901963, b: 0.5254902, a: 1}
+    metresPerTile: 3
+  - key: mat/sidewalk/transition
+    material: {fileID: 2100000, guid: 04d15573699a14649b1205e36552c411, type: 2}
+    fallback: {r: 0.65882355, g: 0.63529414, b: 0.5647059, a: 1}
+    metresPerTile: 4
+  - key: mat/sidewalk/_default
+    material: {fileID: 2100000, guid: 0b8ecfeb759cab44883c11caf29913b1, type: 2}
+    fallback: {r: 0.6627451, g: 0.64705884, b: 0.6039216, a: 1}
+    metresPerTile: 4
+  - key: mat/ground/asphalt
+    material: {fileID: 2100000, guid: acbe9242a29550b42b64cfee411b6a48, type: 2}
+    fallback: {r: 0.3372549, g: 0.34901962, b: 0.35686275, a: 1}
+    metresPerTile: 4
+  - key: mat/ground/rubber
+    material: {fileID: 2100000, guid: 353d94a00ac73584ba86750906d6f311, type: 2}
+    fallback: {r: 0.68235296, g: 0.41568628, b: 0.33333334, a: 1}
+    metresPerTile: 4
+  - key: mat/ground/gravel
+    material: {fileID: 2100000, guid: fc4828ab730d706409273c8749d8dd92, type: 2}
+    fallback: {r: 0.6039216, g: 0.5647059, b: 0.47843137, a: 1}
+    metresPerTile: 2
+  - key: mat/ground/sand
+    material: {fileID: 2100000, guid: 2d324e6ffeabf604eaa259fc40250ca6, type: 2}
+    fallback: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    metresPerTile: 8
+  - key: mat/trunk
+    material: {fileID: 2100000, guid: cab2996006c8cde4c99b52720abdedbf, type: 2}
+    fallback: {r: 0.41960785, g: 0.32156864, b: 0.25490198, a: 1}
+    metresPerTile: 1
+  - key: mat/trunk/birch
+    material: {fileID: 2100000, guid: 31afbcf1e9e23dd4bb882e2f17132858, type: 2}
+    fallback: {r: 0.9098039, g: 0.89411765, b: 0.85490197, a: 1}
+    metresPerTile: 1
+  Layers:
+  - key: layer/meadow
+    layer: {fileID: 8574412962073106934, guid: f320f4c59eb43c84988c7dcad76a4cd6, type: 2}
+    fallback: {r: 0.49019608, g: 0.6039216, b: 0.32156864, a: 1}
+  - key: layer/forest_floor
+    layer: {fileID: 8574412962073106934, guid: ccdca35d6915d9f4e963aacbee961f1e, type: 2}
+    fallback: {r: 0.43137255, g: 0.47843137, b: 0.29411766, a: 1}
+  - key: layer/dry_field
+    layer: {fileID: 8574412962073106934, guid: daf9901aeee62d047b13eea85a83adfc, type: 2}
+    fallback: {r: 0.65882355, g: 0.6039216, b: 0.44705883, a: 1}
+  - key: layer/worn_grass
+    layer: {fileID: 8574412962073106934, guid: 8e239c86b94011946a41cede67ac9c43, type: 2}
+    fallback: {r: 0.5411765, g: 0.54901963, b: 0.3529412, a: 1}
+  - key: layer/park_grass
+    layer: {fileID: 8574412962073106934, guid: 74aed0d25dc548445844df66dc3139b2, type: 2}
+    fallback: {r: 0.43529412, g: 0.6039216, b: 0.29803923, a: 1}
+  - key: layer/lawn
+    layer: {fileID: 8574412962073106934, guid: ebdda43dbbd00a040ac77876f5ba3719, type: 2}
+    fallback: {r: 0.47058824, g: 0.63529414, b: 0.30588236, a: 1}
+  - key: layer/gravel
+    layer: {fileID: 8574412962073106934, guid: fe65faea2b82b5f488393f7525d75a5b, type: 2}
+    fallback: {r: 0.6039216, g: 0.5647059, b: 0.47843137, a: 1}
+  - key: layer/sand
+    layer: {fileID: 8574412962073106934, guid: 89cbf3d766e072747b0b52e2ca43c8ad, type: 2}
+    fallback: {r: 0.9019608, g: 0.8392157, b: 0.65882355, a: 1}
+  MaxTintsPerKey: 4

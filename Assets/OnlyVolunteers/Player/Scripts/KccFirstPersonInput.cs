@@ -9,9 +9,15 @@ namespace OnlyVolunteers.Player
         public ExampleCharacterController Character;
         public Camera ViewCamera;
 
+        // OV stage1: set by other systems, never by this script. JumpBlocked: no jump (e.g. riding in the van's cargo bay).
+        // ExternalSpeedScale multiplies the grounded target speed (e.g. dragging a heavy body); at 1 it changes nothing.
+        [System.NonSerialized] public bool JumpBlocked;
+        [System.NonSerialized] public float ExternalSpeedScale = 1f;
+
         private const float WalkSpeed = 4.7025f;
         private const float SprintSpeed = 8.229375f;
         private const float CrouchSpeed = 1.881f;
+        private const float StoopSpeed = 2.5f; // OV stage1: stooped in the cargo bay, no sprint
         private const float DiagonalSpeedMultiplier = 1.05f;
         private const float MouseSensitivity = 1.3f;
         private const float PitchLimit = 85f;
@@ -39,6 +45,7 @@ namespace OnlyVolunteers.Player
         private float _standingCapsuleTop;
         private float _standingEyeHeight;
         private float _crouchedEyeHeight;
+        private float _stoopedEyeHeight; // OV stage1
         private float _visualEyeHeight;
         private float _eyeTransitionSpeed;
         private float _airTuckCameraOffset;
@@ -71,6 +78,7 @@ namespace OnlyVolunteers.Player
             _standingCapsuleTop = capsule.center.y + capsule.height * 0.5f;
             _standingEyeHeight = _standingCapsuleTop - EyeInset;
             _crouchedEyeHeight = Character.CrouchedCapsuleHeight - EyeInset;
+            _stoopedEyeHeight = Character.StoopedCapsuleHeight - EyeInset; // OV stage1: 1.35 - 0.15 = 1.20
             _visualCrouched = IsPhysicallyCrouched();
             _visualEyeHeight = _visualCrouched ? _crouchedEyeHeight : _standingEyeHeight;
             _eyeTransitionSpeed = Mathf.Abs(_standingEyeHeight - _crouchedEyeHeight) /
@@ -171,7 +179,9 @@ namespace OnlyVolunteers.Player
 
             bool effectiveCrouchHeld = crouchHeld || _airborneCrouchLatched;
             bool crouched = effectiveCrouchHeld || physicallyCrouched;
-            bool jumpDown = !crouched && Input.GetKeyDown(KeyCode.Space);
+            // OV stage1: no jump while stooped (low roof) or while another system blocks it (cargo bay).
+            bool stooped = !crouched && Character.IsStooped;
+            bool jumpDown = !crouched && !stooped && !JumpBlocked && Input.GetKeyDown(KeyCode.Space);
             if (crouched || (!_wasStableGrounded && grounded) || (jumpDown && grounded))
                 ResetLongJump();
             if (jumpDown && !grounded)
@@ -239,11 +249,14 @@ namespace OnlyVolunteers.Player
             {
                 float groundedSpeed = crouched
                     ? CrouchSpeed
-                    : Input.GetKey(KeyCode.LeftShift) && hasMovementInput
-                        ? SprintSpeed
-                        : WalkSpeed;
+                    : stooped // OV stage1
+                        ? StoopSpeed
+                        : Input.GetKey(KeyCode.LeftShift) && hasMovementInput
+                            ? SprintSpeed
+                            : WalkSpeed;
                 float targetSpeed = groundedSpeed *
-                    (diagonalInput ? DiagonalSpeedMultiplier : 1f);
+                    (diagonalInput ? DiagonalSpeedMultiplier : 1f) *
+                    ExternalSpeedScale; // OV stage1: 1 unless something (a held body) slows the player down
 
                 Character.MaxStableMoveSpeed = targetSpeed;
                 if (!_bhopChainActive)
@@ -383,7 +396,9 @@ namespace OnlyVolunteers.Player
                         _airborneSpeedLimit + verticalVelocity;
             }
 
-            float targetEyeHeight = _visualCrouched ? _crouchedEyeHeight : _standingEyeHeight;
+            // OV stage1: three eye levels (crouched 0.85, stooped 1.20, standing 1.85).
+            float targetEyeHeight = _visualCrouched ? _crouchedEyeHeight
+                : Character.IsStooped ? _stoopedEyeHeight : _standingEyeHeight;
             _visualEyeHeight = Mathf.MoveTowards(_visualEyeHeight, targetEyeHeight,
                 _eyeTransitionSpeed * Time.deltaTime);
 
@@ -396,6 +411,22 @@ namespace OnlyVolunteers.Player
             ViewCamera.transform.SetPositionAndRotation(
                 Character.transform.TransformPoint(eye),
                 Quaternion.Euler(_pitch, _yaw, 0f));
+        }
+
+        // OV stage1: called by a carrier (the van's cargo bay, GreyboxCargoRider) when it lets go of the player. The motor
+        // adds the carrier's velocity on its next tick (PreserveAttachedRigidbodyMomentum); widen the air speed cap to
+        // that planar speed so LateUpdate does not clip a jump out of a moving van back to walking speed. While grounded
+        // it changes nothing (the cap is recomputed on leaving the ground). Long jumps still cap air speed at BhopMaxSpeed.
+        public void AllowAirSpeed(float planarSpeed)
+        {
+            _airborneSpeedLimit = Mathf.Max(_airborneSpeedLimit, planarSpeed);
+        }
+
+        // OV stage1: turns the view with whatever the player rides in (the van's cargo bay), so a passenger keeps facing
+        // the same way relative to a turning van. Called per frame by the carrier code; unused otherwise.
+        public void AddYaw(float degrees)
+        {
+            _yaw = Mathf.Repeat(_yaw + degrees, 360f);
         }
 
         private bool IsPhysicallyCrouched()

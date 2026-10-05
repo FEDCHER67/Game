@@ -172,8 +172,13 @@ namespace OnlyVolunteers.Vehicles
             visual.SetPositionAndRotation(pos, rot * offset);
         }
 
+        // NPC capture stage 1: how many times ResetUpright ran (R, F1-F8, the sea return). The cargo bay compares it each
+        // tick to carry its riders along even when a reset moves the van only a little (R lifts it 1.2 m).
+        public int ResetCount { get; private set; }
+
         public void ResetUpright(Vector3 position, float yawDegrees)
         {
+            ResetCount++;
             _body.linearVelocity = Vector3.zero;
             _body.angularVelocity = Vector3.zero;
             _body.position = position;

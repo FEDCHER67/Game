@@ -1,0 +1,66 @@
+{
+  "asset": "SK_AC_Unit",
+  "family": "SK-FACADE",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 700,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.415,
+    -0.42,
+    0.0
+  ],
+  "bounds_max": [
+    0.6,
+    0.005,
+    0.91
+  ],
+  "size_xyz_m": [
+    1.015,
+    0.425,
+    0.91
+  ],
+  "objects": {
+    "SK_AC_Unit_Mesh": {
+      "triangles": 700,
+      "vertices": 406,
+      "faces": 336,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Split-system outdoor unit 0.8 x 0.3 x 0.55 m on two wall brackets, fan grille, side vents, insulated pipe into the wall, rust drips. Pivot = bottom of the brackets at the wall.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_AC_Unit_v01.fbx",
+    "fbx_size_bytes": 29324,
+    "blend": "SK-FACADE_v01.blend"
+  }
+}

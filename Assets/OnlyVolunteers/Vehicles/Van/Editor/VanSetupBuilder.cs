@@ -148,7 +148,13 @@ namespace OnlyVolunteers.Vehicles.EditorTools
                 VanDoor slide = SetupDoor(model.transform, root.transform, "VAN_Door_Slide", VanDoor.Kind.Slide, 0f, Vector3.right);
                 slide.SlidePop = new Vector3(0.07f, 0f, 0f);
                 slide.SlideTravel = new Vector3(0.07f, 0f, -1.02f);
-                slide.Duration = 1.1f;
+                slide.Duration = 0.6f; // NPC capture stage 1: the driver's button opens it in ~0.6 s (was 1.1)
+
+                // NPC capture stage 1: the cargo bay as a carrier (riding, loading), and the extra colliders (steps under
+                // the cargo doors, cab partition, thicker walls) with every van collider on layer Vehicle. Baked here; the
+                // same component rebuilds them idempotently at runtime on older prefab instances.
+                root.AddComponent<VanCargoSpace>();
+                root.AddComponent<VanInteriorColliders>().Build();
 
                 return PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             }

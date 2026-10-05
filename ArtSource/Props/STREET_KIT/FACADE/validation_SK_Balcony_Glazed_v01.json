@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Balcony_Glazed",
+  "family": "SK-FACADE",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 884,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -1.6,
+    -1.3614,
+    0.0
+  ],
+  "bounds_max": [
+    1.6,
+    0.0,
+    2.803
+  ],
+  "size_xyz_m": [
+    3.2,
+    1.361,
+    2.803
+  ],
+  "objects": {
+    "SK_Balcony_Glazed_Mesh": {
+      "triangles": 884,
+      "vertices": 568,
+      "faces": 458,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Self-glazed balcony: board-clad front, blue sheet sides, white PVC front frames, one side in old wooden frames, an open sash, rusty roof sheet. Pivot = bottom of the floor slab at the wall.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Balcony_Glazed_v01.fbx",
+    "fbx_size_bytes": 30428,
+    "blend": "SK-FACADE_v01.blend"
+  }
+}

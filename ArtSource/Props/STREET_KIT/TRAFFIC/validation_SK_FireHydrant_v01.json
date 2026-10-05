@@ -1,0 +1,67 @@
+{
+  "asset": "SK_FireHydrant",
+  "family": "SK-TRAFFIC",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 650,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.27,
+    -0.28,
+    0.0
+  ],
+  "bounds_max": [
+    0.27,
+    0.17,
+    0.845
+  ],
+  "size_xyz_m": [
+    0.54,
+    0.45,
+    0.845
+  ],
+  "objects": {
+    "SK_FireHydrant_Mesh": {
+      "triangles": 650,
+      "vertices": 371,
+      "faces": 299,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Above-ground column hydrant 0.84 m: red barrel, dark dome cap and operating nut, two side outlets (+-X) and a pumper outlet to the front (-Y), all capped.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_FireHydrant_v01.fbx",
+    "fbx_size_bytes": 28556,
+    "blend": "SK-TRAFFIC_v01.blend"
+  }
+}

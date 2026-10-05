@@ -1,0 +1,299 @@
+{
+  "family": "MAP-BEACH-001",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); moving parts are children with the pivot on the hinge",
+  "uv": "metre-scale box projection (1 UV unit = 1 m)",
+  "description": "Beach props: sun lounger, umbrellas, lifeguard tower.",
+  "assets": {
+    "BC_SunLounger": {
+      "triangles": 324,
+      "triangle_budget": 600,
+      "size_m": [
+        0.66,
+        1.95,
+        0.868
+      ],
+      "bounds_min": [
+        -0.33,
+        -0.975,
+        0.0
+      ],
+      "bounds_max": [
+        0.33,
+        0.975,
+        0.868
+      ],
+      "materials": [
+        "MP_Metal_Grey",
+        "MP_Wood"
+      ],
+      "objects": {
+        "BC_SunLounger": {
+          "triangles": 228,
+          "vertices": 152,
+          "faces": 114,
+          "materials": [
+            "MP_Metal_Grey",
+            "MP_Wood"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0268,
+          "mesh_validate_changed": false
+        },
+        "BC_SunLounger_Back": {
+          "triangles": 96,
+          "vertices": 64,
+          "faces": 48,
+          "materials": [
+            "MP_Metal_Grey",
+            "MP_Wood"
+          ],
+          "origin_world": [
+            0.0,
+            -0.275,
+            0.36
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0105,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Backrest raised 42 deg; its pivot is on the hinge (rotate about local X to fold flat).",
+      "row": 0,
+      "size_note": "1.95 x 0.66 m",
+      "fbx": "BC_SunLounger_v01.fbx"
+    },
+    "BC_Umbrella_Red": {
+      "triangles": 242,
+      "triangle_budget": 500,
+      "size_m": [
+        2.3,
+        2.3,
+        2.56
+      ],
+      "bounds_min": [
+        -1.15,
+        -1.15,
+        0.0
+      ],
+      "bounds_max": [
+        1.15,
+        1.15,
+        2.56
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Fabric_Stripe",
+        "MP_Metal_Grey",
+        "MP_Red",
+        "MP_White"
+      ],
+      "objects": {
+        "BC_Umbrella_Red": {
+          "triangles": 242,
+          "vertices": 147,
+          "faces": 133,
+          "materials": [
+            "MP_Concrete",
+            "MP_White",
+            "MP_Metal_Grey",
+            "MP_Red",
+            "MP_Fabric_Stripe"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.3181,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Canopy diameter 2.3 m, height 2.5 m.",
+      "row": 0,
+      "fbx": "BC_Umbrella_Red_v01.fbx"
+    },
+    "BC_Umbrella_Teal": {
+      "triangles": 242,
+      "triangle_budget": 500,
+      "size_m": [
+        2.3,
+        2.3,
+        2.56
+      ],
+      "bounds_min": [
+        -1.15,
+        -1.15,
+        0.0
+      ],
+      "bounds_max": [
+        1.15,
+        1.15,
+        2.56
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Fabric_Stripe",
+        "MP_Metal_Grey",
+        "MP_Teal",
+        "MP_White"
+      ],
+      "objects": {
+        "BC_Umbrella_Teal": {
+          "triangles": 242,
+          "vertices": 147,
+          "faces": 133,
+          "materials": [
+            "MP_Concrete",
+            "MP_White",
+            "MP_Metal_Grey",
+            "MP_Teal",
+            "MP_Fabric_Stripe"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.3181,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Canopy diameter 2.3 m, height 2.5 m.",
+      "row": 0,
+      "fbx": "BC_Umbrella_Teal_v01.fbx"
+    },
+    "BC_LifeguardTower": {
+      "triangles": 828,
+      "triangle_budget": 1500,
+      "size_m": [
+        2.98,
+        3.744,
+        6.2
+      ],
+      "bounds_min": [
+        -1.49,
+        -2.286,
+        0.0
+      ],
+      "bounds_max": [
+        1.49,
+        1.458,
+        6.2
+      ],
+      "materials": [
+        "MP_Concrete",
+        "MP_Red",
+        "MP_White",
+        "MP_Wood",
+        "MP_Wood_Dark"
+      ],
+      "objects": {
+        "BC_LifeguardTower": {
+          "triangles": 828,
+          "vertices": 516,
+          "faces": 417,
+          "materials": [
+            "MP_Concrete",
+            "MP_White",
+            "MP_Wood",
+            "MP_Wood_Dark",
+            "MP_Red"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 3.2967,
+          "mesh_validate_changed": false
+        }
+      },
+      "checks": {
+        "triangles_within_budget": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "mesh_validate_clean": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true
+      },
+      "sockets": {},
+      "all_checks_passed": true,
+      "notes": "Faces -Y (the sea). Ladder at the front-left, booth open to the front.",
+      "row": 1,
+      "deck_height_m": 2.3000000000000003,
+      "fbx": "BC_LifeguardTower_v01.fbx"
+    }
+  },
+  "total_assets": 4,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in a row along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "MAP-BEACH-001_v01.blend"
+  }
+}

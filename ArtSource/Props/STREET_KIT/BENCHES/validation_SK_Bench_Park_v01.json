@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Bench_Park",
+  "family": "SK-BENCHES",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 936,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.93,
+    -0.32,
+    -0.0045
+  ],
+  "bounds_max": [
+    0.93,
+    0.3694,
+    0.998
+  ],
+  "size_xyz_m": [
+    1.86,
+    0.689,
+    1.002
+  ],
+  "objects": {
+    "SK_Bench_Park_Mesh": {
+      "triangles": 936,
+      "vertices": 504,
+      "faces": 504,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Park bench: cast-iron tube sides with scrolls and armrests, green-painted slats; seat height 0.47 m.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Bench_Park_v01.fbx",
+    "fbx_size_bytes": 34268,
+    "blend": "SK-BENCHES_v01.blend"
+  }
+}

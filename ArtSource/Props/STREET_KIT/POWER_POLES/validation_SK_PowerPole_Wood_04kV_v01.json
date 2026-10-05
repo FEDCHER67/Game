@@ -1,0 +1,93 @@
+{
+  "asset": "SK_PowerPole_Wood_04kV",
+  "family": "SK-POWER_POLES",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 756,
+  "triangle_budget": [
+    100,
+    1500
+  ],
+  "bounds_min": [
+    -0.3173,
+    -0.42,
+    0.0
+  ],
+  "bounds_max": [
+    0.3173,
+    0.33,
+    8.72
+  ],
+  "size_xyz_m": [
+    0.635,
+    0.75,
+    8.72
+  ],
+  "objects": {
+    "SK_PowerPole_Wood_04kV_Mesh": {
+      "triangles": 756,
+      "vertices": 428,
+      "faces": 398,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {
+    "SK_PowerPole_Wood_04kV_SOCKET_Wire_1": [
+      -0.3,
+      0.0,
+      8.54
+    ],
+    "SK_PowerPole_Wood_04kV_SOCKET_Wire_2": [
+      0.3,
+      0.0,
+      8.54
+    ],
+    "SK_PowerPole_Wood_04kV_SOCKET_Wire_3": [
+      -0.3,
+      0.0,
+      8.04
+    ],
+    "SK_PowerPole_Wood_04kV_SOCKET_Wire_4": [
+      0.3,
+      0.0,
+      8.04
+    ],
+    "SK_PowerPole_Wood_04kV_SOCKET_Wire_Drop": [
+      0.0,
+      -0.4,
+      7.57
+    ]
+  },
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "0.4 kV street pole ~8.7 m: wooden pole banded to a concrete stub, 4 hook insulators + service drop. Wires: SOCKET_Wire_1..4, SOCKET_Wire_Drop.",
+  "checks": {
+    "triangle_budget_100_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_PowerPole_Wood_04kV_v01.fbx",
+    "fbx_size_bytes": 33660,
+    "blend": "SK-POWER_POLES_v01.blend"
+  }
+}
