@@ -95,6 +95,7 @@ namespace OnlyVolunteers.Map.Crowd
         private VanController _van;
         private readonly RaycastHit[] _hits = new RaycastHit[16];
         private readonly List<(string text, float until)> _hints = new();
+        private GUIStyle _hintStyle;
         private int _spawned;
         private TextAsset _gizmoData;
         private CrowdData _gizmoMap;
@@ -439,11 +440,14 @@ namespace OnlyVolunteers.Map.Crowd
 
         private void OnGUI()
         {
+            // OnGUI runs every frame (Layout + Repaint): nothing to draw = no work and no garbage.
+            if (_hints.Count == 0 && !ShowOverlay) return;
             float now = Time.time;
-            _hints.RemoveAll(h => h.until < now);
-            var style = new GUIStyle(GUI.skin.label) { fontSize = 18, alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(1f, 0.55f, 0.35f) } };
+            for (int i = _hints.Count - 1; i >= 0; i--)
+                if (_hints[i].until < now) _hints.RemoveAt(i);
+            _hintStyle ??= new GUIStyle(GUI.skin.label) { fontSize = 18, alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(1f, 0.55f, 0.35f) } };
             for (int i = 0; i < _hints.Count; i++)
-                GUI.Label(new Rect(0f, 70f + 24f * i, Screen.width, 24f), _hints[i].text, style);
+                GUI.Label(new Rect(0f, 70f + 24f * i, Screen.width, 24f), _hints[i].text, _hintStyle);
             if (!ShowOverlay || Map == null) return;
             var sb = new StringBuilder();
             sb.AppendLine($"Толпа ({OverlayKey}): {(Evening > 0.5f ? "вечер" : "день")} [{TimeOfDayKey}], плотность {Density:0.##}, пул {_pool.Count}");

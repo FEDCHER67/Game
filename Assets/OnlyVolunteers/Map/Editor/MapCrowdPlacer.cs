@@ -99,7 +99,8 @@ namespace OnlyVolunteers.Map
                     AssetDatabase.ImportAsset(assetPath);
                     Debug.Log($"[Crowd] copied {Path.GetFileName(source)} into {DataDir}");
                 }
-                else if (new FileInfo(full).Length != new FileInfo(source).Length || File.ReadAllText(full) != File.ReadAllText(source))
+                // Line endings differ between the checkouts (CRLF in ArtSource, LF in Assets): compare the text only.
+                else if (File.ReadAllText(full).Replace("\r\n", "\n") != File.ReadAllText(source).Replace("\r\n", "\n"))
                 {
                     Debug.LogWarning($"[Crowd] {assetPath} differs from {SourceDir}/{Path.GetFileName(source)}; using the copy in Map/Data " +
                                      "(delete it to take the ArtSource version).");

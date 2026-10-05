@@ -1,0 +1,322 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3cc6ef49e74dfd851526cc37ff33ee, type: 3}
+  m_Name: SfxLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Audio.SfxLibrary
+  Voices: 24
+  Output: {fileID: 0}
+  Entries:
+  - Id: hit_head
+    Clips:
+    - {fileID: 8300000, guid: 6d1771df68efc7746a0191cf36689ffc, type: 3}
+    - {fileID: 8300000, guid: 89434110ed9393747ad70889cbef1132, type: 3}
+    - {fileID: 8300000, guid: fb54fb18ade3ece488d11c348781149b, type: 3}
+    Volume: {x: 0.85, y: 1}
+    Pitch: {x: 1.08, y: 1.2}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 30
+    Cooldown: 0.05
+    Priority: 40
+    Locked: 0
+  - Id: hit_torso
+    Clips:
+    - {fileID: 8300000, guid: 6d1771df68efc7746a0191cf36689ffc, type: 3}
+    - {fileID: 8300000, guid: 89434110ed9393747ad70889cbef1132, type: 3}
+    - {fileID: 8300000, guid: fb54fb18ade3ece488d11c348781149b, type: 3}
+    Volume: {x: 0.765, y: 0.9}
+    Pitch: {x: 0.88, y: 0.98}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 30
+    Cooldown: 0.05
+    Priority: 40
+    Locked: 0
+  - Id: hit_limb
+    Clips:
+    - {fileID: 8300000, guid: 1ddf0fc4f4dea5442aee4b6f0b05450b, type: 3}
+    - {fileID: 8300000, guid: c926549d8a3e34446bcf24881e028169, type: 3}
+    Volume: {x: 0.7225, y: 0.85}
+    Pitch: {x: 0.95, y: 1.1}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 25
+    Cooldown: 0.05
+    Priority: 45
+    Locked: 0
+  - Id: thud_ground
+    Clips:
+    - {fileID: 8300000, guid: 9f7617956a708304484a2701fa66fea2, type: 3}
+    - {fileID: 8300000, guid: cf33cf3f647f07248b333d5357ffbdb5, type: 3}
+    - {fileID: 8300000, guid: d8137e9f23a11d942bba41b53f0a0b82, type: 3}
+    Volume: {x: 0.765, y: 0.9}
+    Pitch: {x: 0.9, y: 1.1}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 25
+    Cooldown: 0.12
+    Priority: 70
+    Locked: 0
+  - Id: thud_van_floor
+    Clips:
+    - {fileID: 8300000, guid: 760fd6ef8f6455b42b9f2d58b52c3a6b, type: 3}
+    - {fileID: 8300000, guid: 2c9031fc30681e84eb74bb12e38379ad, type: 3}
+    Volume: {x: 0.765, y: 0.9}
+    Pitch: {x: 0.9, y: 1.1}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 25
+    Cooldown: 0.12
+    Priority: 70
+    Locked: 0
+  - Id: door_front_open
+    Clips:
+    - {fileID: 8300000, guid: 41324550508d41b489cc52e4cba803a1, type: 3}
+    Volume: {x: 0.68, y: 0.8}
+    Pitch: {x: 0.97, y: 1.03}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 25
+    Cooldown: 0.1
+    Priority: 60
+    Locked: 0
+  - Id: door_front_close
+    Clips:
+    - {fileID: 8300000, guid: 57d96acee66720a45920914de86c63f3, type: 3}
+    Volume: {x: 0.7225, y: 0.85}
+    Pitch: {x: 0.97, y: 1.03}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 30
+    Cooldown: 0.1
+    Priority: 60
+    Locked: 0
+  - Id: door_front_slam
+    Clips:
+    - {fileID: 8300000, guid: 524895ba8886c314e9846fa173d3a376, type: 3}
+    Volume: {x: 0.85, y: 1}
+    Pitch: {x: 0.95, y: 1.05}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 40
+    Cooldown: 0.1
+    Priority: 55
+    Locked: 0
+  - Id: door_rear_open
+    Clips:
+    - {fileID: 8300000, guid: a1d449d48a2619c49a6a0c9c05d860a6, type: 3}
+    Volume: {x: 0.68, y: 0.8}
+    Pitch: {x: 0.97, y: 1.03}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 25
+    Cooldown: 0.1
+    Priority: 60
+    Locked: 0
+  - Id: door_rear_close
+    Clips:
+    - {fileID: 8300000, guid: 3bd420b322d3831458c9a8bde9c7d998, type: 3}
+    Volume: {x: 0.7225, y: 0.85}
+    Pitch: {x: 0.97, y: 1.03}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 30
+    Cooldown: 0.1
+    Priority: 60
+    Locked: 0
+  - Id: door_rear_slam
+    Clips:
+    - {fileID: 8300000, guid: 524895ba8886c314e9846fa173d3a376, type: 3}
+    Volume: {x: 0.85, y: 1}
+    Pitch: {x: 0.88, y: 0.96}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 40
+    Cooldown: 0.1
+    Priority: 55
+    Locked: 0
+  - Id: door_slide_open
+    Clips:
+    - {fileID: 8300000, guid: 038a2fb8d2cecfe4296d8e7821ecab6d, type: 3}
+    Volume: {x: 0.7225, y: 0.85}
+    Pitch: {x: 0.97, y: 1.03}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 30
+    Cooldown: 0.1
+    Priority: 60
+    Locked: 0
+  - Id: door_slide_close
+    Clips:
+    - {fileID: 8300000, guid: 05c7d022427010f41b39b0021a5dba50, type: 3}
+    Volume: {x: 0.765, y: 0.9}
+    Pitch: {x: 0.97, y: 1.03}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 30
+    Cooldown: 0.1
+    Priority: 60
+    Locked: 0
+  - Id: step_asphalt
+    Clips:
+    - {fileID: 8300000, guid: 449f2822d2de65342ba1de6da1eb5097, type: 3}
+    - {fileID: 8300000, guid: 142f590954e671449b8ec0628f061d72, type: 3}
+    - {fileID: 8300000, guid: 2ca1ff1774d4a25429e29b9565268ba2, type: 3}
+    - {fileID: 8300000, guid: 77e2a3fb2b1262c41ab57d901fe077ee, type: 3}
+    Volume: {x: 0.3825, y: 0.45}
+    Pitch: {x: 0.92, y: 1.08}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 15
+    Cooldown: 0.15
+    Priority: 150
+    Locked: 0
+  - Id: step_grass
+    Clips:
+    - {fileID: 8300000, guid: 94ec5633f4b1d814283afa1906339599, type: 3}
+    - {fileID: 8300000, guid: ca961fae113cd9f41819cc5d93b00143, type: 3}
+    - {fileID: 8300000, guid: 290f41fd67d163446a13f4b376753501, type: 3}
+    - {fileID: 8300000, guid: a76e749df8707dd4aacba8f5a0bb97c1, type: 3}
+    Volume: {x: 0.3825, y: 0.45}
+    Pitch: {x: 0.92, y: 1.08}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 15
+    Cooldown: 0.15
+    Priority: 150
+    Locked: 0
+  - Id: step_sand
+    Clips:
+    - {fileID: 8300000, guid: 69ec329d9769ada468be706c835e3e93, type: 3}
+    - {fileID: 8300000, guid: a0a062553eb2b1c47a6b9d7d3ebc062b, type: 3}
+    - {fileID: 8300000, guid: 1047d268b3ca9bb479706d7d8cbd7257, type: 3}
+    - {fileID: 8300000, guid: c09ba627c577ad1429d06a1c411e5fa7, type: 3}
+    Volume: {x: 0.3825, y: 0.45}
+    Pitch: {x: 0.92, y: 1.08}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 15
+    Cooldown: 0.15
+    Priority: 150
+    Locked: 0
+  - Id: step_metal
+    Clips:
+    - {fileID: 8300000, guid: f8b5c6b4e134abc47bee272518d21219, type: 3}
+    - {fileID: 8300000, guid: 41778f153e146d04a832da0bdb4e8e46, type: 3}
+    - {fileID: 8300000, guid: e0a91e124661951449dd2405664c04ea, type: 3}
+    - {fileID: 8300000, guid: 48f80f5c94fbfd948af81a5f058c507a, type: 3}
+    Volume: {x: 0.425, y: 0.5}
+    Pitch: {x: 0.92, y: 1.08}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 15
+    Cooldown: 0.15
+    Priority: 150
+    Locked: 0
+  - Id: npc_scream
+    Clips:
+    - {fileID: 8300000, guid: 453aa77662f7a664bbd154348839c76e, type: 3}
+    - {fileID: 8300000, guid: 45970e994503e384d8e6a694c3ea1b61, type: 3}
+    - {fileID: 8300000, guid: 1441ca5e4c0cfad49b508076c62a613f, type: 3}
+    - {fileID: 8300000, guid: 5b2b683ec68bcd3419e66ae22435c13d, type: 3}
+    Volume: {x: 0.85, y: 1}
+    Pitch: {x: 0.9, y: 1.15}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 45
+    Cooldown: 0.3
+    Priority: 50
+    Locked: 0
+  - Id: npc_mumble
+    Clips:
+    - {fileID: 8300000, guid: cc84c4ad1aaf97c47b9df26ad79cf449, type: 3}
+    - {fileID: 8300000, guid: 1c83ea23580a91f4eae69a31b6bfe03a, type: 3}
+    - {fileID: 8300000, guid: bea341498b9e8fa43b7ffaca49713344, type: 3}
+    - {fileID: 8300000, guid: 372d52d69330de046933045fe57dd5b0, type: 3}
+    Volume: {x: 0.595, y: 0.7}
+    Pitch: {x: 0.9, y: 1.15}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 18
+    Cooldown: 0.2
+    Priority: 110
+    Locked: 0
+  - Id: npc_whimper
+    Clips:
+    - {fileID: 8300000, guid: 3e762f98ed773ea4ea5574d97e41b416, type: 3}
+    - {fileID: 8300000, guid: c93ee9e14295e23498032a77ff96b08d, type: 3}
+    Volume: {x: 0.595, y: 0.7}
+    Pitch: {x: 0.92, y: 1.12}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 15
+    Cooldown: 0.2
+    Priority: 110
+    Locked: 0
+  - Id: npc_gasp
+    Clips:
+    - {fileID: 8300000, guid: 89eaa8b6418c2c24aa5116366978b417, type: 3}
+    - {fileID: 8300000, guid: d43648509a843ad43aa49622891dbbad, type: 3}
+    Volume: {x: 0.68, y: 0.8}
+    Pitch: {x: 0.92, y: 1.12}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 20
+    Cooldown: 0.2
+    Priority: 100
+    Locked: 0
+  - Id: organ_squish
+    Clips:
+    - {fileID: 8300000, guid: da5252281fd99ed4fb597f6b83a8fa3d, type: 3}
+    - {fileID: 8300000, guid: 600c12c34e1233c49b788e4e8fca51d2, type: 3}
+    - {fileID: 8300000, guid: 326bbc019fa9a62489881deca743afc2, type: 3}
+    Volume: {x: 0.765, y: 0.9}
+    Pitch: {x: 0.9, y: 1.1}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 15
+    Cooldown: 0.05
+    Priority: 60
+    Locked: 0
+  - Id: police_siren
+    Clips:
+    - {fileID: 8300000, guid: 31c54d7ab91508a468d1e1af323b7305, type: 3}
+    Volume: {x: 0.85, y: 1}
+    Pitch: {x: 1, y: 1}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 120
+    Cooldown: 0.5
+    Priority: 30
+    Locked: 0
+  - Id: phone_buzz
+    Clips:
+    - {fileID: 8300000, guid: 9f2dbb310f4f1724e84835c00082e772, type: 3}
+    Volume: {x: 0.68, y: 0.8}
+    Pitch: {x: 1, y: 1}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 10
+    Cooldown: 0.3
+    Priority: 30
+    Locked: 0
+  - Id: cash_register
+    Clips:
+    - {fileID: 8300000, guid: e8dbd4e8c8061b749b2f053431cbb4ec, type: 3}
+    Volume: {x: 0.765, y: 0.9}
+    Pitch: {x: 0.98, y: 1.02}
+    SpatialBlend: 1
+    MinDistance: 1.5
+    MaxDistance: 20
+    Cooldown: 0.3
+    Priority: 60
+    Locked: 0

@@ -65,6 +65,8 @@ namespace OnlyVolunteers.Operation
         private float operationStarted;
         private string toast = "";
         private string lastItem = "";
+        // Set when the tape step finishes before the kidney's flight lands: the arrival toast adds it under the item line.
+        private string pendingSummary;
         private float toastUntil;
 
         public bool Active => phase != Phase.Idle;
@@ -162,6 +164,8 @@ namespace OnlyVolunteers.Operation
             OperationPatient patient = table.Patient;
             Vector3 dropAt = organ.position;
             patient.TakeKidney();
+            lastItem = ""; // the previous kidney's line must not show up in this operation's summary
+            pendingSummary = null;
             OrganPop.Launch(organ, player.ViewCamera, () => AddToInventory(quality, dropAt));
             game.ClearPoppedKidney();
         }
@@ -178,13 +182,20 @@ namespace OnlyVolunteers.Operation
             if (inventory != null && inventory.Model != null && inventory.Model.TryAdd(kidneyItem.Id, 1, value) > 0)
             {
                 lastItem = $"+ Почка  [{grade}]  ${value}";
-                Toast(lastItem);
+                ToastArrival();
                 return;
             }
             // Pockets full: the organ lands on the floor next to the table (canon 42: dropping it is the player's fault).
             OfflineWorldItem.Spawn(kidneyItem, 1, value, dropAt + Vector3.up * 0.2f);
             lastItem = $"Карманы полны — почка [{grade}] упала на пол (подбери: E)";
-            Toast(lastItem);
+            ToastArrival();
+        }
+
+        // The flight can land after FinishKidney: keep its verdict under the item line instead of replacing it.
+        private void ToastArrival()
+        {
+            Toast(pendingSummary != null ? lastItem + "\n" + pendingSummary : lastItem);
+            pendingSummary = null;
         }
 
         private void FinishKidney()
@@ -193,7 +204,13 @@ namespace OnlyVolunteers.Operation
             float seconds = Time.time - operationStarted;
             int penalty = game.Penalty;
             string verdict = penalty == 0 ? "Чистая работа!" : game.Yanked ? "Рывок помял почку" : "Разрез вышел кривым";
-            Toast($"{lastItem}\nПочка за {seconds:0} с. {verdict}  (ровность разреза {Mathf.RoundToInt(game.Neatness * 100f)}%, соскальзываний {game.Slips})");
+            string summary = $"Почка за {seconds:0} с. {verdict}  (ровность разреза {Mathf.RoundToInt(game.Neatness * 100f)}%, соскальзываний {game.Slips})";
+            if (lastItem.Length > 0) Toast(lastItem + "\n" + summary);
+            else
+            {
+                pendingSummary = summary; // the kidney is still flying to the inventory
+                Toast(summary);
+            }
             game = null;
             phase = Phase.Menu;
         }

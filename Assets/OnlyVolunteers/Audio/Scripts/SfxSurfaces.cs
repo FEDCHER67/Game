@@ -13,8 +13,8 @@ namespace OnlyVolunteers.Audio
     // 1x1 splat sample on a Terrain (TerrainData.GetAlphamaps has no non-allocating form).
     public static class SfxSurfaces
     {
-        private static readonly Dictionary<int, SfxSurface> ByCollider = new();
-        private static readonly Dictionary<int, SfxSurface[]> ByTerrainLayers = new();
+        private static readonly Dictionary<Collider, SfxSurface> ByCollider = new();
+        private static readonly Dictionary<TerrainData, SfxSurface[]> ByTerrainLayers = new();
         private static int _vehicleLayer = -2, _vehicleInteriorLayer = -2;
 
         // Checked in this order: the first group with a keyword in the name wins; no keyword = Asphalt.
@@ -37,7 +37,7 @@ namespace OnlyVolunteers.Audio
             if (IsVan(ground.gameObject.layer)) return SfxSurface.Metal;
             if (ground is TerrainCollider terrainCollider && ground.TryGetComponent(out Terrain terrain))
                 return OnTerrain(terrain, terrainCollider, point);
-            int key = ground.GetInstanceID();
+            Collider key = ground;
             if (ByCollider.TryGetValue(key, out SfxSurface cached)) return cached;
             Renderer renderer = ground.TryGetComponent(out Renderer own) ? own : ground.GetComponentInParent<Renderer>();
             Material material = renderer != null ? renderer.sharedMaterial : null;
@@ -60,7 +60,7 @@ namespace OnlyVolunteers.Audio
         {
             TerrainData data = terrain.terrainData;
             if (data == null || data.alphamapLayers == 0) return Classify(collider.sharedMaterial != null ? collider.sharedMaterial.name : null);
-            int key = data.GetInstanceID();
+            TerrainData key = data;
             if (!ByTerrainLayers.TryGetValue(key, out SfxSurface[] layers) || layers.Length != data.alphamapLayers)
             {
                 TerrainLayer[] source = data.terrainLayers;

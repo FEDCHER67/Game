@@ -90,7 +90,7 @@ namespace OnlyVolunteers.Inventory
         private void OnItemIdChanged(int previous, int next, bool asServer)
         {
             if (asServer) return;
-            resolved = null;
+            if (!IsServerInitialized) resolved = null; // on a host keep the server's authoritative reference
             TryBuildVisual();
         }
 

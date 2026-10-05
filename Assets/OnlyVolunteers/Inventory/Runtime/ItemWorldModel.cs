@@ -38,7 +38,12 @@ namespace OnlyVolunteers.Inventory
                 else Object.DestroyImmediate(c);
             }
 
+            // Renderer.bounds is a world AABB: measure with the root unrotated, or a yawed drop (networked ones face
+            // the dropper) grows the box and shrinks the fitted model by up to ~30%.
+            Quaternion rootRotation = root.rotation;
+            root.rotation = Quaternion.identity;
             Bounds local = LocalBounds(model.transform, holder);
+            root.rotation = rootRotation;
             float largest = Mathf.Max(local.size.x, local.size.y, local.size.z);
             float target = item == null || item.WorldModel == null
                 ? (item != null && item.WorldModelSize > 0f ? item.WorldModelSize : FallbackSize)

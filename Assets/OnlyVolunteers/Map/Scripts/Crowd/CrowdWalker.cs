@@ -655,7 +655,7 @@ namespace OnlyVolunteers.Map.Crowd
             // Waiting for the bus or at a door: a look around now and then.
             if (_activity == CrowdActivity.BusWait || _activity == CrowdActivity.Playground || _activity == CrowdActivity.BarDoor)
             {
-                float look = (Mathf.PerlinNoise(now * 0.15f, GetInstanceID() * 0.01f) - 0.5f) * 140f;
+                float look = (Mathf.PerlinNoise(now * 0.15f, GetHashCode() * 0.01f) - 0.5f) * 140f;
                 face = Rotate(face, look);
             }
             if (face.sqrMagnitude > 1e-4f)

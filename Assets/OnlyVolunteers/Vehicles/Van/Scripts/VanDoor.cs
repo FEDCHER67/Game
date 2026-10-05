@@ -172,7 +172,7 @@ namespace OnlyVolunteers.Vehicles
                 if (closing && _stalledFor >= StallBackoffAfter && BackoffFraction > 0f)
                 {
                     _backoffTo = Mathf.Min(1f, _t + BackoffFraction);
-                    _closeFrom = _backoffTo; // the retry is a short swing: no slam
+                    _closeFrom = 0f; // the retry is a short swing: no slam (even after a stall past SlamFrom - BackoffFraction)
                     _stalledFor = 0f;
                     _blocking.Clear(); // the next hit after backing off is a new hit (and shoves again)
                 }
