@@ -1,3 +1,4 @@
+using OnlyVolunteers.Audio;
 using OnlyVolunteers.Inventory;
 using OnlyVolunteers.Player.Physics;
 using UnityEngine;
@@ -71,7 +72,11 @@ namespace OnlyVolunteers.Map
             if (Input.GetKeyDown(KeyCode.Q) && Time.time >= _nextHit)
             {
                 _nextHit = Time.time + weapon.Cooldown;
-                if (_canHit) target.Hit(weapon, zone, Pawn.Position, point);
+                if (_canHit)
+                {
+                    target.Hit(weapon, zone, Pawn.Position, point);
+                    Sfx.PlayAt(HitSound(zone), point);
+                }
             }
 
             _grabHint = GrabHint();
@@ -108,7 +113,12 @@ namespace OnlyVolunteers.Map
             switch (act)
             {
                 case Act.PickupItem:
+                    // The nearest item is what the label showed; the pickup itself goes by Vadim's view ray.
+                    OfflineWorldItem item = OfflineWorldItem.Nearest(Pawn.Body.position, ItemReach);
+                    bool organ = item != null && item.Definition != null && item.Definition.Kind == ItemKind.Organ;
+                    Vector3 at = item != null ? item.transform.position : Pawn.Body.position;
                     if (InventoryInput == null || !InventoryInput.PickupNow()) Do(_afterItem);
+                    else if (organ) Sfx.PlayAt(SfxIds.OrganSquish, at);
                     break;
                 case Act.Handle:
                     Cargo.ToggleDoor(0);
@@ -177,6 +187,13 @@ namespace OnlyVolunteers.Map
             }
             return npc != null;
         }
+
+        private static string HitSound(HitZone zone) => zone switch
+        {
+            HitZone.Head => SfxIds.HitHead,
+            HitZone.Limb => SfxIds.HitLimb,
+            _ => SfxIds.HitTorso,
+        };
 
         // Nothing but that NPC's own colliders between the eye and 'target'.
         private static bool InView(Vector3 eye, Vector3 target, GreyboxNpc npc)

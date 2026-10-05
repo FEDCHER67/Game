@@ -1,5 +1,6 @@
 using System.Reflection;
 using KinematicCharacterController;
+using OnlyVolunteers.Audio;
 using OnlyVolunteers.Player;
 using UnityEngine;
 
@@ -19,7 +20,22 @@ namespace OnlyVolunteers.Map
                  "wheel arches (1.04 m). Applied at runtime to this instance only; <= 0 keeps the prefab's size.")]
         public float CapsuleRadius = 0.35f;
 
+        [Header("Footsteps (optional, Sfx)")]
+        [Tooltip("Metres between footfalls at walking speed (WalkSpeed) and at a sprint (RunSpeed); lerped between. The " +
+                 "KCC player walks 4.7 m/s and sprints 8.2 m/s (KccFirstPersonInput): about 2.4 and 3 steps a second.")]
+        public float StepLength = 2f;
+        public float RunStepLength = 2.75f;
+        public float WalkSpeed = 4.7f;
+        public float RunSpeed = 8.2f;
+        [Tooltip("Volume of a crouched step (sneaking), against 1 for a sprint.")]
+        [Range(0f, 1f)] public float CrouchVolume = 0.4f;
+        [Tooltip("m/s of fall speed for a full-volume landing step.")]
+        public float LandingSpeed = 5f;
+
         private KccFirstPersonInput _kcc;
+        private float _stepDistance;
+        private bool _wasGrounded = true;
+        private float _fallSpeed;
 
         private KccFirstPersonInput Kcc => _kcc != null ? _kcc : _kcc = GetComponent<KccFirstPersonInput>();
 
@@ -40,6 +56,49 @@ namespace OnlyVolunteers.Map
         {
             KinematicCharacterMotor motor = Kcc != null && Kcc.Character != null ? Kcc.Character.Motor : null;
             if (motor != null) motor.CollidableLayers |= 1 << OvLayers.VehicleInterior;
+        }
+
+        // Footfalls by distance walked on stable ground, the surface under the feet picking the sound (SfxSurfaces:
+        // the van's metal, a Terrain's splat layer, a material name); a landing is one louder step. Reads the motor only.
+        private void Update()
+        {
+            KinematicCharacterMotor motor = Kcc != null && Kcc.Character != null ? Kcc.Character.Motor : null;
+            if (motor == null || Driving) return;
+            bool grounded = motor.GroundingStatus.IsStableOnGround;
+            Vector3 velocity = motor.BaseVelocity;
+            if (!grounded)
+            {
+                _fallSpeed = Mathf.Max(_fallSpeed, -Vector3.Dot(velocity, motor.CharacterUp));
+                _wasGrounded = false;
+                return;
+            }
+            if (!_wasGrounded)
+            {
+                _wasGrounded = true;
+                if (_fallSpeed > 1.5f) Step(motor, Mathf.Clamp01(_fallSpeed / Mathf.Max(0.1f, LandingSpeed)));
+                _fallSpeed = 0f;
+                _stepDistance = 0f;
+            }
+            float speed = Vector3.ProjectOnPlane(velocity, motor.CharacterUp).magnitude;
+            if (speed < 0.3f)
+            {
+                _stepDistance = 0f; // standing: the next walk starts with a step soon
+                return;
+            }
+            float run = Mathf.InverseLerp(WalkSpeed, RunSpeed, speed);
+            float stride = Mathf.Lerp(StepLength, RunStepLength, run);
+            _stepDistance += speed * Time.deltaTime;
+            if (_stepDistance < stride) return;
+            _stepDistance -= stride;
+            float volume = Kcc.Character.CurrentStance == Stance.Crouch ? CrouchVolume : Mathf.Lerp(0.6f, 1f, run);
+            Step(motor, volume);
+        }
+
+        private static void Step(KinematicCharacterMotor motor, float volume)
+        {
+            CharacterGroundingReport ground = motor.GroundingStatus;
+            Vector3 feet = ground.FoundAnyGround ? ground.GroundPoint : motor.TransientPosition;
+            Sfx.PlayAt(SfxSurfaces.StepId(SfxSurfaces.At(ground.GroundCollider, feet)), feet, volume);
         }
 
         public override Transform Body => Kcc.Character.transform;

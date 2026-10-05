@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using KinematicCharacterController;
+using OnlyVolunteers.Audio;
 using UnityEngine;
 
 namespace OnlyVolunteers.Vehicles
@@ -20,9 +21,13 @@ namespace OnlyVolunteers.Vehicles
     // - A closing door stalled for StallBackoffAfter seconds backs off BackoffFraction and tries again: a foot in the door
     //   (canon section 138). A closing door that meets a body faster than ShoveSpeed shoves it (ShoveImpulse).
     // - The drawn pose is interpolated between physics ticks, like the van body itself; physics always sees the tick pose.
+    // - Sound (Sfx, optional: silent without a library): a hinge door plays "open" as it leaves the latch and "close" as it
+    //   latches, "slam" instead when it swung shut from at least SlamFrom open; the sliding door's sounds carry the whole
+    //   run on the rail, so both play as the motion starts.
     public sealed class VanDoor : MonoBehaviour
     {
         public enum Kind { Hinge, Slide }
+        public enum SoundSet { Auto, Front, Rear, Slide, None }
 
         public Kind DoorKind = Kind.Hinge;
         public Transform Van;
@@ -50,6 +55,12 @@ namespace OnlyVolunteers.Vehicles
         [Tooltip("N·s, along the door's push direction.")]
         public float ShoveImpulse = 15f;
 
+        [Header("Sound (optional, Sfx)")]
+        [Tooltip("Auto: Slide for the sliding door, Rear for a hinge door opening backwards (OutwardHint.z < 0), else Front.")]
+        public SoundSet Sounds = SoundSet.Auto;
+        [Tooltip("A hinge door closing from at least this openness slams instead of a soft close.")]
+        [Range(0f, 1f)] public float SlamFrom = 0.6f;
+
         // Plain state (a network door mask later). TargetOpen: where the door is going; Openness 0 closed .. 1 open.
         [System.NonSerialized] public bool TargetOpen;
         public float Openness => _t;
@@ -73,6 +84,8 @@ namespace OnlyVolunteers.Vehicles
         private readonly Collider[] _hits = new Collider[16];
         private readonly HashSet<Collider> _blocking = new();
         private readonly HashSet<Collider> _blockingNow = new();
+        private string _openSound, _closeSound, _slamSound;
+        private float _closeFrom; // openness when the current close began (slam or soft close)
 
         private void Awake()
         {
@@ -84,6 +97,21 @@ namespace OnlyVolunteers.Vehicles
             // The physics pose of the van comes from its body (the transform of an interpolated body shows the drawn pose).
             _vanBody = Van.GetComponent<Rigidbody>();
             _box = GetComponent<BoxCollider>();
+            PickSounds();
+        }
+
+        private void PickSounds()
+        {
+            SoundSet set = Sounds;
+            if (set == SoundSet.Auto)
+                set = DoorKind == Kind.Slide ? SoundSet.Slide : OutwardHint.z < -0.5f ? SoundSet.Rear : SoundSet.Front;
+            (_openSound, _closeSound, _slamSound) = set switch
+            {
+                SoundSet.Front => (SfxIds.DoorFrontOpen, SfxIds.DoorFrontClose, SfxIds.DoorFrontSlam),
+                SoundSet.Rear => (SfxIds.DoorRearOpen, SfxIds.DoorRearClose, SfxIds.DoorRearSlam),
+                SoundSet.Slide => (SfxIds.DoorSlideOpen, SfxIds.DoorSlideClose, SfxIds.DoorSlideClose),
+                _ => ((string)null, (string)null, (string)null),
+            };
         }
 
         /// <summary>Ask for a state. Repeating the same request changes nothing.</summary>
@@ -93,6 +121,15 @@ namespace OnlyVolunteers.Vehicles
             TargetOpen = open;
             _stalledFor = 0f;
             _backoffTo = -1f;
+            if (open)
+            {
+                if (_t <= 0f) Sfx.PlayAt(_openSound, transform.position); // leaves the latch now
+            }
+            else
+            {
+                _closeFrom = _t;
+                if (DoorKind == Kind.Slide && _t > 0f) Sfx.PlayAt(_closeSound, transform.position);
+            }
         }
 
         public void Toggle() => Request(!TargetOpen);
@@ -135,6 +172,7 @@ namespace OnlyVolunteers.Vehicles
                 if (closing && _stalledFor >= StallBackoffAfter && BackoffFraction > 0f)
                 {
                     _backoffTo = Mathf.Min(1f, _t + BackoffFraction);
+                    _closeFrom = _backoffTo; // the retry is a short swing: no slam
                     _stalledFor = 0f;
                     _blocking.Clear(); // the next hit after backing off is a new hit (and shoves again)
                 }
@@ -142,6 +180,8 @@ namespace OnlyVolunteers.Vehicles
             }
             IsStalled = false;
             _stalledFor = 0f;
+            if (next <= 0f && _t > 0f && DoorKind == Kind.Hinge)
+                Sfx.PlayAt(_closeFrom >= SlamFrom ? _slamSound : _closeSound, transform.position); // latches this tick
             _t = next;
         }
 

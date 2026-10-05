@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OnlyVolunteers.Audio;
 using OnlyVolunteers.Vehicles;
 using UnityEngine;
 
@@ -74,6 +75,14 @@ namespace OnlyVolunteers.Map
         [Tooltip("The standing Buddy mesh is lowered this much while sitting in the cargo bay (no sitting clip yet).")]
         public float SeatedVisualDrop = 0.4f;
 
+        [Header("Voice (optional, Sfx)")]
+        [Tooltip("Seconds: the least time between two screams of this NPC (it screams when it starts running away).")]
+        public float ScreamCooldown = 6f;
+        [Tooltip("Seconds between gibberish mumbles while groggy.")]
+        public Vector2 MumbleInterval = new(2.5f, 5f);
+        [Tooltip("Seconds between whimpers while sitting in the cargo bay.")]
+        public Vector2 WhimperInterval = new(4f, 9f);
+
         [Header("State (plain data)")]
         public NpcState State;
         public StunPhase Phase;
@@ -114,6 +123,8 @@ namespace OnlyVolunteers.Map
         private float _nextCrawl;
         private float _impactGraceUntil;
         private bool _wasInCargo;
+        private float _nextScream;
+        private float _nextVoice;
 
         public GreyboxNpcBody Body => _body;
         public bool IsDown => State == NpcState.Down;
@@ -258,6 +269,7 @@ namespace OnlyVolunteers.Map
             }
             if (Scared(out Vector3 from))
             {
+                if (Time.time >= _fleeUntil) Scream(); // calm -> running: one scream, not one per frame of fear
                 _threat = from;
                 _fleeUntil = Time.time + CalmAfter;
             }
@@ -397,6 +409,7 @@ namespace OnlyVolunteers.Map
             Phase = PhaseNow();
             if (Phase == StunPhase.Out)
             {
+                _nextVoice = Time.time + Random.Range(0.3f, 1.2f); // the first mumble soon after it turns groggy
                 Face.Set("Surprised", 0f);
                 Face.Set("Worried", 0f);
                 Face.Set("Blink", 100f, 1500f);
@@ -406,6 +419,7 @@ namespace OnlyVolunteers.Map
                 Face.Set("Surprised", Time.time < _flashUntil ? 100f : 0f, 900f);
                 Face.Set("Worried", 70f);
                 Face.TickBlink();
+                VoiceEvery(SfxIds.NpcMumble, MumbleInterval);
             }
             Play("Idle");
         }
@@ -525,6 +539,7 @@ namespace OnlyVolunteers.Map
             _verticalSpeed = 0f;
             _threat = threat;
             _fleeUntil = Time.time + CalmAfter;
+            Scream(); // up and running
             State = NpcState.Free;
             Phase = StunPhase.None;
             StunLeft = 0f;
@@ -545,6 +560,7 @@ namespace OnlyVolunteers.Map
             _body.Grabbable = false;
             _body.SetSeated(true);
             SetVisualDrop(true);
+            _nextVoice = Time.time + Random.Range(1f, 3f);
             Play("Idle");
         }
 
@@ -567,6 +583,7 @@ namespace OnlyVolunteers.Map
             Face.Set("Surprised", Time.time < _flashUntil ? 100f : flicker, 900f);
             Face.Set("Worried", 60f);
             Face.TickBlink();
+            VoiceEvery(SfxIds.NpcWhimper, WhimperInterval);
             Play("Idle");
         }
 
@@ -611,6 +628,7 @@ namespace OnlyVolunteers.Map
             // A runner can be grabbed (draft section 2: stop it by blocking the doorway, grabbing it or shutting the door);
             // GreyboxVanCargo stops the run as soon as someone holds it.
             _body.Grabbable = true;
+            Scream();
             Play("Run");
         }
 
@@ -640,6 +658,25 @@ namespace OnlyVolunteers.Map
             StandUp(from);
             _fleeUntil = Time.time + 2f * CalmAfter;
         }
+
+        // ---------- Voice (Sfx; silent without a library) ----------
+
+        private void Scream()
+        {
+            if (Time.time < _nextScream) return;
+            _nextScream = Time.time + ScreamCooldown;
+            Sfx.PlayAt(SfxIds.NpcScream, VoicePoint);
+        }
+
+        private void VoiceEvery(string id, Vector2 interval)
+        {
+            if (Time.time < _nextVoice) return;
+            _nextVoice = Time.time + Random.Range(interval.x, interval.y);
+            Sfx.PlayAt(id, VoicePoint);
+        }
+
+        // About the head: the top end of a lying body, head height of a standing or sitting one.
+        private Vector3 VoicePoint => _body != null && _body.Active ? Center + transform.up * 0.5f : transform.position + Vector3.up * 1.4f;
 
         /// <summary>A short startled look (an escape that failed).</summary>
         public void Flash() => _flashUntil = Time.time + 0.5f;
