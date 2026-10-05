@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using OnlyVolunteers.Inventory;
+using OnlyVolunteers.Map.Crowd;
 using OnlyVolunteers.Player;
 using OnlyVolunteers.Player.Physics;
 using OnlyVolunteers.Vehicles;
@@ -317,13 +318,19 @@ namespace OnlyVolunteers.Map
             // Main Camera (van rig) and the KCC player's camera.
             public float FarClip = 3500f;
             public bool PostProcessing;
+            // Static: two Buddies standing at each CrowdSpots point (the grey-box crowd, the fallback). Director: a
+            // CrowdDirector with a pool of Buddies walking crowd_vNN.json instead (look map only, MapCrowdPlacer).
+            public CrowdKind Crowd = CrowdKind.Static;
         }
+
+        internal enum CrowdKind { Static, Director }
 
         internal sealed class GameplayResult
         {
             public GameObject Van;
             public GreyboxPawn Pawn;
             public int Npcs, Pickups, CrowdSlots;
+            public CrowdDirector Director;
         }
 
         // NPC capsule for spawn checks (SpawnBuddy's CharacterController) and the KCC player's (prefab radius 0.5).
@@ -469,14 +476,13 @@ namespace OnlyVolunteers.Map
                 {
                     result.CrowdSlots++;
                     if (!FreeSpot(plan, ground, centre, rnd, out Vector3 p)) continue;
-                    var npc = SpawnBuddy(buddies[spawned++ % buddies.Length], $"NPC_{id}_{k}", p, (float)rnd.NextDouble() * 360f);
+                    // With the CrowdDirector the spots are still drawn (same random sequence, so the pickups stay put),
+                    // but nobody stands there.
+                    GameObject prefab = buddies[spawned++ % buddies.Length];
+                    float yaw = (float)rnd.NextDouble() * 360f;
+                    if (setup.Crowd != CrowdKind.Static) continue;
+                    var npc = SpawnCrowdNpc(prefab, $"NPC_{id}_{k}", p, yaw, npcGrabProfile, hasSea);
                     npc.transform.SetParent(crowd, true);
-                    // Layer NpcBody from the start: the Q ray, LMB and the cargo bay all look for it there.
-                    SetLayerRecursively(npc.transform, OvLayers.NpcBody);
-                    npc.AddComponent<GreyboxNpc>();
-                    npc.AddComponent<GreyboxNpcBody>().GrabProfile = npcGrabProfile;
-                    if (hasSea)
-                        npc.AddComponent<SeaReturnTracker>();
                     result.Npcs++;
                 }
                 if (database != null && database.Items.Count > 0 && database.Items[spawned % database.Items.Count] is ItemDefinition item &&
@@ -486,7 +492,26 @@ namespace OnlyVolunteers.Map
                     result.Pickups++;
                 }
             }
+            if (setup.Crowd == CrowdKind.Director)
+            {
+                UnityEngine.Object.DestroyImmediate(crowd.gameObject);
+                result.Director = MapCrowdPlacer.Place(buddies, npcGrabProfile, hasSea, out int pool);
+                result.Npcs = pool;
+            }
             return result;
+        }
+
+        // A grey-box crowd NPC: a Buddy with its CharacterController, GreyboxNpc, the grab body and a sea tracker, on
+        // layer NpcBody from the start (the Q ray, LMB and the cargo bay all look for it there).
+        internal static GameObject SpawnCrowdNpc(GameObject prefab, string name, Vector3 position, float yaw, GrabPhysicsProfile grabProfile, bool sea)
+        {
+            var npc = SpawnBuddy(prefab, name, position, yaw);
+            SetLayerRecursively(npc.transform, OvLayers.NpcBody);
+            npc.AddComponent<GreyboxNpc>();
+            npc.AddComponent<GreyboxNpcBody>().GrabProfile = grabProfile;
+            if (sea)
+                npc.AddComponent<SeaReturnTracker>();
+            return npc;
         }
 
         private static (float thickness, Color color) FenceStyle(string material) => material switch
