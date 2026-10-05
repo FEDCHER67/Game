@@ -1,0 +1,83 @@
+{
+  "asset": "LM_ChurchBell",
+  "family": "LM-OLD_TOWN",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 392,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -0.72,
+    -0.53,
+    -1.1
+  ],
+  "bounds_max": [
+    0.72,
+    0.53,
+    0.1
+  ],
+  "size_xyz_m": [
+    1.44,
+    1.06,
+    1.2
+  ],
+  "objects": {
+    "LM_ChurchBell_Mesh": {
+      "triangles": 324,
+      "vertices": 180,
+      "faces": 180,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ChurchBell_Clapper": {
+      "triangles": 68,
+      "vertices": 40,
+      "faces": 38,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        -0.24
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Bell 1.06 m across on a 1.2 m headstock (1.44 m with the axle stubs). Pivot = axle centre (rotate the root about X to swing). LM_ChurchBell_Clapper has its pivot on its hinge under the crown. Hangs in a belfry, not on the ground.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_ChurchBell_v01.fbx",
+    "fbx_size_bytes": 28940,
+    "blend": "LM-OLD_TOWN_v01.blend"
+  }
+}

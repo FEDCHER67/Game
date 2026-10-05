@@ -1,0 +1,220 @@
+{
+  "asset": "LM_ClockTowerTop",
+  "family": "LM-OLD_TOWN",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1482,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -1.79,
+    -1.79,
+    0.0
+  ],
+  "bounds_max": [
+    1.79,
+    1.79,
+    8.44
+  ],
+  "size_xyz_m": [
+    3.58,
+    3.58,
+    8.44
+  ],
+  "objects": {
+    "LM_ClockTowerTop_Mesh": {
+      "triangles": 1082,
+      "vertices": 673,
+      "faces": 608,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Emissive": {
+      "triangles": 192,
+      "vertices": 104,
+      "faces": 144,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Hour_S": {
+      "triangles": 16,
+      "vertices": 10,
+      "faces": 7,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        -1.77,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Minute_S": {
+      "triangles": 36,
+      "vertices": 22,
+      "faces": 15,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        -1.77,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Hour_E": {
+      "triangles": 16,
+      "vertices": 10,
+      "faces": 7,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        1.77,
+        -0.0,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Minute_E": {
+      "triangles": 36,
+      "vertices": 22,
+      "faces": 15,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        1.77,
+        -0.0,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Hour_N": {
+      "triangles": 16,
+      "vertices": 10,
+      "faces": 7,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        1.77,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Minute_N": {
+      "triangles": 36,
+      "vertices": 22,
+      "faces": 15,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        1.77,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Hour_W": {
+      "triangles": 16,
+      "vertices": 10,
+      "faces": 7,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        -1.77,
+        -0.0,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_ClockTowerTop_Hand_Minute_W": {
+      "triangles": 36,
+      "vertices": 22,
+      "faces": 15,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        -1.77,
+        -0.0,
+        1.5
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Top of a 3.2 m square tower (8.4 m tall piece): clock stage, open belfry arches, tented roof and spire. Pivot = centre of the bottom band, put it on a 3.2 x 3.2 m shaft. Dials = LM_ClockTowerTop_Emissive. Hands (hour/minute x S, W, N, E faces) have their pivot on the dial centre; rotate about the local axis normal to the face. Built at 10:10.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_ClockTowerTop_v01.fbx",
+    "fbx_size_bytes": 69820,
+    "blend": "LM-OLD_TOWN_v01.blend"
+  }
+}

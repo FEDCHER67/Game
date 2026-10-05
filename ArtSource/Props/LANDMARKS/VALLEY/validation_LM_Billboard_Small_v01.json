@@ -1,0 +1,86 @@
+{
+  "asset": "LM_Billboard_Small",
+  "family": "LM-VALLEY",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 312,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -1.7,
+    -0.5596,
+    0.0
+  ],
+  "bounds_max": [
+    1.7,
+    0.4235,
+    3.4851
+  ],
+  "size_xyz_m": [
+    3.4,
+    0.983,
+    3.485
+  ],
+  "objects": {
+    "LM_Billboard_Small_Mesh": {
+      "triangles": 300,
+      "vertices": 180,
+      "faces": 174,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_Billboard_Small_Poster": {
+      "triangles": 12,
+      "vertices": 8,
+      "faces": 6,
+      "materials": [
+        "SK_Palette",
+        "LM_Poster"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "LM_Poster",
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Poster 3.0 x 1.5 m on two legs, street size. Poster face (-Y) = material LM_Poster, UV 0..1 over the poster, aspect 2:1.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_Billboard_Small_v01.fbx",
+    "fbx_size_bytes": 29964,
+    "blend": "LM-VALLEY_v01.blend"
+  }
+}
