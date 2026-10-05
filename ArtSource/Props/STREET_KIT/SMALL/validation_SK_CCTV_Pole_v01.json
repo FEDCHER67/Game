@@ -1,0 +1,84 @@
+{
+  "asset": "SK_CCTV_Pole",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 356,
+  "triangle_budget": [
+    100,
+    800
+  ],
+  "bounds_min": [
+    -0.1663,
+    -0.6791,
+    0.0
+  ],
+  "bounds_max": [
+    0.1663,
+    0.1663,
+    3.0828
+  ],
+  "size_xyz_m": [
+    0.333,
+    0.845,
+    3.083
+  ],
+  "objects": {
+    "SK_CCTV_Pole_Mesh": {
+      "triangles": 228,
+      "vertices": 136,
+      "faces": 90,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_CCTV_Pole_Head": {
+      "triangles": 128,
+      "vertices": 76,
+      "faces": 62,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        -0.35,
+        3.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Security camera on a 3 m pipe pole with a flange, junction box and arm to -Y (map id cctv_camera, elite hill). The head is a child with its pivot on the pan joint (0, -0.35, 3.0): rotate about local Z to pan.",
+  "checks": {
+    "triangle_budget_100_800": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_CCTV_Pole_v01.fbx",
+    "fbx_size_bytes": 27900,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}
