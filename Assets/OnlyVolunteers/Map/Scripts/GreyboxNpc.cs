@@ -10,6 +10,9 @@ namespace OnlyVolunteers.Map
     // crawls. Awake: conscious but caught (sitting in the van, escaping). None: free.
     public enum StunPhase : byte { None, Out, Groggy, Awake }
 
+    // What a bystander can see happen to an NPC (GreyboxNpc.Incident): knocked down from its feet, or loaded into a van.
+    public enum NpcIncident : byte { Stunned, Captured }
+
     // Grey-box crowd NPC (Sausage Buddy), NPC capture stage 1 (canon section 151, draft docs/drafts/NPC_CAPTURE_VAN_COOP_DRAFT.md).
     // Free: idles and blinks, runs away from the van or the on-foot pawn (CharacterController, ignores the van; a fast
     // van still knocks it over by script).
@@ -83,8 +86,13 @@ namespace OnlyVolunteers.Map
         // EscapeCrawlForce instead of away from the pawn. Cleared on standing up or sitting up.
         [System.NonSerialized] public bool CrawlToward;
         [System.NonSerialized] public Vector3 CrawlGoal;
+        // Set by a crowd walker (Crowd/CrowdWalker) that moves and animates this NPC while it is free and calm: UpdateFree
+        // then only blinks. Fleeing, going down and everything after stay this script's.
+        [System.NonSerialized] public bool ExternalLocomotion;
 
         public static readonly List<GreyboxNpc> All = new();
+        // Raised when a free NPC goes down (before its body switches on) and when it becomes loaded in a cargo bay.
+        public static event System.Action<GreyboxNpc, NpcIncident> Incident;
 
         private CharacterController _controller;
         private GreyboxNpcBody _body;
@@ -105,9 +113,11 @@ namespace OnlyVolunteers.Map
         private float _nextKick;
         private float _nextCrawl;
         private float _impactGraceUntil;
+        private bool _wasInCargo;
 
         public GreyboxNpcBody Body => _body;
         public bool IsDown => State == NpcState.Down;
+        public bool Fleeing => State == NpcState.Free && Time.time < _fleeUntil;
         // Middle of the body, upright or lying (the root is at the feet).
         public Vector3 Center => _body != null && _body.Active ? _body.CenterOfMass : transform.TransformPoint(0f, 0.75f, 0f);
         private bool CarrierAlive => Carrier is Object o ? o != null : Carrier != null;
@@ -159,7 +169,11 @@ namespace OnlyVolunteers.Map
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetStatics() => All.Clear();
+        private static void ResetStatics()
+        {
+            All.Clear();
+            Incident = null;
+        }
 
         // In OnEnable rather than Awake: it also runs after a script reload in Play mode, which drops these references
         // and the event subscription.
@@ -212,6 +226,11 @@ namespace OnlyVolunteers.Map
         private void Update()
         {
             if (InCargo && Carrier == null) RecoverCarrier();
+            if (InCargo != _wasInCargo)
+            {
+                _wasInCargo = InCargo;
+                if (InCargo) Incident?.Invoke(this, NpcIncident.Captured);
+            }
             switch (State)
             {
                 case NpcState.Free: UpdateFree(); break;
@@ -244,6 +263,13 @@ namespace OnlyVolunteers.Map
             }
 
             bool fleeing = Time.time < _fleeUntil;
+            if (ExternalLocomotion && !fleeing)
+            {
+                Face.Set("Surprised", 0f);
+                Face.Set("Worried", 0f);
+                Face.TickBlink();
+                return;
+            }
             Vector3 move = Vector3.zero;
             if (fleeing)
             {
@@ -322,6 +348,7 @@ namespace OnlyVolunteers.Map
         {
             if (State == NpcState.Free)
             {
+                Incident?.Invoke(this, NpcIncident.Stunned); // a crowd walker lets go here, before the body exists
                 _controller.enabled = false;
                 SetTracker(false, false);
             }
@@ -655,9 +682,15 @@ namespace OnlyVolunteers.Map
             if (on && rebase) _tracker.Rebase();
         }
 
-        private void Play(string state)
+        /// <summary>Animator state and playback speed for an external driver (a crowd walker: "Run" slowed down is its
+        /// walk until the Buddy has a walk clip).</summary>
+        public void Animate(string state, float speed) => Play(state, speed);
+
+        private void Play(string state, float speed = 1f)
         {
-            if (_animator == null || _anim == state) return;
+            if (_animator == null) return;
+            _animator.speed = speed;
+            if (_anim == state) return;
             _animator.CrossFadeInFixedTime(state, 0.15f);
             _anim = state;
         }

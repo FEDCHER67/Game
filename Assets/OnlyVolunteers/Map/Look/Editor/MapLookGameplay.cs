@@ -61,6 +61,8 @@ namespace OnlyVolunteers.Map.Look
                 Sea = plan.sea,
                 FarClip = FarClip,
                 PostProcessing = true,
+                // The walking crowd (CrowdDirector, crowd_vNN.json); the menu toggle brings back the static grey-box crowd.
+                Crowd = MapCrowdPlacer.UseDirector ? MapGreyboxBuilder.CrowdKind.Director : MapGreyboxBuilder.CrowdKind.Static,
             };
             MapGreyboxBuilder.GameplayResult result = MapGreyboxBuilder.PlaceGameplay(setup);
             AddSurf(setup.SeaZone, data);
@@ -69,7 +71,8 @@ namespace OnlyVolunteers.Map.Look
             EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), scenePath);
             Vector3 van = result.Van.transform.position;
             Debug.Log($"[MapLook+Play] {rev} (builder r{GreyboxVanSeat.CurrentBuildRevision}): van at ({van.x:0.0}, {van.y:0.00}, {van.z:0.0}), " +
-                      $"{result.Npcs} of {result.CrowdSlots} crowd NPCs, {result.Pickups} pickups; {layers} -> {scenePath} in {sw.Elapsed.TotalSeconds:0.0} s");
+                      (result.Director != null ? $"CrowdDirector with {result.Npcs} pooled NPCs, " : $"{result.Npcs} of {result.CrowdSlots} crowd NPCs, ") +
+                      $"{result.Pickups} pickups; {layers} -> {scenePath} in {sw.Elapsed.TotalSeconds:0.0} s");
         }
 
         // The beach runs under the sea's surface before the sea zone starts (the surf, BEACH_SURF): a point there below
