@@ -16,6 +16,8 @@ namespace OnlyVolunteers.Inventory
         [SerializeField, Min(1)] private int capacity = 12;
         [SerializeField, Min(0.5f)] private float reach = 2.5f;
         [SerializeField, Min(0)] private int startCash;
+        [Tooltip("Forward speed a dropped item is tossed with, m/s.")]
+        [SerializeField, Min(0f)] private float dropThrowSpeed = 1.5f;
 
         private InventoryModel model;
 
@@ -86,7 +88,9 @@ namespace OnlyVolunteers.Inventory
             Vector3 forward = Vector3.ProjectOnPlane(view.direction, Vector3.up);
             if (forward.sqrMagnitude < 1e-4f) forward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
             forward.Normalize();
-            OfflineWorldItem.Spawn(database.Get(taken.ItemId), 1, taken.UnitValue, transform.position + forward + Vector3.up * 0.3f);
+            // From about hand height, tossed forward a little: it lands, bounces once and stays within pick-up reach.
+            OfflineWorldItem.Spawn(database.Get(taken.ItemId), 1, taken.UnitValue,
+                transform.position + forward + Vector3.up * 1.1f, forward * dropThrowSpeed + Vector3.up * 0.5f);
             return true;
         }
     }

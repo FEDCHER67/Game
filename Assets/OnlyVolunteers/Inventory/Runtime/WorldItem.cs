@@ -8,6 +8,8 @@ namespace OnlyVolunteers.Inventory
     /// A networked item lying in the world that a NetworkInventory can pick up.
     /// Count and per-item value are server-owned, so an organ keeps its price when it is dropped
     /// and picked up again.
+    /// A prefab with its own definition shows its own renderers; a generic prefab (no definition, see
+    /// ItemDatabase.GenericWorldPrefab) gets the item id from the server and shows the item's world model.
     /// </summary>
     [RequireComponent(typeof(NetworkObject))]
     public sealed class WorldItem : NetworkBehaviour
@@ -16,11 +18,26 @@ namespace OnlyVolunteers.Inventory
         [SerializeField, Min(1)] private int initialCount = 1;
         [Tooltip("0 = use the definition's base value.")]
         [SerializeField, Min(0)] private int initialUnitValue;
+        [Tooltip("Resolves the synced item id on a generic prefab (no definition set). Not needed otherwise.")]
+        [SerializeField] private ItemDatabase database;
 
         private readonly SyncVar<int> count = new SyncVar<int>();
         private readonly SyncVar<int> unitValue = new SyncVar<int>();
+        /// <summary>Set by the server on a generic prefab; 0 when the prefab's own definition is used.</summary>
+        private readonly SyncVar<int> itemId = new SyncVar<int>();
 
-        public ItemDefinition Definition => definition;
+        private ItemDefinition resolved;
+        private bool visualBuilt;
+
+        public ItemDefinition Definition
+        {
+            get
+            {
+                if (definition != null) return definition;
+                if (resolved == null && itemId.Value > 0 && database != null) resolved = database.Get(itemId.Value);
+                return resolved;
+            }
+        }
         public int Count => count.Value;
         public int UnitValue => unitValue.Value;
 
@@ -28,8 +45,30 @@ namespace OnlyVolunteers.Inventory
         {
             base.OnStartServer();
             if (count.Value <= 0) count.Value = initialCount;
+            ItemDefinition item = Definition;
             if (unitValue.Value <= 0) unitValue.Value = initialUnitValue > 0
-                ? initialUnitValue : definition != null ? definition.BaseValue : 0;
+                ? initialUnitValue : item != null ? item.BaseValue : 0;
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            itemId.OnChange += OnItemIdChanged;
+            TryBuildVisual();
+        }
+
+        public override void OnStopClient()
+        {
+            itemId.OnChange -= OnItemIdChanged;
+            base.OnStopClient();
+        }
+
+        /// <summary>Server only, call between Instantiate and Spawn on a generic prefab (used when dropping).</summary>
+        public void ServerSetDefinition(ItemDefinition item)
+        {
+            if (definition != null || item == null) return;
+            resolved = item;
+            itemId.Value = item.Id;
         }
 
         /// <summary>Server only, call between Instantiate and Spawn (used when dropping).</summary>
@@ -46,6 +85,24 @@ namespace OnlyVolunteers.Inventory
             int left = count.Value - taken;
             if (left > 0) count.Value = left;
             else Despawn();
+        }
+
+        private void OnItemIdChanged(int previous, int next, bool asServer)
+        {
+            if (asServer) return;
+            resolved = null;
+            TryBuildVisual();
+        }
+
+        // Client presentation: the world model plus a trigger collider for the owner's pick-up ray. Skipped when the
+        // prefab already has its own renderers. No Rigidbody: the server places drops on the floor (NetworkInventory).
+        private void TryBuildVisual()
+        {
+            if (visualBuilt || GetComponentInChildren<Renderer>(true) != null) return;
+            ItemDefinition item = Definition;
+            if (item == null) return;
+            ItemWorldModel.Build(item, transform, true, true);
+            visualBuilt = true;
         }
     }
 }
