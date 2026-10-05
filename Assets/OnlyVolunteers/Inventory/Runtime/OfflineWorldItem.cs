@@ -52,14 +52,18 @@ namespace OnlyVolunteers.Inventory
             if (count <= 0) Destroy(gameObject);
         }
 
-        /// <summary>Drops a placeholder box (dropped items have no offline model yet).</summary>
-        public static OfflineWorldItem Spawn(ItemDefinition itemDefinition, int itemCount, int value, Vector3 position)
+        /// <summary>Drops the item as its world model (a grey box when it has none): a light physics body with a fitted
+        /// collider, thrown with <paramref name="velocity"/>.</summary>
+        public static OfflineWorldItem Spawn(ItemDefinition itemDefinition, int itemCount, int value, Vector3 position,
+            Vector3 velocity = default)
         {
-            var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            go.name = $"Dropped_{(itemDefinition != null ? itemDefinition.DisplayName : "Item")}";
+            var go = new GameObject($"Dropped_{(itemDefinition != null ? itemDefinition.DisplayName : "Item")}");
             go.transform.position = position;
-            go.transform.localScale = Vector3.one * 0.3f;
-            go.AddComponent<Rigidbody>().mass = 1f;
+            Transform model = ItemWorldModel.Build(itemDefinition, go.transform, false, false);
+            Rigidbody body = ItemWorldModel.AddPhysics(go, itemDefinition, model);
+            body.linearVelocity = velocity;
+            // A little random tumble so two drops of the same organ do not land identically.
+            body.angularVelocity = Random.insideUnitSphere * 3f;
             var item = go.AddComponent<OfflineWorldItem>();
             item.Set(itemDefinition, itemCount, value);
             return item;

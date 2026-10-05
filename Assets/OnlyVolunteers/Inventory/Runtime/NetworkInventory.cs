@@ -194,8 +194,9 @@ namespace OnlyVolunteers.Inventory
                 return;
             ItemStack stack = model.GetSlot(slot);
             ItemDefinition definition = stack.IsEmpty ? null : database.Get(stack.ItemId);
-            if (definition == null || definition.WorldPrefab == null ||
-                definition.WorldPrefab.GetComponent<WorldItem>() == null)
+            // The item's own prefab, else the database's generic one that shows the item's world model.
+            NetworkObject prefab = database.WorldPrefabFor(definition);
+            if (definition == null || prefab == null || prefab.GetComponent<WorldItem>() == null)
             {
                 Debug.LogWarning($"NetworkInventory: item {stack.ItemId} has no WorldItem prefab and cannot be dropped", this);
                 return;
@@ -212,8 +213,9 @@ namespace OnlyVolunteers.Inventory
             Quaternion rotation = flat.sqrMagnitude > 0.001f ? Quaternion.LookRotation(flat) : Quaternion.identity;
 
             ItemStack dropped = model.TakeFromSlot(slot, 1);
-            NetworkObject instance = Instantiate(definition.WorldPrefab, position, rotation);
+            NetworkObject instance = Instantiate(prefab, position, rotation);
             WorldItem worldItem = instance.GetComponent<WorldItem>();
+            worldItem.ServerSetDefinition(definition);
             worldItem.ServerSetContents(dropped.Count, dropped.UnitValue);
             Spawn(instance);
             ServerDropped?.Invoke(dropped, worldItem);
