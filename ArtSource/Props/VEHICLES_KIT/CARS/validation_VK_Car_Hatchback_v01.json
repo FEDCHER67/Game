@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Car_Hatchback",
+  "family": "VK-CARS",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 952,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -0.837,
+    -2.115,
+    0.0
+  ],
+  "bounds_max": [
+    0.837,
+    2.1,
+    1.4
+  ],
+  "size_xyz_m": [
+    1.674,
+    4.215,
+    1.4
+  ],
+  "objects": {
+    "VK_Car_Hatchback_Mesh": {
+      "triangles": 952,
+      "vertices": 572,
+      "faces": 466,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Parked 1980s wedge 3-door hatchback, \"aubergine\" paint: low nose, steep hatch with a roof lip, rectangular headlights, black plastic bumpers and rubbing strips, steel wheels. No interior. Faces -Y; driver side +X.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Car_Hatchback_v01.fbx",
+    "fbx_size_bytes": 32604,
+    "blend": "VK-CARS_v01.blend"
+  }
+}

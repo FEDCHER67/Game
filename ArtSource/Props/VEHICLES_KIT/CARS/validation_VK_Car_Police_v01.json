@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Car_Police",
+  "family": "VK-CARS",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1328,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -0.86,
+    -2.05,
+    0.0
+  ],
+  "bounds_max": [
+    0.86,
+    2.025,
+    1.57
+  ],
+  "size_xyz_m": [
+    1.72,
+    4.075,
+    1.57
+  ],
+  "objects": {
+    "VK_Car_Police_Mesh": {
+      "triangles": 1328,
+      "vertices": 792,
+      "faces": 656,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Police version of the sedan: white with a blue band along both flanks and across the bonnet, roof light bar (red / white / blue). No text, no interior. Faces -Y; driver side +X.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Car_Police_v01.fbx",
+    "fbx_size_bytes": 36556,
+    "blend": "VK-CARS_v01.blend"
+  }
+}

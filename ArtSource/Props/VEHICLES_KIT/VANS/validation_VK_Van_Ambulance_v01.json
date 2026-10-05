@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Van_Ambulance",
+  "family": "VK-VANS",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1268,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -1.205,
+    -2.89,
+    0.0
+  ],
+  "bounds_max": [
+    1.205,
+    3.02,
+    2.65
+  ],
+  "size_xyz_m": [
+    2.41,
+    5.91,
+    2.65
+  ],
+  "objects": {
+    "VK_Van_Ambulance_Mesh": {
+      "triangles": 1268,
+      "vertices": 758,
+      "faces": 635,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Parked short-bonnet ambulance van with a high box body: white, red band and red crosses (sides and rear), blue roof light bar and rear beacon, frosted box windows, kerb-side sliding door, twin rear doors. No text, no interior. Faces -Y; driver side +X.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Van_Ambulance_v01.fbx",
+    "fbx_size_bytes": 36332,
+    "blend": "VK-VANS_v01.blend"
+  }
+}
