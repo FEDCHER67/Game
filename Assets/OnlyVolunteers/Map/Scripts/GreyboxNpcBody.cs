@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OnlyVolunteers.Audio;
 using OnlyVolunteers.Player.Physics;
 using OnlyVolunteers.Vehicles;
 using UnityEngine;
@@ -81,6 +82,11 @@ namespace OnlyVolunteers.Map
         public float StaticFriction = 1.6f;
         [Tooltip("Per second, only around the body's long axis: a lone capsule would otherwise roll away like a log.")]
         public float RollDamping = 4f;
+        [Header("Sound (optional, Sfx)")]
+        [Tooltip("m/s along the contact normal: slower landings make no thud.")]
+        public float ThudMinSpeed = 1.2f;
+        [Tooltip("m/s: at and above this the thud plays at full volume.")]
+        public float ThudFullSpeed = 6f;
 
         /// <summary>One hold: who holds, and where (Rigidbody space, ON the body axis: x = z = 0).</summary>
         public struct Claim
@@ -421,10 +427,22 @@ namespace OnlyVolunteers.Map
         private void OnCollisionEnter(Collision collision)
         {
             _lastContact = Time.fixedTime;
-            if (Impact == null || collision.contactCount == 0) return;
+            if (collision.contactCount == 0) return;
             if (collision.rigidbody != null && collision.rigidbody.isKinematic) return;
-            float speed = Mathf.Abs(Vector3.Dot(collision.relativeVelocity, collision.GetContact(0).normal));
-            Impact(speed, collision.collider);
+            ContactPoint contact = collision.GetContact(0);
+            float speed = Mathf.Abs(Vector3.Dot(collision.relativeVelocity, contact.normal));
+            Thud(speed, collision.collider, contact.point);
+            Impact?.Invoke(speed, collision.collider);
+        }
+
+        // A body landing: on the van (layer Vehicle: floor, bumper, wheel housings) or on anything else, louder the
+        // harder it lands. Sitters make none (they are placed, not dropped). The library's cooldown stops bounce spam.
+        private void Thud(float speed, Collider other, Vector3 point)
+        {
+            if (_seated || speed < ThudMinSpeed || other == null) return;
+            string id = other.gameObject.layer == OvLayers.Vehicle ? SfxIds.ThudVan : SfxIds.ThudGround;
+            float loud = Mathf.InverseLerp(ThudMinSpeed, Mathf.Max(ThudMinSpeed + 0.01f, ThudFullSpeed), speed);
+            Sfx.PlayAt(id, point, Mathf.Lerp(0.35f, 1f, loud));
         }
 
         private void OnCollisionStay(Collision collision) => _lastContact = Time.fixedTime;
