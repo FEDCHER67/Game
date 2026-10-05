@@ -1,0 +1,67 @@
+{
+  "asset": "SK_DefaultCrate",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 344,
+  "triangle_budget": [
+    100,
+    800
+  ],
+  "bounds_min": [
+    -0.3,
+    -0.3,
+    -0.0
+  ],
+  "bounds_max": [
+    0.3,
+    0.3,
+    0.6
+  ],
+  "size_xyz_m": [
+    0.6,
+    0.6,
+    0.6
+  ],
+  "objects": {
+    "SK_DefaultCrate_Mesh": {
+      "triangles": 344,
+      "vertices": 224,
+      "faces": 176,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Neutral 0.6 m wooden crate (map id default_crate), fallback for any missing prop: framed boards with diagonal braces on the four sides and the lid. Collider: one box 0.6 m.",
+  "checks": {
+    "triangle_budget_100_800": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_DefaultCrate_v01.fbx",
+    "fbx_size_bytes": 24236,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}

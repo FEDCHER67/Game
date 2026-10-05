@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Rock_04",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 180,
+  "triangle_budget": [
+    100,
+    600
+  ],
+  "bounds_min": [
+    -1.1045,
+    -0.8615,
+    0.0
+  ],
+  "bounds_max": [
+    1.0955,
+    0.8551,
+    1.3137
+  ],
+  "size_xyz_m": [
+    2.2,
+    1.717,
+    1.314
+  ],
+  "objects": {
+    "SK_Rock_04_Mesh": {
+      "triangles": 180,
+      "vertices": 92,
+      "faces": 180,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Stylised faceted rock (map id rock), boulder 2.2 m: convex hull, flat base on z = 0; sink 5-15 % into the terrain and rotate/scale freely (uniform 0.8-1.2).",
+  "checks": {
+    "triangle_budget_100_600": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Rock_04_v01.fbx",
+    "fbx_size_bytes": 26156,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}
