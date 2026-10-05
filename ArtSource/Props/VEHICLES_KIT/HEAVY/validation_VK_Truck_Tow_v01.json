@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Truck_Tow",
+  "family": "VK-HEAVY",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1472,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -1.225,
+    -3.25,
+    0.0
+  ],
+  "bounds_max": [
+    1.225,
+    3.9046,
+    2.9701
+  ],
+  "size_xyz_m": [
+    2.45,
+    7.155,
+    2.97
+  ],
+  "objects": {
+    "VK_Truck_Tow_Mesh": {
+      "triangles": 1472,
+      "vertices": 870,
+      "faces": 703,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Parked 1960s-style bonnet truck converted into a tow truck: orange cab and bonnet, arched front mudguards, flat steel deck with toolboxes, yellow crane boom on an A-frame with pulley, cable and hook, rear underlift bar, two amber beacons. Twin rear tyres are one wide wheel. No interior. Faces -Y; driver side +X.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Truck_Tow_v01.fbx",
+    "fbx_size_bytes": 39788,
+    "blend": "VK-HEAVY_v01.blend"
+  }
+}

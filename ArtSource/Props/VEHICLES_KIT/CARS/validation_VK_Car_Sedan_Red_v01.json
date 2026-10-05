@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Car_Sedan_Red",
+  "family": "VK-CARS",
+  "revision": "v01",
+  "blender": "5.0.1",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1260,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -0.86,
+    -2.05,
+    0.0
+  ],
+  "bounds_max": [
+    0.86,
+    2.025,
+    1.42
+  ],
+  "size_xyz_m": [
+    1.72,
+    4.075,
+    1.42
+  ],
+  "objects": {
+    "VK_Car_Sedan_Red_Mesh": {
+      "triangles": 1260,
+      "vertices": 752,
+      "faces": 606,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Parked boxy Soviet 1970s sedan, cherry red paint (\"classic\" proportions, no logos, no number on the plates): four round headlights in a dark grille, chrome bumpers with overriders, chrome hubcaps, four doors, no interior (dark glass). Faces -Y; driver side +X.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Car_Sedan_Red_v01.fbx",
+    "fbx_size_bytes": 35660,
+    "blend": "VK-CARS_v01.blend"
+  }
+}
