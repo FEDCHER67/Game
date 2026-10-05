@@ -1,0 +1,90 @@
+{
+  "asset": "LM_Fountain",
+  "family": "LM-OLD_TOWN",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 828,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -2.5407,
+    -2.5407,
+    0.0
+  ],
+  "bounds_max": [
+    2.5407,
+    2.5407,
+    3.22
+  ],
+  "size_xyz_m": [
+    5.081,
+    5.081,
+    3.22
+  ],
+  "objects": {
+    "LM_Fountain_Mesh": {
+      "triangles": 720,
+      "vertices": 392,
+      "faces": 378,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_Fountain_Water": {
+      "triangles": 108,
+      "vertices": 60,
+      "faces": 36,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {
+    "LM_Fountain_SOCKET_JetTop": [
+      0.0,
+      0.0,
+      3.22
+    ]
+  },
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Octagonal fountain 5.1 m across, rim height 0.6 m (sitting edge). LM_Fountain_Water = three water surfaces for a water material. Jets/splashes are VFX; SOCKET_JetTop at the finial.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_Fountain_v01.fbx",
+    "fbx_size_bytes": 35340,
+    "blend": "LM-OLD_TOWN_v01.blend"
+  }
+}

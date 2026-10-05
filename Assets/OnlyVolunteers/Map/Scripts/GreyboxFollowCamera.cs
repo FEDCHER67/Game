@@ -32,7 +32,8 @@ namespace OnlyVolunteers.Map
             Vector3 pivot = Target.position + Vector3.up * Height;
             Vector3 back = rotation * Vector3.back;
             float distance = Distance;
-            foreach (RaycastHit hit in Physics.SphereCastAll(pivot, 0.25f, back, Distance, ~0, QueryTriggerInteraction.Ignore))
+            foreach (RaycastHit hit in Physics.SphereCastAll(pivot, 0.25f, back, Distance, ~(1 << OvLayers.VehicleInterior),
+                         QueryTriggerInteraction.Ignore))
                 if (!hit.transform.IsChildOf(Target) && hit.distance < distance)
                     distance = Mathf.Max(0.5f, hit.distance - 0.1f);
             transform.SetPositionAndRotation(pivot + back * distance, rotation);

@@ -7,7 +7,8 @@ namespace OnlyVolunteers.Map.Look
 {
     // Everything that stands on the ground besides buildings and trees: street furniture and rocks (registry prefabs or
     // placeholders, yaw jittered 3-12 degrees - nothing on a grid), plot fences, the elite perimeter fence, retaining
-    // walls, the outfall pipe and decals, plus invisible blockers (map edge, beach scarps, exit barriers).
+    // walls, the outfall pipe and decals, parked vehicles and landmark kit pieces (exact registry slots only, no jitter),
+    // plus invisible blockers (map edge, beach scarps, exit barriers).
     // Fedya's rule: NO fences or walls on district borders. Fences come only from yards (around single plots, with
     // their >= 4.5 m gates) and the elite ring; the map edge is a berm, rocks and an invisible blocker.
     public static class PropScatterer
@@ -21,6 +22,8 @@ namespace OnlyVolunteers.Map.Look
             merger = new PrefabMerger();
             nudged = 0;
             int placed = Furniture(d, hm, registry, root, render, colliders);
+            int vehicles = Vehicles(d, hm, registry, root, log);
+            int landmarks = Landmarks(d, hm, registry, root, render, colliders);
             int rocks = Rocks(d, hm, registry, root, render, colliders);
             int fences = Yards(d, hm, render, colliders);
             int panels = Elite(d, hm, registry, root, render, colliders);
@@ -31,7 +34,7 @@ namespace OnlyVolunteers.Map.Look
             int instances = merger.Instances;
             LastInstanceRenderers = merger.Emit(root, store);
             merger = null;
-            log.Add($"props: {placed} furniture, {rocks} rocks ({instances} prefab instances merged into {LastInstanceRenderers} submeshes, {nudged} nudged off van roads, placeholders merged), {fences} fenced plots, " +
+            log.Add($"props: {placed} furniture, {vehicles} parked vehicles, {landmarks} landmark pieces, {rocks} rocks ({instances} prefab instances merged into {LastInstanceRenderers} submeshes, {nudged} nudged off van roads, placeholders merged), {fences} fenced plots, " +
                     $"{d.elite_fence.Length} elite fence runs ({panels} prefab panels), {walls} retaining walls");
         }
 
@@ -175,17 +178,185 @@ namespace OnlyVolunteers.Map.Look
             for (int k = 0; k < d.furniture.Length; k++)
             {
                 LookFurniture f = d.furniture[k];
+                bool saddle = f.type == "pipe_support";
                 string district = District(d, f.x, f.y);
                 string type = Variant(f.type, district);
-                float yaw = f.a + Jitter(k, d.seed);
+                float yaw = f.a + (saddle ? 0f : Jitter(k, d.seed));          // a 3-12 deg twist shows as the pipe crossing the saddle askew
                 var pos = new Vector3(f.x, hm.Height(f.x, f.y), f.y);
                 // Family fallback is fine for street furniture ("prop/_default" stands in for any missing kit piece).
                 // Art variants (broken lamps, park benches, wooden poles...) only where the registry has them.
                 PrefabSlot slot = FurnitureSlot(d, registry, k);
+                // Outfall saddles: square to the pipe and at the pipe's height (kit art only; the placeholder block stays on the ground).
+                if (saddle && slot?.prefab != null) pos.y = PipeSupportBase(d, hm, f, registry, ref slot);
                 Place(d, group, slot, district, () => PlaceholderKit.Prop(type, out _), PropCollide(type), 2.2f,
                     pos, Quaternion.Euler(0f, yaw, 0f), Vector3.one, render, colliders);
             }
             return d.furniture.Length;
+        }
+
+        // The pipe is straight between its vertices at ground + h (FenceBuilder.Pipe), so its axis height at a saddle is the lerp
+        // of the two vertex heights. SK_PipeSupport_080 cradles an axis 1.20 m above its base, _040 one 0.80 m above; use the
+        // one that needs a 0..0.45 m sink into the ground (v12 outfall: h = 0.95 -> 080 sunk 0.25 m on all 13 saddles).
+        internal static float PipeSupportBase(LookData d, HeightModel hm, LookFurniture f, MapLookRegistry registry, ref PrefabSlot slot)
+        {
+            float ground = hm.Height(f.x, f.y), axis = ground + 0.95f, best = float.MaxValue;
+            foreach (LookPipe p in d.pipes)
+            {
+                if (p.mode == "buried_sleeve") continue;
+                for (int i = 0; i + 1 < LookGeom.Count(p.pts); i++)
+                {
+                    float ax = p.pts[2 * i], ay = p.pts[2 * i + 1], bx = p.pts[2 * i + 2], by = p.pts[2 * i + 3];
+                    float dx = bx - ax, dy = by - ay, l2 = dx * dx + dy * dy;
+                    float t = l2 < 1e-6f ? 0f : Mathf.Clamp01(((f.x - ax) * dx + (f.y - ay) * dy) / l2);
+                    float ex = ax + t * dx - f.x, ey = ay + t * dy - f.y, dist = ex * ex + ey * ey;
+                    if (dist >= best) continue;
+                    best = dist;
+                    axis = Mathf.Lerp(hm.Height(ax, ay) + p.h, hm.Height(bx, by) + p.h, t);
+                }
+            }
+            PrefabSlot low = registry.ExactPrefabSlot("prop/pipe_support_040");
+            float sink080 = ground - (axis - 1.20f), sink040 = ground - (axis - 0.80f);
+            if (low != null && sink040 >= 0f && sink040 <= 0.45f && (sink080 < 0f || sink080 > sink040))
+            {
+                slot = low;
+                return axis - 0.80f;
+            }
+            return axis - 1.20f;
+        }
+
+        // A parked vehicle tilts at most MaxParkTilt to the ground under it. Where a point of its footprint still floats or
+        // sinks more than MaxParkGap after that (a bank, a pad edge or a terrace step under it), the build skips it: the
+        // planner (extras_v12_kits.py) has no terrain, so this is the only place a steep spot can be caught.
+        internal const float MaxParkTilt = 6f, MaxParkGap = 0.25f;
+
+        // Pose of parked vehicle v (b = the baked mesh bounds, front +Z): the json yaw without jitter, pitched and rolled
+        // (clamped) to the terrain under the four corners. gap = the worst of a 3 x 3 grid over the footprint off the ground.
+        internal static void VehiclePose(LookVehicle v, Bounds b, HeightModel hm, out Vector3 pos, out Quaternion rot, out float gap)
+        {
+            Quaternion yaw = Quaternion.Euler(0f, v.a, 0f);
+            float H(float lx, float lz)
+            {
+                Vector3 o = yaw * new Vector3(lx, 0f, lz);
+                return hm.Height(v.x + o.x, v.y + o.z);
+            }
+            float fl = H(b.min.x, b.max.z), fr = H(b.max.x, b.max.z), rl = H(b.min.x, b.min.z), rr = H(b.max.x, b.min.z);
+            float pitch = Mathf.Clamp(Mathf.Atan2((rl + rr - fl - fr) / 2f, b.size.z) * Mathf.Rad2Deg, -MaxParkTilt, MaxParkTilt);   // + = nose down
+            float roll = Mathf.Clamp(Mathf.Atan2((fr + rr - fl - rl) / 2f, b.size.x) * Mathf.Rad2Deg, -MaxParkTilt, MaxParkTilt);
+            pos = new Vector3(v.x, (fl + fr + rl + rr) / 4f, v.y);
+            rot = Quaternion.Euler(pitch, v.a, roll);
+            gap = 0f;
+            for (int i = 0; i <= 2; i++)
+                for (int j = 0; j <= 2; j++)
+                {
+                    Vector3 w = pos + rot * new Vector3(Mathf.Lerp(b.min.x, b.max.x, i / 2f), b.min.y, Mathf.Lerp(b.min.z, b.max.z, j / 2f));
+                    gap = Mathf.Max(gap, Mathf.Abs(w.y - hm.Height(w.x, w.z)));
+                }
+        }
+
+        // Parked vehicles: exact slots only (never the prop/_default family prefab), posed by VehiclePose; a vehicle the
+        // ground cannot carry (VehiclePose gap > MaxParkGap) is skipped and logged.
+        private static int Vehicles(LookData d, HeightModel hm, MapLookRegistry registry, Transform root, List<string> log)
+        {
+            var group = new GameObject("Vehicles").transform;
+            group.SetParent(root, false);
+            int placed = 0;
+            var missing = new HashSet<string>();
+            var steep = new List<string>();
+            foreach (LookVehicle v in d.vehicles)
+            {
+                PrefabSlot slot = registry.ExactPrefabSlot("prop/" + v.type);   // never the prop/_default family prefab
+                MeshFilter mf = slot != null ? slot.prefab.GetComponent<MeshFilter>() : null;
+                if (mf == null || mf.sharedMesh == null)
+                {
+                    missing.Add(v.type);
+                    continue;
+                }
+                VehiclePose(v, mf.sharedMesh.bounds, hm, out Vector3 pos, out Quaternion rot, out float gap);
+                if (gap > MaxParkGap)
+                {
+                    steep.Add($"{v.type} ({v.spot}) at ({v.x:0},{v.y:0}) {gap:0.00} m");
+                    continue;
+                }
+                var inst = (GameObject)PrefabUtility.InstantiatePrefab(slot.prefab, group);
+                inst.transform.SetPositionAndRotation(pos, rot);
+                inst.transform.localScale = slot.scale;
+                if (!slot.collider)
+                    foreach (Collider c in inst.GetComponentsInChildren<Collider>())
+                        UnityEngine.Object.DestroyImmediate(c);
+                KeepOffRoads(d, inst);                        // a no-op for the validated poses; guards later art changes
+                merger.Absorb(inst, string.IsNullOrEmpty(v.district) ? District(d, v.x, v.y) : v.district);
+                placed++;
+            }
+            if (missing.Count > 0) log.Add("vehicles: no prefab for " + string.Join(", ", missing) + " (run Setup Map Art)");
+            if (steep.Count > 0)
+                log.Add($"WARNING vehicles: {steep.Count} skipped, the ground under them is off by more than {MaxParkGap} m after a " +
+                        $"{MaxParkTilt} deg tilt (re-site them in extras_v12_kits.py): " + string.Join("; ", steep));
+            return placed;
+        }
+
+        // Landmark kit pieces. Each mount type sets the height; "tower" also builds its brick shaft.
+        private static int Landmarks(LookData d, HeightModel hm, MapLookRegistry registry, Transform root, DistrictCombiner render, DistrictCombiner colliders)
+        {
+            var group = new GameObject("Landmarks").transform;
+            group.SetParent(root, false);
+            int placed = 0;
+            foreach (LookLandmark m in d.landmarks)
+            {
+                PrefabSlot slot = registry.ExactPrefabSlot("prop/" + m.type);
+                if (slot == null) continue;                   // no kit art yet: the ProceduralBuilding stand-in stays (KitParts)
+                bool onBuilding = m.mount == "roof" || m.mount == "facade" || m.mount == "belfry";
+                float baseY = onBuilding && hm.Pads.TryGetValue(m.building, out float pad) ? pad : hm.Height(m.x, m.y);
+                string district = string.IsNullOrEmpty(m.district) ? District(d, m.x, m.y) : m.district;
+                Quaternion rot = Quaternion.Euler(0f, m.a, 0f);
+                if (m.mount == "tower") baseY = TowerShaft(m, hm, rot, district, render, colliders);
+                var inst = (GameObject)PrefabUtility.InstantiatePrefab(slot.prefab, group);
+                inst.transform.SetPositionAndRotation(new Vector3(m.x, baseY + m.z, m.y), rot);
+                inst.transform.localScale = slot.scale * (m.s > 0f ? m.s : 1f);
+                if (!slot.collider)
+                    foreach (Collider c in inst.GetComponentsInChildren<Collider>())
+                        UnityEngine.Object.DestroyImmediate(c);
+                if (m.mount == "ground") KeepOffRoads(d, inst);
+                merger.Absorb(inst, district);
+                placed++;
+            }
+            return placed;
+        }
+
+        // Free-standing clock tower (CLOCK_SQUARE has no clock building): brick shaft with a stone plinth and cornice; the kit
+        // top (3.2 m base) sits on it at z = shaft_h. Returns the terrain height the json z is measured from.
+        private static float TowerShaft(LookLandmark m, HeightModel hm, Quaternion rot, string district, DistrictCombiner render, DistrictCombiner colliders)
+        {
+            float w = m.shaft_w > 0f ? m.shaft_w : 3.2f, h = m.shaft_h > 0f ? m.shaft_h : m.z;
+            float ground = hm.Height(m.x, m.y), low = ground;
+            for (int sx = -1; sx <= 1; sx += 2)
+                for (int sz = -1; sz <= 1; sz += 2)
+                {
+                    Vector3 o = rot * new Vector3(sx * w / 2f, 0f, sz * w / 2f);
+                    low = Mathf.Min(low, hm.Height(m.x + o.x, m.y + o.z));
+                }
+            low -= 0.3f;
+            var draft = new MeshDraft();
+            int brick = draft.Slot("mat/brick"), stone = draft.Slot("mat/stone");
+            var c = new Vector3(m.x, 0f, m.y);
+            draft.Box(brick, c + Vector3.up * ((low + ground + h) / 2f), new Vector3(w, ground + h - low, w), rot);
+            draft.Box(stone, c + Vector3.up * (ground + 0.25f), new Vector3(w + 0.4f, 0.5f, w + 0.4f), rot);
+            draft.Box(stone, c + Vector3.up * (ground + h - 0.15f), new Vector3(w + 0.3f, 0.3f, w + 0.3f), rot);
+            render.Add(district, Matrix4x4.identity, draft, c);
+            var col = new MeshDraft();
+            col.Box(col.Slot("collision"), c + Vector3.up * ((low + ground + h) / 2f), new Vector3(w + 0.4f, ground + h - low, w + 0.4f), rot, true);
+            colliders.Add(district, Matrix4x4.identity, col, c);
+            return ground;
+        }
+
+        // Kit landmark types placed on building `buildingId` whose prefab exists: ProceduralBuilding skips its stand-ins
+        // for them (casino crown, bowling pin, gas pumps, small church domes; the belfry opens for the bell).
+        public static HashSet<string> KitParts(LookData d, MapLookRegistry registry, string buildingId)
+        {
+            var set = new HashSet<string>();
+            foreach (LookLandmark m in d.landmarks)
+                if (m.building == buildingId && registry.ExactPrefabSlot("prop/" + m.type) != null)
+                    set.Add(m.type);
+            return set;
         }
 
         // The registry slot furniture item k is built from (art variant first, then the type or its family fallback);
@@ -205,6 +376,9 @@ namespace OnlyVolunteers.Map.Look
             return collide;
         }
 
+        // STREET_KIT/SMALL rocks: one of five variants per rock, stretched to the json size (prop/rock stays empty on purpose).
+        private static readonly string[] RockKeys = { "prop/rock_01", "prop/rock_02", "prop/rock_03", "prop/rock_04", "prop/rock_05" };
+
         private static int Rocks(LookData d, HeightModel hm, MapLookRegistry registry, Transform root, DistrictCombiner render, DistrictCombiner colliders)
         {
             var group = new GameObject("Rocks").transform;
@@ -215,6 +389,16 @@ namespace OnlyVolunteers.Map.Look
                 LookRock r = d.rocks[k];
                 int variant = (int)(LookGeom.Hash01(k, 41, d.seed) * 4f) % 4;
                 var scale = new Vector3(Mathf.Max(0.3f, r.sx), Mathf.Max(0.3f, r.sy), Mathf.Max(0.3f, r.sz));
+                PrefabSlot kitRock = registry.ExactPrefabSlot(RockKeys[(int)(LookGeom.Hash01(k, 41, d.seed) * 5f) % 5]);
+                MeshFilter rmf = kitRock != null ? kitRock.prefab.GetComponent<MeshFilter>() : null;
+                if (rmf != null && rmf.sharedMesh != null)
+                {
+                    Vector3 native = rmf.sharedMesh.bounds.size;     // kit rocks are 0.5-3 m, not unit cubes
+                    var fit = new Vector3(scale.x / Mathf.Max(0.05f, native.x), scale.y / Mathf.Max(0.05f, native.y), scale.z / Mathf.Max(0.05f, native.z));
+                    var rp = new Vector3(r.x, hm.Height(r.x, r.y) - 0.1f * scale.y, r.y);   // sink 10 % (kit README: 5-15 %)
+                    Place(null, group, kitRock, District(d, r.x, r.y), null, true, float.MaxValue, rp, Quaternion.Euler(0f, r.a, 0f), fit, render, colliders);
+                    continue;
+                }
                 var pos = new Vector3(r.x, hm.Height(r.x, r.y) - 0.15f * scale.y, r.y);
                 Place(null, group, rockSlot, District(d, r.x, r.y), () => PlaceholderKit.Rock(variant), true, float.MaxValue, pos, Quaternion.Euler(0f, r.a, 0f), scale,
                     render, colliders);
@@ -299,6 +483,12 @@ namespace OnlyVolunteers.Map.Look
                     centre = cap.center;
                     ext = new Vector3(cap.radius, 0f, cap.radius);
                     break;
+                case MeshCollider mc when mc.sharedMesh != null:
+                    // Convex kit pieces (fountain): the mesh box, since Collider.bounds of a just-placed edit-mode instance
+                    // still sits at the prefab origin until the transforms reach PhysX.
+                    centre = mc.sharedMesh.bounds.center;
+                    ext = mc.sharedMesh.bounds.extents;
+                    break;
                 default:
                     yield return c.bounds.center;
                     yield break;
@@ -341,7 +531,7 @@ namespace OnlyVolunteers.Map.Look
         public static bool FurnitureCollider(LookData d, LookFurniture f, int k, out Vector3 centre, out Vector3 size, out float yaw)
         {
             string type = Variant(f.type, District(d, f.x, f.y));
-            yaw = f.a + Jitter(k, d.seed);
+            yaw = f.a + (f.type == "pipe_support" ? 0f : Jitter(k, d.seed));
             MeshDraft draft = PlaceholderKit.Prop(type, out bool collide);
             centre = size = Vector3.zero;
             return collide && ColliderBox(draft, 2.2f, out centre, out size);

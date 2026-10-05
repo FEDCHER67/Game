@@ -25,6 +25,11 @@ namespace OnlyVolunteers.Map
             return false;
         }
 
+        /// <summary>A place to put someone back on: outside every zone and not in the surf under the sea's surface (the
+        /// look map's SeaReturnSurf regions; the flat grey-box has none, so there every point outside the zone is dry).
+        /// </summary>
+        public static bool Dry(Vector3 position) => !InSea(position) && !SeaReturnSurf.Wet(position);
+
         private static bool InTriangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
         {
             float d1 = Cross(p, a, b), d2 = Cross(p, b, c), d3 = Cross(p, c, a);

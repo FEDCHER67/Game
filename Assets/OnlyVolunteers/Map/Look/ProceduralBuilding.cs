@@ -67,11 +67,18 @@ namespace OnlyVolunteers.Map.Look
             public int Front, Floors;
             public float Fh, H, Low, Top, DoorLift;
             public int Wall, Trim, Roof, Plinth, Glass, GlassLit, DoorS, Metal, Concrete, Brick;
+            // Landmark kit types placed on this building (PropScatterer.KitParts): their procedural stand-ins are skipped.
+            public ISet<string> Kit;
         }
 
-        public static BuildingResult Build(LookBuilding b, BuildingStyle s, float padY, float lowestY)
+        private static readonly HashSet<string> NoKit = new();
+
+        // `kit`: landmark kit types with a prefab on this building (casino_crown_sign, bowling_pin_giant, gas_pump,
+        // onion_cupola, church_bell); null or empty keeps every procedural part.
+        public static BuildingResult Build(LookBuilding b, BuildingStyle s, float padY, float lowestY, ISet<string> kit = null)
         {
             Ctx c = Setup(b, s, padY, lowestY);
+            c.Kit = kit ?? NoKit;
             switch (s.Special)
             {
                 case "water_tower": WaterTower(c); break;
@@ -688,6 +695,8 @@ namespace OnlyVolunteers.Map.Look
             BuildingStyle s = c.S;
             if (s.Special == "casino")
             {
+                // The kit sign has 3D letters "КАЗИНО": no procedural board, neon, crown, posts or TextMesh.
+                if (c.Kit.Contains("casino_crown_sign")) return;
                 CasinoCrown(c, text);
                 return;
             }
@@ -787,8 +796,10 @@ namespace OnlyVolunteers.Map.Look
             switch (s.Special)
             {
                 case "church": Church(c); break;
-                case "gas_station": GasCanopy(c); break;
-                case "bowling": BowlingPin(c, roofY); break;
+                case "gas_station": GasCanopy(c, !c.Kit.Contains("gas_pump")); break;
+                case "bowling":
+                    if (!c.Kit.Contains("bowling_pin_giant")) BowlingPin(c, roofY);
+                    break;
                 case "hospital": RedCross(c); break;
                 case "police": Flag(c, roofY); break;
                 case "kiosk": KioskAwning(c); break;
@@ -829,7 +840,9 @@ namespace OnlyVolunteers.Map.Look
             c.D.QuadBoth(canvas, a0, b0, b1, a1);
         }
 
-        private static void GasCanopy(Ctx c)
+        // `pumps` false: the kit pumps (landmarks[], mount ground, building F06_GAS) stand in one island row beside the
+        // access lane instead; the canopy and its four pillars stay.
+        private static void GasCanopy(Ctx c, bool pumps = true)
         {
             Edge e = c.Edges[c.Front];
             float u = c.Doors.Count > 0 ? c.Doors[0].U : e.Len / 2f;
@@ -846,13 +859,14 @@ namespace OnlyVolunteers.Map.Look
                     c.D.Box(white, p + Vector3.up * 2.5f, new Vector3(0.5f, 5f, 0.5f), rot);
                     c.R.Colliders.Add(new ExtraCollider { Centre = p + Vector3.up * 2.5f, Size = new Vector3(0.5f, 5f, 0.5f), Rotation = rot, Optional = true });
                 }
-            for (int i = -1; i <= 1; i += 2)
-            {
-                Vector3 p = centre + across * (i * 2.6f);
-                c.D.Box(orange, p + Vector3.up * 0.8f, new Vector3(0.7f, 1.6f, 1.1f), rot);
-                c.D.Box(white, p + Vector3.up * 1.65f, new Vector3(0.75f, 0.1f, 1.15f), rot);
-                c.R.Colliders.Add(new ExtraCollider { Centre = p + Vector3.up * 0.8f, Size = new Vector3(0.7f, 1.6f, 1.1f), Rotation = rot, Optional = true });
-            }
+            if (pumps)
+                for (int i = -1; i <= 1; i += 2)
+                {
+                    Vector3 p = centre + across * (i * 2.6f);
+                    c.D.Box(orange, p + Vector3.up * 0.8f, new Vector3(0.7f, 1.6f, 1.1f), rot);
+                    c.D.Box(white, p + Vector3.up * 1.65f, new Vector3(0.75f, 0.1f, 1.15f), rot);
+                    c.R.Colliders.Add(new ExtraCollider { Centre = p + Vector3.up * 0.8f, Size = new Vector3(0.7f, 1.6f, 1.1f), Rotation = rot, Optional = true });
+                }
             c.Top = Mathf.Max(c.Top, 5.6f);
         }
 
@@ -879,13 +893,28 @@ namespace OnlyVolunteers.Map.Look
             float u = c.Doors.Count > 0 ? c.Doors[0].U : e.Len / 2f;
             Vector3 towerC = At(e, u, 0f, -2.9f);
             float towerTop = 18f;
-            c.D.Box(c.Wall, towerC + Vector3.up * ((towerTop + c.Low) / 2f), new Vector3(5.4f, towerTop - c.Low, 5.4f), rot);
-            for (int k = 0; k < 4; k++)
+            if (c.Kit.Contains("church_bell"))
             {
-                Quaternion face = rot * Quaternion.Euler(0f, 90f * k, 0f);
-                Vector3 n = face * Vector3.forward, side = face * Vector3.right;
-                Vector3 o = towerC + n * 2.72f + Vector3.up * 14.2f;
-                c.D.QuadFacing(c.D.Slot("mat/iron"), o - side * 0.6f, o - side * 0.6f + Vector3.up * 2.2f, o + side * 0.6f + Vector3.up * 2.2f, o + side * 0.6f, n);
+                // Open belfry for the kit bell (pivot 16.2 m above the pad at the tower centre): shaft, four corner piers
+                // over the 14.2-16.4 m storey, the storey under the tent roof, and a dark wooden belfry floor.
+                const float b0 = 14.2f, b1 = 16.4f;
+                c.D.Box(c.Wall, towerC + Vector3.up * ((b0 + c.Low) / 2f), new Vector3(5.4f, b0 - c.Low, 5.4f), rot);          // shaft
+                for (int i = -1; i <= 1; i += 2)
+                    for (int j = -1; j <= 1; j += 2)                                                                         // corner piers
+                        c.D.Box(c.Wall, towerC + rot * new Vector3(i * 2.25f, 0f, j * 2.25f) + Vector3.up * ((b0 + b1) / 2f), new Vector3(0.9f, b1 - b0, 0.9f), rot);
+                c.D.Box(c.Wall, towerC + Vector3.up * ((b1 + towerTop) / 2f), new Vector3(5.4f, towerTop - b1, 5.4f), rot);      // storey under the tent roof
+                c.D.Box(c.D.Slot("mat/wood/dark"), towerC + Vector3.up * (b0 + 0.05f), new Vector3(4.6f, 0.1f, 4.6f), rot);   // belfry floor
+            }
+            else
+            {
+                c.D.Box(c.Wall, towerC + Vector3.up * ((towerTop + c.Low) / 2f), new Vector3(5.4f, towerTop - c.Low, 5.4f), rot);
+                for (int k = 0; k < 4; k++)
+                {
+                    Quaternion face = rot * Quaternion.Euler(0f, 90f * k, 0f);
+                    Vector3 n = face * Vector3.forward, side = face * Vector3.right;
+                    Vector3 o = towerC + n * 2.72f + Vector3.up * 14.2f;
+                    c.D.QuadFacing(c.D.Slot("mat/iron"), o - side * 0.6f, o - side * 0.6f + Vector3.up * 2.2f, o + side * 0.6f + Vector3.up * 2.2f, o + side * 0.6f, n);
+                }
             }
             int dome = c.D.Slot("mat/dome", "#2F6F8F"), gold = c.D.Slot("mat/gold");
             c.D.Lathe(c.Roof, towerC + Vector3.up * towerTop, new[] { 3.9f, 0f }, new[] { 0f, 2.2f }, 4, Mathf.Atan2(e.N.z, e.N.x) + Mathf.PI / 4f);
@@ -895,13 +924,15 @@ namespace OnlyVolunteers.Map.Look
             Vector3 mid = nave.C;
             c.D.Cylinder(c.Wall, mid + Vector3.up * (c.H + nave.Hv * t * 0.5f), 2.0f, nave.Hv * t * 0.5f + 2.2f, 12, false);
             Onion(c, dome, gold, mid + Vector3.up * (ridge + 2.2f), 2.0f);
-            for (int i = -1; i <= 1; i += 2)
-                for (int j = -1; j <= 1; j += 2)
-                {
-                    Vector3 p = mid + nave.U * (i * Mathf.Min(4.5f, nave.Hu * 0.45f)) + nave.V * (j * nave.Hv * 0.45f);
-                    c.D.Cylinder(c.Wall, p + Vector3.up * (c.H + nave.Hv * t * 0.4f), 0.75f, ridge - c.H - nave.Hv * t * 0.4f + 1.2f, 8, false);
-                    Onion(c, dome, gold, p + Vector3.up * (ridge + 1.2f), 0.9f);
-                }
+            // The four kit cupolas sit at exactly these corners, on the roof slope.
+            if (!c.Kit.Contains("onion_cupola"))
+                for (int i = -1; i <= 1; i += 2)
+                    for (int j = -1; j <= 1; j += 2)
+                    {
+                        Vector3 p = mid + nave.U * (i * Mathf.Min(4.5f, nave.Hu * 0.45f)) + nave.V * (j * nave.Hv * 0.45f);
+                        c.D.Cylinder(c.Wall, p + Vector3.up * (c.H + nave.Hv * t * 0.4f), 0.75f, ridge - c.H - nave.Hv * t * 0.4f + 1.2f, 8, false);
+                        Onion(c, dome, gold, p + Vector3.up * (ridge + 1.2f), 0.9f);
+                    }
             c.Top = Mathf.Max(c.Top, towerTop + 7f);
             c.R.Colliders.Add(new ExtraCollider { Centre = towerC + Vector3.up * (towerTop / 2f), Size = new Vector3(5.4f, towerTop, 5.4f), Rotation = rot });
         }

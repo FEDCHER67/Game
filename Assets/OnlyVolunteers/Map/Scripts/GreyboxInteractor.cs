@@ -10,13 +10,15 @@ namespace OnlyVolunteers.Map
     // finds within the weapon's reach (OvLayers.ShootMask skips our own capsule), and the height of that point on the NPC
     // picks the zone (head / torso / limbs), which sets how long it stays down. The third-person walker has no crosshair:
     // it hits the nearest NPC in a cone in front, as a torso hit. The player only ever sees the weapon's strength as dots.
-    // LMB drags a lying NPC by the point nearest to the crosshair (Vadim's PhysicsGrabber on the KCC player; the NPC body
-    // hands out the points). This script only shows that hint.
-    // F9 (offline test aid): pins the grab point under the crosshair at hand height, as if another player held it; F9 on
-    // a pinned point drops that pin, F9 at nothing drops all of them.
+    // LMB grabs a lying NPC anywhere, at the point of its body under the crosshair (Vadim's PhysicsGrabber on the KCC
+    // player; the NPC body hands out the point, on its axis). This script only shows the hint: the zone that would be
+    // grabbed ("ЛКМ — взять за голову"; "— тяжело" where one hand cannot lift it, hips and belly), and while holding an
+    // NPC, that the mouse wheel moves the hold nearer or farther (the hotbar's wheel is switched off meanwhile).
+    // F9 (offline test aid): pins the point under the crosshair at hand height, as if another player held it; F9 within
+    // 0.25 m of a pin drops that pin, F9 at nothing drops all of them.
     // E does the most specific thing in reach, in this order: in the cargo bay next to the sliding door, its inside handle
     // (canon section 151); pick up an item (the item draws its own "— E" label); open/close the cargo door on that side
-    // (rear doors by hand only, the driver has just the sliding door); get into the driver's seat.
+    // (the driver works them with 1-4 and F); get into the driver's seat.
     public sealed class GreyboxInteractor : MonoBehaviour
     {
         public GreyboxPawn Pawn;
@@ -27,12 +29,15 @@ namespace OnlyVolunteers.Map
         public WeaponStun Weapon;
 
         private const float ConeAngle = 45f; // the walker's Q
+        private const float HitRadius = 0.33f; // m: the first-person swing is a fat sphere, not a thin ray
         private const float ItemReach = 2.5f;
         private const float GrabHintReach = 3f;
         private const float PinReach = 6f;
         private const float PinLift = 0.8f;
 
         private enum Act { None, Handle, PickupItem, ToggleDoor, Enter }
+
+        private static readonly RaycastHit[] SweepHits = new RaycastHit[16];
 
         private float _nextHit;
         private Act _act;
@@ -42,6 +47,7 @@ namespace OnlyVolunteers.Map
         private bool _canHit;
         private string _grabHint;
         private PhysicsGrabber _grabber;
+        private bool _inventoryMuted; // switched InventoryInput off while an NPC body is held (it cycles slots on the wheel)
 
         public WeaponStun CurrentWeapon => Weapon != null ? Weapon : WeaponStun.Fist;
 
@@ -69,6 +75,7 @@ namespace OnlyVolunteers.Map
             }
 
             _grabHint = GrabHint();
+            MuteInventoryWheel();
             if (Input.GetKeyDown(KeyCode.F9)) TogglePin();
 
             (_act, _label) = Resolve();
@@ -117,7 +124,10 @@ namespace OnlyVolunteers.Map
 
         // ---------- Q ----------
 
-        // What Q would hit now, where, and in which zone.
+        // What Q would hit now, where, and in which zone. First person: the exact crosshair ray first; if it finds no NPC,
+        // a fat sphere (HitRadius) along the same ray, so a swing that just misses (beside the head, past a thin limb)
+        // still lands. The sphere's hit must be in plain view of the eye (nothing but that NPC between). The zone comes
+        // from where the view ray passes the NPC's body (GreyboxNpc.ZoneAlong), not from the exact contact point.
         private bool FindHit(WeaponStun weapon, out GreyboxNpc npc, out HitZone zone, out Vector3 point)
         {
             npc = null;
@@ -127,12 +137,16 @@ namespace OnlyVolunteers.Map
             if (view != null)
             {
                 Transform eye = view.transform;
-                if (!Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, weapon.Reach, OvLayers.ShootMask, QueryTriggerInteraction.Ignore))
+                var ray = new Ray(eye.position, eye.forward);
+                if (Physics.Raycast(ray, out RaycastHit hit, weapon.Reach, OvLayers.ShootMask, QueryTriggerInteraction.Ignore) &&
+                    hit.collider.GetComponentInParent<GreyboxNpc>() is GreyboxNpc direct)
+                {
+                    npc = direct;
+                    point = hit.point;
+                }
+                else if (!SweepHit(ray, weapon.Reach, out npc, out point))
                     return false;
-                npc = hit.collider.GetComponentInParent<GreyboxNpc>();
-                if (npc == null) return false;
-                point = hit.point;
-                zone = npc.ZoneAt(point);
+                zone = npc.ZoneAlong(ray);
                 return true;
             }
             // Third person (walker): no crosshair, so the nearest NPC in front counts as a torso hit.
@@ -140,6 +154,38 @@ namespace OnlyVolunteers.Map
             if (npc == null) return false;
             point = npc.Center;
             return true;
+        }
+
+        // The nearest NPC the sphere along 'ray' touches within reach, if the eye sees the touched point.
+        private static bool SweepHit(Ray ray, float reach, out GreyboxNpc npc, out Vector3 point)
+        {
+            npc = null;
+            point = Vector3.zero;
+            int count = Physics.SphereCastNonAlloc(ray, HitRadius, SweepHits, reach, OvLayers.ShootMask, QueryTriggerInteraction.Ignore);
+            float best = float.MaxValue;
+            for (int i = 0; i < count; i++)
+            {
+                RaycastHit hit = SweepHits[i];
+                SweepHits[i] = default;
+                // Overlapping at the start (distance 0, no point): point blank, the plain ray decides those.
+                if (hit.distance <= 0f || hit.distance >= best || hit.collider == null) continue;
+                GreyboxNpc candidate = hit.collider.GetComponentInParent<GreyboxNpc>();
+                if (candidate == null || !InView(ray.origin, hit.point, candidate)) continue;
+                npc = candidate;
+                point = hit.point;
+                best = hit.distance;
+            }
+            return npc != null;
+        }
+
+        // Nothing but that NPC's own colliders between the eye and 'target'.
+        private static bool InView(Vector3 eye, Vector3 target, GreyboxNpc npc)
+        {
+            Vector3 to = target - eye;
+            float distance = to.magnitude;
+            if (distance < 0.05f) return true;
+            return !Physics.Raycast(eye, to / distance, out RaycastHit block, distance - 0.03f, OvLayers.ShootMask, QueryTriggerInteraction.Ignore) ||
+                   block.collider.GetComponentInParent<GreyboxNpc>() == npc;
         }
 
         // Nearest NPC within reach and within 'angle' of the walker's flat facing.
@@ -164,17 +210,50 @@ namespace OnlyVolunteers.Map
 
         // ---------- LMB hint, F9 pins ----------
 
-        // "ЛКМ — схватить (шиворот)" when the grabber would get a point of the lying body under the crosshair.
+        // "ЛКМ — взять за голову" when the grabber would get hold of the lying body under the crosshair; while holding an
+        // NPC body, the wheel hint.
         private string GrabHint()
         {
-            if (_grabber == null || !_grabber.isActiveAndEnabled || _grabber.IsHolding || Pawn.ViewCamera == null) return null;
+            if (_grabber == null || !_grabber.isActiveAndEnabled || Pawn.ViewCamera == null) return null;
+            if (_grabber.IsHolding)
+                return _grabber.GrabbedBody != null && _grabber.GrabbedBody.TryGetComponent(out GreyboxNpcBody _)
+                    ? "колесо — ближе/дальше"
+                    : null;
             Transform eye = Pawn.ViewCamera.transform;
-            if (!Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, GrabHintReach, ~0, QueryTriggerInteraction.Ignore))
+            // Same mask as PhysicsGrabber.TryAcquire: everything but VehicleInterior (the van's invisible step ramps).
+            if (!Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, GrabHintReach, ~(1 << OvLayers.VehicleInterior),
+                    QueryTriggerInteraction.Ignore))
                 return null;
             if (hit.rigidbody == null || !hit.rigidbody.TryGetComponent(out GreyboxNpcBody body)) return null;
             if (hit.distance > body.Profile.AcquireDistance) return null;
-            string point = body.FreePointName(hit.point);
-            return point != null ? $"ЛКМ — схватить ({point})" : null;
+            string zone = body.GrabHintName(hit.point);
+            return zone != null ? $"ЛКМ — взять за {zone}" : null;
+        }
+
+        // The wheel moves a held NPC point nearer or farther (PhysicsGrabber) and also cycles Vadim's hotbar
+        // (InventoryInput, <Mouse>/scroll/y): while an NPC body is held, InventoryInput is switched off (its OnDisable turns
+        // its actions off), and back on once let go. Only what this script switched off is switched back on.
+        private void MuteInventoryWheel()
+        {
+            bool npcHold = _grabber != null && _grabber.IsHolding && _grabber.GrabbedBody != null &&
+                           _grabber.GrabbedBody.TryGetComponent(out GreyboxNpcBody _);
+            if (npcHold && !_inventoryMuted && InventoryInput != null && InventoryInput.enabled)
+            {
+                InventoryInput.enabled = false;
+                _inventoryMuted = true;
+            }
+            else if (!npcHold && _inventoryMuted) UnmuteInventory();
+        }
+
+        private void UnmuteInventory()
+        {
+            if (InventoryInput != null) InventoryInput.enabled = true;
+            _inventoryMuted = false;
+        }
+
+        private void OnDisable()
+        {
+            if (_inventoryMuted) UnmuteInventory();
         }
 
         private void TogglePin()

@@ -1,0 +1,83 @@
+{
+  "asset": "SK_CCTV_Wall",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 260,
+  "triangle_budget": [
+    100,
+    800
+  ],
+  "bounds_min": [
+    -0.075,
+    -0.5491,
+    0.0
+  ],
+  "bounds_max": [
+    0.075,
+    0.004,
+    0.2378
+  ],
+  "size_xyz_m": [
+    0.15,
+    0.553,
+    0.238
+  ],
+  "objects": {
+    "SK_CCTV_Wall_Mesh": {
+      "triangles": 132,
+      "vertices": 80,
+      "faces": 54,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "SK_CCTV_Wall_Head": {
+      "triangles": 128,
+      "vertices": 76,
+      "faces": 62,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        -0.22,
+        0.155
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Security camera on a wall bracket (map id cctv_camera, elite hill). Wall = plane y = 0, pivot = bottom of the wall plate; camera looks to -Y, tilted 15 deg down. The head is a child with its pivot on the pan joint (0, -0.22, 0.155): rotate about local Z to pan.",
+  "checks": {
+    "triangle_budget_100_800": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_CCTV_Wall_v01.fbx",
+    "fbx_size_bytes": 26844,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}

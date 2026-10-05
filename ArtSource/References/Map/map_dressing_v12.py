@@ -661,7 +661,7 @@ class MapDressing:
         warning_ids=[]
         for anchor in ([626,296],[654,264]):
             prop=self.nearby_prop('sign_no_swimming',anchor,region=self.beach,min_dist=4,max_dist=14,
-                context='WASTE_OUTFALL',text_ru='КУПАТЬСЯ ЗАПРЕЩЕНО',height_m=1.8,
+                context='WASTE_OUTFALL',pictogram='no_swimming',height_m=1.8,  # crossed-out swimmer over waves, no text
                 sign_width_m=1.2,sign_height_m=.8,material='rusty_painted_metal')
             warning_ids.append(prop['id'])
         decals=[]
@@ -1020,8 +1020,9 @@ def validate(plan, d):
     check('sludge plume approximately 60 by 35 metres',55<=plume.bounds[2]-plume.bounds[0]<=68
         and 30<=plume.bounds[3]-plume.bounds[1]<=42,str(plume.bounds))
     signs=[q for q in d['street_furniture'] if q['type']=='sign_no_swimming']
-    check('two no-swimming signs on beach',len(signs)==2 and {q['id'] for q in signs}==set(outfall['warning_sign_ids'])
-        and all(q['text_ru']=='КУПАТЬСЯ ЗАПРЕЩЕНО' and m.beach.covers(Point(q['x'],q['y']).buffer(q['reserved_radius_m']))
+    check('two no-swimming pictogram signs (no text) on beach',len(signs)==2 and {q['id'] for q in signs}==set(outfall['warning_sign_ids'])
+        and all('text_ru' not in q and q.get('pictogram')=='no_swimming'
+                and m.beach.covers(Point(q['x'],q['y']).buffer(q['reserved_radius_m']))
                 for q in signs))
     decals=outfall['dead_fish_decals'];supports=outfall['supports']
     check('two dead fish decals clear paths on sand',len(decals)==2 and all(q['type']=='dead_fish_decal' and
@@ -1434,7 +1435,7 @@ def report(plan,d):
         f'Сады: {c["yards"]} фрагментов; деревянные ограды в хуторе, штакетник у домов, живые изгороди у вилл.',
         f'Покрытия: {c["ground_materials"]} полигонов; все 8 материалов, все районы и общие полосы между ними.',
         f'Слив B05: ржавая труба Ø 0,8 м, 36 м за урезом; грязный зелёно-бурый шлейф ~60 × 35 м целиком в море.',
-        f'Новые детали: {len(d["waste_outfall"]["segments"])} секций трубы, {len(d["waste_outfall"]["supports"])} низких опор, 2 знака «КУПАТЬСЯ ЗАПРЕЩЕНО», 2 декали дохлых рыб.',
+        f'Новые детали: {len(d["waste_outfall"]["segments"])} секций трубы, {len(d["waste_outfall"]["supports"])} низких опор, 2 знака-пиктограммы «купаться запрещено» (перечёркнутый пловец, без текста), 2 декали дохлых рыб.',
         'Под дорогой, ЖД, пляжной дорожкой и оградой труба в гильзах: 1,2 м грунта над верхом; на песке — низкие опоры.',
         '| Район | Здания/ID | Тротуары/бордюры/зебры | Фонари/прочее | Деревья | Парковки/места | Сады | Покрытия | Ограды Э/П/ворота | Слив: опоры/рыбы/секции/шлейф |',
         '|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|']

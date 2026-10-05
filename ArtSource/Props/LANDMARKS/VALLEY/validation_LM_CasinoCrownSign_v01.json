@@ -1,0 +1,84 @@
+{
+  "asset": "LM_CasinoCrownSign",
+  "family": "LM-VALLEY",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1376,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -3.58,
+    -0.274,
+    0.0
+  ],
+  "bounds_max": [
+    3.58,
+    1.15,
+    4.33
+  ],
+  "size_xyz_m": [
+    7.16,
+    1.424,
+    4.33
+  ],
+  "objects": {
+    "LM_CasinoCrownSign_Mesh": {
+      "triangles": 740,
+      "vertices": 462,
+      "faces": 427,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_CasinoCrownSign_Emissive": {
+      "triangles": 636,
+      "vertices": 424,
+      "faces": 636,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Roof sign 7.0 x 1.6 m, letters КАЗИНО, crown with five points, bulb dots in LM_CasinoCrownSign_Emissive. Stands on a flat roof: pivot = centre of the trestle feet, front -Y.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_CasinoCrownSign_v01.fbx",
+    "fbx_size_bytes": 44236,
+    "blend": "LM-VALLEY_v01.blend"
+  }
+}

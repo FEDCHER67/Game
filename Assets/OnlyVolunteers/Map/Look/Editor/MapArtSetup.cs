@@ -16,7 +16,7 @@ namespace OnlyVolunteers.Map.Look
         private const string MatDir = Root + "/Materials", SurfDir = Root + "/Materials/Surfaces", PrefabDir = Root + "/Prefabs",
             MeshDir = Root + "/Prefabs/Meshes", LayerDir = Root + "/TerrainLayers", TexDir = Root + "/Textures";
 
-        private enum Col { None, Box, Pole, Trunk, Panel }
+        private enum Col { None, Box, Pole, Trunk, Panel, Round, Convex }
 
         // inventory key, FBX path under Art/Map, collider.
         private static readonly (string key, string path, Col col)[] Assets =
@@ -64,6 +64,30 @@ namespace OnlyVolunteers.Map.Look
             ("powerpole_concrete_strut", "StreetKit/POWER_POLES/SK_PowerPole_Concrete_10kV_Strut", Col.Pole),
             ("powerpole_wood", "StreetKit/POWER_POLES/SK_PowerPole_Wood_04kV", Col.Pole),
             ("car_wrecked", "StreetKit/WRECKS/SK_Car_Wrecked", Col.Box), ("car_burnt", "StreetKit/WRECKS/SK_Car_Burnt", Col.Box),
+            // STREET_KIT/SMALL - the last v01 placeholders (bus-stop sign, no-swimming pictogram, pipe saddles, ad column, rocks, CCTV, crate)
+            ("bus_stop_sign", "StreetKit/SMALL/SK_BusStopSign", Col.Pole), ("sign_no_swimming", "StreetKit/SMALL/SK_Sign_NoSwimming", Col.Box),
+            ("pipe_support", "StreetKit/SMALL/SK_PipeSupport_080", Col.Box), ("pipe_support_040", "StreetKit/SMALL/SK_PipeSupport_040", Col.Box),
+            ("ad_column", "StreetKit/SMALL/SK_AdColumn", Col.Round),
+            ("rock_01", "StreetKit/SMALL/SK_Rock_01", Col.Convex), ("rock_02", "StreetKit/SMALL/SK_Rock_02", Col.Convex),
+            ("rock_03", "StreetKit/SMALL/SK_Rock_03", Col.Convex), ("rock_04", "StreetKit/SMALL/SK_Rock_04", Col.Convex),
+            ("rock_05", "StreetKit/SMALL/SK_Rock_05", Col.Convex),
+            ("cctv_pole", "StreetKit/SMALL/SK_CCTV_Pole", Col.Pole), ("cctv_wall", "StreetKit/SMALL/SK_CCTV_Wall", Col.None),
+            ("default_crate", "StreetKit/SMALL/SK_DefaultCrate", Col.Box),
+            // VEHICLES_KIT - parked, static; one box each
+            ("car_sedan_blue", "Vehicles/CARS/VK_Car_Sedan_Blue", Col.Box), ("car_sedan_red", "Vehicles/CARS/VK_Car_Sedan_Red", Col.Box),
+            ("car_sedan_beige", "Vehicles/CARS/VK_Car_Sedan_Beige", Col.Box), ("car_sedan_green", "Vehicles/CARS/VK_Car_Sedan_Green", Col.Box),
+            ("car_hatchback", "Vehicles/CARS/VK_Car_Hatchback", Col.Box), ("car_police", "Vehicles/CARS/VK_Car_Police", Col.Box),
+            ("van_minibus", "Vehicles/VANS/VK_Van_Minibus", Col.Box), ("van_ambulance", "Vehicles/VANS/VK_Van_Ambulance", Col.Box),
+            ("truck_tow", "Vehicles/HEAVY/VK_Truck_Tow", Col.Box), ("bus_city", "Vehicles/HEAVY/VK_Bus_City", Col.Box),
+            ("tractor_small", "Vehicles/HEAVY/VK_Tractor_Small", Col.Box), ("scooter", "Vehicles/SCOOTER/VK_Scooter", Col.Box),
+            // LANDMARKS - neon and the out-of-reach roof/belfry pieces carry no collider
+            ("casino_crown_sign", "Landmarks/VALLEY/LM_CasinoCrownSign", Col.Box), ("neon_bars", "Landmarks/VALLEY/LM_Neon_Bars", Col.None),
+            ("neon_star", "Landmarks/VALLEY/LM_Neon_Star", Col.None), ("neon_cocktail", "Landmarks/VALLEY/LM_Neon_Cocktail", Col.None),
+            ("bowling_pin_giant", "Landmarks/VALLEY/LM_BowlingPin_Giant", Col.Round), ("bowling_ball_giant", "Landmarks/VALLEY/LM_BowlingBall_Giant", Col.Round),
+            ("billboard_large", "Landmarks/VALLEY/LM_Billboard_Large", Col.Box), ("billboard_small", "Landmarks/VALLEY/LM_Billboard_Small", Col.Box),
+            ("gas_pump", "Landmarks/VALLEY/LM_GasPump", Col.Box), ("market_stall", "Landmarks/OLD_TOWN/LM_MarketStall", Col.Box),
+            ("church_bell", "Landmarks/OLD_TOWN/LM_ChurchBell", Col.None), ("onion_cupola", "Landmarks/OLD_TOWN/LM_OnionCupola", Col.None),
+            ("fountain", "Landmarks/OLD_TOWN/LM_Fountain", Col.Convex), ("clock_tower_top", "Landmarks/OLD_TOWN/LM_ClockTowerTop", Col.None),
         };
 
         // Builder keys -> inventory key. Variants ("_b" trees, lamp/bench/bin/pole variants) are picked by the builder.
@@ -79,6 +103,9 @@ namespace OnlyVolunteers.Map.Look
             ("prop/bus_stop", "busstop_shelter"), ("prop/bus_stop_vandalised", "busstop_shelter_vandalised"),
             ("prop/sign_crossing", "sign_crossing"), ("prop/swings", "play_swings"), ("prop/slide", "play_slide"), ("prop/sandbox", "play_sandbox"),
             ("prop/carpet_rack", "play_carpet_rack"), ("prop/kiosk", "news_kiosk"), ("prop/atm", "atm_pavilion"),
+            // SMALL kit: prop/_default stays empty (it would turn the empty prop/lamp_bollard into crates) and prop/rock stays
+            // empty (Rocks scales a unit cube by the json size; the kit rocks go through prop/rock_01..05 and are normalised).
+            ("prop/ad_pole", "ad_column"), ("prop/camera", "cctv_pole"),
             ("tree/birch", "tree_birch_a"), ("tree/birch_b", "tree_birch_b"), ("tree/pine", "tree_pine_a"), ("tree/pine_b", "tree_pine_b"),
             ("tree/spruce", "tree_pine_b"), ("tree/oak", "tree_oak_a"), ("tree/oak_b", "tree_oak_b"), ("tree/linden", "tree_oak_b"),
             ("tree/poplar", "tree_poplar_a"), ("tree/poplar_b", "tree_poplar_b"), ("tree/fruit", "tree_apple_a"), ("tree/fruit_b", "tree_apple_b"),
@@ -307,6 +334,19 @@ namespace OnlyVolunteers.Map.Look
             mats["SK_Palette"] = MakeMaterial($"{MatDir}/SK_Palette.mat", Color.white, 0.15f, palette, null, null, 1f);
             // The sign atlas of the kit is a 256 px placeholder: sign faces get a plain light board until the atlas is real.
             mats["SK_Signage"] = MakeMaterial($"{MatDir}/SK_Signage.mat", new Color32(232, 228, 214, 255), 0.1f, null, null, null, 1f);
+            // LANDMARKS: <Asset>_Emissive children (neon tubes, bulbs, clock faces, pump lightbox) glow with the palette colours.
+            Material emissive = MakeMaterial($"{MatDir}/SK_Palette_Emissive.mat", Color.white, 0.15f, palette, null, null, 1f);
+            emissive.EnableKeyword("_EMISSION");
+            emissive.SetTexture("_EmissionMap", palette);
+            emissive.SetColor("_EmissionColor", Color.white * 1.8f);
+            emissive.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            mats["SK_Palette_Emissive"] = emissive;
+            // Billboard poster face (UV 0..1, 2:1). Plain light board until a poster texture is dropped in Textures/Landmarks.
+            var poster = AssetDatabase.LoadAssetAtPath<Texture2D>($"{TexDir}/Landmarks/LM_Poster_v01.png");
+            // (Color) cast: Color and Color32 convert implicitly both ways, so the bare ternary has no natural type.
+            mats["LM_Poster"] = MakeMaterial($"{MatDir}/LM_Poster.mat", poster != null ? Color.white : (Color)new Color32(232, 228, 214, 255), 0.2f, poster, null, null, 1f);
+            // LM_Fountain_Water: opaque, glossy water blue (mat/water/river default).
+            mats["LM_Water"] = MakeMaterial($"{MatDir}/LM_Water.mat", new Color32(90, 157, 175, 255), 0.85f, null, null, null, 1f);
             Log.Add($"materials: {mats.Count} prop materials in {MatDir}");
             return mats;
         }
@@ -449,9 +489,13 @@ namespace OnlyVolunteers.Map.Look
                     if (mf.sharedMesh == null) continue;
                     var mr = mf.GetComponent<MeshRenderer>();
                     Material[] src = mr != null ? mr.sharedMaterials : new Material[0];
+                    // Material by child mesh name (<Asset>_Mesh, _Emissive, _Poster, LM_Fountain_Water): the emissive and
+                    // water children use SK_Palette in the FBX and would otherwise merge into the plain palette submesh.
+                    string part = mf.gameObject.name;
+                    Material over = part.EndsWith("_Emissive") ? mats["SK_Palette_Emissive"] : part.EndsWith("_Water") ? mats["LM_Water"] : null;
                     for (int s = 0; s < mf.sharedMesh.subMeshCount; s++)
                     {
-                        Material m = s < src.Length && src[s] != null ? PropMaterial(mats, src[s].name) ?? src[s] : mats["SK_Palette"];
+                        Material m = over ?? (s < src.Length && src[s] != null ? PropMaterial(mats, src[s].name) ?? src[s] : mats["SK_Palette"]);
                         if (!groups.TryGetValue(m, out var list))
                         {
                             groups[m] = list = new List<CombineInstance>();
@@ -513,6 +557,21 @@ namespace OnlyVolunteers.Map.Look
                     trunk.height = Mathf.Min(b.max.y, 3f);
                     trunk.center = new Vector3(0f, trunk.height / 2f, 0f);
                     trunk.direction = 1;
+                    break;
+                case Col.Round:
+                    // Upright round prop (ad column, giant pin and ball): a capsule on the pivot axis, radius of what stands below 2.2 m.
+                    Bounds lowR = LowFootprint(mesh, b, 2.2f);
+                    var round = go.AddComponent<CapsuleCollider>();
+                    round.radius = Mathf.Max(0.1f, Mathf.Max(lowR.extents.x, lowR.extents.z));
+                    round.height = Mathf.Max(b.max.y, 2f * round.radius);
+                    round.center = new Vector3(lowR.center.x, round.height / 2f, lowR.center.z);
+                    round.direction = 1;
+                    break;
+                case Col.Convex:
+                    // Rocks (112-204 tris) and the fountain (828 tris; PhysX cooks a <= 255-face hull): solid, walk-around shapes.
+                    var hull = go.AddComponent<MeshCollider>();
+                    hull.sharedMesh = mesh;
+                    hull.convex = true;
                     break;
             }
         }

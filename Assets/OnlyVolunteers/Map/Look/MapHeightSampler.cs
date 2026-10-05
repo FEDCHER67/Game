@@ -25,7 +25,7 @@ namespace OnlyVolunteers.Map.Look
     }
 
     // Ground height of the look map for spawning and snapping (terrain plus bridge decks) and the water test.
-    // The greybox builder can replace its y = 0 spawns with Snap() once it builds on top of the look environment.
+    // The play scene (MapLookGameplay) places the grey-box gameplay with Height(), raised to the colliders there.
     public sealed class MapHeightSampler : MonoBehaviour
     {
         public Terrain Terrain;
@@ -60,9 +60,13 @@ namespace OnlyVolunteers.Map.Look
         }
 
         // Deck surface height where (x, z) lies on a bridge deck (within HalfWidth of its centreline, between its ends).
-        public static bool DeckHeight(List<BridgeDeck> decks, float x, float z, out float h)
+        public static bool DeckHeight(List<BridgeDeck> decks, float x, float z, out float h) => DeckAt(decks, x, z, out h, out _);
+
+        // As DeckHeight, plus the deck's direction there (unit plan x, z of its centreline segment nearest to the point).
+        public static bool DeckAt(List<BridgeDeck> decks, float x, float z, out float h, out Vector2 dir)
         {
             h = 0f;
+            dir = Vector2.zero;
             if (decks == null) return false;
             foreach (BridgeDeck d in decks)
             {
@@ -88,6 +92,7 @@ namespace OnlyVolunteers.Map.Look
                 if (bestSeg < 0 || total < 0.1f || bestDist > d.HalfWidth) continue;
                 if (bestSeg == 0 && bestRaw < 0f || bestSeg == n - 2 && bestRaw > 1f) continue;
                 h = Mathf.Lerp(d.HeightA, d.HeightB, bestS / total);
+                dir = new Vector2(path[2 * bestSeg + 2] - path[2 * bestSeg], path[2 * bestSeg + 3] - path[2 * bestSeg + 1]).normalized;
                 return true;
             }
             return false;

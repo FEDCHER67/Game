@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Bus_City",
+  "family": "VK-HEAVY",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1212,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -1.465,
+    -5.385,
+    0.0
+  ],
+  "bounds_max": [
+    1.465,
+    5.385,
+    3.02
+  ],
+  "size_xyz_m": [
+    2.93,
+    10.77,
+    3.02
+  ],
+  "objects": {
+    "VK_Bus_City_Mesh": {
+      "triangles": 1212,
+      "vertices": 736,
+      "faces": 594,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Parked rounded city bus, about 10.5 m: cream body, white roof cap, red band, three folding doors on the kerb side (-X), split windscreen with a blank route board, round headlights, bull-horn mirrors, rear engine grille. Floor/door sill height matches the STREET_KIT bus stop. No interior. Faces -Y.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Bus_City_v01.fbx",
+    "fbx_size_bytes": 35212,
+    "blend": "VK-HEAVY_v01.blend"
+  }
+}

@@ -16,9 +16,10 @@ namespace OnlyVolunteers.Vehicles
         public VanCameraRig CameraRig;
         [Tooltip("Optional. Taken from this object, or added if the van has none (test scene only).")]
         public VanUpgrades Upgrades;
-        [Tooltip("Grey-box door rules (NPC capture stage 1, canon section 151): 3 asks the sliding door for the other state " +
-                 "(explicit request, so it never fights the handle in the cargo bay); 1, 2, 4 and F do nothing, the rear " +
-                 "doors open by hand only. Off = the test-scene keys as before.")]
+        [Tooltip("Grey-box door rules (NPC capture stage 1): the same keys as the test scene (1 front left, 2 front right, " +
+                 "3 sliding, 4 both rear doors, F all), sent as explicit open/close requests to the force-limited doors; " +
+                 "4 keeps the rear pair together (both open if either is shut), like the rear handle outside. " +
+                 "Off = the test-scene toggles exactly as before.")]
         public bool GreyboxDoorRules;
 
         private VanController _van;
@@ -52,18 +53,15 @@ namespace OnlyVolunteers.Vehicles
             _van.Steer = steer;
             _van.Handbrake = Input.GetKey(KeyCode.Space);
 
-            if (GreyboxDoorRules)
+            if (Input.GetKeyDown(KeyCode.Alpha1)) Toggle(FrontLeft);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) Toggle(FrontRight);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) Toggle(Slide);
+            if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha3) && Slide != null) Slide.Request(!Slide.TargetOpen);
+                if (GreyboxDoorRules) RequestRear(Closed(RearLeft) || Closed(RearRight));
+                else { Toggle(RearLeft); Toggle(RearRight); }
             }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Alpha1)) Toggle(FrontLeft);
-                if (Input.GetKeyDown(KeyCode.Alpha2)) Toggle(FrontRight);
-                if (Input.GetKeyDown(KeyCode.Alpha3)) Toggle(Slide);
-                if (Input.GetKeyDown(KeyCode.Alpha4)) { Toggle(RearLeft); Toggle(RearRight); }
-                if (Input.GetKeyDown(KeyCode.F)) ToggleAll();
-            }
+            if (Input.GetKeyDown(KeyCode.F)) ToggleAll();
             if (Input.GetKeyDown(KeyCode.Alpha7)) CycleUpgrade(VanUpgradeCategory.Engine);
             if (Input.GetKeyDown(KeyCode.Alpha8)) CycleUpgrade(VanUpgradeCategory.Brakes);
             if (Input.GetKeyDown(KeyCode.Alpha9)) CycleUpgrade(VanUpgradeCategory.Handling);
@@ -99,6 +97,13 @@ namespace OnlyVolunteers.Vehicles
 
         private static bool Closed(VanDoor d) => d != null && !d.IsOpen;
 
+        // Grey-box: the rear pair as one door (VanDoor.Request asks for a state, so repeating it is harmless).
+        private void RequestRear(bool open)
+        {
+            if (RearLeft != null) RearLeft.Request(open);
+            if (RearRight != null) RearRight.Request(open);
+        }
+
         // 0 -> 1 -> 2 -> 3 -> 0
         private void CycleUpgrade(VanUpgradeCategory category)
         {
@@ -122,9 +127,7 @@ namespace OnlyVolunteers.Vehicles
                 $"Тормоза {Upgrades.GetLevel(VanUpgradeCategory.Brakes)}/{max} · " +
                 $"Управление {Upgrades.GetLevel(VanUpgradeCategory.Handling)}/{max}");
             if (!_showHelp) return;
-            string doors = GreyboxDoorRules
-                ? "3 — сдвижная дверь (задние — только руками снаружи)\n"
-                : "1 — левая передняя, 2 — правая передняя, 3 — сдвижная, 4 — задние, F — все двери\n";
+            const string doors = "1 — левая передняя, 2 — правая передняя, 3 — сдвижная, 4 — задние, F — все двери\n";
             GUI.Label(new Rect(16, 56, 640, 160),
                 "WASD / стрелки — ехать, Space — ручник, R — поставить на колёса\n" +
                 doors +

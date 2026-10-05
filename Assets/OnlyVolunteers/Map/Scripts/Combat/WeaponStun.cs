@@ -2,17 +2,26 @@ using UnityEngine;
 
 namespace OnlyVolunteers.Map
 {
-    // Where a hit landed on an NPC. Picked from the height of the hit point in the NPC's own space (root at the feet, body
-    // along local up), so it works the same on a standing, a lying and a sitting NPC (HitZones.FromLocalHeight).
+    // Where a hit landed on an NPC. Picked in the NPC's own space (root at the feet, body along local up), so it works the
+    // same on a standing, a lying and a sitting NPC. Forgiving on purpose (Fedya's playtest, 2026-10-05: the head was a
+    // tiny target): the upper third of the body is the head, and so is anything the swing passes within HeadReach of
+    // the head centre; the middle third is the torso, the lower third the limbs.
     public enum HitZone : byte { Head, Torso, Limb }
 
     public static class HitZones
     {
-        public const float HeadAbove = 1.2f;  // m above the feet, NPC-local
-        public const float TorsoAbove = 0.6f;
+        public const float HeadShare = 2f / 3f;   // above this share of the body height: head
+        public const float TorsoShare = 1f / 3f;  // above this: torso, below: limbs
+        public const float HeadReach = 0.45f;     // m from the head centre that still counts as a head hit
+        public const float HeadCentreBelowTop = 0.15f;
 
-        public static HitZone FromLocalHeight(float height) =>
-            height > HeadAbove ? HitZone.Head : height >= TorsoAbove ? HitZone.Torso : HitZone.Limb;
+        /// <summary>Zone from the height above the feet (NPC space, standing body) and the distance of the swing from the
+        /// head centre (infinity when unknown).</summary>
+        public static HitZone Classify(float height, float bodyHeight, float headDistance = float.PositiveInfinity)
+        {
+            if (height >= bodyHeight * HeadShare || headDistance <= HeadReach) return HitZone.Head;
+            return height >= bodyHeight * TorsoShare ? HitZone.Torso : HitZone.Limb;
+        }
     }
 
     // How long a weapon stuns (NPC capture stage 1, canon section 151): a base duration, a multiplier per hit zone and a

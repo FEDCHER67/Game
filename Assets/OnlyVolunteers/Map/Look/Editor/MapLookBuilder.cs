@@ -12,7 +12,7 @@ namespace OnlyVolunteers.Map.Look
     // Builds the stylised map look from look_vNN_flat.json (ArtSource/References/Map/Look/flatten_look.py):
     // terrain + splat + trees, draped roads and sidewalks, procedural buildings merged per district cell, water,
     // fences (plots and the elite ring only), props, blockers, lighting and a fly camera, saved as Map_Look_vNN.
-    // BuildEnvironment is the environment alone, for the greybox gameplay builder to place on later.
+    // BuildEnvironment is the environment alone; MapLookGameplay places the grey-box gameplay on it (Map_Look_vNN_Play).
     public static class MapLookBuilder
     {
         public const string LookJsonDir = "ArtSource/References/Map/Look";
@@ -186,7 +186,7 @@ namespace OnlyVolunteers.Map.Look
                 }
 
                 BuildingStyle style = BuildingStyles.For(b);
-                BuildingResult res = ProceduralBuilding.Build(b, style, pad, hm.LowestUnder(b.fp));
+                BuildingResult res = ProceduralBuilding.Build(b, style, pad, hm.LowestUnder(b.fp), PropScatterer.KitParts(d, registry, b.id));
                 tris += res.Triangles;
                 if (res.Triangles > style.TriangleBudget)
                 {

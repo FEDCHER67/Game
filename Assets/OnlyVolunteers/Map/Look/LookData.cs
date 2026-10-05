@@ -38,6 +38,8 @@ namespace OnlyVolunteers.Map.Look
         public LookFurniture[] furniture;
         public LookPipe[] pipes;
         public LookDecal[] decals;
+        public LookVehicle[] vehicles;
+        public LookLandmark[] landmarks;
         public LookExit[] exits;
         public LookPoint[] points;
         public string[] warnings;
@@ -82,6 +84,8 @@ namespace OnlyVolunteers.Map.Look
             furniture ??= new LookFurniture[0];
             pipes ??= new LookPipe[0];
             decals ??= new LookDecal[0];
+            vehicles ??= new LookVehicle[0];
+            landmarks ??= new LookLandmark[0];
             exits ??= new LookExit[0];
             points ??= new LookPoint[0];
             warnings ??= new string[0];
@@ -362,6 +366,24 @@ namespace OnlyVolunteers.Map.Look
         public string color;
         public float alpha;
         public float[] pts, tris;
+    }
+
+    // Parked vehicle (extras_v12_kits.py): prefab prop/<type> at the exact Unity yaw a - no builder jitter.
+    [Serializable]
+    public sealed class LookVehicle
+    {
+        public string type, district, spot;
+        public float x, y, a;
+    }
+
+    // Landmark kit piece. mount: "ground" (z above the terrain), "roof" / "facade" / "belfry" (z above the pad of `building`),
+    // "tower" (free-standing: shaft_w x shaft_w x shaft_h brick shaft on the terrain, the kit top at z). s = uniform scale;
+    // `replaces` names the ProceduralBuilding stand-in to skip (see ProceduralBuilding Ctx.Kit).
+    [Serializable]
+    public sealed class LookLandmark
+    {
+        public string type, mount, building, district, replaces, spot;
+        public float x, y, z, a, s = 1f, shaft_w, shaft_h;
     }
 
     [Serializable]

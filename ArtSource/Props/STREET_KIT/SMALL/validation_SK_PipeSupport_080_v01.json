@@ -1,0 +1,73 @@
+{
+  "asset": "SK_PipeSupport_080",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 356,
+  "triangle_budget": [
+    100,
+    800
+  ],
+  "bounds_min": [
+    -0.18,
+    -0.5,
+    0.0
+  ],
+  "bounds_max": [
+    0.18,
+    0.5,
+    1.6466
+  ],
+  "size_xyz_m": [
+    0.36,
+    1.0,
+    1.647
+  ],
+  "objects": {
+    "SK_PipeSupport_080_Mesh": {
+      "triangles": 356,
+      "vertices": 222,
+      "faces": 176,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {
+    "SK_PipeSupport_080_SOCKET_PipeAxis": [
+      0.0,
+      0.0,
+      1.2
+    ]
+  },
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Rusty steel saddle (map id pipe_support) for a d 0.8 m pipe running along X with its underside 0.8 m above the sand; pipe axis at z = 1.20 m (socket SOCKET_PipeAxis). Strap over the top shows the pipe position; space supports every 4-6 m.",
+  "checks": {
+    "triangle_budget_100_800": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_PipeSupport_080_v01.fbx",
+    "fbx_size_bytes": 25644,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}

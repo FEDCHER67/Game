@@ -31,6 +31,17 @@ namespace OnlyVolunteers.Map
                 Kcc.Character.ApplyCapsuleRadius(CapsuleRadius);
         }
 
+        // After every Awake: the motor builds CollidableLayers from the layer matrix in its own Awake, where Player x
+        // VehicleInterior is off. The van's step ramps live on VehicleInterior (PhysX ignores that layer, so only queries
+        // see them): this player's motor walks on them, Vadim's prefabs and other scenes are untouched. Nothing else uses
+        // that layer as a collider (the cargo-bay volumes are maths, VanCargoSpace). The KCC cannot step onto the van's
+        // own colliders (a dynamic rigidbody: no step handling there), hence ramps rather than MaxStepHeight.
+        private void Start()
+        {
+            KinematicCharacterMotor motor = Kcc != null && Kcc.Character != null ? Kcc.Character.Motor : null;
+            if (motor != null) motor.CollidableLayers |= 1 << OvLayers.VehicleInterior;
+        }
+
         public override Transform Body => Kcc.Character.transform;
         public override Camera ViewCamera => Kcc.ViewCamera;
         public override float Radius => Kcc.Character.Motor.Capsule != null ? Kcc.Character.Motor.Capsule.radius : CapsuleRadius > 0f ? CapsuleRadius : 0.5f;

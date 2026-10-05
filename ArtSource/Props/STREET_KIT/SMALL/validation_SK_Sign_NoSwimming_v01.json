@@ -1,0 +1,67 @@
+{
+  "asset": "SK_Sign_NoSwimming",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 540,
+  "triangle_budget": [
+    100,
+    800
+  ],
+  "bounds_min": [
+    -0.5332,
+    -0.2,
+    0.0
+  ],
+  "bounds_max": [
+    0.5332,
+    0.2,
+    2.01
+  ],
+  "size_xyz_m": [
+    1.066,
+    0.4,
+    2.01
+  ],
+  "objects": {
+    "SK_Sign_NoSwimming_Mesh": {
+      "triangles": 540,
+      "vertices": 328,
+      "faces": 222,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Beach sign (map id sign_no_swimming): two pointed wooden posts 1.95 m, board 1.0 x 0.9 m centred at 1.5 m; its -Y face carries a no-swimming pictogram, no text: white field, red ring r 0.39 m, black crawl swimmer over two blue wave lines, red slash top-left to bottom-right. Layered geometry on SK_Palette, no textures. Posts can be sunk 0.2-0.3 m into the sand.",
+  "checks": {
+    "triangle_budget_100_800": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_Sign_NoSwimming_v01.fbx",
+    "fbx_size_bytes": 27276,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}

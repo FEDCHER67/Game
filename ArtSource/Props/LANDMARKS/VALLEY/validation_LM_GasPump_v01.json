@@ -1,0 +1,112 @@
+{
+  "asset": "LM_GasPump",
+  "family": "LM-VALLEY",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 692,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -0.95,
+    -0.45,
+    0.0
+  ],
+  "bounds_max": [
+    0.95,
+    0.45,
+    2.42
+  ],
+  "size_xyz_m": [
+    1.9,
+    0.9,
+    2.42
+  ],
+  "objects": {
+    "LM_GasPump_Mesh": {
+      "triangles": 608,
+      "vertices": 362,
+      "faces": 308,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_GasPump_Emissive": {
+      "triangles": 48,
+      "vertices": 32,
+      "faces": 24,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_GasPump_Nozzle": {
+      "triangles": 36,
+      "vertices": 24,
+      "faces": 18,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.47,
+        -0.08,
+        1.22
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {
+    "LM_GasPump_SOCKET_Interact": [
+      0.0,
+      -0.75,
+      1.0
+    ],
+    "LM_GasPump_SOCKET_Refuel": [
+      0.9,
+      -0.6,
+      0.6
+    ]
+  },
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Roadside pump on a 1.9 x 0.9 m island; counter windows on -Y and +Y, price box on top (LM_GasPump_Emissive). LM_GasPump_Nozzle has its pivot at the holster mouth (can be lifted out). SOCKET_Interact = where the player stands, SOCKET_Refuel = where a car filler should be.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_GasPump_v01.fbx",
+    "fbx_size_bytes": 36988,
+    "blend": "LM-VALLEY_v01.blend"
+  }
+}

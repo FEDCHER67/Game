@@ -3,12 +3,27 @@ using UnityEngine;
 namespace OnlyVolunteers.Vehicles
 {
     // Extra van colliders for riding in and loading the cargo bay (NPC capture stage 1, draft section 3):
-    // - StepSlide / StepRear: ~0.28 m steps under the sliding door and the rear doors, so a crouched KCC player climbs to
-    //   the 0.55 m floor in two steps (the KCC step limit is 0.5 m). Visible (dark trim material), the model has none.
+    // - StepSlide / StepRear: ~0.28 m steps under the sliding door and the rear doors. Visible (dark trim material), the
+    //   model has none. The player walks on the ramps below, not on these (they stay for looks and for NPC bodies).
     // - Partition: invisible, floor to roof behind the front seats (the driver stays visible from the bay).
     // - LeftWallLow / RightWallLow thickened outward to 0.12 m and the Roof 0.05 m thicker upward: the 5 cm boxes were
     //   thin enough for a fast body to tunnel through. The inside of the bay (1.04 m between the arches) is unchanged.
-    // Then every collider of the van, doors and wheels included, goes on layer Vehicle (when the project has it).
+    // - RampSlide / RampRear (Fedya's playtest, 2026-10-05: the steps needed a jump): invisible slopes from the wheels'
+    //   contact height over the outer edge of each step up to the edge of the floor (rear: the bumper top). The KCC never steps
+    //   onto a dynamic rigidbody (KinematicCharacterMotor.EvaluateHitStability skips DetectSteps for it), so on the van
+    //   only slopes and edges lower than ~0.17 m (capsule radius 0.35 at the 60 degree stability limit) are walkable;
+    //   a 48/55 degree slope is. Layer VehicleInterior, which PhysX ignores entirely: only the grey-box KCC player, which
+    //   adds that layer to its motor's CollidableLayers (GreyboxKccPawn), walks on them; NPC bodies, the world and the van
+    //   never touch them. They sit on their own kinematic Rigidbody ("Ramps"), so the van's mass and inertia stay as they
+    //   were. Stand on the ramp by walking (W), then Ctrl to crouch in under the door top.
+    // - Loading surfaces (Fedya's playtests, 2026-10-05): Floor, BumperRear, both steps and the rear wheel housings
+    //   (HousingRearLeft/Right, which a body pushed in through the rear doors rubs along) get a smooth material (0.3,
+    //   combined by Minimum) at runtime, so it wins over the NPC body's Average-combined high grip: a body leaning on the
+    //   floor edge or the bumper slides in when pushed by the ankles, while on the ground its far end still holds and
+    //   pivots. Loaded bodies are kept in place by GreyboxVanCargo.LoadedDamping. Play mode only: an edit-time Build
+    //   (VanSetupBuilder) must not bake a non-asset material into the prefab.
+    // Then every collider of the van, doors and wheels included, goes on layer Vehicle (when the project has it); the
+    // ramps then go on VehicleInterior (or are switched off when the project has no such layer).
     // Runtime setup, idempotent by child name: an existing Van.prefab instance (grey-box scenes) gets it in Awake without a
     // prefab rebuild, and VanSetupBuilder bakes the same children into a rebuilt prefab (Build at edit time).
     // Boxes are given in the model's Blender coordinates (min..max, Z up, -Y forward, +X = vehicle left), mapped to
@@ -44,6 +59,24 @@ namespace OnlyVolunteers.Vehicles
             ("Roof", new(-0.80f, -0.99f, 1.98f), new(0.80f, 2.19f, 2.13f)),
         };
 
+        // Ramps, Blender coordinates: centre of the low (outer) edge, centre of the high (inner) edge, half the width.
+        // RampSlide: through the step's outer top edge (-1.18, 0.28) and the floor edge (-0.94, 0.55), 48 degrees, down to
+        // the wheels' contact height (0). RampRear: 55 degrees down from the bumper's outer top edge (2.36, 0.62), passing
+        // ~3 cm above the step's outer edge. Both below the KCC's 60 degree stability limit.
+        private static readonly (string name, Vector3 low, Vector3 high, Vector3 halfWidth)[] Ramps =
+        {
+            ("RampSlide", new(-1.429f, 0.23f, 0f), new(-0.94f, 0.23f, 0.55f), new(0f, 0.67f, 0f)),
+            ("RampRear", new(0f, 2.794f, 0f), new(0f, 2.36f, 0.62f), new(0.80f, 0f, 0f)),
+        };
+        private const string RampBody = "Ramps";
+        private const string RampLayerName = "VehicleInterior"; // OvLayers.VehicleInterior (11)
+        private const float RampThickness = 0.12f;
+
+        private static readonly string[] SmoothSurfaces =
+            { "Floor", "BumperRear", "StepSlide", "StepRear", "HousingRearLeft", "HousingRearRight" };
+        private const float SmoothFriction = 0.3f;
+        private static PhysicsMaterial _smooth;
+
         private Vector3 _offset = new(0f, 0f, -0.02f);
 
         private void Awake() => Build();
@@ -69,6 +102,10 @@ namespace OnlyVolunteers.Vehicles
             foreach ((string name, Vector3 min, Vector3 max) in Resized)
                 if (container.Find(name) is Transform t && t.TryGetComponent(out BoxCollider box))
                     SetBox(box, min, max);
+            if (Application.isPlaying)
+                foreach (string name in SmoothSurfaces)
+                    if (container.Find(name) is Transform t && t.TryGetComponent(out BoxCollider box))
+                        box.sharedMaterial = Smooth;
 
             int layer = LayerMask.NameToLayer(VehicleLayerName);
             if (layer < 0)
@@ -78,7 +115,71 @@ namespace OnlyVolunteers.Vehicles
             }
             foreach (Collider c in GetComponentsInChildren<Collider>(true))
                 c.gameObject.layer = layer;
+            BuildRamps(container);
         }
+
+        // ---------- Ramps ----------
+
+        private void BuildRamps(Transform container)
+        {
+            Transform holder = container.Find(RampBody);
+            if (holder == null)
+            {
+                holder = new GameObject(RampBody).transform;
+                holder.SetParent(container, false);
+            }
+            holder.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            holder.localScale = Vector3.one;
+            // Its own kinematic body: the boxes are not part of the van's compound collider (mass, inertia).
+            if (!holder.TryGetComponent(out Rigidbody body)) body = holder.gameObject.AddComponent<Rigidbody>();
+            body.isKinematic = true;
+            body.useGravity = false;
+            body.interpolation = RigidbodyInterpolation.None;
+
+            int layer = LayerMask.NameToLayer(RampLayerName);
+            if (layer < 0)
+                Debug.LogWarning($"[Van] Layer '{RampLayerName}' is missing (ProjectSettings/TagManager); the step ramps are off.");
+            holder.gameObject.layer = layer >= 0 ? layer : 0;
+            foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in Ramps)
+                Ramp(holder, name, low, high, halfWidth, layer);
+        }
+
+        // A box whose top face runs from the low edge to the high edge, RampThickness thick below it.
+        private void Ramp(Transform holder, string name, Vector3 low, Vector3 high, Vector3 halfWidth, int layer)
+        {
+            Vector3 a = RootPoint(low);
+            Vector3 b = RootPoint(high);
+            Vector3 slope = b - a;
+            Vector3 across = Axes(halfWidth);
+            Vector3 normal = Vector3.Cross(slope, across).normalized;
+            if (normal.y < 0f) normal = -normal;
+            Quaternion rootRotation = Quaternion.LookRotation(slope.normalized, normal);
+            Vector3 centre = (a + b) * 0.5f - normal * (RampThickness * 0.5f);
+
+            Transform t = holder.Find(name);
+            if (t == null)
+            {
+                t = new GameObject(name).transform;
+                t.SetParent(holder, false);
+            }
+            t.SetPositionAndRotation(transform.TransformPoint(centre), transform.rotation * rootRotation);
+            t.localScale = Vector3.one;
+            if (!t.TryGetComponent(out BoxCollider box)) box = t.gameObject.AddComponent<BoxCollider>();
+            box.center = Vector3.zero;
+            box.size = new Vector3(across.magnitude * 2f, RampThickness, slope.magnitude);
+            box.enabled = layer >= 0; // on Default it would collide with everything
+            t.gameObject.layer = layer >= 0 ? layer : 0;
+        }
+
+        private static PhysicsMaterial Smooth => _smooth != null ? _smooth : _smooth = new PhysicsMaterial("VanLoadingSurface")
+        {
+            staticFriction = SmoothFriction,
+            dynamicFriction = SmoothFriction,
+            bounciness = 0f,
+            frictionCombine = PhysicsMaterialCombine.Minimum,
+            bounceCombine = PhysicsMaterialCombine.Minimum,
+            hideFlags = HideFlags.DontSave,
+        };
 
         private static Vector3 Axes(Vector3 b) => new(-b.x, b.z, -b.y);
         private Vector3 RootPoint(Vector3 b) => Axes(b) + _offset;

@@ -5,7 +5,9 @@ using UnityEngine;
 namespace OnlyVolunteers.Map
 {
     // Remembers where its object recently stood on dry ground; when the object gets into a SeaReturnZone it is put back
-    // at the last such point a few metres from the water's edge, i.e. where it jumped or drove in from.
+    // at the last such point a few metres from the water's edge, i.e. where it jumped or drove in from. Dry = outside
+    // the zone and not under the sea surface (SeaReturnZone.Dry: on the look map the surf strip of the beach lies below
+    // the sea level before the zone starts); heights come from where the object really stood, never a flat y = 0.
     // Works for the van (VanController.ResetUpright), the on-foot pawn (GreyboxPawn.Teleport; the KCC player must move
     // through its motor) and for plain rigidbodies/transforms.
     public sealed class SeaReturnTracker : MonoBehaviour
@@ -47,10 +49,10 @@ namespace OnlyVolunteers.Map
         }
 
         /// <summary>Forget old dry points after a teleport, so the sea never sends the object back to where it was before.
-        /// A teleport into the sea keeps the old history: there is no dry point to start from there.</summary>
+        /// A teleport into the sea (or the surf) keeps the old history: there is no dry point to start from there.</summary>
         public void Rebase()
         {
-            if (SeaReturnZone.InSea(transform.position)) return;
+            if (!SeaReturnZone.Dry(transform.position)) return;
             _history.Clear();
             Record();
         }
@@ -58,7 +60,7 @@ namespace OnlyVolunteers.Map
         private void Record()
         {
             // A sea point in the history would be returned to, rebased onto and returned to again (a climb every tick).
-            if (SeaReturnZone.InSea(transform.position)) return;
+            if (!SeaReturnZone.Dry(transform.position)) return;
             if (_history.Count == HistorySize) _history.RemoveAt(0);
             var point = (transform.position, transform.eulerAngles.y);
             _history.Add(point);
@@ -82,15 +84,15 @@ namespace OnlyVolunteers.Map
             for (int i = _history.Count - 1; i >= 0; i--)
             {
                 Vector3 d = _history[i].pos - entry;
-                if (new Vector2(d.x, d.z).magnitude >= Backoff && !SeaReturnZone.InSea(_history[i].pos))
+                if (new Vector2(d.x, d.z).magnitude >= Backoff && SeaReturnZone.Dry(_history[i].pos))
                 {
                     found = _history[i];
                     break;
                 }
             }
-            if (found.HasValue && SeaReturnZone.InSea(found.Value.pos)) found = _lastDry;
+            if (found.HasValue && !SeaReturnZone.Dry(found.Value.pos)) found = _lastDry;
             // Never been on dry land (e.g. spawned in the sea): leave it where it is rather than lift it every tick.
-            if (!found.HasValue || SeaReturnZone.InSea(found.Value.pos)) return;
+            if (!found.HasValue || !SeaReturnZone.Dry(found.Value.pos)) return;
             (Vector3 pos, float yaw) target = found.Value;
             Vector3 up = target.pos + Vector3.up * 0.5f;
             if (_van != null)

@@ -40,12 +40,12 @@ namespace OnlyVolunteers.Map
                  "but is not free (draft section 2, canon sections 24-25).")]
         public float ReStunConditionCost = 5f;
         [Tooltip("Share of the stun spent Out (eyes shut, limp); the rest is Groggy.")]
-        [Range(0f, 1f)] public float OutShare = 0.4f;
+        [Range(0f, 1f)] public float OutShare = 0.5f;
         public Vector2 KickInterval = new(0.8f, 1.5f);
         [Tooltip("N·s at an ankle.")]
         public float KickImpulse = 25f;
         [Tooltip("Chance that a kick tears one hold loose, by the number of holders (0, 1, 2, 3).")]
-        public float[] KickTearChance = { 0f, 0.5f, 0.2f, 0f };
+        public float[] KickTearChance = { 0f, 0.35f, 0.15f, 0f };
         [Tooltip("Average crawl push in N while Groggy and nobody holds it, given as hops every CrawlPeriod seconds.")]
         public float CrawlForce = 80f;
         public float CrawlPeriod = 0.6f;
@@ -113,14 +113,49 @@ namespace OnlyVolunteers.Map
         private bool CarrierAlive => Carrier is Object o ? o != null : Carrier != null;
         private GreyboxFace Face => _face ??= new GreyboxFace(gameObject);
 
-        /// <summary>Hit zone of a world point on this NPC, from its height above the feet in NPC space. Sitting in the
-        /// van the capsule is only SeatedHeight (1 m) tall and the mesh is sunk by SeatedVisualDrop: heights are counted
-        /// as on the standing body, so the top of a sitter (its head) is still a head hit.</summary>
+        /// <summary>Hit zone of a swing along 'ray' (the view ray of a first-person hit), in NPC space: the height where
+        /// the ray passes closest to the body's axis (feet to top), and how close it passes to the head centre
+        /// (HitZones.Classify). Works for a near miss too (the sphere cast beside the head). Sitting in the van the capsule
+        /// is only SeatedHeight (1 m) tall and the mesh is sunk by SeatedVisualDrop: heights are counted as on the standing
+        /// body, so the top of a sitter (its head) is still a head hit.</summary>
+        public HitZone ZoneAlong(Ray ray)
+        {
+            float bodyHeight = _body != null ? _body.Height : 1.5f;
+            float drop = _body != null && _body.Seated ? SeatedVisualDrop : 0f;
+            Vector3 origin = transform.InverseTransformPoint(ray.origin);
+            Vector3 direction = transform.InverseTransformDirection(ray.direction).normalized;
+            float top = Mathf.Max(0.1f, bodyHeight - drop);
+            float height = ClosestAxisHeight(origin, direction, top) + drop;
+            Vector3 head = new(0f, bodyHeight - HitZones.HeadCentreBelowTop - drop, 0f);
+            Vector3 toHead = head - origin;
+            float along = Mathf.Max(0f, Vector3.Dot(toHead, direction));
+            float headDistance = (toHead - direction * along).magnitude;
+            return HitZones.Classify(height, bodyHeight, headDistance);
+        }
+
+        /// <summary>Hit zone of a world point on this NPC (third person, no view ray): its height above the feet.</summary>
         public HitZone ZoneAt(Vector3 world)
         {
             float height = transform.InverseTransformPoint(world).y;
             if (_body != null && _body.Seated) height += SeatedVisualDrop;
-            return HitZones.FromLocalHeight(height);
+            return HitZones.Classify(height, _body != null ? _body.Height : 1.5f);
+        }
+
+        // Height (0..top, local up) of the point on the body axis nearest to the ray origin + t * direction, t >= 0.
+        private static float ClosestAxisHeight(Vector3 origin, Vector3 direction, float top)
+        {
+            float b = direction.y; // dot(axis, direction), axis = local up
+            float denominator = 1f - b * b;
+            float s;
+            if (denominator < 1e-4f) s = origin.y; // looking along the axis (straight down on a standing NPC)
+            else
+            {
+                // Closest points of the two lines (axis through the root, the ray), with w = axis origin - ray origin.
+                Vector3 w = -origin;
+                s = (b * Vector3.Dot(direction, w) - w.y) / denominator;
+                if (Vector3.Dot(direction, w) + s * b < 0f) s = origin.y; // the closest point is behind the eye
+            }
+            return Mathf.Clamp(s, 0f, top);
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -226,8 +261,10 @@ namespace OnlyVolunteers.Map
             if (!fleeing) Face.TickBlink();
         }
 
+        // Level with the van too, not under it on a bridge or below a road embankment (the look map is not flat).
         private bool VanHits() => _van != null && Mathf.Abs(_van.SpeedKmh) > KnockSpeedKmh &&
-                                  Flat(_van.transform.position - transform.position).magnitude < 2.6f;
+                                  Flat(_van.transform.position - transform.position).magnitude < 2.6f &&
+                                  Mathf.Abs(_van.transform.position.y - transform.position.y) < 2f;
 
         private Vector3 VanPush()
         {

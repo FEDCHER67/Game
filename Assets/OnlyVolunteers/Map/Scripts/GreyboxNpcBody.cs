@@ -6,39 +6,65 @@ using UnityEngine;
 
 namespace OnlyVolunteers.Map
 {
-    // The physical body of a downed grey-box NPC (NPC capture stage 1): ONE rigidbody with grab points, no bone ragdoll
-    // yet (canon section 151, draft section 3; the 11-body ragdoll is stage B8). The limbs only dangle visually.
+    // The physical body of a downed grey-box NPC (NPC capture stage 1): ONE rigidbody, no bone ragdoll yet (canon section
+    // 151, draft section 3; the 11-body ragdoll is stage B8). The limbs only dangle visually.
     // GreyboxNpc switches it on when the NPC goes down (Activate: capsule + Rigidbody on the NPC root, layer NpcBody) and
     // off when it stands up again (Deactivate: both removed, the CharacterController takes over).
-    // Grab points are root-local (root at the feet, body along local up): collar, wrists, pelvis, ankles. Holders claim
-    // the free point nearest to where they grabbed (within ClaimRadius); one holder per point, at most three per body.
-    // PhysicsGrabber (Vadim's LMB grab) holds through IGrabPointTarget with NpcGrabProfile: 350 N per holder, so one
-    // player lifts the collar end (~230 N) while the heels drag, and two (700 N > 392 N weight) carry it like a hammock.
+    // Grab anywhere (Fedya's second playtest, 2026-10-05): a holder claims the point of the body's axis nearest to where its
+    // ray hit, i.e. any point of the capsule, projected onto the axis (a pull through the axis never rolls the body like a
+    // log). Up to MaxHolders holders, one slot each, no spacing rule (two players may hold the same spot). Point and
+    // PointLocal are only anatomical landmarks now: GreyboxVanCargo's in-bay test (pelvis, collar), GreyboxNpc's ankle
+    // kicks and Tear's preference.
+    // Lever rule, no lift assist: lying stunned the body weighs DownedMass (28 kg, W 275 N); awake (sitting in the bay,
+    // escaping) it has Mass (40 kg). PhysicsGrabber holds a claim with NpcGrabProfile: up to 200 N up/down and 220 N
+    // sideways per hand, spring 1200, damping ratio 0.6. A body lying on the ground turns about the centre of its other
+    // end cap (0.28 m from the feet; 1.22 m from the feet for the head end), at any tilt, its centre of mass 0.47 m from that
+    // pivot. Lifting a point s (m from the feet) on the head side needs W*0.47/(s-0.28), on the foot side W*0.47/(1.22-s),
+    // at the centre of mass the whole W:
+    // - head top 110 N, collar 127 N, shin 133 N, ankle 113 N: one hand lifts them easily (55-67% of its 200 N);
+    // - between 0.574 and 0.926 m (hips, belly; the hint adds "тяжело") one hand is not enough and the point stays down;
+    //   two hands there (400 N) lift it;
+    // - one hand never lifts the whole body clear (200 N < W), two at the ends carry it (collar 151 N + ankle 124 N).
+    // Grip: static 1.6, sliding 0.5, combined by Average: ~1.1 / 0.55 on default ground (0.6), so the far end pivots
+    // instead of sliding. The van's floor, bumper top, steps and rear wheel housings use a Minimum-combined 0.3 material
+    // (VanInteriorColliders), which wins over Average, so a body leaning on the floor edge slides in when pushed.
     // The NPC logic can take any claim back (RevokeAll on waking, Tear when it kicks free). F9 debug pins (TogglePin) are
     // holders too: they stand in for a second or third player offline.
-    // State is plain data (Holders, HolderCount, Grabbable) for a network version later.
+    // State is plain data (Claims, HolderCount, Grabbable) for a network version later.
     [DisallowMultipleComponent]
     public sealed class GreyboxNpcBody : MonoBehaviour, IGrabPointTarget
     {
         public enum Point { Collar, LeftWrist, RightWrist, Pelvis, LeftAnkle, RightAnkle }
 
-        /// <summary>Grab points in root space, indexed by Point.</summary>
+        /// <summary>Anatomical landmarks in root space (root at the feet, body along local up), indexed by Point. Not grab
+        /// points any more (a hand holds wherever it grabbed, on the axis): GreyboxVanCargo tests the pelvis and collar for
+        /// "in the bay", GreyboxNpc kicks at an ankle, Tear prefers holds near a landmark.</summary>
         public static readonly Vector3[] PointLocal =
         {
             new(0f, 1.30f, -0.12f), new(-0.35f, 0.85f, 0f), new(0.35f, 0.85f, 0f),
             new(0f, 0.80f, 0f), new(-0.10f, 0.08f, 0f), new(0.10f, 0.08f, 0f),
         };
 
-        // What the grab hint calls each point (accusative: "схватить (...)").
-        private static readonly string[] PointNames = { "шиворот", "запястье", "запястье", "таз", "лодыжку", "лодыжку" };
-
         public const int MaxHolders = 3;
+        // m along the axis: claims stay this far inside the capsule's ends; a claim below FootZone is a feet hold
+        // (OnlyAnklesHeld); Tear takes the hold nearest its landmark within TearRadius; F9 on a pin within PinToggleRadius
+        // removes it.
+        public const float EndInset = 0.05f, FootZone = 0.45f, TearRadius = 0.45f, PinToggleRadius = 0.25f;
+
+        // Grab hint zones by height along the body (m from the feet on the 1.5 m body, scaled with Height), accusative.
+        private static readonly (float from, string name)[] Zones =
+        {
+            (1.30f, "голову"), (1.12f, "плечи"), (0.95f, "грудь"), (0.62f, "таз"), (0.25f, "ноги"), (float.NegativeInfinity, "ступни"),
+        };
 
         [Tooltip("How holders hold a point (Map/Data/NpcGrabProfile.asset). Empty = the same numbers built in code.")]
         public GrabPhysicsProfile GrabProfile;
 
         [Header("Body")]
+        [Tooltip("Awake mass (sitting in the cargo bay, escaping).")]
         public float Mass = 40f;
+        [Tooltip("Mass while lying stunned: light enough for one hand to lift an end, never the middle (lever rule, see header).")]
+        public float DownedMass = 28f;
         public float LinearDamping = 0.05f;
         public float AngularDamping = 0.5f;
         public float MaxDepenetration = 3f;
@@ -49,16 +75,23 @@ namespace OnlyVolunteers.Map
         public float SeatedHeight = 1.0f;
         [Tooltip("m/s: a sitter knocked down with no room to lie flat grows back to full length this fast (SetSeated).")]
         public float UnseatGrowSpeed = 2f;
+        [Tooltip("Sliding friction (dragging along the ground or the cargo floor).")]
         public float Friction = 0.5f;
+        [Tooltip("Static friction: holds the far end in place while the other end is lifted, so the body pivots on it.")]
+        public float StaticFriction = 1.6f;
         [Tooltip("Per second, only around the body's long axis: a lone capsule would otherwise roll away like a log.")]
         public float RollDamping = 4f;
 
-        [Header("Grab points")]
-        public float ClaimRadius = 0.6f;
+        /// <summary>One hold: who holds, and where (Rigidbody space, ON the body axis: x = z = 0).</summary>
+        public struct Claim
+        {
+            public object Holder;
+            public Vector3 Local;
+        }
 
-        // Plain data. Holders[i] holds Point i (null = free). Grabbable: set by GreyboxNpc (while lying down, and while
+        // Plain data. Claims[slot]: Holder null = free slot. Grabbable: set by GreyboxNpc (while lying down, and while
         // running for a cargo door; NpcGrabProfile finds both layers, NpcBody and NpcSeated).
-        [NonSerialized] public object[] Holders = new object[6];
+        [NonSerialized] public readonly Claim[] Claims = new Claim[MaxHolders];
         [NonSerialized] public bool Grabbable;
 
         /// <summary>Hit something: (impact speed along the contact normal, the other collider). Kinematic bodies (players'
@@ -83,7 +116,7 @@ namespace OnlyVolunteers.Map
 
         private sealed class DebugPin
         {
-            public int Point;
+            public int Slot;
             public Vector3 Anchor;
         }
 
@@ -100,32 +133,36 @@ namespace OnlyVolunteers.Map
             get
             {
                 int n = 0;
-                foreach (object h in Holders) if (h != null) n++;
+                for (int i = 0; i < Claims.Length; i++)
+                    if (Claims[i].Holder != null) n++;
                 return n;
             }
         }
 
-        public bool HeldAt(Point p) => Holders[(int)p] != null;
-
-        /// <summary>Held, and only by the ankles (feet first, head bouncing: costs the NPC condition when fast).</summary>
+        /// <summary>Held, and only by the feet (every hold below FootZone; feet first, head bouncing: costs the NPC
+        /// condition when fast).</summary>
         public bool OnlyAnklesHeld
         {
             get
             {
-                bool ankle = false;
-                for (int i = 0; i < Holders.Length; i++)
+                bool held = false;
+                for (int i = 0; i < Claims.Length; i++)
                 {
-                    if (Holders[i] == null) continue;
-                    if (i != (int)Point.LeftAnkle && i != (int)Point.RightAnkle) return false;
-                    ankle = true;
+                    if (Claims[i].Holder == null) continue;
+                    if (Claims[i].Local.y >= FootZone) return false;
+                    held = true;
                 }
-                return ankle;
+                return held;
             }
         }
 
         // From the physics pose when there is a body (the transform shows the interpolated one).
         public Vector3 PointWorld(int point) =>
             _rb != null ? _rb.position + _rb.rotation * PointLocal[point] : transform.TransformPoint(PointLocal[point]);
+
+        /// <summary>World position of the hold in a slot (physics pose).</summary>
+        public Vector3 ClaimWorld(int slot) =>
+            _rb != null ? _rb.position + _rb.rotation * Claims[slot].Local : transform.TransformPoint(Claims[slot].Local);
 
         // The NpcGrabProfile numbers in code, for scenes built before the asset existed. GrabPhysicsProfile keeps its
         // fields private (Vadim's), so they are filled by name from JSON; if a name ever changes, that field keeps its default.
@@ -138,8 +175,9 @@ namespace OnlyVolunteers.Map
                 _fallbackProfile.name = "NpcGrabProfile (code)";
                 _fallbackProfile.hideFlags = HideFlags.DontSave;
                 JsonUtility.FromJsonOverwrite(
-                    "{\"acquireDistance\":2.2,\"holdDistance\":1.2,\"springStrength\":600,\"dampingRatio\":1," +
-                    "\"maxForce\":350,\"maxLinearSpeed\":4.5,\"maxAngularSpeed\":8,\"breakDistance\":2.2," +
+                    "{\"acquireDistance\":2.2,\"holdDistance\":2.5,\"springStrength\":1200,\"dampingRatio\":0.6," +
+                    "\"maxForce\":200,\"maxLinearSpeed\":4.5,\"maxAngularSpeed\":8,\"breakDistance\":2.2," +
+                    "\"soloHorizontalMaxForce\":220," +
                     "\"acquisitionLayers\":{\"m_Bits\":" + OvLayers.NpcMask + "}}", _fallbackProfile);
                 return _fallbackProfile;
             }
@@ -148,7 +186,7 @@ namespace OnlyVolunteers.Map
         private PhysicsMaterial Material => _material != null ? _material : _material = new PhysicsMaterial("NpcBody")
         {
             dynamicFriction = Friction,
-            staticFriction = Friction,
+            staticFriction = Mathf.Max(Friction, StaticFriction),
             bounciness = 0f,
             frictionCombine = PhysicsMaterialCombine.Average,
             bounceCombine = PhysicsMaterialCombine.Minimum,
@@ -161,7 +199,7 @@ namespace OnlyVolunteers.Map
 
         // ---------- On / off ----------
 
-        /// <summary>Becomes a 40 kg physics body where the NPC stands now (lying down is up to physics: a hit topples it).</summary>
+        /// <summary>Becomes a DownedMass physics body where the NPC stands now (lying down is up to physics: a hit topples it).</summary>
         public void Activate(Vector3 velocity, Vector3 angularVelocity)
         {
             if (_rb == null) _freeLayer = gameObject.layer;
@@ -174,7 +212,7 @@ namespace OnlyVolunteers.Map
             _capsule.enabled = true;
             _capsule.sharedMaterial = Material;
             SetShape(Height);
-            _rb.mass = Mass;
+            _rb.mass = DownedMass;
             _rb.linearDamping = LinearDamping;
             _rb.angularDamping = AngularDamping;
             _rb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -204,8 +242,9 @@ namespace OnlyVolunteers.Map
             gameObject.layer = _freeLayer;
         }
 
-        /// <summary>Sitting in the cargo bay (awake there): upright, rotation frozen, 1 m capsule, layer NpcSeated (ignores
-        /// lying bodies and other sitters). Back to lying: laid on its back where it sat, then the full capsule.</summary>
+        /// <summary>Sitting in the cargo bay (awake there, Mass): upright, rotation frozen, 1 m capsule, layer NpcSeated
+        /// (ignores lying bodies and other sitters). Back to lying (DownedMass): laid on its back where it sat, then the full
+        /// capsule.</summary>
         public void SetSeated(bool seated)
         {
             if (_rb == null || seated == _seated) return;
@@ -222,6 +261,7 @@ namespace OnlyVolunteers.Map
                 position = centre - Vector3.up * (Radius - 0.02f);
                 _growing = false;
                 SetShape(SeatedHeight);
+                _rb.mass = Mass;
                 _rb.constraints = RigidbodyConstraints.FreezeRotation;
                 gameObject.layer = OvLayers.NpcSeated;
             }
@@ -241,6 +281,7 @@ namespace OnlyVolunteers.Map
                 _growing = !fits;
                 _shapeHeight = fits ? Height : Radius * 2f + 0.01f;
                 SetShape(_shapeHeight, Height * 0.5f);
+                _rb.mass = DownedMass;
                 _rb.constraints = RigidbodyConstraints.None;
                 gameObject.layer = OvLayers.NpcBody;
             }
@@ -313,10 +354,15 @@ namespace OnlyVolunteers.Map
 
         // ---------- Forces (called by GreyboxNpc) ----------
 
+        // GreyboxNpc's hit, kick and crawl numbers were tuned on the 40 kg body: impulses scale with the current mass, so a
+        // lighter downed body (0.7) gets the same velocity change as before (hit 60 -> 42 N·s, still 1.5 m/s; kick 25 ->
+        // 17.5 N·s, 0.63 m/s; crawl speed unchanged).
+        private float LimpScale => _rb != null && Mass > 0f ? _rb.mass / Mass : 1f;
+
         public void Push(Vector3 impulse, Vector3 worldPoint)
         {
             if (_rb == null) return;
-            _rb.AddForceAtPosition(impulse, worldPoint, ForceMode.Impulse);
+            _rb.AddForceAtPosition(impulse * LimpScale, worldPoint, ForceMode.Impulse);
         }
 
         public void Kick(Point ankle, Vector3 impulse) => Push(impulse, PointWorld((int)ankle));
@@ -325,7 +371,7 @@ namespace OnlyVolunteers.Map
         public void Scoot(Vector3 horizontalImpulse, float hopSpeed)
         {
             if (_rb == null) return;
-            _rb.AddForce(horizontalImpulse + Vector3.up * (hopSpeed * _rb.mass), ForceMode.Impulse);
+            _rb.AddForce(horizontalImpulse * LimpScale + Vector3.up * (hopSpeed * _rb.mass), ForceMode.Impulse);
         }
 
         /// <summary>Contacts with these colliders are ignored for a while (the van that just knocked the NPC over, so the body
@@ -385,72 +431,59 @@ namespace OnlyVolunteers.Map
 
         // ---------- Claims (IGrabPointTarget) ----------
 
+        /// <summary>Claims the point of the body axis nearest to 'hit' for 'holder' (one slot per holder, at most
+        /// MaxHolders). point = the slot, local = the point in Rigidbody space.</summary>
         public bool TryClaim(object holder, Vector3 hit, out int point, out Vector3 local, out GrabPhysicsProfile profile)
         {
             point = -1;
             local = Vector3.zero;
             profile = Profile;
-            if (holder == null || !Grabbable || _rb == null || !isActiveAndEnabled) return false;
-            if (HolderCount >= MaxHolders || HolderOf(holder) >= 0) return false;
-            point = NearestFree(hit);
+            if (holder == null || !Grabbable || _rb == null || _capsule == null || !isActiveAndEnabled || SlotOf(holder) >= 0)
+                return false;
+            point = FreeSlot(); // -1 when MaxHolders already hold it
             if (point < 0) return false;
-            Holders[point] = holder;
-            local = PointLocal[point];
+            local = AxisLocal(hit);
+            Claims[point] = new Claim { Holder = holder, Local = local };
             return true;
         }
 
         public bool IsClaimValid(object holder, int point) =>
-            holder != null && point >= 0 && point < Holders.Length && ReferenceEquals(Holders[point], holder) &&
+            holder != null && point >= 0 && point < Claims.Length && ReferenceEquals(Claims[point].Holder, holder) &&
             Grabbable && _rb != null && isActiveAndEnabled;
 
         public void Release(object holder, int point)
         {
-            if (point < 0 || point >= Holders.Length || !ReferenceEquals(Holders[point], holder)) return;
-            Holders[point] = null;
+            if (point < 0 || point >= Claims.Length || !ReferenceEquals(Claims[point].Holder, holder)) return;
+            Claims[point] = default;
             if (holder is DebugPin pin) _pins.Remove(pin);
         }
 
         /// <summary>Every holder lets go (woke up, stood up, sat up).</summary>
         public void RevokeAll()
         {
-            Array.Clear(Holders, 0, Holders.Length);
+            Array.Clear(Claims, 0, Claims.Length);
             _pins.Clear();
         }
 
-        /// <summary>Tears one hold loose: the holder of 'preferred' if there is one, otherwise a random holder.</summary>
+        /// <summary>Tears one hold loose: the hold nearest the landmark 'preferred' along the body (within TearRadius; an
+        /// ankle kick tears feet-side holds first), otherwise a random one.</summary>
         public bool Tear(Point preferred)
         {
-            int point = Holders[(int)preferred] != null ? (int)preferred : RandomHeld();
-            if (point < 0) return false;
-            Release(Holders[point], point);
+            int slot = NearestClaim(PointLocal[(int)preferred].y, TearRadius);
+            if (slot < 0) slot = RandomHeld();
+            if (slot < 0) return false;
+            Release(Claims[slot].Holder, slot);
             return true;
         }
 
-        private int RandomHeld()
-        {
-            int count = HolderCount;
-            if (count == 0) return -1;
-            int pick = UnityEngine.Random.Range(0, count);
-            for (int i = 0; i < Holders.Length; i++)
-                if (Holders[i] != null && pick-- == 0) return i;
-            return -1;
-        }
-
-        private int HolderOf(object holder)
-        {
-            for (int i = 0; i < Holders.Length; i++)
-                if (ReferenceEquals(Holders[i], holder)) return i;
-            return -1;
-        }
-
-        private int NearestFree(Vector3 world)
+        private int NearestClaim(float along, float radius)
         {
             int best = -1;
-            float bestDistance = ClaimRadius;
-            for (int i = 0; i < PointLocal.Length; i++)
+            float bestDistance = radius;
+            for (int i = 0; i < Claims.Length; i++)
             {
-                if (Holders[i] != null) continue;
-                float d = Vector3.Distance(PointWorld(i), world);
+                if (Claims[i].Holder == null) continue;
+                float d = Mathf.Abs(Claims[i].Local.y - along);
                 if (d <= bestDistance)
                 {
                     best = i;
@@ -460,33 +493,92 @@ namespace OnlyVolunteers.Map
             return best;
         }
 
-        /// <summary>For the grab hint: the name of the point a grab at 'world' would get, or null if it would be refused.</summary>
-        public string FreePointName(Vector3 world)
+        private int RandomHeld()
         {
-            if (!Grabbable || _rb == null || HolderCount >= MaxHolders) return null;
-            int point = NearestFree(world);
-            return point >= 0 ? PointNames[point] : null;
+            int count = HolderCount;
+            if (count == 0) return -1;
+            int pick = UnityEngine.Random.Range(0, count);
+            for (int i = 0; i < Claims.Length; i++)
+                if (Claims[i].Holder != null && pick-- == 0) return i;
+            return -1;
+        }
+
+        private int SlotOf(object holder)
+        {
+            for (int i = 0; i < Claims.Length; i++)
+                if (ReferenceEquals(Claims[i].Holder, holder)) return i;
+            return -1;
+        }
+
+        private int FreeSlot()
+        {
+            for (int i = 0; i < Claims.Length; i++)
+                if (Claims[i].Holder == null) return i;
+            return -1;
+        }
+
+        // The point of the capsule's axis nearest to a world point, in Rigidbody space, kept EndInset inside its ends. From
+        // the physics pose, not the interpolated transform (up to 9 cm apart at 4.5 m/s). Uses the capsule's current shape,
+        // so it is also right for a seated (1 m) or a growing capsule.
+        private Vector3 AxisLocal(Vector3 world)
+        {
+            float along = (Quaternion.Inverse(_rb.rotation) * (world - _rb.position)).y;
+            float half = _capsule.height * 0.5f, mid = _capsule.center.y;
+            return new Vector3(0f, Mathf.Clamp(along, mid - half + EndInset, mid + half - EndInset), 0f);
+        }
+
+        /// <summary>Static force one hand needs to lift the axis point 's' (m from the feet) of the lying body while its other
+        /// end rests on the ground: the body turns about the centre of the other end cap (lever rule, see the header).</summary>
+        public float OneHandLoad(float s)
+        {
+            if (_rb == null) return 0f;
+            float weight = _rb.mass * Physics.gravity.magnitude;
+            float c = _rb.centerOfMass.y;
+            float footPivot = Radius, headPivot = Height - Radius;
+            if (s > c) return weight * (c - footPivot) / Mathf.Max(0.05f, s - footPivot);
+            if (s < c) return weight * (headPivot - c) / Mathf.Max(0.05f, headPivot - s);
+            return weight;
+        }
+
+        /// <summary>For the grab hint: where a grab at 'world' would take hold (accusative: "взять за ..."), with " — тяжело"
+        /// when one hand cannot lift that point; null if the grab would be refused.</summary>
+        public string GrabHintName(Vector3 world)
+        {
+            if (!Grabbable || _rb == null || _capsule == null || HolderCount >= MaxHolders) return null;
+            if (_seated) return "беглеца";
+            float s = AxisLocal(world).y;
+            float scale = Height / 1.5f;
+            string zone = Zones[Zones.Length - 1].name;
+            foreach ((float from, string name) in Zones)
+                if (s >= from * scale)
+                {
+                    zone = name;
+                    break;
+                }
+            return OneHandLoad(s) > Profile.MaxForce ? zone + " — тяжело" : zone;
         }
 
         // ---------- F9 debug pins (offline stand-ins for other holders) ----------
 
-        /// <summary>Pins the free point nearest to 'hit', 'lift' metres above where it is now, held with the same profile
-        /// as a player's hand. A hit next to an existing pin removes that pin instead. True = pinned.</summary>
+        /// <summary>Pins the axis point nearest to 'hit', 'lift' metres above where it is now, held with the same profile
+        /// as a player's hand. A hit within PinToggleRadius of an existing pin removes that pin instead. True = pinned.</summary>
         public bool TogglePin(Vector3 hit, float lift)
         {
+            if (_rb == null || _capsule == null) return false;
+            Vector3 at = _rb.position + _rb.rotation * AxisLocal(hit);
             for (int i = _pins.Count - 1; i >= 0; i--)
             {
                 DebugPin old = _pins[i];
-                if (Vector3.Distance(PointWorld(old.Point), hit) <= ClaimRadius)
+                if (Vector3.Distance(ClaimWorld(old.Slot), at) <= PinToggleRadius)
                 {
-                    Release(old, old.Point);
+                    Release(old, old.Slot);
                     return false;
                 }
             }
             var pin = new DebugPin();
-            if (!TryClaim(pin, hit, out int point, out _, out _)) return false;
-            pin.Point = point;
-            pin.Anchor = PointWorld(point) + Vector3.up * lift;
+            if (!TryClaim(pin, hit, out int slot, out _, out _)) return false;
+            pin.Slot = slot;
+            pin.Anchor = ClaimWorld(slot) + Vector3.up * lift;
             _pins.Add(pin);
             return true;
         }
@@ -494,7 +586,7 @@ namespace OnlyVolunteers.Map
         public void UnpinAll()
         {
             for (int i = _pins.Count - 1; i >= 0; i--)
-                Release(_pins[i], _pins[i].Point);
+                Release(_pins[i], _pins[i].Slot);
         }
 
         private void HoldPins()
@@ -503,11 +595,23 @@ namespace OnlyVolunteers.Map
             for (int i = _pins.Count - 1; i >= 0; i--)
             {
                 DebugPin pin = _pins[i];
-                if (!IsClaimValid(pin, pin.Point) ||
-                    !GrabPhysicsSolver.TryCalculate(_rb, PointLocal[pin.Point], pin.Anchor, profile, out Vector3 world, out Vector3 force))
+                if (!IsClaimValid(pin, pin.Slot))
                 {
-                    Release(pin, pin.Point);
-                    _pins.Remove(pin); // a revoked pin is no longer in Holders, so Release did not drop it from the list
+                    Release(pin, pin.Slot);
+                    _pins.Remove(pin); // a revoked pin is no longer in Claims, so Release did not drop it from the list
+                    continue;
+                }
+                // Shaped like a player's hand (PhysicsGrabber's point hold): sideways capped apart when the profile says so.
+                Vector3 world = ClaimWorld(pin.Slot);
+                Vector3 error = pin.Anchor - world;
+                Vector3 velocity = _rb.GetPointVelocity(world);
+                Vector3 force;
+                bool held = profile.SoloHorizontalMaxForce > 0f
+                    ? GrabPhysicsSolver.TryCalculateRelativeGrounded(error, Vector3.zero, velocity, _rb.mass, profile, out force)
+                    : GrabPhysicsSolver.TryCalculateRelative(error, Vector3.zero, velocity, _rb.mass, profile, out force);
+                if (!held)
+                {
+                    Release(pin, pin.Slot);
                     continue;
                 }
                 GrabPhysicsSolver.ApplyForce(_rb, world, force);
@@ -516,13 +620,17 @@ namespace OnlyVolunteers.Map
 
         private static Vector3 Flat(Vector3 v) => new(v.x, 0f, v.z);
 
+        // Holds red, anatomical landmarks yellow.
         private void OnDrawGizmosSelected()
         {
+            Gizmos.color = Color.yellow;
             for (int i = 0; i < PointLocal.Length; i++)
-            {
-                Gizmos.color = Holders != null && Holders[i] != null ? Color.red : Color.yellow;
-                Gizmos.DrawWireSphere(PointWorld(i), 0.06f);
-            }
+                Gizmos.DrawWireSphere(PointWorld(i), 0.04f);
+            if (Claims == null) return;
+            Gizmos.color = Color.red;
+            for (int i = 0; i < Claims.Length; i++)
+                if (Claims[i].Holder != null)
+                    Gizmos.DrawWireSphere(ClaimWorld(i), 0.06f);
         }
     }
 }

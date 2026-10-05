@@ -1,6 +1,6 @@
 """Flatten MAP_PLAN_R01_vNN.json (+ optional MAP_DRESSING_R01_vNN.json) into look_vNN_flat.json for MapLookBuilder.
 
-usage: python flatten_look.py [v12] [--dressing PATH | --no-dressing] [--no-veg] [--out PATH]
+usage: python flatten_look.py [v12] [--dressing PATH | --no-dressing] [--no-veg] [--no-extras] [--no-kits] [--out PATH]
                               [--lake-depth M] [--canal-depth M] [--seed N]
 
 Python 3.12, standard library only. Geometry helpers live in look_geom.py.
@@ -2053,6 +2053,8 @@ class Look:
                     add(mat, 30, s['poly'], 'site:' + s['src']['id'])
             for mat, prio, ring, ctx in self.hard_ground:
                 add(mat, prio, ring, ctx)
+        for mat, prio, ring, ctx in getattr(self, 'extra_ground', []):     # extras_v12: gravel at the garage rows
+            add(mat, prio, ring, ctx, edge=1.5)
         self.notes['dressing_ground_replaced_by_district_base'] = replaced
         # 1 m shoulders on roads without sidewalks (rural roads, open highways)
         sw_roads = {(q['road'], q['side']) for q in self.sidewalks}
@@ -2169,6 +2171,14 @@ class Look:
         self.build_furniture()
         self.build_vegetation()
         self.build_extras()
+        self.extras = None
+        if rev == 'v12' and not getattr(self.o, 'no_extras', False):
+            from extras_v12 import place_extras          # garage rows, wrecks, beach furniture (hand-sited for v12)
+            self.extras = place_extras(self)
+        self.kits = None
+        if rev == 'v12' and not getattr(self.o, 'no_kits', False):
+            from extras_v12_kits import place_kits        # parked vehicles + landmarks -> new vehicles[] / landmarks[]
+            self.kits = place_kits(self)
         self.build_ground()
         self.build_misc()
         self.out['warnings'] = self.warn
@@ -2184,7 +2194,8 @@ def seg_hit(a, b, c, d):
 ORDER = ['schema', 'revision', 'source_plan', 'source_dressing', 'seed', 'angle_convention', 'winding', 'soft_layers',
          'hard_mats', 'ground_default', 'terrain', 'boundary', 'districts', 'hills', 'buildings', 'roads', 'junctions',
          'crossings', 'sidewalks', 'markings', 'parking', 'yards', 'ground', 'water', 'sea', 'beach', 'rail',
-         'elite_fence', 'blockers', 'rocks', 'trees', 'furniture', 'pipes', 'decals', 'exits', 'points', 'warnings']
+         'elite_fence', 'blockers', 'rocks', 'trees', 'furniture', 'pipes', 'decals', 'exits', 'points', 'warnings',
+         'vehicles', 'landmarks']
 
 
 def main(argv=None):
@@ -2193,6 +2204,8 @@ def main(argv=None):
     ap.add_argument('--dressing', default=None, help='dressing json (default ../MAP_DRESSING_R01_<rev>.json when present)')
     ap.add_argument('--no-dressing', action='store_true', help='ignore any dressing file (test the fallback path)')
     ap.add_argument('--no-veg', action='store_true', help='skip the district scatter and the edge belt trees')
+    ap.add_argument('--no-extras', action='store_true', help='skip the hand-sited garages, wrecks and beach furniture (extras_v12.py)')
+    ap.add_argument('--no-kits', action='store_true', help='skip the parked vehicles and landmarks (extras_v12_kits.py)')
     ap.add_argument('--out', default=None, help='output path (default look_<rev>_flat.json next to this script)')
     ap.add_argument('--lake-depth', type=float, default=1.1, help='lake bed depth (design 2.0; 1.1 keeps 0.8 m fordable)')
     ap.add_argument('--canal-depth', type=float, default=1.2)
@@ -2231,6 +2244,27 @@ def main(argv=None):
     print('yard fences: ' + ', '.join(f'{k} {v}' for k, v in sorted(yc.items())))
     print('building tris (footprints): ' + str(sum(len(b['tris']) // 6 for b in ordered['buildings'])))
     print('notes: ' + ', '.join(f'{k} {v}' for k, v in sorted(look.notes.items())))
+    if look.extras is not None:
+        ec = Counter((b.key, look.district_at(b.p)) for b in look.extras.items)
+        print(f'extras ({"OK" if look.extras.ok else "CHECK"}): ' + ', '.join(f'{k} {v} ({dd})' for (k, dd), v in sorted(ec.items())))
+        for line in look.extras.report:
+            print('  ' + line)
+    if look.kits is not None:
+        kv = Counter((q['type'], q['district']) for q in ordered.get('vehicles', []))
+        kl = Counter((q['type'], q['mount']) for q in ordered.get('landmarks', []))
+        lines = [f'kits ({"OK" if look.kits.ok else "CHECK"}): {len(ordered.get("vehicles", []))} vehicles, '
+                 f'{len(ordered.get("landmarks", []))} landmarks',
+                 'vehicles: ' + ', '.join(f'{k} {v} ({dd})' for (k, dd), v in sorted(kv.items())),
+                 'landmarks: ' + ', '.join(f'{k} {v} ({m})' for (k, m), v in sorted(kl.items()))]
+        lines += look.kits.report + [f'dropped: {t} ({k}): {", ".join(w or [])}' for t, k, _, w in look.kits.drops]
+        lines += ['final check: ' + b for b in look.kits.bad]
+        print(lines[0])
+        for line in lines[1:]:
+            print('  ' + line)
+        if os.path.basename(dst).endswith('_flat.json'):
+            rep = dst[:-len('_flat.json')] + '_kits_validation.txt'
+            with open(rep, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(lines) + '\n')
     print(f'warnings {len(ordered["warnings"])}' + (':' if ordered['warnings'] else ''))
     for w in ordered['warnings'][:40]:
         print('  - ' + w)

@@ -1,0 +1,67 @@
+{
+  "asset": "SK_BusStopSign",
+  "family": "SK-SMALL",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 592,
+  "triangle_budget": [
+    100,
+    800
+  ],
+  "bounds_min": [
+    -0.28,
+    -0.1109,
+    0.0
+  ],
+  "bounds_max": [
+    0.28,
+    0.1109,
+    2.9
+  ],
+  "size_xyz_m": [
+    0.56,
+    0.222,
+    2.9
+  ],
+  "objects": {
+    "SK_BusStopSign_Mesh": {
+      "triangles": 592,
+      "vertices": 336,
+      "faces": 208,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Soviet bus stop sign (map id bus_stop_sign): 2.4 m grey pipe, round two-faced plate r 0.27 m centred at 2.62 m (white rim, yellow field, black \"A\"), white route plate on the -Y side at 1.95 m. Layered geometry, no textures.",
+  "checks": {
+    "triangle_budget_100_800": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "SK_BusStopSign_v01.fbx",
+    "fbx_size_bytes": 27244,
+    "blend": "SK-SMALL_v01.blend"
+  }
+}

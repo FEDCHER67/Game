@@ -430,6 +430,9 @@ namespace OnlyVolunteers.Map.Look
             MapLookRegistry registry = LookAssetStore.Registry();
             registry.ResetCache();
             int placeholders = 0, art = 0, kit = 0, extras = 0;
+            // Collider.bounds of a freshly built edit-mode scene still sit at the prefab origin until the transforms reach
+            // PhysX (autoSyncTransforms is off): GroundBox's 2.2 m test and the mesh-collider AABB need them in place.
+            if (built != null) Physics.SyncTransforms();
             Transform furnitureRoot = built != null ? built.Find("Props/Furniture") : null;
             for (int k = 0; k < d.furniture.Length; k++)
             {
@@ -460,6 +463,73 @@ namespace OnlyVolunteers.Map.Look
                     list.Add(($"{top.name} at ({top.position.x:0},{top.position.z:0})", box));
                     art++;
                 }
+
+            // Parked vehicles and ground landmark pieces (kit prefabs, exact slots only). GroundBox drops colliders more
+            // than 2.2 m above the terrain (roof crown, giant pin and ball) and falls back to AabbBox for mesh colliders.
+            int kitProps = 0;
+            if (built != null)
+                foreach (string g in new[] { "Props/Vehicles", "Props/Landmarks" })
+                {
+                    Transform groupRoot = built.Find(g);
+                    if (groupRoot == null) continue;
+                    foreach (Collider col in groupRoot.GetComponentsInChildren<Collider>())
+                    {
+                        if (!GroundBox(col, hm, out float[] box)) continue;
+                        Transform top = TopBelow(col.transform, groupRoot);
+                        list.Add(($"{top.name} at ({top.position.x:0},{top.position.z:0})", box));
+                        kitProps++;
+                    }
+                }
+            else
+            {
+                // No scene: the prefabs' own colliders at the build's poses (no nudge); vehicles the build skips as
+                // unparkable (PropScatterer.VehiclePose gap) are skipped here too.
+                foreach (LookVehicle v in d.vehicles)
+                {
+                    PrefabSlot slot = registry.ExactPrefabSlot("prop/" + v.type);
+                    MeshFilter vmf = slot != null ? slot.prefab.GetComponent<MeshFilter>() : null;
+                    if (slot == null || !slot.collider || vmf == null || vmf.sharedMesh == null) continue;
+                    PropScatterer.VehiclePose(v, vmf.sharedMesh.bounds, hm, out Vector3 vpos, out Quaternion vrot, out float gap);
+                    if (gap > PropScatterer.MaxParkGap) continue;
+                    var pose = Matrix4x4.TRS(vpos, vrot, slot.scale);
+                    foreach (float[] box in PrefabBoxes(slot.prefab, pose))
+                    {
+                        list.Add(($"{v.type} ({v.spot}) at ({v.x:0},{v.y:0})", box));
+                        kitProps++;
+                    }
+                }
+                foreach (LookLandmark m in d.landmarks)
+                {
+                    if (m.mount != "ground") continue;
+                    PrefabSlot slot = registry.ExactPrefabSlot("prop/" + m.type);
+                    if (slot == null || !slot.collider) continue;
+                    Vector3 scale = slot.scale * (m.s > 0f ? m.s : 1f);
+                    var pose = Matrix4x4.TRS(new Vector3(m.x, hm.Height(m.x, m.y), m.y), Quaternion.Euler(0f, m.a, 0f), scale);
+                    bool boxed = false;
+                    foreach (float[] box in PrefabBoxes(slot.prefab, pose))
+                    {
+                        list.Add(($"{m.type} at ({m.x:0},{m.y:0})", box));
+                        kitProps++;
+                        boxed = true;
+                    }
+                    if (boxed) continue;
+                    // LocalBox has no answer for a MeshCollider (the convex fountain): the scaled prefab mesh bounds instead.
+                    MeshFilter mf = slot.prefab.GetComponent<MeshFilter>();
+                    if (mf == null || mf.sharedMesh == null || slot.prefab.GetComponentInChildren<Collider>() == null) continue;
+                    Bounds b = mf.sharedMesh.bounds;
+                    list.Add(($"{m.type} at ({m.x:0},{m.y:0})",
+                        Corners(new Vector3(m.x, 0f, m.y), Quaternion.Euler(0f, m.a, 0f), Vector3.Scale(b.center, scale), Vector3.Scale(b.size, scale), true)));
+                    kitProps++;
+                }
+            }
+            // Free-standing clock-tower shafts sit in the district colliders, not under Props: both passes add them.
+            foreach (LookLandmark m in d.landmarks)
+            {
+                if (m.mount != "tower" || registry.ExactPrefabSlot("prop/" + m.type) == null) continue;
+                float w = m.shaft_w > 0f ? m.shaft_w : 3.2f;
+                list.Add(($"{m.type} shaft at ({m.x:0},{m.y:0})", Corners(new Vector3(m.x, 0f, m.y), Quaternion.Euler(0f, m.a, 0f), Vector3.zero, new Vector3(w + 0.4f, 10f, w + 0.4f), true)));
+                kitProps++;
+            }
 
             Transform buildingsRoot = built != null ? built.Find("Buildings") : null;
             if (buildingsRoot != null)
@@ -495,7 +565,7 @@ namespace OnlyVolunteers.Map.Look
                         }
                         continue;
                     }
-                    BuildingResult res = ProceduralBuilding.Build(b, BuildingStyles.For(b), pad, hm.LowestUnder(b.fp));
+                    BuildingResult res = ProceduralBuilding.Build(b, BuildingStyles.For(b), pad, hm.LowestUnder(b.fp), PropScatterer.KitParts(d, registry, b.id));
                     if (res.Collision != null) UnityEngine.Object.DestroyImmediate(res.Collision);
                     foreach (ExtraCollider ec in res.Colliders)
                     {
@@ -506,7 +576,7 @@ namespace OnlyVolunteers.Map.Look
                     }
                 }
             note = (built != null ? "colliders from the built scene" : "colliders from registry prefabs at plan poses (no scene open; KeepOffRoads nudge not applied)") +
-                   $": {art} street-art, {kit} kit-building, {extras} building-extra, {placeholders} placeholder-furniture boxes";
+                   $": {art} street-art, {kitProps} vehicle/landmark, {kit} kit-building, {extras} building-extra, {placeholders} placeholder-furniture boxes";
             return list;
         }
 

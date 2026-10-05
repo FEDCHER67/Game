@@ -1,0 +1,67 @@
+{
+  "asset": "VK_Van_Minibus",
+  "family": "VK-VANS",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = centre of the base on the ground",
+  "triangles_total": 1168,
+  "triangle_budget": [
+    600,
+    1500
+  ],
+  "bounds_min": [
+    -1.115,
+    -2.32,
+    0.0
+  ],
+  "bounds_max": [
+    1.115,
+    2.3,
+    2.05
+  ],
+  "size_xyz_m": [
+    2.23,
+    4.62,
+    2.05
+  ],
+  "objects": {
+    "VK_Van_Minibus_Mesh": {
+      "triangles": 1168,
+      "vertices": 704,
+      "faces": 568,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Parked rounded \"loaf\" 4x4 minibus (UAZ-like silhouette, no logos), army green: high ground clearance with visible axles, split windscreen, round headlights and slotted grille, four side windows, kerb-side passenger door, twin rear doors. No interior. Faces -Y; driver side +X.",
+  "checks": {
+    "triangle_budget_600_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "VK_Van_Minibus_v01.fbx",
+    "fbx_size_bytes": 34604,
+    "blend": "VK-VANS_v01.blend"
+  }
+}

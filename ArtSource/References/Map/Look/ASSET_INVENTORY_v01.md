@@ -125,3 +125,38 @@ Builder keys still served by PlaceholderKit after v01 (registry slot empty, `pro
 - `prop/ad_pole` - round advertising column (F07_AD_POLE uses this key as a building prop).
 - `prop/pipe_support` - industrial pipe rack/support (outfall pipe runs).
 Same rules as v01: low-poly faceted, SK_Palette or MP_* palette materials, pivot at base centre, front -Y in Blender.
+
+## v01 kits added 2026-10-05 (built locally with Blender 5.2.1, all validation JSONs `all_checks_passed`; cloud drafts, NOT yet reviewed by Fedya)
+Same line format; Unity wiring in `KITS_UNITY_TODO.md`; placements in `look_v12_flat.json` `vehicles[]` / `landmarks[]` (`extras_v12_kits.py`).
+
+### ArtSource/Props/STREET_KIT/SMALL - the v02 placeholder batch above (all on SK_Palette)
+`bus_stop_sign` SK_BusStopSign 592 0.56×0.22×2.90 - replaces builder key `prop/bus_stop_sign`
+`sign_no_swimming` SK_Sign_NoSwimming 540 1.07×0.40×2.01 (pictogram, no text) - `prop/sign_no_swimming`
+`pipe_support` SK_PipeSupport_080 356 0.36×1.00×1.65 (pipe axis z 1.20) - `prop/pipe_support`
+`pipe_support_040` SK_PipeSupport_040 356 0.36×1.00×1.25 (pipe axis z 0.80) - variant for lower pipes
+`ad_column` SK_AdColumn 536 1.44×1.44×3.18 - `prop/ad_pole` (building prop of F07_AD_POLE)
+`rock_01` SK_Rock_01 112 0.50×0.43×0.33, `rock_02` SK_Rock_02 134 0.90×0.80×0.89, `rock_03` SK_Rock_03 142 1.40×0.99×0.50,
+`rock_04` SK_Rock_04 180 2.20×1.72×1.31, `rock_05` SK_Rock_05 204 3.00×1.93×1.51 - own slots `prop/rock_01..05`, picked by hash; `prop/rock` stays empty (NOT unit size: the
+builder must normalise; rocks 01-04 are under the 200-tri floor of the map brief, inside the kit's own 100-600 rock budget)
+`cctv_pole` SK_CCTV_Pole 356 0.33×0.85×3.08 - `prop/camera`; `cctv_wall` SK_CCTV_Wall 260 0.15×0.55×0.24 (wall-mounted, no placement yet)
+`default_crate` SK_DefaultCrate 344 0.60×0.60×0.60 - generic stand-in; deliberately NOT `prop/_default` (see KITS_UNITY_TODO.md)
+
+### ArtSource/Props/VEHICLES_KIT/<FAMILY> (stems VK_, all on SK_Palette, nose -Y in Blender)
+`car_sedan_blue` / `car_sedan_red` / `car_sedan_beige` / `car_sedan_green` CARS/VK_Car_Sedan_<Colour> 1260 1.72×4.08×1.42
+`car_hatchback` CARS/VK_Car_Hatchback 952 1.67×4.22×1.40; `car_police` CARS/VK_Car_Police 1328 1.72×4.08×1.57
+`van_minibus` VANS/VK_Van_Minibus 1168 2.23×4.62×2.05; `van_ambulance` VANS/VK_Van_Ambulance 1268 2.41×5.91×2.65
+`truck_tow` HEAVY/VK_Truck_Tow 1472 2.45×7.16×2.97; `bus_city` HEAVY/VK_Bus_City 1212 2.93×10.77×3.02;
+`tractor_small` HEAVY/VK_Tractor_Small 828 1.71×3.49×2.35; `scooter` SCOOTER/VK_Scooter 652 0.74×1.84×1.37
+
+### ArtSource/Props/LANDMARKS/<FAMILY> (stems LM_; SK_Palette + child meshes `_Emissive` (glow), `_Poster` (LM_Poster), `_Water`)
+`casino_crown_sign` VALLEY/LM_CasinoCrownSign 1376 7.16×1.42×4.33; `neon_bars` VALLEY/LM_Neon_Bars 632 3.44×0.14×1.21;
+`neon_star` VALLEY/LM_Neon_Star 336 1.64×0.16×1.68; `neon_cocktail` VALLEY/LM_Neon_Cocktail 576 1.78×0.15×2.44 (wall-mounted:
+wall = local y 0); `bowling_pin_giant` VALLEY/LM_BowlingPin_Giant 436 1.75×1.75×4.50; `bowling_ball_giant` VALLEY/LM_BowlingBall_Giant
+536 2.40×2.31×2.72; `billboard_large` VALLEY/LM_Billboard_Large 460 6.30×1.86×8.15; `billboard_small` VALLEY/LM_Billboard_Small
+312 3.40×0.98×3.49; `gas_pump` VALLEY/LM_GasPump 692 1.90×0.90×2.42
+`market_stall` OLD_TOWN/LM_MarketStall 796 2.70×1.61×2.62; `church_bell` OLD_TOWN/LM_ChurchBell 392 1.44×1.06×1.20 (pivot =
+swing axis, hangs down to -1.10); `onion_cupola` OLD_TOWN/LM_OnionCupola 516 1.46×1.46×3.20; `fountain` OLD_TOWN/LM_Fountain 828
+5.08×5.08×3.22; `clock_tower_top` OLD_TOWN/LM_ClockTowerTop 1482 3.58×3.58×8.44 (sits on a 3.2 m shaft)
+
+Builder keys still served by PlaceholderKit after these kits: `prop/lamp_bollard` only (rocks too until the rock
+normalisation in KITS_UNITY_TODO.md 4e lands; `prop/rock` and `prop/_default` stay empty on purpose).

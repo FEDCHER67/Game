@@ -10,7 +10,8 @@ namespace OnlyVolunteers.Map
     // with its own camera, or the walker + follow camera) on foot, VanDriveInput + VanCameraRig on Main Camera driving.
     // Exactly one camera and AudioListener stay on.
     // NPC capture stage 1 (canon section 151): the driver is visible in the cab (GreyboxDriverDummy, offline stand-in) and
-    // opens the sliding door with 3 (VanDriveInput.GreyboxDoorRules; the rear doors open by hand only). Entering still
+    // works the doors with the test-scene keys (1 front left, 2 front right, 3 sliding, 4 rear pair, F all; sent as
+    // requests to the force-limited doors, VanDriveInput.GreyboxDoorRules). Entering still
     // switches the pawn off, which also drops anything its PhysicsGrabber holds (PhysicsGrabber.OnDisable releases).
     // The van parts the stage needs are added here for scenes built before them (cargo space, interior colliders, rider,
     // autopilot); BuildRevision says which builder made the scene, older scenes get a "rebuild" warning.
@@ -30,6 +31,13 @@ namespace OnlyVolunteers.Map
         public int BuildRevision;
 
         public bool Driving { get; private set; }
+
+        private const float ExitStepUp = 1.2f, ExitMinNormalY = 0.7f, ExitHeight = 1.8f, ExitClearance = 0.25f;
+        // What the exit ground ray sees (not NPCs, not the cargo-bay volumes) and what may not be at the exit point (the
+        // pawn's own capsule and the cargo-bay volumes aside).
+        private const int ExitGroundMask = ~((1 << OvLayers.VehicleInterior) | OvLayers.NpcMask);
+        private const int ExitBlockMask = ~((1 << OvLayers.VehicleInterior) | (1 << OvLayers.Player));
+        private readonly Collider[] _overlaps = new Collider[16];
 
         private VanController _van;
         private VanDriveInput _input;
@@ -73,7 +81,7 @@ namespace OnlyVolunteers.Map
             // Offline test drive (P) so the only player can ride in the cargo bay of a moving van.
             if (!TryGetComponent(out GreyboxVanAutopilot _))
                 gameObject.AddComponent<GreyboxVanAutopilot>();
-            // The driver as others would see them, and the driver's door rules (3 = sliding door only).
+            // The driver as others would see them, and the driver's door keys (requests, rear pair together).
             if (!TryGetComponent(out GreyboxDriverDummy dummy))
                 dummy = gameObject.AddComponent<GreyboxDriverDummy>();
             if (dummy.Seat == null) dummy.Seat = this;
@@ -119,22 +127,37 @@ namespace OnlyVolunteers.Map
 
         private void GetOut()
         {
-            // Parked with the driver door over the sea: step out on the passenger side, or stay in if both are wet.
-            float side = 1f;
-            Vector3 p = ExitPoint(side);
-            if (SeaReturnZone.InSea(p))
+            // The driver door; parked against a wall, a fence, a facade or an NPC: the passenger side, then behind the van.
+            // Never into the sea: if every dry place is blocked, the first dry one as before; all wet: stay in.
+            Vector3? fallback = null;
+            Vector3 p = default;
+            float yaw = 0f;
+            bool found = false;
+            for (int i = 0; i < 3 && !found; i++)
             {
-                side = -1f;
-                p = ExitPoint(side);
-                if (SeaReturnZone.InSea(p)) return;
+                float side = i == 0 ? 1f : -1f;
+                Vector3 candidate = i < 2 ? ExitPoint(side) : RearExitPoint();
+                if (SeaReturnZone.InSea(candidate)) continue;
+                candidate = OnExitGround(candidate);
+                float candidateYaw = i < 2 ? transform.eulerAngles.y - 90f * side : transform.eulerAngles.y + 180f;
+                if (fallback == null)
+                {
+                    fallback = candidate;
+                    yaw = candidateYaw;
+                }
+                if (ExitBlocked(candidate)) continue;
+                p = candidate;
+                yaw = candidateYaw;
+                found = true;
             }
-            float ground = float.NegativeInfinity;
-            foreach (RaycastHit hit in Physics.RaycastAll(p + Vector3.up * 3f, Vector3.down, 10f, ~0, QueryTriggerInteraction.Ignore))
-                if (!hit.collider.transform.IsChildOf(transform)) ground = Mathf.Max(ground, hit.point.y);
-            if (!float.IsNegativeInfinity(ground)) p.y = ground + 0.05f;
+            if (!found)
+            {
+                if (fallback == null) return;
+                p = fallback.Value;
+            }
             // Teleport first: the KCC player is still inactive, so it wakes up already outside the van.
             GreyboxInput.UseE();
-            Pawn.Teleport(p, transform.eulerAngles.y - 90f * side);
+            Pawn.Teleport(p, yaw);
             SetDriving(false);
             StartCoroutine(SwingDriverDoor());
         }
@@ -146,6 +169,45 @@ namespace OnlyVolunteers.Map
             var local = new Vector3(DoorPoint.x * side, DoorPoint.y, DoorPoint.z);
             return transform.TransformPoint(local) - transform.right * (side * Mathf.Max(0f, Pawn.Radius - 0.3f));
         }
+
+        // Behind the rear doors and their step (the builder's foot spawn uses the same 4.6 m for the 0.5 m KCC).
+        private Vector3 RearExitPoint() => transform.TransformPoint(new Vector3(0f, DoorPoint.y, -(4.1f + Pawn.Radius)));
+
+        // The ground by the door, not an awning, a bus-stop roof or a branch above it (the look map), nor an NPC's head, a
+        // fence or a wall top: the highest walkable surface at most ExitStepUp above the van's floor level.
+        private Vector3 OnExitGround(Vector3 p)
+        {
+            float ground = float.NegativeInfinity;
+            foreach (RaycastHit hit in Physics.RaycastAll(p + Vector3.up * 3f, Vector3.down, 10f, ExitGroundMask, QueryTriggerInteraction.Ignore))
+            {
+                if (hit.point.y > p.y + ExitStepUp || hit.normal.y <= ExitMinNormalY) continue;
+                if (hit.collider.transform.IsChildOf(transform) || hit.collider.GetComponentInParent<GreyboxNpc>() != null) continue;
+                ground = Mathf.Max(ground, hit.point.y);
+            }
+            if (!float.IsNegativeInfinity(ground)) p.y = ground + 0.05f;
+            return p;
+        }
+
+        // Something (other than this van) in the pawn's capsule at the exit point, or a wall between the cab and it: parked
+        // against a facade, the exit point is inside the building, whose hollow shell the capsule alone does not touch.
+        private bool ExitBlocked(Vector3 feet)
+        {
+            float radius = Pawn.Radius;
+            Vector3 low = feet + Vector3.up * (radius + ExitClearance);
+            Vector3 high = feet + Vector3.up * Mathf.Max(radius + ExitClearance, ExitHeight - radius);
+            int n = Physics.OverlapCapsuleNonAlloc(low, high, radius, _overlaps, ExitBlockMask, QueryTriggerInteraction.Ignore);
+            for (int i = 0; i < n; i++)
+                if (!Ours(_overlaps[i].transform)) return true;
+            Vector3 from = transform.position + transform.up * 1.2f, to = feet + Vector3.up * 1.2f;
+            Vector3 d = to - from;
+            foreach (RaycastHit hit in Physics.RaycastAll(from, d.normalized, d.magnitude, ExitBlockMask & ~OvLayers.NpcMask, QueryTriggerInteraction.Ignore))
+                if (!Ours(hit.collider.transform)) return true;
+            return false;
+        }
+
+        // This van (body, doors, steps, interior colliders) or the pawn's own body, wherever it was switched off.
+        private bool Ours(Transform t) =>
+            t.IsChildOf(transform) || Pawn != null && (t.IsChildOf(Pawn.transform) || t.IsChildOf(Pawn.Body));
 
         private void SetDriving(bool driving)
         {
@@ -189,7 +251,7 @@ namespace OnlyVolunteers.Map
         {
             // On foot the hints come from GreyboxInteractor.
             if (!Driving) return;
-            const string hint = "E — выйти из бусика (на малой скорости)     3 — боковая дверь";
+            const string hint = "E — выйти из бусика (на малой скорости)     1–4, F — двери";
             var style = new GUIStyle(GUI.skin.label) { fontSize = 18, alignment = TextAnchor.MiddleCenter };
             GUI.Label(new Rect(0f, Screen.height - 70f, Screen.width - 340f, 30f), hint, style); // left of the trip panel
         }

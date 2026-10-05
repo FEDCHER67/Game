@@ -702,15 +702,19 @@ namespace OnlyVolunteers.Map
             return rider.Carrier == _space ? pawn : null;
         }
 
-        // Highest ground under p, ignoring the van, the pawn and NPCs.
+        // Highest ground under p, ignoring the van, the pawn and NPCs, and anything more than EjectStepUp above the van or
+        // p (an awning, a bus-stop roof, a branch over the road on the look map).
+        private const float EjectStepUp = 1.5f;
+
         private Vector3 GroundBelow(Vector3 p)
         {
             float top = Mathf.Max(p.y, transform.position.y) + 3f;
+            float highest = top - 3f + EjectStepUp;
             float ground = float.NegativeInfinity;
             foreach (RaycastHit hit in Physics.RaycastAll(new Vector3(p.x, top, p.z), Vector3.down, top - p.y + 20f, ~0, QueryTriggerInteraction.Ignore))
             {
                 Transform t = hit.collider.transform;
-                if (t.IsChildOf(transform) || hit.collider.GetComponentInParent<GreyboxNpc>() != null) continue;
+                if (hit.point.y > highest || t.IsChildOf(transform) || hit.collider.GetComponentInParent<GreyboxNpc>() != null) continue;
                 if (_seat != null && _seat.Pawn != null && (t.IsChildOf(_seat.Pawn.transform) || t.IsChildOf(_seat.Pawn.Body))) continue;
                 ground = Mathf.Max(ground, hit.point.y);
             }

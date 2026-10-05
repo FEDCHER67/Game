@@ -1,0 +1,84 @@
+{
+  "asset": "LM_Neon_Star",
+  "family": "LM-VALLEY",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 336,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -0.8179,
+    -0.1633,
+    0.0
+  ],
+  "bounds_max": [
+    0.8179,
+    0.0,
+    1.68
+  ],
+  "size_xyz_m": [
+    1.636,
+    0.163,
+    1.68
+  ],
+  "objects": {
+    "LM_Neon_Star_Mesh": {
+      "triangles": 96,
+      "vertices": 64,
+      "faces": 48,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_Neon_Star_Emissive": {
+      "triangles": 240,
+      "vertices": 120,
+      "faces": 120,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Five-point star 1.6 m, yellow outer and pink inner tube. Wall-mounted: wall plane y = 0, tubes 0.10 m in front, pivot on the wall at the bottom of the transformer box. Tubes = LM_Neon_Star_Emissive.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_Neon_Star_v01.fbx",
+    "fbx_size_bytes": 27932,
+    "blend": "LM-VALLEY_v01.blend"
+  }
+}

@@ -20,6 +20,7 @@ namespace OnlyVolunteers.Map
         public GreyboxVanSeat Seat;
 
         private VanController _van;
+        private GreyboxTripFootSpots _feet;
         private float _tripStart;
         private float _tripDistance;
         private Vector3 _lastPosition;
@@ -28,6 +29,7 @@ namespace OnlyVolunteers.Map
         private void Awake()
         {
             _van = GetComponent<VanController>();
+            TryGetComponent(out _feet); // the look map's checked places on foot (none on the grey-box)
             ResetTrip();
         }
 
@@ -43,7 +45,11 @@ namespace OnlyVolunteers.Map
                 if (Input.GetKeyDown(KeyCode.F1 + i))
                 {
                     if (Seat != null && !Seat.Driving && Seat.Pawn != null)
-                        Seat.Pawn.Teleport(Spots[i].Position + Quaternion.Euler(0f, Spots[i].Yaw, 0f) * Vector3.right * 4f + Vector3.up * 0.1f, Spots[i].Yaw);
+                    {
+                        if (_feet == null || !_feet.TryGet(i, out Vector3 feet))
+                            feet = OnGround(Spots[i].Position + Quaternion.Euler(0f, Spots[i].Yaw, 0f) * Vector3.right * 4f) + Vector3.up * 0.1f;
+                        Seat.Pawn.Teleport(feet, Spots[i].Yaw);
+                    }
                     else
                     {
                         _van.ResetUpright(Spots[i].Position + Vector3.up * 0.5f, Spots[i].Yaw);
@@ -53,6 +59,28 @@ namespace OnlyVolunteers.Map
                     ResetTrip();
                 }
             }
+        }
+
+        // Without checked places (the grey-box, older scenes): 4 m to the side of the road spot the ground can be a kerb, a
+        // sidewalk, a bank or a ditch. Stand on the highest walkable surface at most StepUp above the road (the same band as
+        // the builder's ground), not on an NPC, a fence, a wall top or a bench back; ignore the van and the pawn. Flat
+        // grey-box: y = 0.
+        private const float StepUp = 0.6f, Probe = 2f, MinNormalY = 0.7f;
+        private const int GroundMask = ~((1 << OvLayers.VehicleInterior) | OvLayers.NpcMask);
+
+        private Vector3 OnGround(Vector3 p)
+        {
+            float ground = float.NegativeInfinity;
+            foreach (RaycastHit hit in Physics.RaycastAll(p + Vector3.up * Probe, Vector3.down, Probe + 10f, GroundMask, QueryTriggerInteraction.Ignore))
+            {
+                if (hit.point.y > p.y + StepUp || hit.normal.y <= MinNormalY) continue;
+                Transform t = hit.collider.transform;
+                if (t.IsChildOf(transform) || Seat.Pawn != null && (t.IsChildOf(Seat.Pawn.transform) || t.IsChildOf(Seat.Pawn.Body))) continue;
+                if (hit.collider.GetComponentInParent<GreyboxNpc>() != null) continue;
+                ground = Mathf.Max(ground, hit.point.y);
+            }
+            if (!float.IsNegativeInfinity(ground)) p.y = ground;
+            return p;
         }
 
         private void ResetTrip()

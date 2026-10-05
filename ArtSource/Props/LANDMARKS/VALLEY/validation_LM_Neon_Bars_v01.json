@@ -1,0 +1,84 @@
+{
+  "asset": "LM_Neon_Bars",
+  "family": "LM-VALLEY",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, -Y front, metres; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root empty at (0,0,0) = wall attachment point, see README",
+  "triangles_total": 632,
+  "triangle_budget": [
+    200,
+    1500
+  ],
+  "bounds_min": [
+    -1.54,
+    -0.145,
+    0.0
+  ],
+  "bounds_max": [
+    1.9,
+    0.0,
+    1.2088
+  ],
+  "size_xyz_m": [
+    3.44,
+    0.145,
+    1.209
+  ],
+  "objects": {
+    "LM_Neon_Bars_Mesh": {
+      "triangles": 240,
+      "vertices": 152,
+      "faces": 108,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    },
+    "LM_Neon_Bars_Emissive": {
+      "triangles": 392,
+      "vertices": 204,
+      "faces": 188,
+      "materials": [
+        "SK_Palette"
+      ],
+      "pivot_local": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "non_manifold_edges": 0,
+      "boundary_edges": 0,
+      "flipped_faces": 0,
+      "zero_area_faces": 0
+    }
+  },
+  "sockets": {},
+  "materials": [
+    "SK_Palette"
+  ],
+  "palette": "SK_Palette.png 8x4 cells x 16 px, UV0 points at cell centres; vertex colour \"Col\" carries the same colour",
+  "notes": "Three neon bars 3.0 m wide (zig-zag pink, double teal, wave purple). Wall-mounted: wall plane y = 0, tubes 0.10 m in front, pivot on the wall at the bottom of the transformer box. Tubes = LM_Neon_Bars_Emissive.",
+  "checks": {
+    "triangle_budget_200_1500": true,
+    "closed_manifold": true,
+    "consistent_normals": true,
+    "no_zero_area_faces": true,
+    "root_at_origin": true,
+    "base_on_ground_z0": true
+  },
+  "all_checks_passed": true,
+  "files": {
+    "fbx": "LM_Neon_Bars_v01.fbx",
+    "fbx_size_bytes": 31036,
+    "blend": "LM-VALLEY_v01.blend"
+  }
+}

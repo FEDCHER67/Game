@@ -41,7 +41,13 @@ namespace OnlyVolunteers.Map.Look
         {
             "lamp_street", "lamp_iron", "lamp_bollard", "power_pole", "bench", "bin", "garbage_container", "bus_stop",
             "bus_stop_sign", "sign_crossing", "sign_no_swimming", "swings", "slide", "sandbox", "carpet_rack", "pipe_support",
-            "kiosk", "atm", "ad_pole", "rock", "camera", "_default",
+            "kiosk", "atm", "ad_pole", "rock", "camera",
+            "pipe_support_040", "rock_01", "rock_02", "rock_03", "rock_04", "rock_05", "cctv_wall", "default_crate",
+            "car_sedan_blue", "car_sedan_red", "car_sedan_beige", "car_sedan_green", "car_hatchback", "car_police", "van_minibus",
+            "van_ambulance", "truck_tow", "bus_city", "tractor_small", "scooter",
+            "casino_crown_sign", "neon_bars", "neon_star", "neon_cocktail", "bowling_pin_giant", "bowling_ball_giant",
+            "billboard_large", "billboard_small", "gas_pump", "market_stall", "church_bell", "onion_cupola", "fountain", "clock_tower_top",
+            "_default",
         };
 
         public static readonly string[] TreeKeys = { "pine", "spruce", "birch", "oak", "linden", "poplar", "fruit", "willow", "palm", "cypress", "bush" };
