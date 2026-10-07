@@ -192,8 +192,9 @@ def _lie_loop():
         # breathing belly + crossed foot bobbing to music, then a happy wiggle settle
         p['s2.p'] = p.get('s2.p', 0) - 1.6 * math.sin(2 * math.pi * 4 * t / T) ** 2
         w = window(t, 0.4, 2.4, 0.3) + window(t, 3.9, 4.9, 0.3)
-        p['fR.r'] = p.get('fR.r', 0) + 12.0 * w * math.sin(2 * math.pi * 2.0 * t)
-        p['fR.w'] = p.get('fR.w', 0) + 6.0 * w * math.sin(2 * math.pi * 1.0 * t)
+        p['fR.r'] = p.get('fR.r', 0) + 20.0 * w * math.sin(2 * math.pi * 2.0 * t)
+        p['fR.w'] = p.get('fR.w', 0) + 9.0 * w * math.sin(2 * math.pi * 1.0 * t)
+        p['hd.r'] = p.get('hd.r', 0) + 4.0 * w * math.sin(2 * math.pi * 1.0 * t)     # head sways to the music
         w2 = window(t, 5.0, 5.9, 0.2)
         p['hip.r'] = p.get('hip.r', 0) + 4.0 * w2 * math.sin(2 * math.pi * 3.0 * (t - 5.0))
         p['s3.r'] = p.get('s3.r', 0) - 3.0 * w2 * math.sin(2 * math.pi * 3.0 * (t - 5.0))
