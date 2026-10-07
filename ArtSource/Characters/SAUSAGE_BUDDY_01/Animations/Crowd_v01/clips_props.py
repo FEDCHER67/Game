@@ -114,10 +114,10 @@ def _smoke_exit():
                                 'hd.w': -6, 's2.p': 5, 'fR.z': 0.07, 'fR.y': -0.10, 'fR.x': 0.02, 'fR.r': -8})),  # step onto it
         (0.98, {'fR.z': 0.0, 'fR.r': 0.0, 'fR.y': -0.14, 'fR.x': 0.03}),
         (1.08, {'fR.r': 12, 'fR.wb': 0}),                                               # heel up, twist it out
-        (1.24, {'fR.wb': 22}),
-        (1.40, {'fR.wb': -16}),
-        (1.56, {'fR.wb': 18}),
-        (1.70, {'fR.wb': 0, 'fR.r': 0, 'hd.p': 10}),
+        (1.24, {'fR.wb': 24, 'hip.w': -7, 's2.w': 4, 'aL.o': 14, 'aR.o': 14}),          # hips join the twist,
+        (1.40, {'fR.wb': -18, 'hip.w': 6, 's2.w': -4, 'aL.o': 4, 'aR.o': 18}),           # arms out for balance
+        (1.56, {'fR.wb': 20, 'hip.w': -6, 's2.w': 4, 'aL.o': 14, 'aR.o': 10}),
+        (1.70, {'fR.wb': 0, 'fR.r': 0, 'hd.p': 10, 'hip.w': 0, 's2.w': 0, 'aL.o': 4, 'aR.o': 6}),
         (1.92, {'fR.z': 0.06, 'fR.y': -0.06, 'fR.x': 0.01, 'fR.r': 6, 'hd.p': 4}),     # step back to its spot
         (2.10, add(shift(0.2), {'fR.z': 0.0, 'fR.y': 0.0, 'fR.x': 0.0, 'fR.r': 0.0, 'hd.p': 0, 'hd.w': 0, 's2.p': 0,
                                 'aL.f': 0, 'aL.o': 0, 'eL': 0, 'fiL': 0, 'thL': 0, 'aR.o': 0, 'eR': 0, 'hd.r': 0})),
