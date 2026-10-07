@@ -9,7 +9,7 @@ Opens every saved <clip>_v01.blend, samples it at 120 Hz and checks:
     every other one exactly (Enter end == Loop start == Loop end == Exit start), and 'idle' == A v04 Idle frame 1
   * feet: soles never more than 1 mm into the floor; planted soles (outside each clip's feet_free windows) do not
     slide: drift of touching sole vertices (z < 2 mm) in the ground frame (treadmill speed for the run) <= 1 mm
-  * body: lowest vertex >= -1 cm (design limit), props: no vertex more than 5 mm into the bench seat / wall
+  * body: lowest vertex >= -1 cm (design limit), props: no vertex more than 5 mm into the bench seat / backrest / wall
 then re-imports the FBX: bone order, hierarchy, bind matrices vs the rig JSON (or Walk_v02.fbx when real), one take,
 armature only, animated world-matrix error < 1.5e-4, reimported seam < 1e-5. Refuses to overwrite its report.
 """
@@ -195,6 +195,9 @@ def main():
                 m = (P3[:, 1] > b_['front_y'] + 0.01) & (P3[:, 1] < b_['back_y']) & (P3[:, 2] < b_['seat_top']) & (P3[:, 2] > 0.39)
                 if m.any():
                     prop_pen = max(prop_pen, float(b_['seat_top'] - P3[m, 2].min()))
+                m = (P3[:, 2] > 0.62) & (P3[:, 2] < 0.95)            # backrest board (front face at backrest_y)
+                if m.any():
+                    prop_pen = max(prop_pen, float(P3[m, 1].max() - b_['backrest_y']))
             if spec.get('activity') == 'BarDoor':
                 prop_pen = max(prop_pen, float(P3[:, 1].max() - CP.WALL_Y))
         r.update({'max_sole_penetration_m': pen, 'max_planted_slide_m': slide, 'max_planted_slide_at': slide_at,

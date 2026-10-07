@@ -29,7 +29,8 @@ HAND_HIP_L = {'aL.o': 45, 'aL.f': -15, 'aL.t': 20, 'eL': 100, 'wL.f': -10, 'ikL.
 WATCH_L = {'aL.f': 62, 'aL.o': 10, 'eL': 118, 'eL.t': -70, 'wL.f': 5, 'fiL': 0.35, 'thL': 0.2}
 POINT_R = {'aR.f': 85, 'aR.o': 10, 'eR': 10, 'fiR': 0.9, 'fiR.i': -0.9, 'thR': 0.8}
 SHADE_R = {'aR.f': 85, 'aR.o': 40, 'eR': 120, 'eR.t': 70, 'wR.f': 10, 'wR.d': -10, 'ikR.w': 1, 'ikR.rel': 'Head',
-           'ikR.pt': 'palm', 'ikR.x': 0.0, 'ikR.y': -0.25, 'ikR.z': 1.645, 'fiR': 0.1, 'thR': 0.1}   # palm over the brow
+           'ikR.pt': 'palm', 'ikR.x': 0.03, 'ikR.y': -0.24, 'ikR.z': 1.645, 'fiR': 0.1, 'thR': 0.1}   # palm over the brow
+SHADE_L = K.mirror_params(SHADE_R)
 
 
 def side_key(d, side):
@@ -127,22 +128,22 @@ BW_T = 6.5
 
 def _buswait():
     T = BW_T
-    look = {'hd.w': 52, 'nk.w': 10, 's3.w': 12, 's2.w': 8, 's1.w': 4, 'hip.w': 4, 's2.p': 8, 's3.p': 5, 'nk.p': 6, 'hd.p': -6}
+    look = {'hd.w': 40, 'nk.w': 12, 's3.w': 14, 's2.w': 10, 's1.w': 5, 'hip.w': 6, 's2.p': 8, 's3.p': 5, 'nk.p': 6, 'hd.p': -6}
     k = keys(
         (0.0, {}),
         (0.30, {'hd.w': -4, 'hip.z': -0.006}),                                           # anticipation: little glance away
-        (0.62, add(shift(0.5), look, SHADE_R, {'cL.u': 0})),                             # snap: look up the road, hand to brow
-        (0.80, {'hd.w': 56, 'hd.p': -8}),
+        (0.62, add(shift(0.5), look, SHADE_L, {'cL.u': 0})),                             # snap: look up the road, hand to brow
+        (0.80, {'hd.w': 44, 'hd.p': -8}),
         (1.00, {'fL.r': 22, 'fR.r': 22, 'hip.z': 0.0, 'hip.x': 0.0, 'hip.r': 0, 'hip.w': 4, 's1.r': 0, 's2.r': 0,
                 's3.r': 0, 'hd.r': -3, 'hd.p': -10, 's2.p': 10}),                       # up on tiptoes, peering
-        (1.55, {'hd.w': 44, 'hd.r': 2, 'fL.r': 25, 'fR.r': 25}),
-        (1.80, {'hd.w': 58, 'hd.r': -4}),                                                # scan... nothing
-        (1.94, {'ikR.w': 0.0}),                                                         # hand leaves the brow
+        (1.55, {'hd.w': 34, 'hd.r': 2, 'fL.r': 25, 'fR.r': 25}),
+        (1.80, {'hd.w': 46, 'hd.r': -4}),                                                # scan... nothing
+        (1.94, {'ikL.w': 0.0}),                                                         # hand leaves the brow
         (2.16, {'fL.r': 0, 'fR.r': 0, 'hip.z': -0.022, 's2.p': 12, 's3.p': 10, 'hd.p': 10, 'cL.u': -5, 'cR.u': -5,
-                'hd.w': 30, 'aR.f': 20, 'aR.o': 10, 'eR': 40, 'eR.t': 0, 'wR.f': 0, 'fiR': 0.1}),  # drop: huff
+                'hd.w': 30, 'aL.f': 20, 'aL.o': 10, 'eL': 40, 'eL.t': 0, 'wL.f': 0, 'fiL': 0.1}),  # drop: huff
         (2.30, add(shift(-0.3), {'hip.z': -0.012, 'hd.w': 6, 'nk.w': 2, 's3.w': 2, 's2.w': 0, 's1.w': 0, 'hip.w': -0.6,
-                                 's2.p': 3, 's3.p': 2, 'nk.p': 1, 'hd.p': 3, 'cL.u': 0, 'cR.u': 0, 'aR.f': 0, 'aR.o': 0,
-                                 'eR': 0, 'fiR': 0, 'thR': 0})),
+                                 's2.p': 3, 's3.p': 2, 'nk.p': 1, 'hd.p': 3, 'cL.u': 0, 'cR.u': 0, 'aL.f': 0, 'aL.o': 0,
+                                 'eL': 0, 'fiL': 0, 'thL': 0})),
         (2.80, {'fL.r': -12, 'fR.r': -12, 'hip.y': 0.02, 's2.p': -2, 'hd.p': -3}),       # rock back on the heels
         (3.20, {'fL.r': 14, 'fR.r': 14, 'hip.y': -0.02, 's2.p': 4, 'hd.p': 3}),          # forward on the toes
         (3.60, {'fL.r': -10, 'fR.r': -10, 'hip.y': 0.015, 's2.p': -2, 'hd.p': -3}),
@@ -274,7 +275,7 @@ CLIPS = {
     'BusWait_Loop': {'T': BW_T, 'loop': True, 'start': 'idle', 'end': 'idle', 'params': _buswait(),
                      'activity': 'BusWait', 'role': 'loop',
                      'feet_heel_toe': True,
-                     'beats': ['0.3-0.8 snap look up the road (his left), hand shading the eyes',
+                     'beats': ['0.3-0.8 snap look up the road (his left), left hand shading the eyes',
                                '0.8-1.8 up on tiptoes, peering, scanning', '1.8-2.3 drops down with a huff',
                                '2.6-4.0 bored heel-toe rocking', '4.2-4.9 maybe it comes from the right?',
                                '4.9-6.5 back, shrug-sigh, settle into Idle']},
