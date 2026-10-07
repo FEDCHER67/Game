@@ -1,0 +1,173 @@
+{
+  "version": "v03",
+  "validator": "validate_getups_v03.py",
+  "source_rig": "ArtSource/Characters/SAUSAGE_BUDDY_01/SAUSAGE_BUDDY_A_v04.blend",
+  "built_from": "rig/mesh rebuilt from rig_Buddy_Mixamo65.json + mesh_proxy_Buddy_A_v04.json (GETUP_SOURCE_BLEND; no Git LFS)",
+  "source_sha256": {
+    "SAUSAGE_BUDDY_A_v04.blend": "8ce9b86c1a2665893a9749cb234af48fb8b792c427e9491a2af75a4fb1c20653",
+    "SAUSAGE_BUDDY_B_v04.blend": "e2d501f4e103ee42a8663334a1b1093a4558d48d94a62f6f9f016a7a9214c051",
+    "SAUSAGE_BUDDY_A_v04.fbx": "b389c8bdc0e6cecb46b61a2c51121c4b9479b3024c7add42ba1c97e0ffd53f07",
+    "SAUSAGE_BUDDY_B_v04.fbx": "e6ee884a5ca9706c35e3432d204bac2a0e9ad126d468eba051aeb8b69258efd9"
+  },
+  "clips": {
+    "GetUp_FromBack_v03": {
+      "file": "GetUp_FromBack_v03.blend",
+      "action": "GetUp_FromBack_v03",
+      "actions_in_file": [
+        "GetUp_FromBack_v03"
+      ],
+      "fps": 30,
+      "frames": [
+        1,
+        85
+      ],
+      "duration_s": 2.8,
+      "face_or_shape_key_animation": false,
+      "bones": {
+        "count": 65,
+        "names_order_parents_match_rig_json": true,
+        "rest_max_error_vs_rig_json": 9.626846309007675e-08
+      },
+      "negative_adjacent_quaternion_key_dots": 0,
+      "max_half_frame_local_rotation_deg": 23.666,
+      "max_half_frame_rotation_at": [
+        63.0,
+        "mixamorig:RightArm"
+      ],
+      "hipsStart_m": [
+        0.0,
+        0.0,
+        0.142909
+      ],
+      "start_hold_frames": 5,
+      "stable_frame_0based": 67.25,
+      "stable_fraction": 0.8006,
+      "idle_end_matrix_error": 4.448612213048264e-07,
+      "hips_net_horizontal_drift_m": 0.0,
+      "hips_max_horizontal_excursion_m": 0.24000000953674316,
+      "standing_max_sole_penetration_m": 0.00013681745622307062,
+      "standing_support_max_ground_error_m": 0.0019999505020678043,
+      "all_frames_max_sole_penetration_m": 0.0007264651358127594,
+      "all_mesh_max_floor_penetration_m": 0.0027152299880981445,
+      "hands_max_floor_penetration_m": 0.0027152299880981445,
+      "nan_or_infinite_components": 0,
+      "reflected_bone_samples": 0,
+      "max_mesh_height_m": 1.7483,
+      "van_1p2m_first_frame_above_0based": 66.25,
+      "sample_rate_hz": 120,
+      "fbx_reimport": {
+        "bone_count": 65,
+        "names_order_parents_match_rig_json": true,
+        "max_animated_world_matrix_error": 0.00010186061263084412,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|GetUp_FromBack_v03": [
+            1.0,
+            85.0
+          ]
+        },
+        "only_armature_objects": true,
+        "v02_fbx_reference": "not available (Git LFS pointer or missing); compared with rig_Buddy_Mixamo65.json"
+      },
+      "checks": {
+        "one_action_named": true,
+        "fps_30": true,
+        "duration_2_to_2p8": true,
+        "start_hold_ge_5": true,
+        "stable_found": true,
+        "idle_end": true,
+        "in_place": true,
+        "standing_soles": true,
+        "floor_1cm": true,
+        "no_nan_or_reflection": true,
+        "no_quat_flips": true,
+        "rot_step_lt_25": true,
+        "no_face_curves": true,
+        "bones_identical": true,
+        "fbx_one_action_armature_only": true,
+        "fbx_reimport_error": true,
+        "fbx_bind_vs_v02": true
+      },
+      "pass": true
+    },
+    "GetUp_FromBelly_v03": {
+      "file": "GetUp_FromBelly_v03.blend",
+      "action": "GetUp_FromBelly_v03",
+      "actions_in_file": [
+        "GetUp_FromBelly_v03"
+      ],
+      "fps": 30,
+      "frames": [
+        1,
+        85
+      ],
+      "duration_s": 2.8,
+      "face_or_shape_key_animation": false,
+      "bones": {
+        "count": 65,
+        "names_order_parents_match_rig_json": true,
+        "rest_max_error_vs_rig_json": 9.626846309007675e-08
+      },
+      "negative_adjacent_quaternion_key_dots": 0,
+      "max_half_frame_local_rotation_deg": 23.573,
+      "max_half_frame_rotation_at": [
+        67.5,
+        "mixamorig:RightArm"
+      ],
+      "hipsStart_m": [
+        0.0,
+        0.0,
+        0.201452
+      ],
+      "start_hold_frames": 6,
+      "stable_frame_0based": 61.0,
+      "stable_fraction": 0.7262,
+      "idle_end_matrix_error": 4.448612213048264e-07,
+      "hips_net_horizontal_drift_m": 0.0,
+      "hips_max_horizontal_excursion_m": 0.30000001192092896,
+      "standing_max_sole_penetration_m": 0.00022849766537547112,
+      "standing_support_max_ground_error_m": 0.002283114939928055,
+      "all_frames_max_sole_penetration_m": 0.0005785394459962845,
+      "all_mesh_max_floor_penetration_m": 0.0005785394459962845,
+      "hands_max_floor_penetration_m": 0.0004590749740600586,
+      "nan_or_infinite_components": 0,
+      "reflected_bone_samples": 0,
+      "max_mesh_height_m": 1.7484,
+      "van_1p2m_first_frame_above_0based": 60.75,
+      "sample_rate_hz": 120,
+      "fbx_reimport": {
+        "bone_count": 65,
+        "names_order_parents_match_rig_json": true,
+        "max_animated_world_matrix_error": 1.8581748008728027e-05,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|GetUp_FromBelly_v03": [
+            1.0,
+            85.0
+          ]
+        },
+        "only_armature_objects": true,
+        "v02_fbx_reference": "not available (Git LFS pointer or missing); compared with rig_Buddy_Mixamo65.json"
+      },
+      "checks": {
+        "one_action_named": true,
+        "fps_30": true,
+        "duration_2_to_2p8": true,
+        "start_hold_ge_5": true,
+        "stable_found": true,
+        "idle_end": true,
+        "in_place": true,
+        "standing_soles": true,
+        "floor_1cm": true,
+        "no_nan_or_reflection": true,
+        "no_quat_flips": true,
+        "rot_step_lt_25": true,
+        "no_face_curves": true,
+        "bones_identical": true,
+        "fbx_one_action_armature_only": true,
+        "fbx_reimport_error": true,
+        "fbx_bind_vs_v02": true
+      },
+      "pass": true
+    }
+  },
+  "pass": true
+}

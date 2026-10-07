@@ -1,0 +1,198 @@
+{
+  "package": "SAUSAGE_BUDDY_01 GetUp v03",
+  "rig": "Buddy_Rig_Mixamo65 (65 bones, root mixamorig:Hips)",
+  "units": "metres; Blender Z up, character faces -Y; FBX -Z forward, Y up",
+  "source": "getup_choreo_v03.py + getup_lib_v03.py via build_getups_v03.py --final (deterministic)",
+  "validation": "validation_v03.json (pass=True)",
+  "clips": [
+    {
+      "name": "GetUp_FromBack_v03",
+      "action": "GetUp_FromBack_v03",
+      "blend": "GetUp_FromBack_v03.blend",
+      "fbx": "GetUp_FromBack_v03.fbx",
+      "fps": 30,
+      "frames_blender": [
+        1,
+        85
+      ],
+      "frame_count": 85,
+      "duration_s": 2.8,
+      "loop": false,
+      "applyRootMotion": false,
+      "in_place": true,
+      "hipsStart_m": [
+        0.0,
+        0.0,
+        0.142909
+      ],
+      "start_head_dir_root_space": [
+        -0.0054,
+        0.948,
+        0.3182
+      ],
+      "start_pose": "supine, face up, head toward local +Y, feet -Y; butt and hood on the floor (pelvis pitch -67), head resting on the hood, arms along the sides, palms down",
+      "start_hold_frames": 5,
+      "ragdoll_blend": "first frame = neutral lying pose held 5 frames; blend ragdoll->clip over 0.35 s (Neck/Head 0.5 s); the first motion after the hold is slow",
+      "stable": {
+        "frame_0based": 67.25,
+        "fraction": 0.8006,
+        "time_s": 2.2417,
+        "meaning": "from here to the end the character is upright over the root with feet down (standing capsule may turn on)"
+      },
+      "end_pose": "exactly SAUSAGE_BUDDY_A_v04 Idle frame 1 (matrix error 4.4e-07)",
+      "hips_max_horizontal_excursion_m": 0.24,
+      "max_mesh_height_m": 1.7483,
+      "van_1p2m_first_frame_above_0based": 66.25,
+      "beats_0based": [
+        {
+          "from": 0,
+          "to": 5,
+          "what": "HOLD supine start (ragdoll blend target). Head tipped back on the hood, turned left; palms down beside the hips; legs relaxed, toes up and out."
+        },
+        {
+          "from": 5,
+          "to": 14,
+          "what": "GROGGY HEAD LIFT: neck flexes, head peels off the floor and looks at the feet (\"huh?\"), slow with a small lateral bobble; left knee twitches up a little."
+        },
+        {
+          "from": 14,
+          "to": 17,
+          "what": "ANTICIPATION: head drops back a touch, hands leave the floor (IK->FK), shoulders load."
+        },
+        {
+          "from": 17,
+          "to": 24,
+          "what": "SIT-UP SNAP: pelvis -90 -> -8, spine curls to 45 (overshoot over the legs), arms thrown forward toward the feet; heels pop up 5-6 cm (counterweight) and slap down at f22; head lags then whips forward."
+        },
+        {
+          "from": 24,
+          "to": 30,
+          "what": "SETTLE to a slumped sit; hands land on the thighs (IK on the thigh tops)."
+        },
+        {
+          "from": 30,
+          "to": 46,
+          "what": "DIZZY CIRCLE: neck/head/upper spine trace one slow circle (~2 Hz, 14 deg neck, 6 deg spine with phase lag); arms ride limp on the thighs."
+        },
+        {
+          "from": 42,
+          "to": 51,
+          "what": "BRR SHAKE: head twist +-30 deg at 5 Hz decaying, neck side +-8, spine twist counter-shakes with lag, shoulders shrug up during the shake (\"shaking off the stars\")."
+        },
+        {
+          "from": 48,
+          "to": 56,
+          "what": "GATHER: feet slide to y=-0.27 (soles flatten, knees up), hands plant behind the hips (fingers out/back), torso leans back onto the arms (pelvis -32)."
+        },
+        {
+          "from": 56,
+          "to": 64,
+          "what": "ROCK-UP: push off the hands, rock forward over the feet into a deep squat (hips to y=-0.17, z=0.33, pelvis +38), arms swing forward for momentum, head lags."
+        },
+        {
+          "from": 63,
+          "to": 71,
+          "what": "RISE to standing too fast (hips to y=-0.22, z=0.80); head comes up last."
+        },
+        {
+          "from": 70,
+          "to": 77,
+          "what": "HEAD-RUSH STAGGER BACK: body keeps tipping back (spine -10, head thrown back), arms windmill (one circle per ~9 frames, keep < 25 deg per half frame), RIGHT foot steps back to its Idle spot (y 0), hips drop to absorb."
+        },
+        {
+          "from": 76,
+          "to": 84,
+          "what": "RECOVER: LEFT foot steps back to Idle, hips return to (0,0), small head wobble, arms drop, settle exactly into Idle frame 1. Stable ~f71 (0.85) or earlier once upright."
+        }
+      ],
+      "validation_pass": true
+    },
+    {
+      "name": "GetUp_FromBelly_v03",
+      "action": "GetUp_FromBelly_v03",
+      "blend": "GetUp_FromBelly_v03.blend",
+      "fbx": "GetUp_FromBelly_v03.fbx",
+      "fps": 30,
+      "frames_blender": [
+        1,
+        85
+      ],
+      "frame_count": 85,
+      "duration_s": 2.8,
+      "loop": false,
+      "applyRootMotion": false,
+      "in_place": true,
+      "hipsStart_m": [
+        0.0,
+        0.0,
+        0.201452
+      ],
+      "start_head_dir_root_space": [
+        -0.0143,
+        -0.9984,
+        0.0542
+      ],
+      "start_pose": "prone, face down, head toward local -Y, feet +Y; right cheek on the floor, head turned left, hands beside the chest ready to push, thighs and shoe tops on the floor",
+      "start_hold_frames": 6,
+      "ragdoll_blend": "first frame = neutral lying pose held 6 frames; blend ragdoll->clip over 0.35 s (Neck/Head 0.5 s); the first motion after the hold is slow",
+      "stable": {
+        "frame_0based": 61.0,
+        "fraction": 0.7262,
+        "time_s": 2.0333,
+        "meaning": "from here to the end the character is upright over the root with feet down (standing capsule may turn on)"
+      },
+      "end_pose": "exactly SAUSAGE_BUDDY_A_v04 Idle frame 1 (matrix error 4.4e-07)",
+      "hips_max_horizontal_excursion_m": 0.3,
+      "max_mesh_height_m": 1.7484,
+      "van_1p2m_first_frame_above_0based": 60.75,
+      "beats_0based": [
+        {
+          "from": 0,
+          "to": 6,
+          "what": "HOLD prone start: head turned left, right cheek on the floor; hands beside the chest (push-up hands), elbows up/back; legs straight, shoe tops on the floor."
+        },
+        {
+          "from": 6,
+          "to": 16,
+          "what": "PUSH 1 (noodle arms): chest rises, arms tremble (8-10 Hz torso bob +-1 cm drives the IK elbows), head hangs, face still near the floor."
+        },
+        {
+          "from": 16,
+          "to": 19,
+          "what": "ARMS BUCKLE: chest flops back down halfway (3 frames), head nearly bonks."
+        },
+        {
+          "from": 19,
+          "to": 30,
+          "what": "PUSH 2 + PUSH BACK: determined push, hips shift back over the knees (hips 0 -> y +0.30), knees slide under -> all fours (knees ~y +0.30, hands stay at y -0.15)."
+        },
+        {
+          "from": 30,
+          "to": 46,
+          "what": "ALL-FOURS DIZZY: head hangs low, one slow circle, then a whole-body WET-DOG SHAKE (head leads, spine side/twist follows with lag, ~5 Hz, 2.5 cycles)."
+        },
+        {
+          "from": 46,
+          "to": 57,
+          "what": "KNEEL UP + HALF-KNEEL: hands push off, torso swings up to kneeling; RIGHT foot swings forward to its Idle spot (y ~0); both hands go onto the right knee (handOnKnee)."
+        },
+        {
+          "from": 57,
+          "to": 67,
+          "what": "STAND: push on the knee, hips forward/up to (0,0,~0.8); LEFT foot swings forward from behind to its Idle spot; head comes up last."
+        },
+        {
+          "from": 66,
+          "to": 78,
+          "what": "FORWARD TEETER (in place, no steps): head rush tips him forward onto the toes (heels up ~4 cm), arms windmill, then he rocks back onto the heels (toes up slightly)."
+        },
+        {
+          "from": 78,
+          "to": 84,
+          "what": "SETTLE into Idle frame 1. Stable ~f63 (0.75)."
+        }
+      ],
+      "validation_pass": true
+    }
+  ]
+}
