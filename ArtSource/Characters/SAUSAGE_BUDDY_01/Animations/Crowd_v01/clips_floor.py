@@ -120,13 +120,14 @@ def _sit_exit():
         (0.0, base),
         (0.25, add(knees, {'s1.p': 22, 's2.p': 16, 's3.p': 8, 'hip.p': 6, 'hd.p': -12, 'nk.p': -4})),  # hands to the knees, lean
         (0.45, {'s1.p': 30, 's2.p': 20, 'hip.p': 14, 'hip.y': 0.26, 'gnd': 0.0, 'hd.p': -16}),          # nose over the toes
-        (0.75, {'hip.y': 0.10, 'hip.z': -0.16, 'hip.p': 18, 's1.p': 18, 's2.p': 12, 's3.p': 6, 'hd.p': -8, 'ikL.w': 0.3,
-                'ikR.w': 0.3}),                                                          # push up off the knees
-        (0.92, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 10, 'aR.f': 10, 'eL': 20, 'eR': 20}),
-        (1.05, add(zero(base), {'hip.free': 1.0, 'lift': 1.0, 'hip.y': -0.005, 'hip.z': -0.03, 'hip.p': -6, 's1.p': -4,
+        (0.68, {'hip.y': 0.12, 'hip.z': -0.18, 'hip.p': 18, 's1.p': 20, 's2.p': 13, 's3.p': 6, 'hd.p': -10, 'ikL.w': 0.6,
+                'ikR.w': 0.6}),                                                          # push up off the knees
+        (0.86, {'hip.y': 0.04, 'hip.z': -0.09, 'hip.p': 12, 's1.p': 10, 's2.p': 7, 's3.p': 3, 'hd.p': -4,
+                'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 10, 'aR.f': 10, 'eL': 20, 'eR': 20}),   # rising
+        (1.12, add(zero(base), {'hip.free': 1.0, 'lift': 1.0, 'hip.y': -0.005, 'hip.z': -0.03, 'hip.p': -6, 's1.p': -4,
                                 's2.p': -8, 's3.p': -6, 'hd.p': -8, 'nk.p': -2, 'cL.u': 8, 'cR.u': 8, 'aL.f': -25,
                                 'aR.f': -25, 'aL.o': 14, 'aR.o': 14, 'eL': 70, 'eR': 70, 'wL.f': -30, 'wR.f': -30})),  # back stretch
-        (1.35, {'hip.z': -0.012, 'hip.p': -3, 's2.p': -4, 's3.p': -3, 'hd.p': -3}),
+        (1.42, {'hip.z': -0.012, 'hip.p': -3, 's2.p': -4, 's3.p': -3, 'hd.p': -3}),
         (1.70, {'hip.y': 0.0, 'hip.z': 0.0, 'hip.p': 0, 's1.p': 0, 's2.p': 0, 's3.p': 0, 'hd.p': 0, 'nk.p': 0,
                 'cL.u': 0, 'cR.u': 0, 'aL.f': 0, 'aR.f': 0, 'aL.o': 0, 'aR.o': 0, 'eL': 0, 'eR': 0, 'wL.f': 0,
                 'wR.f': 0}),
