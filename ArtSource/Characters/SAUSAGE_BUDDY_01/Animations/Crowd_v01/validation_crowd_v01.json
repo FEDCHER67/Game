@@ -1,0 +1,1767 @@
+{
+  "package": "Crowd_v01",
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "bind_reference": "rig_Buddy_Mixamo65_A_v04.json",
+  "rig_source": "json",
+  "thresholds": {
+    "key_step_deg": 25.0,
+    "sole_penetration_m": 0.0011,
+    "planted_slide_m": 0.001,
+    "body_floor_m": -0.01,
+    "prop_penetration_m": 0.005,
+    "fbx_bind": 0.0001,
+    "fbx_anim": 0.00015,
+    "fbx_seam": 1e-05,
+    "contract": 1e-05
+  },
+  "note": "the A v04 rest sole sits 1.0 mm below z = 0, so planted soles read ~1 mm penetration by design",
+  "clips": {
+    "ShopQueue_Loop": {
+      "action": "ShopQueue_Loop",
+      "frames": [
+        1,
+        181
+      ],
+      "fps": 30,
+      "duration_s": 6.0,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 8.357965754530676,
+      "max_key_step_at": [
+        86.5,
+        "LeftForeArm"
+      ],
+      "max_sole_penetration_m": 1.4191027730703354e-07,
+      "max_planted_slide_m": 0.0005508789793859506,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.0001813265262171626,
+        "max_planted_slide_m": 0.0005509542592645049,
+        "max_planted_slide_at": [
+          3.042,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.07704425603151321,
+      "min_body_z_at": 2.783,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8194317817687988e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|ShopQueue_Loop": [
+            1.0,
+            181.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BusWait_Loop": {
+      "action": "BusWait_Loop",
+      "frames": [
+        1,
+        196
+      ],
+      "fps": 30,
+      "duration_s": 6.5,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 20.49360182353772,
+      "max_key_step_at": [
+        14.0,
+        "LeftArm"
+      ],
+      "max_sole_penetration_m": 1.7241109162569046e-07,
+      "max_planted_slide_m": 0.00045064836746652807,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.00048771908041089773,
+        "max_planted_slide_m": 0.0006991892944797675,
+        "max_planted_slide_at": [
+          0.825,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.07669643312692642,
+      "min_body_z_at": 2.167,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.7896294593811035e-05,
+        "seam_error": 1.7881393432617188e-07,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BusWait_Loop": [
+            1.0,
+            196.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "Chat_Loop": {
+      "action": "Chat_Loop",
+      "frames": [
+        1,
+        241
+      ],
+      "fps": 30,
+      "duration_s": 8.0,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 12.01160291867392,
+      "max_key_step_at": [
+        171.0,
+        "LeftForeArm"
+      ],
+      "max_sole_penetration_m": 1.6309786587953568e-07,
+      "max_planted_slide_m": 1.1920928955078125e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 9.748467709869146e-05,
+        "max_planted_slide_m": 7.49145042070979e-06,
+        "max_planted_slide_at": [
+          5.542,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.07531952857971191,
+      "min_body_z_at": 6.15,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8894672393798828e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Chat_Loop": [
+            1.0,
+            241.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "KioskBuy": {
+      "action": "KioskBuy",
+      "frames": [
+        1,
+        139
+      ],
+      "fps": 30,
+      "duration_s": 4.6,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 14.434598680264658,
+      "max_key_step_at": [
+        129.5,
+        "RightForeArm"
+      ],
+      "max_sole_penetration_m": 1.587904989719391e-07,
+      "max_planted_slide_m": 0.000669725239276886,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.0002634038683027029,
+        "max_planted_slide_m": 0.000669725239276886,
+        "max_planted_slide_at": [
+          3.65,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.07872897386550903,
+      "min_body_z_at": 4.017,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8537044525146484e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|KioskBuy": [
+            1.0,
+            139.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "Chat_Loop_Mirror": {
+      "action": "Chat_Loop_Mirror",
+      "frames": [
+        1,
+        241
+      ],
+      "fps": 30,
+      "duration_s": 8.0,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 12.0115376385217,
+      "max_key_step_at": [
+        171.0,
+        "RightForeArm"
+      ],
+      "max_sole_penetration_m": 1.9080471247434616e-07,
+      "max_planted_slide_m": 1.4975481660844222e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 9.748502634465694e-05,
+        "max_planted_slide_m": 7.5034708045011265e-06,
+        "max_planted_slide_at": [
+          5.542,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.07531952857971191,
+      "min_body_z_at": 6.15,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.9319355487823486e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Chat_Loop_Mirror": [
+            1.0,
+            241.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "SmokeCorner_Enter": {
+      "action": "SmokeCorner_Enter",
+      "frames": [
+        1,
+        58
+      ],
+      "fps": 30,
+      "duration_s": 1.9,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "smoke",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 20.807453097866638,
+      "max_key_step_at": [
+        31.0,
+        "LeftArm"
+      ],
+      "max_sole_penetration_m": 1.3399403542280197e-07,
+      "max_planted_slide_m": 4.53201124839352e-08,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 2.9485556297004223e-05,
+        "max_planted_slide_m": 1.56761703035421e-06,
+        "max_planted_slide_at": [
+          0.442,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.08112592250108719,
+      "min_body_z_at": 0.2,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8522143363952637e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|SmokeCorner_Enter": [
+            1.0,
+            58.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "SmokeCorner_Loop": {
+      "action": "SmokeCorner_Loop",
+      "frames": [
+        1,
+        181
+      ],
+      "fps": 30,
+      "duration_s": 6.0,
+      "loop": true,
+      "start_contract": "smoke",
+      "end_contract": "smoke",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 10.761838169271792,
+      "max_key_step_at": [
+        42.0,
+        "RightArm"
+      ],
+      "max_sole_penetration_m": 1.2433156371116638e-07,
+      "max_planted_slide_m": 7.598131170262075e-08,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.00012644461821764708,
+        "max_planted_slide_m": 9.89855548909353e-06,
+        "max_planted_slide_at": [
+          3.475,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.07942024618387222,
+      "min_body_z_at": 2.35,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.01889999955892563,
+        0.0,
+        0.8186249136924744
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8909573554992676e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|SmokeCorner_Loop": [
+            1.0,
+            181.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "SmokeCorner_Exit": {
+      "action": "SmokeCorner_Exit",
+      "frames": [
+        1,
+        73
+      ],
+      "fps": 30,
+      "duration_s": 2.4,
+      "loop": false,
+      "start_contract": "smoke",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 17.39726581451392,
+      "max_key_step_at": [
+        16.0,
+        "RightForeArm"
+      ],
+      "max_sole_penetration_m": 1.1478550732135773e-07,
+      "max_planted_slide_m": 0.0009854630857169598,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.0013226649025455117,
+        "max_planted_slide_m": 0.0009854630857169598,
+        "max_planted_slide_at": [
+          0.567,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.07797890156507492,
+      "min_body_z_at": 1.7,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.01889999955892563,
+        0.0,
+        0.8186249136924744
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8477439880371094e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|SmokeCorner_Exit": [
+            1.0,
+            73.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "PhoneTalk_Enter": {
+      "action": "PhoneTalk_Enter",
+      "frames": [
+        1,
+        40
+      ],
+      "fps": 30,
+      "duration_s": 1.3,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "phone",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 22.20269552225113,
+      "max_key_step_at": [
+        18.5,
+        "RightArm"
+      ],
+      "max_sole_penetration_m": 7.206108421087265e-08,
+      "max_planted_slide_m": 5.4241045484546706e-08,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 7.265235763043165e-05,
+        "max_planted_slide_m": 4.041244640948158e-06,
+        "max_planted_slide_at": [
+          0.892,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.08163958787918091,
+      "min_body_z_at": 0.95,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.831352710723877e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|PhoneTalk_Enter": [
+            1.0,
+            40.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "PhoneTalk_Loop": {
+      "action": "PhoneTalk_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "fps": 30,
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "phone",
+      "end_contract": "phone",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 14.11182400945632,
+      "max_key_step_at": [
+        33.0,
+        "LeftForeArm"
+      ],
+      "max_sole_penetration_m": 1.6298145055770874e-07,
+      "max_planted_slide_m": 1.0848209096909341e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 4.8836576752364635e-05,
+        "max_planted_slide_m": 5.599571074396665e-06,
+        "max_planted_slide_at": [
+          2.925,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.07923607528209686,
+      "min_body_z_at": 5.4,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.01679999940097332,
+        0.0,
+        0.8189235329627991
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8224120140075684e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|PhoneTalk_Loop": [
+            1.0,
+            211.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "PhoneTalk_Exit": {
+      "action": "PhoneTalk_Exit",
+      "frames": [
+        1,
+        43
+      ],
+      "fps": 30,
+      "duration_s": 1.4,
+      "loop": false,
+      "start_contract": "phone",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 17.532949663499764,
+      "max_key_step_at": [
+        20.5,
+        "RightArm"
+      ],
+      "max_sole_penetration_m": 1.1431984603404999e-07,
+      "max_planted_slide_m": 7.598131170262075e-08,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 8.53522215038538e-06,
+        "max_planted_slide_m": 1.2654806208988572e-06,
+        "max_planted_slide_at": [
+          0.992,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.08163958787918091,
+      "min_body_z_at": 0.0,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.01679999940097332,
+        0.0,
+        0.8189235329627991
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8864870071411133e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|PhoneTalk_Exit": [
+            1.0,
+            43.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BarDoor_Enter": {
+      "action": "BarDoor_Enter",
+      "frames": [
+        1,
+        46
+      ],
+      "fps": 30,
+      "duration_s": 1.5,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "lean",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 18.829428670451037,
+      "max_key_step_at": [
+        26.0,
+        "LeftForeArm"
+      ],
+      "max_sole_penetration_m": 1.2794043868780136e-07,
+      "max_planted_slide_m": 1.1175870895385742e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.00022717530373483896,
+        "max_planted_slide_m": 1.790885257389326e-05,
+        "max_planted_slide_at": [
+          0.925,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.07688644528388977,
+      "min_body_z_at": 0.45,
+      "max_prop_penetration_m": 6.921529769898793e-05,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.808255910873413e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BarDoor_Enter": [
+            1.0,
+            46.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BarDoor_Loop": {
+      "action": "BarDoor_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "fps": 30,
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "lean",
+      "end_contract": "lean",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 4.265531831597994,
+      "max_key_step_at": [
+        107.0,
+        "LeftLeg"
+      ],
+      "max_sole_penetration_m": 7.264316082000732e-08,
+      "max_planted_slide_m": 8.72068100476237e-08,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.00011408759746700525,
+        "max_planted_slide_m": 1.2326343308857146e-05,
+        "max_planted_slide_at": [
+          3.508,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.0719892606139183,
+      "min_body_z_at": 2.6,
+      "max_prop_penetration_m": 1.8918514251842211e-06,
+      "hips_first_m": [
+        0.03500000387430191,
+        -0.004091694951057434,
+        0.8010592460632324
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.823902130126953e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BarDoor_Loop": [
+            1.0,
+            211.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BarDoor_Exit": {
+      "action": "BarDoor_Exit",
+      "frames": [
+        1,
+        40
+      ],
+      "fps": 30,
+      "duration_s": 1.3,
+      "loop": false,
+      "start_contract": "lean",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 16.771905262807852,
+      "max_key_step_at": [
+        21.5,
+        "LeftForeArm"
+      ],
+      "max_sole_penetration_m": 1.2316741049289703e-07,
+      "max_planted_slide_m": 1.0848209096909341e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.0003642734372988343,
+        "max_planted_slide_m": 1.702125537004736e-05,
+        "max_planted_slide_at": [
+          0.358,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.07600560784339905,
+      "min_body_z_at": 0.2,
+      "max_prop_penetration_m": 4.430055618287465e-05,
+      "hips_first_m": [
+        0.03500000387430191,
+        -0.004091694951057434,
+        0.8010592460632324
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.7933547496795654e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BarDoor_Exit": [
+            1.0,
+            40.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BenchSit_Enter": {
+      "action": "BenchSit_Enter",
+      "frames": [
+        1,
+        61
+      ],
+      "fps": 30,
+      "duration_s": 2.0,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "bench_sit",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 19.41511528927265,
+      "max_key_step_at": [
+        41.5,
+        "RightForeArm"
+      ],
+      "max_sole_penetration_m": 2.3387838155031204e-07,
+      "max_planted_slide_m": 2.691506127743191e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.0003307713195681572,
+        "max_planted_slide_m": 0.00013711996488959766,
+        "max_planted_slide_at": [
+          0.892,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.07207344472408295,
+      "min_body_z_at": 0.725,
+      "max_prop_penetration_m": 0.0028168678283691517,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.7933547496795654e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BenchSit_Enter": [
+            1.0,
+            61.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BenchSit_Loop": {
+      "action": "BenchSit_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "fps": 30,
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "bench_sit",
+      "end_contract": "bench_sit",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 20.886618923043454,
+      "max_key_step_at": [
+        79.0,
+        "LeftArm"
+      ],
+      "max_sole_penetration_m": 1.5471596270799637e-07,
+      "max_planted_slide_m": 0.0006066486239433289,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 2.9593706130981445e-05,
+        "max_planted_slide_m": 0.0006066486239433289,
+        "max_planted_slide_at": [
+          3.317,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.08369071781635284,
+      "min_body_z_at": 0.0,
+      "max_prop_penetration_m": 0.00013823509216309704,
+      "hips_first_m": [
+        0.0,
+        0.30000001192092896,
+        0.6338984966278076
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8075108528137207e-05,
+        "seam_error": 4.76837158203125e-07,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BenchSit_Loop": [
+            1.0,
+            211.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BenchSit_Exit": {
+      "action": "BenchSit_Exit",
+      "frames": [
+        1,
+        52
+      ],
+      "fps": 30,
+      "duration_s": 1.7,
+      "loop": false,
+      "start_contract": "bench_sit",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 8.456457100601419,
+      "max_key_step_at": [
+        17.0,
+        "LeftLeg"
+      ],
+      "max_sole_penetration_m": 1.782318577170372e-07,
+      "max_planted_slide_m": 2.476687750010887e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.0003500591265037656,
+        "max_planted_slide_m": 0.00012139195275248379,
+        "max_planted_slide_at": [
+          0.525,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.07080432027578354,
+      "min_body_z_at": 0.725,
+      "max_prop_penetration_m": 0.00014306306838990368,
+      "hips_first_m": [
+        0.0,
+        0.30000001192092896,
+        0.6338984966278076
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8298625946044922e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BenchSit_Exit": [
+            1.0,
+            52.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BeachLie_Enter": {
+      "action": "BeachLie_Enter",
+      "frames": [
+        1,
+        88
+      ],
+      "fps": 30,
+      "duration_s": 2.9,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "beach_lie",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 19.878661193992055,
+      "max_key_step_at": [
+        54.0,
+        "RightArm"
+      ],
+      "max_sole_penetration_m": 1.9383151084184647e-07,
+      "max_planted_slide_m": 0.0005105398595333099,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.00016707321628928185,
+        "max_planted_slide_m": 0.0006119711033021801,
+        "max_planted_slide_at": [
+          0.392,
+          "Right"
+        ]
+      },
+      "min_body_z_m": -0.009166955947875977,
+      "min_body_z_at": 1.708,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.870095729827881e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BeachLie_Enter": [
+            1.0,
+            88.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BeachLie_Loop": {
+      "action": "BeachLie_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "fps": 30,
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "beach_lie",
+      "end_contract": "beach_lie",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 16.380240081982777,
+      "max_key_step_at": [
+        98.0,
+        "RightForeArm"
+      ],
+      "max_sole_penetration_m": 2.2083986550569534e-07,
+      "max_planted_slide_m": 2.537576312709809e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 2.2083986550569534e-07,
+        "max_planted_slide_m": 7.717107671898467e-06,
+        "max_planted_slide_at": [
+          5.825,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.003999948501586914,
+      "min_body_z_at": 0.0,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.41999998688697815,
+        0.1608259677886963
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.761317253112793e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BeachLie_Loop": [
+            1.0,
+            211.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "BeachLie_Exit": {
+      "action": "BeachLie_Exit",
+      "frames": [
+        1,
+        91
+      ],
+      "fps": 30,
+      "duration_s": 3.0,
+      "loop": false,
+      "start_contract": "beach_lie",
+      "end_contract": "idle",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 19.34869354239966,
+      "max_key_step_at": [
+        65.5,
+        "LeftForeArm"
+      ],
+      "max_sole_penetration_m": 2.0116567611694336e-07,
+      "max_planted_slide_m": 4.789280498024284e-07,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.000783375115133822,
+        "max_planted_slide_m": 0.003046432827371285,
+        "max_planted_slide_at": [
+          1.258,
+          "Right"
+        ]
+      },
+      "min_body_z_m": 0.0038918256759643555,
+      "min_body_z_at": 0.758,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.41999998688697815,
+        0.1608259677886963
+      ],
+      "seam_matrix_error": null,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.9297003746032715e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|BeachLie_Exit": [
+            1.0,
+            91.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    },
+    "Flee_Panic_Run": {
+      "action": "Flee_Panic_Run",
+      "frames": [
+        1,
+        11
+      ],
+      "fps": 30,
+      "duration_s": 0.3333333333333333,
+      "loop": true,
+      "start_contract": "flee_run",
+      "end_contract": "flee_run",
+      "actions_in_file": 1,
+      "bone_count": 65,
+      "bone_order_matches": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 22.0476752961947,
+      "max_key_step_at": [
+        4.5,
+        "RightLeg"
+      ],
+      "max_sole_penetration_m": 4.109460860490799e-08,
+      "max_planted_slide_m": 0.00010647220420550067,
+      "subframe_120hz": {
+        "max_sole_penetration_m": 0.001590922474861145,
+        "max_planted_slide_m": 0.0007712317047564204,
+        "max_planted_slide_at": [
+          0.058,
+          "Left"
+        ]
+      },
+      "min_body_z_m": 0.08567545562982559,
+      "min_body_z_at": 0.192,
+      "max_prop_penetration_m": null,
+      "hips_first_m": [
+        0.0,
+        0.0,
+        0.7082608342170715
+      ],
+      "seam_matrix_error": 0.0,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.7583370208740234e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Flee_Panic_Run": [
+            1.0,
+            11.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps": true,
+        "bones": true,
+        "rig_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "sole_penetration": true,
+        "planted_slide": true,
+        "body_floor": true,
+        "props": true,
+        "fbx_bones": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_seam": true
+      },
+      "pass": true
+    }
+  },
+  "contracts": {
+    "idle": {
+      "reference": "A v04 Idle frame 1",
+      "errors": {
+        "ShopQueue_Loop:first": 0.0,
+        "ShopQueue_Loop:last": 0.0,
+        "BusWait_Loop:first": 0.0,
+        "BusWait_Loop:last": 0.0,
+        "Chat_Loop:first": 0.0,
+        "Chat_Loop:last": 0.0,
+        "KioskBuy:first": 0.0,
+        "KioskBuy:last": 0.0,
+        "Chat_Loop_Mirror:first": 0.0,
+        "Chat_Loop_Mirror:last": 0.0,
+        "SmokeCorner_Enter:first": 0.0,
+        "SmokeCorner_Exit:last": 0.0,
+        "PhoneTalk_Enter:first": 0.0,
+        "PhoneTalk_Exit:last": 0.0,
+        "BarDoor_Enter:first": 0.0,
+        "BarDoor_Exit:last": 0.0,
+        "BenchSit_Enter:first": 0.0,
+        "BenchSit_Exit:last": 0.0,
+        "BeachLie_Enter:first": 0.0,
+        "BeachLie_Exit:last": 0.0
+      },
+      "pass": true
+    },
+    "smoke": {
+      "reference": "SmokeCorner_Enter:last",
+      "errors": {
+        "SmokeCorner_Enter:last": 0.0,
+        "SmokeCorner_Loop:first": 0.0,
+        "SmokeCorner_Loop:last": 0.0,
+        "SmokeCorner_Exit:first": 0.0
+      },
+      "pass": true
+    },
+    "phone": {
+      "reference": "PhoneTalk_Enter:last",
+      "errors": {
+        "PhoneTalk_Enter:last": 0.0,
+        "PhoneTalk_Loop:first": 0.0,
+        "PhoneTalk_Loop:last": 0.0,
+        "PhoneTalk_Exit:first": 0.0
+      },
+      "pass": true
+    },
+    "lean": {
+      "reference": "BarDoor_Enter:last",
+      "errors": {
+        "BarDoor_Enter:last": 0.0,
+        "BarDoor_Loop:first": 0.0,
+        "BarDoor_Loop:last": 0.0,
+        "BarDoor_Exit:first": 0.0
+      },
+      "pass": true
+    },
+    "bench_sit": {
+      "reference": "BenchSit_Enter:last",
+      "errors": {
+        "BenchSit_Enter:last": 0.0,
+        "BenchSit_Loop:first": 0.0,
+        "BenchSit_Loop:last": 0.0,
+        "BenchSit_Exit:first": 0.0
+      },
+      "pass": true
+    },
+    "beach_lie": {
+      "reference": "BeachLie_Enter:last",
+      "errors": {
+        "BeachLie_Enter:last": 0.0,
+        "BeachLie_Loop:first": 0.0,
+        "BeachLie_Loop:last": 0.0,
+        "BeachLie_Exit:first": 0.0
+      },
+      "pass": true
+    },
+    "flee_run": {
+      "reference": "Flee_Panic_Run:first",
+      "errors": {
+        "Flee_Panic_Run:first": 0.0,
+        "Flee_Panic_Run:last": 0.0
+      },
+      "pass": true
+    }
+  },
+  "pass": true
+}
