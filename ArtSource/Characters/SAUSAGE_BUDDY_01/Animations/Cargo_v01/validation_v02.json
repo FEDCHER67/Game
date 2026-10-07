@@ -1,0 +1,188 @@
+{
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "source_files_sha256_unchanged": true,
+  "a_b_rig_rest_equal": true,
+  "source_review_triangles": 14176,
+  "export_triangle_budget": 0,
+  "export_meshes": 0,
+  "thresholds": {
+    "height_m": 1.2,
+    "sitting_penetration_m": 1e-06,
+    "quaternion_half_frame_step_deg": 25,
+    "fbx_matrix_component_error": 0.00015,
+    "reference_matrix_error": 1e-05
+  },
+  "scope": "Saved Blender sources, original A mesh, rig compatibility with A/B, FBX reimport. No Unity import or gameplay test.",
+  "clips": {
+    "SitUp_Cargo_v02": {
+      "action": "SitUp_Cargo_v02",
+      "duration_s": 2.1,
+      "frames": [
+        1,
+        64
+      ],
+      "fps": 30,
+      "loop": false,
+      "bone_count": 65,
+      "rig_mesh_uv_material_weights_shape_keys_unchanged": true,
+      "bone_list_order_matches_a_v04": true,
+      "nan_or_infinite_components": 0,
+      "reflected_bone_samples": 0,
+      "negative_adjacent_quaternion_key_dots": 0,
+      "max_half_frame_quaternion_rotation_deg": 13.603968764246677,
+      "max_120hz_local_rotation_deg": 6.801982082305784,
+      "max_key_step_at": [
+        "mixamorig:RightArm",
+        31.0
+      ],
+      "max_height_above_floor_m": 1.0742229223251343,
+      "max_hips_height_m": 0.3077008128166199,
+      "sitting_sample_interval_s": [
+        0.97,
+        2.1
+      ],
+      "sitting_min_mesh_z_m": 0.001992800273001194,
+      "sitting_max_floor_penetration_m": 0,
+      "all_frames_min_mesh_z_m": 0.0004999637603759766,
+      "all_frames_max_floor_penetration_m": 0,
+      "sitting_min_wall_clearance_m": 0.005080783367157005,
+      "minimum_bone_determinant": 0.9999988675117493,
+      "seam_max_matrix_component_error": null,
+      "supine_start_matrix_component_error": 5.960464477539062e-07,
+      "hips_horizontal_net_displacement_m": 0.30000001192092896,
+      "common_sit_end_matrix_error": 0.0,
+      "common_sit_start_matrix_error": null,
+      "fbx_reimport": {
+        "bone_count": 65,
+        "bone_list_order_matches_walk_v02": true,
+        "hierarchy_matches_walk_v02": true,
+        "max_bind_matrix_error_vs_walk_v02": 0.0,
+        "max_animated_world_matrix_component_error": 1.7873011529445648e-05,
+        "loop_seam_matrix_component_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|SitUp_Cargo_v02": [
+            1.0,
+            64.0
+          ]
+        },
+        "only_armature_objects": true,
+        "constraints": 0
+      },
+      "pass": true
+    },
+    "Cargo_Sit_Idle_v02": {
+      "action": "Cargo_Sit_Idle_v02",
+      "duration_s": 4.0,
+      "frames": [
+        1,
+        121
+      ],
+      "fps": 30,
+      "loop": true,
+      "bone_count": 65,
+      "rig_mesh_uv_material_weights_shape_keys_unchanged": true,
+      "bone_list_order_matches_a_v04": true,
+      "nan_or_infinite_components": 0,
+      "reflected_bone_samples": 0,
+      "negative_adjacent_quaternion_key_dots": 0,
+      "max_half_frame_quaternion_rotation_deg": 3.1081270563075685,
+      "max_120hz_local_rotation_deg": 1.5541537101526974,
+      "max_key_step_at": [
+        "mixamorig:RightForeArm",
+        29.0
+      ],
+      "max_height_above_floor_m": 1.0293242931365967,
+      "max_hips_height_m": 0.10799992084503174,
+      "sitting_sample_interval_s": [
+        0,
+        4.0
+      ],
+      "sitting_min_mesh_z_m": 0.0019999719224870205,
+      "sitting_max_floor_penetration_m": 0,
+      "all_frames_min_mesh_z_m": 0.0019999719224870205,
+      "all_frames_max_floor_penetration_m": 0,
+      "sitting_min_wall_clearance_m": 0.0050827503204345925,
+      "minimum_bone_determinant": 0.9999988079071045,
+      "seam_max_matrix_component_error": 0.0,
+      "supine_start_matrix_component_error": null,
+      "hips_horizontal_net_displacement_m": 0.0,
+      "common_sit_end_matrix_error": 0.0,
+      "common_sit_start_matrix_error": 0.0,
+      "fbx_reimport": {
+        "bone_count": 65,
+        "bone_list_order_matches_walk_v02": true,
+        "hierarchy_matches_walk_v02": true,
+        "max_bind_matrix_error_vs_walk_v02": 0.0,
+        "max_animated_world_matrix_component_error": 1.7687678337097168e-05,
+        "loop_seam_matrix_component_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cargo_Sit_Idle_v02": [
+            1.0,
+            121.0
+          ]
+        },
+        "only_armature_objects": true,
+        "constraints": 0
+      },
+      "pass": true
+    },
+    "Cargo_Knock_v02": {
+      "action": "Cargo_Knock_v02",
+      "duration_s": 2.8,
+      "frames": [
+        1,
+        85
+      ],
+      "fps": 30,
+      "loop": true,
+      "bone_count": 65,
+      "rig_mesh_uv_material_weights_shape_keys_unchanged": true,
+      "bone_list_order_matches_a_v04": true,
+      "nan_or_infinite_components": 0,
+      "reflected_bone_samples": 0,
+      "negative_adjacent_quaternion_key_dots": 0,
+      "max_half_frame_quaternion_rotation_deg": 11.11365001424253,
+      "max_120hz_local_rotation_deg": 5.556812052445746,
+      "max_key_step_at": [
+        "mixamorig:RightHand",
+        15.0
+      ],
+      "max_height_above_floor_m": 1.0284868478775024,
+      "max_hips_height_m": 0.10799998044967651,
+      "sitting_sample_interval_s": [
+        0,
+        2.8
+      ],
+      "sitting_min_mesh_z_m": 0.0019998238421976566,
+      "sitting_max_floor_penetration_m": 0,
+      "all_frames_min_mesh_z_m": 0.0019998238421976566,
+      "all_frames_max_floor_penetration_m": 0,
+      "sitting_min_wall_clearance_m": 0.0017551422119140847,
+      "minimum_bone_determinant": 0.9999985694885254,
+      "seam_max_matrix_component_error": 0.0,
+      "supine_start_matrix_component_error": null,
+      "hips_horizontal_net_displacement_m": 0.0,
+      "common_sit_end_matrix_error": 6.556510925292969e-07,
+      "common_sit_start_matrix_error": 6.556510925292969e-07,
+      "fbx_reimport": {
+        "bone_count": 65,
+        "bone_list_order_matches_walk_v02": true,
+        "hierarchy_matches_walk_v02": true,
+        "max_bind_matrix_error_vs_walk_v02": 0.0,
+        "max_animated_world_matrix_component_error": 1.730024814605713e-05,
+        "loop_seam_matrix_component_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cargo_Knock_v02": [
+            1.0,
+            85.0
+          ]
+        },
+        "only_armature_objects": true,
+        "constraints": 0
+      },
+      "pass": true
+    }
+  },
+  "pass": true
+}

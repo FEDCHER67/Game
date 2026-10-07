@@ -1,0 +1,67 @@
+{
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "bind_reference": "Walk_v02.fbx",
+  "rig_source": "blend",
+  "thresholds": {
+    "seam_source": 0.0,
+    "contract_matrix": 1e-05,
+    "sole_penetration_m": 0.001,
+    "support_ground_error_m": 0.001,
+    "planted_foot_slide_m": 0.001,
+    "key_step_deg": 25,
+    "height_m": 1.2,
+    "floor_m": -1e-06,
+    "wall_x_m": -0.65,
+    "fbx_bind": 0.0001,
+    "fbx_anim": 0.00015,
+    "fbx_seam": 1e-05
+  },
+  "clips": {
+    "Idle_Stand_v03": {
+      "action": "Idle_Stand_v03",
+      "frames": [
+        1,
+        121
+      ],
+      "fps": 30,
+      "duration_s": 4.0,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_a_v04": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 1.1669954989586613,
+      "seam_matrix_error": 0.0,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "start_contract_error": 0.0,
+      "end_contract_error": 0.0,
+      "max_sole_penetration_m": 6.530550308525562e-06,
+      "max_support_ground_error_m": 6.530550308525562e-06,
+      "max_planted_foot_slide_m": 8.165034983605633e-06,
+      "hips_first_height_m": 0.8210592269897461,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 0.0,
+        "max_animated_matrix_error": 1.7881393432617188e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Idle_Stand_v03": [
+            1.0,
+            121.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true
+    }
+  },
+  "pass": true
+}

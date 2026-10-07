@@ -1,0 +1,35 @@
+{
+  "current_revision": "v03",
+  "accepted_by_author": true,
+  "inspection_method": "Direct visual inspection of all three final 20-panel contact sheets (side and three-quarter), final motion-sequence sample frames, and the corrected fist close-up. MP4 frame counts and timings checked with FFprobe.",
+  "clips": {
+    "SitUp_Cargo_v03": {
+      "contact_sheet": "Previews/SitUp_Cargo_v03/SitUp_Cargo/SitUp_Cargo_v03_contact_sheet.png",
+      "motion_sample": "Previews/SitUp_Cargo_v03/SitUp_Cargo/motion_frames/f0036.png",
+      "findings": "Readable supine start, low supported rise and turn into the seat, dazed wobble, visible right-temple rub, settled knee hug. The mid-rise pelvis float from the early review is corrected."
+    },
+    "Cargo_Sit_Idle_v03": {
+      "contact_sheet": "Previews/Cargo_Sit_Idle_v03/Cargo_Sit_Idle/Cargo_Sit_Idle_v03_contact_sheet.png",
+      "motion_sample": "Previews/Cargo_Sit_Idle_v03/Cargo_Sit_Idle/motion_frames/f0072.png",
+      "findings": "Arms hold the raised knees, feet and seat stay at the floor, head glances alternate with small breathing and trembling, back rests near the wall. Endpoint pose matches the sit-up and knock."
+    },
+    "Cargo_Knock_v03": {
+      "contact_sheet": "Previews/Cargo_Knock_v03/Cargo_Knock/Cargo_Knock_v03_contact_sheet.png",
+      "motion_sample": "Previews/Cargo_Knock_v03/Cargo_Knock/motion_frames/f0025.png",
+      "fist_closeup": "Previews/Review_03/Cargo_Knock/fist_detail_v01.png",
+      "findings": "Right shoulder and head turn toward the wall, fingers close into the striking fist, three separate strikes have holds and slower withdrawals, torso recoils and the head trembles, then the exact knee-hug pose returns. The closed-hand close-up uses the same final finger authoring as v03."
+    }
+  },
+  "corrections": [
+    "Lowered the pelvis and supported the middle of the sit-up on the actual skinned geometry.",
+    "Tightened the knee hug and added a more tucked head pose.",
+    "Replaced the singular moving head-rub IK target with a joint-authored shoulder/elbow/wrist arc.",
+    "Aligned the side wall with the original lying width and final back position.",
+    "Reduced the strike reach to preserve wall clearance.",
+    "Replaced the moving knock IK transition with smooth local arcs between fixed hinge poses, eliminating an FBX wrist seam branch change.",
+    "Corrected finger flexion from sideways curling to curling around the posed palm axis, closing the fist."
+  ],
+  "quality_scope": "Author-reviewed source animation, original A review mesh, local floor/side-wall stage and FBX reimport. No Unity import, ragdoll transition, network test or player acceptance is claimed.",
+  "owner_acceptance": "Pending owner review and Unity integration.",
+  "paid_generation_credits": 0
+}

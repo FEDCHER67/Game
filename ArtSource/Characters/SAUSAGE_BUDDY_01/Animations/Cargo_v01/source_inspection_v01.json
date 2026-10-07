@@ -1,0 +1,795 @@
+{
+  "source_sha256": {
+    "buddy_anim.py": "77c1efcdc93b4885a79f12b0354cd4b81783079de34f0ea4fedef464f62ce94e",
+    "buddy_body.py": "8b5efe81e587e14ab13773b471d0ef80c85ed83e1150c209ea3e5f4c676a7080",
+    "buddy_clothes.py": "6e07603cfe289a126dc5c5401ce0ce16976bd5dfeacc86441a43c3d20735d396",
+    "buddy_geo.py": "af3140a984c090b0986ae644a222fe835126ec2f9117630a6e4f877182cc6ace",
+    "buddy_render.py": "0625ec99986af16eec7b37143fa791f7d1fb4be0817125bf8682a079f0d2cc51",
+    "buddy_rig.py": "9cbccdaad9bfae6cd1d32890900c92f4acfa5ff4e24c1aa2b394e84e22d5be25",
+    "build_buddy.py": "7fbe59b5db1cea3cb8b803aec9a458d0f41d486f8dc6ae74b18930f2fab375ee",
+    "OPTIMIZATION_REPORT_v04.md": "4279ddde62abc9c0dd368e5f017a886a29ab22699753c27610b1e0e222f4b8da",
+    "README.md": "f24ffa73145b26f1b59e69647f5ce349d0f8f8ca15bc4015013d632ab9a3025d",
+    "SAUSAGE_BUDDY_A_v03.blend": "032abb59217a96a72f52c8102a43c007b7c6b7fb6d47d83e02349d2bd8e31565",
+    "SAUSAGE_BUDDY_A_v03.fbx": "ab153ed9234b71dd07738e00a04240a64c5fb8f73811c717b5b6d286b0a47b6e",
+    "SAUSAGE_BUDDY_A_v04.blend": "8ce9b86c1a2665893a9749cb234af48fb8b792c427e9491a2af75a4fb1c20653",
+    "SAUSAGE_BUDDY_A_v04.fbx": "b389c8bdc0e6cecb46b61a2c51121c4b9479b3024c7add42ba1c97e0ffd53f07",
+    "SAUSAGE_BUDDY_B_v03.blend": "771fdd082ca74f732cff590c5e4d9b8ef8c30f7274a2bd5a58f6e7519e07e777",
+    "SAUSAGE_BUDDY_B_v03.fbx": "148d232cae9097f5bdcee5173392feb54d2456801e4ed817ad05710122541b82",
+    "SAUSAGE_BUDDY_B_v04.blend": "e2d501f4e103ee42a8663334a1b1093a4558d48d94a62f6f9f016a7a9214c051",
+    "SAUSAGE_BUDDY_B_v04.fbx": "e6ee884a5ca9706c35e3432d204bac2a0e9ad126d468eba051aeb8b69258efd9",
+    "validation_A_v03.json": "bed563e9a6c7478c27570b539ecd92d8e21abcf41ced65e84d80556ef4390fc2",
+    "validation_A_v04.json": "a651a6776daaca697f809e8a03c1a3c7200e6f8cbf15a490e78bb0d4455936b8",
+    "validation_B_v03.json": "639cc3e378231d5322f04b5c943eb17d1fc670677e4d068e594009aa97d60776",
+    "validation_B_v04.json": "9e5c35282ae88f936d001bd48b9d4b0e652a53b59e833baf9a0b1604cc91c2f7",
+    "Previews/A_v03/01_sheet_front.png": "4593c310c0992c5c19d3412e9767d1df4fbf71662cbd4cf79afb2a3e1dba9a26",
+    "Previews/A_v03/02_sheet_side.png": "be57250481a27688320242f29cd820589e6c03b78e5fffd1d9f3b98468bbd007",
+    "Previews/A_v03/03_sheet_back.png": "148ab5b1215c63e40e58e0fd22a912bfe5ca77b20f6129ed176a8cd572c6d259",
+    "Previews/A_v03/04_idle_three_quarter.png": "9752d8717110b5bcebd5b44b740b4e55eb95b1642d47f5db08f11db024000d3f",
+    "Previews/A_v03/05_idle_head.png": "fdf1e8c75831e36fb2feec0962600b6e4ea03700e170308d992928b0c7453ad2",
+    "Previews/A_v03/Panic_TurnFlee.gif": "076e6ec83034bfa19ddcced7d07a2fe61466c590b31742349dc9277375a0bbb2",
+    "Previews/A_v03/sheet.png": "4e508f4e7cd61d2b0ee555e36ace1dca16c702eee5670ee08b3198fd5e882a8f",
+    "Previews/A_v04/01_sheet_front.png": "3c76dea0c9cc577cee33b8e5f9135cd779e93e3baa21e33125b567dfd9ac8b7d",
+    "Previews/A_v04/02_sheet_side.png": "baea435ecbacfe63e5affd332d2f633c2dfbf09d5408fd01323193784545c296",
+    "Previews/A_v04/03_sheet_back.png": "fd2ae262e11dde42844ce34d1146aa767070046f91458ec0ff6b958aeb36031b",
+    "Previews/A_v04/04_idle_three_quarter.png": "2681cdfc7b44d7d319aebabab8431fb5f9c7751ab6f81885b4ebb08589d7bbd8",
+    "Previews/A_v04/05_idle_head.png": "f0712f19b136152b2cca4484a8d6d64225a8eb54b0c4c00ed3e0dcea9ef9cc8e",
+    "Previews/A_v04/Panic_TurnFlee.gif": "1763d55fc4acc9625e5a7aa34fd3f4d5c3fecb376750b9af0b1d00fd4b9d4438",
+    "Previews/A_v04/sheet.png": "b1f9c51ec9845dcb4ad597f94e4e2e39c8ccb4ca5aa84f71d224f98949b14b6a",
+    "Previews/B_v03/01_sheet_front.png": "e6a3da020d5349acfcddab9cb0fc1a873e584332724f93fd223066631fcb1b7f",
+    "Previews/B_v03/02_sheet_side.png": "47de541952cefce0fdf8106dbfc761b8404684442f019229ab08a5a5e18d9b1d",
+    "Previews/B_v03/03_sheet_back.png": "86916fdbe4f71985d4b967ed756cc0c295706e30c484d37de5f4734d7f75414e",
+    "Previews/B_v03/04_idle_three_quarter.png": "0af817a9ad34d28ac1d003554b9eb8eab9a32b13a270515b21c5c9e6b5c5aa21",
+    "Previews/B_v03/05_idle_head.png": "607629a1caa07b0840d4425eedbde3023f6b8f5b7c1352866e48d73c8d5a1103",
+    "Previews/B_v03/Panic_TurnFlee.gif": "9c097ffc499004b965ffe050bf58b207978d2403ac65fbfbab6b5942b2d5558a",
+    "Previews/B_v03/sheet.png": "ca1980bf13897ee47888afc5d6e0321d02b2454d64dcaab5c74bfaa57fbf126a",
+    "Previews/B_v04/01_sheet_front.png": "d2bae2b839c4949206582b4c5e938cb9182bc8e971061ba279c7cabd4d11f0ef",
+    "Previews/B_v04/02_sheet_side.png": "3fd1fe67190a2ca15787c54574ed43cc4e7bdd90a8915241b2ba54e3f5458c92",
+    "Previews/B_v04/03_sheet_back.png": "2628f9fe5dadc0eb5fad1d96b6eb0cce7c4c3f3e726f88603194fbca26514e1c",
+    "Previews/B_v04/04_idle_three_quarter.png": "87e08c6dcfaf95bb5b248a262ec8980b7bb93b5af0dddc1a555ff8b189b73b02",
+    "Previews/B_v04/05_idle_head.png": "e88aa85a1ac65424b443795865481455a5ee95b358ea22b0a0a55db6ec9fd555",
+    "Previews/B_v04/Panic_TurnFlee.gif": "a3efb514f997d45b84c2af07666f8ccca1009edabbfb9f346b8430f0d10da451",
+    "Previews/B_v04/sheet.png": "bcb9c5deb61de7fc9332f328556c03b8b9f2fab8e3a3b742b978e2658151fa3b",
+    "Animations/GetUp_Idle_v01/build_getups.py": "bed097a8c3301ccb03348a640030da8471a268c18496e2f88a3b69a993387d04",
+    "Animations/GetUp_Idle_v01/build_v01.log": "6cd949457f5aa11c3960284cc308b49061759ddfdfad19329cd925e552328368",
+    "Animations/GetUp_Idle_v01/build_v02.log": "75fb38c26c595509404dea1ff1987d42adb286ecfc70105f5306f9aad99c598f",
+    "Animations/GetUp_Idle_v01/contact_sheets.ps1": "ea0474701f3f97bba5fec5f706099d307c5e2fce059eb661dbea209b5938e7a0",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v01.blend": "552a516e6ab77fffe1c39bd3ad4e414a8259df9639c938dcdae4e92fc4434253",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v01.fbx": "523d30749d34bdce8d62d64ad9f2372481247e0c0942347ebc4ee128acaa0dcb",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v01_authoring.json": "604c9f3ba7a5f87591a93d586adaa86ff5b436f460ec180d21880eaebceb466f",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v01_rotation_review.json": "d66dd1eaba975ec80f2f3d331b7c84d078fbb8081461d7b0f5564cca1e11627e",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v02.blend": "dd1ef794c15fe0414ed75b1f5024b8ae6486aaeef61bd80e5d84cecc3db109d3",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v02.fbx": "d2cb6f1240f9525dcb213345543f7d437887880184daeb6f0e9b7bbd01fd4702",
+    "Animations/GetUp_Idle_v01/GetUp_FromBack_v02_authoring.json": "7924b60cb43cbbfe9ffaa723ee2cb02d6d93202a4876b788498b55a971960299",
+    "Animations/GetUp_Idle_v01/GetUp_FromBelly_v01.blend": "3e456dc889048f775500ff3204f757cb5f87067688becd89ed6e223c79e8eac4",
+    "Animations/GetUp_Idle_v01/GetUp_FromBelly_v01.fbx": "ca4adbd6754ca25edec5b1228c1e5ba7414f8892401c59f20a5c4b2612f01ac1",
+    "Animations/GetUp_Idle_v01/GetUp_FromBelly_v01_authoring.json": "b5139cf506dc8e349630baae09d904b4cd8fbd77c42e6316f34d7c473a7f4dc0",
+    "Animations/GetUp_Idle_v01/GetUp_FromBelly_v02.blend": "10e492373609056889b7e7bbfa4f3d599c73ee8fafb6ed8fbf040199edab97b0",
+    "Animations/GetUp_Idle_v01/GetUp_FromBelly_v02.fbx": "3dbb184bbbcdbcb7085e702d7b8306a4618bc52debfb4aa3c9ad51cf24b54c0d",
+    "Animations/GetUp_Idle_v01/GetUp_FromBelly_v02_authoring.json": "a1727fc44678e25565e26d8c3b3e05aa32595b2e952b368f90d4426d08a0ac44",
+    "Animations/GetUp_Idle_v01/Idle_Variant_A_v01.blend": "a4fb083015de5b8d948467e233e82de4fb49cd37442177eb1e4e4c637d090c1e",
+    "Animations/GetUp_Idle_v01/Idle_Variant_A_v01.fbx": "bc859db4e5048575cc976fbb9e1f026fbb7271c250ce6e21028deb29a34225d1",
+    "Animations/GetUp_Idle_v01/Idle_Variant_A_v01_authoring.json": "6b98e8bd6bb0e7edc413ab727c5838be0dca76a77f0ab98b483b285e19b77d66",
+    "Animations/GetUp_Idle_v01/Idle_Variant_A_v02.blend": "3e577ac14cfeea66ed87f242ee78d1ebb244fadacc882b09429c7411111a9f91",
+    "Animations/GetUp_Idle_v01/Idle_Variant_A_v02.fbx": "f248ac26e5569494112dafcc9f97eb81f9f4687a01f5fca3fd8faf6ff66aebab",
+    "Animations/GetUp_Idle_v01/Idle_Variant_A_v02_authoring.json": "ccab19f1bcdcc073bfbc2fd8825cd456ce7e252066f27f2eb79dd1c234777f0c",
+    "Animations/GetUp_Idle_v01/Idle_Variant_B_v01.blend": "3ba851a0957c750092ad87be54cf71c552ef6bc389282349740ca71dbc265b17",
+    "Animations/GetUp_Idle_v01/Idle_Variant_B_v01.fbx": "da0377f7eaeb8fffabe083eacd4c2391b84de83459782e159e563f1fb18f2d6d",
+    "Animations/GetUp_Idle_v01/Idle_Variant_B_v01_authoring.json": "38769eeb3de366232367b54d0f2509d64c7a96d484e0db351b5f492abd5ab7f5",
+    "Animations/GetUp_Idle_v01/Idle_Variant_B_v02.blend": "15c950081030113d4a4fd56592da4d759817afea8bae0ccb4080844332d1c49b",
+    "Animations/GetUp_Idle_v01/Idle_Variant_B_v02.fbx": "b3e2a84295b7a56b3cb9e3bbfeed550bfd80ad4645d5366b71c4f3822b00b595",
+    "Animations/GetUp_Idle_v01/Idle_Variant_B_v02_authoring.json": "f5cc0c724c6edcf9fb0022c23addcf535a3abe0fb40493aea4de7e68befd1077",
+    "Animations/GetUp_Idle_v01/inspect_getups.py": "5f55ffe87493153168cfd3d64fad3d64b08f4c9b2ec5e75a81d3ef70dbd550ea",
+    "Animations/GetUp_Idle_v01/inspect_motion.py": "a3c255931cc65e760320cbc3a7e57e94bfd957832c23b59cde5d6c69f809ea93",
+    "Animations/GetUp_Idle_v01/package_report.py": "f33f54348776b885db5ae016d48024f700a6b652d30c08b560563808b2354a5d",
+    "Animations/GetUp_Idle_v01/preflight_v01.log": "b0ecd0b85e4a367dd53011fa94f048bb98e3f219657f3554f00e144884775de1",
+    "Animations/GetUp_Idle_v01/preflight_v02.log": "3d83724fb82f19f1b0be696bd61fc66a0ef203f6f43dc92f9c1b8a5086f7397e",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry01.log": "3ba4f032610c502e691ac03debfa55819350ae233695ee5ad851a0fc1482044a",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry02.log": "c95fdb8cc383076d061b9248144bcf26deb2b08c9a7e8dd39e16ee470246b10d",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry03.log": "e18f6b9b2c5789aed99a88acb2b484d8e393654eedf744216954a0eb875efc32",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry04.log": "c14346fc19601feafde09407f9fc6c399ebbb348690a0929d71fd2452dcfd9c6",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry05.log": "30a0cc4b3f30309ec95e38a48fa328a648c6418a64264a81746b22db8b748277",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry06.log": "3c3c4d587257f0415bd3a00310e4615b5922ab34a3ead2957992813ee4b41047",
+    "Animations/GetUp_Idle_v01/preflight_v02_retry07.log": "7480880052556d7d0eebb0c7ffaab935f8ba93f1aff00a24a0a489105e8ea4ef",
+    "Animations/GetUp_Idle_v01/provenance_v02.json": "0ca695a15b8f0d1eb0f32357825d1aa3c2e6063f009e579c098d9ba7f39a6539",
+    "Animations/GetUp_Idle_v01/README.md": "e152410252214134699883b17cb5d346630b0d82e5f1b086906e3168a89357ad",
+    "Animations/GetUp_Idle_v01/review_01_back.log": "894d366554639a1fff882cc3d6c2ab64cb51f22af01c9a5b2035b0798cc19703",
+    "Animations/GetUp_Idle_v01/Review_01_GetUp_FromBack_authoring.json": "2b3f32e120b693b8da17f4c08b292c7844429b144e11186124c94c98af4c9791",
+    "Animations/GetUp_Idle_v01/review_02.log": "92943fbe78e37bbd787922278ba7968da5ad8061e03b28e50a4d425db3cd478c",
+    "Animations/GetUp_Idle_v01/Review_02_GetUp_FromBack_authoring.json": "6f4b880c4c0403c0f935e532268030b6d34b19c011e190c09508059df358d58c",
+    "Animations/GetUp_Idle_v01/Review_02_GetUp_FromBelly_authoring.json": "e86cc05bd9a34b25be0f1f41a5d83007df762dbdb48aa892f63cf27fcd4a0282",
+    "Animations/GetUp_Idle_v01/Review_02_Idle_Variant_A_authoring.json": "a206b1188a245cbc3c47887191955aeaf87b36287cb5d476e09497a51439ea58",
+    "Animations/GetUp_Idle_v01/Review_02_Idle_Variant_B_authoring.json": "3b2f31016f5137f6df1eae48896916a3392259acf8e4caadacaa8eadcf0b572b",
+    "Animations/GetUp_Idle_v01/source_inspection_v01.json": "828cf3e265da8fb79466b8a7d059ab9f8a0f964dcf0f6177c7cccbef68afe179",
+    "Animations/GetUp_Idle_v01/validate_back_v01.log": "3986ce77794688d8b099b1e336014855373b6bc7e1817f58ab69729ee64d3b9c",
+    "Animations/GetUp_Idle_v01/validate_getups.py": "3c8bc55d227247d06ecf1e798b28963e402e6e7bbe006d175ac0095eeb1dfcae",
+    "Animations/GetUp_Idle_v01/validate_v02.log": "551a0da4cc7e26e8ad5accd55cd787c1ec6b40738fda7d18b1fb1a676d0aa5c9",
+    "Animations/GetUp_Idle_v01/validation_GetUp_FromBack_v01.json": "11ef0298ea963ee8fae38ea47de70100feeb95e12f4f0a63abcf98c9bf20e4b4",
+    "Animations/GetUp_Idle_v01/validation_v02.json": "683332a822d2e415cf83e7c789756aef55e0b8e7705cbb2396956c256e840a04",
+    "Animations/Locomotion_v01/build.log": "9777d2c280352a1dc516a2760a7b56aa6f7e6be2b4e10dc05960fcb924b46ac6",
+    "Animations/Locomotion_v01/build_walk.py": "ff2e211ace91365b580ca147c546df5dad033bf7d1ddf99f036885514e642c6f",
+    "Animations/Locomotion_v01/export_walk_v02.py": "770d51ffda8abc515c9b45f6b6d0701e6ef23cd86ea5845e0b994ef2f0c2274d",
+    "Animations/Locomotion_v01/inspect_fbx.py": "b5adaa5440751f2c2f1a0b020c09e53c3d4df6dfba981ba1618391ab8e59e40f",
+    "Animations/Locomotion_v01/inspect_source.py": "a267a16759e7823fec4c13562268c011143c226b42c121d56b9add3b384bf2c8",
+    "Animations/Locomotion_v01/README.md": "e2170bdb57bd11e7c5e61e6f342fa5d418300c803f29596fbb729c1f8a867f67",
+    "Animations/Locomotion_v01/render.log": "c938e77821e7e57b372478733ef4ac514e865b6ddf713d929cd815109e58df52",
+    "Animations/Locomotion_v01/render_walk.py": "4357487764fad2acd1eb8cc7034175dc608cdd976bec656946d0c7ee329179b1",
+    "Animations/Locomotion_v01/source_inspection.json": "44176776c99e1a0a32acc1f7f857acc50a3a04ea51deeeed39d02e3846c74aa8",
+    "Animations/Locomotion_v01/validate_walk.py": "fd53d224d1467ee52ad86e76f2e5061bcb2d3a8e3d621db1d60c66844b9ac781",
+    "Animations/Locomotion_v01/validation_v01.json": "9fb13176210cf163a1d7f08ce65f6a9d1dee2ca910b906613514fc275b3ec768",
+    "Animations/Locomotion_v01/validation_v02.json": "9cfd5a16c7138a7aad4776c9dde705e7dc6e8fa94cb5b74236deb1c5c7e3919b",
+    "Animations/Locomotion_v01/Walk_v01.blend": "2f25e169c40ce93bba415207b2382478ab29c4e6c03f9ce5d4f3ebd5da5b1576",
+    "Animations/Locomotion_v01/Walk_v01.fbx": "362c9e46eb7a46a19022be15fc4f8a742f4eae03584140733b51f8cb5afd17d8",
+    "Animations/Locomotion_v01/Walk_v02.blend": "6a0cdc02f24cf2b55a51aeaccefc2a040cf9b912c6e63333bb421aa879d8f13c",
+    "Animations/Locomotion_v01/Walk_v02.fbx": "7a97aac6c5a6b3581c842ec81ae16134c9e8245c0e5fb8bd9dfb3aa6d7f2b8a1",
+    "Animations/Locomotion_v01/Previews/01_contact_34.png": "407f822765eba0c1f1b496bbeea7c7c001b3c37ff29f8cf2e6c64f4ea39deb19",
+    "Animations/Locomotion_v01/Previews/02_passing_side.png": "377a2f0f8c46a778142cb1ff73b8c4c1d097cf97ad1d3ab2ae3088f457158a3e",
+    "Animations/Locomotion_v01/Previews/03_contact_side.png": "25a1a53f16f249ed2bebb5bf9c58f8488d2f7f98da33853461dffb80a2e1ae54",
+    "Animations/Locomotion_v01/Previews/04_passing_front.png": "50cf2508693b0d5733dca367ccc4caa6e6b4233bb82da1427aa86edf920c75df",
+    "Animations/Locomotion_v01/Previews/Walk_v02.gif": "5a75adcb074c1f19adc01c23eb87a88f607fa8e052e89ece3954d015a6d39d8d",
+    "Animations/Locomotion_v01/Previews/Walk_v02.mp4": "e899c7006c427f901a233d215559fc26c84abc4fddcc7de3912d5f443d0014d0",
+    "Animations/Locomotion_v01/Previews/Walk_v02_contact_sheet.png": "51925b5948841da2524cc10c78de9d729d65c3aa24f721ced074657e143eebcf",
+    "Animations/Locomotion_v01/Previews/side/f001.png": "3667b41a677fc4a27f2e17e97d19b58584e38d9feb520edb5731ec485db5fab2",
+    "Animations/Locomotion_v01/Previews/side/f002.png": "1dc013fbc634c74c22a9bf648ed86dc89ea940fc7b9956aa25eee8e67924dd3c",
+    "Animations/Locomotion_v01/Previews/side/f003.png": "aa5bebed710a04abe0c208150d745361fb938d254bc2b62ed57738a8f4e74435",
+    "Animations/Locomotion_v01/Previews/side/f004.png": "036f7f19811a4dd74f6d43d241039d296c7db019e8d2a82c04bb9bc04b3a96cd",
+    "Animations/Locomotion_v01/Previews/side/f005.png": "71537f09bbc116964efc45849df4ddcacf6bed13600bac76450a348d474fa8e4",
+    "Animations/Locomotion_v01/Previews/side/f006.png": "ea758cb0c985e179437b9db4c816f18d350090f536d21f4c989c688b75382368",
+    "Animations/Locomotion_v01/Previews/side/f007.png": "bb0b28d4645e82d627aab368d63ad22b36731eab10c523c763f71092cc6ff657",
+    "Animations/Locomotion_v01/Previews/side/f008.png": "b762c4c9c7c89078824125f8a6c917562fc8b513b25524893d71c5d2fbfa916d",
+    "Animations/Locomotion_v01/Previews/side/f009.png": "32f75e50bafeece5ad2b643e9cca2aafab8e4634efaa19f20d0ef079768c59e6",
+    "Animations/Locomotion_v01/Previews/side/f010.png": "f9bc37e9362e08680fa7117a346b1023f786012151579e79376d1e6e321a321a",
+    "Animations/Locomotion_v01/Previews/side/f011.png": "b609197f6d5c3546155a797795da6f24ea501646777d0c929777cb4f87d4c0a5",
+    "Animations/Locomotion_v01/Previews/side/f012.png": "0f9da78e77a5a9d48e5fd7a91dca146ce30e704e7d171788cf58268f22f25d9b",
+    "Animations/Locomotion_v01/Previews/side/f013.png": "571ff4011bc11743af1205afaee784a72315a373d4d1cefd165ba819a5cf22b3",
+    "Animations/Locomotion_v01/Previews/side/f014.png": "3c08d404f5a37488d550401c0ddfd3698817c4feedba19f32ce2a682cacb1b0c",
+    "Animations/Locomotion_v01/Previews/side/f015.png": "ff866461fd4ff90c26dba1a3e37aa3f618bd2681872b3502038c86d8693cb3f4",
+    "Animations/Locomotion_v01/Previews/side/f016.png": "3803fec75263059c48316d222e127adcdc1309e7d8e2c97c6e6a80601118043e",
+    "Animations/Locomotion_v01/Previews/side/f017.png": "88ae5333fc3b4f1d7ef9301d26b4ff10317fdc4b55077e1c6449eee54f461ae8",
+    "Animations/Locomotion_v01/Previews/side/f018.png": "2ad9c001562633e26eadd81a8e61929d68846773b7a2837aafc013f7b98f927b",
+    "Animations/Locomotion_v01/Previews/side/f019.png": "ab3a34e5f2a726dc60f52b7e15475e5ef927f9596bcec9026bd18fed03682726",
+    "Animations/Locomotion_v01/Previews/side/f020.png": "a6e47212869791038febc30d63d0f186eb03e29e0d91e2c28fa210ebd57bbc20",
+    "Animations/Locomotion_v01/Previews/three_quarter/f001.png": "d6dc6cccf5beb2b3e3da007a5adc7efa093dfcea98211386d0448085284f26ab",
+    "Animations/Locomotion_v01/Previews/three_quarter/f002.png": "c415b260dc57a95f474dc6166902c6d96ef0a5dd7c827ce298818e10d3604dea",
+    "Animations/Locomotion_v01/Previews/three_quarter/f003.png": "0f4a92e30b4595b89947f8126deb752219758a7d2f8be237556d0df6cada5a50",
+    "Animations/Locomotion_v01/Previews/three_quarter/f004.png": "e0fcda60aa206867922ddc179a84b9bffe4b72aeef4a31a15e83126d6dc4bc3e",
+    "Animations/Locomotion_v01/Previews/three_quarter/f005.png": "e25c9dda695553adfaacad110cb799e154889fa734904ccada170d7af2263d88",
+    "Animations/Locomotion_v01/Previews/three_quarter/f006.png": "16a281692a4f0ce2b47f15941050b4f84b8788fac88c972c61ee84358dd02e55",
+    "Animations/Locomotion_v01/Previews/three_quarter/f007.png": "b186cc0c183d0e64926c9b32812f8b301a16c03709979f5682978a509a852130",
+    "Animations/Locomotion_v01/Previews/three_quarter/f008.png": "93968b76fc2d4341fa5c82f7e7116e789df3a31edc9d468f41f1f90f062ce3a7",
+    "Animations/Locomotion_v01/Previews/three_quarter/f009.png": "1ad01074887755af4a05b5b554be3ca8e8eb4605926a480cad020f39c61413e7",
+    "Animations/Locomotion_v01/Previews/three_quarter/f010.png": "fee660b9fa1a40022731039f2d2eb2643cf002ba13ef40c3d642961bdf9b88f3",
+    "Animations/Locomotion_v01/Previews/three_quarter/f011.png": "6e1a8ea2e8991c3c03cd9e6dd8361ed54dbcc33d109aa20edb065e4fd1a89cb9",
+    "Animations/Locomotion_v01/Previews/three_quarter/f012.png": "f7f073532e7cf16b75a2bc2983da7f8ebdc0a031741b36bc77d1a467d337f8dd",
+    "Animations/Locomotion_v01/Previews/three_quarter/f013.png": "0b16d6987840a5f45eb7e6544f0897aa43a069236f6ea8919f6fb9fd5b71c1cb",
+    "Animations/Locomotion_v01/Previews/three_quarter/f014.png": "ff1829072069b1d62a88213babeb2d494b94845946e9812d87e2cfe645f0220d",
+    "Animations/Locomotion_v01/Previews/three_quarter/f015.png": "22a118b98d82f6ef45d1ef9af1159d4ad082201ec1f6c9697d765305168294b4",
+    "Animations/Locomotion_v01/Previews/three_quarter/f016.png": "0371503a7af098d2bc2d12cffdf3b1d099bf069975c8086b37e7b936459c8a32",
+    "Animations/Locomotion_v01/Previews/three_quarter/f017.png": "fc14ac2fa85357d30c1118f336d4f1ee85a76f929380d37766a4e7cc5cb6a9cf",
+    "Animations/Locomotion_v01/Previews/three_quarter/f018.png": "09e0cf2ace6ef93d390589d389a41f2c8d886eaf6401f9b2e33a2eb48c394243",
+    "Animations/Locomotion_v01/Previews/three_quarter/f019.png": "42fd82df2be558881b74cf43897104bfc0ae97f33715fc8991e400ff41a20639",
+    "Animations/Locomotion_v01/Previews/three_quarter/f020.png": "5b455073f302be2e29b1a9785eba87af11a31cdf4b8fc5d459fb3974497d2e3d",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/GetUp_FromBack_contact_sheet.png": "4b85eb3bcb610206e96d3b0d2ea1c1da7e1d771c3e3ba3d8cb1265ac2fc20953",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/GetUp_FromBelly_contact_sheet.png": "b0a9f209635b5fdb25c1d26de57eb28fcbd06299e6911fcae376ec8ad1029d67",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/Idle_Variant_A_contact_sheet.png": "9611d00c1d6715c4ac3968fc32ef2464cb54ed90bd09f8401135fef6d0e188a7",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/Idle_Variant_B_contact_sheet.png": "cffaeafeb74e2ba34b127204600d2f83161ff194ad6fa1635b5d0c6ca145d689",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_00_0.00s.png": "1b368c5d1f5ce4835d9f140c6421d022d1aa01da93e83e85c7fa2a7285495f8a",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_01_0.65s.png": "36627f3e5a01e2a9cc646a6e215cee61b3df5805c8f55f30ce94f839318e6833",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_02_1.00s.png": "d7f8890cbbfe48f7d259b703b1c7bacb70cfe8488e502394e7437b7f4c07fb5a",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_03_1.50s.png": "cd216af4d0fa1237ed3f0822f2ed2c9c27f35de25142053683ab78300c294e2f",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_04_2.00s.png": "0c5bc593b4e91263a05fb79b38818568cd0ab8e765674169fa25ec5b34894c0f",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_05_2.45s.png": "d0e1e17af94be101829470049953c34af57558ce48ca51f499d0267fc4346dcc",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_06_2.80s.png": "a51cb7eb67a3056baa34baafd2f1b98e408528cfa3fb035576ab767dc4a7206c",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_07_3.20s.png": "55071b9f553e02f2c96f50ca9663ecdf4b5668369e149ebb6e027bf10ecfc609",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_08_3.60s.png": "86454cfe9168c34a24485ab24ffb563dfbcc9d402338eb7d855cd671ad5b1105",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/side/Idle_Variant_B_v01_09_4.00s.png": "47d66399a16468f30d362a0eac6c1b07c083cf1753b0eee047a4ad5a043cb278",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_00_0.00s.png": "78c5c7f22604f781d379ca15ccb3c70ac7bc222481990a7ee4ffaaf2de38b770",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_01_0.65s.png": "f30399b9aa8da7454c95d9ea0f7901ed2daa7dcfaa4abb0ab5cfe882c0276e5e",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_02_1.00s.png": "0f0c7ef059891319f94e0990ea4997604a557a972727bf7ee2e60a4121e3842a",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_03_1.50s.png": "15fe7a0be6bcd8ff0e824dc9469570516bfe107b2ea1e87a8f95973c6accd4ef",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_04_2.00s.png": "53f394baad402eb96106cc172ce48e4ce7987970c706e0deb3e644e41c789615",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_05_2.45s.png": "1093067e2a85065485ae3009847d8e8c5ef9d9c03c7322b029be5c93ab2a023f",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_06_2.80s.png": "15ffa707336a0e6e86dd0305e87acdc074229a1f93d95436b2d794ea41401b81",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_07_3.20s.png": "a5cb3c7b4d468f9008b6a44b207e300f7bd92b88fa683faee7c2e7fe3e5df698",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_08_3.60s.png": "9aa384d615a69fabe2c139f2bb3b3a05beb8d94eaaa10cbb34de83c17006a779",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_09_4.00s.png": "54647d03d60fb8717642b12498b97ce25a50a94ac0559d3bfb388345189bd19e",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_00_0.00s.png": "7e90f96bc87348ba4adf6d341ae829698bb76004614ba8f757c1ad828924b38f",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_01_0.65s.png": "ff792bbdf47618475762fd20ea50898dec5eae89b3b0cfd9412fc20e2c197723",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_02_1.00s.png": "6ac1e6acf3264f2b702fc0a7bd9085e3d97133896441ddcc64d2dedc5568ecce",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_03_1.50s.png": "874c468b69fe56528375a2fdcc85b8933b5f578e59d94fe9da8279f53ec7e5d5",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_04_2.00s.png": "5d686df4c636b3c38b5d9c695cbfed0f7b60236c4893f5c777ea59b1d6eac7ac",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_05_2.45s.png": "16b86bdc57534a4b1cb790cc28d00a1a0172a62ba54975e25f2bc9dbab8caf06",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_06_2.80s.png": "14eff612dec388a606a66977b2be22629be722159f2fb13ba0323297cf46d2f3",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_07_3.20s.png": "9ebb8aff7d72e1aa51648b29c512c50287e63ac29a790490fbc34bccc40ef0d4",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_08_3.60s.png": "b82dfd82f401cc04f35ce8c2343bee5a791b5d65a88bea98ae5997f323664d71",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/side/Idle_Variant_A_v01_09_4.00s.png": "003f6fe8adbffad8d422f8338ba11ac0d89d3b413aac8129d53867c499dc44b5",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_00_0.00s.png": "85c1d340c0f4080c83f4f5a2021b68d95788e8b9ecd476460ab4d7b6ae51f02d",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_01_0.65s.png": "f93281b2fb9d6c98216f397437d25417865bdf52dcfcbdf5b6ee8e227563d850",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_02_1.00s.png": "1f07aa738e45d188fd26b033b727c725a1553cec7cc5fe4a7af818b65588d33f",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_03_1.50s.png": "7e16f7568fc4c5f390b1c059bcfdcf92121d4e7fac0705c0caab845d4a2f37bd",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_04_2.00s.png": "d491ac7f1721e1df7fc69cbb1130eb0616a34b558d63fc27cb9d807db23a0e58",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_05_2.45s.png": "d154120f33a13030bd080508dcafa5f1fbe92716cab57fff858fbd0d898900a5",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_06_2.80s.png": "82f8241bed450bf8bc7a083b156df70fbdcea8b4aa93fc83214fd110ef184838",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_07_3.20s.png": "e1ce4f923a5c8d0cf1be7a58779d03515fcd0406bc3c34f24ba0594f88148941",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_08_3.60s.png": "4f7a61c5f4397481a34eb3f103142e8b50ed749141f8e15453c1703395b48688",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_09_4.00s.png": "5b89f4333d99914935e1ec6de08eb96bcbb9c5311d1bd7d363edcfc151664c17",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_00_0.00s.png": "13d413781d9891e14e5951cb0e82bfbb3dc758df82b04d2968d93100fe8a489c",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_01_0.38s.png": "685f4370837573b9ed4dfa7094d27870369e2552ce74160c3d797c866b0d19a8",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_02_0.70s.png": "67a1417c7be40d82a2d93c067afda54fadd8f0d7d38b244595aec094d7b6fdd5",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_03_1.04s.png": "df29edd59f899ea59a0bd3c96dc8039029d6d11a471e5685e1b16ae0dce1bda0",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_04_1.30s.png": "d8db5caf84805578949f450cc1bf42b5cd66fe6c5027ba18a539371254ea3e16",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_05_1.62s.png": "98558e36e6b545403a784b44286872e94e332cfcb581c5e884d7565a251e18a6",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_06_1.90s.png": "f1424981b4baa2713f10b87e9d452e2fa74cc51cafa571eeacc3a37f8ed0713d",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_07_2.10s.png": "f08e95c82f770873beae08281c40b0ca882da73e26d25db8ed9ad7c1db27e50c",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_08_2.28s.png": "1d315e0b55439e771150391d3f019a4ce59f763e4948d6d66a447bd07f961b23",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/side/GetUp_FromBelly_v01_09_2.50s.png": "47ef761caa30dbfe1810a02d02c64545a0b1b162c9be9c0826c9f381bc5a12be",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_00_0.00s.png": "33054a067e6afdcc6438845a2a810c1e2ba93cdc466130b583ee7986d0d58e11",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_01_0.38s.png": "da0203f2ea54c5da0987975a8040e4db7be1e52beafb20dedf7dd3189e48d380",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_02_0.70s.png": "96431d23ee09f275dfe048e06e75a5477535bfb63efac95d7c984a0d426a9634",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_03_1.04s.png": "db8512861f6c377d0b62c3a5f13c8ea797fc4433b0278e8f44a145e06badd852",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_04_1.30s.png": "4427738f5c30efcd991c2739bd6668e09d1dd4b859c9d87d51475da0c7f99135",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_05_1.62s.png": "dfb68862e651971ee87ee44289f2e11e87211a639914d567c3131beccdc05552",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_06_1.90s.png": "09a1657f42f0d58722a4d271537d3a85a2d0daafbc90dca8695e02085e1c341b",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_07_2.10s.png": "5c67b2820dca1ea2192784f14caf935baf948f5e856cd2f8009a26ad3a4d4b73",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_08_2.28s.png": "bc7cadc246ed4063d1d253d6d60693ca7b9ee6d79ec7ef4fb34a1b1a230b196b",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_09_2.50s.png": "899eda8e5c03a6dedb25d67d78a0c480138c0211fc64ecf9812d9e6c6feb13cc",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_00_0.00s.png": "ec8908288b07a4b5f313c467d11bd8abf146ca97b00f0bf4aa2c2a293e032bcf",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_01_0.46s.png": "52acac1ea87adfbdc76349f2e8f57d83a036cfe0cfe3c372b42c812db3d53336",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_02_0.80s.png": "6690fb9677432a704dc22aec13971eaa7c9122b33efb01c3bc44acd260a90df9",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_03_1.00s.png": "71b65079df103bda6d624a3fc9cbb20f8d6f0c1b0d73c4af13782763d6ba566c",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_04_1.25s.png": "834284748dca82cbdc9a4a1638d6d521b6b778a6ca59aa86d5daf08021f3ada1",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_05_1.53s.png": "df230a5e8e37060b9147e4cf73a70c866984d28547854259985998b31e9ddcff",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_06_1.85s.png": "9782c4cb34e285a5ac0b0e5c8ec6edb3e6506ef414162902c6f024069d0aebcd",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_07_2.05s.png": "e857fcc1d4dcbb7a65da5ec6e89ed2d00694740d6bd7db80b478804c2cf8eff1",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_08_2.24s.png": "4fab3290f2c253b58b25296d4ffb244f4b05a58453c0c04926001f685cd45ba1",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/side/GetUp_FromBack_v01_09_2.60s.png": "a9f73465920be1f5a1978993920969b48f2e41c9879e47b3e93dcb7730179001",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_00_0.00s.png": "a5497235747654aa02b8269dad443301bcdc424fdbceb617595c35ae1e2a1b72",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_01_0.46s.png": "fc0b7f27580395aba7dab73194d8d685d597728b33e726ec076c96560a5b1819",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_02_0.80s.png": "635ba49ac5c66304436ce77f9d34c3e9080434d59c7ab5faab7fff325f508a1c",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_03_1.00s.png": "c07b3d514adf520d970732c4adbc0e533d304c0f0c82789230aac987bccca5c0",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_04_1.25s.png": "da01a6801895cd58be7fc8e13e3eaf59614badbf846b445529593c40b3ff0de7",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_05_1.53s.png": "23bdcb9e169c6af432a74c120f41b247c8176a3fbd50dc2e382f65ff4eff94be",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_06_1.85s.png": "1cecc7452fc48341be443717a6e1ba1ef8cee2a2eda0af6a16fb090e75bbeb2d",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_07_2.05s.png": "0435b78176d2b31652be0cd60ef8599914bd24f744c5488c96baf0b12a8645d8",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_08_2.24s.png": "fa2c67a1e16cf661d478aa9daac2e087462dbb967ff178af52d958bd62365f97",
+    "Animations/GetUp_Idle_v01/Previews/Review_02/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_09_2.60s.png": "1b448a08d4a6696cda83c4204794dbe6f8205fea44c7971d544acc653317029e",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/GetUp_FromBack_contact_sheet.png": "438064a31cb5d913f1b9bb7c358cbbd7d07afc78d8be617d4785f5d1e6de2ec1",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_00_0.00s.png": "90f96f88db9f9796f48996a9726352b04f2700e0b291c813345039ac6c86e159",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_01_0.46s.png": "3450b5ce04dfc641800a7c0a8ef11a788141d97d8677597936e0d94c53755d6d",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_02_0.80s.png": "b2f55943c3cc7a580f11e6211077c4545ee329a5d3400fac04bf7d22e0a4421d",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_03_1.00s.png": "5b568df4e416922eb1f22aa1e2583b080254f904b95fcd1caa03b1a013fb2a7e",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_04_1.25s.png": "a3a9a761a189e72cc65fcc7f38c39ab8e18d401042c06ea1f65bfc852bb94930",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_05_1.53s.png": "7de03c8f3f64ebd3db5bfc2c837364129b99627aa197e11ecd50cbad8f9cdce9",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_06_1.85s.png": "b85ba846bb13989c50489d5c3716b7ae7edc8ba3d5a1777fda01a85037688fce",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_07_2.05s.png": "ed48112347b692536284b68b5d95ecbead5d15e8add4a6f79d0a003f50cd24b0",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_08_2.24s.png": "58f6b8da7048db49540c2b7398e5c6409275b2bbe8b1aa7a4bae3eb09e585b7d",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/side/GetUp_FromBack_v01_09_2.60s.png": "df0be4a06e7fce8be4394db73343ebfd188339429531e15c23e29127024b192b",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_00_0.00s.png": "38b4f4950940b289d1371e929a124a72e533659938fcdc5f999a44b7707751b4",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_01_0.46s.png": "e3617943323d8b31f64e815783eefa81f2881679d8013755068dabd89ffd03eb",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_02_0.80s.png": "2d5c11052ccb0602b812ed1b228fe2bb04a822363efe23116ae34762058df81f",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_03_1.00s.png": "51ef28bb68b3b0df3936057216094aa9ce8e104ce94dab7d00bfb8d8e5791eee",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_04_1.25s.png": "4780c1143a237514b5f96a0e9c85f63b7b4d59b78598ef0572218048b511e5c9",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_05_1.53s.png": "0eb26d9442cb424670908f5877216432a32da451ca75db2c14e85c66722eca2b",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_06_1.85s.png": "bfdafa3297e4148813c12992cdec21345015cc2ade957355f069982ec8c7e66a",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_07_2.05s.png": "6ce426c6d078fb02e5c5dc2423f513a2763c8dc87209ad68cb2af570e75fbf5a",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_08_2.24s.png": "0eb65743ee716d57eedcb68578191bbc4617151ed1cda3c00c878ffcb016dff9",
+    "Animations/GetUp_Idle_v01/Previews/Review_01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_09_2.60s.png": "dba43120eb7fc6ca2048826f338c2c7761406c31e1c039ed2af8dd4425e1b28e",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/Idle_Variant_B_v02_contact_sheet.png": "a048b4071cf5afa678af78489afdd18354f8bda86b9b2e96b6ac736879094067",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_00_0.00s.png": "46966fc85ba846ec4846ac3c815528fa54bb8e6844e24df949c2b30baa3fabfa",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_01_0.65s.png": "2cba413ea116a528abe4d009d879fefdfe423db0f32c9bc2af82eecf4937644e",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_02_1.00s.png": "204812b89a20a649053f133d482a82b64043a519d6e20dd463514a7102e2f02f",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_03_1.50s.png": "7c56d351cab50f9c91f95cbd39cbe79e9c624f9928349b68c23dbf773f38ea25",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_04_2.00s.png": "26cffdbecd41f0ae942ba24d283ee1577cc888e5b6c8e5ce1983e294e5086dc8",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_05_2.45s.png": "bd08913706ffe5026795c56deeffdcdb8d3bae3067939e1450d6deefd37e7b35",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_06_2.80s.png": "bfd9a275716e2573173872727b506dda53c842ef3755f1540b085c42cabae691",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_07_3.20s.png": "4aff1c0d3021f4c3fd47489a1c4b6458594971b2bc97a40cbe5aaca686c3293b",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_08_3.60s.png": "b9cf2bfcb0363f7b585a93ab9c6bceec21c1c42b9b753a157e0bfdfd4801e902",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/side/Idle_Variant_B_v02_09_4.00s.png": "63e1750434859a35e9f2e21df0bf6c5050229583764f1a459fc86210d67b29cc",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_00_0.00s.png": "b06754afa722ccb33e985a9440197a887e0a56e13791a422352fbd1377129edb",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_01_0.65s.png": "49f29d28993f9c9fd97e62ad87a97c768584c675bb301d013c6a40e934cce71b",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_02_1.00s.png": "7e680c62d19987e7edf71d4aac290c1352608f4e9da561ad688cfeee954cdd7d",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_03_1.50s.png": "49552747b31904654b64d5d90430036d5dc6ef2f260d263f6a17cf0aa566f2fb",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_04_2.00s.png": "aa41b91a1ac1c750d78730c7749793fa7678cd227fc7dbb2b321ab7afb0f1ded",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_05_2.45s.png": "6d01963237c173c1e3bcff0acab15fa9f0faf36c526492177743758ed2a5a42d",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_06_2.80s.png": "8da146569c9025bc8ae2d08cb88d994849600bdf02f1389c4e6c49e4ec3f3caa",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_07_3.20s.png": "725addf2804b3a812c5cd76f963f76e9856fadd4fa574e5e63b242b44480fb43",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_08_3.60s.png": "b82d65109024066c3287dccb39821104ff79bc264dfd1bc3209f83861b88ff82",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v02/Idle_Variant_B/three_quarter/Idle_Variant_B_v02_09_4.00s.png": "7dfe24be6bf2aced879ce9d07862cf3e3a9244fe662e809cd94a2a564c752cb1",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_00_0.00s.png": "f40db0a392bd6ede8ada7c222427ace6fe26145ab9353f730d1e604ff05067ea",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_01_0.65s.png": "dc63447056842626ffbc79fdce2b54eba9761108d02877891f14722c4512a8a0",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_02_1.00s.png": "d941748643ac0cf6f89a7347091416ccd113a72ab5367b9f726c8b30799d9ecf",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_03_1.50s.png": "da439381f00605566616faefdcf3f8aa27cc4ce78f04617bbf1d35a82ad607da",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_04_2.00s.png": "4b6715e744fdc74e472a7a235f23d3aceb26950188ff24049cae056a88d92b73",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_05_2.45s.png": "9892939886d698007cb87e49bf40f18f6514fa71e7196046f98276091ba99114",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_06_2.80s.png": "68ccddedd10db6905794e8e9ffa415bde805ea31f3bc13c17bd5c58c8a5490a9",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_07_3.20s.png": "6a299f1d1d09e989284f335e023f0636771056f99c49181409dba2e05f8ba698",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_08_3.60s.png": "1908aa4f5e3a573a3c8e38018314aba25bf09b569964c7776768abd42de17484",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/side/Idle_Variant_B_v01_09_4.00s.png": "626e83bd64af00b37cf0d98dc80a53afb3a0bd2ed080fd5b4b437d8bad65d694",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_00_0.00s.png": "d0575ff649de1f14e5cf03f4f7a2f2c7c71d321448739878778de6debd2bebe1",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_01_0.65s.png": "36b3463ea97691c2ae383e23d58d79636eb3fb6139816cc7a618aa3750e57cf2",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_02_1.00s.png": "30d5b2c72abc63a4462af47fc778745e9d24d917ca08e1f030a2fada0618bf9e",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_03_1.50s.png": "06a0ba0b6670dc4c61216bf76d5a8dece4c15ca5226ed5ebfab66e6253c696d3",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_04_2.00s.png": "92c1c4443966761e3a9aa9c5752a3435491fe48038605724af36b69135966ccd",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_05_2.45s.png": "8943942fd5bf3565359d6d80fb4b51e5e9341e9a91459fc94a976d7ca07cc765",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_06_2.80s.png": "6e89dc0bf67491953411fb9f09d69b7a6a27b2eab8a65c6bd727649bbe4031d0",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_07_3.20s.png": "5152e32d9a2ede4721bc6bd0145a83a7e893ca890f2929e2e3e16ae47cbaec20",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_08_3.60s.png": "250b5eab11d3613c9ecba084e960c12b489b1111f465efec70969e51da85a02b",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_B_v01/Idle_Variant_B/three_quarter/Idle_Variant_B_v01_09_4.00s.png": "6719bb0b0671c51b4e91f01ef4f88d5e971b79c1f84ef3d8e357421e3b3c59ae",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/Idle_Variant_A_v02_contact_sheet.png": "2f126766fbd21f6fa69aee84bb2e6e1abcaa14d98c6b7d816269fcf180838a1b",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_00_0.00s.png": "0215cf967897cddc94fdbd06681f253750ced2ca736a6788a674a8715c4f59c8",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_01_0.65s.png": "b70e1fea901b751ba61f3fb66abb5a542a9d770f0ab66c61ed01c98d60120ceb",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_02_1.00s.png": "94003ce94932ce8ccc9ba9f327d555b76ffd1ccdc0fa723960db2f01fd07a03d",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_03_1.50s.png": "2876e05a01d414425cf98cba2e5e40a6e1447e9d2ece9aa634774c3bbd972bff",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_04_2.00s.png": "1c4d2837e88ecb7a61826ba2addbc376f33e5acdc57e6695cdc41a49fd162571",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_05_2.45s.png": "e8e3318901b75beb95bf684cd26f6fdd7cbdf264146645192377e329457ac366",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_06_2.80s.png": "53af36e3cedcdf7285c703f554044620f3b6fbc33789bb4228eb5f4fd4249f97",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_07_3.20s.png": "33cdfdb1a7c1a54dced958e29825feebe96403ba55974f2f6edb09460420d6cf",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_08_3.60s.png": "584e95dea537a78b77e67870a88267c9394befc87292dcc9a592c0efaee523ae",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/side/Idle_Variant_A_v02_09_4.00s.png": "b428f3a4d1a084b0356f3293a1a24a74ba6b200e0c34167163af075eeb7e0af5",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_00_0.00s.png": "caa5288f7783840cacce698c6ccad84fe072c0a5c4c92297ebfedfea58b77789",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_01_0.65s.png": "be22a2196863a4156ab69d0e07cf3f7c26df7f3e9b96d0efcefd80b6b8bcb6ed",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_02_1.00s.png": "9a24cb8251647496c17e2bd94ee2a219e10ba013364c138ed04db5a6682d1c15",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_03_1.50s.png": "040a673d8718c118216068269ae535030c617db3b2ce263c6b4e6107f398f297",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_04_2.00s.png": "f61c7f802109cd66a5012de0a6fe06ed6c7dfc561a0cfad7c6b1dc3a345d183d",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_05_2.45s.png": "2c4d80747a6aa868d0d3760039776b0f19e621f7227ce27c5c0cb571c78885dc",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_06_2.80s.png": "b0280799073fdb0138eb48a37c3aefb55279901046934b14bf9341b721811e09",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_07_3.20s.png": "c7d42ed3624200cbede7fa503f41f8952631f2d7b3fc4d3e7d0fc1383d1a0ffa",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_08_3.60s.png": "9d9af337d9b7e954d9649cee81d61e3af12fe3acc3902746d6bd2bceb2211dc6",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v02/Idle_Variant_A/three_quarter/Idle_Variant_A_v02_09_4.00s.png": "b44293f8b96e444520cafb567f5c329bf0dbb7040e6c7a8cf3dec8e6146cd552",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_00_0.00s.png": "6f26eb70cda6fa580ffb7814cc27f90aaedb32baf022839a0460ce62563936fe",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_01_0.65s.png": "cbf1564008c14a642abcb929eec2832f0b4c1c6aef5cefa93f78f5ec4196d1a4",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_02_1.00s.png": "f5e37aa1b1ecb83f78e1468c468f11c8ffdac892e4ac37fc223674838ea0afe6",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_03_1.50s.png": "9b4ab8138e5d7365d5f65cc2e0dd99d8c04604a1b27edd0cd0c85b3df414e8a9",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_04_2.00s.png": "28af73fcc08aa630d84cfb7135cbe865b3dab1b82eb7c2891fbc8bde9abf43f4",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_05_2.45s.png": "2b7d5277bf1a5ec647fde5f8440e58497f0c0b9e03a87506f6dc47e41197b1b4",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_06_2.80s.png": "1627050fdc4554b22d9ac87e4cad311918fc78e8053a30ec3cb28867edac2ccf",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_07_3.20s.png": "d1e59e8e3236513b6868e6ec19cf99c24086bd21262dfb911e31b6382dfbf304",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_08_3.60s.png": "67e7e1b507f7038e47c777fc903a7bba54be2193f33f7005cdb19096fcc07feb",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/side/Idle_Variant_A_v01_09_4.00s.png": "21819fbf6ab0bbfbc560ab9055166e5d471a204232fc69307132d1d321746265",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_00_0.00s.png": "a18ac240e4450350adfd3484ce6fc22c73b831810c7cb0f8648b1fae43c35853",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_01_0.65s.png": "075d778e49e53a61aec58458e9a67ea65049f0e68715f914e52cb5e5d6c4f1ef",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_02_1.00s.png": "90986a53d0d3be1e8eca30a501f55267bf00eb6c5f6a68d80e699134914ddd7e",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_03_1.50s.png": "4a1529404b39f141e2ef6ae68daa6f3c0e9bc712e001f789e07fca20451ec9d2",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_04_2.00s.png": "341a7fd01a2354b5742fa4c0c3699e312429c4ab40ec01b8b6aa2b5e45ff4460",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_05_2.45s.png": "45b62a34a69db777f11bd33113b0ec78741943e5e3acab1df2e79877579b8882",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_06_2.80s.png": "f6e0a3ad2afbb15025761523021fc7c77e7c382487a364e6d3e67fdb1771828a",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_07_3.20s.png": "09bcaab3d27732d50ae22e02c7ed5845573ae9b94cc094a71528ae89a13eced4",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_08_3.60s.png": "dec617fd3ee735df68958dfe1322cc17e877bc1599fa044d1ad068ef0873b439",
+    "Animations/GetUp_Idle_v01/Previews/Idle_Variant_A_v01/Idle_Variant_A/three_quarter/Idle_Variant_A_v01_09_4.00s.png": "37ead06db9e034366bc3d16db8f96955af6947b9ee8d911e979343aa37299934",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/GetUp_FromBelly_v02_contact_sheet.png": "ab5a8e9de0d4e3977f2f960924571503890221bd8ae462442cde09a09c719093",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_00_0.00s.png": "76dcc3b67deb7e947e0242fac5be659f854d417f264b3d04a1f9aa82260e0285",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_01_0.38s.png": "4109b5af72423c2b1b96bec3296f3dece82822353b22fbaef1c689ad16d63159",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_02_0.70s.png": "b0f97e73cba4cb9ca9b2decc1db6b81bbd00b9211b03d2f83c60d4037a166f6c",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_03_1.04s.png": "c8dfade04fa9138550b16ecdfc31d01d2a878484e38ea7f8095f5d20e7f0e6e5",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_04_1.30s.png": "bb5a6b5ef74929b32354a3603271e398e140b98d2848c6f46c8c441bf4a20544",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_05_1.62s.png": "285e536dbfe0592e0421e216f3bb8d21438ddab410cfb2e7746e8c5612b00e1c",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_06_1.90s.png": "68e45ccfccabbee2dc186bca8d908a32aa3952ff089783ecb9efb5897a69a473",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_07_2.10s.png": "bddce1187798ede735edf00819cafc9ab1397e724f25a74b023ce9fa29a6d592",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_08_2.28s.png": "00249f926eccacacee286b2e35f35a1e4c051e578ec230277c61a5e5c60a21a8",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/side/GetUp_FromBelly_v02_09_2.50s.png": "852b06d09d63e73750d2e9419106fde03ae94edf56591b0697c1ffaa722dd679",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_00_0.00s.png": "41b16df10dadf5384e75a05fc13af06c1e314b342f92e1479df7db16b3c94a19",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_01_0.38s.png": "6557bff3fe96da9df7c7a8987aedc19b922572208ea4ebf474b2f443f1f54e2e",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_02_0.70s.png": "89c141d170a79b29f4e38d8f48a5979cfbbfaa9459924846caf1057a02c4d58f",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_03_1.04s.png": "4b4243f293bea821e2042997f7f5622160ee46d1ba7f40bee9739c5d1d531e79",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_04_1.30s.png": "4d7a540c25b30a6188c446a86d99bac0d7d058f930a2316d52d94c4c68629313",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_05_1.62s.png": "2f3fca49eac6079371e237f3bcff08369a43b293b1fef11a3e7c2e880fcc1ba3",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_06_1.90s.png": "992948042c4a12f899c91c704534d7670eb5cac4f71c80aac12e3f122900f1c5",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_07_2.10s.png": "bef9ee6aee7573518995af8963d4a98879681ccd384b4e06a9cefde06aba5445",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_08_2.28s.png": "9b40fea35fbe9945092ac099e63310591725244afb2b1da507f6cc50bcddcd59",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v02/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v02_09_2.50s.png": "1eb0b6663fe5e0e1d1bbca6df523a39a1ac5fa561086e34f1a920d85ce0833a6",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_00_0.00s.png": "cfb8638a91b7cd65d55056b90cd5bfe3434eace61a9c4ed9509dcf88118e144e",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_01_0.38s.png": "a6a9e7b42ab198f745cc2e8b124ab3f1eab69a877d730b14c6a7c963dd23b77a",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_02_0.70s.png": "659ef8115b511444ad6a065fec46f5cd296766c5a9a74a7b09e1bc76d53f4202",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_03_1.04s.png": "d84624f69b6ad751004d3b9fad17b3f02e9424e685b8cdae9acdd992daf7b889",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_04_1.30s.png": "ad44c4ccb4aeaa6f0664ec0278ad66fd754fbbc3a78a4e507f54954e9e198f97",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_05_1.62s.png": "ed996f8188cab59ae2ebe075ed839fba35603cac75952fa6d5a5e4e4cf8a7b58",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_06_1.90s.png": "2b8bed8b4d286c958f9b6dda9dd9675b50c55c5cf234cffbf0d5040aef87bfb9",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_07_2.10s.png": "5fcc76342e7938bb11036f938db7663f72c4af96c569961291c13221fa844331",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_08_2.28s.png": "15832a910b7d05d794619444b0eef18253d510b4f73661b3331f0321fc2795d3",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/side/GetUp_FromBelly_v01_09_2.50s.png": "3399753d2ab98d358fe7cd652975bd88e5ac99b9f22cbd760e63a004a77f6922",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_00_0.00s.png": "9a52cece9c3b4bda10c795989c4c73d4ccbc4f946991bde2b5ca46ddf88fbeec",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_01_0.38s.png": "389b4b79ec3a6dd5b6cff9a8da63ec5e46b701ade327a48db83dc1fe86581d11",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_02_0.70s.png": "88af8bdc2ac5286bf2ddacdc600eeb60181cdf0fbedb1a70f0c1d4017e6664d4",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_03_1.04s.png": "b133fd64f29f8889fe2a0902162c2041ab91cd2bd2b0c707e2b7b8e05ea728b1",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_04_1.30s.png": "a5455c8f91b06b6dfde0fccc86f133359947081846623ab95a3b4bd1647a2ec7",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_05_1.62s.png": "83f4814206c17e87afc2182c792398a13779d6f273e59fe2676f9cce83bc1684",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_06_1.90s.png": "4d9b69518c946d87a7dbffbd5804d65bdc2961b1831581e9ba123a60b88e08d3",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_07_2.10s.png": "f4112b96da905f67f4e33fb77403cb8292c18d3df17e4448a4d3bd0cbd5131ca",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_08_2.28s.png": "1bf32857e2ee3b1bda2dbef21d98faeb53362e0a1cc4b2dfb861362e708398ac",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBelly_v01/GetUp_FromBelly/three_quarter/GetUp_FromBelly_v01_09_2.50s.png": "6e714cc5f495f83da7a9974421ebdf1b68b852d7aeeabf5c1df4bc67f5f500ec",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/GetUp_FromBack_v02_contact_sheet.png": "e8287f0ae930933cd89138ef571c9c34d7f6a75042bd531de48565ac6f0f2da3",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_00_0.00s.png": "0174b3ca2dc404bb1db8dc51406f577eeb8c402a66cb144c456acbdbb3015872",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_01_0.46s.png": "ad94cfd56b712f5712c1b9333b946204321609bc6acd2915fc2bacbf634ebeb8",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_02_0.80s.png": "c29782137a7229f08060dd8d9e1c7b602f940c8df442a07b6bc1be3695b29aa8",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_03_1.00s.png": "38e6d052bdb5252634d8c8d9bef5fe5b921025f9264f3b53ee26ce342db11099",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_04_1.25s.png": "92f40bd4bc0bb5eff2684705ad6cefdae0b640b2bbcdbd4d893c8b08e2ccbeff",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_05_1.53s.png": "6f28ee0a58c55891a8da9ec8ed4d61120084c9cd31258bb3e10ebc6aa6296582",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_06_1.85s.png": "3583ce675e255741123907e2213415294293ee48a4ab9c85fef7dfa22bad90a0",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_07_2.05s.png": "36a4b401521fa26ea7a719e00f9a8f28ef1f94ee6e99dc70230fa56449527962",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_08_2.24s.png": "e7300d9d483e68d020e30e598867f80ee25dd14cc5406f55c36d9e334e0fbba6",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/side/GetUp_FromBack_v02_09_2.60s.png": "6024f0aa458b488b473a4d1b5c30d012131c0f2b62929cbefe4e1770342afd38",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_00_0.00s.png": "50756a43329d9f5483cc33f8435b09cfd27181db97e4a38671c75e1f4c65c5aa",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_01_0.46s.png": "6f1b751fcb25dd6cfb035c1c8bf5067c9563b87023e7add150834b47793fee7b",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_02_0.80s.png": "3b10ac6fca63469ccbafa4c9d9572a9a799babc008404e2612a4f735d5db39cf",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_03_1.00s.png": "f98026f384f8608a68bfefb4d4a25a98b2ec9506c881dd56313f173088d17d51",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_04_1.25s.png": "067b14c13f003920b05cafda74f7a809015a7f5fe64942a3eb061a47983c0532",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_05_1.53s.png": "50eb63de6171bc82fe6d23d675774073728f3c093be73c9c13085396ffb32271",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_06_1.85s.png": "a5dcc93f5a01e796ab411dd7a94eb9e1a07e24d7ce93bcf0c1ef90f96dab4e40",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_07_2.05s.png": "47c77e02fba7dcf41688b357239ff2172f606577de53124fbafcc2e72162e203",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_08_2.24s.png": "9127703662d02309e9a78add2752ff6b65200c21d258884fc92d7114c440dfe2",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v02/GetUp_FromBack/three_quarter/GetUp_FromBack_v02_09_2.60s.png": "e176c9296f674ab8d84879cb0e055e5138108de6a2c27eea257fbdefd5f8275f",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_00_0.00s.png": "bbd279ff19f61381ae9eee1d49c4d70ee0a59f52b6cea307e56cb47bc5e700b3",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_01_0.46s.png": "3121b30dc0946d12e34b071012174b4fe12a8a3ddfee72c10c29f22af2e93a37",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_02_0.80s.png": "19acba3021ed753f5b79f30bdb2b882a262efd991883a73c27f197a5d2e11335",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_03_1.00s.png": "285d5a7b924de56bcb9ec47e7dfe315607bc7466c0719858464749bb462cadb9",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_04_1.25s.png": "53cd5abff196c9eb8b84bce5189dab250c3b390494fb16b542792dea20e04a6a",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_05_1.53s.png": "6cbf0ba7ef5ca14851b17dfa40e84051097acb1db27fbb9d75b8c6a9fb2a848c",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_06_1.85s.png": "08baf8ff0ebaa14c03334b75e57af55e582776706c4454ef4359f2d37259fb84",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_07_2.05s.png": "66098f3efe96f84c9fc76e54846799c59240823028cd78545cc01be555b11653",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_08_2.24s.png": "408fee01bf8ad2d0e8a0b301a9ae92ffbe2bcc6755d7c6d4c759c90519d9b7cd",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/side/GetUp_FromBack_v01_09_2.60s.png": "19e22c1ad69b26811f3e8e927bb1ed40e903c83fe694d2beb6dc0ce5921d6588",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_00_0.00s.png": "7cadc15a180f834cad4bdb6d51e4ff81144388a07237edf4732c879260d098a6",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_01_0.46s.png": "421b8d7c1c8a6bc2bcee535fe20c016720c17dc9f5b694980d36d309ad26aaa0",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_02_0.80s.png": "7ddcb35ffdc8eef3f40312e4222e3db5d5ad92df2f7248cd5d3b88f9fb0af239",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_03_1.00s.png": "096703e9dcae84f48788446392793056df6ee95ad7d3fe895ba31c2ceeafdead",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_04_1.25s.png": "5fc93854fc2e98d5a5e99e42170a8452b967495df1b6e8eb26fd2886cb77d62e",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_05_1.53s.png": "63119bc9caabfcf590a19649c7d27d82feb009ffd56e91875975af375e42dfad",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_06_1.85s.png": "c601d6c59ecbe9d49ec4cc69ebcc3b85d3fc83d9a9cee85f231faea9b358ad07",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_07_2.05s.png": "4b6afb3b8b7aee7860ba851982eb1582a06659c4846746b4d5037fee40c98b4b",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_08_2.24s.png": "cf1221cf56720062e9f87a0e7f186fc5f3538790b8eb2aea2699ba7516f78a22",
+    "Animations/GetUp_Idle_v01/Previews/GetUp_FromBack_v01/GetUp_FromBack/three_quarter/GetUp_FromBack_v01_09_2.60s.png": "b2b4069942c5e285be4d428db318494d343f23c07431e6e393d31a43155e8ada"
+  },
+  "bounds": {
+    "SitUp_Cargo_0": {
+      "min": [
+        -0.4691861867904663,
+        -0.821151614189148,
+        0.0004999637603759766
+      ],
+      "max": [
+        0.46918606758117676,
+        0.9272720217704773,
+        0.5465904474258423
+      ],
+      "hips": [
+        0.0,
+        0.0,
+        0.30702006816864014
+      ],
+      "right_wrist": [
+        -0.4003869295120239,
+        -0.04397934675216675,
+        0.3505839705467224
+      ]
+    },
+    "SitUp_Cargo_0.5": {
+      "min": [
+        -0.5418184995651245,
+        -0.7737027406692505,
+        0.042883507907390594
+      ],
+      "max": [
+        0.559373676776886,
+        0.7238978147506714,
+        0.8178367614746094
+      ],
+      "hips": [
+        -0.1262654960155487,
+        0.0,
+        0.223255455493927
+      ],
+      "right_wrist": [
+        -0.20942403376102448,
+        -0.2367519587278366,
+        0.5176764130592346
+      ]
+    },
+    "SitUp_Cargo_0.95": {
+      "min": [
+        -0.6450554132461548,
+        -0.35066384077072144,
+        0.0015302863903343678
+      ],
+      "max": [
+        0.43399178981781006,
+        0.3352021872997284,
+        1.0330190658569336
+      ],
+      "hips": [
+        -0.29950955510139465,
+        0.0,
+        0.1083253026008606
+      ],
+      "right_wrist": [
+        0.03954923525452614,
+        -0.16470107436180115,
+        0.47720661759376526
+      ]
+    },
+    "SitUp_Cargo_1.15": {
+      "min": [
+        -0.6449172496795654,
+        -0.3853866755962372,
+        0.0019999693613499403
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318968296051,
+        1.03281569480896
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        -0.2661539614200592,
+        -0.14999999105930328,
+        0.5981041789054871
+      ]
+    },
+    "SitUp_Cargo_1.4": {
+      "min": [
+        -0.6449172496795654,
+        -0.38253411650657654,
+        0.0019999693613499403
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318968296051,
+        1.032313346862793
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        -0.2661539614200592,
+        -0.14572925865650177,
+        0.597973644733429
+      ]
+    },
+    "SitUp_Cargo_2.1": {
+      "min": [
+        -0.6449172496795654,
+        -0.3350318670272827,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318670272827,
+        1.03281569480896
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.05999993905425072,
+        -0.16499988734722137,
+        0.45999985933303833
+      ]
+    },
+    "Cargo_Sit_Idle_0": {
+      "min": [
+        -0.6449172496795654,
+        -0.3350318670272827,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318670272827,
+        1.03281569480896
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.05999993905425072,
+        -0.16499988734722137,
+        0.45999985933303833
+      ]
+    },
+    "Cargo_Sit_Idle_0.84": {
+      "min": [
+        -0.6428148150444031,
+        -0.3368624150753021,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3368624746799469,
+        1.0321418046951294
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.060000043362379074,
+        -0.1649998128414154,
+        0.4601350724697113
+      ]
+    },
+    "Cargo_Sit_Idle_1.22": {
+      "min": [
+        -0.6407730579376221,
+        -0.33854928612709045,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.33854934573173523,
+        1.0305874347686768
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.060000039637088776,
+        -0.16499991714954376,
+        0.4608807861804962
+      ]
+    },
+    "Cargo_Sit_Idle_1.63": {
+      "min": [
+        -0.6407220959663391,
+        -0.33863916993141174,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.33863919973373413,
+        1.0321595668792725
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.059999920427799225,
+        -0.16499973833560944,
+        0.4586905241012573
+      ]
+    },
+    "Cargo_Sit_Idle_4.0": {
+      "min": [
+        -0.6449172496795654,
+        -0.3350318670272827,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318670272827,
+        1.03281569480896
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.05999993905425072,
+        -0.16499988734722137,
+        0.45999985933303833
+      ]
+    },
+    "Cargo_Knock_0": {
+      "min": [
+        -0.6449172496795654,
+        -0.3350318670272827,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318670272827,
+        1.03281569480896
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.05999993905425072,
+        -0.16499988734722137,
+        0.45999985933303833
+      ]
+    },
+    "Cargo_Knock_0.84": {
+      "min": [
+        -0.6060829162597656,
+        -0.4079999327659607,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3545483350753784,
+        1.0319063663482666
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        -0.5417786240577698,
+        -0.34999993443489075,
+        0.654964029788971
+      ]
+    },
+    "Cargo_Knock_1.22": {
+      "min": [
+        -0.6039313077926636,
+        -0.4079999625682831,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3541901707649231,
+        1.0316051244735718
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        -0.5418767929077148,
+        -0.34999993443489075,
+        0.6549800038337708
+      ]
+    },
+    "Cargo_Knock_1.63": {
+      "min": [
+        -0.6057782769203186,
+        -0.4080004394054413,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3541278839111328,
+        1.0323829650878906
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        -0.5415893197059631,
+        -0.3500003218650818,
+        0.6549340486526489
+      ]
+    },
+    "Cargo_Knock_2.8": {
+      "min": [
+        -0.6449172496795654,
+        -0.3350318670272827,
+        0.0019999719224870205
+      ],
+      "max": [
+        0.43233686685562134,
+        0.3350318670272827,
+        1.03281569480896
+      ],
+      "hips": [
+        -0.30000001192092896,
+        0.0,
+        0.10799992084503174
+      ],
+      "right_wrist": [
+        0.05999993905425072,
+        -0.16499988734722137,
+        0.45999985933303833
+      ]
+    }
+  }
+}
