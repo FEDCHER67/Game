@@ -265,11 +265,12 @@ def _lean_loop():
         # back scratch against the wall: up-down rub of the hips/back with a happy head roll
         w = window(t, 2.3, 3.5, 0.2)
         rub = math.sin(2 * math.pi * 2.5 * (t - 2.3)) * w
-        p['hip.z'] = p.get('hip.z', 0) + 0.018 * rub
-        p['s3.r'] = p.get('s3.r', 0) + 3.0 * rub
-        p['s2.r'] = p.get('s2.r', 0) - 1.5 * rub
-        p['hd.r'] = p.get('hd.r', 0) - 4.0 * rub
-        p['hd.p'] = p.get('hd.p', 0) - 6.0 * w
+        p['hip.z'] = p.get('hip.z', 0) - 0.02 * w + 0.032 * rub
+        p['hip.r'] = p.get('hip.r', 0) + 3.0 * rub
+        p['s3.r'] = p.get('s3.r', 0) + 6.0 * rub
+        p['s2.r'] = p.get('s2.r', 0) - 3.0 * rub
+        p['hd.r'] = p.get('hd.r', 0) - 7.0 * rub
+        p['hd.p'] = p.get('hd.p', 0) - 12.0 * w                     # chin up, blissful
         p['cL.u'] = p.get('cL.u', 0) + 4.0 * w
         p['cR.u'] = p.get('cR.u', 0) + 4.0 * w
         # foot on the wall taps along to some music 5.6-6.6 s (heel knocks the wall)
