@@ -1,0 +1,39 @@
+{
+  "clip": "Cop_Trip_v01",
+  "action": "Cop_Trip_v01",
+  "frames": [
+    1,
+    23
+  ],
+  "fps": 30,
+  "duration_s": 0.7333333333333333,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "Cop_Run frame 1 (exact)",
+  "end_contract": "ragdoll hand-off pose (diving, airborne except the left toe)",
+  "events": {
+    "Ragdoll": 0.7333333333333333
+  },
+  "ground_speed": "in place; ground +Y at 3.00 m/s (same as Cop_Run); hips advance 0.36 m in the dive",
+  "beats": [
+    "0.00-0.14 normal heavy run (identical to Cop_Run)",
+    "0.14 the right toe catches the street under the body",
+    "0.14-0.24 the toe is dragged back with the ground, heel tips up; the body starts to pitch forward",
+    "0.12-0.48 arms windmill, head snaps up looking ahead (uh-oh), back arches",
+    "0.19-0.40 desperate long stumble step with the left foot",
+    "0.40-0.72 diving: body pitches to 76 deg, arms reach forward to brace",
+    "0.733 hand off to the ragdoll (hips 0.44 m, still moving forward/down)"
+  ],
+  "max_leg_ik_overreach_m": 0.0,
+  "max_arm_ik_overreach_m": 0.0,
+  "hips_first": [
+    -0.010163564234972,
+    0.0,
+    0.7120000123977661
+  ],
+  "hips_last": [
+    0.0,
+    -0.36000001430511475,
+    0.4399999976158142
+  ]
+}
