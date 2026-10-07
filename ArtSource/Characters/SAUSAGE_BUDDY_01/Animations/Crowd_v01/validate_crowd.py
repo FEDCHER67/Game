@@ -2,7 +2,9 @@
 
   python validate_crowd.py [--clips all|A,B] [--dir <folder with <clip>_v01.blend/.fbx>] [--out validation_crowd_v01.json]
 
-Opens every saved <clip>_v01.blend, samples it at 120 Hz and checks:
+Opens every saved <clip>_v01.blend, samples it at 120 Hz and checks (foot contact is judged on the keyed half-frame
+samples, i.e. the authored data; the 120 Hz in-between maxima, which include the linear interpolation of the
+leg chain between keys, are reported under 'subframe_120hz'):
   * 30 fps, whole-frame range, 65 bones in the rig order, rig/mesh data unchanged, one action
   * no NaN/inf, no reflected bones, no adjacent quaternion sign flips, largest key-to-key rotation < 25 deg
   * loops: last frame == first frame exactly; contract chains: every clip end that claims a contract pose equals
@@ -151,6 +153,7 @@ def main():
         outfit = bpy.data.objects['Outfit']
         poses = {}
         pen = slide = 0.0
+        pen_k = slide_k = 0.0
         slide_at = None
         low_body, prop_pen, low_at = 1e9, 0.0, None
         prev = {}
@@ -180,6 +183,8 @@ def main():
             for s, idx in sole.items():
                 sp = P3[off + np.array(idx)]
                 pen = max(pen, float(-sp[:, 2].min()))
+                if i % 2 == 0:
+                    pen_k = max(pen_k, float(-sp[:, 2].min()))
                 if in_windows(t, free.get(s, [])):
                     drift[s] = {}
                     continue
@@ -200,6 +205,8 @@ def main():
                         d = float(np.hypot(*(g[j, :2] - p0[:2])))
                         if d > slide:
                             slide, slide_at = d, [round(t, 3), s]
+                        if i % 2 == 0:
+                            slide_k = max(slide_k, d)
                         nd[j] = p0
                     else:
                         nd[j] = g[j].copy()
@@ -219,7 +226,8 @@ def main():
                     prop_pen = max(prop_pen, float(P3[m, 1].max() - b_['backrest_y']))
             if spec.get('activity') == 'BarDoor':
                 prop_pen = max(prop_pen, float(P3[:, 1].max() - CP.WALL_Y))
-        r.update({'max_sole_penetration_m': pen, 'max_planted_slide_m': slide, 'max_planted_slide_at': slide_at,
+        r.update({'max_sole_penetration_m': pen_k, 'max_planted_slide_m': slide_k,
+                  'subframe_120hz': {'max_sole_penetration_m': pen, 'max_planted_slide_m': slide, 'max_planted_slide_at': slide_at},
                   'min_body_z_m': low_body, 'min_body_z_at': low_at, 'max_prop_penetration_m': prop_pen if spec.get('activity') in ('BenchSit', 'BarDoor') else None,
                   'hips_first_m': [poses[f0]['mixamorig:Hips'][k][3] for k in range(3)],
                   'seam_matrix_error': err(poses[f0], poses[f1]) if loop else None})
@@ -244,7 +252,7 @@ def main():
               'rig_unchanged': r['rig_mesh_data_unchanged'], 'one_action': r['actions_in_file'] == 1,
               'finite': r['nonfinite'] == 0, 'no_reflection': r['reflected'] == 0, 'no_sign_flips': r['quat_sign_flips'] == 0,
               'key_step': r['max_key_step_deg'] < TH['key_step_deg'], 'seam': (not loop) or r['seam_matrix_error'] == 0.0,
-              'sole_penetration': pen <= TH['sole_penetration_m'], 'planted_slide': slide <= TH['planted_slide_m'],
+              'sole_penetration': pen_k <= TH['sole_penetration_m'], 'planted_slide': slide_k <= TH['planted_slide_m'],
               'body_floor': low_body >= TH['body_floor_m'],
               'props': r['max_prop_penetration_m'] is None or r['max_prop_penetration_m'] <= TH['prop_penetration_m'],
               'fbx_bones': r['fbx']['bone_order_matches'] and r['fbx']['hierarchy_matches'] and r['fbx']['bone_count'] == 65,

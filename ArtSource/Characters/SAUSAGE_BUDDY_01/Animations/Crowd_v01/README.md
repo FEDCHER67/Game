@@ -50,7 +50,42 @@ mirrored clip still starts and ends on the exact Idle frame 1).
 
 `validate_crowd.py` opens every saved `.blend`, samples at 120 Hz and re-imports every `.fbx`.
 
-RESULTS_TABLE
+| Clip | Checks | Seam | Max key step | Sole pen. (keys / 120 Hz) | Planted slide (keys / 120 Hz) | Lowest body vertex | Props | FBX anim. err |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `ShopQueue_Loop` | 18/18 | 0.0 | 8.4° | 0.00 / 0.18 mm | 0.55 / 0.55 mm | +77.0 mm | – | 1.8e-05 |
+| `BusWait_Loop` | 18/18 | 0.0 | 20.5° | 0.00 / 0.49 mm | 0.45 / 0.70 mm | +76.7 mm | – | 1.8e-05 |
+| `Chat_Loop` | 18/18 | 0.0 | 12.0° | 0.00 / 0.10 mm | 0.00 / 0.01 mm | +75.3 mm | – | 1.9e-05 |
+| `KioskBuy` | 18/18 | – | 14.4° | 0.00 / 0.26 mm | 0.67 / 0.67 mm | +78.7 mm | – | 1.9e-05 |
+| `Chat_Loop_Mirror` | 18/18 | 0.0 | 12.0° | 0.00 / 0.10 mm | 0.00 / 0.01 mm | +75.3 mm | – | 1.9e-05 |
+| `SmokeCorner_Enter` | 18/18 | – | 20.8° | 0.00 / 0.03 mm | 0.00 / 0.00 mm | +81.1 mm | – | 1.9e-05 |
+| `SmokeCorner_Loop` | 18/18 | 0.0 | 10.8° | 0.00 / 0.13 mm | 0.00 / 0.01 mm | +79.4 mm | – | 1.9e-05 |
+| `SmokeCorner_Exit` | 18/18 | – | 17.4° | 0.00 / 1.32 mm | 0.99 / 0.99 mm | +78.0 mm | – | 1.8e-05 |
+| `PhoneTalk_Enter` | 18/18 | – | 22.2° | 0.00 / 0.07 mm | 0.00 / 0.00 mm | +81.6 mm | – | 1.8e-05 |
+| `PhoneTalk_Loop` | 18/18 | 0.0 | 14.1° | 0.00 / 0.05 mm | 0.00 / 0.01 mm | +79.2 mm | – | 1.8e-05 |
+| `PhoneTalk_Exit` | 18/18 | – | 17.5° | 0.00 / 0.01 mm | 0.00 / 0.00 mm | +81.6 mm | – | 1.9e-05 |
+| `BarDoor_Enter` | 18/18 | – | 18.8° | 0.00 / 0.23 mm | 0.00 / 0.02 mm | +76.9 mm | 0.1 mm | 1.8e-05 |
+| `BarDoor_Loop` | 18/18 | 0.0 | 4.3° | 0.00 / 0.11 mm | 0.00 / 0.01 mm | +72.0 mm | 0.0 mm | 1.8e-05 |
+| `BarDoor_Exit` | 18/18 | – | 16.8° | 0.00 / 0.36 mm | 0.00 / 0.02 mm | +76.0 mm | 0.0 mm | 1.8e-05 |
+| `BenchSit_Enter` | 18/18 | – | 19.4° | 0.00 / 0.33 mm | 0.00 / 0.14 mm | +72.1 mm | 2.8 mm | 1.8e-05 |
+| `BenchSit_Loop` | 18/18 | 0.0 | 20.9° | 0.00 / 0.03 mm | 0.61 / 0.61 mm | +83.7 mm | 0.1 mm | 1.8e-05 |
+| `BenchSit_Exit` | 18/18 | – | 8.5° | 0.00 / 0.35 mm | 0.00 / 0.12 mm | +70.8 mm | 0.1 mm | 1.8e-05 |
+| `BeachLie_Enter` | 18/18 | – | 19.9° | 0.00 / 0.17 mm | 0.51 / 0.61 mm | -9.2 mm | – | 1.9e-05 |
+| `BeachLie_Loop` | 18/18 | 0.0 | 16.4° | 0.00 / 0.00 mm | 0.00 / 0.01 mm | +4.0 mm | – | 1.8e-05 |
+| `BeachLie_Exit` | 18/18 | – | 19.3° | 0.00 / 0.78 mm | 0.00 / 3.05 mm | +3.9 mm | – | 1.9e-05 |
+| `Flee_Panic_Run` | 18/18 | 0.0 | 22.0° | 0.00 / 1.59 mm | 0.11 / 0.77 mm | +85.7 mm | – | 1.8e-05 |
+
+Contract chains (max world-matrix difference between every clip end that claims the pose): `idle` 0, `smoke` 0, `phone` 0, `lean` 0, `bench_sit` 0, `beach_lie` 0, `flee_run` 0. Overall: **PASS**.
+
+18 checks per clip: fps, 65 bones in rig order, rig/mesh data unchanged, one action, finite, no reflection, no quaternion
+sign flips, key step < 25°, seam, sole penetration, planted slide, body vs floor, props, FBX bones/hierarchy, FBX bind,
+FBX animated error < 1.5e-4, one take + armature only, FBX seam.
+
+**Keys vs 120 Hz.** Foot contact is judged on the keyed half-frames (the authored data). Between keys the leg chain is
+interpolated linearly, so during the fastest body moves a planted foot can wander slightly: up to 1.6 mm into the floor
+(the run's toe pads at touchdown, the support toe in SmokeCorner_Exit's big weight shift) and 3.1 mm of heel-skin creep in
+the deepest squat of BeachLie_Exit. These in-between values are in the `subframe_120hz` block of the report; they are
+below what reads at gameplay distance and Unity interpolates the same keys the same way. `BeachLie_Enter`'s lowest
+vertex (−9.2 mm) is a fingertip of a palm planted on the towel (design limit 1 cm).
 
 Notes on the checks:
 - **Planted feet**: net horizontal drift of every sole vertex touching the floor (z < 2 mm) since it touched down, in
@@ -128,16 +163,67 @@ python build_crowd.py --clip BenchSit_Loop --review /tmp/f/BenchSit_Loop --every
 python make_previews.py mp4 /tmp/f/BenchSit_Loop Previews/BenchSit_Loop_v01 --loops 3
 ```
 
-A full `--final` build of the 21 clips takes about 2 minutes on 4 CPU cores; validation about 5 minutes.
+A full `--final` build of the 21 clips plus validation takes a few minutes on 4 CPU cores (no GPU needed).
 
 ## 5. Review log (what I looked at and what I fixed)
 
-REVIEW_LOG
+Every clip was rendered (Cycles CPU, flat-colour JSON mesh proxy, side + three-quarter, Chat with its mirrored
+partner, run on a 4.5 m/s treadmill floor) and looked at in three passes: pass 1 every 3rd frame of all 21 clips,
+pass 2 every 2nd frame of the 12 clips changed in pass 1, pass 3 every frame of all clips (MP4, 3 loops for loops) plus
+a 10-frame strip per clip. Before pass 1 the key poses were blocked on pose sheets (hand on hip, phone at the ear,
+cigarette hold and drag, brow shade, watch, point, bench sit, beach lie, wall lean) and checked from front/side/¾.
+
+| Pass | Clip | What I saw | Fix |
+| --- | --- | --- | --- |
+| 0 | all | smoker's free arm read as a boxer guard; wall lean not touching the wall; beach lie floating on the hood with the "crossed" leg in the air | IK forearm across the belly; wall contact solve; pelvis pitch −64° so butt **and** hood touch the towel; ankle solved onto the left knee |
+| 0 | all | technical: arm/leg roll flips at IK hand-offs and when the thigh points along the knee pole; summing instead of overriding pose snippets (arms at 240°); a stale action overriding mesh contact solves; floating IK targets sweeping in from the origin | minimal-roll IK in the elbow plane, hinge-axis knee pole, override semantics, FK auto-fit to IK targets at keys, target hold rules (all in `crowd_core.py`) |
+| 1 | ShopQueue | peek and sigh too shy at crowd distance | ~1.3× lean/slump |
+| 1 | BusWait | hand landed on top of the head instead of shading the eyes (right hand cannot reach the brow while he looks left) | shade with the **left** hand, head-relative brow target |
+| 1 | KioskBuy | after paying he just stood there | happy double bounce on the toes; review counter made a slab |
+| 1 | Chat | review cameras cropped the partner | chat cameras |
+| 1 | SmokeCorner_Exit | the twist-out was a foot-only wiggle | hips and chest join the twist, arms out for balance |
+| 1 | BarDoor_Enter | the "flop back onto the wall" was invisible | forward dip anticipation + head whip on impact |
+| 1 | BarDoor_Loop | back scratch invisible (1.8 cm) | 3.2 cm rub, hip roll, blissful chin-up |
+| 1 | BenchSit_Enter | glance back at the bench too small | bigger glance with chest and hips |
+| 1 | BenchSit_Loop | **yawn arched the torso ~45° through the backrest** | arch reduced, the stretch goes into the arms; backrest check added to the validator |
+| 1 | BenchSit_Exit | rise popped between 0.9 and 1.0 s | in-between key, spread rise |
+| 1 | BeachLie_Exit | forward rock folded ~70° (face-plant) | squat lean |
+| 1 | BeachLie_Loop | foot bob to music invisible | bigger bob + head sway |
+| 1 | PhoneTalk ×3, SmokeCorner_Enter/Loop, BarDoor_Exit, BeachLie_Enter, Flee_Panic_Run | read as intended | – |
+| 2 | BusWait | left-hand brow shade reads as peering under the hand | – |
+| 2 | BenchSit_Loop | yawn now a clean overhead stretch against the backrest | – |
+| 2 | KioskBuy | review wall prop blocked the ¾ camera | removed (counter only) |
+| 3 | all | full-rate check: no pops, seams invisible, enter → loop → exit chains continuous | – |
+| validation | all | heel lifts slid the toe pad ~1.2 cm (toes counter-rotated about a joint 4.2 cm above the floor); shoe crease sank on tiptoes; planted palms dug the fingers 9–15 cm into the towel; hood 12 cm through the bench backrest; bench feet 2 cm apart without a step; beach foot scoot 6 cm; BarDoor foot 4.6 cm into the wall; heel pivot 1 mm above the real heel | heel lifts now pivot at the toe joint (toe pad exactly planted); `ik*.flat` palm-flat contacts; backrest 0.70 m; feet kept; scoot removed (ankle re-solved); foot flush; heel pivot at the real sole |
+
+Pass-3 notes on the look: the sausage reads best from the front/¾; side views of the standing loops are calm by design
+(crowd idles must not distract), the comic beats are the snaps (peek, "CHTO?!", flop, plop, swat, flick, thigh slap).
+The run is a fast churn (10 frames per two steps) with a short flight; arms shake one beat per step above the head.
 
 ## 6. Known limits / next steps
 
-LIMITS
+1. **Not seen in Unity yet.** Import with the settings in section 3 and check at gameplay distance (lead).
+2. Rendered with the flat-colour JSON mesh proxy (no textures/face); final previews with the LFS A v04 source are for a
+   local session: `python build_crowd.py --clip X --review ...` picks the real `.blend` automatically when it is present.
+3. No face animation in the FBX (by design); eyes/blinks/expressions belong to the face script (`GreyboxFace.Set`).
+4. Props are implied: a cigarette/phone mesh can be parented to `mixamorig:RightHand`.
+5. `Flee_Panic_Run` is authored at 4.5 m/s; at much lower playback multipliers the flight phase gets floaty.
+6. Sub-frame contact values listed in section 2 (≤ 1.6 mm sole, 3.1 mm heel-skin creep in one squat) — fix by denser
+   keys only if they ever show in game.
+7. B variant: the rig is identical (verified by the earlier packages); B's outfit was not used for contact checks.
+8. Next revisions must be new files (`*_v02`); never overwrite v01.
 
 ## Кратко по-русски
 
-RU_SUMMARY
+Набор «толпы» для сосисочных NPC (21 клип, 30 fps, всё на месте): сесть на скамейку / сидеть с ёрзаньем (зевок с
+потягиванием, дёргает коленкой, чешет пузо, хлопает по коленям) / встать; лечь на полотенце (руки за голову, нога на
+ноге, качает ступнёй под музыку, отмахивается от мухи) / встать и отряхнуть зад; очередь (выглядывает из-за спин, тяжко
+вздыхает, рука в бок, стучит носком, зыркает назад); курилка (прикурить, затяжка-выдох в сторону, стряхнуть пепел,
+щелчком выбросить бычок и растоптать); разговор по телефону («ЧТО?!», спорит, закатывает глаза, ржёт); остановка
+(козырёк ладонью, на цыпочках, качается с пятки на носок); бар (плюхается спиной на стену, нога на стену, чешет спину
+о стену); киоск (тычет «вот это», роется в кармане, платит, радостно подпрыгивает); болтовня вдвоём (Chat_Loop +
+зеркальный Chat_Loop_Mirror со сдвигом на полцикла: один говорит — другой слушает и ржёт до хлопка по ляжке);
+бег в панике с руками над головой (4,5 м/с). Все переходы стыкуются точно (ошибка 0), петли бесшовные, стопы не
+скользят, проверка пройдена (`validation_crowd_v01.json`, 21/21). В репозитории только скрипты и JSON: `.blend/.fbx`
+собираются командой `python build_crowd.py --clip all --final`. Размещение пропов для Unity — в разделе 3, в Unity
+ещё не проверялось.
