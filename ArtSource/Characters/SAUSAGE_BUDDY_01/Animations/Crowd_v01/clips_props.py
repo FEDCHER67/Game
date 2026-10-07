@@ -285,10 +285,12 @@ def _lean_enter():
     k = keys(
         (0.0, {'ikL.rel': 'Spine', 'ikR.rel': 'Spine', 'ikL.pt': 'fist', 'ikR.pt': 'fist', 'fR.tf': 1.0}),
         (0.25, {'hd.w': 30, 'nk.w': 8, 's3.w': 6, 'hip.z': -0.008}),                   # glance back at the wall
-        (0.45, {'hd.w': 0, 'nk.w': 0, 's3.w': 0}),
-        (0.70, add({'hip.y': 0.10, 'hip.p': -6, 'wall': 1.0, 'hip.z': -0.022, 's3.p': 5, 'nk.p': 6, 'hd.p': 8,
-                    'aL.o': 6, 'aR.o': 6})),                                              # flop back onto the wall
-        (0.82, {'hd.p': 2, 's3.p': 2, 'hip.z': -0.018}),                                # head bounce
+        (0.45, {'hd.w': 0, 'nk.w': 0, 's3.w': 0, 's2.p': 7, 's3.p': 4, 'hd.p': 6, 'hip.z': -0.02,
+                'hip.y': -0.012}),                                                       # anticipation: dip forward
+        (0.66, add({'hip.y': 0.10, 'hip.p': -6, 'wall': 1.0, 'hip.z': -0.022, 's2.p': -2, 's3.p': -2, 'nk.p': -4,
+                    'hd.p': -10, 'aL.o': 12, 'aR.o': 12, 'aL.f': -12, 'aR.f': -12})),      # flop back: thud, head lags back
+        (0.80, {'hd.p': 10, 'nk.p': 6, 's3.p': 5, 's2.p': 0, 'hip.z': -0.018, 'aL.o': 6, 'aR.o': 6, 'aL.f': 0,
+                'aR.f': 0}),                                                             # head bounces forward
         (0.98, add(shift(0.8), {'hip.y': 0.10, 'fR.z': 0.12, 'fR.y': 0.12, 'fR.r': 30, 'kR': 6}, POCKET_BOTH,
                    {'aL.o': 4, 'aR.o': 4})),                                              # foot up, hands to the pocket
         (1.20, add(base, {'fR.tf': 0.0})),
