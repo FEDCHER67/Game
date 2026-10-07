@@ -266,7 +266,6 @@ def _kiosk():
 CLIPS = {
     'ShopQueue_Loop': {'T': SQ_T, 'loop': True, 'start': 'idle', 'end': 'idle', 'params': _shopqueue(),
                        'activity': 'ShopQueue', 'role': 'loop',
-                       'feet_free': {'Right': [(3.2, 4.2)]},
                        'events': {'Tap': [3.25 + i / 3.0 for i in range(3)]},
                        'beats': ['0.3-0.8 lean out to his right to peek past the queue', '0.8-1.5 crane and scan',
                                  '1.5-1.8 snap back', '1.8-2.8 big impatient sigh (shrug up, head back, slump)',

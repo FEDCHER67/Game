@@ -276,7 +276,6 @@ CLIPS = {
                                  '1.4-2.0 hands onto the thighs, settle']},
     'BenchSit_Loop': {'T': SIT_T, 'loop': True, 'start': 'bench_sit', 'end': 'bench_sit', 'params': _sit_loop(),
                       'setup': [bench_setup], 'props': BENCH_PROPS, 'activity': 'BenchSit', 'role': 'loop',
-                      'feet_free': {'Right': [(3.0, 4.35)]},
                       'beats': ['0.5-1.7 look around left and right', '1.9-2.6 big yawn stretch, arms overhead',
                                 '2.75 arms flop onto the thighs', '3.15-4.2 nervous knee jiggle, fingers drum the thigh',
                                 '4.7-5.4 belly scratch', '5.75-6.1 "nu, ladno" knee slap', '7.0 base']},
