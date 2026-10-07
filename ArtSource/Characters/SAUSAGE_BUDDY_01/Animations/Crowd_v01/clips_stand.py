@@ -28,8 +28,8 @@ HAND_HIP_L = {'aL.o': 45, 'aL.f': -15, 'aL.t': 20, 'eL': 100, 'wL.f': -10, 'ikL.
               'ikL.z': 0.86, 'fiL': 0.7, 'thL': 0.6}
 WATCH_L = {'aL.f': 62, 'aL.o': 10, 'eL': 118, 'eL.t': -70, 'wL.f': 5, 'fiL': 0.35, 'thL': 0.2}
 POINT_R = {'aR.f': 85, 'aR.o': 10, 'eR': 10, 'fiR': 0.9, 'fiR.i': -0.9, 'thR': 0.8}
-SHADE_R = {'aR.f': 85, 'aR.o': 40, 'eR': 120, 'eR.t': 70, 'wR.f': 10, 'ikR.w': 1, 'ikR.x': 0.05, 'ikR.y': -0.24,
-           'ikR.z': 1.64, 'fiR': 0.1, 'thR': 0.1}
+SHADE_R = {'aR.f': 85, 'aR.o': 40, 'eR': 120, 'eR.t': 70, 'wR.f': 10, 'wR.d': -10, 'ikR.w': 1, 'ikR.rel': 'Head',
+           'ikR.pt': 'palm', 'ikR.x': 0.0, 'ikR.y': -0.25, 'ikR.z': 1.645, 'fiR': 0.1, 'thR': 0.1}   # palm over the brow
 
 
 def side_key(d, side):
@@ -56,8 +56,8 @@ SQ_T = 6.0
 
 def _shopqueue():
     T = SQ_T
-    peek = add(shift(-1.0), {'s1.r': -7, 's2.r': -11, 's3.r': -9, 'nk.r': 5, 'hd.r': 11, 'hd.w': -8, 's3.p': 6, 'nk.p': 8,
-                             'hd.p': -8, 'fL.r': 12, 'aL.o': 6, 'aL.f': 6, 'eL': 12, 'aR.f': 6, 'eR': 10})
+    peek = add(shift(-1.0), {'s1.r': -9, 's2.r': -14, 's3.r': -12, 'nk.r': 6, 'hd.r': 14, 'hd.w': -8, 's3.p': 6, 'nk.p': 8,
+                             'hd.p': -8, 'fL.r': 16, 'aL.o': 8, 'aL.f': 6, 'eL': 12, 'aR.f': 6, 'eR': 10})
     k = keys(
         (0.0, {}),
         (0.30, {'hip.z': -0.008, 'hd.p': 3, 's3.p': 2}),                                 # tiny dip: here we go
@@ -69,7 +69,7 @@ def _shopqueue():
         (1.80, add(shift(0.15), {'hd.p': -2, 'hd.w': 0, 'hd.r': -1})),
         (2.30, {'cL.u': 13, 'cR.u': 13, 's3.p': -7, 's2.p': -3, 'hd.p': -14, 'nk.p': -4, 'aL.o': 4, 'aR.o': 4}),  # inhale
         (2.48, {'cL.u': 14, 'cR.u': 14, 'hd.p': -16}),
-        (2.78, add(shift(0.55), {'cL.u': -4, 'cR.u': -4, 's3.p': 6, 's2.p': 7, 'hd.p': 12, 'nk.p': 5, 'aL.o': 0, 'aR.o': 0,
+        (2.78, add(shift(0.55), {'cL.u': -6, 'cR.u': -6, 's3.p': 9, 's2.p': 10, 'hd.p': 16, 'nk.p': 7, 'aL.o': 0, 'aR.o': 0,
                                  'aL.f': 6, 'aR.f': 6, 'hip.z': -0.018})),                # big sigh: slump
         (3.10, add(shift(0.75), HAND_HIP_L, {'cL.u': 2, 'cR.u': 0, 's3.p': 1, 's2.p': 2, 'hd.p': 2, 'nk.p': 1, 'aR.f': 0,
                                              'hd.w': 6, 'hd.r': 4})),                     # hand to hip, foot starts
