@@ -48,7 +48,7 @@ def _sit_loop():
     base = sit_base()
     stretch = {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 150, 'aR.f': 150, 'aL.o': 30, 'aR.o': 30, 'eL': 35, 'eR': 35,
                'eL.t': 0, 'eR.t': 0, 'wL.f': 20, 'wR.f': 20, 'fiL': 0.6, 'fiR': 0.6, 'thL': 0.5, 'thR': 0.5,
-               's1.p': -4, 's2.p': -10, 's3.p': -10, 'nk.p': -4, 'hd.p': -16, 'cL.u': 14, 'cR.u': 14, 'hip.p': -14}
+               's1.p': 2, 's2.p': -3, 's3.p': -5, 'nk.p': -4, 'hd.p': -18, 'cL.u': 14, 'cR.u': 14, 'hip.p': -8}
     scratch = {'ikR.w': 1.0, 'ikR.rel': 'Spine1', 'ikR.pt': 'fist', 'ikR.x': 0.02, 'ikR.y': -0.215, 'ikR.z': 0.93,
                'aR.f': 30, 'aR.o': 6, 'eR': 80, 'eR.t': 0, 'wR.f': 20, 'fiR': 0.55, 'thR': 0.3}
     k = keys(
@@ -59,7 +59,7 @@ def _sit_loop():
         (1.65, {'hd.w': -26}),
         (1.74, {'ikL.w': 0.0, 'ikR.w': 0.0}),                                           # hands leave the thighs
         (2.00, add(stretch, {'hd.w': 0, 'nk.w': 0, 's3.w': 0, 'hd.r': 0})),            # big yawn stretch
-        (2.45, {'aL.f': 160, 'aR.f': 158, 'hd.p': -20, 's3.p': -12, 'cL.u': 16, 'cR.u': 16}),
+        (2.45, {'aL.f': 162, 'aR.f': 160, 'aL.o': 36, 'aR.o': 36, 'hd.p': -22, 's3.p': -7, 'cL.u': 17, 'cR.u': 17}),
         (2.85, add(HANDS_THIGHS, {'s1.p': 12, 's2.p': 12, 's3.p': 8, 'nk.p': 4, 'hd.p': 6, 'cL.u': -3, 'cR.u': -3,
                                   'hip.p': -6})),                                         # arms flop onto the thighs
         (3.10, {'s1.p': 7, 's2.p': 7, 's3.p': 4, 'hd.p': 0, 'cL.u': 0, 'cR.u': 0, 'hip.p': -8}),
