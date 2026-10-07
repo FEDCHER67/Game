@@ -98,7 +98,12 @@ I rendered every clip myself, in a fast numpy/Pillow rasteriser of the skinned m
 
 ## Final review (Eevee previews from the saved files)
 
-Pending: the Eevee previews (side + three-quarter, 480 px, every frame) are rendering in the cloud box; this section is filled in by the next push.
+Rendered with the package's own preview path (`build_v03.py --from-saved --every 1 --res 480 --seq`, owner's grey studio, cargo wall + 1.2 m line), side and three-quarter, every frame. Then MP4s (loops shown 3× with the duplicated end frame dropped) and the 10-still contact sheets (`make_sheets.py contact`). They are not in Git (LFS): rebuild them with the commands in HANDOFF §3. They were shared in the session that made this PR.
+
+- **SitUp_Cargo_v04:** Reads in both views. You see the supine contract, the legs dropping, and the head lagging back while the torso comes up (clearest in three-quarter at 0.6 s). He rubs the side of his head, snaps a panic look at the doors, then the turn and the two-push scoot. The hood bumps the wall and he curls into the hug. The forward head flop reads less from the frontal doors-side camera than from three-quarter.
+- **Cargo_Knock_v03b:** Reads well from the doors-side (−Y) camera. The fist cocks during the swivel, he pounds with his face at the wall, raises both fists overhead, slams, listens with his ear on the wall, then slumps back into the hug. **Open point:** from the handoff's three-quarter camera at (2, −4, 1.6) the pounding is seen mostly from behind his head and hood, and the fists are partly hidden. If Fedya wants the hits readable from that side, options: a corner layout (HANDOFF §7 alternative, needs a Unity placement decision), or a knock that bangs sideways with the near arm. Ask before changing the stage.
+- **Cargo_Sit_Idle_v04:** The doors-side camera catches his face on every glance (0.67, 2.93, 3.07 s). The gulp dips his head (1.97 s) and he sinks behind his knees (3.53 s). The three loops in the MP4 run through the seam without a hitch. The trembling is subtle at 480 px, as specified (0.4–0.7°).
+- **Idle_Bored_v03:** The look-around, the watch snap with the double take, the big inhale with the head thrown back (2.93 s), the deflated slump with bent knees and the hip out (3.33 s), and the lazy scratch (the elbow up reads in three-quarter; from the +X side camera the right hand is on the far side). The knees lock again before the seam, and the loop is clean.
 
 ## Building (local, Windows, Blender 5.2)
 
