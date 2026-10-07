@@ -252,8 +252,10 @@ def _kiosk():
         (3.35, {'fiR': 0.6, 'thR': 0.6}),                                               # grab
         (3.75, add(shift(0.3), tuck_R, {'s2.p': 2, 's3.p': 0, 'hd.p': 6, 'hd.r': 5, 'hip.y': 0, 'aL.f': 0, 'aL.o': 0,
                                         'eL': 0, 'fiL': 0, 'thL': 0})),                  # tuck into the pocket, happy
-        (3.95, {'hd.p': -4, 'hip.z': 0.0, 'hd.r': 3}),                                  # chin up "spasibo"
-        (4.25, add(shift(0.0), {'ikR.w': 0, 'aR.f': 0, 'aR.o': 0, 'eR': 0, 'eR.t': 0, 'wR.f': 0, 'fiR': 0, 'thR': 0,
+        (3.88, {'hd.p': -8, 'hip.z': 0.0, 'hd.r': 4, 'fL.r': 14, 'fR.r': 14, 'cL.u': 6, 'cR.u': 6}),  # happy hop onto the toes
+        (4.02, {'fL.r': 0, 'fR.r': 0, 'hip.z': -0.012, 'hd.p': 4, 'cL.u': 0, 'cR.u': 0}),
+        (4.12, {'fL.r': 9, 'fR.r': 9, 'hip.z': 0.0, 'hd.p': -3}),                      # second little bounce
+        (4.30, add(shift(0.0), {'fL.r': 0, 'fR.r': 0, 'ikR.w': 0, 'aR.f': 0, 'aR.o': 0, 'eR': 0, 'eR.t': 0, 'wR.f': 0, 'fiR': 0, 'thR': 0,
                                 's2.p': 0, 'hd.p': 0, 'hd.r': 0, 'hd.w': -12, 'nk.w': -4})),     # glance where he goes
         (4.6, {'hd.w': 0, 'nk.w': 0}),
     )
@@ -285,11 +287,13 @@ CLIPS = {
     'KioskBuy': {'T': KB_T, 'loop': False, 'start': 'idle', 'end': 'idle', 'params': _kiosk(),
                  'activity': 'Kiosk', 'role': 'oneshot',
                  'events': {'Pay': 2.70, 'Take': 3.30},
-                 'props': [('box', {'name': 'Kiosk_Counter_Review', 'lo': (-0.8, -0.85, 0.0), 'hi': (0.8, -0.42, 1.0),
-                                    'rgb': (90, 120, 150)})],
+                 'props': [('box', {'name': 'Kiosk_Counter_Review', 'lo': (-0.8, -0.85, 0.94), 'hi': (0.8, -0.42, 1.0),
+                                    'rgb': (90, 120, 150)}),
+                           ('box', {'name': 'Kiosk_Wall_Review', 'lo': (-0.8, -0.9, 0.0), 'hi': (0.8, -0.85, 1.9),
+                                    'rgb': (120, 140, 160)})],
                  'beats': ['0.3-0.7 lean in and peer at the goods', '0.9-1.4 point "that one" with two jabs',
                            '1.6-2.4 dig in the hoodie pocket (rummage)', '2.5-2.9 hand the money over (event Pay)',
-                           '3.0-3.4 take the item (event Take)', '3.5-4.0 tuck it in the pocket, happy chin-up',
+                           '3.0-3.4 take the item (event Take)', '3.5-4.2 tuck it in the pocket, happy double bounce on the toes',
                            '4.0-4.6 glance where he goes next, end in Idle']},
 }
 CLIPS['Chat_Loop_Mirror'] = dict(CLIPS['Chat_Loop'], params=(lambda f: (lambda t: K.mirror_params(f(t))))(CLIPS['Chat_Loop']['params']),
