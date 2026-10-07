@@ -143,6 +143,9 @@ def towel_setup(rig):
     rig.surfaces = [(TOWEL['top'], lambda xs, ys: ys == ys)]
 
 
+BEACH_VIEWS = {'side': ((5.6, 0.55, 0.8), (0.0, 0.55, 0.6), 2.6),
+               'three_quarter': ((3.8, -3.4, 2.4), (0.0, 0.45, 0.45), 2.6),
+               'front': ((0.0, -5.2, 1.4), (0.0, 0.5, 0.5), 2.6)}
 TOWEL_PROPS = [('box', {'name': 'Towel_Review', 'lo': (-TOWEL['x'], TOWEL['y0'], 0.0), 'hi': (TOWEL['x'], TOWEL['y1'], TOWEL['top']),
                         'rgb': (60, 150, 190)})]
 
@@ -281,19 +284,19 @@ CLIPS = {
                       'beats': ['0.25 hands to the knees, lean', '0.45 nose over the toes', '0.75 push up off the knees',
                                 '1.05 back stretch, hands on the lower back', '1.65 Idle']},
     'BeachLie_Enter': {'T': 2.9, 'loop': False, 'start': 'idle', 'end': 'beach_lie', 'params': _lie_enter(),
-                       'setup': [towel_setup], 'props': TOWEL_PROPS, 'activity': 'BeachLie', 'role': 'enter',
+                       'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'enter',
                        'feet_free': {'Left': [(0.5, 1.1)], 'Right': [(0.5, 2.9)]},
                        'beats': ['0.3 look down at the towel', '0.75 squat', '1.05-1.25 sit down, hands back (plop)',
                                  '1.55 sigh at the sky', '1.85 lie back, arms swing up', '2.25 hands behind the head',
                                  '2.55 cross the leg', '2.9 base']},
     'BeachLie_Loop': {'T': LIE_T, 'loop': True, 'start': 'beach_lie', 'end': 'beach_lie', 'params': _lie_loop(),
-                      'setup': [towel_setup], 'props': TOWEL_PROPS, 'activity': 'BeachLie', 'role': 'loop',
+                      'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'loop',
                       'feet_free': {'Right': [(0.0, LIE_T)]},
                       'beats': ['breathing belly throughout', '0.4-2.4 crossed foot bobs to music, face turns to the sun',
                                 '2.8-3.4 a fly: two swats', '3.9-4.9 foot bobbing again', '5.0-5.9 happy wiggle settle',
                                 '7.0 base']},
     'BeachLie_Exit': {'T': 3.0, 'loop': False, 'start': 'beach_lie', 'end': 'idle', 'params': _lie_exit(),
-                      'setup': [towel_setup], 'props': TOWEL_PROPS, 'activity': 'BeachLie', 'role': 'exit',
+                      'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'exit',
                       'feet_free': {'Right': [(0.0, 0.45)], 'Left': [(1.0, 1.9)]},
                       'beats': ['0.3 uncross the leg', '0.55 hands out from behind the head', '0.85 crunch up',
                                 '1.05-1.35 rock forward into a squat', '1.85 stand up',
