@@ -8,7 +8,7 @@ Opens every saved <clip>_v01.blend, samples it at 120 Hz and checks:
   * loops: last frame == first frame exactly; contract chains: every clip end that claims a contract pose equals
     every other one exactly (Enter end == Loop start == Loop end == Exit start), and 'idle' == A v04 Idle frame 1
   * feet: soles never more than 1 mm into the floor; planted soles (outside each clip's feet_free windows) do not
-    slide: drift of touching sole vertices (z < 2 mm) in the ground frame (treadmill speed for the run) <= 1 mm
+    slide: net drift of each touching sole vertex (z < 2 mm) since it touched down, in the ground frame (treadmill speed for the run) <= 1 mm
   * body: lowest vertex >= -1 cm (design limit), props: no vertex more than 5 mm into the bench seat / backrest / wall
 then re-imports the FBX: bone order, hierarchy, bind matrices vs the rig JSON (or Walk_v02.fbx when real), one take,
 armature only, animated world-matrix error < 1.5e-4, reimported seam < 1e-5. Refuses to overwrite its report.
@@ -142,7 +142,7 @@ def main():
         poses = {}
         pen = slide = 0.0
         slide_at = None
-        low_body, prop_pen = 1e9, 0.0
+        low_body, prop_pen, low_at = 1e9, 0.0, None
         prev = {}
         drift = {s: {} for s in sole}
         for i in range(N * 4 + 1):
@@ -178,18 +178,20 @@ def main():
                 touch = g[:, 2] < 0.002
                 nd = {}
                 for j in np.nonzero(touch)[0]:
-                    if j in prev.get(s, {}):
-                        p0, acc = prev[s][j]
-                        acc = acc + float(np.hypot(*(g[j, :2] - p0[:2])))
-                        if acc > slide:
-                            slide, slide_at = acc, [round(t, 3), s]
-                        nd[j] = (g[j], acc)
+                    if j in prev.get(s, {}):              # net drift since this vertex touched down
+                        p0 = prev[s][j]
+                        d = float(np.hypot(*(g[j, :2] - p0[:2])))
+                        if d > slide:
+                            slide, slide_at = d, [round(t, 3), s]
+                        nd[j] = p0
                     else:
-                        nd[j] = (g[j], 0.0)
+                        nd[j] = g[j].copy()
                 prev[s] = nd
             body = np.ones(len(P3), bool)
             body[off + np.array(sole['Left'] + sole['Right'])] = False
-            low_body = min(low_body, float(P3[body, 2].min()))
+            lb = float(P3[body, 2].min())
+            if lb < low_body:
+                low_body, low_at = lb, round(t, 3)
             if spec.get('activity') == 'BenchSit':
                 b_ = CF.BENCH
                 m = (P3[:, 1] > b_['front_y'] + 0.01) & (P3[:, 1] < b_['back_y']) & (P3[:, 2] < b_['seat_top']) & (P3[:, 2] > 0.39)
@@ -201,7 +203,7 @@ def main():
             if spec.get('activity') == 'BarDoor':
                 prop_pen = max(prop_pen, float(P3[:, 1].max() - CP.WALL_Y))
         r.update({'max_sole_penetration_m': pen, 'max_planted_slide_m': slide, 'max_planted_slide_at': slide_at,
-                  'min_body_z_m': low_body, 'max_prop_penetration_m': prop_pen if spec.get('activity') in ('BenchSit', 'BarDoor') else None,
+                  'min_body_z_m': low_body, 'min_body_z_at': low_at, 'max_prop_penetration_m': prop_pen if spec.get('activity') in ('BenchSit', 'BarDoor') else None,
                   'hips_first_m': [poses[f0]['mixamorig:Hips'][k][3] for k in range(3)],
                   'seam_matrix_error': err(poses[f0], poses[f1]) if loop else None})
         ends[name] = (poses[f0], poses[f1])

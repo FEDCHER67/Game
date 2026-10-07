@@ -12,7 +12,7 @@ from clips_stand import shift, _fill, keys
 from clips_props import zero
 
 # ------------------------------------------------------------------------------------- BenchSit
-BENCH = {'seat_top': 0.45, 'front_y': 0.10, 'back_y': 0.52, 'half_width': 0.9, 'backrest_y': 0.54}
+BENCH = {'seat_top': 0.45, 'front_y': 0.10, 'back_y': 0.68, 'half_width': 0.9, 'backrest_y': 0.70}
 
 
 def bench_setup(rig):
@@ -92,8 +92,8 @@ def _sit_enter():
     base = sit_base()
     reach = {'ikL.w': 1.0, 'ikR.w': 1.0, 'ikL.rel': '', 'ikR.rel': '', 'ikL.pt': 'palm', 'ikR.pt': 'palm',
              'ikL.x': 0.26, 'ikR.x': 0.26, 'ikL.y': 0.24, 'ikR.y': 0.24, 'ikL.z': 0.47, 'ikR.z': 0.47,
-             'aL.f': -30, 'aR.f': -30, 'aL.o': 20, 'aR.o': 20, 'eL': 20, 'eR': 20, 'wL.f': -50, 'wR.f': -50,
-             'fiL': 0.1, 'fiR': 0.1, 'ikL.floor': 1.0, 'ikR.floor': 1.0}
+             'aL.f': -30, 'aR.f': -30, 'aL.o': 20, 'aR.o': 20, 'eL': 20, 'eR': 20, 'wL.f': -60, 'wR.f': -60, 'eL.t': -60, 'eR.t': -60,
+             'fiL': 0.1, 'fiR': 0.1, 'ikL.floor': 1.0, 'ikR.floor': 1.0, 'ikL.flat': 1.0, 'ikR.flat': 1.0}
     k = keys(
         (0.0, {'hip.free': 1.0, 'lift': 1.0, 'ikL.rel': '', 'ikR.rel': '', 'ikL.pt': 'palm', 'ikR.pt': 'palm'}),
         (0.30, {'hd.w': -62, 'nk.w': -14, 's3.w': -16, 's2.w': -9, 'hip.w': -4, 'hd.p': 8, 'hip.z': -0.012}),   # glance back at the bench
@@ -105,9 +105,9 @@ def _sit_enter():
         (1.12, {'gnd': 1.0, 'hip.y': 0.30, 'hip.z': -0.32, 'hip.p': 0, 's1.p': -2, 's2.p': -4, 's3.p': -4, 'hd.p': -10,
                 'cL.u': 6, 'cR.u': 6}),                                                  # plop! head lags back
         (1.26, {'s1.p': 10, 's2.p': 10, 's3.p': 8, 'hd.p': 10, 'cL.u': -3, 'cR.u': -3, 'hip.p': -10}),   # bounce forward
-        (1.40, {'ikL.w': 0.0, 'ikR.w': 0.0}),
-        (1.47, {'ikL.rel': 'Hips', 'ikR.rel': 'Hips', 'ikL.floor': 0.0, 'ikR.floor': 0.0}),
-        (1.78, add(base, {'s1.p': 5, 's2.p': 5, 's3.p': 2, 'hd.p': -4, 'cL.u': 0, 'cR.u': 0, 'kL': 6, 'kR': 6})),
+        (1.50, {'ikL.w': 0.0, 'ikR.w': 0.0}),
+        (1.56, {'ikL.rel': 'Hips', 'ikR.rel': 'Hips', 'ikL.floor': 0.0, 'ikR.floor': 0.0, 'ikL.flat': 0.0, 'ikR.flat': 0.0}),
+        (1.84, add(base, {'s1.p': 5, 's2.p': 5, 's3.p': 2, 'hd.p': -4, 'cL.u': 0, 'cR.u': 0, 'kL': 6, 'kR': 6})),
         (2.0, base),
     )
     return K.FitTrack(_fill(k, start={}, end=base))
@@ -205,9 +205,9 @@ def _lie_loop():
 def _lie_enter():
     base = lie_base()
     floor_hands = {'ikL.w': 1.0, 'ikR.w': 1.0, 'ikL.rel': '', 'ikR.rel': '', 'ikL.pt': 'palm', 'ikR.pt': 'palm',
-                   'ikL.floor': 1.0, 'ikR.floor': 1.0, 'ikL.x': 0.27, 'ikR.x': 0.27, 'ikL.y': 0.62, 'ikR.y': 0.62,
-                   'ikL.z': 0.03, 'ikR.z': 0.03, 'aL.f': -40, 'aR.f': -40, 'aL.o': 20, 'aR.o': 20, 'eL': 20, 'eR': 20,
-                   'wL.f': -60, 'wR.f': -60, 'fiL': 0.1, 'fiR': 0.1}
+                   'ikL.floor': 1.0, 'ikR.floor': 1.0, 'ikL.flat': 1.0, 'ikR.flat': 1.0, 'ikL.x': 0.27, 'ikR.x': 0.27, 'ikL.y': 0.62, 'ikR.y': 0.62,
+                   'ikL.z': 0.035, 'ikR.z': 0.035, 'aL.f': -40, 'aR.f': -40, 'aL.o': 20, 'aR.o': 20, 'eL': 20, 'eR': 20,
+                   'wL.f': -60, 'wR.f': -60, 'eL.t': 30, 'eR.t': 30, 'fiL': 0.0, 'fiR': 0.0}
     k = keys(
         (0.0, {'hip.free': 1.0, 'lift': 1.0, 'ikL.rel': '', 'ikR.rel': '', 'ikL.pt': 'palm', 'ikR.pt': 'palm'}),
         (0.30, {'hd.p': 16, 'nk.p': 6, 's3.p': 4, 'hip.z': -0.01}),                     # look down at the towel
@@ -218,10 +218,10 @@ def _lie_enter():
         (1.25, {'ikL.w': 1.0, 'ikR.w': 1.0, 'gnd': 1.0, 'hip.y': 0.36, 'hip.p': -22, 's1.p': 4, 's2.p': 2,
                 'hd.p': 4}),                                                               # on the butt: plop
         (1.55, {'hip.p': -34, 's1.p': -2, 's2.p': -2, 'hd.p': 8, 'hd.w': 10}),           # sigh, look at the sky
-        (1.66, {'ikL.w': 0.0, 'ikR.w': 0.0}),                                            # hands leave the towel
+        (1.74, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 10, 'aR.f': 10, 'aL.o': 30, 'aR.o': 30, 'eL': 50, 'eR': 50}),  # hands leave the towel
         (1.85, add(base, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 90, 'aR.f': 90, 'aL.o': 40, 'aR.o': 40, 'eL': 90, 'eR': 90,
                           'fR.x': 0.0, 'fR.y': 0.0, 'fR.z': 0.0, 'fR.r': 0, 'fR.w': 0, 'kR': 6, 'hip.p': -60,
-                          'hd.w': 0, 'ikL.floor': 0.0, 'ikR.floor': 0.0})),                 # lie back, arms swing up
+                          'hd.w': 0, 'ikL.floor': 0.0, 'ikR.floor': 0.0, 'ikL.flat': 0.0, 'ikR.flat': 0.0})),                 # lie back, arms swing up
         (1.95, {'ikL.rel': 'Head', 'ikR.rel': 'Head'}),
         (2.25, add(HEAD_HANDS, {'hip.p': base['hip.p'], 'fR.z': 0.25, 'fR.y': 0.08, 'fR.x': 0.06, 'fR.r': -30}),),  # hands behind the head
         (2.55, add(CROSS_R, {'hd.p': base['hd.p'] + 4})),                                # cross the leg

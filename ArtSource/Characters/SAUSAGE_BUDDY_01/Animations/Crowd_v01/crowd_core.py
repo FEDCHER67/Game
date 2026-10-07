@@ -29,6 +29,7 @@ Parameters (missing = 0):
                          point ikL.pt ('wrist' | 'fist' | 'pinch' | 'palm') and keeps the FK hand rotation.
                          ikL.rel = 'Head' | 'Spine2' | 'Hips' ...: the target is given in Idle world space
                          and carried by that bone's motion (phone at the ear, hands in the pocket).
+                         ikL.flat 0..1 turns the palm flat onto a support (palm down, fingers level).
   fiL thL                finger curl 0..1, thumb curl; fiL.i fiL.m fiL.r fiL.k: per-finger extra
                          (index, middle, ring, pinky)
   fL.x fL.y fL.z         foot pivot offset (m; x outward)
@@ -58,6 +59,11 @@ X, Y, Z = Vector((1, 0, 0)), Vector((0, 1, 0)), Vector((0, 0, 1))
 S = Matrix.Diagonal((-1.0, 1.0, 1.0))           # mirror across the centre plane x = 0
 SIDES = (('Left', 'L', 1), ('Right', 'R', -1))
 FPS = C.FPS
+def ball_sink(roll):
+    """Skinned crease sink under the ball with the heel up and the toes flat (fit to the A v04 shoe, m)."""
+    return 0.00002 * roll + 0.0000058 * roll * roll
+
+
 
 
 def pry(p=0.0, r=0.0, w=0.0):
@@ -154,11 +160,13 @@ class Rig:
 
     # ------------------------------------------------------------------------------------ feet
     def foot_matrix(self, s, sgn, p):
-        g = lambda k: p.get(k, 0.0)
+        g = lambda k, d=0.0: p.get(k, d)
         k = s[0]
-        off = Vector((g('f%s.x' % k) * sgn, g('f%s.y' % k), g('f%s.z' % k)))
-        yaw = g('f%s.w' % k) * sgn
         roll = g('f%s.r' % k)
+        # with the heel up and the toes flat the skinned crease under the ball sinks (quadratically with the
+        # heel angle): lift the pivot by that much so the sole never goes into the floor
+        off = Vector((g('f%s.x' % k) * sgn, g('f%s.y' % k), g('f%s.z' % k) + ball_sink(max(roll, 0.0)) * g('f%s.tf' % k, 1.0)))
+        yaw = g('f%s.w' % k) * sgn
         Yw = rot_about(self.ankle_g[s], R(Z, yaw))
         piv = Yw @ (self.ball[s] if roll >= 0 else self.heel[s])
         lat = R(Z, yaw) @ X
@@ -281,6 +289,20 @@ class Rig:
             tgt = (out[P + rel] @ self.base[P + rel].inverted()) @ tgt
         pt = p.get('ik%s.pt' % k, 'wrist')
         a, b, c = (P + s + n for n in ('Arm', 'ForeArm', 'Hand'))
+        flat = p.get('ik%s.flat' % k, 0.0)
+        if flat > 0:                   # palm flat on the support: palm normal (hand +Z) down, fingers level
+            hm = out[c].to_3x3()
+            fy = hm.col[1].copy()
+            fy.z = 0.0
+            if fy.length > 1e-6:
+                fy.normalize()
+                fz = Vector((0, 0, -1))
+                fx = fy.cross(fz)
+                want = Matrix((fx, fy, fz)).transposed().to_quaternion()
+                q = hm.to_quaternion().slerp(want, min(1.0, flat * w))      # fades with the IK weight
+                M = rot_about(out[c].translation, q @ hm.to_quaternion().inverted())
+                for n_ in B.subtree(s + 'Hand'):
+                    out[n_] = M @ out[n_]
         hand = out[c].copy()
         off = (hand @ self.hand_pts[s][pt]) - hand.translation
         H, K0, E0 = out[a].translation.copy(), out[b].translation.copy(), out[c].translation.copy()
