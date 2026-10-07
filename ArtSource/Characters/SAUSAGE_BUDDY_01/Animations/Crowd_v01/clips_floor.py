@@ -240,7 +240,7 @@ def _lie_exit():
         (0.85, {'hip.p': -20, 's1.p': 14, 's2.p': 14, 's3.p': 10, 'nk.p': 10, 'hd.p': 10, 'aL.f': 75, 'aR.f': 75,
                 'aL.o': 6, 'aR.o': 6, 'eL': 15, 'eR': 15, 'hip.y': 0.34}),                # crunch up, arms forward
         (1.05, {'hip.p': -5, 's1.p': 20, 's2.p': 16, 'hd.p': 2, 'nk.p': 2}),              # rock...
-        (1.35, {'gnd': 0.0, 'hip.y': 0.08, 'hip.z': -0.40, 'hip.p': 34, 's1.p': 18, 's2.p': 12, 's3.p': 6,
+        (1.35, {'gnd': 0.0, 'hip.y': 0.08, 'hip.z': -0.40, 'hip.p': 28, 's1.p': 10, 's2.p': 6, 's3.p': 2, 'hd.p': -10,
                 'aL.f': 70, 'aR.f': 70, 'kL': 12, 'kR': 12, 'fL.y': 0.0, 'fL.x': 0.0}),  # ...forward into a squat
         (1.85, {'hip.y': 0.0, 'hip.z': -0.06, 'hip.p': 8, 's1.p': 4, 's2.p': 3, 's3.p': 0, 'hd.p': -4, 'aL.f': 10,
                 'aR.f': 10, 'aL.o': 4, 'aR.o': 4, 'eL': 20, 'eR': 20, 'kL': 2, 'kR': 2}),   # stand up
