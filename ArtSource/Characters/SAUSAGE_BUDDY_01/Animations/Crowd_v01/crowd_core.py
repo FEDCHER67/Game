@@ -34,7 +34,7 @@ Parameters (missing = 0):
                          (index, middle, ring, pinky)
   fL.x fL.y fL.z         foot pivot offset (m; x outward)
   fL.w                   foot yaw (+ = toe out)
-  fL.r                   foot roll: + = heel up about the ball, - = toe up about the heel
+  fL.r                   foot roll: + = heel up about the toe joint (toes stay planted), - = toe up about the heel
   fL.wb                  foot yaw about the ball (twist on the ball of the foot, + = heel in)
   fL.t fL.tf             toe bend (+ = toes up) and toe-flatten weight (1 = toes stay flat while the
                          heel is up; default 1)
@@ -59,13 +59,6 @@ X, Y, Z = Vector((1, 0, 0)), Vector((0, 1, 0)), Vector((0, 0, 1))
 S = Matrix.Diagonal((-1.0, 1.0, 1.0))           # mirror across the centre plane x = 0
 SIDES = (('Left', 'L', 1), ('Right', 'R', -1))
 FPS = C.FPS
-def ball_sink(roll):
-    """Skinned crease sink under the ball with the heel up and the toes flat (fit to the A v04 shoe, m)."""
-    return 0.00002 * roll + 0.0000058 * roll * roll
-
-
-
-
 def pry(p=0.0, r=0.0, w=0.0):
     return R(Z, w) @ R(X, p) @ R(Y, r)
 
@@ -120,7 +113,7 @@ class Rig:
             low = [p for p in pts if p.z < 0.012]
             tj = base[P + s + 'ToeBase'].translation
             an = base[ft].translation
-            self.ball[s] = Vector((tj.x, tj.y, 0.0))
+            self.ball[s] = tj.copy()                 # heel lifts bend the shoe at the toe joint: the toes stay exactly put
             self.heel[s] = Vector((an.x, max(p.y for p in low) - 0.012, 0.0))
             self.ankle_g[s] = Vector((an.x, an.y, 0.0))
         # hand reach points in the Hand bone's rest-relative frame (offset from the wrist, base pose)
@@ -163,9 +156,7 @@ class Rig:
         g = lambda k, d=0.0: p.get(k, d)
         k = s[0]
         roll = g('f%s.r' % k)
-        # with the heel up and the toes flat the skinned crease under the ball sinks (quadratically with the
-        # heel angle): lift the pivot by that much so the sole never goes into the floor
-        off = Vector((g('f%s.x' % k) * sgn, g('f%s.y' % k), g('f%s.z' % k) + ball_sink(max(roll, 0.0)) * g('f%s.tf' % k, 1.0)))
+        off = Vector((g('f%s.x' % k) * sgn, g('f%s.y' % k), g('f%s.z' % k)))
         yaw = g('f%s.w' % k) * sgn
         Yw = rot_about(self.ankle_g[s], R(Z, yaw))
         piv = Yw @ (self.ball[s] if roll >= 0 else self.heel[s])

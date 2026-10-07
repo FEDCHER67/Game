@@ -8,7 +8,8 @@ Opens every saved <clip>_v01.blend, samples it at 120 Hz and checks:
   * loops: last frame == first frame exactly; contract chains: every clip end that claims a contract pose equals
     every other one exactly (Enter end == Loop start == Loop end == Exit start), and 'idle' == A v04 Idle frame 1
   * feet: soles never more than 1 mm into the floor; planted soles (outside each clip's feet_free windows) do not
-    slide: net drift of each touching sole vertex (z < 2 mm) since it touched down, in the ground frame (treadmill speed for the run) <= 1 mm
+    slide: net drift of each touching sole vertex (z < 2 mm) since it touched down, in the ground frame; while the
+    shoe is bent at the ball (heel lifting) only the toe pad counts as planted, the rest of the sole is peeling (treadmill speed for the run) <= 1 mm
   * body: lowest vertex >= -1 cm (design limit), props: no vertex more than 5 mm into the bench seat / backrest / wall
 then re-imports the FBX: bone order, hierarchy, bind matrices vs the rig JSON (or Walk_v02.fbx when real), one take,
 armature only, animated world-matrix error < 1.5e-4, reimported seam < 1e-5. Refuses to overwrite its report.
@@ -93,6 +94,15 @@ def main():
     original_sig = mesh_signature()
     order = list(B.rig.data.bones.keys())
     sole = B.sole
+    # toe-pad sole vertices (dominant weight on ToeBase): the only planted part while the shoe bends at the ball
+    outfit0 = B.meshes[2]
+    gname = [vg.name for vg in outfit0.vertex_groups]
+    toe_pad = {}
+    for s_, idx in sole.items():
+        toe_pad[s_] = [k for k, i in enumerate(idx) if outfit0.data.vertices[i].groups and
+                       gname[max(outfit0.data.vertices[i].groups, key=lambda g: g.weight).group].endswith('ToeBase')]
+    rest_rel = {s_: (B.idle[C.P + s_ + 'Foot'].to_3x3().inverted() @ B.idle[C.P + s_ + 'ToeBase'].to_3x3()).to_quaternion()
+                for s_ in sole}
     walk_fbx = C.ANIM / 'Locomotion_v01' / 'Walk_v02.fbx'
     if walk_fbx.exists() and walk_fbx.read_bytes()[:18] == b'Kaydara FBX Binary':
         bind = bone_sig(import_rig(walk_fbx))
@@ -176,6 +186,13 @@ def main():
                 g = sp.copy()
                 g[:, 1] -= v_run * t                      # ground frame (treadmill)
                 touch = g[:, 2] < 0.002
+                fm = rig.pose.bones[C.P + s + 'Foot'].matrix.to_3x3()
+                tm = rig.pose.bones[C.P + s + 'ToeBase'].matrix.to_3x3()
+                bend = math.degrees((fm.inverted() @ tm).to_quaternion().rotation_difference(rest_rel[s]).angle)
+                if bend > 1.0:                            # shoe bent at the ball: heel peeling, toe pad planted
+                    only = np.zeros(len(idx), bool)
+                    only[toe_pad[s]] = True
+                    touch &= only
                 nd = {}
                 for j in np.nonzero(touch)[0]:
                     if j in prev.get(s, {}):              # net drift since this vertex touched down

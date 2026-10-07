@@ -226,7 +226,7 @@ POCKET_BOTH = {'ikL.w': 1.0, 'ikL.rel': 'Spine', 'ikL.x': 0.075, 'ikL.y': -0.20,
                'aL.f': 25, 'aL.o': 4, 'eL': 85, 'eL.t': 10, 'fiL': 0.55, 'thL': 0.5,
                'ikR.w': 1.0, 'ikR.rel': 'Spine', 'ikR.x': 0.075, 'ikR.y': -0.20, 'ikR.z': 0.90, 'ikR.pt': 'fist',
                'aR.f': 25, 'aR.o': 4, 'eR': 85, 'eR.t': 10, 'fiR': 0.55, 'thR': 0.5}
-FOOT_WALL_R = {'fR.y': 0.445, 'fR.z': 0.26, 'fR.x': 0.03, 'fR.r': 84, 'fR.tf': 0.0, 'fR.t': 10, 'kR': 12}
+FOOT_WALL_R = {'fR.y': 0.398, 'fR.z': 0.26, 'fR.x': 0.03, 'fR.r': 84, 'fR.tf': 0.0, 'fR.t': 10, 'kR': 12}
 
 
 def lean_base():

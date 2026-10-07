@@ -36,8 +36,7 @@ HANDS_THIGHS = {'ikL.w': 1.0, 'ikL.pt': 'palm', 'ikL.rel': 'Hips', 'ikL.x': 0.13
 
 def sit_base():
     return add(HANDS_THIGHS, {'hip.free': 1.0, 'lift': 1.0, 'gnd': 1.0, 'hip.y': 0.30, 'hip.z': -0.30, 'hip.p': -8,
-                              's1.p': 6, 's2.p': 6, 's3.p': 3, 'nk.p': 2, 'hd.p': -2, 'kL': 6, 'kR': 6,
-                              'fL.x': 0.02, 'fR.x': 0.02})
+                              's1.p': 6, 's2.p': 6, 's3.p': 3, 'nk.p': 2, 'hd.p': -2, 'kL': 6, 'kR': 6})
 
 
 SIT_T = 7.0
@@ -218,11 +217,12 @@ def _lie_enter():
         (1.25, {'ikL.w': 1.0, 'ikR.w': 1.0, 'gnd': 1.0, 'hip.y': 0.36, 'hip.p': -22, 's1.p': 4, 's2.p': 2,
                 'hd.p': 4}),                                                               # on the butt: plop
         (1.55, {'hip.p': -34, 's1.p': -2, 's2.p': -2, 'hd.p': 8, 'hd.w': 10}),           # sigh, look at the sky
-        (1.74, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 10, 'aR.f': 10, 'aL.o': 30, 'aR.o': 30, 'eL': 50, 'eR': 50}),  # hands leave the towel
-        (1.85, add(base, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 90, 'aR.f': 90, 'aL.o': 40, 'aR.o': 40, 'eL': 90, 'eR': 90,
+        (1.64, {'ikL.z': 0.08, 'ikR.z': 0.08, 'fiL': 0.3, 'fiR': 0.3}),                   # hands peel off the towel
+        (1.80, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 10, 'aR.f': 10, 'aL.o': 30, 'aR.o': 30, 'eL': 50, 'eR': 50}),  # hands leave the towel
+        (1.95, add(base, {'ikL.w': 0.0, 'ikR.w': 0.0, 'aL.f': 90, 'aR.f': 90, 'aL.o': 40, 'aR.o': 40, 'eL': 90, 'eR': 90,
                           'fR.x': 0.0, 'fR.y': 0.0, 'fR.z': 0.0, 'fR.r': 0, 'fR.w': 0, 'kR': 6, 'hip.p': -60,
                           'hd.w': 0, 'ikL.floor': 0.0, 'ikR.floor': 0.0, 'ikL.flat': 0.0, 'ikR.flat': 0.0})),                 # lie back, arms swing up
-        (1.95, {'ikL.rel': 'Head', 'ikR.rel': 'Head'}),
+        (2.03, {'ikL.rel': 'Head', 'ikR.rel': 'Head'}),
         (2.25, add(HEAD_HANDS, {'hip.p': base['hip.p'], 'fR.z': 0.25, 'fR.y': 0.08, 'fR.x': 0.06, 'fR.r': -30}),),  # hands behind the head
         (2.55, add(CROSS_R, {'hd.p': base['hd.p'] + 4})),                                # cross the leg
         (2.90, base),
@@ -286,9 +286,9 @@ CLIPS = {
                                 '1.05 back stretch, hands on the lower back', '1.65 Idle']},
     'BeachLie_Enter': {'T': 2.9, 'loop': False, 'start': 'idle', 'end': 'beach_lie', 'params': _lie_enter(),
                        'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'enter',
-                       'feet_free': {'Left': [(0.5, 1.1)], 'Right': [(0.5, 2.9)]},
+                       'feet_free': {'Left': [(0.5, 1.1), (1.5, 1.9)], 'Right': [(0.5, 2.9)]},
                        'beats': ['0.3 look down at the towel', '0.75 squat', '1.05-1.25 sit down, hands back (plop)',
-                                 '1.55 sigh at the sky', '1.85 lie back, arms swing up', '2.25 hands behind the head',
+                                 '1.55 sigh at the sky', '1.6-1.85 lie back, arms swing up, left foot scoots 6 cm on the towel', '2.25 hands behind the head',
                                  '2.55 cross the leg', '2.9 base']},
     'BeachLie_Loop': {'T': LIE_T, 'loop': True, 'start': 'beach_lie', 'end': 'beach_lie', 'params': _lie_loop(),
                       'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'loop',
@@ -298,7 +298,7 @@ CLIPS = {
                                 '7.0 base']},
     'BeachLie_Exit': {'T': 3.0, 'loop': False, 'start': 'beach_lie', 'end': 'idle', 'params': _lie_exit(),
                       'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'exit',
-                      'feet_free': {'Right': [(0.0, 0.45)], 'Left': [(1.0, 1.9)]},
+                      'feet_free': {'Right': [(0.0, 0.45)], 'Left': [(1.0, 2.0)]},
                       'beats': ['0.3 uncross the leg', '0.55 hands out from behind the head', '0.85 crunch up',
                                 '1.05-1.35 rock forward into a squat', '1.85 stand up',
                                 '2.05-2.5 brush the sand off the butt (two pats)', '2.95 Idle']},
