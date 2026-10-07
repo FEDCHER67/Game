@@ -287,8 +287,10 @@ class Rig:
         h = self.hr[n]
         return T[p] @ Matrix.Translation(h) @ local_q.to_matrix().to_4x4() @ Matrix.Translation(-h)
 
-    def two_bone(self, T, upper, lower, end, hinge, sgn, p_rest, target, pole, W_end):
-        """Hinge-plane IK in rest-frame terms; keeps each bone's rest roll. Returns (locals, info)."""
+    def two_bone(self, T, upper, lower, end, hinge, sgn, p_rest, target, pole, W_end, soft=0.0):
+        """Hinge-plane IK in rest-frame terms; keeps each bone's rest roll. Returns (locals, info).
+        soft > 0 (v03, arms): beyond (1 - soft) of the full reach the effective distance approaches the full
+        reach exponentially, so the elbow never snaps straight/bent at the reach limit."""
         Wp = T[self.parent[upper]].to_quaternion()
         head = T[self.parent[upper]] @ self.hr[upper]
         a = self.hr[lower] - self.hr[upper]
@@ -304,6 +306,11 @@ class Rig:
         dvec = Vector(target) - head
         d = dvec.length
         rho = math.hypot(A, B)
+        if soft > 0:
+            dmax = math.sqrt(C + rho)
+            ds = (1 - soft) * dmax
+            if d > ds:
+                d = ds + (dmax - ds) * (1 - math.exp(-(d - ds) / (dmax - ds)))
         alpha = math.atan2(B, A)
         arg = (d * d - C) / rho
         clamped = arg > 1 or arg < -1
@@ -382,7 +389,7 @@ class Rig:
                         kp = T[P + knee_side + 'Leg'] @ self.hr[P + knee_side + 'Leg']
                         target = target.lerp(kp + vec(prm['handKneeOff' + t]), kw)
                     (qu, ql, qe), inf = self.two_bone(T, n, P + side + 'ForeArm', P + side + 'Hand', (0, 0, 1), -s,
-                                                      (0, 1, 0), target, prm['pole' + t], Wh)
+                                                      (0, 1, 0), target, prm['pole' + t], Wh, soft=ARM_SOFT)
                     info['arm' + t] = inf
                     loc[n] = fk_up.slerp(qu, w)
                     loc[P + side + 'ForeArm'] = fk_lo.slerp(ql, w)
@@ -450,7 +457,10 @@ DEFAULTS = {
     'handOnKneeL': 0.0, 'handOnKneeR': 0.0, 'handKneeSideL': 'Left', 'handKneeSideR': 'Right',
     'handKneeOffL': (0, 0, 0), 'handKneeOffR': (0, 0, 0),
     'ground': 0.0, 'ground_set': ('torso',),
+    'plantL': 0.0, 'plantR': 0.0,
 }
+ARM_SOFT = 0.08  # soft-IK zone of the arms (fraction of full reach)
+HAND_CLEAR = 0.001  # planted palms: lowest deformed hand vertex this far above z=0 (mesh-measured, v03 fix)
 
 ADDITIVE_TUPLE = ('spine', 'chest', 'neck', 'head', 'clavL', 'clavR', 'armL', 'armR', 'wristL', 'wristR',
                   'hips_pos', 'footL', 'footR', 'handL', 'handR')
@@ -485,6 +495,33 @@ class Clip:
         q['hips_pos'] = (x, y, z)
         return q
 
+    def _plant_hands(self, prm, z):
+        """Planted-hand clearance (v03 fix): the rigid-point contact height misses mixed-weight wrist/cuff
+        vertices (7 mm under in the supine start), so for planted hands (plantL/plantR weight) the hand target
+        height is corrected until the lowest DEFORMED hand vertex sits HAND_CLEAR above the floor."""
+        sides = [t for t in 'LR' if prm.get('plant' + t, 0.0) > 1e-4 and prm['ik' + t] > 1e-4]
+        if not sides:
+            return prm
+        full = dict(prm)
+        for _ in range(5):
+            d, _, _ = self.rig.build(self._with_z(full, z))
+            lows = self.rig.region_lows(d)
+            done = True
+            for t in sides:
+                err = HAND_CLEAR - lows['hand' + t]
+                if abs(err) > 2e-5:
+                    done = False
+                    x, y, h = full['hand' + t]
+                    full['hand' + t] = (x, y, h + err)
+            if done:
+                break
+        prm = dict(prm)
+        for t in sides:  # partial plant weight blends the correction (hand arriving / leaving)
+            w = min(1.0, prm['plant' + t])
+            x, y, h = prm['hand' + t]
+            prm['hand' + t] = (x, y, h + w * (full['hand' + t][2] - h))
+        return prm
+
     def solve(self, step=0.5, lift_regions=('torso', 'armL', 'armR', 'legL', 'legR'), radius_frames=2.0, log=None):
         """Sample every `step` frames. Hips height = authored, blended toward 'grounded' (named regions touch
         z=0 exactly) by the 'ground' weight, then lifted where any non-planted region would penetrate.
@@ -509,6 +546,7 @@ class Clip:
                     if abs(low) < 1e-5:
                         break
                 z = (1 - w) * z0 + w * zg
+            prm = self._plant_hands(prm, z)
             lf = 0.0
             for _ in range(6):
                 d, _, _ = rig.build(self._with_z(prm, z + lf))
