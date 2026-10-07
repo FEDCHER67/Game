@@ -114,7 +114,8 @@ class Rig:
             tj = base[P + s + 'ToeBase'].translation
             an = base[ft].translation
             self.ball[s] = tj.copy()                 # heel lifts bend the shoe at the toe joint: the toes stay exactly put
-            self.heel[s] = Vector((an.x, max(p.y for p in low) - 0.012, 0.0))
+            hp = max(low, key=lambda p: p.y)
+            self.heel[s] = Vector((an.x, hp.y - 0.012, min(p.z for p in low if p.y > hp.y - 0.03)))   # real heel sole height
             self.ankle_g[s] = Vector((an.x, an.y, 0.0))
         # hand reach points in the Hand bone's rest-relative frame (offset from the wrist, base pose)
         self.hand_pts = {}
@@ -177,7 +178,7 @@ class Rig:
         feet = {s: self.foot_matrix(s, sgn, p) for s, _, sgn in SIDES}
         dz_extra = 0.0
         info = {}
-        for it in range(4):
+        for it in range(10):
             out, dz, over = self._body(p, q, feet, dz_extra)
             if not contact or (g('gnd') <= 0 and g('wall') <= 0 and not g('lift')):
                 break
@@ -362,6 +363,8 @@ class Rig:
             if gaps:
                 gap = min(gaps)                       # > 0: floating, < 0: penetrating
                 gw = p.get('gnd', 0.0)
+                margin = 0.004 * (1.0 - min(gw, 1.0))      # lift-only moves keep a few mm (keys are linear between)
+                gap -= margin
                 want = -gap * gw if gap > 0 else -gap
                 dz = want
         dy = 0.0

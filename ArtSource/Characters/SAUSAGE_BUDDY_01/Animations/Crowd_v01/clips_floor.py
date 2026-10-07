@@ -90,7 +90,7 @@ def _sit_loop():
 def _sit_enter():
     base = sit_base()
     reach = {'ikL.w': 1.0, 'ikR.w': 1.0, 'ikL.rel': '', 'ikR.rel': '', 'ikL.pt': 'palm', 'ikR.pt': 'palm',
-             'ikL.x': 0.26, 'ikR.x': 0.26, 'ikL.y': 0.24, 'ikR.y': 0.24, 'ikL.z': 0.47, 'ikR.z': 0.47,
+             'ikL.x': 0.26, 'ikR.x': 0.26, 'ikL.y': 0.24, 'ikR.y': 0.24, 'ikL.z': 0.492, 'ikR.z': 0.492,
              'aL.f': -30, 'aR.f': -30, 'aL.o': 20, 'aR.o': 20, 'eL': 20, 'eR': 20, 'wL.f': -60, 'wR.f': -60, 'eL.t': -60, 'eR.t': -60,
              'fiL': 0.1, 'fiR': 0.1, 'ikL.floor': 1.0, 'ikR.floor': 1.0, 'ikL.flat': 1.0, 'ikR.flat': 1.0}
     k = keys(
@@ -152,13 +152,13 @@ HEAD_HANDS = {'ikL.w': 1.0, 'ikR.w': 1.0, 'ikL.rel': 'Head', 'ikR.rel': 'Head', 
               'ikL.x': 0.10, 'ikR.x': 0.10, 'ikL.y': 0.10, 'ikR.y': 0.10, 'ikL.z': 1.47, 'ikR.z': 1.47,
               'aL.f': 150, 'aR.f': 150, 'aL.o': 55, 'aR.o': 55, 'eL': 135, 'eR': 135, 'eL.t': 0, 'eR.t': 0,
               'wL.f': 10, 'wR.f': 10, 'fiL': 0.3, 'fiR': 0.3}
-CROSS_R = {'fR.x': -0.265, 'fR.y': 0.066, 'fR.z': 0.349, 'fR.r': -40, 'fR.w': 30, 'kR': 40}   # ankle over the left knee
+CROSS_R = {'fR.x': -0.292, 'fR.y': 0.039, 'fR.z': 0.338, 'fR.r': -40, 'fR.w': 30, 'kR': 40}   # ankle over the left knee
 
 
 def lie_base():
     return add(HEAD_HANDS, CROSS_R, {'hip.free': 1.0, 'lift': 1.0, 'gnd': 1.0, 'shin.free': 0.0,
                                      'hip.y': 0.42, 'hip.z': -0.70, 'hip.p': -64, 's1.p': -5, 's2.p': -1, 's3.p': 0,
-                                     'nk.p': 8, 'hd.p': 6, 'fL.y': 0.06, 'fL.x': 0.03, 'kL': 6})
+                                     'nk.p': 8, 'hd.p': 6, 'kL': 6})
 
 
 LIE_T = 7.0
@@ -241,8 +241,8 @@ def _lie_exit():
         (0.85, {'hip.p': -20, 's1.p': 14, 's2.p': 14, 's3.p': 10, 'nk.p': 10, 'hd.p': 10, 'aL.f': 75, 'aR.f': 75,
                 'aL.o': 6, 'aR.o': 6, 'eL': 15, 'eR': 15, 'hip.y': 0.34}),                # crunch up, arms forward
         (1.05, {'hip.p': -5, 's1.p': 20, 's2.p': 16, 'hd.p': 2, 'nk.p': 2}),              # rock...
-        (1.35, {'gnd': 0.0, 'hip.y': 0.08, 'hip.z': -0.40, 'hip.p': 28, 's1.p': 10, 's2.p': 6, 's3.p': 2, 'hd.p': -10,
-                'aL.f': 70, 'aR.f': 70, 'kL': 12, 'kR': 12, 'fL.y': 0.0, 'fL.x': 0.0}),  # ...forward into a squat
+        (1.35, {'gnd': 0.0, 'hip.y': 0.08, 'hip.z': -0.37, 'hip.p': 28, 's1.p': 10, 's2.p': 6, 's3.p': 2, 'hd.p': -10,
+                'aL.f': 70, 'aR.f': 70, 'kL': 12, 'kR': 12}),  # ...forward into a squat
         (1.85, {'hip.y': 0.0, 'hip.z': -0.06, 'hip.p': 8, 's1.p': 4, 's2.p': 3, 's3.p': 0, 'hd.p': -4, 'aL.f': 10,
                 'aR.f': 10, 'aL.o': 4, 'aR.o': 4, 'eL': 20, 'eR': 20, 'kL': 2, 'kR': 2}),   # stand up
         (2.05, {'ikL.rel': 'Hips', 'ikR.rel': 'Hips', 'ikL.pt': 'palm', 'ikR.pt': 'palm', 'ikL.floor': 0.0,
@@ -285,9 +285,9 @@ CLIPS = {
                                 '1.05 back stretch, hands on the lower back', '1.65 Idle']},
     'BeachLie_Enter': {'T': 2.9, 'loop': False, 'start': 'idle', 'end': 'beach_lie', 'params': _lie_enter(),
                        'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'enter',
-                       'feet_free': {'Left': [(0.5, 1.1), (1.5, 1.9)], 'Right': [(0.5, 2.9)]},
+                       'feet_free': {'Left': [(0.5, 1.1)], 'Right': [(0.5, 2.9)]},
                        'beats': ['0.3 look down at the towel', '0.75 squat', '1.05-1.25 sit down, hands back (plop)',
-                                 '1.55 sigh at the sky', '1.6-1.85 lie back, arms swing up, left foot scoots 6 cm on the towel', '2.25 hands behind the head',
+                                 '1.55 sigh at the sky', '1.6-1.95 lie back, arms swing up', '2.25 hands behind the head',
                                  '2.55 cross the leg', '2.9 base']},
     'BeachLie_Loop': {'T': LIE_T, 'loop': True, 'start': 'beach_lie', 'end': 'beach_lie', 'params': _lie_loop(),
                       'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'loop',
@@ -297,7 +297,7 @@ CLIPS = {
                                 '7.0 base']},
     'BeachLie_Exit': {'T': 3.0, 'loop': False, 'start': 'beach_lie', 'end': 'idle', 'params': _lie_exit(),
                       'setup': [towel_setup], 'props': TOWEL_PROPS, 'views': BEACH_VIEWS, 'activity': 'BeachLie', 'role': 'exit',
-                      'feet_free': {'Right': [(0.0, 0.45)], 'Left': [(1.0, 2.0)]},
+                      'feet_free': {'Right': [(0.0, 0.45)], 'Left': [(1.0, 1.9)]},
                       'beats': ['0.3 uncross the leg', '0.55 hands out from behind the head', '0.85 crunch up',
                                 '1.05-1.35 rock forward into a squat', '1.85 stand up',
                                 '2.05-2.5 brush the sand off the butt (two pats)', '2.95 Idle']},

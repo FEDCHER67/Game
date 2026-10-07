@@ -52,7 +52,9 @@ def params(t):
     for side, off, sgn in (('L', 0.0, 1), ('R', 0.5, -1)):
         y, z, roll, tf = foot((ph + off) % 1.0)
         p['f%s.y' % side] = y - BALL0_Y
-        p['f%s.z' % side] = z
+        # ~1.5 mm clearance while the heel is up past 15 deg: half-frame keys interpolate linearly, which lets
+        # a fast toe-joint roll dip the sole ~1.5 mm between keys
+        p['f%s.z' % side] = z + 0.0016 * min(1.0, max(0.0, (roll - 12.0) / 12.0))
         p['f%s.r' % side] = roll
         p['f%s.tf' % side] = tf
         p['f%s.x' % side] = -0.035          # narrow track (feet under the body)
