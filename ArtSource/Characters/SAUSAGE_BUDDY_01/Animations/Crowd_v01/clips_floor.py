@@ -96,8 +96,8 @@ def _sit_enter():
              'fiL': 0.1, 'fiR': 0.1, 'ikL.floor': 1.0, 'ikR.floor': 1.0}
     k = keys(
         (0.0, {'hip.free': 1.0, 'lift': 1.0, 'ikL.rel': '', 'ikR.rel': '', 'ikL.pt': 'palm', 'ikR.pt': 'palm'}),
-        (0.30, {'hd.w': -48, 'nk.w': -10, 's3.w': -12, 's2.w': -6, 'hd.p': 6, 'hip.z': -0.012}),   # glance back at the bench
-        (0.50, {'hd.w': -20, 'nk.w': -4, 's3.w': -4, 's2.w': 0, 'aL.f': -10, 'aR.f': -10, 'aL.o': 10, 'aR.o': 10}),
+        (0.30, {'hd.w': -62, 'nk.w': -14, 's3.w': -16, 's2.w': -9, 'hip.w': -4, 'hd.p': 8, 'hip.z': -0.012}),   # glance back at the bench
+        (0.50, {'hd.w': -20, 'nk.w': -4, 's3.w': -4, 's2.w': 0, 'hip.w': 0, 'aL.f': -10, 'aR.f': -10, 'aL.o': 10, 'aR.o': 10}),
         (0.80, add(reach, {'ikL.w': 0.4, 'ikR.w': 0.4, 'hd.w': 0, 'nk.w': 0, 's3.w': 0, 'hip.y': 0.17, 'hip.z': -0.20,
                            'hip.p': 18, 's1.p': 10, 's2.p': 8, 's3.p': 4, 'hd.p': -6, 'kL': 8, 'kR': 8})),  # bend, reach back
         (1.00, {'ikL.w': 1.0, 'ikR.w': 1.0, 'hip.y': 0.27, 'hip.z': -0.27, 'hip.p': 12, 's1.p': 10, 's2.p': 10,
