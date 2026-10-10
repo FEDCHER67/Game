@@ -5,11 +5,23 @@ Stopped on request at a logical point. **`Walk_v03` is iteration 1 of the new wa
 validated. It has one known 1.3 mm contact defect and has had one visual review pass (stills and contact
 sheet), not the planned 2-3 motion iterations. The next revision must be **`Walk_v04`**: never overwrite v03.
 
+> **Update 2026-10-10: `Walk_v04` (iteration 2) is done; see `README.md`.** It fixes items 1-4 of section 4
+> (marching knee, crouch, indistinct up, 1.3 mm skim -> 0.73 mm, all validation checks pass), with 3 render
+> review passes and close-ups of hand/belly and the shoe bend (item 5). Same timing, in place, exact loop, same
+> 65 bones, same FBX/Unity settings. Built in the cloud without LFS, so only text was committed:
+> `walk_v04_motion.py`, `build_walk_v04.py` (use it instead of `build_walk_v03.py` in section 6),
+> `review_meshes_v04.py` (no-LFS review meshes), `review_sheet_v04.py`, `build_report_v04.json`,
+> `validation_v04_jsonmode.json`. `Walk_v04.blend/.fbx`, blend-mode `validation_v04.json` and the previews must be
+> built locally with the README commands. Still open: real-time look at the MP4s, items 6-8, Unity (step 5 of section 5).
+> The next revision is `Walk_v05`.
+
 ## 1. Files in this folder
 
 | File | What |
 | --- | --- |
-| `walk_v03_motion.py` | **The motion design.** All parameters at the top; pure maths, no file I/O. |
+| `walk_v04_motion.py`, `build_walk_v04.py` | **Walk_v04** motion and build (current). `README.md` lists the changes, numbers and review passes. |
+| `review_meshes_v04.py`, `review_sheet_v04.py` | No-LFS review meshes (procedural A/B v04 rebuild, shoes verified against `shoe_soles_v04.json`) and Pillow review sheets/onion skins. |
+| `walk_v03_motion.py` | **The motion design (v03).** All parameters at the top; pure maths, no file I/O. |
 | `build_walk_v03.py` | Builds the action and saves a blend. `--source blend` (A v04 .blend, keeps meshes) or `--source json` (no LFS). |
 | `export_walk_v03.py` | Blend -> animation-only FBX (same settings as Walk_v02; rest-pose bind). |
 | `validate_walk_v03.py` | Writes `validation_<rev>.json` (checks in section 4). `--source blend` or `--source json`. |
@@ -101,7 +113,7 @@ Judged from the contact sheet and a low-res filmstrip only. The MP4s were render
 Windows (local, Git Bash), from this folder:
 ```
 BL="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
-"$BL" -b --factory-startup --python build_walk_v03.py -- --out Walk_v04.blend --report build_report_v04.json
+"$BL" -b --factory-startup --python build_walk_v04.py -- --out Walk_v04.blend --report build_report_v04.json
 "$BL" -b --factory-startup --python export_walk_v03.py -- --blend Walk_v04.blend --fbx Walk_v04.fbx
 "$BL" -b --factory-startup --python validate_walk_v03.py -- --rev v04
 "$BL" -b --factory-startup --python render_walk_v03.py -- --blend Walk_v04.blend --out Previews/frames_v04 --samples 16 --res 640 720
@@ -109,7 +121,7 @@ python make_previews_v03.py --frames Previews/frames_v04 --stem Walk_v04
 ```
 Cloud without Git LFS (Blender 5.2.x on PATH). Only `.py` and `.json` files are needed:
 ```
-blender -b --factory-startup --python build_walk_v03.py -- --source json --out Walk_v04.blend
+blender -b --factory-startup --python build_walk_v04.py -- --source json --out Walk_v04.blend
 blender -b --factory-startup --python export_walk_v03.py -- --blend Walk_v04.blend --fbx Walk_v04.fbx
 blender -b --factory-startup --python validate_walk_v03.py -- --rev v04 --source json
 blender -b --factory-startup --python rebuild_rig_from_json.py            # optional: rig self-check
