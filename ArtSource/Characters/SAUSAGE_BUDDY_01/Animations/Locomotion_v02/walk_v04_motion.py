@@ -42,7 +42,7 @@ T_FLAT = 0.07                   # phase: forefoot slap ends the heel roll (1.4 f
 T_HEEL_OFF = 0.27               # heel starts to peel
 T_TIP = 0.49                    # toe starts to roll over its tip
 T_OFF = 0.585                   # toe leaves the ground (double support 0.085 = 1.7 frames)
-BALL_END = 45.0                 # shoe bend at the ball at lift-off, deg
+BALL_END = 42.0                 # shoe bend at the ball at lift-off, deg
 BALL_POWER = 1.7                # heel peel accelerates
 TIP_END = 13.0                  # roll over the toe tip before lift-off, deg
 TRACK = 0.092                   # ankle |x| on the ground
@@ -63,7 +63,7 @@ LAND_VZ = -0.30                 # m/s, heel plants with a small downward accent 
 
 # ----------------------------------------------------------------------------- pelvis
 # Hips height per step (u = 0 contact, ~0.17 down, ~0.5 passing, ~0.75 up), normalised -1..1.
-BOB_KEYS = [(0.00, 0.50), (0.18, -1.00), (0.45, -0.05), (0.78, 1.00)]
+BOB_KEYS = [(0.00, 0.35), (0.20, -1.00), (0.46, -0.05), (0.78, 1.00)]
 BOB_CENTER = -0.042             # m, offset of the Hips from rest (legs stay bent)
 BOB_HALF = 0.033                # m, half of the peak-to-peak bounce
 SWAY = 0.022                    # m, hips over the support foot

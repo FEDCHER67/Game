@@ -107,7 +107,7 @@ action['stride_m'] = W.TRAVEL
 action['step_m'] = W.TRAVEL / 2
 action['stance_fraction'] = W.T_OFF
 action['heel_strike_phase_left_right'] = [0.0, 0.5]
-action['authoring'] = ('Walk v03: original key-curve cartoon walk on the Buddy v04 skeleton; heel-toe roll '
+action['authoring'] = ('Walk v04: original key-curve cartoon walk on the Buddy v04 skeleton; heel-toe roll '
                        'over the real sole hull, hinge IK, overlapping spine/head/arms; no source motion reused')
 rig.animation_data.action = action
 
