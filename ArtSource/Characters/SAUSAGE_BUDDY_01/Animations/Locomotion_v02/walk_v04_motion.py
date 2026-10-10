@@ -1,4 +1,4 @@
-"""Sausage Buddy Walk v03 - motion design (maths only; no file I/O, no keying).
+"""Sausage Buddy Walk v04 - motion design (maths only; no file I/O, no keying).
 
 Frame: the character faces -Y, left = +X, Z up, metres. The cycle is in place: the ground
 moves toward +Y at SPEED. Cycle phase t in [0, 1): t = 0 is the LEFT heel strike and
@@ -55,6 +55,8 @@ SWING_TOE = 8.0                 # deg, extra toe-down dangle early in the swing
 SWING_TOE_AB = (2.0, 4.0)
 TOE_SPRING = 1.0                # fraction of the toe-bend rate carried into the swing (1 = C1 lift-off)
 SWING_INWARD = 0.012            # m, swing foot passes slightly toward the midline
+LIFT_VZ = 0.30                  # m/s, toe pops off the floor at lift-off (v04: removes the 1.3 mm toe skim)
+LAND_VZ = -0.30                 # m/s, heel plants with a small downward accent at the strike
 
 # ----------------------------------------------------------------------------- pelvis
 # Hips height per step (u = 0 contact, ~0.17 down, ~0.5 passing, ~0.75 up), normalised -1..1.
@@ -301,6 +303,11 @@ class Foot:
         D = 1.0 - T_OFF
         (p0, a0, k0), (dp0, da0, dk0) = self.lift0, self.dlift0
         (p1, a1, k1), (dp1, da1, dk1) = self.land1, self.dland1
+        # Vertical accents (m/s -> per unit phase): the swing leaves and meets the floor with a
+        # little vertical speed instead of grazing it tangentially.
+        dp0, dp1 = dp0.copy(), dp1.copy()
+        dp0.z += LIFT_VZ * CYCLE_S
+        dp1.z += LAND_VZ * CYCLE_S
         # the landing state belongs to the next stance, which starts one cycle later
         p1 = p1.copy()
         ankle = hermite(p0, dp0 * D, p1, dp1 * D, w)
