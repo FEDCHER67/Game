@@ -39,30 +39,33 @@ def frames(n):
 STRIKE_TOE_UP = 24.0            # deg, toe up at heel strike
 STRIKE_RATE = 0.35              # 0 = foot stops turning at contact, 1 = constant rate into the slap
 T_FLAT = 0.07                   # phase: forefoot slap ends the heel roll (1.4 frames)
-T_HEEL_OFF = 0.30               # heel starts to peel
+T_HEEL_OFF = 0.27               # heel starts to peel
 T_TIP = 0.49                    # toe starts to roll over its tip
 T_OFF = 0.585                   # toe leaves the ground (double support 0.085 = 1.7 frames)
-BALL_END = 42.0                 # shoe bend at the ball at lift-off, deg
+BALL_END = 45.0                 # shoe bend at the ball at lift-off, deg
 BALL_POWER = 1.7                # heel peel accelerates
 TIP_END = 13.0                  # roll over the toe tip before lift-off, deg
 TRACK = 0.092                   # ankle |x| on the ground
 TOE_OUT = 7.0                   # deg, feet point slightly outward
 KNEE_OUT = 4.0                  # deg, extra knee splay beyond the toe-out
 Y0 = None                       # flat-foot ankle offset at strike; None = balance leg reach
-SWING_LIFT = 0.075              # m, ankle lift bump in swing (on top of the Hermite path)
-SWING_LIFT_AB = (2.0, 2.6)      # bump exponents: peak at a / (a + b) of the swing
-SWING_TOE = 8.0                 # deg, extra toe-down dangle early in the swing
+SWING_LIFT = 0.020              # m, ankle lift bump in swing (on top of the Hermite path)
+SWING_LIFT_AB = (2.4, 2.0)      # bump exponents: peak at a / (a + b) of the swing
+SWING_TOE = 4.0                 # deg, extra toe-down dangle early in the swing
 SWING_TOE_AB = (2.0, 4.0)
 TOE_SPRING = 1.0                # fraction of the toe-bend rate carried into the swing (1 = C1 lift-off)
 SWING_INWARD = 0.012            # m, swing foot passes slightly toward the midline
+SWING_CARRY_Z = 0.4             # v04: fraction of the toe-roll's upward ankle speed carried into the swing
+SWING_CARRY_PITCH = 0.4         # v04: fraction of the toe-roll's foot pitch rate carried into the swing
+                                # (1.0 = v03: foot whipped on to 77 deg and the ankle rose 14 cm -> marching)
 LIFT_VZ = 0.30                  # m/s, toe pops off the floor at lift-off (v04: removes the 1.3 mm toe skim)
 LAND_VZ = -0.30                 # m/s, heel plants with a small downward accent at the strike
 
 # ----------------------------------------------------------------------------- pelvis
 # Hips height per step (u = 0 contact, ~0.17 down, ~0.5 passing, ~0.75 up), normalised -1..1.
-BOB_KEYS = [(0.00, -0.30), (0.16, -1.00), (0.47, 0.30), (0.74, 1.00)]
-BOB_CENTER = -0.057             # m, offset of the Hips from rest (legs stay bent)
-BOB_HALF = 0.030                # m, half of the peak-to-peak bounce
+BOB_KEYS = [(0.00, 0.50), (0.18, -1.00), (0.45, -0.05), (0.78, 1.00)]
+BOB_CENTER = -0.042             # m, offset of the Hips from rest (legs stay bent)
+BOB_HALF = 0.033                # m, half of the peak-to-peak bounce
 SWAY = 0.022                    # m, hips over the support foot
 SWAY_KEYS = [(0.03, 0.0), (0.28, 1.0)]          # odd: second half mirrored
 PELVIS_YAW = 6.0                # deg, swing-side hip travels forward with the leg
@@ -306,7 +309,8 @@ class Foot:
         # Vertical accents (m/s -> per unit phase): the swing leaves and meets the floor with a
         # little vertical speed instead of grazing it tangentially.
         dp0, dp1 = dp0.copy(), dp1.copy()
-        dp0.z += LIFT_VZ * CYCLE_S
+        dp0.z = SWING_CARRY_Z * dp0.z + LIFT_VZ * CYCLE_S
+        da0 = SWING_CARRY_PITCH * da0
         dp1.z += LAND_VZ * CYCLE_S
         # the landing state belongs to the next stance, which starts one cycle later
         p1 = p1.copy()
