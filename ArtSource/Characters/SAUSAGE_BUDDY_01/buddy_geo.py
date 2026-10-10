@@ -14,8 +14,8 @@ PART_TRIS = {}      # part object name -> triangles, recorded by join() for the 
 LODS = {
     'full': {},
     'crowd': {
-        'head': dict(seg=32, subdiv=0, dome=8), 'nose': dict(seg=16, rings=10), 'ear': dict(seg=12, rings=8),
-        'ear_inner': dict(seg=10, rings=6), 'torso': dict(seg=16, subdiv=0), 'arm': dict(seg=12, subdiv=0),
+        'head': dict(seg=32, subdiv=0, dome=8), 'nose': dict(seg=16, rings=10), 'ear': dict(seg=16, rings=10),
+        'torso': dict(seg=16, subdiv=0), 'arm': dict(seg=12, subdiv=0),
         'palm': dict(seg=20, subdiv=0), 'finger': dict(seg=12, subdiv=0), 'leg': dict(seg=16, subdiv=0),
         'eye': dict(seg=16, rings=10), 'pupil': dict(seg=12, rings=8), 'shine': dict(seg=8, rings=6),
         'brow': dict(seg=6), 'mouth': dict(seg=6),

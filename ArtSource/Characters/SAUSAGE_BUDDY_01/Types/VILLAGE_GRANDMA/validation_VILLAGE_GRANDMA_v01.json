@@ -1,0 +1,316 @@
+{
+  "asset": "SAUSAGE_BUDDY_VILLAGE_GRANDMA_v01",
+  "variant": "VILLAGE_GRANDMA",
+  "height_m": 1.772,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 10382,
+      "vertices": 5561,
+      "materials": [
+        "VILLAGE_GRANDMA_Scarf",
+        "VILLAGE_GRANDMA_Scarf_Dots",
+        "VILLAGE_GRANDMA_Cardigan",
+        "VILLAGE_GRANDMA_Cardigan_Rib",
+        "VILLAGE_GRANDMA_Blouse",
+        "VILLAGE_GRANDMA_Buttons",
+        "VILLAGE_GRANDMA_Skirt",
+        "VILLAGE_GRANDMA_Apron",
+        "VILLAGE_GRANDMA_Apron_Trim",
+        "VILLAGE_GRANDMA_Tights",
+        "VILLAGE_GRANDMA_Shoes",
+        "VILLAGE_GRANDMA_Blush"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.088
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.088,
+      "max": 0.088
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.088
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0627
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Сельская бабка",
+    "group": "Деревня",
+    "body": {},
+    "idle_arm_down_deg": 74.0,
+    "face_defaults": {},
+    "slots": {
+      "VILLAGE_GRANDMA_Scarf": {
+        "default": "#C03834",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Scarf_Dots": {
+        "default": "#F6F2EA",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Cardigan": {
+        "default": "#7A5642",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Cardigan_Rib": {
+        "default": "#684836",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Blouse": {
+        "default": "#EAE4D4",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Buttons": {
+        "default": "#EEE6D6",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Skirt": {
+        "default": "#384A64",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Apron": {
+        "default": "#E8D8A0",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Apron_Trim": {
+        "default": "#C44A40",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Tights": {
+        "default": "#7A5E4A",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Shoes": {
+        "default": "#26262A",
+        "metal": false
+      },
+      "VILLAGE_GRANDMA_Blush": {
+        "default": "#EC847A",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "VILLAGE_GRANDMA_Scarf": "#385EA2",
+        "VILLAGE_GRANDMA_Cardigan": "#626A56",
+        "VILLAGE_GRANDMA_Cardigan_Rib": "#525A48",
+        "VILLAGE_GRANDMA_Skirt": "#5C2A30",
+        "VILLAGE_GRANDMA_Apron": "#DEDED8",
+        "VILLAGE_GRANDMA_Apron_Trim": "#385EA2",
+        "VILLAGE_GRANDMA_Tights": "#5C5652",
+        "VILLAGE_GRANDMA_Shoes": "#3E2A20"
+      },
+      {
+        "VILLAGE_GRANDMA_Scarf": "#E6BC3E",
+        "VILLAGE_GRANDMA_Scarf_Dots": "#C03E34",
+        "VILLAGE_GRANDMA_Cardigan": "#983E44",
+        "VILLAGE_GRANDMA_Cardigan_Rib": "#82343A",
+        "VILLAGE_GRANDMA_Skirt": "#2A2A2E",
+        "VILLAGE_GRANDMA_Apron": "#C6DEC6",
+        "VILLAGE_GRANDMA_Apron_Trim": "#983E44",
+        "VILLAGE_GRANDMA_Tights": "#8E6E56"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 17358,
+  "part_triangles": {
+    "GRANDMA_Apron": 2540,
+    "GRANDMA_Cardigan": 1632,
+    "GRANDMA_Scarf": 1296,
+    "Skin_Head": 1088,
+    "GRANDMA_Galosh_Shoe_Upper": 1000,
+    "GRANDMA_Tights": 752,
+    "GRANDMA_Galosh_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "GRANDMA_Skirt": 512,
+    "Skin_Arm": 480,
+    "GRANDMA_Pocket": 472,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "GRANDMA_ApronPocket": 272,
+    "GRANDMA_Blouse": 254,
+    "GRANDMA_KnotTail": 200,
+    "GRANDMA_ChinBand": 196,
+    "GRANDMA_Knot": 196,
+    "Brow": 168,
+    "Shine": 160,
+    "GRANDMA_DotS": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "GRANDMA_DotB": 110,
+    "Prop_Phone": 108,
+    "GRANDMA_DotT": 50,
+    "GRANDMA_Blush": 36,
+    "GRANDMA_Btn": 32
+  }
+}

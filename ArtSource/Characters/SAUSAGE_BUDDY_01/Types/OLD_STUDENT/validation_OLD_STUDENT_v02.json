@@ -1,0 +1,352 @@
+{
+  "asset": "SAUSAGE_BUDDY_OLD_STUDENT_v02",
+  "variant": "OLD_STUDENT",
+  "height_m": 1.785,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9008,
+      "vertices": 4680,
+      "materials": [
+        "OLD_STUDENT_Hoodie",
+        "OLD_STUDENT_Hoodie_Rib",
+        "OLD_STUDENT_Cords",
+        "OLD_STUDENT_Jeans",
+        "OLD_STUDENT_Jeans_Cuff",
+        "OLD_STUDENT_Socks",
+        "OLD_STUDENT_Shoe_Upper",
+        "OLD_STUDENT_Shoe_Sole",
+        "OLD_STUDENT_Shoe_Lace",
+        "OLD_STUDENT_Beanie",
+        "OLD_STUDENT_Backpack",
+        "OLD_STUDENT_Backpack_Straps",
+        "OLD_STUDENT_Phones",
+        "OLD_STUDENT_Phones_Pad",
+        "OLD_STUDENT_Phones_Plate"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.2065
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.2065,
+      "max": 0.2065
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.2065
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Студент",
+    "group": "Старый город",
+    "body": {},
+    "idle_arm_down_deg": 74.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Surprised": 0.3
+    },
+    "slots": {
+      "OLD_STUDENT_Hoodie": {
+        "default": "#D8AA36",
+        "metal": false
+      },
+      "OLD_STUDENT_Hoodie_Rib": {
+        "default": "#C0962E",
+        "metal": false
+      },
+      "OLD_STUDENT_Cords": {
+        "default": "#F0ECE4",
+        "metal": false
+      },
+      "OLD_STUDENT_Jeans": {
+        "default": "#486494",
+        "metal": false
+      },
+      "OLD_STUDENT_Jeans_Cuff": {
+        "default": "#5E7CAA",
+        "metal": false
+      },
+      "OLD_STUDENT_Socks": {
+        "default": "#E8E6E0",
+        "metal": false
+      },
+      "OLD_STUDENT_Shoe_Upper": {
+        "default": "#ECECE8",
+        "metal": false
+      },
+      "OLD_STUDENT_Shoe_Sole": {
+        "default": "#FAF8F4",
+        "metal": false
+      },
+      "OLD_STUDENT_Shoe_Lace": {
+        "default": "#E6E6E2",
+        "metal": false
+      },
+      "OLD_STUDENT_Beanie": {
+        "default": "#383A40",
+        "metal": false
+      },
+      "OLD_STUDENT_Backpack": {
+        "default": "#36564A",
+        "metal": false
+      },
+      "OLD_STUDENT_Backpack_Straps": {
+        "default": "#222628",
+        "metal": false
+      },
+      "OLD_STUDENT_Phones": {
+        "default": "#EC423A",
+        "metal": false
+      },
+      "OLD_STUDENT_Phones_Pad": {
+        "default": "#28282C",
+        "metal": false
+      },
+      "OLD_STUDENT_Phones_Plate": {
+        "default": "#F0EEE8",
+        "metal": false
+      },
+      "OLD_STUDENT_Can": {
+        "default": "#84DE34",
+        "metal": false
+      },
+      "OLD_STUDENT_Can_Band": {
+        "default": "#1A1A1E",
+        "metal": false
+      },
+      "OLD_STUDENT_Can_Metal": {
+        "default": "#CED0D6",
+        "metal": true
+      }
+    },
+    "colourways": [
+      {
+        "OLD_STUDENT_Hoodie": "#4E7AAC",
+        "OLD_STUDENT_Hoodie_Rib": "#426A98",
+        "OLD_STUDENT_Jeans": "#2A2C34",
+        "OLD_STUDENT_Jeans_Cuff": "#3A3C44",
+        "OLD_STUDENT_Beanie": "#C03E34",
+        "OLD_STUDENT_Backpack": "#3E3E42",
+        "OLD_STUDENT_Shoe_Upper": "#2A2A2E",
+        "OLD_STUDENT_Phones": "#F0F0EC",
+        "OLD_STUDENT_Phones_Plate": "#28282C",
+        "OLD_STUDENT_Can": "#3C8CF0"
+      },
+      {
+        "OLD_STUDENT_Hoodie": "#84A270",
+        "OLD_STUDENT_Hoodie_Rib": "#728E60",
+        "OLD_STUDENT_Jeans": "#98ACC6",
+        "OLD_STUDENT_Jeans_Cuff": "#ACBED4",
+        "OLD_STUDENT_Beanie": "#E8CA7A",
+        "OLD_STUDENT_Backpack": "#983E3E",
+        "OLD_STUDENT_Phones": "#28282C",
+        "OLD_STUDENT_Phones_Plate": "#EC423A",
+        "OLD_STUDENT_Can": "#FA781E",
+        "OLD_STUDENT_Can_Band": "#FAF6EC"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16560,
+  "part_triangles": {
+    "OLD_STUDENT_Hoodie": 2016,
+    "OLD_STUDENT_Hood": 1148,
+    "Skin_Head": 1088,
+    "OLD_STUDENT_Shoe_Upper": 1000,
+    "OLD_STUDENT_Jeans": 880,
+    "STUDENT_Hood": 860,
+    "OLD_STUDENT_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "OLD_STUDENT_Phones_Band": 540,
+    "OLD_STUDENT_Phones_Cup_Cup": 504,
+    "Skin_Arm": 480,
+    "OLD_STUDENT_Beanie": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "OLD_STUDENT_Pocket": 380,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "OLD_STUDENT_Phones_Cup_Plate": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "STUDENT_HoodPouch": 288,
+    "OLD_STUDENT_Socks": 288,
+    "OLD_STUDENT_Lace": 256,
+    "Brow": 168,
+    "Shine": 160,
+    "OLD_STUDENT_Backpack_Bag": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "OLD_STUDENT_Backpack_Pocket": 112,
+    "Prop_Phone": 108,
+    "OLD_STUDENT_Backpack_Strap": 104,
+    "OLD_STUDENT_Cord": 96,
+    "OLD_STUDENT_PocketSlot": 52
+  }
+}

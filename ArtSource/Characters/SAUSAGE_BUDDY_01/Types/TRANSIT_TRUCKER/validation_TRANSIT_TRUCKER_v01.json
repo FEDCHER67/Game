@@ -1,0 +1,351 @@
+{
+  "asset": "SAUSAGE_BUDDY_TRANSIT_TRUCKER_v01",
+  "variant": "TRANSIT_TRUCKER",
+  "height_m": 1.777,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8266,
+      "vertices": 4780,
+      "materials": [
+        "TRANSIT_TRUCKER_Tank",
+        "TRANSIT_TRUCKER_Shirt",
+        "TRANSIT_TRUCKER_Check",
+        "TRANSIT_TRUCKER_Shirt_Roll",
+        "TRANSIT_TRUCKER_Jeans",
+        "TRANSIT_TRUCKER_Belt",
+        "TRANSIT_TRUCKER_Buckle",
+        "TRANSIT_TRUCKER_Socks",
+        "TRANSIT_TRUCKER_Slides",
+        "TRANSIT_TRUCKER_Cap",
+        "TRANSIT_TRUCKER_Cap_Peak",
+        "TRANSIT_TRUCKER_Hair",
+        "TRANSIT_TRUCKER_Mustache",
+        "TRANSIT_TRUCKER_Stubble"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props": {
+      "triangles": 256,
+      "vertices": 134,
+      "materials": [
+        "TRANSIT_TRUCKER_Thermos_Cap",
+        "TRANSIT_TRUCKER_Thermos_Steel",
+        "TRANSIT_TRUCKER_Thermos"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0723
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0723,
+      "max": 0.0723
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0723
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0698
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Дальнобой",
+    "group": "Переход",
+    "body": {
+      "belly": 1.0
+    },
+    "idle_arm_down_deg": 66.0,
+    "face_defaults": {
+      "Happy": 0.25,
+      "Blink": 0.3
+    },
+    "slots": {
+      "TRANSIT_TRUCKER_Shirt": {
+        "default": "#B2282C",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Check": {
+        "default": "#281E1E",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Shirt_Roll": {
+        "default": "#A02428",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Tank": {
+        "default": "#EEECE4",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Jeans": {
+        "default": "#3E5482",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Belt": {
+        "default": "#281E18",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Buckle": {
+        "default": "#C4C4CA",
+        "metal": true
+      },
+      "TRANSIT_TRUCKER_Socks": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Slides": {
+        "default": "#282A2E",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Cap": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Cap_Peak": {
+        "default": "#283C78",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Hair": {
+        "default": "#3C322A",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Mustache": {
+        "default": "#3C322A",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Stubble": {
+        "default": "#504640",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Thermos": {
+        "default": "#3C7850",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Thermos_Cap": {
+        "default": "#28282C",
+        "metal": false
+      },
+      "TRANSIT_TRUCKER_Thermos_Steel": {
+        "default": "#C8CACE",
+        "metal": true
+      }
+    },
+    "colourways": [
+      {
+        "TRANSIT_TRUCKER_Shirt": "#285A96",
+        "TRANSIT_TRUCKER_Shirt_Roll": "#224E84",
+        "TRANSIT_TRUCKER_Cap_Peak": "#B2282C",
+        "TRANSIT_TRUCKER_Thermos": "#C83C32"
+      },
+      {
+        "TRANSIT_TRUCKER_Shirt": "#3C6E3C",
+        "TRANSIT_TRUCKER_Shirt_Roll": "#346034",
+        "TRANSIT_TRUCKER_Jeans": "#282A32",
+        "TRANSIT_TRUCKER_Cap": "#FAC828",
+        "TRANSIT_TRUCKER_Cap_Peak": "#282A32"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16074,
+  "part_triangles": {
+    "TRANSIT_TRUCKER_Shirt": 1452,
+    "TRANSIT_TRUCKER_Hair": 1152,
+    "Skin_Head": 1088,
+    "TRANSIT_TRUCKER_Foot_Upper": 1000,
+    "TRANSIT_TRUCKER_Jeans": 816,
+    "TRANSIT_TRUCKER_Foot_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "TRANSIT_TRUCKER_Strap": 408,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "TRANSIT_TRUCKER_Tank": 368,
+    "TRANSIT_TRUCKER_Stubble_Dot": 360,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "TRANSIT_TRUCKER_Collar": 296,
+    "Skin_Nose": 288,
+    "TRANSIT_TRUCKER_Socks": 288,
+    "TRANSIT_TRUCKER_Cap_Crown": 288,
+    "TRANSIT_TRUCKER_Belt": 260,
+    "TRANSIT_TRUCKER_Mustache": 240,
+    "TRANSIT_TRUCKER_ShirtEdge": 216,
+    "TRANSIT_TRUCKER_Cap_Peak": 216,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "TRANSIT_TRUCKER_Tank_Strap": 104,
+    "TRANSIT_TRUCKER_Cap_Button": 100,
+    "TRANSIT_TRUCKER_Thermos_Lid": 96,
+    "TRANSIT_TRUCKER_Thermos_Body": 96,
+    "TRANSIT_TRUCKER_Thermos_Ring": 64,
+    "TRANSIT_TRUCKER_Buckle": 12
+  }
+}

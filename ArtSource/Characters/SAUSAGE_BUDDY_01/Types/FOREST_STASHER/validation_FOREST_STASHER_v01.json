@@ -1,0 +1,352 @@
+{
+  "asset": "SAUSAGE_BUDDY_FOREST_STASHER_v01",
+  "variant": "FOREST_STASHER",
+  "height_m": 1.789,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9332,
+      "vertices": 4825,
+      "materials": [
+        "FOREST_STASHER_Hoodie",
+        "FOREST_STASHER_Hoodie_Rib",
+        "FOREST_STASHER_Pants",
+        "FOREST_STASHER_Pants_Rib",
+        "FOREST_STASHER_Socks",
+        "FOREST_STASHER_Shoe_Upper",
+        "FOREST_STASHER_Shoe_Sole",
+        "FOREST_STASHER_Shoe_Lace",
+        "FOREST_STASHER_Shades_Frame",
+        "FOREST_STASHER_Shades_Lens",
+        "FOREST_STASHER_Backpack",
+        "FOREST_STASHER_Backpack_Straps"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props": {
+      "triangles": 424,
+      "vertices": 224,
+      "materials": [
+        "FOREST_STASHER_Phone",
+        "FOREST_STASHER_Screen",
+        "FOREST_STASHER_Tape_Blue",
+        "FOREST_STASHER_Tape_Red",
+        "FOREST_STASHER_Tape_Yellow"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.157
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.157,
+      "max": 0.157
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.157
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0337,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Закладчик",
+    "group": "Лесная полоса",
+    "body": {
+      "thin": 0.6
+    },
+    "idle_arm_down_deg": 74.0,
+    "face_defaults": {
+      "Worried": 0.35,
+      "Blink": 0.15
+    },
+    "slots": {
+      "FOREST_STASHER_Hoodie": {
+        "default": "#222428",
+        "metal": false
+      },
+      "FOREST_STASHER_Hoodie_Rib": {
+        "default": "#1A1C20",
+        "metal": false
+      },
+      "FOREST_STASHER_Pants": {
+        "default": "#1E2024",
+        "metal": false
+      },
+      "FOREST_STASHER_Pants_Rib": {
+        "default": "#181A1E",
+        "metal": false
+      },
+      "FOREST_STASHER_Socks": {
+        "default": "#E6E6E2",
+        "metal": false
+      },
+      "FOREST_STASHER_Shoe_Upper": {
+        "default": "#1C1C1E",
+        "metal": false
+      },
+      "FOREST_STASHER_Shoe_Sole": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "FOREST_STASHER_Shoe_Lace": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "FOREST_STASHER_Shades_Frame": {
+        "default": "#101012",
+        "metal": false
+      },
+      "FOREST_STASHER_Shades_Lens": {
+        "default": "#0C0E12",
+        "metal": false
+      },
+      "FOREST_STASHER_Backpack": {
+        "default": "#343A32",
+        "metal": false
+      },
+      "FOREST_STASHER_Backpack_Straps": {
+        "default": "#1E201E",
+        "metal": false
+      },
+      "FOREST_STASHER_Phone": {
+        "default": "#141416",
+        "metal": false
+      },
+      "FOREST_STASHER_Screen": {
+        "default": "#78C8FF",
+        "metal": false
+      },
+      "FOREST_STASHER_Tape_Blue": {
+        "default": "#285AC8",
+        "metal": false
+      },
+      "FOREST_STASHER_Tape_Red": {
+        "default": "#C82828",
+        "metal": false
+      },
+      "FOREST_STASHER_Tape_Yellow": {
+        "default": "#F0C828",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "FOREST_STASHER_Hoodie": "#343E2E",
+        "FOREST_STASHER_Hoodie_Rib": "#2A3226",
+        "FOREST_STASHER_Pants": "#2C2E28",
+        "FOREST_STASHER_Pants_Rib": "#242620",
+        "FOREST_STASHER_Backpack": "#1E1E22"
+      },
+      {
+        "FOREST_STASHER_Hoodie": "#3C4254",
+        "FOREST_STASHER_Hoodie_Rib": "#323646",
+        "FOREST_STASHER_Pants": "#22242A",
+        "FOREST_STASHER_Shoe_Upper": "#F0F0EC",
+        "FOREST_STASHER_Shoe_Sole": "#28282A",
+        "FOREST_STASHER_Backpack": "#782824"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16732,
+  "part_triangles": {
+    "FOREST_STASHER_Hoodie": 2016,
+    "FOREST_STASHER_Hood": 1440,
+    "Skin_Head": 1088,
+    "FOREST_STASHER_Shoe_Upper": 1000,
+    "FOREST_STASHER_Pants": 880,
+    "FOREST_STASHER_Shoe_Sole": 672,
+    "FOREST_STASHER_HoodRim": 656,
+    "FOREST_STASHER_Shades_Rim": 624,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "FOREST_STASHER_Shades_Lens": 560,
+    "Skin_Arm": 480,
+    "FOREST_STASHER_Bundle": 400,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "FOREST_STASHER_Pocket": 380,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "FOREST_STASHER_Socks": 288,
+    "FOREST_STASHER_Lace": 256,
+    "Brow": 168,
+    "Shine": 160,
+    "FOREST_STASHER_Backpack_Bag": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "FOREST_STASHER_Backpack_Pocket": 112,
+    "Prop_Phone": 108,
+    "FOREST_STASHER_Backpack_Strap": 104,
+    "FOREST_STASHER_Shades_Temple": 96,
+    "FOREST_STASHER_PocketSlot": 52,
+    "FOREST_STASHER_Shades_Bridge": 36,
+    "FOREST_STASHER_Phone": 12,
+    "FOREST_STASHER_Screen": 12
+  }
+}

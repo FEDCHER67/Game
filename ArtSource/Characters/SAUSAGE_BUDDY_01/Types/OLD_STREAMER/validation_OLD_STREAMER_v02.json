@@ -1,0 +1,362 @@
+{
+  "asset": "SAUSAGE_BUDDY_OLD_STREAMER_v02",
+  "variant": "OLD_STREAMER",
+  "height_m": 1.793,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9828,
+      "vertices": 5097,
+      "materials": [
+        "OLD_STREAMER_Hoodie",
+        "OLD_STREAMER_Hoodie_Rib",
+        "OLD_STREAMER_Print",
+        "OLD_STREAMER_Pants",
+        "OLD_STREAMER_Pants_Rib",
+        "OLD_STREAMER_Socks",
+        "OLD_STREAMER_Slides",
+        "OLD_STREAMER_Hair",
+        "OLD_STREAMER_Headset",
+        "OLD_STREAMER_Headset_Pad",
+        "OLD_STREAMER_Headset_Glow",
+        "OLD_STREAMER_Mic",
+        "OLD_STREAMER_EyeBags"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_RightHand": {
+      "triangles": 752,
+      "vertices": 388,
+      "materials": [
+        "OLD_STREAMER_Stick",
+        "OLD_STREAMER_RingLight",
+        "OLD_STREAMER_Phone",
+        "OLD_STREAMER_Screen"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.2065
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.2065,
+      "max": 0.2065
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.2065
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Стример (редко)",
+    "group": "Старый город",
+    "body": {},
+    "idle_arm_down_deg": 74.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {
+      "Surprised": 0.4,
+      "Happy": 0.25
+    },
+    "slots": {
+      "OLD_STREAMER_Hoodie": {
+        "default": "#282A34",
+        "metal": false
+      },
+      "OLD_STREAMER_Hoodie_Rib": {
+        "default": "#1E2028",
+        "metal": false
+      },
+      "OLD_STREAMER_Print": {
+        "default": "#FA4296",
+        "metal": false
+      },
+      "OLD_STREAMER_Pants": {
+        "default": "#7E828C",
+        "metal": false
+      },
+      "OLD_STREAMER_Pants_Rib": {
+        "default": "#686C76",
+        "metal": false
+      },
+      "OLD_STREAMER_Socks": {
+        "default": "#F4F2EC",
+        "metal": false
+      },
+      "OLD_STREAMER_Slides": {
+        "default": "#22242A",
+        "metal": false
+      },
+      "OLD_STREAMER_Hair": {
+        "default": "#42322A",
+        "metal": false
+      },
+      "OLD_STREAMER_EyeBags": {
+        "default": "#A87E9C",
+        "metal": false
+      },
+      "OLD_STREAMER_Headset": {
+        "default": "#1C1C20",
+        "metal": false
+      },
+      "OLD_STREAMER_Headset_Pad": {
+        "default": "#34343A",
+        "metal": false
+      },
+      "OLD_STREAMER_Headset_Glow": {
+        "default": "#46F082",
+        "metal": false
+      },
+      "OLD_STREAMER_Mic": {
+        "default": "#161618",
+        "metal": false
+      },
+      "OLD_STREAMER_Stick": {
+        "default": "#1E1E22",
+        "metal": false
+      },
+      "OLD_STREAMER_RingLight": {
+        "default": "#FCFAF0",
+        "metal": false
+      },
+      "OLD_STREAMER_Phone": {
+        "default": "#16161A",
+        "metal": false
+      },
+      "OLD_STREAMER_Screen": {
+        "default": "#78C8FF",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "OLD_STREAMER_Hoodie": "#E8E8E4",
+        "OLD_STREAMER_Hoodie_Rib": "#D2D2CE",
+        "OLD_STREAMER_Print": "#28AAF0",
+        "OLD_STREAMER_Pants": "#282A32",
+        "OLD_STREAMER_Pants_Rib": "#1E2028",
+        "OLD_STREAMER_Headset": "#EEEEEC",
+        "OLD_STREAMER_Headset_Glow": "#28AAF0",
+        "OLD_STREAMER_Slides": "#E8403C"
+      },
+      {
+        "OLD_STREAMER_Hoodie": "#603EB0",
+        "OLD_STREAMER_Hoodie_Rib": "#503296",
+        "OLD_STREAMER_Print": "#FADE3C",
+        "OLD_STREAMER_Pants": "#363A42",
+        "OLD_STREAMER_Pants_Rib": "#2A2E36",
+        "OLD_STREAMER_Headset_Glow": "#FA46A0",
+        "OLD_STREAMER_Socks": "#FADE3C",
+        "OLD_STREAMER_Hair": "#E85C8C"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 17556,
+  "part_triangles": {
+    "OLD_STREAMER_Hoodie": 2016,
+    "Skin_Head": 1088,
+    "OLD_STREAMER_Hair": 1024,
+    "OLD_STREAMER_Foot_Upper": 1000,
+    "OLD_STREAMER_Pants": 880,
+    "OLD_STREAMER_Hood": 860,
+    "OLD_STREAMER_Foot_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "OLD_STREAMER_Headset_Cup_Cup": 504,
+    "Skin_Arm": 480,
+    "OLD_STREAMER_Prop_Ring": 448,
+    "OLD_STREAMER_Heart": 436,
+    "OLD_STREAMER_Strap": 408,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "OLD_STREAMER_Pocket": 380,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "OLD_STREAMER_Headset_Cup_Plate": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "OLD_STREAMER_HoodPouch": 288,
+    "OLD_STREAMER_Socks": 288,
+    "OLD_STREAMER_EyeBag": 248,
+    "OLD_STREAMER_Headset_Band": 204,
+    "Brow": 168,
+    "OLD_STREAMER_Prop_Gimbal": 168,
+    "OLD_STREAMER_Headset_MicTip": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "OLD_STREAMER_Headset_Boom": 80,
+    "OLD_STREAMER_PocketSlot": 52,
+    "OLD_STREAMER_Prop_Handle": 48,
+    "OLD_STREAMER_Prop_Rod": 32,
+    "OLD_STREAMER_Prop_Arm": 32,
+    "OLD_STREAMER_Prop_Phone": 12,
+    "OLD_STREAMER_Prop_Screen": 12
+  }
+}

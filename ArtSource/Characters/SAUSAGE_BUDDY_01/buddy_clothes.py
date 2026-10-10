@@ -1,4 +1,5 @@
-"""Variant outfits A/B/C for the Sausage Buddy, following the owner's reference image."""
+"""Variant outfits A/B/C for the Sausage Buddy, following the owner's reference image, and the plain BASE outfit
+(TASK-000241): the generic NPC that later types are recoloured / re-dressed from."""
 import math
 import bpy
 from mathutils import Vector, Matrix
@@ -48,6 +49,16 @@ def transfer(ob, src, filt=None):
         out.append(filt(p, acc) if filt else acc)
     set_weights(ob, out)
     return ob
+
+
+def no_head(p, w):
+    """Torso garments never follow the neck or head: weights transferred from the neck part of the capsule made the
+    collar twist and tear when the head turned (TASK-000244). Neck/Head influence goes to Spine2."""
+    out = {}
+    for k, x in w.items():
+        k2 = P + 'Spine2' if k in (P + 'Neck', P + 'Head') else k
+        out[k2] = out.get(k2, 0.0) + x
+    return out
 
 
 def rigid(ob, bone='Head'):
@@ -404,7 +415,7 @@ def variant_a(body):
     sleeve = [(.22, .080), (.25, .078), (.29, .076), (.34, .074), (.39, .072), (.44, .070), (.49, .068), (.54, .066), (.575, .064),
               (.586, .056), (.600, .055), (.622, .054), (.630, .050), (.622, .046)]
     hoodie = torso_garment('A_Hoodie', rows, 7, sleeve, (.750, .174, .118, -.010), [red, rib], rib_rows=(0,), cuff_from=9, **G.res('top', n=24, subdiv=1))
-    transfer(hoodie, src)
+    transfer(hoodie, src, no_head)
     out = [hoodie]
     # Hood: soft roll around the back of the neck, open at the front where the drawstrings come out.
     rh = G.res('hood', seg=14, subdiv=1)
@@ -496,7 +507,7 @@ def variant_b(body, face):
     for o in [crown, peak, button, tongue, tongue_line] + logo:
         rigid(o, 'Head'); out.append(o)
     shirt = tee('B_Tee', (240, 238, 232))
-    transfer(shirt, src); out.append(shirt)
+    transfer(shirt, src, no_head); out.append(shirt)
     ink = mat('B_Print_Ink', (70, 60, 56), 0.8)
     prints = hotdog('B_Print', 0.0, 1.030, 0.120, 0.046, math.radians(-8), [shirt], 0.0035, (saus, grill, shine))
     for k, (x0, z0, x1, z1) in enumerate([(-0.112, 1.062, -0.090, 1.054), (-0.112, 1.000, -0.090, 1.008), (0.090, 1.054, 0.112, 1.062), (0.090, 1.008, 0.112, 1.000)]):
@@ -531,6 +542,36 @@ def variant_b(body, face):
     return out
 
 
+# Base NPC colours: neutral defaults, one material per garment so a type can recolour it (Unity: tint or swap).
+BASE_COLORS = {'Tee': (238, 236, 230), 'Shorts': (88, 108, 138), 'Socks': (242, 240, 234),
+               'Shoe_Upper': (168, 172, 180), 'Shoe_Sole': (246, 244, 238), 'Shoe_Lace': (236, 236, 232)}
+# The shared tee is 6 mm too tight at the lower back for the plain shorts' waistband (it poked through):
+# lower rows are a little deeper and moved back so the tee hangs over the shorts all round.
+BASE_TEE_ROWS = [(z, rx, ry + 0.004 * smoothstep(1.06, 0.98, z), dy + 0.006 * smoothstep(1.06, 0.98, z)) for z, rx, ry, dy in TEE_ROWS]
+
+
+def variant_base(body):
+    """Uniform clothes for the most basic NPC: crew-neck tee, plain shorts, plain socks, low sneakers with laces.
+    No prints, stripes, pockets, hoods or caps."""
+    src = weight_source([body])
+    out = []
+    tee_m = mat('NPC_Tee', BASE_COLORS['Tee'], 0.85)
+    shirt = torso_garment('NPC_Tee', BASE_TEE_ROWS, 6, TEE_SLEEVE, (.806, .184, .124, -.004), [tee_m], **G.res('top', n=24, subdiv=1))
+    out.append(transfer(shirt, src, no_head))
+    shorts_m = mat('NPC_Shorts', BASE_COLORS['Shorts'], 0.9)
+    shorts = legwear('NPC_Shorts', WAIST, .742, [(.70, .084), (.65, .082), (.61, .080), (.600, .076), (.606, .071)], [shorts_m],
+                     **G.res('bottoms', n=16, subdiv=1))
+    out.append(transfer(shorts, src))
+    socks_m = mat('NPC_Socks', BASE_COLORS['Socks'], 0.85)
+    sk = socks('NPC_Socks', socks_m, socks_m, [], top=0.280, **G.res('socks', seg=14))
+    sk.data.materials.pop()          # no stripes: drop the unused second slot
+    out.append(transfer(sk, src))
+    for s, objs_side, objs in shoes_pair('NPC', BASE_COLORS['Shoe_Upper'], BASE_COLORS['Shoe_Sole'],
+                                         lace_rgb=BASE_COLORS['Shoe_Lace']):
+        out += objs
+    return out
+
+
 def variant_c(body):
     src = weight_source([body])
     out = []
@@ -539,7 +580,7 @@ def variant_c(body):
     G.solidify(beanie, 0.007, offset=1.0)
     out.append(rigid(beanie, 'Head'))
     shirt = tee('C_Tee', (60, 60, 64))
-    transfer(shirt, src); out.append(shirt)
+    transfer(shirt, src, no_head); out.append(shirt)
     brown = mat('C_Trousers_Brown', (100, 74, 56), 0.9)
     cuffm = mat('C_Trousers_Cuff', (112, 84, 64), 0.9)
     trousers = legwear('C_Trousers', WAIST, .742,

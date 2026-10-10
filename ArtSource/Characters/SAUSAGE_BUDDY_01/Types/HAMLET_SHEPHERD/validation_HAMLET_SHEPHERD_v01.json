@@ -1,0 +1,334 @@
+{
+  "asset": "SAUSAGE_BUDDY_HAMLET_SHEPHERD_v01",
+  "variant": "HAMLET_SHEPHERD",
+  "height_m": 1.814,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8720,
+      "vertices": 4530,
+      "materials": [
+        "HAMLET_SHEPHERD_Shirt",
+        "HAMLET_SHEPHERD_Shirt_Roll",
+        "HAMLET_SHEPHERD_Vest",
+        "HAMLET_SHEPHERD_Fur",
+        "HAMLET_SHEPHERD_Trousers",
+        "HAMLET_SHEPHERD_Patch",
+        "HAMLET_SHEPHERD_Boots",
+        "HAMLET_SHEPHERD_Boots_Sole",
+        "HAMLET_SHEPHERD_Hat",
+        "HAMLET_SHEPHERD_HatBand",
+        "HAMLET_SHEPHERD_Hair"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props": {
+      "triangles": 436,
+      "vertices": 226,
+      "materials": [
+        "HAMLET_SHEPHERD_Straw",
+        "HAMLET_SHEPHERD_Crook"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.2129
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.1043,
+      "max": 0.2129
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.2129
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Пастух со соломинкой в зубах",
+    "group": "Хутор",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 74.0,
+    "face_defaults": {
+      "Blink": 0.4,
+      "Happy": 0.3
+    },
+    "slots": {
+      "HAMLET_SHEPHERD_Shirt": {
+        "default": "#96B0C4",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Shirt_Roll": {
+        "default": "#849EB4",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Vest": {
+        "default": "#885C38",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Fur": {
+        "default": "#ECE2CA",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Trousers": {
+        "default": "#605C4A",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Patch": {
+        "default": "#96764A",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Boots": {
+        "default": "#282C28",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Boots_Sole": {
+        "default": "#1C1E1C",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Hat": {
+        "default": "#E2C476",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_HatBand": {
+        "default": "#96342C",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Hair": {
+        "default": "#967042",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Straw": {
+        "default": "#F0D668",
+        "metal": false
+      },
+      "HAMLET_SHEPHERD_Crook": {
+        "default": "#845C36",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "HAMLET_SHEPHERD_Shirt": "#C65C4E",
+        "HAMLET_SHEPHERD_Shirt_Roll": "#B04E42",
+        "HAMLET_SHEPHERD_Vest": "#524234",
+        "HAMLET_SHEPHERD_Trousers": "#3E4658",
+        "HAMLET_SHEPHERD_Patch": "#7E925C",
+        "HAMLET_SHEPHERD_Boots": "#345234",
+        "HAMLET_SHEPHERD_HatBand": "#2C3E70"
+      },
+      {
+        "HAMLET_SHEPHERD_Shirt": "#E2DECA",
+        "HAMLET_SHEPHERD_Shirt_Roll": "#CEC8B4",
+        "HAMLET_SHEPHERD_Vest": "#AA8052",
+        "HAMLET_SHEPHERD_Fur": "#5C544C",
+        "HAMLET_SHEPHERD_Trousers": "#485C42",
+        "HAMLET_SHEPHERD_Patch": "#B0523E",
+        "HAMLET_SHEPHERD_Hat": "#CEAA60",
+        "HAMLET_SHEPHERD_HatBand": "#3C5C3A"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16708,
+  "part_triangles": {
+    "HAMLET_SHEPHERD_Vest": 1616,
+    "HAMLET_SHEPHERD_Shirt": 1568,
+    "Skin_Head": 1088,
+    "HAMLET_SHEPHERD_Boot_Shoe_Upper": 1000,
+    "HAMLET_SHEPHERD_Trousers": 688,
+    "HAMLET_SHEPHERD_Boot_Shoe_Sole": 672,
+    "HAMLET_SHEPHERD_HatBrim": 640,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "HAMLET_SHEPHERD_Hair": 492,
+    "Skin_Arm": 480,
+    "HAMLET_SHEPHERD_Boot_Shaft": 448,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "HAMLET_SHEPHERD_HatCrown": 352,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "HAMLET_SHEPHERD_FurTrim": 320,
+    "Mouth": 312,
+    "HAMLET_SHEPHERD_Patch": 300,
+    "HAMLET_SHEPHERD_Collar": 296,
+    "HAMLET_SHEPHERD_FurCollar": 296,
+    "Skin_Nose": 288,
+    "HAMLET_SHEPHERD_Crook": 256,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "HAMLET_SHEPHERD_StrawHead": 80,
+    "HAMLET_SHEPHERD_CrookTip": 64,
+    "HAMLET_SHEPHERD_Straw": 36,
+    "HAMLET_SHEPHERD_Btn": 32
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "asset": "SAUSAGE_BUDDY_BAD_RAPPER_v01",
+  "variant": "BAD_RAPPER",
+  "height_m": 1.774,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 12089,
+      "vertices": 6209,
+      "materials": [
+        "BAD_RAPPER_Tee",
+        "BAD_RAPPER_Jeans",
+        "BAD_RAPPER_Shoe_Upper",
+        "BAD_RAPPER_Shoe_Sole",
+        "BAD_RAPPER_Shoe_Lace",
+        "BAD_RAPPER_Shoe_Accent",
+        "BAD_RAPPER_Gold",
+        "BAD_RAPPER_Medal_Gem",
+        "BAD_RAPPER_Cap",
+        "BAD_RAPPER_Cap_Peak",
+        "BAD_RAPPER_Hair",
+        "BAD_RAPPER_Shades_Frame",
+        "BAD_RAPPER_Shades_Lens",
+        "BAD_RAPPER_WatchFace"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props": {
+      "triangles": 372,
+      "vertices": 192,
+      "materials": [
+        "BAD_RAPPER_Mic",
+        "BAD_RAPPER_Mic_Grille"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0016,
+    "Panic_Run_Loop": 0.0723,
+    "Panic_TurnFlee": 0.0771,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0495,
+      "max": 0.0771
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": 0.0002,
+      "max": 0.1246
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.1028,
+      "max": 0.1246
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": 0.0005,
+      "max": 0.1246
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0256,
+      "max": 0.0771
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2719,
+      "max": 0.0016
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0283,
+      "max": 0.0796
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0256,
+      "max": 0.09
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.09,
+      "max": 0.09
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.1837,
+      "max": 0.0771
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Рэпер",
+    "group": "Неблагополучный район",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 62.0,
+    "face_defaults": {
+      "Happy": 0.3
+    },
+    "slots": {
+      "BAD_RAPPER_Tee": {
+        "default": "#F0EEE8",
+        "metal": false
+      },
+      "BAD_RAPPER_Jeans": {
+        "default": "#4666A0",
+        "metal": false
+      },
+      "BAD_RAPPER_Shoe_Upper": {
+        "default": "#F4F4F0",
+        "metal": false
+      },
+      "BAD_RAPPER_Shoe_Sole": {
+        "default": "#CE302E",
+        "metal": false
+      },
+      "BAD_RAPPER_Shoe_Accent": {
+        "default": "#CE302E",
+        "metal": false
+      },
+      "BAD_RAPPER_Shoe_Lace": {
+        "default": "#F4F4F0",
+        "metal": false
+      },
+      "BAD_RAPPER_Cap": {
+        "default": "#1E1E22",
+        "metal": false
+      },
+      "BAD_RAPPER_Cap_Peak": {
+        "default": "#CE302E",
+        "metal": false
+      },
+      "BAD_RAPPER_Hair": {
+        "default": "#28201C",
+        "metal": false
+      },
+      "BAD_RAPPER_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "BAD_RAPPER_Medal_Gem": {
+        "default": "#2878E8",
+        "metal": false
+      },
+      "BAD_RAPPER_WatchFace": {
+        "default": "#ECF0F6",
+        "metal": false
+      },
+      "BAD_RAPPER_Shades_Frame": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "BAD_RAPPER_Shades_Lens": {
+        "default": "#12141A",
+        "metal": false
+      },
+      "BAD_RAPPER_Mic": {
+        "default": "#242428",
+        "metal": false
+      },
+      "BAD_RAPPER_Mic_Grille": {
+        "default": "#BEC0C6",
+        "metal": true
+      }
+    },
+    "colourways": [
+      {
+        "BAD_RAPPER_Tee": "#222226",
+        "BAD_RAPPER_Jeans": "#98B0D2",
+        "BAD_RAPPER_Cap": "#CE302E",
+        "BAD_RAPPER_Cap_Peak": "#1E1E22",
+        "BAD_RAPPER_Shoe_Sole": "#1E1E22",
+        "BAD_RAPPER_Shoe_Accent": "#F0C434",
+        "BAD_RAPPER_Medal_Gem": "#CE2834"
+      },
+      {
+        "BAD_RAPPER_Tee": "#F6BA2E",
+        "BAD_RAPPER_Jeans": "#282C3A",
+        "BAD_RAPPER_Cap": "#F0EEE8",
+        "BAD_RAPPER_Cap_Peak": "#34845C",
+        "BAD_RAPPER_Shoe_Upper": "#282A30",
+        "BAD_RAPPER_Shoe_Sole": "#F0EEE8",
+        "BAD_RAPPER_Shoe_Accent": "#34845C",
+        "BAD_RAPPER_Shoe_Lace": "#F0EEE8",
+        "BAD_RAPPER_Medal_Gem": "#34AC5C"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 20013,
+  "part_triangles": {
+    "RAPPER_Chain": 3120,
+    "RAPPER_Tee": 1392,
+    "RAPPER_Hair": 1152,
+    "RAPPER_Jeans": 1136,
+    "Skin_Head": 1088,
+    "RAPPER_Shoe_Upper": 1000,
+    "RAPPER_Shoe_Sole": 672,
+    "RAPPER_Shades_Rim": 624,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "RAPPER_Heel": 560,
+    "RAPPER_Shades_Lens": 560,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "RAPPER_Cap_Crown": 352,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "RAPPER_Medal": 280,
+    "RAPPER_Lace": 256,
+    "RAPPER_MicHead": 252,
+    "RAPPER_Cap_Peak": 216,
+    "Brow": 168,
+    "Shine": 160,
+    "RAPPER_Watch_Case": 160,
+    "RAPPER_Watch_Dial": 160,
+    "RAPPER_MedalGem": 120,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "RAPPER_Cap_Button": 100,
+    "RAPPER_Shades_Temple": 96,
+    "RAPPER_MicHandle": 72,
+    "RAPPER_Watch_Band": 56,
+    "RAPPER_MicBand": 48,
+    "RAPPER_Shades_Bridge": 36,
+    "RAPPER_Cap_Opening": 29,
+    "RAPPER_Cap_Strap": 12
+  }
+}

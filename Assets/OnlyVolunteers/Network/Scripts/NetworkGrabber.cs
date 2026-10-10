@@ -95,7 +95,7 @@ namespace OnlyVolunteers.Network
         private void Update()
         {
             if (!IsOwner || player == null || player.ViewCamera == null || profile == null) return;
-            if (Cursor.lockState != CursorLockMode.Locked && !smokeHolding)
+            if ((Cursor.lockState != CursorLockMode.Locked || player.HandsBusy) && !smokeHolding)
             {
                 if (clientHeld != null || pending) ReleaseClient();
                 return;

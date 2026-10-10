@@ -462,6 +462,9 @@ namespace OnlyVolunteers.Map
             interactor.Cargo = cargo;
             interactor.InventoryInput = inventoryInput;
             interactor.Weapon = EnsureFist();
+            // Vadim's phone (Tab), as in NetworkTest: stands still, hands busy while it is out (KCC pawn only).
+            if (pawn is GreyboxKccPawn)
+                pawn.gameObject.AddComponent<GreyboxPhone>();
             GrabPhysicsProfile npcGrabProfile = EnsureNpcGrabProfile();
 
             var result = new GameplayResult { Van = van, Pawn = pawn };
