@@ -1,16 +1,16 @@
-# Idle_Knock_v03 — handoff (stop point 2026-10-07)
+# Idle_Knock_v03 — handoff (updated 2026-10-07, cloud session)
 
-The work stopped at the lead's request so the set can move to cloud Claude sessions. Everything below can be regenerated deterministically from the A v04 rig, or from the JSON export of it (no Git LFS needed). Two independent runs, one through the .blend and one through the JSON, gave byte-identical authored traces.
+The first stop point (Idle_Stand_v03 delivered, four clips designed) was continued in a cloud Claude session on branch `claude/anim-idle-cargo-v04-f9ijlq` (started from `cloud/anim-handoff`). All four remaining clips are now authored, built and validated 21/21 from the LFS-free rig JSON (`pip install bpy` 5.2.2). The cloud session could not push LFS binaries, so `.blend` / `.fbx` / previews are rebuilt locally with the commands in §3 and README "Building"; the committed validation JSONs come from exactly those builds.
 
 ## 1. State per clip
 
-| Clip | State | What still looks wrong / next step |
+| Clip | State | What still needs an eye |
 | --- | --- | --- |
-| **Idle_Stand_v03** (4.0 s loop) | **Delivered**: `.blend` + `.fbx` + authoring JSON + `validation_Idle_Stand_v03.json` (21/21) + MP4 side/three-quarter (3 loops each) + contact sheet. Three review passes are in `Previews/Review_01..03`. | Not yet seen by Fedya. It is intentionally calm (it is the default idle). If he finds it too plain, add one small characterful beat (a short sniff/chin-lift or a lazy shoulder roll around 3.0 s) as **Idle_Stand_v04**; keep amplitudes moderate. The finger curl (max 0.16) is almost invisible. Judge the head drift and blink dip at the gameplay camera distance in Unity. |
-| **Idle_Bored_v03** (planned 6.0 s loop) | Not started. Design in §7. | Author it in `clips_standing.py`, reusing `StandRig`. |
-| **Cargo_Sit_Idle_v04** (planned 4.5 s loop) | Not started. Design in §7. | Author it first: Cargo_Knock and SitUp_Cargo depend on its frame 1. New module `clips_cargo.py`. |
-| **Cargo_Knock_v03b** (planned 3.3 s loop) | Not started. Design in §7. | Must start and end on **Cargo_Sit_Idle_v04 frame 1** (not GPT's v03). |
-| **SitUp_Cargo_v04** (planned 2.4 s) | Not started. Design in §7. | First frame = GetUp_FromBack_v02 frame 1; last frame = Cargo_Sit_Idle_v04 frame 1. |
+| **Idle_Stand_v03** (4.0 s loop) | Delivered at the first stop point (unchanged; its build is bit-identical: the new IK/blend code is in new functions). | Not yet seen by Fedya; see the earlier note (an optional Idle_Stand_v04 with one characterful beat). |
+| **Cargo_Sit_Idle_v04** (4.5 s loop) | Built and validated 21/21 (`validation_cargo_v04.json`). Frame 1 = the cargo sit contract, frozen in `Cargo_Sit_Contract_v04.json`. | The trembling is deliberately small (0.4–0.7°, per §7); judge at gameplay distance. |
+| **Cargo_Knock_v03b** (3.3 s loop on the sit contract) | Built and validated 21/21. | Deviations from §7: the chest twist ends ~8° off square (not 30°) so the right arm never crosses the wall, the head turns ~40° toward the doors instead, and he lurches off the wall during the swivel. A post-pass rate-limits 21 samples of the right upper arm and swings it ≤ 18° off the wall (§8.13). Judge the swivel in Unity at speed. |
+| **SitUp_Cargo_v04** (2.4 s one-shot) | Built and validated 21/21. Frame 1 = raw GetUp_FromBack_v02 frame 1 (hipsStart 0.3070 m), held to 0.13 s. | Ragdoll blend into the supine contract is not tested in Unity. The bump rub is on the right side of the head (the back was hidden from every camera). |
+| **Idle_Bored_v03** (6.0 s loop on Idle frame 1) | Built and validated 21/21 (`validation_Idle_Bored_v03.json`). Watch check, not the pebble kick. | — |
 
 ## 2. Files in this folder
 
@@ -24,7 +24,13 @@ The work stopped at the lead's request so the set can move to cloud Claude sessi
 | `export_rig_json.py`, `rebuild_rig_from_json.py`, `rig_Buddy_Mixamo65_A_v04.json` | LFS-free rig, contract poses and skinned A mesh proxy (§4). |
 | `Idle_Stand_v03.*`, `validation_Idle_Stand_v03.json`, `Previews/Idle_Stand_v03/` | The delivered clip. |
 | `Previews/Review_01..03/` | Iteration evidence for Idle_Stand: traces, key poses, a grid, and the r3 candidate MP4 with front, side and three-quarter views. |
-| `provenance_v03.json` | sha256 of the inputs (unchanged) and of every package file at this stop point. |
+| `provenance_v03.json` | sha256 of the inputs (unchanged) and of every package file at the first stop point. |
+| `clips_cargo.py` | The three cargo clips: `SitRig` (seated machinery in a local frame placed in the van by `W`), wall/floor contact solves, `Cargo_Sit_Idle`, `Cargo_Knock` (+ its pre-passes and post safety nets), `SitUp_Cargo`. |
+| `Cargo_Sit_Contract_v04.json` | The frozen raw values of the cargo sit contract (65 bones) + the stage layout. Read by all three cargo builds. Written once by the code if missing; never overwritten. |
+| `quicklook.py` | Fast numpy/Pillow rasteriser of the skinned mesh for motion review in GPU-less sessions (~0.1 s/frame, every frame; `--saved` reads a built `.blend`). Review only. |
+| `validation_cargo_v04.json`, `validation_Idle_Bored_v03.json` | Validator reports of the v04 builds (rig JSON path). |
+| `provenance_v04.json` | sha256 of every new/changed package file and of the locally built binaries of this round. |
+| `Cargo_Sit_Idle_v04.*`, `Cargo_Knock_v03b.*`, `SitUp_Cargo_v04.*`, `Idle_Bored_v03.*` | Built locally (not in Git this round): `.blend`, `.fbx`, `_authoring.json`. |
 
 `acting_core.py` provides:
 - source loading (A v04 .blend, or the JSON when the .blend files are LFS pointers);
@@ -71,7 +77,9 @@ blender -b --factory-startup --python $PKG/export_rig_json.py -- --out <new>.jso
 blender -b --factory-startup --python $PKG/rebuild_rig_from_json.py -- [--save /tmp/buddy_rebuilt.blend]
 ```
 
-Cameras live in `VIEWS_STAND` / `VIEWS_CARGO` in `build_v03.py`. The cargo review stage adds the floor, the wall plane x = -0.65 and an orange 1.2 m marker line on the wall. Cargo clips must set `'stage': 'cargo'` in their registry entry.
+Additions of this round: `--saved-dir <dir>` renders a saved `.blend` from another folder (dry runs); `python quicklook.py -- --clip <key> --saved <stem>.blend --every 1 --views side,three_quarter --out <dir> [--mp4 f.mp4]` for fast motion review. In a GPU-less cloud box: `pip install bpy` and run every script with `python <script> -- ...` instead of `blender -b --factory-startup --python <script> -- ...`; software Eevee needs `apt install libegl1 libgl1-mesa-dri` and takes ~5.5 s per 480 px frame (run renders serially: parallel processes fight over llvmpipe).
+
+Cameras live in `VIEWS_STAND` / `VIEWS_CARGO` / `VIEWS_KNOCK` in `build_v03.py`. The cargo review stage adds the floor, the wall plane x = -0.65 and an orange 1.2 m marker line on the wall. Cargo clips must set `'stage': 'cargo'` in their registry entry.
 
 ## 4. Rig sources and working without Git LFS
 
@@ -126,7 +134,7 @@ Additional criteria per clip:
 - **Cargo_Knock_v03b:** 2.5–3.5 s; desperate comic banging. He turns, bangs with **both** fists, perhaps presses his cheek to the wall to listen, then slumps back.
 - **SitUp_Cargo_v04:** ~1.8–2.4 s; waking up groggy and comic. Beats: a dazed head shake, rubbing the bump, realising where he is, then a panic glance. He ends sitting with the knees up and the back to the wall.
 
-## 7. Planned designs (not yet authored)
+## 7. Designs (authored; the README lists the final timings and the deviations)
 
 **Cargo_Sit_Idle_v04 (4.5 s = 135 frames, loop)**
 
@@ -214,3 +222,10 @@ Trembling: `pnoise` with integer cycles per loop (about 30–41 cycles in 4.5 s,
 8. **Hands.** Pinky bones are non-deforming (mitten: three fingers + thumb). `Buddy.curl` uses the palm axis that GPT verified.
 9. **No face animation in the FBX** (animation-only FBX). The acting must read from the body; blinks and expressions belong to the game's face script.
 10. **Registering new clips.** `clips_cargo.py` does not exist yet; `build_v03.py` imports it if present. Register clips with the same dict shape as `clips_standing.CLIPS` (`T`, `loop`, `stage`, `setup`, `pose`, `canonical`, `stats`, `beats`). Stems are in `build_v03.STEMS` and `validate_v03.STEMS`.
+11. **Seated authoring frame.** `SitRig` builds every seated pose as if he sat at the origin facing −Y (so all the sign rules of `clips_standing` hold) and places it with `W = T(wx, 0, 0) @ Rz(90)`. `wx` and the seat height are solved once from the skinned mesh (hood 3 mm off the wall, seat 0.5 mm above the floor). In the local frame the wall is the plane y = +`y_wall` and the doors are toward −X.
+12. **Flip-free IK (`Buddy.chain_info2` / `solve_chain2`).** `solve_chain` builds its roll frames from `frame_from(bone, pole)`, which flips 180° when the pole leans along the bones (seen as 180° forearm/knee flips in the knock). The new pair uses N × bone, N = bend-plane normal, which is continuous whenever the pole is not parallel to the reach. `solve_chain` is unchanged so Idle_Stand rebuilds bit-identically.
+13. **FK↔IK and IK↔IK blends (`Buddy.blend_subtree`).** Never switch an arm from FK to IK (or between two IK targets far apart): solve both and slerp the parent-relative rotations. If the blend goes out and comes back, give it hemisphere references (`refs`) or the arm can go out the short way and come back the other short way, a hidden 360° twist (the validator flags it as an end sign flip on loops). The knock records both endpoint rotations of every blend on a 1/240 s grid in a pre-pass and makes them sign-continuous (`KnockCtx._blend_refs`), so the result does not depend on call order.
+14. **Contact solves on the skinned mesh.** Body vs wall: regula falsi on the lean of the upper body (from Spine, about the local X axis). It must only see parts that leaning can move: exclude arms pinned to IK targets, or the solve becomes non-monotonic and its root jumps between contacts. Hands vs wall: shift the IK target back by the measured excess (fingers ride rigidly). Keep targets inside the soft reach (`SitRig.soft_reach`): a locked elbow snaps open like the straight Idle knees. Floor: lift the pelvis by the seat excess (feet stay planted through the leg IK).
+15. **Interpolation between keys.** The validator samples at 120 Hz, between the 60 Hz keys. During the 80°/0.3 s swivel the linear key interpolation let a toe sag 3.3 mm and an elbow cross the wall by 0.2 mm although every key was clean: the feet now skid round 8 mm up and the post arm swing keeps a 4 mm margin.
+16. **Post safety nets (`'post'` in a clip registry entry, run by `build_v03.author`).** `acting_core.limit_rotation_steps` (iterative quaternion smoothing inside the offending windows, contract end frames kept) and the knock's measured, max-filtered and blurred arm-off-wall swing. Like GPT's `floor_safe`, they are safety nets: the authored motion should already be within limits; here they touch only the right upper arm for ~0.35 s of the swivel.
+17. **Hammer-fist hits with a giant head.** The head reaches the wall before the fists can, and the arms are short (0.44 m + hand). The fists land beside the head (z 0.68–0.82), with the body leaning in until the head touches.

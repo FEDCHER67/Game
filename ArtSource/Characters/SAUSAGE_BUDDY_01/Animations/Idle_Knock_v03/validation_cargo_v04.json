@@ -1,0 +1,158 @@
+{
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "bind_reference": "rig_Buddy_Mixamo65_A_v04.json",
+  "rig_source": "json",
+  "thresholds": {
+    "seam_source": 0.0,
+    "contract_matrix": 1e-05,
+    "sole_penetration_m": 0.001,
+    "support_ground_error_m": 0.001,
+    "planted_foot_slide_m": 0.001,
+    "key_step_deg": 25,
+    "height_m": 1.2,
+    "floor_m": -1e-06,
+    "wall_x_m": -0.65,
+    "fbx_bind": 0.0001,
+    "fbx_anim": 0.00015,
+    "fbx_seam": 1e-05
+  },
+  "clips": {
+    "Cargo_Sit_Idle_v04": {
+      "action": "Cargo_Sit_Idle_v04",
+      "frames": [
+        1,
+        136
+      ],
+      "fps": 30,
+      "duration_s": 4.5,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_a_v04": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 17.136594135135205,
+      "seam_matrix_error": 0.0,
+      "start_contract": "sit",
+      "end_contract": "sit",
+      "start_contract_error": 0.0,
+      "end_contract_error": 0.0,
+      "max_mesh_height_m": 1.0188612937927246,
+      "min_mesh_z_m": 2.2988650016486645e-05,
+      "min_mesh_x_m": -0.6485310196876526,
+      "wall_clearance_m": 0.0014689803123474343,
+      "hips_first_height_m": 0.11362993717193604,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.558661460876465e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cargo_Sit_Idle_v04": [
+            1.0,
+            136.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true
+    },
+    "Cargo_Knock_v03b": {
+      "action": "Cargo_Knock_v03b",
+      "frames": [
+        1,
+        100
+      ],
+      "fps": 30,
+      "duration_s": 3.3,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_a_v04": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 22.855782815887473,
+      "seam_matrix_error": 0.0,
+      "start_contract": "sit",
+      "end_contract": "sit",
+      "start_contract_error": 1.0132789611816406e-06,
+      "end_contract_error": 1.0132789611816406e-06,
+      "max_mesh_height_m": 1.0528154373168945,
+      "min_mesh_z_m": 1.0937219485640526e-05,
+      "min_mesh_x_m": -0.6489593982696533,
+      "wall_clearance_m": 0.001040601730346702,
+      "hips_first_height_m": 0.11362993717193604,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.8137507140636444e-05,
+        "seam_error": 2.980232238769531e-07,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cargo_Knock_v03b": [
+            1.0,
+            100.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true
+    },
+    "SitUp_Cargo_v04": {
+      "action": "SitUp_Cargo_v04",
+      "frames": [
+        1,
+        73
+      ],
+      "fps": 30,
+      "duration_s": 2.4,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_a_v04": true,
+      "rig_mesh_data_unchanged": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 20.696338372530143,
+      "seam_matrix_error": null,
+      "start_contract": "supine",
+      "end_contract": "sit",
+      "start_contract_error": 5.364418029785156e-07,
+      "end_contract_error": 6.556510925292969e-07,
+      "max_mesh_height_m": 1.0586755275726318,
+      "min_mesh_z_m": 9.159441106021404e-06,
+      "min_mesh_x_m": -0.6485508680343628,
+      "wall_clearance_m": 0.0014491319656372292,
+      "hips_first_height_m": 0.30702006816864014,
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.65402889251709e-05,
+        "max_animated_matrix_error": 1.7881393432617188e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|SitUp_Cargo_v04": [
+            1.0,
+            73.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,43 @@
+{
+ "round": "v04 cloud continuation 2026-10-07 (branch claude/anim-idle-cargo-v04-f9ijlq, from cloud/anim-handoff)",
+ "tools": {
+  "blender_python": "bpy 5.2.2 (PyPI) on Python 3.13, headless, rig from rig_Buddy_Mixamo65_A_v04.json (LFS-less)",
+  "eevee": "software EGL (Mesa llvmpipe)"
+ },
+ "inputs_unchanged": {
+  "rig_Buddy_Mixamo65_A_v04.json": "eff0072bb5d8c17c7d6697fde9b6165acca1ffc2a12535ce170e4b5cdb669d35"
+ },
+ "package_files": {
+  "acting_core.py": "018416e225b90214a56e0a5e5d8d7f889d295919fb4aa90e05e74c6e5ae88cc7",
+  "build_v03.py": "00a03407b34c3ca74e30df561c4e108cb4928a21f3a2e045400834560a7dc47f",
+  "clips_standing.py": "dc3a20fc0023b6638e72e394d13727370792094f546457992802f1b211825824",
+  "clips_cargo.py": "21dacfb6b60694b7b7e01b7bdb86a19783f942ebcca269a5772aa9e9aebfb42f",
+  "quicklook.py": "f98213f76d3d389e3dd404bce089aebe800cec1959e6930bcc7d11d94b50ea1e",
+  "Cargo_Sit_Contract_v04.json": "37a1e77de803f09f7db3fea961b8cf5e02b728d577af471e685c3f53a98eaf7e",
+  "validation_cargo_v04.json": "234c19d9ed14ca4cb369034cf0732d88b277e8e129ae176ca2879d50aba3059c",
+  "validation_Idle_Bored_v03.json": "6fbd4e3d11383252371a40770c361d44ad6a8cd8ff10dc24322dec1f876f56c1",
+  "validate_v03.py": "b22e8fb370ee2b60bdf40de3caebec0f34822673c39feb4003af839fb404a298",
+  "make_sheets.py": "bc14e58c3f1c64858cd672e7b9b37b041b59bb47020bf8761405e2a4f695b8d0",
+  "rebuild_rig_from_json.py": "2f9046dd202ecedfbf01d8c76f70cc01c0604b027933bfd0d87627bbd20a0805"
+ },
+ "local_binaries_not_in_git": {
+  "Cargo_Sit_Idle_v04.blend": "10b28547f9e5186e84fdfc23b6305530f72262594086cfbff96d7d1dc517e24a",
+  "Cargo_Sit_Idle_v04.fbx": "a7fb3c34c01105533eb3bfc1775a9ebdae362315fe5043e098a6e801287e7aff",
+  "Cargo_Sit_Idle_v04_authoring.json": "0496ab6cc000dd050659530d888814de7c1c9514bb396a825e758d1cf412e372",
+  "Cargo_Knock_v03b.blend": "2d7d57f4fd5b80fe64192ec0257ba2e47322741d6abb8292b5c5d569f4960030",
+  "Cargo_Knock_v03b.fbx": "367477b019560de83f0fabd4eae09189fee55b7fa11f35117b169244b35b417e",
+  "Cargo_Knock_v03b_authoring.json": "3ee0735d1af501bec993d32652a7c30e582ff20086298953a0c719418a145dd4",
+  "SitUp_Cargo_v04.blend": "148e9895b9beb061c35c8a5e05010169e4f7851bf00e5e8104e2fd41c303cbdb",
+  "SitUp_Cargo_v04.fbx": "8733efc972e4d7b9bb2cb83f581fba1b717b8570dd36ff33e46b94065cb0ea16",
+  "SitUp_Cargo_v04_authoring.json": "b2959b3ca5db894338bd471a904b16f23c65f70bf2e0044ced01c807673a159f",
+  "Idle_Bored_v03.blend": "982111dcaf6f3831ce89b4d215219a63caf73024d64dbf17b7f190e5f468a332",
+  "Idle_Bored_v03.fbx": "e656b27909a3a499b33c417ad1239cc0d54d0cd4e04151e95a7ab11070d6599f",
+  "Idle_Bored_v03_authoring.json": "3493349730cc377e828c7ff38d6f6d9f8611155260cae62ca46acd280c0f4c2b"
+ },
+ "determinism": [
+  "SitUp_Cargo built twice: identical trace JSON",
+  "Idle_Stand trace with this code identical to the first-stop-point code (shared IK/blend changes are additive)",
+  "Cargo_Knock trace identical before/after the final code cleanup"
+ ],
+ "note": "Binaries could not be pushed from the cloud (Git LFS). Rebuild with build_v03.py --final; the .blend/.fbx hashes above are from the cloud build (bpy 5.2.2 / JSON rig) and may differ from a desktop Blender build in file metadata."
+}

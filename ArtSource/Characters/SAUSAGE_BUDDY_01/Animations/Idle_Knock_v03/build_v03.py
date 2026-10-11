@@ -36,6 +36,7 @@ ap.add_argument('--trace', default='')
 ap.add_argument('--seq', action='store_true', help='name review frames s0000.png.. (ffmpeg-friendly)')
 ap.add_argument('--dest', default='', help='write --final outputs here instead of this folder (dry runs)')
 ap.add_argument('--from-saved', action='store_true', help='render the saved <stem>.blend instead of re-authoring')
+ap.add_argument('--saved-dir', default='', help='folder of the saved <stem>.blend for --from-saved (default: this folder)')
 args = ap.parse_args(argv)
 
 REGISTRY = dict(CS.CLIPS)
@@ -60,6 +61,8 @@ def author(B, name):
         extra['t'] = t
         info.append(extra)
     canonical = spec['canonical'](ctx, N)
+    if 'post' in spec:                       # clip-level safety nets on the sampled poses
+        spec['post'](ctx, frames, canonical)
     if args.trace:
         pts = ('HeadTop_End', 'Head', 'Neck', 'Spine2', 'Hips', 'LeftArm', 'RightArm', 'LeftHand', 'RightHand',
                'LeftLeg', 'RightLeg', 'LeftFoot', 'RightFoot', 'LeftToeBase', 'RightToeBase')
@@ -89,12 +92,16 @@ VIEWS_CARGO = {
 }
 
 
+# the knock turns to his right (toward -Y): its three-quarter camera sits on the -Y side (HANDOFF 7)
+VIEWS_KNOCK = dict(VIEWS_CARGO, three_quarter=((2.0, -4.0, 1.6), (-0.32, 0.0, 0.55), 1.85))
+
+
 def review(B, name, N):
     spec = REGISTRY[name]
     cargo = spec.get('stage') == 'cargo'
     col, cam = C.studio(B.scene, wall=cargo)
     C.use_eevee(B.scene, (args.res, args.res), samples=12)
-    views = VIEWS_CARGO if cargo else VIEWS_STAND
+    views = (VIEWS_KNOCK if name == 'Cargo_Knock' else VIEWS_CARGO) if cargo else VIEWS_STAND
     out = Path(args.out)
     if args.times:
         frames = [1 + float(x) * C.FPS for x in args.times.split(',')]
@@ -138,7 +145,7 @@ def final(B, name, act, N, info, ctx):
 class _Saved:
     """Minimal stand-in for Buddy when rendering a saved deliverable without re-authoring."""
     def __init__(self, stem):
-        bpy.ops.wm.open_mainfile(filepath=str(HERE / (stem + '.blend')))
+        bpy.ops.wm.open_mainfile(filepath=str((Path(args.saved_dir) if args.saved_dir else HERE) / (stem + '.blend')))
         self.scene = bpy.context.scene
         act = bpy.data.objects[C.RIG_NAME].animation_data.action
         self.N = int(round(act.frame_range[1] - act.frame_range[0]))

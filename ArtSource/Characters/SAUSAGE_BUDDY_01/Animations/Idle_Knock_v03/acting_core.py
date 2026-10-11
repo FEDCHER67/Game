@@ -481,6 +481,98 @@ class Buddy:
             out[n] = delta @ out[n]
         return over
 
+    # -- flip-free IK (added for the v04 cargo set and Idle_Bored; solve_chain above is kept
+    #    unchanged so Idle_Stand_v03 rebuilds bit-identically) ------------------------------------
+    @staticmethod
+    def _bend_frames(H, K, E, pole):
+        """Bone frames whose roll reference is N x bone, N = bend-plane normal (dir x pole).
+        Unlike frame_from(bone, pole) this never flips when the pole leans along the bones."""
+        d = (E - H).normalized()
+        pp = Vector(pole) - d * Vector(pole).dot(d)
+        pp.normalize()
+        N = d.cross(pp)
+        u, l = (K - H).normalized(), (E - K).normalized()
+        return frame_from(u, N.cross(u)), frame_from(l, N.cross(l))
+
+    def chain_info2(self, base, kind, side, pole0):
+        info = self.chain_info(base, kind, side, pole0)
+        a, b, c = info['names']
+        H, K, E = base[a].translation, base[b].translation, base[c].translation
+        info['F_up2'], info['F_lo2'] = self._bend_frames(H, K, E, info['pole0'])
+        return info
+
+    def solve_chain2(self, out, info, target, end_matrix, pole):
+        """solve_chain with flip-free roll frames (see _bend_frames). Same contract."""
+        a, b, c = info['names']
+        H = out[a].translation.copy()
+        K, E, over = self.two_bone(H, Vector(target), info['l1'], info['l2'], Vector(pole))
+        Fu, Fl = self._bend_frames(H, K, E, Vector(pole))
+        Ru = Fu @ info['F_up2'].transposed() @ info['R_up']
+        Rl = Fl @ info['F_lo2'].transposed() @ info['R_lo']
+        mu = Ru.to_4x4(); mu.translation = H
+        ml = Rl.to_4x4(); ml.translation = K
+        out[a], out[b] = mu, ml
+        me = end_matrix.copy(); me.translation = E
+        delta = me @ out[c].inverted()
+        for n in self.subtree(c[len(P):]):
+            out[n] = delta @ out[n]
+        return over
+
+    @staticmethod
+    def slerp_signed(a, b, k):
+        """Slerp along the given hemispheres (no shortest-path flip; may exceed 180 deg)."""
+        d = max(-1.0, min(1.0, a.dot(b)))
+        th = math.acos(d)
+        if th < 1e-6:
+            return a.copy()
+        s = math.sin(th)
+        wa, wb = math.sin((1 - k) * th) / s, math.sin(k * th) / s
+        return Quaternion([wa * x + wb * y for x, y in zip(a, b)]).normalized()
+
+    def local_rots(self, pose, short):
+        """Parent-relative rotations of a subtree (for blend references)."""
+        return {n: (pose[self.parent[n]].inverted() @ pose[n]).to_quaternion() for n in self.subtree(short)}
+
+    blend_log = None      # dev hook: {tag: {bone: (qa, qb)}} filled by blend_subtree when set
+
+    def blend_subtree(self, out, other, short, k, refs=None, tag=None):
+        """FK/IK blend: slerp the parent-relative rotations of the subtree rooted at `short`
+        from `out` (k = 0) to `other` (k = 1); local offsets come from `out` (rigid bones).
+        refs = (ref_out, ref_other): fixed per-bone local rotations; each side is put in the
+        hemisphere of its reference and interpolated without a shortest-path flip, so a blend
+        that goes out and comes back follows the same path (no net 360 deg twist)."""
+        if k <= 0:
+            return
+        names = self.subtree(short)
+        if k >= 1:
+            for n in names:
+                out[n] = other[n].copy()
+            return
+        loc = {}
+        log = {} if (self.blend_log is not None and tag is not None) else None
+        for n in names:
+            p = self.parent[n]
+            la = out[p].inverted() @ out[n]
+            lb = other[p].inverted() @ other[n]
+            if log is not None:
+                log[n] = (la.to_quaternion(), lb.to_quaternion())
+            if refs is not None:
+                qa, qb = la.to_quaternion(), lb.to_quaternion()
+                if qa.dot(refs[0][n]) < 0:
+                    qa.negate()
+                if qb.dot(refs[1][n]) < 0:
+                    qb.negate()
+                q = self.slerp_signed(qa, qb, k)
+            else:
+                q = la.to_quaternion().slerp(lb.to_quaternion(), k)
+            m = q.to_matrix().to_4x4()
+            m.translation = la.translation.lerp(lb.translation, k)
+            loc[n] = m
+        for n in names:                      # names are in parent-before-child order
+            out[n] = out[self.parent[n]] @ loc[n]
+        if log is not None:
+            self.blend_log[tag] = log
+
     # -- hands -------------------------------------------------------------------------------
     def hand_q(self, out, side):
         return (out[P + side + 'Hand'].to_3x3() @ self.rest[P + side + 'Hand'].to_3x3().inverted()).to_quaternion()
@@ -564,6 +656,64 @@ class Buddy:
                                  use_mesh_modifiers=False)
         rig.animation_data.action = action
         self.scene.frame_set(1)
+
+
+# ----------------------------------------------------------------------------- post-process
+def limit_rotation_steps(B, frames, max_deg=21.0, pad=3, iters=400, keep=()):
+    """Safety net (like GPT's floor_safe): where a bone's parent-relative rotation changes by more
+    than max_deg between neighbouring samples, smooth that bone's local rotation sequence inside
+    a window (+-pad samples) with an iterative 3-tap quaternion filter until every step is under
+    the limit. Frames listed in `keep` (e.g. exact contract ends) are never changed. Positions are
+    recomposed by FK from the unchanged local offsets. Returns {bone: samples changed}."""
+    keys = sorted(frames)
+    n = len(keys)
+    keep = set(keep)
+    loc = {b: [] for b in B.order}
+    for f in keys:
+        pose = frames[f]
+        for b in B.order:
+            p = B.parent[b]
+            loc[b].append(pose[b].copy() if p is None else pose[p].inverted() @ pose[b])
+    changed = {}
+    lim = math.radians(max_deg)
+    for b in B.order:
+        q = [m.to_quaternion() for m in loc[b]]
+        for i in range(1, n):
+            if q[i - 1].dot(q[i]) < 0:
+                q[i].negate()
+
+        def ang(i):
+            return 2 * math.acos(min(1.0, abs(q[i - 1].dot(q[i]))))
+        bad = [i for i in range(1, n) if ang(i) > lim]
+        if not bad:
+            continue
+        mask = [False] * n
+        for i in bad:
+            for j in range(max(1, i - pad - 1), min(n - 1, i + pad + 1)):
+                if keys[j] not in keep:
+                    mask[j] = True
+        idx = [j for j in range(n) if mask[j]]
+        for _ in range(iters):
+            new = list(q)
+            for j in idx:
+                mid = q[j - 1].slerp(q[j + 1], 0.5)
+                new[j] = q[j].slerp(mid, 0.6)
+            q = new
+            if max(ang(i) for i in range(1, n)) <= lim:
+                break
+        for j in idx:
+            m = q[j].to_matrix().to_4x4()
+            m.translation = loc[b][j].translation
+            loc[b][j] = m
+        changed[b] = len(idx)
+    if changed:
+        for k, f in enumerate(keys):
+            out = {}
+            for b in B.order:
+                p = B.parent[b]
+                out[b] = loc[b][k].copy() if p is None else out[p] @ loc[b][k]
+            frames[f] = out
+    return changed
 
 
 # ----------------------------------------------------------------------------- render helpers
