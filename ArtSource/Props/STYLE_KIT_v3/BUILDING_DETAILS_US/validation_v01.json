@@ -1,0 +1,1756 @@
+{
+  "task": "G12-US",
+  "family": "SK3-BLDDETAILS-US-001",
+  "blender": "5.2.1 LTS",
+  "units": "metres",
+  "source_axes": "X right, Z up, facade outward -Y",
+  "fbx_axes": "axis_forward=-Z, axis_up=Y, apply_unit_scale=True, scale 1",
+  "palette_source": "../../STYLE_KIT_v2/_lib/Look_Palette_v2.png (UV0 cell selector, fallback only)",
+  "palette_sha256": "3c48b12b7f40adbba3451428796d7f8a2013ade7fa6e0324b77d31a2e54ffa37",
+  "colour_source": "../../../Textures/StyleKit_v3/candidate_v07/grade_v07.json",
+  "colour_source_sha256": "b3282ef21536423f4d285804ca15a303865436993468f33626ee6c537f1577ab",
+  "material_roles": [
+    "plaster",
+    "brick",
+    "concrete",
+    "metal_painted",
+    "metal_dark",
+    "wood",
+    "glass",
+    "roof",
+    "canvas",
+    "accent",
+    "emissive"
+  ],
+  "slot_categories": {
+    "plaster": {
+      "category": "3b_plaster_stucco",
+      "source": "grade_v07.json after.mean_hex",
+      "hex": "#B8AD98"
+    },
+    "brick": {
+      "category": "3a_brick",
+      "source": "grade_v07.json after.mean_hex",
+      "hex": "#8C4F42"
+    },
+    "concrete": {
+      "category": "3c_concrete_panels",
+      "source": "grade_v07.json after.mean_hex",
+      "hex": "#ADABA6"
+    },
+    "metal_painted": {
+      "category": "6a_painted_metal_panels",
+      "source": "grade_v07.json after.mean_hex",
+      "hex": "#8E9396"
+    },
+    "metal_dark": {
+      "category": "6b_lightly_weathered_metal",
+      "source": "v07 mean at value 0.32 (dark cast iron)",
+      "hex": "#4D5052"
+    },
+    "wood": {
+      "category": "5a_wood_planks_fences",
+      "source": "grade_v07.json after.mean_hex",
+      "hex": "#856450"
+    },
+    "glass": {
+      "category": null,
+      "source": "Look_Palette_v2 glass.dark, v07 initial grade S*0.75 V*0.85",
+      "hex": "#63758E"
+    },
+    "roof": {
+      "category": "4d_flat_bitumen_roof",
+      "source": "grade_v07.json after.mean_hex",
+      "hex": "#3E4247"
+    },
+    "canvas": {
+      "category": null,
+      "source": "Look_Palette_v2 red.dark, v07 initial grade S*0.75 V*0.85",
+      "hex": "#974A4F"
+    },
+    "accent": {
+      "category": "6a_painted_metal_panels",
+      "source": "Look_Palette_v2 cobalt.dark, v07 initial grade S*0.75 V*0.85",
+      "hex": "#47567F"
+    },
+    "emissive": {
+      "category": null,
+      "source": "Look_Palette_v2 lamp_glow, unmuted (light source)",
+      "hex": "#FFE2A8"
+    }
+  },
+  "assets": {
+    "US_STOREFRONT_CASTIRON_3M": {
+      "triangles": 400,
+      "budget": 420,
+      "size_m": [
+        3.0,
+        0.52,
+        3.2
+      ],
+      "bounds_min": [
+        -1.5,
+        -0.5199999809265137,
+        0.0
+      ],
+      "bounds_max": [
+        1.5,
+        0.0,
+        3.200000047683716
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "3.0 m wide x 3.2 m high ground floor; threshold at origin. Fascia top Z=3.2; awning mounts with valance at Z=2.1.",
+      "swatches": [
+        "glass",
+        "grey",
+        "ink.light",
+        "paving",
+        "wood"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "concrete",
+        "glass",
+        "metal_dark",
+        "metal_painted",
+        "wood"
+      ],
+      "preview_tints": {},
+      "shell_count": 31,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "7f8b48f19cbefa1e12fbd1a906efdb1ddf976107",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_STOREFRONT_CASTIRON_3M_v01.fbx"
+    },
+    "US_STOREFRONT_CASTIRON_4_5M": {
+      "triangles": 448,
+      "budget": 460,
+      "size_m": [
+        4.5,
+        0.52,
+        3.2
+      ],
+      "bounds_min": [
+        -2.25,
+        -0.5199999809265137,
+        0.0
+      ],
+      "bounds_max": [
+        2.25,
+        0.0,
+        3.200000047683716
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "4.5 m wide x 3.2 m high ground floor; threshold at origin. Same section as 3M; adjacent storefronts abut column to column.",
+      "swatches": [
+        "glass",
+        "grey",
+        "ink.light",
+        "paving",
+        "wood"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "concrete",
+        "glass",
+        "metal_dark",
+        "metal_painted",
+        "wood"
+      ],
+      "preview_tints": {},
+      "shell_count": 35,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "380040af8c438632cbdac841ad66fb46b7e8cd9c",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_STOREFRONT_CASTIRON_4_5M_v01.fbx"
+    },
+    "US_AWNING_CANVAS_3M": {
+      "triangles": 72,
+      "budget": 150,
+      "size_m": [
+        3.0,
+        1.2,
+        1.0
+      ],
+      "bounds_min": [
+        -1.5,
+        -1.2000000476837158,
+        0.0
+      ],
+      "bounds_max": [
+        1.5,
+        0.0,
+        1.0
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "3 m width; wall origin at lowest valance level, wall rail +.95 m. Over US_STOREFRONT_CASTIRON_3M at Z=2.10. Cloth colour = canvas slot.",
+      "swatches": [
+        "ink.light",
+        "red.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "canvas",
+        "metal_dark"
+      ],
+      "preview_tints": {
+        "canvas": {
+          "swatch": "red.dark",
+          "hex": "#974A4F"
+        }
+      },
+      "shell_count": 6,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "d2f94b381bbecfd0fee20046ffb3c4b78ea4f238",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_AWNING_CANVAS_3M_v01.fbx"
+    },
+    "US_AWNING_CANVAS_4_5M": {
+      "triangles": 72,
+      "budget": 150,
+      "size_m": [
+        4.5,
+        1.2,
+        1.0
+      ],
+      "bounds_min": [
+        -2.25,
+        -1.2000000476837158,
+        0.0
+      ],
+      "bounds_max": [
+        2.25,
+        0.0,
+        1.0
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "4.5 m width; wall origin at lowest valance level, wall rail +.95 m. Over US_STOREFRONT_CASTIRON_4_5M at Z=2.10. Cloth colour = canvas slot.",
+      "swatches": [
+        "ink.light",
+        "red.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "canvas",
+        "metal_dark"
+      ],
+      "preview_tints": {
+        "canvas": {
+          "swatch": "conifer.dark",
+          "hex": "#23443E"
+        }
+      },
+      "shell_count": 6,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "be17a7018233d59357b8ac0f4f9cfc1d3942ca7e",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_AWNING_CANVAS_4_5M_v01.fbx"
+    },
+    "US_BLADE_SIGN": {
+      "triangles": 80,
+      "budget": 120,
+      "size_m": [
+        0.3,
+        1.0,
+        1.9
+      ],
+      "bounds_min": [
+        -0.15000000596046448,
+        -1.0,
+        -0.09999996423721313
+      ],
+      "bounds_max": [
+        0.15000000596046448,
+        0.0,
+        1.7999999523162842
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Projecting sign; wall plane origin at bottom of board. Mount at Z>=3.0 between storefront fascia and first-floor windows. Faces = accent slot.",
+      "swatches": [
+        "ink.light",
+        "teal.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "accent",
+        "metal_dark"
+      ],
+      "preview_tints": {
+        "accent": {
+          "swatch": "teal.dark",
+          "hex": "#3D666D"
+        }
+      },
+      "shell_count": 7,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "6814f95760e05932fecdd3b3824e3496c2d70a80",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_BLADE_SIGN_v01.fbx"
+    },
+    "US_NEON_SIGN_BOARD": {
+      "triangles": 184,
+      "budget": 200,
+      "size_m": [
+        2.4,
+        0.18,
+        0.9
+      ],
+      "bounds_min": [
+        -1.2000000476837158,
+        -0.18000000715255737,
+        0.0
+      ],
+      "bounds_max": [
+        1.2000000476837158,
+        0.0,
+        0.8999999761581421
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "2.4 m wide wall board, wall plane bottom-centre origin. Tubes on 0.06 m stand-offs; emissive slot. Mount above the storefront fascia.",
+      "swatches": [
+        "ink",
+        "neon_pink"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "emissive",
+        "metal_dark"
+      ],
+      "preview_tints": {
+        "emissive": {
+          "swatch": "neon_pink",
+          "hex": "#FF4F93"
+        }
+      },
+      "shell_count": 14,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "17296800070ca1c3807488af7bc607084dc1a14c",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_NEON_SIGN_BOARD_v01.fbx"
+    },
+    "US_WALL_AD_PANEL": {
+      "triangles": 124,
+      "budget": 140,
+      "size_m": [
+        4.0,
+        0.06,
+        3.0
+      ],
+      "bounds_min": [
+        -2.0,
+        -0.06000003218650818,
+        0.0
+      ],
+      "bounds_max": [
+        2.0,
+        0.0,
+        3.0
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "4.0 x 3.0 m painted ad on a blank brick wall; wall plane bottom-centre origin. Field = accent slot, lettering/border = plaster. Raised 1-3 cm, never coplanar with the wall.",
+      "swatches": [
+        "cream",
+        "mustard.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "accent",
+        "plaster"
+      ],
+      "preview_tints": {
+        "accent": {
+          "swatch": "mustard.dark",
+          "hex": "#A8844D"
+        }
+      },
+      "shell_count": 9,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "f558535809f9f44f23df2d9646629f431c29df94",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_WALL_AD_PANEL_v01.fbx"
+    },
+    "US_LINTEL_BRICK_JACK": {
+      "triangles": 84,
+      "budget": 120,
+      "size_m": [
+        1.5,
+        0.1,
+        0.38
+      ],
+      "bounds_min": [
+        -0.75,
+        -0.10000000149011612,
+        -0.03999999910593033
+      ],
+      "bounds_max": [
+        0.75,
+        0.0,
+        0.3400000035762787
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Flat splayed jack arch for WIN_FRAME_M (1.2 m). Z=0 = window top (sill +1.5 m); width 1.50 m, 6 cm relief, protruding keystone.",
+      "swatches": [
+        "brick",
+        "chalk.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "brick",
+        "concrete"
+      ],
+      "preview_tints": {},
+      "shell_count": 7,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "cdf22b971a227c4309f47f4766e01211fb6b1a5d",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_LINTEL_BRICK_JACK_v01.fbx"
+    },
+    "US_ARCH_BRICK_SEGMENTAL": {
+      "triangles": 136,
+      "budget": 140,
+      "size_m": [
+        1.5,
+        0.1,
+        0.496227
+      ],
+      "bounds_min": [
+        -0.75,
+        -0.10000000149011612,
+        0.0
+      ],
+      "bounds_max": [
+        0.75,
+        0.0,
+        0.49622687697410583
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Segmental brick arch for WIN_FRAME_M (1.2 m). Spring line Z=0 = window top; 9 voussoirs, rise .22 m, ring ~.23 m.",
+      "swatches": [
+        "brick",
+        "brick.dark",
+        "chalk.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "brick",
+        "concrete"
+      ],
+      "preview_tints": {},
+      "shell_count": 12,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "55c9776dfc2eeb88780732ac9ca34c5724c602ec",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_ARCH_BRICK_SEGMENTAL_v01.fbx"
+    },
+    "US_STOOP_BROWNSTONE": {
+      "triangles": 268,
+      "budget": 300,
+      "size_m": [
+        2.3,
+        2.9,
+        2.51
+      ],
+      "bounds_min": [
+        -1.149999976158142,
+        -2.9000000953674316,
+        0.0
+      ],
+      "bounds_max": [
+        1.149999976158142,
+        0.0,
+        2.509999990463257
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Wall plane bottom-centre origin on ground. 7 x .18 m rises to a 1.0 m landing at Z=1.26 (parlour door threshold); six .30 m treads; 2.3 m wide incl. cheeks. Brownstone = brick slot.",
+      "swatches": [
+        "chalk.dark",
+        "ink.light",
+        "terracotta.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "brick",
+        "concrete",
+        "metal_dark"
+      ],
+      "preview_tints": {},
+      "shell_count": 17,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "5080a3abc138bef338c9d41110a88920bb9fb3ad",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_STOOP_BROWNSTONE_v01.fbx"
+    },
+    "US_CORNICE_PRESSED_METAL_1M": {
+      "triangles": 92,
+      "budget": 160,
+      "size_m": [
+        1.0,
+        0.66,
+        0.84
+      ],
+      "bounds_min": [
+        -0.5,
+        -0.6600000262260437,
+        0.0
+      ],
+      "bounds_max": [
+        0.5,
+        0.0,
+        0.8399999737739563
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Tile along X at exactly 1 m pitch; flat end caps. Two console brackets per metre at X=+/-.25 keep the rhythm continuous. Top Z=.84; sits on the parapet/top-floor line.",
+      "swatches": [
+        "grey",
+        "grey.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 4,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "adcab66ec7ffe7df4bb817bb6945f9ef90b1383b",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_CORNICE_PRESSED_METAL_1M_v01.fbx"
+    },
+    "US_CORNICE_DENTIL_1M": {
+      "triangles": 92,
+      "budget": 120,
+      "size_m": [
+        1.0,
+        0.3,
+        0.4
+      ],
+      "bounds_min": [
+        -0.5,
+        -0.30000001192092896,
+        0.0
+      ],
+      "bounds_max": [
+        0.5,
+        0.0,
+        0.4000000059604645
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Tile along X at exactly 1 m pitch; five .10 m dentils at .20 m pitch (X=-.4..+.4) so joints repeat seamlessly. Top Z=.40.",
+      "swatches": [
+        "chalk.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "concrete"
+      ],
+      "preview_tints": {},
+      "shell_count": 6,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "6378fe91020c0b6c9d882a4af02b48bc91cb3e8b",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_CORNICE_DENTIL_1M_v01.fbx"
+    },
+    "US_ROOF_STAIR_BULKHEAD": {
+      "triangles": 128,
+      "budget": 220,
+      "size_m": [
+        2.5,
+        3.565,
+        3.11
+      ],
+      "bounds_min": [
+        -1.25,
+        -1.9450000524520874,
+        0.0
+      ],
+      "bounds_max": [
+        1.25,
+        1.6200000047683716,
+        3.1100001335144043
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Roof plane Z=0, footprint centre X=Y=0; door faces -Y",
+      "snapping": "Roof-plane origin at footprint centre; 2.2 x 3.0 m brick box, 2.5 m walls; steel door on -Y. Keep 1.8 m clear in front of the door.",
+      "swatches": [
+        "brick",
+        "grey",
+        "ink.light",
+        "lamp_glow",
+        "paving"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "brick",
+        "concrete",
+        "emissive",
+        "metal_dark",
+        "metal_painted",
+        "roof"
+      ],
+      "preview_tints": {},
+      "shell_count": 8,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "d6142b856418bdf489c3aeda3c3cd3655a46571d",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_ROOF_STAIR_BULKHEAD_v01.fbx"
+    },
+    "US_LOADING_DOCK_DOOR": {
+      "triangles": 180,
+      "budget": 220,
+      "size_m": [
+        3.4,
+        1.12,
+        4.5
+      ],
+      "bounds_min": [
+        -1.7000000476837158,
+        -1.1200000047683716,
+        0.0
+      ],
+      "bounds_max": [
+        1.7000000476837158,
+        0.0,
+        4.5
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "snapping": "Wall plane origin on street ground. 1.2 m dock, 3.0 x 3.0 m sectional door (sill Z=1.2), header to 4.5 m. Truck backs on -Y; keep 4 m clear.",
+      "swatches": [
+        "grey",
+        "grey.dark",
+        "grey.light",
+        "ink",
+        "ink.light",
+        "mustard.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "concrete",
+        "metal_dark",
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 9,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "b3c61943eb29b61957e9a49c8133a61153aea1ef",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_LOADING_DOCK_DOOR_v01.fbx"
+    },
+    "US_CHAINLINK_PANEL_3M": {
+      "triangles": 216,
+      "budget": 240,
+      "size_m": [
+        3.0,
+        0.086603,
+        1.73
+      ],
+      "bounds_min": [
+        -1.5,
+        -0.04330126941204071,
+        0.07000000029802322
+      ],
+      "bounds_max": [
+        1.5,
+        0.04330126941204071,
+        1.7999999523162842
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, fence line Y=0, panel centre X=0",
+      "snapping": "Fence line Y=0; tile along X at exactly 3 m pitch with US_CHAINLINK_POST at every joint (X=+/-1.5). Top rail Z=1.75. Mesh wires .035 m: deliberate thin exception.",
+      "swatches": [
+        "grey",
+        "grey.light"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 24,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "2e5b5ef2a8ed5f465939ce2d65147c14d7c29f1e",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_CHAINLINK_PANEL_3M_v01.fbx"
+    },
+    "US_CHAINLINK_POST": {
+      "triangles": 74,
+      "budget": 80,
+      "size_m": [
+        0.277128,
+        0.32,
+        2.0
+      ],
+      "bounds_min": [
+        -0.1385640650987625,
+        -0.1599999964237213,
+        0.0
+      ],
+      "bounds_max": [
+        0.1385640650987625,
+        0.1599999964237213,
+        2.0
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, post centre X=Y=0",
+      "snapping": "Fence line Y=0, post centre X=0. Place at every 3 m panel joint and both gate sides. 2.0 m tall incl. dome cap.",
+      "swatches": [
+        "grey",
+        "grey.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "concrete",
+        "metal_dark",
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 4,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "bf8267cb1a65936a513608b55bbb92734d379ea2",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_CHAINLINK_POST_v01.fbx"
+    },
+    "US_CHAINLINK_GATE_1_2M": {
+      "triangles": 232,
+      "budget": 240,
+      "size_m": [
+        1.2,
+        0.16,
+        1.85
+      ],
+      "bounds_min": [
+        -0.6000000238418579,
+        -0.07999999821186066,
+        0.0
+      ],
+      "bounds_max": [
+        0.6000000238418579,
+        0.07999999821186066,
+        1.850000023841858
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, fence line Y=0, panel centre X=0",
+      "snapping": "Fence line Y=0; gate opening centre X=0 between posts at X=+/-0.60. Hinges on -X; swing about (-.60,0). Frame 1.10 x 1.75 m.",
+      "swatches": [
+        "grey",
+        "grey.light",
+        "ink.light"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 20,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "3f2f4303d5f146205d5e3c3cb3ec560051ad3644",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_CHAINLINK_GATE_1_2M_v01.fbx"
+    },
+    "US_STREETLIGHT_COBRA": {
+      "triangles": 294,
+      "budget": 320,
+      "size_m": [
+        0.554328,
+        2.677164,
+        7.68
+      ],
+      "bounds_min": [
+        -0.27716386318206787,
+        -2.4000000953674316,
+        0.0
+      ],
+      "bounds_max": [
+        0.27716386318206787,
+        0.27716386318206787,
+        7.679999828338623
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, pole base centre X=Y=0; arm -Y",
+      "snapping": "Ground origin at pole base; arm reaches 2.25 m towards -Y (the carriageway). Kerb-side, 23 m spacing (map plan v17). Lens = emissive.",
+      "swatches": [
+        "grey",
+        "grey.light",
+        "ink.light",
+        "lamp_glow"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "concrete",
+        "emissive",
+        "metal_dark",
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 8,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "b07b2a22b1d3342c8b0565c0ae204f6ae72ae7cd",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_STREETLIGHT_COBRA_v01.fbx"
+    },
+    "US_PARKING_METER": {
+      "triangles": 110,
+      "budget": 120,
+      "size_m": [
+        0.26,
+        0.24,
+        1.49
+      ],
+      "bounds_min": [
+        -0.12999999523162842,
+        -0.12999999523162842,
+        0.0
+      ],
+      "bounds_max": [
+        0.12999999523162842,
+        0.10999999940395355,
+        1.4900000095367432
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, footprint centre X=Y=0; front -Y",
+      "snapping": "Ground origin; kerb edge .45 m from the kerb line, head faces the sidewalk (-Y). One per kerb parking bay.",
+      "swatches": [
+        "glass",
+        "grey",
+        "ink",
+        "ink.light"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "glass",
+        "metal_dark",
+        "metal_painted"
+      ],
+      "preview_tints": {},
+      "shell_count": 6,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "3dbfa24b60265e7e792e4232cfbeb6520f7921de",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_PARKING_METER_v01.fbx"
+    },
+    "US_NEWSPAPER_BOX": {
+      "triangles": 88,
+      "budget": 120,
+      "size_m": [
+        0.54,
+        0.51,
+        1.16
+      ],
+      "bounds_min": [
+        -0.27000001072883606,
+        -0.27000001072883606,
+        0.0
+      ],
+      "bounds_max": [
+        0.27000001072883606,
+        0.23999999463558197,
+        1.1600000858306885
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, footprint centre X=Y=0; front -Y",
+      "snapping": "Ground origin; set against a building or lamp, door faces -Y. Body colour = accent.",
+      "swatches": [
+        "cobalt.dark",
+        "glass",
+        "grey",
+        "ink.light"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "accent",
+        "glass",
+        "metal_dark",
+        "metal_painted"
+      ],
+      "preview_tints": {
+        "accent": {
+          "swatch": "cobalt.dark",
+          "hex": "#47567F"
+        }
+      },
+      "shell_count": 7,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "cf1b68239b38210dd5eb5419d0aa48f59670d14e",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_NEWSPAPER_BOX_v01.fbx"
+    },
+    "US_MAILBOX": {
+      "triangles": 116,
+      "budget": 150,
+      "size_m": [
+        0.52,
+        0.66,
+        1.22
+      ],
+      "bounds_min": [
+        -0.25999999046325684,
+        -0.3799999952316284,
+        0.0
+      ],
+      "bounds_max": [
+        0.25999999046325684,
+        0.2800000011920929,
+        1.2200000286102295
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, footprint centre X=Y=0; front -Y",
+      "snapping": "Ground origin; USPS-style collection box, chute faces -Y (sidewalk). Body = accent.",
+      "swatches": [
+        "chalk",
+        "cobalt.dark",
+        "grey",
+        "ink.light"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "accent",
+        "metal_dark",
+        "metal_painted",
+        "plaster"
+      ],
+      "preview_tints": {
+        "accent": {
+          "swatch": "cobalt.dark",
+          "hex": "#47567F"
+        }
+      },
+      "shell_count": 8,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "a324aab8aba070ee2f268c47d3c1417aaa1ac09c",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_MAILBOX_v01.fbx"
+    },
+    "US_FIRE_HYDRANT": {
+      "triangles": 266,
+      "budget": 280,
+      "size_m": [
+        0.54,
+        0.446298,
+        0.85
+      ],
+      "bounds_min": [
+        -0.27000001072883606,
+        -0.2800000011920929,
+        0.0
+      ],
+      "bounds_max": [
+        0.27000001072883606,
+        0.16629831492900848,
+        0.8499999642372131
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, footprint centre X=Y=0; front -Y",
+      "snapping": "Ground origin at barrel centre; pumper nozzle faces the street (-Y). Kerb-side, .6 m from kerb. Body = accent.",
+      "swatches": [
+        "grey",
+        "red.dark"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "accent",
+        "metal_painted"
+      ],
+      "preview_tints": {
+        "accent": {
+          "swatch": "red.dark",
+          "hex": "#974A4F"
+        }
+      },
+      "shell_count": 8,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "4d2e428913063cefaab2dadf8f3dd83ddb0bb377",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_FIRE_HYDRANT_v01.fbx"
+    },
+    "US_DUMPSTER": {
+      "triangles": 128,
+      "budget": 220,
+      "size_m": [
+        2.24,
+        1.35,
+        1.36
+      ],
+      "bounds_min": [
+        -1.119999885559082,
+        -0.6600000262260437,
+        0.0
+      ],
+      "bounds_max": [
+        1.119999885559082,
+        0.6899999976158142,
+        1.3600000143051147
+      ],
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot": "Ground plane Z=0, footprint centre X=Y=0; front -Y",
+      "snapping": "Ground origin at footprint centre; lids slope up to the back (+Y); fork pockets on X sides. Alley/courtyard placement. Body = accent.",
+      "swatches": [
+        "conifer.dark",
+        "ink"
+      ],
+      "slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof",
+        "canvas",
+        "accent",
+        "emissive"
+      ],
+      "used_slots": [
+        "accent",
+        "metal_dark"
+      ],
+      "preview_tints": {
+        "accent": {
+          "swatch": "conifer.dark",
+          "hex": "#23443E"
+        }
+      },
+      "shell_count": 10,
+      "closed_boundary_edges": 0,
+      "duplicate_directed_edges": 0,
+      "geometry_sha1": "136b8bd10701e49a59bc6f8f1c344b4e8880a1c6",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "all_shells_outward": true,
+        "no_degenerate_triangles": true,
+        "palette_uv_cells": true,
+        "g12_eight_roles_first_then_us_slots": true,
+        "slot_colours_from_v07": true,
+        "applied_transforms": true,
+        "deterministic_rebuild": true,
+        "no_rig_animation": true,
+        "no_jitter": true,
+        "nothing_behind_wall_or_below_ground": true,
+        "exact_nominal_width": true
+      },
+      "all_checks_passed": true,
+      "fbx": "US_DUMPSTER_v01.fbx"
+    }
+  },
+  "total_assets": 23,
+  "total_triangles": 3884,
+  "all_checks_passed": true,
+  "master_layout": "6-column review grid; translate to origin before exporting. Local pivot stays (0,0,0).",
+  "files": {
+    "blend": "SK3-BLDDETAILS-US-001_v01.blend",
+    "validation": "validation_v01.json"
+  }
+}
