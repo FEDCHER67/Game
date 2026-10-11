@@ -102,7 +102,7 @@ namespace OnlyVolunteers.Map
         {
             CharacterGroundingReport ground = motor.GroundingStatus;
             Vector3 feet = ground.FoundAnyGround ? ground.GroundPoint : motor.TransientPosition;
-            Sfx.PlayAt(SfxSurfaces.StepId(SfxSurfaces.At(ground.GroundCollider, feet)), feet, volume);
+            Sfx.PlayAt(SfxSurfaces.StepId(SfxSurfaces.At(ground.GroundCollider, feet)), feet, volume * 0.6f);
         }
 
         public override Transform Body => Kcc.Character.transform;

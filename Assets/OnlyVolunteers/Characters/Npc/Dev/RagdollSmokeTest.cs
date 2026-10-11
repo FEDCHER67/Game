@@ -31,7 +31,8 @@ namespace OnlyVolunteers.Characters.Npc.Dev
     // loaded in the bay sits up there (SitUp_Cargo, then Cargo_Sit_Idle, under the roof, no pop); r6b (rear doors alone)
     // now runs over the van's NPC body slide.
     // Step 2 (assists A2-A4 on, the van loads ragdolls): r5b two hands (collar + ankle, standing) lift it on open ground
-    // (the design's r5: the pelvis >= 0.3 m clear within 1.5 s, each hand's mean <= 160 N), r6 one hand loads it alone
+    // (the design's r5: the pelvis >= 0.3 m clear within 1.5 s, each hand's mean <= 160 N; r5c its sag in a U between the
+    // hands, 0.15-0.27 m under their line, joints whole, no jitter), r6 one hand loads it alone
     // through the sliding door in one go
     // (the h1 path of Map/Scripts/Dev/NpcLoadingTest: <= 12 s, mean hand force <= 195 N, grip kept), r6b the same through
     // the rear doors (loaded <= 12 s; force INFO, as the capsule's h2), r7 two hands, collar + ankle, through the rear
@@ -60,6 +61,11 @@ namespace OnlyVolunteers.Characters.Npc.Dev
     // NpcGetUp's start wrote them;
     // r21 the Animator shows each situation's state: fleeing after a get-up (the run), lying as the capsule (Down, or a
     // hit react), sitting in the van (the sit idle), escaping (the scramble or the run), the officer leaving (walking).
+    // Fedya's playtest 2026-10-11: r22 one hand alone on an ankle lifts the leg, not the body (the pelvis tilts a little
+    // toward it, the back and the head stay down) and still drags it at a walk; r23-r25 the van ramming standing NPCs
+    // (16-70 km/h, front, corner, side; the capsule once), running over, stopping on and backing over lying ones, pushing
+    // one against a wall: nothing stuck in the van, under it or in the wall (see LegLift and VanBodies). Only (a field)
+    // runs a subset, e.g. "legs,ram,runover".
     // Hands are real PhysicsGrabbers (ScriptDriven, as in NpcLoadingTest); in the van checks a hand stands somewhere
     // (crouched in the bay: eye 0.85 m over the floor, or standing: 1.85 m), the hold distance follows its target no
     // faster than a mouse wheel (1 m/s) and within 0.6-2.5 m.
@@ -86,6 +92,9 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         public int PerfAsleep = 40;
         public int PerfAwake = 10;
         public int PerfFrames = 300;
+        [Tooltip("Run only some parts (set before Start; comma-separated tags, empty: everything): base (r2-r21, T2), legs " +
+                 "(r22), legsweep (r22's INFO sweep: the solo-limb rule off and at 60/90/120 N), ram (r23), runover (r24, r25).")]
+        public string Only = "";
 
         private const string Tag = "[RagdollSmokeTest]";
         private const float SandboxLift = 300f;
@@ -104,6 +113,10 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         private const float SoloLimit = 12f, PairLimit = 6f;        // s from the first grab to "loaded" (§3.5)
         private const float SoloForce = 195f, PairForce = 160f;     // N, mean per hand (§3.5)
         private const float PairClear = 0.3f, PairClearTime = 1.5f; // m off the ground within s (§3.5)
+        // r5c (Fedya 2026-10-11: carried between two, the body sags in a U like a real person): the pelvis's sag under the
+        // line of the two holds, net of the same body lying flat (m), every joint gap (m) and the pelvis's jitter (RMS
+        // acceleration, m/s^2) over the last SagWindow s of r5b's hold.
+        private const float SagMin = 0.15f, SagMax = 0.27f, SagGap = 0.02f, SagJitter = 3f, SagWindow = 0.25f;
         private const float RideKmh = 40f, RideSeconds = 10f, RidePeriod = 4f, RideSteer = 0.3f;
         private const float ExplodeSpeed = 6f;      // m/s relative to the van: faster is an explosion, not a ride
         // m/s after a blow (r11, r13): the fist's own 42 N·s gives the struck torso part ~7.5 m/s before the joints share
@@ -145,6 +158,96 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             public NpcRagdoll Held;
             public int Slot = -1;
             public readonly List<float> Lags = new();
+        }
+
+        // The sag of a two-hand carry (r5c): how far the pelvis hangs under the straight line between the two holds (vertical,
+        // at the pelvis's place along the line), the bend at the pelvis (180 minus the angle hold A - pelvis - hold B), and
+        // how far the waist, the held leg's hip and the neck have turned from the pose lying flat at the grab. Drop and bend
+        // are net of that flat pose (the holds sit on the surface, the pelvis point on the bone).
+        private sealed class SagMeter
+        {
+            private readonly NpcRagdoll _r;
+            private readonly Hand _top, _low;
+            private readonly int _chest, _head, _thigh, _pelvis;
+            private readonly Quaternion _waist0, _neck0, _hip0;
+            private readonly float _drop0, _bend0;
+            private Vector3 _v;
+            private bool _hasV;
+            public readonly List<float> Drop = new(), Bend = new(), Waist = new(), Hip = new(), Neck = new(), Accel = new();
+            public float Gap;
+
+            public SagMeter(NpcRagdoll r, Hand top, Hand low, NpcSide heldLeg)
+            {
+                _r = r;
+                _top = top;
+                _low = low;
+                NpcRagdollProfile p = r.Profile;
+                _chest = p.IndexOf(Kind.Chest);
+                _head = p.IndexOf(Kind.Head);
+                _thigh = p.IndexOf(Kind.Thigh, heldLeg);
+                _pelvis = p.IndexOf(Kind.Pelvis);
+                _waist0 = Relative(_chest);
+                _neck0 = Relative(_head);
+                _hip0 = Relative(_thigh);
+                Line(out _drop0, out _bend0);
+            }
+
+            private Quaternion Relative(int part)
+            {
+                ConfigurableJoint j = _r.JointOf(part);
+                Rigidbody child = _r.BodyOf(part);
+                return j != null && j.connectedBody != null && child != null
+                    ? Quaternion.Inverse(j.connectedBody.rotation) * child.rotation
+                    : Quaternion.identity;
+            }
+
+            private void Line(out float drop, out float bend)
+            {
+                Vector3 g1 = _r.ClaimWorld(_top.Slot), g2 = _r.ClaimWorld(_low.Slot), pelvis = _r.Landmark(NpcLandmark.Pelvis);
+                Vector3 d = Flat(g2 - g1);
+                float t = d.sqrMagnitude > 1e-6f ? Mathf.Clamp01(Vector3.Dot(Flat(pelvis - g1), d) / d.sqrMagnitude) : 0.5f;
+                drop = Mathf.Lerp(g1.y, g2.y, t) - pelvis.y;
+                bend = 180f - Vector3.Angle(g1 - pelvis, g2 - pelvis);
+            }
+
+            public void Sample()
+            {
+                if (!_r.Active || _top.Slot < 0 || _low.Slot < 0) return;
+                Line(out float drop, out float bend);
+                Drop.Add(drop - _drop0);
+                Bend.Add(bend - _bend0);
+                Waist.Add(Quaternion.Angle(Relative(_chest), _waist0));
+                Hip.Add(Quaternion.Angle(Relative(_thigh), _hip0));
+                Neck.Add(Quaternion.Angle(Relative(_head), _neck0));
+                Vector3 v = _r.BodyOf(_pelvis).linearVelocity;
+                Accel.Add(_hasV ? (v - _v).magnitude / Time.fixedDeltaTime : 0f);
+                _v = v;
+                _hasV = true;
+                Gap = Mathf.Max(Gap, MaxJointGap(_r));
+            }
+
+            // The mean of the last 'n' samples.
+            public static float Tail(List<float> values, int n)
+            {
+                if (values.Count == 0) return 0f;
+                int from = Mathf.Max(0, values.Count - n);
+                float sum = 0f;
+                for (int i = from; i < values.Count; i++) sum += values[i];
+                return sum / (values.Count - from);
+            }
+
+            public static float TailRms(List<float> values, int n)
+            {
+                if (values.Count == 0) return 0f;
+                int from = Mathf.Max(0, values.Count - n);
+                float sum = 0f;
+                for (int i = from; i < values.Count; i++) sum += values[i] * values[i];
+                return Mathf.Sqrt(sum / (values.Count - from));
+            }
+
+            public string Report(int n) =>
+                Inv($"sag {Tail(Drop, n):0.00} m (flat offset {_drop0:0.00} m), bend {Tail(Bend, n):0} deg, waist {Tail(Waist, n):0} hip {Tail(Hip, n):0} ") +
+                Inv($"neck {Tail(Neck, n):0} deg, worst joint gap {Gap * 100f:0.0} cm, pelvis jitter {TailRms(Accel, n):0.0} m/s^2");
         }
 
         private struct Leg
@@ -288,26 +391,43 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             if (!Setup()) yield break;
             yield return Build();
             yield return Settle();
-            yield return GrabAny();
-            yield return HeadLift();
-            yield return PelvisLift();
-            yield return Stretch();
-            yield return Punch();
-            yield return Drag();
-            yield return PairLift(false);
-            yield return PairLift(true);
-            yield return KickTear();
-            yield return CrawlCheck();
-            yield return Restun();
-            yield return GetUp(true);
-            yield return GetUp(false);
-            yield return Momentum();
-            yield return CapCheck();
-            yield return CapsuleMode();
-            yield return TripCheck();
+            if (Run("base"))
+            {
+                yield return GrabAny();
+                yield return HeadLift();
+                yield return PelvisLift();
+            }
+            if (Run("legs") || Run("legsweep")) yield return LegLift();
+            if (Run("base"))
+            {
+                yield return Stretch();
+                yield return Punch();
+                yield return Drag();
+                yield return PairLift(false);
+                yield return PairLift(true);
+                yield return KickTear();
+                yield return CrawlCheck();
+                yield return Restun();
+                yield return GetUp(true);
+                yield return GetUp(false);
+                yield return Momentum();
+                yield return CapCheck();
+                yield return CapsuleMode();
+                yield return TripCheck();
+            }
             yield return Van();
+            if (!Run("base")) yield break;
             AnimContract();
             yield return Perf();
+        }
+
+        // Whether a part of the run is on (Only: empty runs everything).
+        private bool Run(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(Only)) return tag != "legsweep";
+            foreach (string t in Only.Split(','))
+                if (t.Trim() == tag) return true;
+            return false;
         }
 
         // ---------- Setup and teardown ----------
@@ -434,6 +554,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         {
             Time.timeScale = 1f;
             _observe = null;
+            RestoreSoloLimb();
             foreach (Hand h in _hands)
             {
                 if (h.Grabber != null) h.Grabber.ScriptRelease();
@@ -898,7 +1019,9 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         // The design's T1 r5 (§6): collar + ankle, both hands standing (the collar hand beside the chest, the ankle hand
         // behind the feet), lifting to the carry height in 0.5 s and holding it for a second. The pelvis must clear the
         // ground by PairClear within PairClearTime of the grab, each hand's mean force at most PairForce. INFO: the whole
-        // body's clearance (the arms hang), the carry tone the joints got (2: the split-pair hammock of A4).
+        // body's clearance (the arms hang), the carry tone the joints got (2: the split-pair tone of A4). r5c (non-groggy):
+        // the sag of that carry (SagMeter) over the last SagWindow s of the hold within SagMin..SagMax, every joint gap at
+        // most SagGap, the pelvis's jitter at most SagJitter; r17b prints the same numbers as INFO, r7 the sag after the lift.
         // Step 4 (r17b, groggy): the same with A Groggy once both hands hold it (the carried struggle: pawing, wriggling,
         // kicking on the drives; kick tears off, r15 measures those): it must stay carryable by the same numbers.
         private IEnumerator PairLift(bool groggy)
@@ -930,6 +1053,8 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             int pelvis = p.IndexOf(Kind.Pelvis);
             float grabbed = Time.fixedTime, clearAt = -1f, clear = float.NegativeInfinity, whole = float.NegativeInfinity;
             int tone = 0, kicks0 = _a.Kicks, heldTicks = 0, ticks = 0;
+            var sag = new SagMeter(r, a, b, NpcSide.Left); // r5c: built while it still lies flat
+            bool holding = false;
             if (groggy)
             {
                 OverrideKicks(_a, null, new float[4]);
@@ -945,11 +1070,15 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 tone = Mathf.Max(tone, r.Tone);
                 ticks++;
                 if (_a.Struggle != null && _a.Struggle.Current == NpcStruggle.Mode.Held) heldTicks++;
+                if (holding) sag.Sample();
             };
             Vector3 ta = a.Target, tb = b.Target;
             yield return Move(0.5f, To(a, new Vector3(ta.x, _o.y + Carry, ta.z)), To(b, new Vector3(tb.x, _o.y + Carry, tb.z)));
+            holding = true;
             yield return Move(1.0f, To(a, a.Target), To(b, b.Target));
             _observe = null;
+            int window = Ticks(SagWindow);
+            float sagDrop = SagMeter.Tail(sag.Drop, window), sagJitter = SagMeter.TailRms(sag.Accel, window);
             bool kept = !a.Lost && !b.Lost;
             float forceA = Mean(a.Forces), forceB = Mean(b.Forces);
             var lags = new List<float>(a.Lags);
@@ -967,7 +1096,12 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 Inv($"pelvis clear {clear:0.00} m, {PairClear:0.0} m after {Seconds(clearAt)} (limit {PairClearTime:0.0} s); whole body {whole:0.00} m (INFO); ") +
                 Inv($"force collar={forceA:0}N ankle={forceB:0}N (limit {PairForce:0} each) grip={(kept ? "kept" : "LOST")} tone {tone} ") +
                 Inv($"lag={Mean(lags):0.00}m (p95 {Percentile(lags, 0.95f):0.00})") +
-                (groggy ? Inv($"; struggling held {heldTicks}/{ticks} ticks, kicks {_a.Kicks - kicks0}") : ""));
+                (groggy ? Inv($"; struggling held {heldTicks}/{ticks} ticks, kicks {_a.Kicks - kicks0}; ") + sag.Report(window) + " (INFO)" : ""));
+            // r5c: the same carry sags in a U between the two holds (the arms and the free leg hang), the joints whole, no jitter.
+            if (!groggy)
+                Check("r5c pair carry sag", kept && sagDrop >= SagMin && sagDrop <= SagMax && sag.Gap <= SagGap && sagJitter <= SagJitter,
+                    sag.Report(window) + Inv($" (limits: sag {SagMin:0.00}-{SagMax:0.00} m, gap {SagGap * 100f:0} cm, jitter {SagJitter:0} m/s^2; ") +
+                    Inv($"mean of the last {SagWindow:0.00} s of the 1 s hold at {Carry:0.00} m)"));
         }
 
         // ---------- Step 4: r15 kicks against a holder, r16 crawl, r16b re-stun ----------
@@ -1384,11 +1518,18 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         private IEnumerator Van()
         {
             Progress = "van setup";
+            if (!Run("base") && !Run("ram") && !Run("runover")) yield break;
             if (!VanSetup(out string why))
             {
                 Check("van", false, "van checks not run: " + why);
                 yield break;
             }
+            if (Run("base")) yield return VanLoads();
+            if (Run("ram") || Run("runover")) yield return VanBodies();
+        }
+
+        private IEnumerator VanLoads()
+        {
             // A is the stage-1 capsule since r10: up, and down again as the ragdoll.
             _keepDown.Remove(_a);
             _a.StunTotal = 8f;
@@ -1609,7 +1750,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         // between the open rear leaves, then climbing in crouched. r5b measures the same pair on open ground meanwhile.
         // r7: two players, "one takes the arms, the other the legs" (design §3.5): A crouched in the bay at the rear doors
         // holds the collar, B behind the feet holds the left shin by the ankle. Both lift to the carry height (whole body
-        // off the ground: A4 makes the trunk a hammock), walk it in at CarrySpeed (A backs toward the cab, B up to the
+        // off the ground at the pelvis: A4 lets the trunk sag naturally), walk it in at CarrySpeed (A backs toward the cab, B up to the
         // ground behind the rear step), lower it and let go.
         private IEnumerator PairLoad()
         {
@@ -1637,9 +1778,14 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             }
             float grabbed = Time.fixedTime, loaded = -1f, clear = float.NegativeInfinity, clearAt = -1f;
             int tone = 0;
+            int pelvisPart = r.Profile.IndexOf(Kind.Pelvis);
+            var sag = new SagMeter(r, a, b, NpcSide.Left); // INFO: the r5c sag at the end of the lift
             _observe = () =>
             {
-                float low = LowestPoint(r) - _vo.y;
+                // The pelvis's clearance, as r5b: with the realistic two-holder sag (A4 150/120) the free leg dangles
+                // lower, so the whole body's lowest point is no longer the measure (Fedya 2026-10-11: sag +- realistic).
+                r.CapsuleSegment(pelvisPart, out Vector3 pa, out Vector3 pb, out float pr);
+                float low = Mathf.Min(pa.y, pb.y) - pr - _vo.y;
                 clear = Mathf.Max(clear, low);
                 if (clearAt < 0f && low >= PairClear) clearAt = Time.fixedTime - grabbed;
                 tone = Mathf.Max(tone, r.Tone);
@@ -1649,6 +1795,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             yield return Move(0.5f, To(a, new Vector3(ta.x, _vo.y + Carry, ta.z)), To(b, new Vector3(tb.x, _vo.y + Carry, tb.z)));
             yield return Move(1.0f, To(a, a.Target), To(b, b.Target));
             float pelvisUp = r.Landmark(NpcLandmark.Pelvis).y - _vo.y;
+            sag.Sample();
             // In: the collar to z -0.55 (the head short of the partition, the feet inside the rear doors).
             Vector3 shift = _yaw * new Vector3(0f, 0f, -0.55f - L(a.Target).z);
             yield return Move(shift.magnitude / CarrySpeed, To(a, a.Target + shift, W(0.15f, 0f, 0.05f)), To(b, b.Target + shift, W(0f, 0f, -3.00f)));
@@ -1669,7 +1816,8 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             Check(name, ok, Inv($"clear={clear:0.00}m, {PairClear:0.0} m at {Seconds(clearAt)} (limit {PairClearTime:0.0}) ") +
                             Inv($"loaded={LoadedText(loaded)} (limit {PairLimit:0} s) ") +
                             Inv($"force collar={forceA:0}N ankle={forceB:0}N (limit {PairForce:0} each) grip={(kept ? "kept" : "LOST")} ") +
-                            Inv($"pelvis {pelvisUp:0.00} m up while carried, tone {tone} lag={Mean(lags):0.00}m (p95 {Percentile(lags, 0.95f):0.00})") +
+                            Inv($"pelvis {pelvisUp:0.00} m up while carried (sag {SagMeter.Tail(sag.Drop, 1):0.00} m, bend {SagMeter.Tail(sag.Bend, 1):0} deg INFO), ") +
+                            Inv($"tone {tone} lag={Mean(lags):0.00}m (p95 {Percentile(lags, 0.95f):0.00})") +
                             (loaded < 0f ? " " + Why(_a) : ""));
         }
 
@@ -2381,6 +2529,685 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             foreach (Taken t in _taken)
                 if (t.Npc == npc) return true;
             return false;
+        }
+
+        // ---------- r22: one hand alone on a leg (BUG 1 of Fedya's playtest 2026-10-11) ----------
+
+        // "By the leg you can easily lift him into the air; he feels too light." One player alone on one leg lifts that leg
+        // only (NpcRagdollProfile.SoloLimbRule): the pelvis tilts toward the held side, its held-side hip rising at most
+        // LegHeldHip; the other hip, the pelvis centre and the back stay down (LegFreeHip, LegPelvis, LegBack), the head on
+        // the ground (LegHead); and the body can still be dragged by that ankle at a walk (the pelvis at >= LegDragShare of
+        // WalkSpeed over the drag's last second, the grip kept). A lies on its back; the hand stands 0.8 m behind its feet,
+        // takes the left shin near the ankle (GrabCalf), lifts its target to the carry height in 0.5 s and holds it (carry),
+        // raises it on to LegHigh, looking up (high: "into the air"), comes back to the carry height and walks off feet first
+        // at WalkSpeed for 2.4 s. Rises are the highest over the last second of each hold, net of the body lying flat (hips:
+        // the thighs' joints). INFO: the same lift with one hand on the left wrist (the rule covers the arms; shoulders
+        // instead of hips), the applied hand force (NpcRagdoll.LastHoldForce, after the cap); legsweep: both with the rule
+        // off (as before the fix) and at 60, 90 and 120 N.
+        private const float LegHeldHip = 0.15f, LegFreeHip = 0.05f, LegPelvis = 0.10f, LegBack = 0.05f, LegHead = 0.05f;
+        private const float LegHigh = 2.4f, LegDragShare = 0.7f;
+        private bool _soloTouched, _soloRule0;
+        private float _soloLift0;
+
+        private sealed class LimbLiftResult
+        {
+            public bool Grabbed, Kept, DragKept;
+            public string Miss = "";
+            // [0] carry, [1] high: the highest rise (m) of the held side's joint (hip or shoulder), the other side's, the
+            // pelvis centre, the back (the chest centre), the head's lowest point; the body's lowest point off the ground.
+            public readonly float[] Held = new float[2], Free = new float[2], Pelvis = new float[2], Back = new float[2], Head = new float[2];
+            public readonly float[] Lowest = { float.NegativeInfinity, float.NegativeInfinity };
+            public float Force, ForcePeak, DragShare, DragLag;
+
+            public string Report(bool arm) =>
+                Inv($"carry: held {(arm ? "shoulder" : "hip")} +{Held[0]:0.00} m, other +{Free[0]:0.00}, pelvis +{Pelvis[0]:0.00}, back +{Back[0]:0.00}, head +{Head[0]:0.00}; ") +
+                Inv($"high ({LegHigh:0.0} m): held +{Held[1]:0.00}, other +{Free[1]:0.00}, pelvis +{Pelvis[1]:0.00}, back +{Back[1]:0.00}, head +{Head[1]:0.00}, ") +
+                Inv($"lowest point {Lowest[1]:0.00} m off the ground ({(Lowest[1] > 0.05f ? "IN THE AIR" : "on the ground")}); ") +
+                Inv($"applied hand force mean {Force:0} N peak {ForcePeak:0} N") +
+                (arm ? "" : Inv($"; drag at {WalkSpeed:0.0} m/s: pelvis at {DragShare * 100f:0}%, lag {DragLag:0.00} m, grip {(DragKept ? "kept" : "LOST")}"));
+        }
+
+        private IEnumerator LegLift()
+        {
+            const string name = "r22 one hand on a leg";
+            Progress = name;
+            NpcRagdoll r = _a.Ragdoll;
+            NpcRagdollProfile p = r.Profile;
+            if (Run("legsweep"))
+            {
+                _soloRule0 = p.SoloLimbRule;
+                _soloLift0 = p.SoloLimbLift;
+                _soloTouched = true;
+                foreach (float cap in new[] { -1f, 60f, 90f, 120f })
+                {
+                    p.SoloLimbRule = cap > 0f;
+                    if (cap > 0f) p.SoloLimbLift = cap;
+                    string label = cap > 0f ? Inv($"rule on, {cap:0} N") : "rule off (as before the fix)";
+                    for (int limb = 0; limb < 2; limb++)
+                    {
+                        var sweep = new LimbLiftResult();
+                        yield return LimbLift(r, limb == 1, sweep);
+                        Line($"{Tag} INFO r22 sweep, {label}, one hand on the left {(limb == 1 ? "wrist" : "ankle")}: " +
+                             (sweep.Grabbed ? sweep.Report(limb == 1) + (sweep.Kept ? "" : " (grip LOST)") : "could not grab: " + sweep.Miss));
+                    }
+                }
+                RestoreSoloLimb();
+            }
+            if (!Run("legs")) yield break;
+            var leg = new LimbLiftResult();
+            yield return LimbLift(r, false, leg);
+            bool carry = leg.Held[0] <= LegHeldHip && leg.Free[0] <= LegFreeHip && leg.Pelvis[0] <= LegPelvis && leg.Back[0] <= LegBack &&
+                         leg.Head[0] <= LegHead;
+            bool high = leg.Held[1] <= LegHeldHip && leg.Free[1] <= LegFreeHip && leg.Pelvis[1] <= LegPelvis && leg.Back[1] <= LegBack &&
+                        leg.Head[1] <= LegHead && leg.Lowest[1] <= 0.05f;
+            bool drag = leg.DragKept && leg.DragShare >= LegDragShare;
+            Check(name, leg.Grabbed && leg.Kept && carry && high && drag,
+                (leg.Grabbed ? leg.Report(false) : "could not grab the ankle: " + leg.Miss) +
+                Inv($" (limits: held hip {LegHeldHip:0.00}, other hip {LegFreeHip:0.00}, pelvis {LegPelvis:0.00}, back {LegBack:0.00}, head {LegHead:0.00} m, ") +
+                Inv($"drag >= {LegDragShare * 100f:0}%); rule {(p.SoloLimbRule ? "on" : "OFF")}, cap {p.SoloLimbLift:0} N, grip {(leg.Kept ? "kept" : "LOST")}"));
+            var arm = new LimbLiftResult();
+            yield return LimbLift(r, true, arm);
+            Line($"{Tag} INFO r22 one hand on the left wrist (the same rule): " +
+                 (arm.Grabbed ? arm.Report(true) + (arm.Kept ? "" : " (grip LOST)") : "could not grab: " + arm.Miss));
+        }
+
+        // One hand alone lifts the left ankle (or wrist) of A lying on its back: carry, high, back to carry, then (a leg) the
+        // drag; see r22.
+        private IEnumerator LimbLift(NpcRagdoll r, bool arm, LimbLiftResult res)
+        {
+            NpcRagdollProfile p = r.Profile;
+            foreach (Hand hand in _hands) ReleaseHand(hand);
+            _observe = null;
+            Vector3 headDir = _yaw * Vector3.forward;
+            r.PlaceLying(_o + _yaw * new Vector3(-20f, 0f, 10f), headDir, true);
+            KeepStunned();
+            yield return Idle(0.8f);
+            int chest = p.IndexOf(Kind.Chest);
+            Kind joint = arm ? Kind.UpperArm : Kind.Thigh;
+            int held = p.IndexOf(joint, NpcSide.Left), free = p.IndexOf(joint, NpcSide.Right);
+            float held0 = r.BodyOf(held).position.y, free0 = r.BodyOf(free).position.y, pelvis0 = r.Landmark(NpcLandmark.Pelvis).y;
+            float back0 = r.PartCenter(chest).y, head0 = HeadLow(r), ground = LowestPoint(r);
+            Hand h = _hands[0];
+            Crouch(h, false);
+            if (arm)
+            {
+                r.CapsuleSegment(p.IndexOf(Kind.ForeArm, NpcSide.Left), out _, out Vector3 wrist, out _);
+                Vector3 outward = Flat(wrist - r.Landmark(NpcLandmark.Pelvis));
+                outward = outward.sqrMagnitude > 1e-4f ? outward.normalized : _yaw * Vector3.left;
+                h.Stand = Flat(wrist) + outward * 0.8f;
+                res.Grabbed = GrabForearm(h, r, NpcSide.Left);
+            }
+            else
+            {
+                h.Stand = Flat(LowFootTip(r)) - headDir * 0.8f;
+                res.Grabbed = GrabCalf(h, r, NpcSide.Left);
+            }
+            if (!res.Grabbed)
+            {
+                res.Miss = string.Join("; ", _grabMiss);
+                ReleaseHand(h);
+                yield break;
+            }
+            h.Expect = false; // a lost grip is this check's finding (Kept), not the whole run's
+            int window = -1;  // the hold being measured: 0 carry, 1 high, -1 none
+            bool kept = true;
+            var forces = new List<float>();
+            _observe = () =>
+            {
+                if (!h.Grabber.IsHolding)
+                {
+                    kept = false;
+                    return;
+                }
+                if (window < 0) return;
+                forces.Add(r.LastHoldForce.magnitude);
+                res.Held[window] = Mathf.Max(res.Held[window], r.BodyOf(held).position.y - held0);
+                res.Free[window] = Mathf.Max(res.Free[window], r.BodyOf(free).position.y - free0);
+                res.Pelvis[window] = Mathf.Max(res.Pelvis[window], r.Landmark(NpcLandmark.Pelvis).y - pelvis0);
+                res.Back[window] = Mathf.Max(res.Back[window], r.PartCenter(chest).y - back0);
+                res.Head[window] = Mathf.Max(res.Head[window], HeadLow(r) - head0);
+                res.Lowest[window] = Mathf.Max(res.Lowest[window], LowestPoint(r) - ground);
+            };
+            Vector3 t0 = h.Target;
+            Vector3 carryAt = new Vector3(t0.x, ground + Carry, t0.z);
+            yield return Move(0.5f, To(h, carryAt));
+            yield return Move(0.5f, To(h, carryAt));
+            window = 0;
+            yield return Move(1.0f, To(h, carryAt));
+            window = -1;
+            Vector3 highAt = new Vector3(t0.x, ground + LegHigh, t0.z);
+            yield return Move(0.4f, To(h, highAt));
+            yield return Move(0.4f, To(h, highAt));
+            window = 1;
+            yield return Move(0.6f, To(h, highAt));
+            window = -1;
+            yield return Move(0.5f, To(h, carryAt));
+            res.Kept = kept;
+            res.Force = Mean(forces);
+            res.ForcePeak = Max(forces);
+            if (!arm && kept)
+            {
+                var speeds = new List<float>();
+                var lags = new List<float>();
+                Vector3 away = -headDir;
+                bool dragKept = true;
+                int ticks = Ticks(2.4f);
+                for (int k = 1; k <= ticks; k++)
+                {
+                    float t = k * Time.fixedDeltaTime;
+                    Vector3 step = away * (Mathf.Min(WalkSpeed, WalkSpeed * t / 0.4f) * Time.fixedDeltaTime);
+                    h.Stand += step;
+                    h.Target += step;
+                    AimHand(h);
+                    yield return Fixed;
+                    AfterTick();
+                    if (!h.Grabber.IsHolding)
+                    {
+                        dragKept = false;
+                        break;
+                    }
+                    if (t < 1.4f) continue;
+                    speeds.Add(Vector3.Dot(r.MainBody.linearVelocity, away));
+                    lags.Add(Vector3.Distance(h.Grabber.PointHoldTarget, r.ClaimWorld(h.Slot)));
+                }
+                res.DragKept = dragKept;
+                res.DragShare = Mean(speeds) / WalkSpeed;
+                res.DragLag = Mean(lags);
+            }
+            _observe = null;
+            ReleaseHand(h);
+            yield return Idle(0.5f);
+        }
+
+        private void RestoreSoloLimb()
+        {
+            if (!_soloTouched) return;
+            _soloTouched = false;
+            NpcRagdollProfile p = _a != null && _a.Ragdoll != null ? _a.Ragdoll.Profile : null;
+            if (p == null) return;
+            p.SoloLimbRule = _soloRule0;
+            p.SoloLimbLift = _soloLift0;
+        }
+
+        // The head capsule's lowest point (world y).
+        private static float HeadLow(NpcRagdoll r)
+        {
+            r.CapsuleSegment(r.Profile.IndexOf(Kind.Head), out Vector3 a, out Vector3 b, out float radius);
+            return Mathf.Min(a.y, b.y) - radius;
+        }
+
+        // Takes a forearm near its wrist (from 90 % to 40 % of the way from its middle to the hand end, on its top or sides).
+        private bool GrabForearm(Hand h, NpcRagdoll r, NpcSide side)
+        {
+            int forearm = r.Profile.IndexOf(Kind.ForeArm, side);
+            r.CapsuleSegment(forearm, out Vector3 elbow, out Vector3 wrist, out float radius);
+            Vector3 mid = (elbow + wrist) * 0.5f;
+            Vector3 across = Vector3.Cross(Vector3.up, wrist - elbow);
+            across = across.sqrMagnitude > 1e-6f ? across.normalized : Vector3.right;
+            _grabMiss.Clear();
+            foreach (float u in new[] { 0.7f, 0.9f, 0.5f, 0.4f })
+                foreach (float s in new[] { 0f, 0.6f, -0.6f })
+                    if (TryGrabPart(h, r, forearm, Vector3.Lerp(mid, wrist, u) + Vector3.up * (radius * 0.5f) + across * (s * radius), Handle.Good))
+                        return true;
+            return false;
+        }
+
+        // ---------- r23-r25: the van against standing and lying bodies (BUG 2 of Fedya's playtest 2026-10-11) ----------
+
+        // "When you run over an NPC with the van he gets stuck in the van's geometry. Nothing may ever get stuck in any
+        // geometry." Each case takes a fresh copy of a crowd NPC (not scared of the van) on a lane RamLane m to the side of
+        // the sandbox centre, the van's doors shut:
+        // r23: the van rams a standing NPC at 16 (just over GreyboxNpc.KnockSpeedKmh), 30, 50 and 70 km/h, at the middle of
+        //   its front, at a front corner and grazing it with its side, as the ragdoll; and once as the capsule (F10) at
+        //   50 km/h. It drives on for 1.5 s after the knock, brakes to a stop, waits 1 s and backs off 4 m.
+        // r24: a body lying across the lane run over at 15 and 40 km/h; the van stopping on top of one at 8 km/h, waiting and
+        //   driving on; the van backing over one at 8 km/h.
+        // r25: a wall across the lane: a body lying at its foot pushed at 10 km/h (the van pushes on until blocked for 2 s);
+        //   a standing NPC with its back to it rammed at 30 km/h; then the van backs off.
+        // Stuck (any): a body collider inside a van (or wall) collider deeper than StuckDepth for StuckTime with their contact
+        // on (an ignored pair passes through, it is not stuck); a body part's centre boxed in by the van (a ray along each of
+        // its six axes meets it: the cab or the bay) or behind the wall; carried off by the van as it backs away (not riding
+        // on its roof or hood); NaN; fallen through the ground. Each case prints a row (INFO); a check passes when none of its
+        // cases is stuck. Time scale 1 from the run-up to the stop (the knock is looked for every rendered frame), then
+        // TimeScale.
+        private const float RamLane = 45f;
+        private const float StuckDepth = 0.03f, StuckTime = 0.25f, CarriedLimit = 1.5f;
+        private GreyboxNpc _template;
+
+        private sealed class VanCase
+        {
+            public string Check, Label;
+            public bool Lying;               // lying across the lane (ragdoll) instead of standing
+            public bool Capsule;             // F10's capsule
+            public float Offset;             // m, van-local x of the NPC off the lane's middle
+            public float Kmh;                // cruise; negative: backing up
+            public float StartZ;             // lane z of the van root at the start (the NPC at BodyZ)
+            public float StopZ = float.NaN;  // brake once the van root passes this lane z (else 1.5 s after the knock)
+            public float WallZ = float.NaN;  // a wall's near face at this lane z
+            public float Yaw = 90f;          // a standing NPC's facing, degrees from the lane's +z (90: crossing it)
+            public float BodyZ;
+        }
+
+        private sealed class StuckProbe
+        {
+            public float Worst, WorstAt, WorstIgnored, Run, Longest, Now, NowIgnored;
+            public string WorstWhat = "-", NowWhat = "-";
+            public bool Nan;
+        }
+
+        private static float RunUp(float kmh) => -(kmh / 3.6f * 1.2f + 4f);
+
+        private IEnumerator VanBodies()
+        {
+            var cases = new List<VanCase>();
+            if (Run("ram"))
+            {
+                foreach (float kmh in new[] { 16f, 30f, 50f, 70f })
+                {
+                    cases.Add(new VanCase { Check = "r23", Label = Inv($"{kmh:0} km/h front centre"), Kmh = kmh, StartZ = RunUp(kmh) });
+                    cases.Add(new VanCase { Check = "r23", Label = Inv($"{kmh:0} km/h front corner"), Kmh = kmh, Offset = 0.85f, StartZ = RunUp(kmh) });
+                    cases.Add(new VanCase { Check = "r23", Label = Inv($"{kmh:0} km/h side"), Kmh = kmh, Offset = 1.2f, StartZ = RunUp(kmh) });
+                }
+                cases.Add(new VanCase { Check = "r23", Label = "50 km/h front centre, capsule (F10)", Kmh = 50f, Capsule = true, StartZ = RunUp(50f) });
+            }
+            if (Run("runover"))
+            {
+                cases.Add(new VanCase { Check = "r24", Label = "run over at 15 km/h", Lying = true, Kmh = 15f, StartZ = -12f, StopZ = 9f });
+                cases.Add(new VanCase { Check = "r24", Label = "run over at 40 km/h", Lying = true, Kmh = 40f, StartZ = -16f, StopZ = 9f });
+                cases.Add(new VanCase { Check = "r24", Label = "stops on top at 8 km/h, drives on", Lying = true, Kmh = 8f, StartZ = -8f, StopZ = 0f });
+                cases.Add(new VanCase { Check = "r24", Label = "backs over at 8 km/h", Lying = true, Kmh = -8f, StartZ = 9f, StopZ = -9f });
+                cases.Add(new VanCase { Check = "r25", Label = "pushes a lying body into a wall at 10 km/h", Lying = true, Kmh = 10f, StartZ = -10f, WallZ = 0.55f });
+                cases.Add(new VanCase { Check = "r25", Label = "rams a standing NPC against a wall at 30 km/h", Kmh = 30f, StartZ = RunUp(30f), WallZ = 0.45f, Yaw = 180f });
+            }
+            var stuck = new Dictionary<string, List<string>>();
+            var counts = new Dictionary<string, int>();
+            foreach (VanCase c in cases)
+            {
+                bool free = true;
+                yield return VanCaseRun(c, ok => free = ok);
+                counts[c.Check] = (counts.TryGetValue(c.Check, out int n) ? n : 0) + 1;
+                if (!stuck.ContainsKey(c.Check)) stuck[c.Check] = new List<string>();
+                if (!free) stuck[c.Check].Add(c.Label);
+            }
+            Time.timeScale = Mathf.Max(0.1f, TimeScale);
+            NpcRagdoll.Mode = NpcBodyMode.Ragdoll;
+            PlaceVan(_vo);
+            if (_cloneHolder != null) Destroy(_cloneHolder);
+            _cloneHolder = null;
+            foreach ((string id, string title) in new[] { ("r23", "r23 van rams a standing NPC: nothing stuck"), ("r24", "r24 van over lying bodies: nothing stuck"),
+                         ("r25", "r25 van, body and a wall: nothing stuck") })
+            {
+                if (!counts.TryGetValue(id, out int n)) continue;
+                List<string> bad = stuck[id];
+                Check(title, bad.Count == 0, Inv($"{n - bad.Count}/{n} cases free") + (bad.Count > 0 ? " [stuck: " + string.Join("; ", bad) + "]" : "") +
+                                             " (rows: the INFO lines above)");
+            }
+        }
+
+        private IEnumerator VanCaseRun(VanCase c, Action<bool> result)
+        {
+            Progress = "van: " + c.Label;
+            foreach (Hand hand in _hands) ReleaseHand(hand);
+            _observe = null;
+            Vector3 fwd = _yaw * Vector3.forward, right = _yaw * Vector3.right;
+            Vector3 lane = _o + _yaw * new Vector3(RamLane, 0f, 40f);
+            Vector3 spot = lane + right * c.Offset + fwd * c.BodyZ;
+            NpcRagdoll.Mode = c.Capsule ? NpcBodyMode.Capsule : NpcBodyMode.Ragdoll;
+            PlaceVan(lane + fwd * c.StartZ);
+            if (_cargo.DoorOpen(0)) _cargo.ToggleDoor(0);
+            if (_cargo.DoorOpen(1)) _cargo.ToggleDoor(1);
+            yield return WaitFor(DoorsShut, 3f);
+            BoxCollider wall = null;
+            if (!float.IsNaN(c.WallZ))
+            {
+                var go = new GameObject("RagdollSmokeTest_Wall") { layer = 0 };
+                go.transform.SetPositionAndRotation(lane + fwd * (c.WallZ + 0.2f) + Vector3.up * 1.5f, _yaw);
+                wall = go.AddComponent<BoxCollider>();
+                wall.size = new Vector3(8f, 3f, 0.4f);
+                Physics.SyncTransforms();
+            }
+            Quaternion facing = Quaternion.LookRotation(Quaternion.AngleAxis(c.Yaw, Vector3.up) * fwd);
+            GreyboxNpc npc = Clone(spot, facing);
+            if (npc == null)
+            {
+                Line($"{Tag} INFO {c.Check} {c.Label}: no free crowd NPC to copy");
+                if (wall != null) Destroy(wall.gameObject);
+                result(false);
+                yield break;
+            }
+            yield return null; // its Start turns it at random
+            npc.transform.rotation = facing;
+            yield return Idle(0.4f);
+            if (c.Lying)
+            {
+                npc.Hit(WeaponStun.Fist, HitZone.Torso, npc.transform.position + npc.transform.forward, npc.Center);
+                _keepDown.Add(npc);
+                KeepStunned();
+                if (npc.Ragdoll.Active) npc.Ragdoll.PlaceLying(spot, right, true);
+                yield return Idle(1f);
+            }
+            List<Collider> others = VanColliders();
+            if (wall != null) others.Add(wall);
+            var probe = new StuckProbe();
+            float v = c.Kmh / 3.6f;
+            _van.isKinematic = false;
+            _van.linearVelocity = fwd * v;
+            _van.angularVelocity = Vector3.zero;
+            _vanCtl.Handbrake = false;
+            Time.timeScale = 1f;
+            float t0 = Time.fixedTime, knock = -1f, brake = -1f, blocked = 0f, knockKmh = 0f, born = 0f;
+            string bornWhat = "-", trace = "";
+            bool wasDown = npc.State == NpcState.Down;
+            int frames0 = Time.frameCount, ticks = 0, framesAtKnock = -1, ticksAtKnock = 0;
+            for (int k = 0; k < Ticks(16f); k++)
+            {
+                float kmh = _vanCtl.SpeedKmh;
+                float z = Vector3.Dot(_van.position - lane, fwd);
+                if (knock < 0f && !wasDown && npc.State == NpcState.Down)
+                {
+                    knock = Time.fixedTime;
+                    knockKmh = kmh;
+                    framesAtKnock = Time.frameCount - frames0;
+                    ticksAtKnock = ticks;
+                    _keepDown.Add(npc);
+                    KeepStunned();
+                }
+                if (brake < 0f)
+                {
+                    bool stop = !float.IsNaN(c.StopZ) ? (v >= 0f ? z >= c.StopZ : z <= c.StopZ)
+                        : knock >= 0f ? Time.fixedTime - knock >= 1.5f
+                        : v >= 0f ? z >= 8f : z <= -8f; // passed by without a knock
+                    blocked = Time.fixedTime - t0 > 1f && Mathf.Abs(kmh) < 1f ? blocked + Time.fixedDeltaTime : 0f;
+                    if (stop || blocked >= 2f) brake = Time.fixedTime;
+                }
+                if (brake < 0f) Cruise(c.Kmh);
+                else
+                {
+                    _vanCtl.Steer = 0f;
+                    _vanCtl.Throttle = kmh > 0.5f ? -1f : kmh < -0.5f ? 1f : 0f;
+                    if (Mathf.Abs(kmh) < 1f) _vanCtl.Handbrake = true;
+                    if (Mathf.Abs(kmh) < 0.5f && Time.fixedTime - brake > 0.3f) break;
+                }
+                yield return Fixed;
+                AfterTick();
+                ticks++;
+                Probe(npc, others, probe, knock);
+                if (knock >= 0f && ticks == ticksAtKnock + 1)
+                {
+                    born = probe.NowIgnored;
+                    bornWhat = probe.NowWhat;
+                }
+                if (knock >= 0f)
+                    foreach (float at in new[] { 0.25f, 0.5f, 0.75f, 1.0f })
+                        if (Mathf.Abs(Time.fixedTime - knock - at) < Time.fixedDeltaTime * 0.5f)
+                        {
+                            Vector3 lp = VanLocal(npc.Center);
+                            trace += Inv($" +{at:0.00}s ({lp.x:0.0},{lp.y:0.0},{lp.z:0.0})");
+                        }
+            }
+            float stepsPerFrame = framesAtKnock > 0 ? (float)ticksAtKnock / framesAtKnock : 0f;
+            Time.timeScale = Mathf.Max(0.1f, TimeScale);
+            _vanCtl.Throttle = 0f;
+            _vanCtl.Handbrake = true;
+            for (int k = 0; k < Ticks(1f); k++)
+            {
+                yield return Fixed;
+                AfterTick();
+                Probe(npc, others, probe, knock);
+            }
+            string rest = RestPlace(npc, wall, lane, fwd, out bool inside, out bool behind);
+            // Back off 4 m, away from the body.
+            Vector3 body0 = npc.Center, van0 = _van.position;
+            float away = VanLocal(body0).z > 0f ? -6f : 6f;
+            _vanCtl.Handbrake = false;
+            for (int k = 0; k < Ticks(5f) && Flat(_van.position - van0).magnitude < 4f; k++)
+            {
+                Cruise(away);
+                yield return Fixed;
+                AfterTick();
+                Probe(npc, others, probe, knock);
+            }
+            for (int k = 0; k < Ticks(2f) && Mathf.Abs(_vanCtl.SpeedKmh) > 0.5f; k++)
+            {
+                float kmh = _vanCtl.SpeedKmh;
+                _vanCtl.Throttle = kmh > 0.5f ? -1f : kmh < -0.5f ? 1f : 0f;
+                yield return Fixed;
+                AfterTick();
+                Probe(npc, others, probe, knock);
+            }
+            _vanCtl.Throttle = 0f;
+            _vanCtl.Handbrake = true;
+            for (int k = 0; k < Ticks(0.5f); k++)
+            {
+                yield return Fixed;
+                AfterTick();
+                Probe(npc, others, probe, knock);
+            }
+            Vector3 moved = _van.position - van0;
+            float carried = moved.sqrMagnitude > 0.01f ? Vector3.Dot(npc.Center - body0, moved.normalized) : 0f;
+            bool onTop = OnVanTop(npc.Center);
+            bool carriedOff = carried >= CarriedLimit && !onTop;
+            string after = RestPlace(npc, wall, lane, fwd, out bool insideAfter, out bool behindAfter);
+            inside |= insideAfter;
+            behind |= behindAfter;
+            bool fell = npc.Center.y < _o.y - 0.3f;
+            var why = new List<string>();
+            if (probe.Longest >= StuckTime) why.Add(Inv($"in {probe.WorstWhat} {probe.Worst:0.00} m for {probe.Longest:0.00} s"));
+            if (inside) why.Add("boxed in by the van");
+            if (behind) why.Add("through the wall");
+            if (carriedOff) why.Add(Inv($"carried {carried:0.0} m by the van"));
+            if (probe.Nan) why.Add("NaN");
+            if (fell) why.Add("fell through the ground");
+            bool stuck = why.Count > 0;
+            Line($"{Tag} INFO {c.Check} {c.Label}: " +
+                 (knock >= 0f ? Inv($"knocked at {knockKmh:0} km/h ({stepsPerFrame:0.0} physics steps per frame), born {born:0.00} m into {bornWhat}; ") :
+                     (c.Lying ? "" : "NOT knocked; ")) +
+                 Inv($"worst overlap with the contact on {probe.Worst:0.00} m ({probe.WorstWhat}, +{probe.WorstAt:0.00} s), longest {probe.Longest:0.00} s; ") +
+                 Inv($"ignored overlap up to {probe.WorstIgnored:0.00} m; path{(trace.Length > 0 ? trace : " -")} (van-local); rests {rest}; ") +
+                 Inv($"after backing off {moved.magnitude:0.0} m: {after}, the body moved {carried:0.0} m with the van; ") +
+                 (stuck ? "STUCK: " + string.Join(", ", why) : "free"));
+            _keepDown.Remove(npc);
+            _clones.Remove(npc.gameObject);
+            Destroy(npc.gameObject);
+            if (wall != null) Destroy(wall.gameObject);
+            PlaceVan(_vo);
+            yield return Fixed;
+            result(!stuck);
+        }
+
+        // A copy of a free crowd NPC (not one of the test's three) standing at 'feet': no crowd walker, police role or sea
+        // tracker, not scared of the van or the player.
+        private GreyboxNpc Clone(Vector3 feet, Quaternion rotation)
+        {
+            if (_template == null)
+                foreach (GreyboxNpc npc in GreyboxNpc.All)
+                    if (npc != null && npc.isActiveAndEnabled && npc.State == NpcState.Free && !npc.InCargo && !PoliceOfficer.IsOfficer(npc) &&
+                        npc.Ragdoll != null && npc.Ragdoll.Ready && !IsTaken(npc) && !_clones.Contains(npc.gameObject))
+                    {
+                        _template = npc;
+                        break;
+                    }
+            if (_template == null) return null;
+            if (_cloneHolder == null)
+            {
+                _cloneHolder = new GameObject("RagdollProbe_Holder");
+                _cloneHolder.SetActive(false);
+            }
+            GameObject go = Instantiate(_template.gameObject, _cloneHolder.transform);
+            go.name = $"RamProbe_{_clones.Count:00}";
+            foreach (CrowdWalker w in go.GetComponents<CrowdWalker>()) DestroyImmediate(w);
+            foreach (PoliceOfficer o in go.GetComponents<PoliceOfficer>()) DestroyImmediate(o);
+            foreach (SeaReturnTracker s in go.GetComponents<SeaReturnTracker>()) DestroyImmediate(s);
+            go.transform.SetPositionAndRotation(feet, rotation);
+            var copy = go.GetComponent<GreyboxNpc>();
+            copy.VanScareRadius = 0f;
+            copy.WalkerScareRadius = 0f;
+            go.transform.SetParent(null, true); // active now: Awake and OnEnable run
+            _clones.Add(go);
+            return copy;
+        }
+
+        // Every van collider an NPC body can meet (no wheels, triggers or the player's ramps; the NPC body slide counts).
+        private List<Collider> VanColliders()
+        {
+            var list = new List<Collider>();
+            foreach (Collider c in _van.GetComponentsInChildren<Collider>(true))
+                if (c.enabled && c.gameObject.activeInHierarchy && !c.isTrigger && !(c is WheelCollider) && c.gameObject.layer != OvLayers.VehicleInterior)
+                    list.Add(c);
+            return list;
+        }
+
+        // The van parked (kinematic: the handbrake) at 'root', on the frame's yaw.
+        private void PlaceVan(Vector3 root)
+        {
+            _vanCtl.Throttle = 0f;
+            _vanCtl.Steer = 0f;
+            _vanCtl.Handbrake = true;
+            if (!_van.isKinematic)
+            {
+                _van.linearVelocity = Vector3.zero;
+                _van.angularVelocity = Vector3.zero;
+            }
+            _van.isKinematic = true;
+            _van.position = root;
+            _van.rotation = _yaw;
+            _van.transform.SetPositionAndRotation(root, _yaw);
+            Physics.SyncTransforms();
+        }
+
+        private void Cruise(float kmh)
+        {
+            float now = _vanCtl.SpeedKmh;
+            _vanCtl.Handbrake = false;
+            _vanCtl.Steer = 0f;
+            _vanCtl.Throttle = kmh >= 0f ? Mathf.Clamp((kmh - now) * 0.25f, -1f, 1f) : -Mathf.Clamp((now - kmh) * 0.25f, -1f, 1f);
+        }
+
+        private Vector3 VanLocal(Vector3 world) => Quaternion.Inverse(_van.rotation) * (world - _van.position);
+
+        // Resting on the van's top: over its footprint, above the hood.
+        private bool OnVanTop(Vector3 world)
+        {
+            Vector3 l = VanLocal(world);
+            return Mathf.Abs(l.x) < 1.05f && l.z > -2.5f && l.z < 2.5f && l.y > 1.15f;
+        }
+
+        // Where the body rests (van-local words); inside: a part's centre boxed in by the van; behind: a part past the wall.
+        private string RestPlace(GreyboxNpc npc, BoxCollider wall, Vector3 lane, Vector3 fwd, out bool inside, out bool behind)
+        {
+            inside = behind = false;
+            var centres = new List<Vector3>();
+            if (npc.Ragdoll != null && npc.Ragdoll.Active)
+                for (int i = 0; i < npc.Ragdoll.PartCount; i++) centres.Add(npc.Ragdoll.PartCenter(i));
+            else centres.Add(npc.Center);
+            List<Collider> van = VanColliders();
+            string boxed = "";
+            foreach (Vector3 p in centres)
+            {
+                if (!inside && Enclosed(p, van))
+                {
+                    inside = true;
+                    Vector3 l = VanLocal(p);
+                    boxed = Inv($" (a part at {l.x:0.00},{l.y:0.00},{l.z:0.00})");
+                }
+                if (wall != null && Vector3.Dot(p - lane, fwd) > Vector3.Dot(wall.transform.position - lane, fwd) + wall.size.z * 0.5f) behind = true;
+            }
+            Vector3 c = VanLocal(npc.Center);
+            string where = inside ? "INSIDE THE VAN" + boxed
+                : Mathf.Abs(c.x) < 1.05f && c.z > -2.5f && c.z < 2.5f
+                    ? (c.y > 1.9f ? "on the roof" : c.y > 1.15f ? "on the hood" : c.y < 0.35f ? "under the van" : "against the van")
+                    : c.z >= 2.5f ? Inv($"{c.z - 2.4f:0.0} m ahead") : c.z <= -2.5f ? Inv($"{-c.z - 2.4f:0.0} m behind") : Inv($"{Mathf.Abs(c.x) - 0.95f:0.0} m beside");
+            return Inv($"{where} [centre {c.x:0.00},{c.y:0.00},{c.z:0.00}]") + (behind ? " THROUGH THE WALL" : "");
+        }
+
+        private static readonly Vector3[] SixAxes = { Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.forward, Vector3.back };
+
+        // Boxed in by the van: a ray along each of the van's six axes meets one of its colliders within 3 m.
+        private bool Enclosed(Vector3 point, List<Collider> van)
+        {
+            foreach (Vector3 axis in SixAxes)
+            {
+                var ray = new Ray(point, _van.rotation * axis);
+                bool hit = false;
+                foreach (Collider c in van)
+                    if (c.Raycast(ray, out _, 3f))
+                    {
+                        hit = true;
+                        break;
+                    }
+                if (!hit) return false;
+            }
+            return true;
+        }
+
+        // One tick of a van case: the deepest interpenetration of the NPC's colliders (down: the ragdoll's or the capsule) with
+        // the van's and the wall's, apart for pairs whose contact is ignored (the knock's grace) and the rest.
+        private void Probe(GreyboxNpc npc, List<Collider> others, StuckProbe probe, float knock)
+        {
+            probe.Now = probe.NowIgnored = 0f;
+            probe.NowWhat = "-";
+            if (npc == null || npc.State != NpcState.Down)
+            {
+                probe.Run = 0f;
+                return;
+            }
+            string what = "-";
+            foreach (Collider b in npc.GetComponentsInChildren<Collider>())
+            {
+                if (!b.enabled || b.isTrigger || b is CharacterController) continue;
+                if (b.attachedRigidbody != null && !GrabPhysicsSolver.IsFinite(b.attachedRigidbody.position))
+                {
+                    probe.Nan = true;
+                    continue;
+                }
+                Bounds bb = b.bounds;
+                bb.Expand(0.02f);
+                foreach (Collider o in others)
+                {
+                    if (o == null || !o.enabled || !o.gameObject.activeInHierarchy || !bb.Intersects(o.bounds)) continue;
+                    PhysicsPose(b, out Vector3 pb, out Quaternion qb);
+                    PhysicsPose(o, out Vector3 po, out Quaternion qo);
+                    if (!Physics.ComputePenetration(b, pb, qb, o, po, qo, out _, out float d)) continue;
+                    string pair = (b.attachedRigidbody != null ? b.attachedRigidbody.name : b.name) + " in " + o.name;
+                    if (Physics.GetIgnoreCollision(b, o) || Physics.GetIgnoreLayerCollision(b.gameObject.layer, o.gameObject.layer) &&
+                        (b.includeLayers.value & (1 << o.gameObject.layer)) == 0)
+                    {
+                        if (d > probe.NowIgnored)
+                        {
+                            probe.NowIgnored = d;
+                            probe.NowWhat = pair;
+                        }
+                        probe.WorstIgnored = Mathf.Max(probe.WorstIgnored, d);
+                        continue;
+                    }
+                    if (d <= probe.Now) continue;
+                    probe.Now = d;
+                    what = pair;
+                }
+            }
+            probe.Run = probe.Now > StuckDepth ? probe.Run + Time.fixedDeltaTime : 0f;
+            probe.Longest = Mathf.Max(probe.Longest, probe.Run);
+            if (probe.Now <= probe.Worst) return;
+            probe.Worst = probe.Now;
+            probe.WorstWhat = what;
+            probe.WorstAt = knock >= 0f ? Time.fixedTime - knock : 0f;
+        }
+
+        // A collider's pose from its body's physics pose (the transforms of interpolated bodies trail it).
+        private static void PhysicsPose(Collider c, out Vector3 position, out Quaternion rotation)
+        {
+            Rigidbody rb = c.attachedRigidbody;
+            Transform t = c.transform;
+            if (rb == null)
+            {
+                position = t.position;
+                rotation = t.rotation;
+                return;
+            }
+            Transform bt = rb.transform;
+            Quaternion inverse = Quaternion.Inverse(bt.rotation);
+            position = rb.position + rb.rotation * (inverse * (t.position - bt.position));
+            rotation = rb.rotation * (inverse * t.rotation);
         }
 
         // ---------- Helpers: the van ----------

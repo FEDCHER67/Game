@@ -220,6 +220,7 @@ namespace OnlyVolunteers.Map
         {
             public string activity = "", bone = "", prefab = "";
             public float[] position = Array.Empty<float>(), rotation = Array.Empty<float>(), size = Array.Empty<float>();
+            public bool upright;
         }
 
         // Step 5: a crowd activity's prop behind the NPC (NpcRagdollProfile.ActivityPlacement).
@@ -334,6 +335,7 @@ namespace OnlyVolunteers.Map
                                    Inv($"({info.HipsStart.x:0.000}, {info.HipsStart.y:0.000}, {info.HipsStart.z:0.000}){(miss > 0.01f ? "  WARN off by " + miss.ToString("0.000", CultureInfo.InvariantCulture) + " m" : "")}"));
                 }
                 MeasureSeat(profile, manifest.seat, clips, buddy, log);
+                MeasureSeatReach(profile, clips, scene, log);
             }
             finally
             {
@@ -378,6 +380,7 @@ namespace OnlyVolunteers.Map
                     Rotation = V3(entry.rotation, Vector3.zero),
                     Size = V3(entry.size, new Vector3(0.008f, 0.07f, 0.008f)),
                     Prefab = string.IsNullOrEmpty(entry.prefab) ? null : AssetDatabase.LoadAssetAtPath<GameObject>(entry.prefab),
+                    Upright = entry.upright,
                 };
                 if (!string.IsNullOrEmpty(entry.prefab) && prop.Prefab == null) throw new InvalidOperationException("clips.json: no prop prefab " + entry.prefab);
                 props.Add(prop);
@@ -457,6 +460,69 @@ namespace OnlyVolunteers.Map
             profile.SeatMax = max;
             log.AppendLine(Inv($"  seat ({seat.clip} frame 0): clip x {minX:0.00}..{maxX:0.00} z {minZ:0.00}..{maxZ:0.00}, top {top:0.00} m; ") +
                            Inv($"visual yaw {seat.yaw:0}, offset ({profile.SeatOffset.x:0.00}, {profile.SeatOffset.z:0.00}), footprint x {min.x:0.00}..{max.x:0.00} z {min.y:0.00}..{max.y:0.00}"));
+        }
+
+        // How far each skinned mesh of the Buddy prefabs reaches toward the wall behind the seated figure (the sit clips'
+        // +X, turned and moved by the seat layout above), every 1/30 s over the sit idle, the knock and the sit-up from
+        // 0.8 s before its Seated event (earlier it lies where the ragdoll lay: GreyboxNpc holds it there); LowBack: the part
+        // under SeatLowHeight. NpcGetUp.SitUp puts the deepest of an NPC's meshes just off the van wall.
+        private static void MeasureSeatReach(NpcRagdollProfile profile, Dictionary<string, AnimationClip> clips, Scene scene, StringBuilder log)
+        {
+            var reaches = new List<NpcRagdollProfile.SeatReach>();
+            if (!clips.TryGetValue(profile.SitIdle.State ?? "", out AnimationClip idle) ||
+                !clips.TryGetValue(profile.SitUp.State ?? "", out AnimationClip sitUp))
+            {
+                profile.SeatReaches = reaches.ToArray();
+                log.AppendLine("  seat reach: no sit clips");
+                return;
+            }
+            clips.TryGetValue(profile.Knock.State ?? "", out AnimationClip knock);
+            float sitFrom = Mathf.Max(0f, (profile.SitUp.Events != null && profile.SitUp.Events.Length >= 2 ? profile.SitUp.Events[1] : sitUp.length) - 0.8f);
+            Quaternion turn = Quaternion.Euler(0f, profile.SeatYaw, 0f);
+            Vector3 back = turn * Vector3.right;
+            foreach (string path in NpcRagdollBuilder.BuddyPrefabs)
+            {
+                GameObject buddy = NpcRagdollBuilder.InstantiateSampled(path, scene);
+                var skins = buddy.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+                var baked = new Mesh();
+                var deep = new float[skins.Length];
+                var low = new float[skins.Length];
+                for (int i = 0; i < skins.Length; i++) deep[i] = low[i] = float.MinValue;
+                foreach ((AnimationClip clip, float from) in new[] { (idle, 0f), (knock, 0f), (sitUp, sitFrom) })
+                {
+                    if (clip == null) continue;
+                    for (float t = from; t <= clip.length + 1e-4f; t += 1f / 30f)
+                    {
+                        clip.SampleAnimation(buddy, Mathf.Min(t, clip.length));
+                        for (int i = 0; i < skins.Length; i++)
+                        {
+                            if (skins[i].sharedMesh == null) continue;
+                            skins[i].BakeMesh(baked, true);
+                            Matrix4x4 toRoot = buddy.transform.worldToLocalMatrix * skins[i].transform.localToWorldMatrix;
+                            foreach (Vector3 v in baked.vertices)
+                            {
+                                Vector3 q = profile.SeatOffset + turn * toRoot.MultiplyPoint3x4(v);
+                                float d = Vector3.Dot(q, back);
+                                deep[i] = Mathf.Max(deep[i], d);
+                                if (q.y < NpcRagdollProfile.SeatLowHeight) low[i] = Mathf.Max(low[i], d);
+                            }
+                        }
+                    }
+                }
+                Object.DestroyImmediate(baked);
+                for (int i = 0; i < skins.Length; i++)
+                {
+                    Mesh mesh = skins[i].sharedMesh;
+                    if (mesh == null || deep[i] == float.MinValue) continue;
+                    float lowBack = low[i] == float.MinValue ? 0f : low[i];
+                    NpcRagdollProfile.SeatReach known = reaches.Find(r => r.Mesh == mesh);
+                    if (known != null) continue; // shared by both prefabs: the same rig, the same numbers
+                    reaches.Add(new NpcRagdollProfile.SeatReach { Mesh = mesh, Back = deep[i], LowBack = lowBack });
+                    log.AppendLine(Inv($"  seat reach {Path.GetFileNameWithoutExtension(path)}/{skins[i].name} ({mesh.name}): back {deep[i]:0.000} m, under {NpcRagdollProfile.SeatLowHeight:0.00} m {lowBack:0.000} m"));
+                }
+                Object.DestroyImmediate(buddy);
+            }
+            profile.SeatReaches = reaches.ToArray();
         }
 
         private static float Pick(List<float> sorted, float q) => sorted[Mathf.Clamp(Mathf.RoundToInt(q * (sorted.Count - 1)), 0, sorted.Count - 1)];

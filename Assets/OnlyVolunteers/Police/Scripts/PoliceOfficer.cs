@@ -76,6 +76,7 @@ namespace OnlyVolunteers.Police
         private Vector3 _goal;
         private float _stateSince, _until, _vy, _lastSeen, _nextPath, _nextShot, _tripUntil, _nextBang;
         private float _nextBeat, _chaseSince; // the next attack's earliest time; the foot chase's start
+        private float _nextWhistle;
         // Step 5: the next fist shaken at the van (Bang); the Cop_Trip stumble before the ragdoll (its start, end, velocity).
         private float _nextFist, _tripLeadFrom, _tripLeadUntil;
         private Vector3 _tripVelocity;
@@ -294,6 +295,11 @@ namespace OnlyVolunteers.Police
             {
                 _mayShoot = _d != null && Random.value < C.NightShootChance;
                 _chaseSince = Time.time;
+                if (Time.time >= _nextWhistle)
+                {
+                    _nextWhistle = Time.time + 6f;
+                    Sfx.PlayAt(SfxIds.PoliceWhistle, transform.position + Vector3.up * 1.6f);
+                }
             }
             State = state;
             _stateSince = Time.time;
@@ -514,6 +520,7 @@ namespace OnlyVolunteers.Police
             if (now < _until) return;
             if (_target == _d.PawnSuspect && TargetPosition(_target, out p) && Vector3.Distance(p, transform.position) <= C.BeatReach && _d.PawnOnFoot)
                 LandHit(p, "hit");
+            if (State != OfficerState.Beat) return;
             _until = now + C.BeatCooldown;
             _nextBeat = now + C.BeatCooldown; // TickChase waits for it (it used to swing again at once)
             Enter(OfficerState.Chase);
@@ -526,6 +533,7 @@ namespace OnlyVolunteers.Police
             if (now < _until) return;
             Say("БАХ!");
             if (_target == _d.PawnSuspect && _d.PawnOnFoot && Sees(p + Vector3.up * 1.2f) && Random.value < C.ShootHitChance) LandHit(p, "shot");
+            if (State != OfficerState.Aim) return;
             Enter(OfficerState.Chase);
         }
 
@@ -540,7 +548,8 @@ namespace OnlyVolunteers.Police
             Sfx.PlayAt(SfxIds.HitTorso, pawnPos + Vector3.up * 1.2f);
             float now = Time.time;
             _hitTimes.Add(now);
-            _hitTimes.RemoveAll(t => now - t > C.ArrestWindow);
+            for (int i = _hitTimes.Count - 1; i >= 0; i--)
+                if (now - _hitTimes[i] > C.ArrestWindow) _hitTimes.RemoveAt(i);
             Hits++;
             if (_d.Log) Debug.Log($"[Police] {name} {how} the player ({_hitTimes.Count}/{C.HitsToArrest} within {C.ArrestWindow:0} s)", this);
             if (_hitTimes.Count >= C.HitsToArrest && !_arrestSent)

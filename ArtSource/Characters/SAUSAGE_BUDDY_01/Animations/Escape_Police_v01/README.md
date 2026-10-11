@@ -192,6 +192,92 @@ Unity import, as Walk_v02 / Idle_Knock_v03 (not done here):
 - Loop Time on for the loops, over the full take including the duplicated last frame; Loop Pose off.
 - Events from `clips_manifest_v01.json`: `Hit`, `Land`, `Ragdoll`.
 
+## v02 fixes (2026-10-11): police clips
+
+New revisions of three police clips, authored in `clips_police_v02.py` (it imports `ep_core` / `clips_police`, which stay unchanged) and built with `build_ep_v02.py`. The v01 files are untouched. Validation (`validation_v02_police.json`, saved files, 120 Hz): **20/20 for all three**.
+
+| Clip | Frames | s | Floor pen. (mm) | Slide / 1/120 s (mm) | Largest key step (°) | Loop seam | FBX animated error |
+| --- | --- | --- | ---: | ---: | ---: | --- | ---: |
+| Cop_Run_Fat_v02 | 1–17 | 0.533 | 0.57 | 0.75 | 10.5 | 0.0 | 2.3e-5 |
+| Cop_Punch_v02 | 1–37 | 1.20 | 0.57 | 0.72 | 22.0 (pointing finger) | – | 3.6e-5 |
+| Cop_ShakeFist_v02 | 1–67 | 2.20 | 0.73 | 0.12 | 20.2 | – | 1.9e-5 |
+
+- **Cop_Run_Fat_v02.** v01 read as a brisk walk. Now it is a heavy waddle *run*. **Ground speed 2.2 m/s** (v01: 1.8; play at speed / 2.2).
+  - Gait: a 16-frame cycle with short toe-out strides (17°) on a wide track. The swing foot circles outward.
+  - Each foot: heel lands at 0.000 / 0.267 s, toe-off at 0.213 / 0.480 s. That leaves 0.053 s of near-flight per step, with both feet off the street.
+  - Bounce: he lands while still falling, and the hips sink 7.2 cm in 0.08 s (deep knee bend). Hip height ranges 0.618–0.712 m.
+  - Belly bounce: the chest folds 14° forward and down 0.025 s after each landing (peak ~0.11 s), then rebounds past upright (~0.21 s).
+  - Head: the giant head nods 2–3 frames behind the chest (peak ~0.18 s) and whips back up through the next landing.
+  - Waddle: the whole body rocks over the stance foot (pelvis 9° + spine 8°, pelvis sway ±6.5 cm). The head counter-tilts 0.09 s late.
+  - Arms: out 36° (wider when forward) and pumping ±40° with a 1.5-frame lag. They flop down on every landing.
+- **Cop_Punch_v02.** v01 had no body weight behind the strike. The **`Hit` event is unchanged at 0.45 s (frame 14.5)**, at full extension, and the 0.45 s telegraph is kept. The clip is now 1.2 s.
+  - 0.00–0.07: the weight shifts onto the left foot.
+  - 0.07–0.21: the right foot steps 22 cm back (toe out 20°). The weight goes back onto it: hips 12 cm back, body twisted 45° away, leaning back. The front toes lift.
+  - 0.10–0.33: haymaker cock with the pointing finger, then the straining quiver (as v01).
+  - 0.33–0.45, the strike drives off the back leg:
+    - the back heel peels 38° about the toe hinge;
+    - the hips and chest rotate into it, with the chest leading;
+    - the weight goes onto the bent front knee, and the head goes forward.
+  - 0.45–0.60, follow-through:
+    - the chest keeps twisting to +44°;
+    - the fist carries past the target and across;
+    - he topples onto the front ball, and the left arm flies out.
+  - 0.48–0.66: the back foot is pulled off the street and swings forward to catch him **on its exact Idle spot** (no sliding while planted).
+  - 0.66–0.90: teeter. 1.0–1.1: a small "hmph" nod. Idle frame 1 at 1.20.
+- **Cop_ShakeFist_v02.** In v01, at ~0.77 s and ~1.57 s, the fist swung behind or into the head in the three-quarter view.
+  - The right arm is now an explicit IK path in the chest frame. The hand follows the forearm, and the elbow points out and down.
+  - That keeps the fist raised **out to the side and in front of the face**: it stays visible from the side camera too.
+  - The last wind-up pulls the fist *down in front* (it used to go back behind the head) before the final thrust.
+  - Everything else is the v01 acting (gather, thrust, 4.6 Hz shake, hand on hip, stamp, deflate, no-no head shake).
+  - Measured on the saved files every 1/120 s, right fist versus the head and hood vertices:
+
+    | | Min 3D distance | Fist hidden behind the head (3/4 camera) |
+    | --- | --- | --- |
+    | v01 | 79.5 mm at 1.55 s | up to 99 % (screen gap 0 mm) |
+    | v02 | 86.8 mm at 1.52 s, to the hoodie collar during the pull-down | 0 % at every sample; ≥ 79 mm screen gap in the shake |
+- **Pop scan** (worst accelerations): Run_Fat 182 m/s², all periodic hand and head motion. Punch 440 / 413 m/s² on the right hand at the strike launch (0.35 s) and the Hit (0.45 s), both intended. ShakeFist 227 m/s² at the stamp jolt (1.17 s).
+- **Files:**
+  - `clips_police_v02.py`;
+  - `Cop_Run_Fat_v02` / `Cop_Punch_v02` / `Cop_ShakeFist_v02`: `.blend`, `.fbx` and `_authoring.json` each;
+  - `validation_v02_police.json`;
+  - `Previews/v02/<Clip>_v02_{side,three_quarter}.mp4`, `<Clip>_v02_contact_sheet.png`, frames in `Previews/v02/_frames/<Clip>/`.
+
+По-русски: толстый коп теперь именно бежит, а не идёт быстрым шагом: тяжёлое приседание на каждом шаге, «живот» и голова догоняют с запозданием, переваливается с ноги на ногу; скорость 2,2 м/с. В ударе вес идёт за кулаком: шаг назад на замахе, толчок задней ногой, после удара его заносит, и задняя нога ловит его ровно на месте Idle (Hit по-прежнему 0,45 с). В ShakeFist кулак больше не уходит за голову: он поднят сбоку и перед лицом и виден с обеих камер. Все три клипа проходят валидатор 20/20.
+
+## v02 fixes (2026-10-11): escape clips
+
+New revisions of four escape clips, authored in `clips_escape_v02.py` (it imports `ep_core` / `clips_escape` / `clips_police`, which stay unchanged) and built with `build_ep_v02.py`. The v01 files are untouched. Validation (`validation_v02_escape.json`, saved files, 120 Hz): **20/20 for all four**.
+
+| Clip | Frames | s | Floor pen. (mm) | Slide / 1/120 s (mm) | Largest key step (°) | FBX animated error | Notes |
+| --- | --- | --- | ---: | ---: | ---: | ---: | --- |
+| Escape_Scramble_Start_v02 | 1–31 | 1.00 | 0.14 | 1.00 | 21.9 | 1.9e-5 | mesh top 1.019 m (limit 1.2) |
+| JumpOut_v02 | 1–35 | 1.133 | 1.38 | 1.40 | 24.7 | **9.5e-5** (v01: 2.8e-4) | `Land` 0.567 s, unchanged |
+| Hit_React_Front_v02 | 1–34 | 1.10 | 1.92 | 0.33 | 21.5 | 1.9e-5 | |
+| Stagger_v02 | 1–49 | 1.60 | 0.69 | 0.13 | 23.3 | 1.9e-5 | |
+
+- **Escape_Scramble_Start_v02 (redo).** v01 started on a provisional sit pose and floated ~0.15 s in its hop-turn.
+  - **Frame 1 = the frozen cargo sit contract**: the exact raw values of `Idle_Knock_v03/Cargo_Sit_Contract_v04.json` (sha256 `37a1e77d…af7e`, full hash in the authoring JSON), hips (−0.357, 0, 0.114). The script reads it from `../Idle_Knock_v03/` or `$CARGO_SIT_CONTRACT`. Start error 8e-7 vs `Cargo_Sit_Idle_v04.blend` frame 1. **Last frame = Escape_Scramble_v01 frame 1** (end error 7e-7).
+  - The contract rebuilds exactly with `ep_core.Body.pose` except the legs: the cargo IK rolls thighs and shins 6.85° about their own axes versus ep_core's hinge IK. That twist is applied on top and fades out while the legs swing (it never moves a joint).
+  - Beats: 0.09–0.15 SNAP glance (head ~55° to the doors, shoulders jolt); 0.15–0.32 frozen stare with a tremble; 0.27–0.50 the right hand lets go and slaps the floor on the doors side while the trunk bows over it and the butt rocks forward on the sit bones and lifts; 0.42–0.61 the left hand reaches across and plants; 0.49–0.82 knees up, heels kick up behind, the folded legs drop round the outside, the left knee lands at 0.82; the pelvis swivels ~94° round the right palm with the head kept on the doors; 0.65–0.73 the right palm hops onto its crawl spot; 0.74–0.97 the left hand steps onto its crawl frame-1 spot.
+  - **The last 0.1 s is Escape_Scramble itself** (crawl time −0.1…0) carried so the van floor stands still: the body already moves toward the doors at 1.2 m/s, so the hand-off to the crawl and the moving capsule has no velocity jump.
+  - **Floor contact at every 120 Hz sample** (checked on the saved file): butt + feet, right palm, left palm, left knee, then the left palm. Planted palms and the knee are pressed onto the floor by a skinned-mesh contact solve (the crawl's own contacts hover ~1 cm); swinging feet keep ≥ 1.2 cm at the keys.
+  - The few in-air samples of the slap's wrist, the palm re-plant and the leg swing that turned faster than 22° per half frame are smoothed locally (`limit_rotation_steps`, copied from the cargo package); planted limbs and the contract ends are never touched.
+- **JumpOut_v02 (fix).**
+  - **The pop at 0.30–0.33 s is gone.** The hips, spine and head unfolded ~80° in 0.04 s after the peek. Now each unfolds in one long ease, the head first (0.30–0.47), then the spine (0.31–0.48) and the hips (0.32–0.49). The gulp (head dip at 0.30, a sharp shoulder jolt at 0.283) and the arms swinging back read first, and the toe push starts at 0.285. Frog hop, flight, the `Land` event (0.567 s), stumble and run are v01; both contracts unchanged (start 1.6e-7, end 0).
+  - **FBX error root cause.** The exporter writes each bone's parent-relative rotation, rest included, as XYZ Euler computed in float32. For the shoulders that rotation sits at Euler Y = ±90° *exactly* at rest, which is fine (Blender takes the well-conditioned gimbal branch). A few hundredths of a degree off 90°, with |cos Y| between ~1e-6 and ~1e-3, the X/Z split loses precision. v01 started the shoulder blend toward the run with an ease-in at 0.38 s. The first sample after it (frame 12.5) had Y = 90.0034° (cos Y = 6e-5), and the left shoulder chain reimported 0.28 mm off.
+  - **Fix:** the gulp adds a shoulder hunch (protraction) with a sharp onset exactly on a sample (0 at 0.283 s, ~9° one sample later). A pure shrug keeps Y at 90°; the protraction carries the shoulders decisively off the band and fades into the Flee_Run shoulders through the landing blend. The build reports any sample in the band (`shoulder_gimbal_band_samples`): only the inherited Flee_Run swing remains (|cos Y| = 1.3e-3, 9.5e-5 error).
+- **Hit_React_Front_v02 (polish).** A much bigger "OOF". 0.00–0.05: the pelvis bows, the butt shoots back 10.5 cm, knees buckle 11.5 cm, the chest snaps forward. 0.05–0.15: the big head tips back on the impact, then whips down past the chest (chest ~70° down, head drooping); the arms fly out, then clutch the belly. 0.15–0.50: held fold with two wheezes (chest heaves, shoulder hitches, head bobs). 0.50–0.98: slow groggy recovery with a woozy sway, head last. Idle → Idle, 1.10 s.
+- **Stagger_v02 (polish).** Wobblier and dazed, 1.60 s, Idle → Idle. The pelvis leads and the feet catch up: seven steps. 0.16–0.34 right foot out to his right (lean 17°, knees 9 cm). 0.36–0.54 left crosses over in front. 0.50–0.72 forward lurch, chest 20° down, right foot catches 32 cm ahead. 0.80–1.06 near-fall backward: arms windmill, knees buckle 12 cm, the left foot saves it out to his left. 1.06–1.44 shuffles home onto the exact Idle spots. A bigger dizzy head circle (1.5 Hz) and arms flapping for balance throughout. Planted feet do not slide (0.13 mm).
+- **Pop scan** (worst accelerations, saved files, v02 vs v01): JumpOut **394** (head top 0.30 s) vs **1746**; Escape_Scramble_Start 435 (left toes as the leg opens into the kneel, 0.78 s) vs 317; Hit_React_Front 382 (head top at the impact, intended) vs 316; Stagger 315 (hands, windmill) vs 274.
+- **Files:**
+  - `clips_escape_v02.py`;
+  - `Escape_Scramble_Start_v02` / `JumpOut_v02` / `Hit_React_Front_v02` / `Stagger_v02`: `.blend`, `.fbx` and `_authoring.json` each;
+  - `validation_v02_escape.json`;
+  - `Previews/v02/<Clip>_v02_{side,three_quarter}.mp4`, `<Clip>_v02_contact_sheet.png`, frames in `Previews/v02/_frames/<Clip>/`.
+- Build the cargo clip with the contract reachable: `CARGO_SIT_CONTRACT=<path to Cargo_Sit_Contract_v04.json>` until the packages are merged.
+
+По-русски: Escape_Scramble_Start теперь начинается ровно с настоящего сидения Cargo_Sit_Idle_v04 и всё время касается пола: резкий взгляд на двери, замер, шлепок правой ладонью, разворот на руках, колени под себя, и последние 0,1 с — уже сам Escape_Scramble. В JumpOut убран рывок на 0,30–0,33 с (разгиб растянут, голова ведёт), а ошибка FBX была из-за плеч у самого «гимбала» Эйлера (Y ≈ 90°) — исправлено резким стартом сутулости в «глотке». Hit_React_Front сгибается гораздо сильнее и медленно приходит в себя, Stagger шатается сильнее, с почти-падением назад; все четыре 20/20.
+
 ## Кратко по-русски
 
 Пакет Escape_Police_v01: 16 клипов на общем риге Buddy (полицейские — тоже сосиски).

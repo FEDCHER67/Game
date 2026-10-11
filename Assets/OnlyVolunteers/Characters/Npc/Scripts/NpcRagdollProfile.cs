@@ -126,14 +126,22 @@ namespace OnlyVolunteers.Characters.Npc
         public float HeldSpring = 60f;
         public float HeldMaxTorque = 40f;
         public float HeldDamper = 2f;
-        [Tooltip("Two or more holders, one above the pelvis (head, chest, arms) and one below (legs): the trunk becomes a " +
-                 "hammock with little sag. Arms and knees stay floppy.")]
-        public float CarryWaistSpring = 400f;
-        public float CarryHipSpring = 300f;
+        [Tooltip("Two or more holders, one above the pelvis (head, chest, arms) and one below (legs): the trunk sags " +
+                 "naturally (Fedya 2026-10-11: +- realistic; 150/120 gives ~22 cm). Arms and knees stay floppy.")]
+        public float CarryWaistSpring = 150f;
+        public float CarryHipSpring = 120f;
         public float CarryMaxTorque = 90f;
-        public float CarryDamper = 20f;
+        public float CarryDamper = 15f;
         [Tooltip("Degrees of hip flexion the carried legs are held at (the carried pose: straight trunk, slight hip flexion).")]
         public float CarryHipFlexion = 10f;
+
+        [Header("One hand alone on an arm or a leg (Fedya's playtest 2026-10-11)")]
+        [Tooltip("One holder alone, on an arm or a leg (nobody holds anything else): no A3 relief, and that hand lifts at most " +
+                 "SoloLimbLift N. The limb comes up, the trunk stays down (a held leg tilts the pelvis toward its side a few " +
+                 "cm), like a real body dragged by one foot; sideways the handle's own cap stays, so it is still dragged at a " +
+                 "walk. Off: the handle's cap and the relief (one hand on an ankle lifted the whole body into the air).")]
+        public bool SoloLimbRule = true;
+        public float SoloLimbLift = 90f;
 
         [Header("Going down (§4.2)")]
         [Tooltip("m/s: the animation's own bone motion carried into the bodies is clamped to this.")]
@@ -196,6 +204,22 @@ namespace OnlyVolunteers.Characters.Npc
                  "moved: the sit-up keeps it inside the cargo bay.")]
         public Vector2 SeatMin, SeatMax;
 
+        /// <summary>How far one mesh of the seated figure reaches toward the wall behind it (root space, along the sit
+        /// clips' wall direction), over Cargo_Sit_Idle, the end of SitUp_Cargo and Cargo_Knock; LowBack: its part under
+        /// SeatLowHeight (the wheel housings).</summary>
+        [Serializable]
+        public sealed class SeatReach
+        {
+            public Mesh Mesh;
+            public float Back, LowBack;
+        }
+
+        public const float SeatLowHeight = 0.28f; // a hair under the van's 0.30 m wheel housings (a hand put down on one is fine)
+
+        [Tooltip("Per skinned mesh of the Buddy prefabs (GreyboxBuddySetup.InstallClips): NpcGetUp.SitUp slides the seat " +
+                 "back until the deepest of an NPC's meshes is just off the van's wall, so the knock lands on it. Empty: no slide.")]
+        public SeatReach[] SeatReaches = Array.Empty<SeatReach>();
+
         public bool HasGetUps => GetUpBack.Ready && GetUpBelly.Ready;
         public bool HasSeat => SitUp.Ready && SitIdle.Ready;
 
@@ -248,6 +272,8 @@ namespace OnlyVolunteers.Characters.Npc
             [Tooltip("Without a prefab: the cylinder's size in metres (diameter, length, diameter).")]
             public Vector3 Size = new(0.008f, 0.07f, 0.008f);
             public GameObject Prefab;
+            [Tooltip("Keep the prop's up axis world-up (yaw follows the hand).")]
+            public bool Upright;
         }
 
         public ActivityProp[] Props = Array.Empty<ActivityProp>();

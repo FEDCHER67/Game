@@ -1,0 +1,73 @@
+{
+  "clip": "SmokeCorner_Enter",
+  "file_stem": "SmokeCorner_Enter_v02",
+  "action": "SmokeCorner_Enter",
+  "frames": [
+    1,
+    58
+  ],
+  "fps": 30,
+  "duration_s": 1.9,
+  "loop": false,
+  "start_contract": "idle",
+  "end_contract": "smoke",
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "beats": [
+    "0.0-0.32 both hands into the hoodie pocket, looks down, rummages",
+    "0.46 out come the cigarette (right) and the lighter (left) (events CigOn / LighterOn 0.40)",
+    "0.60-0.70 cig to the lips, hands cupped, head dips into them",
+    "0.76 first flick: nothing; 0.83 head tilt \"huh\"",
+    "0.94 second flick: lit (event Light)",
+    "1.06 first drag: chest fills",
+    "1.06-1.20 lighter hand drops to the belly (event LighterOff 1.20)",
+    "1.30 cig pulled away from the lips, breath held, chin up",
+    "1.46-1.70 exhale aside (event Exhale)",
+    "1.90 smoke base"
+  ],
+  "events": {
+    "CigOn": 0.4,
+    "LighterOn": 0.4,
+    "Light": 0.94,
+    "LighterOff": 1.2,
+    "Exhale": 1.46
+  },
+  "max_leg_overreach_m": 3.485912125622548e-08,
+  "max_contact_lift_m": 0.0,
+  "revision_of": "SmokeCorner_Enter_v01",
+  "authoring_note": "v02 revision (clips_props_v02.py); contract poses identical to v01",
+  "preview_only_props": {
+    "cigarette": {
+      "bone": "mixamorig:RightHand",
+      "frame": "Blender pose-bone frame of the hand: origin at the wrist joint (bone head), +Y along the bone toward the fingers, +X thumb side, +Z palm normal",
+      "grip_position_m": [
+        0.0175,
+        0.104,
+        0.0
+      ],
+      "filter_tip_m": [
+        0.0175,
+        0.104,
+        0.03
+      ],
+      "lit_tip_m": [
+        0.0175,
+        0.104,
+        -0.05
+      ],
+      "prop_axis": "prop +Y = cigarette axis toward the lit end, origin at the grip (filter tip at y = -0.030)",
+      "rotation_quaternion_wxyz": [
+        0.707107,
+        -0.707107,
+        0.0,
+        0.0
+      ],
+      "length_m": 0.08,
+      "diameter_m": 0.008,
+      "visible_events": {
+        "CigOn": 0.4,
+        "LighterOn": 0.4,
+        "LighterOff": 1.2
+      }
+    }
+  }
+}

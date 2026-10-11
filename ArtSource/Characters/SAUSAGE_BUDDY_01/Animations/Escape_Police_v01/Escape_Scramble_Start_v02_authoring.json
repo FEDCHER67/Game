@@ -1,0 +1,41 @@
+{
+  "clip": "Escape_Scramble_Start_v02",
+  "action": "Escape_Scramble_Start_v02",
+  "frames": [
+    1,
+    31
+  ],
+  "fps": 30,
+  "duration_s": 1.0,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "Cargo sit contract = Cargo_Sit_Idle_v04 frame 1, exact raw values of Cargo_Sit_Contract_v04.json (sha256 37a1e77de803f09f7db3fea961b8cf5e02b728d577af471e685c3f53a98eaf7e); hips (-0.357, 0, 0.114), facing +X, back to the wall x = -0.65",
+  "end_contract": "Escape_Scramble frame 1 (exact)",
+  "events": {},
+  "ground_speed": "none (in place, static floor)",
+  "beats": [
+    "0.00 = the cargo sit contract (knee hug, hood on the wall x = -0.65)",
+    "0.09-0.15 SNAP: the head whips ~55 deg to his right at the open doors (-Y), shoulders jolt up",
+    "0.15-0.32 frozen stare with a tremble, hands still on the shins (they slide up a little with the shrug)",
+    "0.27-0.50 the right hand lets go, swings out and slaps the floor on the doors side (palm planted 0.50-0.64); the trunk bows forward over it, the butt rocks forward on the sit bones and lifts (0.42-0.53)",
+    "0.42-0.61 the left hand lets go, reaches across and plants under the left shoulder (0.61-0.73)",
+    "0.49-0.82 the legs: knees jerk up, heels kick up behind, the folded legs drop and swing round the outside; the left knee lands on its crawl spot at 0.82 s, the right leg swings into the right-leg step of the crawl",
+    "0.47-0.85 the pelvis lifts and swivels ~94 deg to his right round the right palm; the head stays on the doors",
+    "0.65-0.73 the right palm hops onto its crawl spot; 0.74-0.97 the left hand steps forward and lands on its crawl frame-1 spot (0.967 s)",
+    "0.90-1.00 the last 0.1 s is Escape_Scramble itself (-0.1..0 s) with the van floor held still: the body already moves toward the doors at 1.2 m/s, so the hand-off to the crawl (and the moving capsule) is seamless",
+    "something is on the floor at every 120 Hz sample: butt + feet, right palm, left palm, left knee, left palm",
+    "1.00 = Escape_Scramble frame 1 (exact)"
+  ],
+  "max_leg_ik_overreach_m": 0.0,
+  "max_arm_ik_overreach_m": 0.005979807553375516,
+  "hips_first": [
+    -0.356884628534317,
+    -2.4428459255432244e-11,
+    0.11362993717193604
+  ],
+  "hips_last": [
+    -0.009399923495948315,
+    0.0,
+    0.32185178995132446
+  ]
+}

@@ -227,3 +227,103 @@ The run is a fast churn (10 frames per two steps) with a short flight; arms shak
 скользят, проверка пройдена (`validation_crowd_v01.json`, 21/21). В репозитории только скрипты и JSON: `.blend/.fbx`
 собираются командой `python build_crowd.py --clip all --final`. Размещение пропов для Unity — в разделе 3, в Unity
 ещё не проверялось.
+
+## v02 fixes (2026-10-11)
+
+Three revisions after the owner review (Claude worker, local Blender 5.2.1, JSON rig like v01). New files only: every v01
+file is unchanged, the contract poses are the v01 ones (`clips_props.CONTRACTS`), and the v02 clips chain exactly with the
+v01 set (`BarDoor_Loop/Exit_v01` on `lean`, `SmokeCorner_Exit_v01` on `smoke`).
+
+| Clip (v02) | Frames | s | Review verdict on v01 | v02 |
+| --- | --- | --- | --- | --- |
+| `BarDoor_Enter` | 1–52 | 1.7 | "the flop back onto the wall is a small lean" | a real sack-like fall: 20 cm forward dip, accelerating fall, thud, head bonks the wall, rebound, dazed wobble |
+| `SmokeCorner_Enter` | 1–58 | 1.9 | "needs the cigarette/lighter props to read" | pocket → cig to the lips + lighter cupped under its tip → two flicks → drag → hand away → exhale; preview cigarette + lighter + flame |
+| `SmokeCorner_Loop` | 1–181 | 6.0 | "without a prop the raised hand reads as nothing" | hand-to-mouth arcs led by the elbow, held puff, hand pulled away out front, exhale aside, hand resting out by the hip, sharp ash flick, second puff |
+
+**BarDoor_Enter_v02** (idle → `lean`). 0.10–0.40 glance back over the left shoulder (head 55°, neck, chest and spine join);
+0.45–0.68 forward dip: chest folds ~28°, knees give 4 cm, shoulders rise — the hood leaves the wall by 20 cm (v01: ~5 cm);
+0.68–0.84 he lets himself fall back: the gap to the wall closes with constant acceleration and stops dead, head lagging
+forward, arms flying up and out; **0.84 thud** (event `Thud`): hood and shoulders hit, knees buckle 7.5 cm, shoulders drop;
+**0.89 the head whips back and bonks the wall** (event `Bonk`), which knocks him 5 cm off it (rebound peak 0.94, head
+bounces forward, arms flop); 1.02 settles; 1.0–1.3 dazed head wobble (±6° roll); 1.14–1.50 right foot up onto the wall,
+hands into the pocket (as v01); 1.70 lean base. Wall check: deepest vertex 0.009 mm into the wall (limit 5 mm).
+
+**SmokeCorner_Enter_v02** (idle → `smoke`). 0.0–0.32 both hands into the hoodie pocket, looks down, rummages; 0.46 out come
+the cigarette (right) and the lighter (left); 0.60 filter on the right corner of the mouth, the left hand holds the
+lighter upright with its top 1.3 cm under the lit end, hands cupped, head dips into them; 0.76 first flick: nothing,
+0.83 "huh" head tilt; 0.94 second flick: lit; 1.06 first drag (chest fills); 1.06–1.20 lighter hand straight down to the
+belly; 1.30 cigarette pulled away out to the side, breath held, chin up; 1.46–1.70 exhale aside; 1.90 smoke base.
+Events: `CigOn` 0.40, `LighterOn` 0.40, `Light` 0.94, `LighterOff` 1.20, `Exhale` 1.46.
+
+**SmokeCorner_Loop_v02** (`smoke` → `smoke`). 0.16 little dip; 0.30–0.46 elbow leads up and out, cigarette to the lips in an
+arc; 0.50–1.22 held puff: chest fills, shoulders rise, head tilts back; 1.42 hand pulled away out front, breath held;
+1.62–2.30 long exhale aside; 2.62 hand rests out by the hip, away from the body (silhouette); 2.84–3.28 looks at the ash,
+cocks forearm and wrist, two sharp taps (forearm + wrist + thumb); 3.60–4.36 weight over, looks around, "sup" chin-up;
+4.62–4.78 elbow leads, quick second puff; 5.24–5.62 hand away, exhale aside; 6.0 base. Events: `Puff` 0.50, `Exhale` 1.62,
+`AshTap` 2.99, `AshTap2` 3.15, `Puff2` 4.80, `Exhale2` 5.28.
+
+**How (new code, `clips_props_v02.py`):** `RigV02` extends the v01 rig without changing any v01 behaviour (the contract
+poses never use the new channels): `wall.on` blends the authored pelvis with the wall-contact solve linearly and
+`wall.gap` keeps the back that far off the wall, so the fall is authored as the gap closing with twice the average slope
+at the impact key and a broken (hard-stop) tangent (`impact()`), from a dip whose own gap is measured on first use
+(`GapTrack`); arm IK reach points `cig` (filter tip) and `lighter` (lighter top) and `ik<k>.ori` (turn the hand so the
+cigarette points along a yaw/pitch in the head frame, fingers rolled away from the nose; the lighter stays upright), so
+the filter, not the knuckles, lands on the lips and the lighter flame sits under the tip.
+
+### Cigarette attachment (in game a separate prop; previews only)
+
+Bone `mixamorig:RightHand`. Blender hand-bone frame = pose-bone frame: origin at the wrist joint (bone head), +Y along the
+bone toward the fingers, +X thumb/index side, +Z palm normal (out of the palm).
+
+| | Blender hand-bone frame | Unity `mixamorig:RightHand` local (after FBX import) |
+| --- | --- | --- |
+| grip = prop pivot (between index and middle finger, middle joints) | (0.0175, 0.104, 0.000) m | localPosition (−0.0175, 0.104, 0.000) |
+| filter tip / lit end | (0.0175, 0.104, +0.030) / (0.0175, 0.104, −0.050) | (−0.0175, 0.104, +0.030) / (−0.0175, 0.104, −0.050) |
+| prop modelled along its local +Y (lit end +Y, filter at y = −0.03; 8 cm × 0.8 cm) | rotation (w,x,y,z) = (0.7071, −0.7071, 0, 0) = −90° about X | localRotation = `Quaternion.Euler(-90, 0, 0)` (= `FromToRotation(up, back)`) |
+
+Verified here: the FBX bone nodes carry exactly the Blender bone frames (`RightHand` Lcl Translation = (0, 0.210, 0) along
+the forearm's +Y, rest roll 0.1°; validator FBX bind error 1.6e-5); the armature node has scale 100 with FBX
+UnitScaleFactor 1 (cm) and `Walk_v02.fbx.meta` uses the file scale, so the bones end up in metres with unit scale. Not
+verified (no Unity in this task): Unity's right→left-handed import mirror, assumed to be the standard X flip
+(position (x,y,z) → (−x,y,z), rotation (x,y,z,w) → (x,−y,−z,w)), which gives the right column. Place it once with a gizmo
+to confirm. Show the prop at `SmokeCorner_Enter` `CigOn` (0.40 s); `SmokeCorner_Exit_v01` flicks the butt away at `Flick`
+(0.55 s). Preview lighter: `mixamorig:LeftHand`, centre (−0.072, 0.070, 0.026), top along −X, 2.6 × 1.5 × 5.5 cm
+(Unity (0.072, 0.070, 0.026), top along +X). The preview ember glows during drags (render-only).
+
+### v02 validation (`validation_crowd_v02.json`, same 18 checks as v01)
+
+| Clip | Checks | Seam | Max key step | Sole pen. (keys / 120 Hz) | Planted slide (keys / 120 Hz) | Lowest body vertex | Wall | FBX anim. err |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `BarDoor_Enter_v02` | 18/18 | – | 15.8° | 0.00 / 0.07 mm | 0.00 / 0.03 mm | +69.2 mm | 0.009 mm | 1.8e-05 |
+| `SmokeCorner_Enter_v02` | 18/18 | – | 20.4° | 0.00 / 0.14 mm | 0.00 / 0.01 mm | +81.1 mm | – | 1.8e-05 |
+| `SmokeCorner_Loop_v02` | 18/18 | 0.0 | 23.2° | 0.00 / 0.10 mm | 0.00 / 0.01 mm | +78.9 mm | – | 1.9e-05 |
+
+Contract chains (max world-matrix difference, v02 ends plus every v01 deliverable that claims the pose): `idle` 0,
+`lean` 0 (BarDoor_Enter/Loop/Exit_v01), `smoke` 0 (SmokeCorner_Enter/Loop/Exit_v01). Overall **PASS**. Acceleration
+scan: the largest spikes are the intended impacts (BarDoor head bonk 0.90 s, arm flop 0.85 s; Loop ash snap 2.98 s).
+
+**Files:** `clips_props_v02.py` (clips, `RigV02`, prop transforms), `build_crowd_v02.py` (wraps `build_crowd.py`; stems
+`<Clip>_v02`; preview props), `validate_crowd_v02.py` (v01 checks + chains against the v01 files),
+`crowd_manifest_v02.json`, `<Clip>_v02.blend/.fbx/_authoring.json` (the authoring JSON of the smoke clips also holds the
+cigarette transform), `validation_crowd_v02.json`, `Previews/<Clip>_v02/` (frames/{side,three_quarter}/s%04d.png every
+frame at 480 px, `<Clip>_v02_side.mp4`, `<Clip>_v02_three_quarter.mp4`, `<Clip>_v02_grid.png`).
+
+```
+# from this folder, absolute paths everywhere (Blender: blender -b --factory-startup --python <script> -- <args>)
+python build_crowd_v02.py --clip all --final                      # refuses to overwrite
+python build_crowd_v02.py --clip all --manifest <abs>/crowd_manifest_v02.json
+python validate_crowd_v02.py --out <abs>/validation_crowd_v02.json
+# previews of exactly the saved files (opens <Clip>_v02.blend; the cigarette/lighter exist only in the render scene)
+python build_crowd_v02.py --clip SmokeCorner_Loop --review <abs>/Previews/SmokeCorner_Loop_v02/frames --saved <abs pkg> --every 1 --seq --res 480
+python make_previews.py mp4 <abs>/Previews/SmokeCorner_Loop_v02/frames <abs>/Previews/SmokeCorner_Loop_v02/SmokeCorner_Loop_v02 --loops 3
+```
+Previews were rendered with Cycles on the GPU (a wrapper sets `build_crowd_v02.DEVICE = 'GPU'`), same studio, cameras,
+6 samples and exposure as v01. The build is deterministic (a scratch build and the delivered file have identical keys).
+
+- BarDoor_Enter_v02: теперь он реально плюхается на стену: оглянулся, наклонился вперёд (замах), падает спиной как мешок,
+  бух капюшоном в стену, голова откидывается и стукается о стену, отскок, чуть «поплыл», нога на стену, руки в карман.
+- SmokeCorner_Enter_v02: руки в карман, сигарета в рот, зажигалка под кончик в ладонях, первый чирк — пусто, второй —
+  огонь, затяжка, зажигалку убирает, сигарету в сторону, выдох вбок. В превью видны сигарета, зажигалка и огонёк.
+- SmokeCorner_Loop_v02: рука с сигаретой ходит ко рту по дуге (локоть ведёт), долгая затяжка с подъёмом груди, выдох в
+  сторону, рука отдыхает на отлёте у бедра, резкий стряхивающий щелчок пеплом, вторая затяжка. Сигарета в игре —
+  отдельный проп на `mixamorig:RightHand` (смещение и поворот — в таблице выше).

@@ -97,6 +97,12 @@ namespace OnlyVolunteers.Characters.Npc
         public float Shift { get; private set; }
         public bool Squeezed { get; private set; }
         public float LyingHips { get; private set; }
+        /// <summary>The last sit-up turned the seat square to the van and/or slid it back to the wall (SitUp): the visual's
+        /// local pose that puts the clip's first frame where the ragdoll lies, in the moved root's frame. GreyboxNpc starts
+        /// there and moves the visual onto the seat pose during the clip's scramble to the wall.</summary>
+        public bool SeatMoved { get; private set; }
+        public Vector3 SeatStartPosition { get; private set; }
+        public Quaternion SeatStartRotation { get; private set; } = Quaternion.identity;
 
         private NpcRagdollProfile Profile
         {
@@ -178,7 +184,7 @@ namespace OnlyVolunteers.Characters.Npc
             LyingHips = 0f;
             _lie = Mathf.Max(0f, lie);
             _rolling = false;
-            if (_lie <= 0f) DecideRoll();
+            if (_lie <= 0f && _ragdoll != null && _ragdoll.HasRequiredBodies) DecideRoll();
         }
 
         // Lying on its side (|front . up| < SideLimit) it is rolled onto the nearer of back or belly first.
@@ -196,7 +202,7 @@ namespace OnlyVolunteers.Characters.Npc
         /// <summary>Physics tick: the side roll while settling.</summary>
         public void FixedTick()
         {
-            if (_step != Step.Settling || !_rolling || _ragdoll == null || !_ragdoll.Active) return;
+            if (_step != Step.Settling || !_rolling || _ragdoll == null || !_ragdoll.HasRequiredBodies) return;
             NpcRagdollProfile p = Profile;
             _roll += Time.fixedDeltaTime;
             if (_roll > p.SideRollTime)
@@ -243,6 +249,12 @@ namespace OnlyVolunteers.Characters.Npc
             if (_ragdoll == null || !_ragdoll.Active)
             {
                 _step = Step.None; // removed from outside: the caller stands it up the old way
+                return;
+            }
+            if (!_ragdoll.HasRequiredBodies)
+            {
+                _ragdoll.Deactivate();
+                _step = Step.None; // GreyboxNpc uses its existing stand-up fallback
                 return;
             }
             NpcRagdollProfile p = Profile;
@@ -521,7 +533,7 @@ namespace OnlyVolunteers.Characters.Npc
             rootPosition = transform.position;
             rootRotation = transform.rotation;
             NpcRagdollProfile p = Profile;
-            if (bay == null || _ragdoll == null || !_ragdoll.Active || !CanSitUp) return false;
+            if (bay == null || _ragdoll == null || !_ragdoll.HasRequiredBodies || !CanSitUp) return false;
             ClipInfo clip = p.SitUp;
             Quaternion van = bay.Rotation;
             // The ragdoll's head direction on the bay floor (van-local) and the clip's (root space, frame 0).
@@ -537,6 +549,26 @@ namespace OnlyVolunteers.Characters.Npc
             var root = new Vector3(hips.x - first.x, bay.LocalBox.min.y, hips.z - first.z);
             Vector3 fit = Inside(bay.LocalBox, root, yaw, p, seatRadius);
             root += fit;
+            // Back to the wall (2026-10-11): the seat turns square to the van and slides back to the wall behind it (see
+            // BackToWall). The clip still starts where the ragdoll lies: GreyboxNpc starts the visual at SeatStart (the
+            // old seat, in the new root's frame) and moves it onto the seat during the clip's scramble to the wall.
+            Vector3 startRoot = root;
+            Quaternion startYaw = yaw;
+            Vector3 back = visualRotation * Vector3.right; // the sit clips' wall direction (their +X), root space
+            back.y = 0f;
+            if (back.sqrMagnitude > 1e-4f && p.SeatReaches != null && p.SeatReaches.Length > 0)
+            {
+                back.Normalize();
+                Vector3 b = yaw * back;
+                Vector3 square = Mathf.Abs(b.x) >= Mathf.Abs(b.z) ? new Vector3(Mathf.Sign(b.x), 0f, 0f) : new Vector3(0f, 0f, Mathf.Sign(b.z));
+                yaw = Quaternion.Euler(0f, Vector3.SignedAngle(b, square, Vector3.up), 0f) * yaw;
+                root += Inside(bay.LocalBox, root, yaw, p, seatRadius);
+                root += square * BackToWall(bay, root, square, seatRadius);
+            }
+            Quaternion turn = Quaternion.Inverse(yaw) * startYaw;
+            SeatMoved = (root - startRoot).sqrMagnitude > 1e-6f || Quaternion.Angle(yaw, startYaw) > 0.01f;
+            SeatStartPosition = Quaternion.Inverse(yaw) * (startRoot - root) + turn * visualPosition;
+            SeatStartRotation = turn * visualRotation;
             rootRotation = van * yaw;
             rootPosition = bay.ToWorld(root);
             bool belly = Vector3.Dot(_ragdoll.Front, van * Vector3.up) < 0f;
@@ -551,6 +583,78 @@ namespace OnlyVolunteers.Characters.Npc
             _kind = GetUpKind.SitUp;
             _step = Step.None; // GreyboxNpc runs the seated NPC; the controller goes on to the sit idle by itself
             return true;
+        }
+
+        // Back to the wall (2026-10-11): the sit clips lean the back, and the knock lands the fists, on a wall right behind
+        // the figure, but the fit above only keeps it inside the bay (it sat ~0.15 m off the side wall and knocked on air).
+        // How far to move the root along 'back' (van-local) so the deepest of this NPC's meshes (SeatReaches) is SeatWallGap
+        // off the van's wall at hip height (the wall leans in ~1.5 cm by fist height) and its low part, the seated capsule
+        // too, clears the wheel housings. Negative: away from a wall it is already in. No wall behind (an open doorway) or no
+        // reach data: 0.
+        private const float SeatWallGap = 0.015f, SeatLowGap = 0.01f, WallRayHigh = 0.45f, WallRayLow = 0.15f;
+        private const float MaxWallSlide = 0.8f, MaxWallBackOff = 0.2f;
+        private static readonly RaycastHit[] WallHits = new RaycastHit[16];
+        private const int WallMask = ~(OvLayers.NpcMask | OvLayers.PlayerMask | (1 << OvLayers.VehicleInterior) | OvLayers.NpcSlideMask);
+        private SkinnedMeshRenderer[] _skins;
+
+        private float BackToWall(VanCargoSpace bay, Vector3 root, Vector3 back, float radius)
+        {
+            if (!SeatReach(out float reach, out float lowReach)) return 0f;
+            float range = reach + MaxWallSlide;
+            float high = WallDistance(bay, root + Vector3.up * WallRayHigh, back, range);
+            if (high < 0f) return 0f;
+            float slide = high - reach - SeatWallGap;
+            float low = WallDistance(bay, root + Vector3.up * WallRayLow, back, range);
+            if (low >= 0f) slide = Mathf.Min(slide, low - Mathf.Max(lowReach, radius) - SeatLowGap);
+            slide = Mathf.Clamp(slide, -MaxWallBackOff, MaxWallSlide);
+            // Not into another passenger already sitting behind: the seated figures (the footprint's depth, more than the
+            // two seated capsules) stay clear of each other.
+            if (slide > 0f)
+            {
+                NpcRagdollProfile p = Profile;
+                float clear = Mathf.Max(0f, p.SeatMax.y - p.SeatMin.y - 2f * radius);
+                int n = Physics.SphereCastNonAlloc(bay.ToWorld(root + Vector3.up * WallRayHigh), radius, bay.Rotation * back, WallHits,
+                    slide + clear, 1 << OvLayers.NpcSeated, QueryTriggerInteraction.Ignore);
+                for (int i = 0; i < n; i++)
+                    if (WallHits[i].collider != null && !WallHits[i].collider.transform.IsChildOf(transform))
+                        slide = Mathf.Max(0f, Mathf.Min(slide, WallHits[i].distance - clear));
+            }
+            return slide;
+        }
+
+        // The deepest reach of this NPC's own meshes (false: none measured).
+        private bool SeatReach(out float reach, out float lowReach)
+        {
+            reach = lowReach = 0f;
+            NpcRagdollProfile p = Profile;
+            if (p == null || p.SeatReaches == null || p.SeatReaches.Length == 0) return false;
+            if (_skins == null) _skins = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+            bool any = false;
+            foreach (SkinnedMeshRenderer skin in _skins)
+                foreach (NpcRagdollProfile.SeatReach r in p.SeatReaches)
+                    if (skin != null && r != null && r.Mesh != null && skin.sharedMesh == r.Mesh)
+                    {
+                        reach = any ? Mathf.Max(reach, r.Back) : r.Back;
+                        lowReach = any ? Mathf.Max(lowReach, r.LowBack) : r.LowBack;
+                        any = true;
+                    }
+            return any;
+        }
+
+        // Metres from 'from' (van-local) along 'direction' (van-local) to the van's own nearest collider; -1: none in range.
+        private static float WallDistance(VanCargoSpace bay, Vector3 from, Vector3 direction, float range)
+        {
+            Rigidbody van = bay.Body;
+            int n = Physics.RaycastNonAlloc(bay.ToWorld(from), bay.Rotation * direction, WallHits, range, WallMask,
+                QueryTriggerInteraction.Ignore);
+            float best = -1f;
+            for (int i = 0; i < n; i++)
+            {
+                Collider c = WallHits[i].collider;
+                if (c == null || van == null || c.attachedRigidbody != van) continue;
+                if (best < 0f || WallHits[i].distance < best) best = WallHits[i].distance;
+            }
+            return best;
         }
 
         // How far to move the root (van-local, on the floor) so the seated figure's footprint and the seated capsule stay

@@ -1,3 +1,4 @@
+using OnlyVolunteers.Audio;
 using UnityEngine;
 
 namespace OnlyVolunteers.Operation
@@ -27,6 +28,7 @@ namespace OnlyVolunteers.Operation
         private Vector3 mouthRest;
         private float jolt;
         private float scream;
+        private AudioSource heartbeat;
 
         public OrganQuality Condition => condition;
         public int KidneysLeft => kidneysLeft;
@@ -91,6 +93,7 @@ namespace OnlyVolunteers.Operation
 
         public void BeginCarry(Transform holder, Vector3 localOffset)
         {
+            StopHeartbeat();
             Carried = true;
             OnTable = false;
             body.isKinematic = true;
@@ -102,6 +105,7 @@ namespace OnlyVolunteers.Operation
 
         public void Drop(Vector3 push)
         {
+            StopHeartbeat();
             transform.SetParent(null, true);
             Carried = false;
             OnTable = false;
@@ -121,7 +125,40 @@ namespace OnlyVolunteers.Operation
             body.isKinematic = true;
             body.detectCollisions = true;
             transform.SetPositionAndRotation(restPose.position, restPose.rotation);
+            StartHeartbeat();
         }
+
+        private void StartHeartbeat()
+        {
+            SfxLibrary library = Sfx.Library;
+            SfxLibrary.Entry entry = library != null ? library.Find(SfxIds.OperationHeartbeat) : null;
+            if (entry == null || entry.Clips == null) return;
+            AudioClip clip = null;
+            for (int i = 0; i < entry.Clips.Length; i++)
+                if (entry.Clips[i] != null) { clip = entry.Clips[i]; break; }
+            if (clip == null) return;
+            if (heartbeat == null) heartbeat = gameObject.AddComponent<AudioSource>();
+            heartbeat.Stop();
+            heartbeat.playOnAwake = false;
+            heartbeat.loop = true;
+            heartbeat.clip = clip;
+            heartbeat.outputAudioMixerGroup = library.Output;
+            heartbeat.volume = Mathf.Clamp01((entry.Volume.x + entry.Volume.y) * 0.5f);
+            heartbeat.pitch = Mathf.Clamp((entry.Pitch.x + entry.Pitch.y) * 0.5f, 0.1f, 3f);
+            heartbeat.spatialBlend = 1f;
+            heartbeat.minDistance = Mathf.Max(0.01f, entry.MinDistance);
+            heartbeat.maxDistance = Mathf.Max(heartbeat.minDistance + 0.01f, entry.MaxDistance);
+            heartbeat.rolloffMode = AudioRolloffMode.Logarithmic;
+            heartbeat.priority = entry.Priority;
+            heartbeat.Play();
+        }
+
+        public void StopHeartbeat()
+        {
+            if (heartbeat != null) heartbeat.Stop();
+        }
+
+        private void OnDisable() => StopHeartbeat();
 
         public void SetStrapped(bool strapped)
         {

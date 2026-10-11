@@ -1,0 +1,80 @@
+{
+  "package": "Crowd_v02",
+  "fps": 30,
+  "rig": "Buddy_Rig_Mixamo65 (65 bones, root mixamorig:Hips)",
+  "contracts": {
+    "smoke": "SmokeCorner base: weight on the left leg, left forearm across the belly, right hand holds the cigarette at chest height (index+middle straight)",
+    "lean": "BarDoor base: back/hood against a wall plane 0.36 m behind the root, right sole on the wall, hands in the hoodie pocket",
+    "idle": "A v04 Idle frame 1 (exact raw values)"
+  },
+  "placement": {
+    "BarDoor": "wall plane 0.36 m behind the root (the hood touches it, the right sole rests on it)",
+    "SmokeCorner": "free standing, in place; cigarette = separate attachment on mixamorig:RightHand (README v02 section: hand-local transform), enabled/disabled by the events"
+  },
+  "clips": {
+    "BarDoor_Enter": {
+      "file": "BarDoor_Enter_v02.fbx",
+      "take": "Buddy_Rig_Mixamo65|BarDoor_Enter",
+      "frames": [
+        1,
+        52
+      ],
+      "duration_s": 1.7,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "lean",
+      "activity": "BarDoor",
+      "role": "enter",
+      "events": {
+        "Thud": 0.84,
+        "Bonk": 0.89
+      },
+      "unity": ""
+    },
+    "SmokeCorner_Enter": {
+      "file": "SmokeCorner_Enter_v02.fbx",
+      "take": "Buddy_Rig_Mixamo65|SmokeCorner_Enter",
+      "frames": [
+        1,
+        58
+      ],
+      "duration_s": 1.9,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "smoke",
+      "activity": "SmokeCorner",
+      "role": "enter",
+      "events": {
+        "CigOn": 0.4,
+        "LighterOn": 0.4,
+        "Light": 0.94,
+        "LighterOff": 1.2,
+        "Exhale": 1.46
+      },
+      "unity": "cigarette = separate attachment on mixamorig:RightHand: grip [0.0175, 0.104, 0.0] m, rotation (w,x,y,z) [0.707107, -0.707107, 0.0, 0.0] in the Blender hand-bone frame; see README v02 section for the Unity mapping"
+    },
+    "SmokeCorner_Loop": {
+      "file": "SmokeCorner_Loop_v02.fbx",
+      "take": "Buddy_Rig_Mixamo65|SmokeCorner_Loop",
+      "frames": [
+        1,
+        181
+      ],
+      "duration_s": 6.0,
+      "loop": true,
+      "start_contract": "smoke",
+      "end_contract": "smoke",
+      "activity": "SmokeCorner",
+      "role": "loop",
+      "events": {
+        "Puff": 0.5,
+        "Exhale": 1.62,
+        "AshTap": 2.99,
+        "AshTap2": 3.15,
+        "Puff2": 4.8,
+        "Exhale2": 5.28
+      },
+      "unity": "cigarette = separate attachment on mixamorig:RightHand: grip [0.0175, 0.104, 0.0] m, rotation (w,x,y,z) [0.707107, -0.707107, 0.0, 0.0] in the Blender hand-bone frame; see README v02 section for the Unity mapping"
+    }
+  }
+}

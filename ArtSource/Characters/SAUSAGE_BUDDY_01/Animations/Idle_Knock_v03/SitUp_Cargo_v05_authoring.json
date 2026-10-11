@@ -1,0 +1,42 @@
+{
+  "clip": "SitUp_Cargo_v05",
+  "action": "SitUp_Cargo_v05",
+  "frames": [
+    1,
+    91
+  ],
+  "fps": 30,
+  "duration_s": 3.0,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "beats": [
+    "0.00-0.15 exact supine hold (GetUp_FromBack_v02 frame 1, hipsStart 0.307 m), frames 1-5.5, for the ragdoll blend",
+    "0.15-0.44 groggy stir: head rolls, the legs drop and bend, feet slide to the butt",
+    "0.42-0.84 heavy sit-up pushing on the floor with both palms; the giant head LAGS back (54 deg, chin to the ceiling)",
+    "0.81-1.37 the head FLOPS forward past the pose (42 deg, chin on the chest), bounces back up (-13), flops again (20), settles",
+    "1.06-1.48 dazed wobble: the head circles, decaying",
+    "1.40-1.70 quick brrr head shake (2.5 shakes) to snap out of it",
+    "1.44-1.99 rubs the bump on the right side of his head, wincing",
+    "2.00-2.32 the hand freezes, slow look up, SNAP panic glance at the doors",
+    "1.92-2.76 scramble: the palms slam down with the panic; he turns 90 deg to his left and scoots 0.36 m to the wall in three heel + palm pushes (2.17, 2.37, 2.58 s), feet and palms planted during each push",
+    "2.66-2.90 the hood bumps the wall: squash and rebound",
+    "2.56-3.00 curls into the knee hug, landing exactly on the cargo sit contract",
+    "events: SatUp frame 27 (0.867 s); Seated/Stable from frame 88 (2.90 s)"
+  ],
+  "authoring_stats": {
+    "max_wall_push_m": 0.023285116195678635,
+    "min_mesh_z_before_fit_m": -0.009953022003173828,
+    "events": {
+      "SatUp": {
+        "frame": 27,
+        "time_s": 0.867,
+        "fraction": 0.289
+      },
+      "Seated_Stable": {
+        "frame": 88,
+        "time_s": 2.9,
+        "fraction": 0.967
+      }
+    }
+  }
+}

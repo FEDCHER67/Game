@@ -1,3 +1,4 @@
+using OnlyVolunteers.Audio;
 using UnityEngine;
 
 namespace OnlyVolunteers.Vehicles
@@ -26,6 +27,7 @@ namespace OnlyVolunteers.Vehicles
         private Vector3 _spawnPosition;
         private float _spawnYaw;
         private bool _showHelp = true;
+        private float _nextHorn;
 
         private void Awake()
         {
@@ -67,7 +69,15 @@ namespace OnlyVolunteers.Vehicles
             if (Input.GetKeyDown(KeyCode.Alpha9)) CycleUpgrade(VanUpgradeCategory.Handling);
             if (Input.GetKeyDown(KeyCode.C) && CameraRig != null) CameraRig.ToggleMode();
             if (Input.GetKeyDown(KeyCode.R)) ResetVan();
-            if (Input.GetKeyDown(KeyCode.H)) _showHelp = !_showHelp;
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                _showHelp = !_showHelp;
+                if (Time.time >= _nextHorn)
+                {
+                    _nextHorn = Time.time + 0.4f;
+                    Sfx.PlayAt(SfxIds.VanHorn, transform.position);
+                }
+            }
             if (Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
             if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
             Cursor.visible = Cursor.lockState != CursorLockMode.Locked;

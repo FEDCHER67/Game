@@ -72,6 +72,7 @@ namespace OnlyVolunteers.Characters.Npc
             DrivenId = Animator.StringToHash(C.Driven);
         private static readonly int[] TriggerIds = Hashes(C.Triggers);
         private static readonly int[] GetUpTriggerIds = Hashes(C.GetUpTriggers);
+        private static readonly int IdleStateId = Animator.StringToHash(C.IdleState);
 
         // Per controller: its parameters and the clips it plays (a role is installed when its state's clip is there:
         // clips.json names the state and the clip alike).
@@ -98,6 +99,8 @@ namespace OnlyVolunteers.Characters.Npc
         private bool _aim;
         private readonly List<int> _pulsed = new();
         private readonly Dictionary<string, bool> _has = new(); // Has(role), per controller
+        private int _lastBaseStateHash;
+        private bool _baseWasInTransition, _idleDesyncSkip;
 
         /// <summary>Animator writes by the driver itself (parameters, trigger pulses).</summary>
         public int Writes { get; private set; }
@@ -264,6 +267,8 @@ namespace OnlyVolunteers.Characters.Npc
         // ---------- The activity's hand prop (a hook: clips.json "props") ----------
 
         private GameObject _prop;
+        private bool _propUpright;
+        private Quaternion _propLocalRotation = Quaternion.identity; // the authored rotation in the bone's frame
         private static Mesh _propMesh;
         private static Material _propMaterial;
 
@@ -271,6 +276,7 @@ namespace OnlyVolunteers.Characters.Npc
         {
             if (_prop != null) Destroy(_prop);
             _prop = null;
+            _propUpright = false;
             if (prop == null || !Resolve()) return;
             Transform bone = null;
             foreach (Transform t in _animator.GetComponentsInChildren<Transform>(true))
@@ -280,6 +286,8 @@ namespace OnlyVolunteers.Characters.Npc
                     break;
                 }
             if (bone == null) return;
+            Quaternion prefabRotation = prop.Prefab != null ? prop.Prefab.transform.localRotation : Quaternion.identity;
+            Vector3 prefabScale = prop.Prefab != null ? prop.Prefab.transform.localScale : Vector3.one;
             if (prop.Prefab != null) _prop = Instantiate(prop.Prefab, bone, false);
             else
             {
@@ -300,16 +308,22 @@ namespace OnlyVolunteers.Characters.Npc
             Vector3 lossy = bone.lossyScale;
             _prop.transform.SetLocalPositionAndRotation(
                 new Vector3(prop.Position.x / Mathf.Max(1e-6f, lossy.x), prop.Position.y / Mathf.Max(1e-6f, lossy.y), prop.Position.z / Mathf.Max(1e-6f, lossy.z)),
-                Quaternion.Euler(prop.Rotation));
-            Vector3 size = prop.Prefab != null ? Vector3.one : new Vector3(prop.Size.x, prop.Size.y * 0.5f, prop.Size.z); // the cylinder is 2 units tall
+                Quaternion.Euler(prop.Rotation) * prefabRotation);
+            Vector3 size = prop.Prefab != null ? prefabScale : new Vector3(prop.Size.x, prop.Size.y * 0.5f, prop.Size.z); // the cylinder is 2 units tall
             _prop.transform.localScale = new Vector3(size.x / Mathf.Max(1e-6f, lossy.x), size.y / Mathf.Max(1e-6f, lossy.y), size.z / Mathf.Max(1e-6f, lossy.z));
+            _propUpright = prop.Upright;
+            _propLocalRotation = _prop.transform.localRotation;
         }
 
         private void OnDisable()
         {
             if (_prop != null) Destroy(_prop);
             _prop = null;
+            _propUpright = false;
             _activity = -1;
+            _lastBaseStateHash = 0;
+            _baseWasInTransition = false;
+            _idleDesyncSkip = false;
         }
 
         /// <summary>A police officer aims (the upper-body layer).</summary>
@@ -385,10 +399,40 @@ namespace OnlyVolunteers.Characters.Npc
         // Its own trigger pulses: reset at the end of the frame if no transition took them (a stale trigger fires later).
         private void LateUpdate()
         {
-            if (_pulsed.Count == 0) return;
-            if (_animator != null && _animator.isActiveAndEnabled)
-                foreach (int id in _pulsed) _animator.ResetTrigger(id);
-            _pulsed.Clear();
+            if (_pulsed.Count > 0)
+            {
+                if (_animator != null && _animator.isActiveAndEnabled)
+                    foreach (int id in _pulsed) _animator.ResetTrigger(id);
+                _pulsed.Clear();
+            }
+            if (_prop != null && _propUpright)
+            {
+                // The authored hand-relative rotation, tilted (shortest arc) so its up axis is world-up: the yaw stays as tuned.
+                Quaternion authored = _prop.transform.parent.rotation * _propLocalRotation;
+                _prop.transform.rotation = Quaternion.FromToRotation(authored * Vector3.up, Vector3.up) * authored;
+            }
+            if (Held || !HasContract)
+            {
+                _idleDesyncSkip = true; // a state entered while held (a get-up's blend) keeps its time
+                return;
+            }
+            AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
+            bool inTransition = _animator.IsInTransition(0);
+            // Only an idle entered without a blend (the spawn's default state): re-timing one at the end of a cross-fade pops the pose.
+            if (state.fullPathHash != _lastBaseStateHash && !_idleDesyncSkip && !_baseWasInTransition && !inTransition)
+            {
+                ClipInfo idle = Clip(C.RoleIdle);
+                ClipInfo bored = Clip("IdleBored");
+                if ((state.shortNameHash == IdleStateId && idle != null && idle.Loop && idle.State == C.IdleState) ||
+                    (bored != null && bored.Loop && state.shortNameHash == Animator.StringToHash(bored.State)))
+                {
+                    _animator.Play(state.fullPathHash, 0, UnityEngine.Random.Range(0f, 0.99999994f));
+                    Writes++;
+                }
+            }
+            _lastBaseStateHash = state.fullPathHash;
+            _baseWasInTransition = inTransition;
+            _idleDesyncSkip = false;
         }
 
         private Inputs CurrentInputs()

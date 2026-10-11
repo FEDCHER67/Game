@@ -1,0 +1,71 @@
+{
+  "clip": "SmokeCorner_Loop",
+  "file_stem": "SmokeCorner_Loop_v02",
+  "action": "SmokeCorner_Loop",
+  "frames": [
+    1,
+    181
+  ],
+  "fps": 30,
+  "duration_s": 6.0,
+  "loop": true,
+  "start_contract": "smoke",
+  "end_contract": "smoke",
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "beats": [
+    "0.16 little dip (anticipation)",
+    "0.30-0.46 elbow leads, cig to the lips in an arc",
+    "0.50-1.22 held puff: chest fills, head tilts (event Puff)",
+    "1.42 hand pulled away out front, breath held",
+    "1.62-2.30 long exhale aside (event Exhale)",
+    "2.62 hand rests by the hip, away from the body",
+    "2.84-3.28 looks at the ash: cocks the wrist, two sharp thumb taps (events AshTap 2.99 / 3.15)",
+    "3.60-4.36 weight over, looks around, \"sup\" chin-up",
+    "4.62-4.78 elbow leads, quick second puff",
+    "5.24-5.62 hand away, exhale aside (event Exhale2)",
+    "6.00 smoke base"
+  ],
+  "events": {
+    "Puff": 0.5,
+    "Exhale": 1.62,
+    "AshTap": 2.99,
+    "AshTap2": 3.15,
+    "Puff2": 4.8,
+    "Exhale2": 5.28
+  },
+  "max_leg_overreach_m": 3.4489265665627045e-08,
+  "max_contact_lift_m": 0.0,
+  "revision_of": "SmokeCorner_Loop_v01",
+  "authoring_note": "v02 revision (clips_props_v02.py); contract poses identical to v01",
+  "preview_only_props": {
+    "cigarette": {
+      "bone": "mixamorig:RightHand",
+      "frame": "Blender pose-bone frame of the hand: origin at the wrist joint (bone head), +Y along the bone toward the fingers, +X thumb side, +Z palm normal",
+      "grip_position_m": [
+        0.0175,
+        0.104,
+        0.0
+      ],
+      "filter_tip_m": [
+        0.0175,
+        0.104,
+        0.03
+      ],
+      "lit_tip_m": [
+        0.0175,
+        0.104,
+        -0.05
+      ],
+      "prop_axis": "prop +Y = cigarette axis toward the lit end, origin at the grip (filter tip at y = -0.030)",
+      "rotation_quaternion_wxyz": [
+        0.707107,
+        -0.707107,
+        0.0,
+        0.0
+      ],
+      "length_m": 0.08,
+      "diameter_m": 0.008,
+      "visible_events": {}
+    }
+  }
+}

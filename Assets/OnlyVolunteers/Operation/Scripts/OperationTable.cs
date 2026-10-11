@@ -65,6 +65,7 @@ namespace OnlyVolunteers.Operation
         public OperationPatient Release()
         {
             OperationPatient patient = Patient;
+            if (patient != null) patient.StopHeartbeat();
             Patient = null;
             strapProgress = 0f;
             ShowStraps();

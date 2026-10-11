@@ -227,7 +227,7 @@ namespace OnlyVolunteers.Characters.Npc
                 {
                     AnyTrigger(sitUp, C.GetUpTriggers[(int)GetUpKind.SitUp], 0f, false);
                     if (!_linked.Contains(sitUp.name)) Link(sitUp, sit, 1f, 0.1f);
-                    ModeExits(sitUp, CargoBroken());
+                    CargoExits(sitUp, scrambleStart != null);
                 }
 
                 // Crowd activities: Enter -> Loop -> (Activity changed) Exit.
@@ -262,7 +262,7 @@ namespace OnlyVolunteers.Characters.Npc
                 foreach (AnimatorState s in locomotion) ModeExits(s, locomotionExits.ToArray());
                 ModeExits(down, All(Lt(C.StunPhase, 1)), All(Gt(C.StunPhase, 2)), All(Is(C.Ragdoll)));
                 ModeExits(ragdoll, All(Not(C.Ragdoll)));
-                foreach (AnimatorState s in cargo) ModeExits(s, CargoBroken());
+                foreach (AnimatorState s in cargo) CargoExits(s, scrambleStart != null);
                 foreach (AnimatorState s in escape)
                     ModeExits(s, All(Not(C.InCargo)), All(Not(C.Panic)), All(Is(C.Ragdoll)), All(Eq(C.StunPhase, 1)), All(Eq(C.StunPhase, 2)));
                 foreach ((int a, AnimatorState enter, AnimatorState loop, AnimatorState exit) in activityStates)
@@ -363,8 +363,12 @@ namespace OnlyVolunteers.Characters.Npc
             }
 
             // The cargo seat's mode no longer holds: out of the van, panicking (the escape), a ragdoll, knocked out.
-            private static Cond[][] CargoBroken() =>
-                new[] { All(Not(C.InCargo)), All(Is(C.Panic)), All(Is(C.Ragdoll)), All(Eq(C.StunPhase, 1)), All(Eq(C.StunPhase, 2)) };
+            private void CargoExits(AnimatorState from, bool cutToScrambleStart)
+            {
+                ModeExits(from, All(Not(C.InCargo)));
+                ModeExits(from, cutToScrambleStart ? 0f : Mode, All(Is(C.Panic)));
+                ModeExits(from, All(Is(C.Ragdoll)), All(Eq(C.StunPhase, 1)), All(Eq(C.StunPhase, 2)));
+            }
 
             private bool IsIdleVariant(string state)
             {
@@ -510,12 +514,14 @@ namespace OnlyVolunteers.Characters.Npc
             }
 
             // One exit (to Exit, then Entry) per condition set: the mode no longer holds.
-            private void ModeExits(AnimatorState from, params Cond[][] whenAny)
+            private void ModeExits(AnimatorState from, params Cond[][] whenAny) => ModeExits(from, Mode, whenAny);
+
+            private void ModeExits(AnimatorState from, float blend, params Cond[][] whenAny)
             {
                 foreach (Cond[] conditions in whenAny)
                 {
                     AnimatorStateTransition t = from.AddExitTransition();
-                    Setup(t, Mode, false, 0f);
+                    Setup(t, blend, false, 0f);
                     t.AddCondition(If, 0f, C.Driven);
                     foreach (Cond c in conditions) t.AddCondition(c.Kind, c.Threshold, c.Parameter);
                     _transitions++;

@@ -94,8 +94,16 @@ namespace OnlyVolunteers.Map
         public float AnkleDragSpeed = 1.5f;
         [Tooltip("Condition per second while dragged by the ankles only, faster than AnkleDragSpeed.")]
         public float AnkleDragCost = 1f;
-        [Tooltip("Seconds the knocked body ignores the van's colliders.")]
+        [Tooltip("Before 2026-10-11 only (LegacyVanKnock): seconds the knocked body ignored all of the van's colliders.")]
         public float VanKnockIgnore = 0.5f;
+        [Tooltip("A vehicle knocks it over (Fedya's playtest 2026-10-11): the body takes the vehicle's velocity at it times " +
+                 "KnockAhead plus KnockLift m/s up. Over 1, the parts born inside the bumper leave it forward; at 0.9 the van " +
+                 "drove into the thrown body and it ended up stuck in the windshield, the roof or a door.")]
+        public float KnockAhead = 1.1f;
+        public float KnockLift = 5f;
+        /// <summary>Test hook (RagdollSmokeTest's before rows): the van's knock as before 2026-10-11: looked for once per
+        /// rendered frame, 0.9 of the van's velocity plus 5 m/s up, all of the van ignored for VanKnockIgnore s.</summary>
+        public static bool LegacyVanKnock;
         [Tooltip("A sitting or escaping NPC this far outside its cargo box with nothing else taking it out of the van " +
                  "(no GreyboxVanCargo, the van gone) gets up and runs.")]
         public float LostCarrierMargin = 1f;
@@ -154,6 +162,7 @@ namespace OnlyVolunteers.Map
         // Sitting with the sit clips (stage 9) rather than the sunk standing Idle; the next knock, the strikes sounded.
         private bool _seatClips;
         private float _nextKnock, _knockAt;
+        private float _wallScootAt = -1f; // when the visual moves onto the seat turned / slid by NpcGetUp.SitUp (SeatMoved)
         private int _knockHit = -1;
         private GreyboxFace _face;
         private VanController _van;
@@ -171,6 +180,7 @@ namespace OnlyVolunteers.Map
         private bool _wasInCargo;
         private float _nextScream;
         private float _nextVoice;
+        private float _nextHurt;
 
         public GreyboxNpcBody Body => _body;
         /// <summary>Stage 9: the ragdoll component (its bodies exist only while this NPC lies down as one).</summary>
@@ -254,6 +264,7 @@ namespace OnlyVolunteers.Map
         {
             All.Clear();
             Incident = null;
+            LegacyVanKnock = false;
         }
 
         // In OnEnable rather than Awake: it also runs after a script reload in Play mode, which drops these references
@@ -344,6 +355,14 @@ namespace OnlyVolunteers.Map
                 FixedDown();
                 return;
             }
+            // Fedya's playtest 2026-10-11: a fast van is looked for every physics step too, not only every rendered frame,
+            // so the body is never born more than one step's travel inside the bumper (0.32 m at 70 km/h).
+            if (!LegacyVanKnock && (State == NpcState.Free ||
+                                    (State == NpcState.GettingUp && _getUp != null && _getUp.Current != NpcGetUp.Step.Settling)) && VanHits())
+            {
+                KnockOver(_vanBody);
+                return;
+            }
             if (_struggle != null && _struggle.Current != NpcStruggle.Mode.Off) _struggle.Stop(); // up (or getting up): limp
             if (State == NpcState.GettingUp && _getUp != null) _getUp.FixedTick();
         }
@@ -360,7 +379,8 @@ namespace OnlyVolunteers.Map
         {
             if (VanHits())
             {
-                KnockOver(VanPush());
+                if (LegacyVanKnock) KnockOver(VanPush());
+                else KnockOver(_vanBody);
                 return;
             }
             if (Scared(out Vector3 from))
@@ -401,6 +421,7 @@ namespace OnlyVolunteers.Map
                                   Flat(_van.transform.position - transform.position).magnitude < 2.6f &&
                                   Mathf.Abs(_van.transform.position.y - transform.position.y) < 2f;
 
+        // Before 2026-10-11 (LegacyVanKnock): 0.9 of the van's velocity, so the van caught up with the thrown body.
         private Vector3 VanPush()
         {
             Vector3 push = _vanBody != null ? _vanBody.linearVelocity : _van.transform.forward * 10f;
@@ -430,6 +451,7 @@ namespace OnlyVolunteers.Map
         public void Hit(WeaponStun weapon, HitZone zone, Vector3 from, Vector3 point)
         {
             if (weapon == null) weapon = WeaponStun.Fist;
+            bool alreadyOut = State == NpcState.Down && Phase == StunPhase.Out;
             // Re-stunning one that is already caught (lying, sitting, escaping) works but costs Condition (never kills);
             // one getting up is not caught any more.
             if (State != NpcState.Free && State != NpcState.GettingUp) Condition = Mathf.Max(0f, Condition - ReStunConditionCost);
@@ -452,15 +474,37 @@ namespace OnlyVolunteers.Map
             if (!Ragdolled && _animDriver != null)
                 _animDriver.Trigger(zone == HitZone.Head ? NpcAnimTrigger.HitHead
                     : Vector3.Dot(from - Center, transform.forward) >= 0f ? NpcAnimTrigger.HitFront : NpcAnimTrigger.HitBack);
+            if (!alreadyOut && Time.time >= _nextHurt)
+            {
+                _nextHurt = Time.time + 0.35f;
+                Sfx.PlayAt(SfxIds.NpcHurt, VoicePoint, Mathf.Lerp(0.8f, 1f, (weapon.Strength - 1) / 4f));
+            }
         }
 
-        /// <summary>Thrown by a vehicle (the van at speed, or jumping out of one): down with that velocity, stunned like a
-        /// fist to the torso, and the body ignores the van for a moment so it is not born inside the bumper.</summary>
-        public void KnockOver(Vector3 velocity)
+        /// <summary>Thrown out of the van (the tumble at speed) or by a script: down with that velocity, stunned like a fist
+        /// to the torso; where the body is born inside the van it passes out of it (the van's knock grace below).</summary>
+        public void KnockOver(Vector3 velocity) => KnockOver(velocity, _vanBody);
+
+        /// <summary>Hit by a fast vehicle (the van, a police car): down with the vehicle's velocity at the NPC times
+        /// KnockAhead plus KnockLift up, stunned like a fist to the torso. Fedya's playtest 2026-10-11 ("he gets stuck in
+        /// the van's geometry"): the parts born inside the vehicle stop colliding with it only until they are out of it
+        /// (IgnoreOverlapping), the rest of the body collides at once, and the body leaves faster than the vehicle comes.</summary>
+        public void KnockOver(Rigidbody vehicle)
+        {
+            Vector3 velocity = vehicle != null ? vehicle.GetPointVelocity(Center) * KnockAhead : Vector3.zero;
+            KnockOver(velocity + Vector3.up * KnockLift, vehicle);
+        }
+
+        private void KnockOver(Vector3 velocity, Rigidbody vehicle)
         {
             GoDown(velocity, Random.onUnitSphere * 8f);
             ExtendStun(WeaponStun.Fist.Duration(HitZone.Torso));
-            if (_van != null) Down.IgnoreFor(_van.GetComponentsInChildren<Collider>(), VanKnockIgnore);
+            if (vehicle != null)
+            {
+                Collider[] parts = vehicle.GetComponentsInChildren<Collider>();
+                if (LegacyVanKnock) Down.IgnoreFor(parts, VanKnockIgnore);
+                else Down.IgnoreOverlapping(parts);
+            }
             Face.Set("Surprised", 100f, 10000f);
         }
 
@@ -564,7 +608,10 @@ namespace OnlyVolunteers.Map
                 Wake();
                 return;
             }
+            StunPhase previousPhase = Phase;
             Phase = PhaseNow();
+            if (previousPhase == StunPhase.Out && Phase == StunPhase.Groggy)
+                Sfx.PlayAt(SfxIds.NpcGasp, VoicePoint);
             if (Phase == StunPhase.Out)
             {
                 _nextVoice = Time.time + Random.Range(0.3f, 1.2f); // the first mumble soon after it turns groggy
@@ -797,7 +844,8 @@ namespace OnlyVolunteers.Map
             // Rising in the clip, a fast van knocks it over again (lying, the van hits the ragdoll itself).
             if (before != NpcGetUp.Step.Settling && VanHits())
             {
-                KnockOver(VanPush());
+                if (LegacyVanKnock) KnockOver(VanPush());
+                else KnockOver(_vanBody);
                 return;
             }
             NpcGetUp.Step now = _getUp.Tick(Time.deltaTime);
@@ -910,10 +958,18 @@ namespace OnlyVolunteers.Map
             Vector3 velocity = bay.PointVelocity(pelvis != null ? pelvis.worldCenterOfMass : Center);
             SeatPose(out Vector3 position, out Quaternion rotation);
             if (!_getUp.SitUp(bay, position, rotation, _body.Radius, out Vector3 root, out Quaternion facing)) return false;
-            VisualPose(position, rotation, 0f);
+            // The seat turned square / slid back to the wall: the figure starts where the ragdoll lies and moves onto the
+            // seat with the clip's scramble.
+            if (_getUp.SeatMoved) VisualPose(_getUp.SeatStartPosition, _getUp.SeatStartRotation, 0f);
+            else VisualPose(position, rotation, 0f);
             _body.ActivateSeated(root, facing, velocity);
             Seated(true);
             NpcRagdollProfile p = _ragdoll.Profile;
+            if (_getUp.SeatMoved)
+            {
+                float seated = p.SitUp.Events != null && p.SitUp.Events.Length >= 2 ? p.SitUp.Events[1] : _getUp.ClipSeconds;
+                _wallScootAt = Time.time + Mathf.Max(0f, seated - WallScootSeconds);
+            }
             _nextKnock = Time.time + _getUp.ClipSeconds + Random.Range(p.KnockInterval.x, p.KnockInterval.y);
             return true;
         }
@@ -965,6 +1021,7 @@ namespace OnlyVolunteers.Map
             _body.Grabbable = false;
             _seatClips = clips;
             _knockHit = -1;
+            _wallScootAt = -1f;
             _nextVoice = Time.time + Random.Range(1f, 3f);
         }
 
@@ -1031,7 +1088,20 @@ namespace OnlyVolunteers.Map
             Face.TickBlink();
             VoiceEvery(SfxIds.NpcWhimper, WhimperInterval);
             if (_seatClips) TickSeatClips();
+            if (_wallScootAt >= 0f && Time.time >= _wallScootAt)
+            {
+                _wallScootAt = -1f;
+                if (_seatClips)
+                {
+                    SeatPose(out Vector3 position, out Quaternion rotation);
+                    VisualPose(position, rotation, WallScootSeconds);
+                }
+            }
         }
+
+        // SitUp_Cargo's scramble to the wall: its last WallScootSeconds before the Seated event (v05: 2.14-2.90 s), the
+        // visual moving from NpcGetUp.SeatStart onto the seat.
+        private const float WallScootSeconds = 0.75f;
 
         private void UpdateEscaping()
         {

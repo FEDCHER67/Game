@@ -623,7 +623,9 @@ namespace OnlyVolunteers.Police
                 {
                     // Noted first: KnockOver raises GreyboxNpc.Incident at once, and the police must know it was their car.
                     PoliceDirector.NotePoliceKnock(npc.transform.position);
-                    npc.KnockOver(Body.linearVelocity * 0.9f + Vector3.up * 5f);
+                    // The car's own colliders get the knock grace (the parts born inside it pass out); 2026-10-11, was
+                    // 0.9 x its velocity with the grace on the van's colliders instead (GreyboxNpc.KnockOver(Rigidbody)).
+                    npc.KnockOver(Body);
                     continue;
                 }
                 if (along > 0f && along < 6f + Mathf.Max(0f, v) * 0.6f) _pedAhead = true;

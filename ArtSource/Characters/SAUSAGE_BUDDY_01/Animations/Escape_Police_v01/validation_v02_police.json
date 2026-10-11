@@ -1,0 +1,267 @@
+{
+  "revision": "v02",
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "rig_reference": "rig_Buddy_Mixamo65_A_v04.json",
+  "rig_source": "json",
+  "thresholds": {
+    "contract_matrix": 1e-05,
+    "seam": 1e-06,
+    "key_step_deg": 25.0,
+    "penetration_m": 0.002,
+    "slide_m": 0.002,
+    "cargo_height_m": 1.2,
+    "fbx_bind": 0.0001,
+    "fbx_anim": 0.00015,
+    "fbx_seam": 1e-05
+  },
+  "clips": {
+    "Cop_Run_Fat_v02": {
+      "action": "Cop_Run_Fat_v02",
+      "frames": [
+        1,
+        17
+      ],
+      "fps": 30,
+      "duration_s": 0.5333333333333333,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 10.479180461917668,
+      "max_key_step_at": [
+        1.0,
+        "mixamorig:LeftLeg"
+      ],
+      "seam_matrix_error": 0.0,
+      "start_contract": "loop",
+      "end_contract": "loop",
+      "start_contract_error": null,
+      "end_contract_error": null,
+      "max_floor_penetration_m": 0.00056699407286942,
+      "max_contact_slide_m_per_120hz_sample": 0.0007488032190926482,
+      "max_contact_slide_at_frame": 12.25,
+      "ground_note": "in place; ground +Y at 2.20 m/s (play at speed / 2.20)",
+      "hips_first": [
+        -0.015173949301242828,
+        -0.012000000104308128,
+        0.6899999976158142
+      ],
+      "hips_last": [
+        -0.015173949301242828,
+        -0.012000000104308128,
+        0.6899999976158142
+      ],
+      "events": {},
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 2.2619962692260742e-05,
+        "seam_error": 0.0,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cop_Run_Fat_v02": [
+            1.0,
+            17.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    },
+    "Cop_Punch_v02": {
+      "action": "Cop_Punch_v02",
+      "frames": [
+        1,
+        37
+      ],
+      "fps": 30,
+      "duration_s": 1.2,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 21.952745331630474,
+      "max_key_step_at": [
+        12.0,
+        "mixamorig:LeftHandIndex2"
+      ],
+      "seam_matrix_error": null,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "start_contract_error": 0.0,
+      "end_contract_error": 0.0,
+      "max_floor_penetration_m": 0.0005660897586494684,
+      "max_contact_slide_m_per_120hz_sample": 0.0007161211010956042,
+      "max_contact_slide_at_frame": 23.0,
+      "ground_note": "static floor",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "events": {
+        "Hit": 0.45
+      },
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 3.637373447418213e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cop_Punch_v02": [
+            1.0,
+            37.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    },
+    "Cop_ShakeFist_v02": {
+      "action": "Cop_ShakeFist_v02",
+      "frames": [
+        1,
+        67
+      ],
+      "fps": 30,
+      "duration_s": 2.2,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 20.20387508296893,
+      "max_key_step_at": [
+        63.5,
+        "mixamorig:RightForeArm"
+      ],
+      "seam_matrix_error": null,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "start_contract_error": 0.0,
+      "end_contract_error": 0.0,
+      "max_floor_penetration_m": 0.0007258078549057245,
+      "max_contact_slide_m_per_120hz_sample": 0.00011694560915645098,
+      "max_contact_slide_at_frame": 35.75,
+      "ground_note": "static floor",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "events": {},
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 1.9066035747528076e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Cop_ShakeFist_v02": [
+            1.0,
+            67.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    }
+  },
+  "contract_references": {
+    "v01_clips": "C:\\Dev\\wt_escape\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Escape_Police_v01",
+    "sit": "C:\\Dev\\wt_escape\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Idle_Knock_v03\\Cargo_Sit_Idle_v04.blend"
+  },
+  "pass": true
+}

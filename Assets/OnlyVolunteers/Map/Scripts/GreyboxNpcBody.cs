@@ -128,6 +128,7 @@ namespace OnlyVolunteers.Map
         private float _shapeHeight;
         private readonly List<Collider> _ignored = new();
         private float _restoreIgnoredAt;
+        private readonly List<Collider> _grace = new(); // IgnoreOverlapping: ignored until apart
         private float _lastContact = -1f;
         private readonly List<DebugPin> _pins = new();
 
@@ -328,6 +329,7 @@ namespace OnlyVolunteers.Map
         {
             RevokeAll();
             _ignored.Clear(); // the pairs die with the capsule
+            _grace.Clear();
             _seated = false;
             _growing = false;
             if (_rb != null) DestroyImmediate(_rb);
@@ -492,8 +494,8 @@ namespace OnlyVolunteers.Map
             _rb.AddForce(horizontalImpulse * LimpScale + Vector3.up * (hopSpeed * _rb.mass), ForceMode.Impulse);
         }
 
-        /// <summary>Contacts with these colliders are ignored for a while (the van that just knocked the NPC over, so the body
-        /// is not born inside its bumper), then restored.</summary>
+        /// <summary>Contacts with these colliders are ignored for a while, then restored (the van's knock before 2026-10-11,
+        /// GreyboxNpc.LegacyVanKnock: the smoke test's before rows).</summary>
         public void IgnoreFor(IEnumerable<Collider> others, float seconds)
         {
             if (!IsLive(_capsule)) return;
@@ -515,12 +517,39 @@ namespace OnlyVolunteers.Map
             _ignored.Clear();
         }
 
+        /// <summary>A vehicle that just knocked it over (Fedya's playtest 2026-10-11): those of 'others' the capsule overlaps
+        /// now are ignored until it is apart from each (FixedUpdate); everything else collides at once. Like
+        /// NpcRagdoll.IgnoreOverlapping: no pair comes back into contact while overlapping.</summary>
+        public void IgnoreOverlapping(IEnumerable<Collider> others)
+        {
+            if (!IsLive(_capsule) || others == null) return;
+            foreach (Collider c in others)
+            {
+                if (c == _capsule || _grace.Contains(c) || !NpcRagdoll.Touchable(c, null) || !NpcRagdoll.Overlapping(_capsule, c, 0f)) continue;
+                Physics.IgnoreCollision(_capsule, c, true);
+                _grace.Add(c);
+            }
+        }
+
+        private void EndGrace()
+        {
+            for (int i = _grace.Count - 1; i >= 0; i--)
+            {
+                Collider c = _grace[i];
+                bool live = IsLive(_capsule) && IsLive(c);
+                if (live && NpcRagdoll.Overlapping(_capsule, c, NpcRagdoll.GraceExit)) continue;
+                if (live) Physics.IgnoreCollision(_capsule, c, false);
+                _grace.RemoveAt(i);
+            }
+        }
+
         private static bool IsLive(Collider c) => c != null && c.enabled && c.gameObject.activeInHierarchy;
 
         private void FixedUpdate()
         {
             if (_rb == null) return;
             if (_ignored.Count > 0 && Time.time >= _restoreIgnoredAt) RestoreIgnored();
+            if (_grace.Count > 0) EndGrace();
             if (_growing && _capsule != null)
             {
                 _shapeHeight = Mathf.MoveTowards(_shapeHeight, Height, UnseatGrowSpeed * Time.fixedDeltaTime);

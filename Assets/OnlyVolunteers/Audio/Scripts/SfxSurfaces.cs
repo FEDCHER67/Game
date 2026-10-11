@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OnlyVolunteers.Audio
 {
-    public enum SfxSurface : byte { Asphalt, Grass, Sand, Metal }
+    public enum SfxSurface : byte { Asphalt, Grass, Sand, Metal, Gravel, Mud }
 
     // What a foot stands on, for footstep sounds. The van (layers Vehicle / VehicleInterior) is metal; a Terrain is
     // read from its splat map (the strongest layer at that point, by the terrain layer's name: TL_meadow, TL_sand...);
@@ -19,13 +19,17 @@ namespace OnlyVolunteers.Audio
 
         // Checked in this order: the first group with a keyword in the name wins; no keyword = Asphalt.
         private static readonly string[] MetalWords = { "metal", "iron", "steel", "rust", "van", "rail", "corrugated", "cargo" };
-        private static readonly string[] SandWords = { "sand", "beach", "gravel", "ballast" };
-        private static readonly string[] GrassWords = { "grass", "meadow", "lawn", "field", "forest", "hedge", "leaves", "dirt", "moss", "soil", "mud" };
+        private static readonly string[] MudWords = { "mud" };
+        private static readonly string[] GravelWords = { "gravel", "ballast", "dirt", "soil" };
+        private static readonly string[] SandWords = { "sand", "beach" };
+        private static readonly string[] GrassWords = { "grass", "meadow", "lawn", "field", "forest", "hedge", "leaves", "moss" };
 
         public static string StepId(SfxSurface surface) => surface switch
         {
             SfxSurface.Grass => SfxIds.StepGrass,
             SfxSurface.Sand => SfxIds.StepSand,
+            SfxSurface.Gravel => SfxIds.StepSand,
+            SfxSurface.Mud => SfxIds.StepGrass,
             SfxSurface.Metal => SfxIds.StepMetal,
             _ => SfxIds.StepAsphalt,
         };
@@ -41,7 +45,9 @@ namespace OnlyVolunteers.Audio
             if (ByCollider.TryGetValue(key, out SfxSurface cached)) return cached;
             Renderer renderer = ground.TryGetComponent(out Renderer own) ? own : ground.GetComponentInParent<Renderer>();
             Material material = renderer != null ? renderer.sharedMaterial : null;
-            SfxSurface surface = Classify(material != null ? material.name : ground.gameObject.name);
+            string name = material != null ? material.name :
+                ground.sharedMaterial != null ? ground.sharedMaterial.name : ground.gameObject.name;
+            SfxSurface surface = Classify(name);
             ByCollider[key] = surface;
             return surface;
         }
@@ -51,6 +57,8 @@ namespace OnlyVolunteers.Audio
         {
             if (string.IsNullOrEmpty(name)) return SfxSurface.Asphalt;
             if (HasAny(name, MetalWords)) return SfxSurface.Metal;
+            if (HasAny(name, MudWords)) return SfxSurface.Mud;
+            if (HasAny(name, GravelWords)) return SfxSurface.Gravel;
             if (HasAny(name, SandWords)) return SfxSurface.Sand;
             if (HasAny(name, GrassWords)) return SfxSurface.Grass;
             return SfxSurface.Asphalt;

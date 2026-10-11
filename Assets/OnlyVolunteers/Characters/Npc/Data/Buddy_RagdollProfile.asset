@@ -352,10 +352,10 @@ MonoBehaviour:
   HeldSpring: 60
   HeldMaxTorque: 40
   HeldDamper: 2
-  CarryWaistSpring: 400
-  CarryHipSpring: 300
+  CarryWaistSpring: 150
+  CarryHipSpring: 120
   CarryMaxTorque: 90
-  CarryDamper: 20
+  CarryDamper: 15
   CarryHipFlexion: 10
   BoneMotionMax: 6
   TrackRadius: 30
@@ -383,10 +383,12 @@ MonoBehaviour:
     Loop: 0
   SitUp:
     State: SitUp_Cargo
-    Seconds: 2.4
+    Seconds: 3
     HipsStart: {x: 0, y: 0.307, z: 0}
     Stable: 0
-    Events: []
+    Events:
+    - 0.8667
+    - 2.9
     Role: SitUp
     Speed: 0
     Loop: 0
@@ -401,15 +403,14 @@ MonoBehaviour:
     Loop: 1
   Knock:
     State: Cargo_Knock
-    Seconds: 3.3
+    Seconds: 3.5
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events:
-    - 0.62
-    - 0.78
-    - 0.94
-    - 1.1
-    - 1.4
+    - 0.783
+    - 1.15
+    - 1.333
+    - 2.483
     Role: Knock
     Speed: 0
     Loop: 1
@@ -437,6 +438,25 @@ MonoBehaviour:
   SeatOffset: {x: 0.00000035087646, y: -0, z: 0.11326944}
   SeatMin: {x: -0.25874513, y: -0.46227586}
   SeatMax: {x: 0.25874516, y: 0.46227586}
+  SeatReaches:
+  - Mesh: {fileID: 2959467708922500008, guid: c9bf60023bda34f4ea85893f556f7edf, type: 3}
+    Back: 0.5352305
+    LowBack: 0.43086407
+  - Mesh: {fileID: 3621554888825754127, guid: c9bf60023bda34f4ea85893f556f7edf, type: 3}
+    Back: 0.48810235
+    LowBack: 0
+  - Mesh: {fileID: 1517757969564366345, guid: c9bf60023bda34f4ea85893f556f7edf, type: 3}
+    Back: 0.53523064
+    LowBack: 0.4371418
+  - Mesh: {fileID: 2959467708922500008, guid: 8459e1c7c02a3a2448d1f06800458f48, type: 3}
+    Back: 0.5352305
+    LowBack: 0.43086407
+  - Mesh: {fileID: 3621554888825754127, guid: 8459e1c7c02a3a2448d1f06800458f48, type: 3}
+    Back: 0.48810235
+    LowBack: 0
+  - Mesh: {fileID: 1517757969564366345, guid: 8459e1c7c02a3a2448d1f06800458f48, type: 3}
+    Back: 0.58401465
+    LowBack: 0.39620927
   WalkSpeed: 1.5
   RunSpeed: 3.2
   Roles:
@@ -457,7 +477,7 @@ MonoBehaviour:
     Speed: 4.5
     Loop: 1
   - State: Idle
-    Seconds: 4
+    Seconds: 5
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events: []
@@ -489,10 +509,12 @@ MonoBehaviour:
     Speed: 0
     Loop: 0
   - State: SitUp_Cargo
-    Seconds: 2.4
+    Seconds: 3
     HipsStart: {x: 0, y: 0.307, z: 0}
     Stable: 0
-    Events: []
+    Events:
+    - 0.8667
+    - 2.9
     Role: SitUp
     Speed: 0
     Loop: 0
@@ -505,20 +527,19 @@ MonoBehaviour:
     Speed: 0
     Loop: 1
   - State: Cargo_Knock
-    Seconds: 3.3
+    Seconds: 3.5
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events:
-    - 0.62
-    - 0.78
-    - 0.94
-    - 1.1
-    - 1.4
+    - 0.783
+    - 1.15
+    - 1.333
+    - 2.483
     Role: Knock
     Speed: 0
     Loop: 1
   - State: Escape_Scramble_Start
-    Seconds: 0.8
+    Seconds: 1
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events: []
@@ -560,7 +581,7 @@ MonoBehaviour:
     Speed: 0
     Loop: 1
   - State: Hit_React_Front
-    Seconds: 0.8
+    Seconds: 1.1
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events: []
@@ -584,7 +605,7 @@ MonoBehaviour:
     Speed: 0
     Loop: 0
   - State: Stagger
-    Seconds: 1.4
+    Seconds: 1.6
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events: []
@@ -600,15 +621,15 @@ MonoBehaviour:
     Speed: 3
     Loop: 1
   - State: Cop_Run_Fat
-    Seconds: 0.5667
+    Seconds: 0.5333
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events: []
     Role: RunCopFat
-    Speed: 1.8
+    Speed: 2.2
     Loop: 1
   - State: Cop_Punch
-    Seconds: 1
+    Seconds: 1.2
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
     Events:
@@ -702,7 +723,11 @@ MonoBehaviour:
     Seconds: 1.9
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
-    Events: []
+    Events:
+    - 0.4
+    - 0.94
+    - 1.2
+    - 1.46
     Role: SmokeCorner/Enter
     Speed: 0
     Loop: 0
@@ -710,7 +735,13 @@ MonoBehaviour:
     Seconds: 6
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
-    Events: []
+    Events:
+    - 0.5
+    - 1.62
+    - 2.99
+    - 3.15
+    - 4.8
+    - 5.28
     Role: SmokeCorner/Loop
     Speed: 0
     Loop: 1
@@ -749,10 +780,12 @@ MonoBehaviour:
     Speed: 0
     Loop: 0
   - State: BarDoor_Enter
-    Seconds: 1.5
+    Seconds: 1.7
     HipsStart: {x: 0, y: 0, z: 0}
     Stable: 0
-    Events: []
+    Events:
+    - 0.84
+    - 0.89
     Role: BarDoor/Enter
     Speed: 0
     Loop: 0
@@ -876,6 +909,126 @@ MonoBehaviour:
     Role: 
     Speed: 0
     Loop: 1
+  - State: Idle_v03
+    Seconds: 4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: SitUp_Cargo_v04
+    Seconds: 2.4
+    HipsStart: {x: 0, y: 0.307, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: Cargo_Sit_Idle_v04
+    Seconds: 4.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: Cargo_Knock_v03b
+    Seconds: 3.3
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.62
+    - 0.78
+    - 0.94
+    - 1.1
+    - 1.4
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: Escape_Scramble_Start_v01
+    Seconds: 0.8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: Cargo_JumpOut_v01
+    Seconds: 1.1333
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.35
+    - 0.5667
+    Role: 
+    Speed: 3.2
+    Loop: 0
+  - State: Hit_React_Front_v01
+    Seconds: 0.8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: Stagger_v01
+    Seconds: 1.4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: Cop_Run_Fat_v01
+    Seconds: 0.5667
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 1.8
+    Loop: 1
+  - State: Cop_Punch_v01
+    Seconds: 1
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.45
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: Cop_ShakeFist_v01
+    Seconds: 2.2
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: SmokeCorner_Enter_v01
+    Seconds: 1.9
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: SmokeCorner_Loop_v01
+    Seconds: 6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: BarDoor_Enter_v01
+    Seconds: 1.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
   - State: Kiosk_Wait
     Seconds: 6.0000005
     HipsStart: {x: 0, y: 0, z: 0}
@@ -903,6 +1056,35 @@ MonoBehaviour:
     Height: 1
     Gap: 0.36
     Reach: 1.5
+  Props:
+  - Activity: SmokeCorner
+    Bone: mixamorig:RightHand
+    Position: {x: -0.0175, y: 0.104, z: 0}
+    Rotation: {x: 0, y: 90, z: 0}
+    Size: {x: 0.008, y: 0.07, z: 0.008}
+    Prefab: {fileID: 1215668120976053064, guid: da28e34042ae2b242be18894aeb9d567, type: 3}
+    Upright: 0
+  - Activity: ChurchSteps
+    Bone: mixamorig:RightHand
+    Position: {x: 0.001, y: 0.0684, z: 0.0124}
+    Rotation: {x: -34.24, y: 4.58, z: -28.27}
+    Size: {x: 0.008, y: 0.07, z: 0.008}
+    Prefab: {fileID: 4178974189153848710, guid: 0e55bc2cc3f8e974aae33771ab1b3846, type: 3}
+    Upright: 0
+  - Activity: Kiosk
+    Bone: mixamorig:RightHand
+    Position: {x: 0, y: 0.06, z: 0.045}
+    Rotation: {x: 7.67, y: -2.52, z: 161.75}
+    Size: {x: 0.008, y: 0.07, z: 0.008}
+    Prefab: {fileID: 2963886480886899324, guid: f38847ab39e4ca945ac9a6dfbd302a8a, type: 3}
+    Upright: 0
+  - Activity: ShopQueue
+    Bone: mixamorig:LeftHand
+    Position: {x: 0, y: 0.09, z: 0.015}
+    Rotation: {x: -49.88, y: -174.11, z: 154.35}
+    Size: {x: 0.008, y: 0.07, z: 0.008}
+    Prefab: {fileID: 1017516071146685309, guid: f2b3b904c1e4693409663336d92d3f3b, type: 3}
+    Upright: 1
   KnockInterval: {x: 4, y: 9}
   KnockVanSpeed: 2
   KnockVolume: 0.45

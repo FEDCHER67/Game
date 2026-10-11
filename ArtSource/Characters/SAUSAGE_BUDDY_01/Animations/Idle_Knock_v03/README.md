@@ -137,3 +137,107 @@ Same settings as Walk_v02 and the GPT packages: Unity 6000.5.11f1, **Generic**, 
 - **SitUp_Cargo_v04** (2,4 с): первый кадр — точная поза лёжа из GetUp_FromBack_v02 (hipsStart 0,307 м, совместимо с рэгдоллом), вялое шевеление, тяжёлый подъём с отстающей и падающей вперёд головой, «брр»-тряска, потирает шишку, паника, поворот и отползание к стенке, обхват коленей.
 - **Idle_Bored_v03** (6 с, цикл): оглядывается, смотрит на «часы» с двойным взглядом и трясёт запястьем, огромный вздох с осадкой, лениво чешет затылок.
 Высота ≤ 1,06 м (лимит 1,2), пол и стенка не пересекаются, швы цикла точные, кости и порядок те же. Бинарные файлы (.blend/.fbx/превью) в этот раз не в Git — собираются локально скриптами (команды выше).
+
+## Fixes round 2026-10-11: Idle_Stand_v04, Cargo_Sit_Idle_v05, SitUp_Cargo_v05
+
+New revisions (the older clips, scripts and `Cargo_Sit_Contract_v04.json` are unchanged). Code: `clips_standing_v04.py` (Idle_Stand_v04) and `clips_cargo_v05.py` (Cargo_Sit_Idle_v05, SitUp_Cargo_v05), built with `build_v05.py --clip <stem> --final` and checked with `validate_v05.py`. All three: **21/21** in `validation_v05_stand_sit_situp.json` (rig JSON path, bind reference = rig JSON; FBX bind error 1.6e-5, animated error ≤ 2.2e-5, 65 bones in order, one take, no sign flips / NaN / reflected bones).
+
+### Idle_Stand_v04: default standing idle, alive (5.0 s loop, f1–151, on the exact Idle frame 1)
+
+- 0.00–0.25: knees locked at the seam (exact Idle frame 1), bottom of the exhale.
+- 0.20–1.10: first breath in (11° clavicle shrug with arm counter-rotation, chest lifts, head rises); 0.25–0.45 anticipation push onto the left leg.
+- 0.45–1.30: **weight sways onto his right leg** with overshoot and settle: hips 6.5 cm over, pelvis tips 7°, the **left knee unlocks and bends forward-in** (~9 cm), the support knee softens a little; the chest and the arms lag on springs.
+- 1.00–1.88: **look to his left** (toward the side camera): a small dip the other way, snap to 41° with overshoot, curious head cock, drifting hold; the chest follows ~30 % on a lagging spring.
+- 1.88–2.76: sweep to his right dipping mid-arc (blink-like), −35° overshoot, hold; 2.2–3.2 second, deeper breath.
+- 2.72–3.36: weight back through the middle and a little onto the left leg; head back to centre.
+- 2.98–3.38: **fidget**: the left shoulder dips (anticipation), the elbow folds and the hand comes up close to the body to the left cheek.
+- 3.38–3.84: **scratches the left cheek** with the fingertips (6 Hz strokes; a head-surface contact solve keeps the fingertips 1.4 mm off the skin, never inside); the head tilts 10° and dips into the hand, the shoulder hunches.
+- 3.84–4.28: the hand drops down beside the body (IK path, pendulum follow-through), then a sniff (head lifts 3.96–4.28); long exhale.
+- 4.30–5.00: settles; knees locked from 4.60 s into the seam (0.40 s before, 0.25 s after it; HANDOFF 8.1).
+- Validation: seam 0.0, contract error 8e-7 (float noise of the raw Idle values, gate 1e-5), largest key step 19.6°, sole penetration 0.10 mm, support error 0.10 mm, planted-foot slide 0.12 mm. Pop scan: top 79 m/s² (the hand rising to the face), median 0.1.
+
+### Cargo_Sit_Idle_v05: scared sitting loop, stronger (4.5 s loop, f1–136, exact cargo sit contract at both ends)
+
+- 0.00–0.47: panicky breathing (9 per loop) and a **visible shiver**: periodic noise (31/37/41 cycles per loop, zero at the seam) of 1.1–1.9° on spine, neck and head, 2.6° shoulder jitter, 5.5 mm hand jitter (head-top shiver about twice v04, hands about 4×); 0.36–0.47 anticipation (head 6° the other way).
+- 0.47–0.64: **SNAP glance at the doors** (63° with overshoot, face to the −Y camera), shoulder jolt, chest follows on a lagging spring.
+- 0.60–0.90: **SHRINK**: shoulders up to the ears (+24° shrug), head pulled down between them (neck forward, head pitched back to keep watching), pelvis rolls under so the back presses into the wall (wall contact solve, up to 2.3° lean correction, hood 1.5 mm off the wall), knees squeezed together, feet dragged in 6.5 cm (small lift).
+- 0.90–1.40: frozen stare, shivering hardest. 1.40–1.88: slow reluctant turn back with a small overshoot.
+- 1.80–2.20: GULP (chin tuck, head dip, shoulder bob, arms squeeze).
+- 2.10–2.98: **two big anxious rocks** (12° and 11° forward, v04: 6.5/5.5°); the wall stops the back swings; the giant head lags and nods after each.
+- 2.95–3.36: **double-take**: 33°, a 2-frame hold, SNAP 65° with overshoot, hold, shrinks again. 3.36–3.72: turns back and sinks lower behind the knees.
+- 3.70–4.50: settles; the feet slide back out into the exact contract.
+- Validation: seam 0.0, start/end contract error 0.0, largest key step 14.0°, mesh height ≤ 1.019 m, floor +0.02 mm, wall clearance 1.45 mm. Pop scan: top 92 m/s² (double-take jolt), median 1.1.
+
+### SitUp_Cargo_v05: wakes up in the van, bigger flop, unrushed scramble (3.0 s one-shot, f1–91)
+
+- 0.00–0.15 (frames 1–5.5): **exact supine hold** = GetUp_FromBack_v02 frame 1 (raw values, hipsStart 0.3070 m) for the ragdoll blend.
+- 0.15–0.44: groggy stir: head rolls, the legs drop and bend, feet slide to the butt.
+- 0.42–0.84: heavy sit-up on both palms; **the giant head lags back** (−54°, chin to the ceiling).
+- 0.81–1.37: **the head FLOPS forward past the pose** (+42°, chin on the chest), bounces back up (−13°), flops again (+20°), settles.
+- 1.06–1.48: dazed wobble (the head circles, decaying). 1.40–1.70: quick "brrr" shake (2.5 shakes).
+- 1.44–1.99: rubs the bump on the right side of his head, wincing.
+- 1.96–2.20: the hand freezes, slow look up, **SNAP panic glance** at the doors; the palms slam down on the floor.
+- 2.14–2.76: **scramble, 0.62 s** (v04: ~0.3 s): turns 90° to his left and scoots 0.36 m to the wall in **three heel + palm pushes** (2.17, 2.37, 2.58 s). Feet and palms are planted on the floor during each push while the butt slides; between pushes they hop to the next plant.
+- 2.66–2.90: the hood bumps the wall (squash and rebound). 2.56–3.00: curls into the knee hug, landing exactly on the cargo sit contract.
+- **Events: SatUp** at frame 27 (0.867 s, fraction 0.289); **Seated/Stable** from frame 88 (2.90 s, fraction 0.967). Also in `SitUp_Cargo_v05_authoring.json` (`authoring_stats.events`).
+- Validation: start (supine) error 5e-7, end (sit) error 7e-7, hips first height 0.3070 m, largest key step 21.8°, mesh height ≤ 1.033 m, floor +0.01 mm, wall clearance 1.45 mm. Pop scan: top 370 m/s² on HeadTop_End at 0.82/0.95/1.02 s = the intended flop whip and bounce (v04 flop: 256), median 2.1.
+
+### Review passes
+
+1. Pass 1 (traces, key poses, every-frame Eevee renders, side + three-quarter): Idle_Stand: the scratch arm swung straight out in front on the way up and down (FK↔IK blend far apart) → the elbow now leads with an inward forearm fold and the release is an IK path; a knee notch at 0.45 s reduced. Sit idle: the rock-lag sign was reversed (the head slammed face-down onto the knees) → fixed; three quick rocks read weakly → two big rocks. Sit-up: the flop put the face into the knees (63° → 42°); the feet slid during the scramble → planted per push.
+2. Pass 2 (validator + pop scan on dry builds): sit-up key steps of 52° and a 0.5 mm floor dip (hands following the knees, IK reach snaps, fast slam) → palm plants with a soft reach and longer blends, a 1.2 mm scramble floor margin; Idle_Stand: a 240 m/s² hand jerk at the release (FK/IK blend + contact switch) → contact-corrected target and an IK-carried release (now 75 m/s²); the sniff moved after the hand leaves. Sit idle shrink pushed further (shoulders 17° → 24°).
+3. Pass 3 (Eevee previews from the saved files): all beats read from both cameras; loop seams pixel-identical.
+- Still to judge in Unity: the stand fidget plays every 5 s (it may want a random-offset start); the sit idle's feet drag in/out once per loop; the sit-up flop is a deliberate whip.
+
+Files: `Idle_Stand_v04.*`, `Cargo_Sit_Idle_v05.*`, `SitUp_Cargo_v05.*` (`.blend`, `.fbx`, `_authoring.json`), `validation_v05_stand_sit_situp.json`, `Previews/<stem>/` (frames side + three-quarter, all N+1 frames; MP4s: loops shown 3× without the duplicated end frame, the sit-up once; 10-still contact sheet). Unity import as above (Loop Time on for the two loops, off for the sit-up).
+
+Кратко (RU):
+- **Idle_Stand_v04** (5 с, цикл): заметное дыхание (плечи и грудь), перенос веса на правую ногу с согнутым левым коленом, огляд влево-вправо с отставанием корпуса, почёсывание щеки левой рукой и шмыг носом. Колени прямые у шва цикла, ступни не скользят.
+- **Cargo_Sit_Idle_v05** (4,5 с, цикл): видимая дрожь, резкие взгляды на двери, сильное «сжатие» (плечи к ушам, голова вниз, колени вместе, ноги подтянуты), два больших раскачивания; кадр 1 — тот же контракт сидения.
+- **SitUp_Cargo_v05** (3 с): большая «болтанка» головы (отставание назад, падение вперёд, отскок, покачивание), разворот к стенке за 0,6 с тремя толчками пятками и ладонями. События: SatUp — кадр 27, Seated/Stable — с кадра 88.
+
+## Fixes round 2026-10-11: Cargo_Knock_v04
+
+New revision of Cargo_Knock_v03b (v03b and its files are unchanged): **3.5 s loop, f1–106, the exact cargo sit contract at both ends** (raw values from `Cargo_Sit_Contract_v04.json` keyed through `canonical`). Code: `clips_knock_v04.py` (imports the `clips_cargo` machinery, never edits it), built with `build_v05.py --clip Cargo_Knock_v04 --final`, checked with `validate_v05.py`: **21/21** in `validation_Cargo_Knock_v04.json`.
+
+**Staging change.** v03b swivelled ~80° and twisted the chest ~92° more to face the wall, so from the doors-side cameras the fists were hidden behind the giant head and hood (it looked like he pressed his face to the wall). v04 spins ~88° to his right on the butt and scoots 24 cm off the wall: he **faces the doors (−Y, the review cameras)**, the wall is at his right side and his legs fold to his left. The near (right) arm bangs **sideways**: the elbow stays out at shoulder height, the forearm tips in over the head (the wind-up) and swings out upright like a wiper, so the pinky side of the fist meets the wall. That arc lies in the side camera's image plane; the face and both fists stay visible from the side and three-quarter cameras during every hit.
+
+Beats:
+- 0.00–0.30: anticipation: a startled inhale (shoulders up, head up and turned over his right shoulder), then a squash.
+- 0.17–0.62: spins ~88° right on the butt (counter-move, overshoot, settle) and scoots off the wall; the feet skid round 7 mm off the floor; the arms let go of the knees.
+- 0.40–0.71: wind-up 1 (the big one): right forearm tipped in over the head, body leaning 24° away, head pulled back. The left fist pumps in front of his belly through all the bangs.
+- 0.80: **BANG 1**; the body whips toward the wall, follows through and rebounds; the giant head lags on a spring and wobbles.
+- 0.85–1.09: recoil and wind-up 2 → 1.167 **BANG 2**, a short bounce off the wall, 1.333 **BANG 3** (BANG … BANG-BANG).
+- 1.36–1.66: the fist opens into a palm flat on the wall at shoulder height, he leans in until his head is on the wall (body contact solve), face still to the cameras, left index raised ("wait…").
+- 1.66–2.04: listening hold, frozen with a tiny tremble (hopeful silence).
+- 2.04–2.40: frustrated mega wind-up: both fists up, body coiled 34° away, head thrown back; hold.
+- 2.50: **SLAM**: right fist on the wall, left fist on his own knee; head jolt, held beat.
+- 2.55–3.03: deflate: the fist slides down the wall, the arm drops off it and hangs, the head droops, the shoulders sag.
+- 2.86–3.50: spins back with the head leading, a sad sigh, lands in the exact knee hug.
+
+**Hit times (sound and face scripts).** The right fist first touches the wall (≤ 3 mm, measured on the skinned mesh of the saved file) at **0.783 s (frame 24.5), 1.150 s (35.5), 1.333 s (41) and 2.483 s (75.5)**; the nominal impacts (fist stuck on the wall, body follow-through) are 0.80 / 1.167 / 1.333 / 2.50 s, and the left fist hits his knee at 2.50 s (frame 76). The hand is on the wall 0.78–0.90, 1.15–1.25, 1.33–2.15 (BANG 3 into the listening palm) and 2.48–2.92 s (slam and slide; during the follow-through 2.53–2.62 it floats up to 6 mm off). Face-script moments: the listening silence 1.66–2.04 s (hopeful), the mega wind-up 2.30–2.40 (angry yell), the slam 2.50, the droop 2.85. The same numbers are in `Cargo_Knock_v04_authoring.json` (`authoring_stats`).
+
+**Validation** (rig JSON path, bind reference = rig JSON): start/end contract error 6.0e-7 (float noise, gate 1e-5), source seam 0.0, FBX reimported seam 1.5e-7, largest key-to-key rotation 22.6°, 0 sign flips / NaN / reflected bones, mesh height ≤ 1.059 m, floor +0.02 mm, wall clearance 0.68 mm (min x −0.6493), FBX bind error 1.6e-5, animated error 1.9e-5, 65 bones in order, one take, armature only. Fist contacts 2.5 mm from the wall. Pop scan: top 321 m/s² (HeadTop_End at the BANG-BANG), all top values on hits or the slam swing, median 1.8.
+
+**New technique.** `SitRig4` (a subclass) adds the sleeve cuff to the fist's wall-contact set and solves the contact with a bracketed regula falsi, re-aligning the fist with the forearm after every re-solve; the v03b loop shifted by the full excess, overshot by 1.5 cm and twisted the hand 36°. Contact points are frozen per hit in the van frame, so the fist does not slide while it is stuck. Strike ease-ins use exponents < 1.5 and every contact sits on a key. The body lean is fastest at the contact and follows through (head-top pops 577 → 321 m/s²). Elbow hints stay well off the reach line (two bend-plane flips found and fixed). The post-pass `_post` runs `limit_rotation_steps` plus a validator emulation that checks every 120 Hz in-between sample on the skinned mesh (wall, floor, 1.2 m) and swings an arm only where it would graze the wall. Neither had anything to fix in the final build. The v03b 4 mm arm margin is not used, so the hits stay at 2.5 mm.
+
+**Review passes.**
+1. Fast every-frame numpy renders and traces:
+   - The hit read as a reach and slide: the fist met the wall at 0.8 m and slid 23 cm down. Fixed with the elbow-pivot wiper bang.
+   - The elbow was 3.7 cm inside the wall: the elbow now goes forward and out.
+   - The guard path crossed his mouth: the guard is now lateral.
+   - The listening palm sat by his cheek: it is now lower and further forward.
+   - The "wait" hand was an open palm: it is now a raised index.
+2. Eevee pass 1 (every 2nd frame, side and three-quarter):
+   - The mega wind-up was barely bigger than wind-up 1: 34° lean, head thrown back, both fists higher.
+   - The slam hold was static and the hand rose in front of the face on the way back: two-stage deflate (slide, then drop), with the guard blend off at the end.
+3. Eevee pass 2:
+   - The anticipation was too subtle: inhale plus squash.
+   - The deflate was weak: the head drops 28°, the shoulders sag and the fist slides lower.
+4. Final previews from the saved file: every beat reads in both comparison cameras and the loop seam is continuous. Also checked `three_quarter_cargo` (reads) and `front`: from +X he is in profile after the swivel, so the bangs read less there, a consequence of this staging.
+
+Files: `clips_knock_v04.py`; `Cargo_Knock_v04.blend`, `.fbx`, `_authoring.json`; `validation_Cargo_Knock_v04.json`; `Previews/Cargo_Knock_v04/`. The previews are the frames for side and three-quarter (all 106), MP4s with 3 loops without the duplicated end frame, and a 10-still contact sheet. Unity import as above (Loop Time on).
+
+Кратко (RU):
+- **Cargo_Knock_v04** (3,5 с, цикл, контракт сидения на обоих концах): разворачивается на попе вправо **лицом к дверям** (к камерам), стенка справа, колотит в неё сбоку правым кулаком: большой замах, БАМ… БАМ-БАМ; потом прижимается головой к стене и слушает, подняв палец («тихо…»); огромный замах двумя кулаками и СЛЭМ (правый — в стену, левый — по своей коленке); сдувается и возвращается в обхват коленей.
+- Лицо и оба кулака видны с боковой и трёхчетвертной камер. Удары: 0,78 / 1,15 / 1,33 / 2,48 с. Проверка 21/21.

@@ -1,0 +1,348 @@
+{
+  "revision": "v02",
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "rig_reference": "rig_Buddy_Mixamo65_A_v04.json",
+  "rig_source": "json",
+  "thresholds": {
+    "contract_matrix": 1e-05,
+    "seam": 1e-06,
+    "key_step_deg": 25.0,
+    "penetration_m": 0.002,
+    "slide_m": 0.002,
+    "cargo_height_m": 1.2,
+    "fbx_bind": 0.0001,
+    "fbx_anim": 0.00015,
+    "fbx_seam": 1e-05
+  },
+  "clips": {
+    "Escape_Scramble_Start_v02": {
+      "action": "Escape_Scramble_Start_v02",
+      "frames": [
+        1,
+        31
+      ],
+      "fps": 30,
+      "duration_s": 1.0,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 21.875990079897477,
+      "max_key_step_at": [
+        15.0,
+        "mixamorig:RightHand"
+      ],
+      "seam_matrix_error": null,
+      "start_contract": "sit",
+      "end_contract": "('Escape_Scramble', 'first')",
+      "start_contract_error": 8.344650268554688e-07,
+      "end_contract_error": 6.556510925292969e-07,
+      "max_floor_penetration_m": 0.00014257431030273438,
+      "max_contact_slide_m_per_120hz_sample": 0.0009998181600918239,
+      "max_contact_slide_at_frame": 20.0,
+      "ground_note": "static floor",
+      "max_mesh_height_above_cargo_floor_m": 1.0193380117416382,
+      "hips_first": [
+        -0.356884628534317,
+        0.0,
+        0.11362993717193604
+      ],
+      "hips_last": [
+        -0.009399923495948315,
+        0.0,
+        0.32185178995132446
+      ],
+      "events": {},
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 1.9468367099761963e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Escape_Scramble_Start_v02": [
+            1.0,
+            31.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    },
+    "JumpOut_v02": {
+      "action": "JumpOut_v02",
+      "frames": [
+        1,
+        35
+      ],
+      "fps": 30,
+      "duration_s": 1.1333333333333333,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 24.67892892181493,
+      "max_key_step_at": [
+        21.0,
+        "mixamorig:RightUpLeg"
+      ],
+      "seam_matrix_error": null,
+      "start_contract": "('Escape_Scramble', 'first', 0.55)",
+      "end_contract": "('Flee_Run', 'first')",
+      "start_contract_error": 1.5571713452011693e-07,
+      "end_contract_error": 0.0,
+      "max_floor_penetration_m": 0.001377831562422216,
+      "max_contact_slide_m_per_120hz_sample": 0.0014020615643200918,
+      "max_contact_slide_at_frame": 20.25,
+      "ground_note": "in place; ground +Y: 1.2 m/s on the van floor until take-off (0.35 s), ramps in the air to 3.2 m/s within 0.1 s, then Flee_Run speed. Root = street level below the door; the van floor is +0.55 m",
+      "hips_first": [
+        -0.009399923495948315,
+        0.0,
+        0.8718518018722534
+      ],
+      "hips_last": [
+        -0.011292850598692894,
+        0.0,
+        0.7250000238418579
+      ],
+      "events": {
+        "Land": 0.5666666666666667
+      },
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 9.512156248092651e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|JumpOut_v02": [
+            1.0,
+            35.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    },
+    "Hit_React_Front_v02": {
+      "action": "Hit_React_Front_v02",
+      "frames": [
+        1,
+        34
+      ],
+      "fps": 30,
+      "duration_s": 1.1,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 21.47767086924071,
+      "max_key_step_at": [
+        3.5,
+        "mixamorig:RightForeArm"
+      ],
+      "seam_matrix_error": null,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "start_contract_error": 0.0,
+      "end_contract_error": 0.0,
+      "max_floor_penetration_m": 0.0019220089307054877,
+      "max_contact_slide_m_per_120hz_sample": 0.00032960694970224905,
+      "max_contact_slide_at_frame": 2.5,
+      "ground_note": "static floor",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "events": {},
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 1.850724220275879e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Hit_React_Front_v02": [
+            1.0,
+            34.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    },
+    "Stagger_v02": {
+      "action": "Stagger_v02",
+      "frames": [
+        1,
+        49
+      ],
+      "fps": 30,
+      "duration_s": 1.6,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_rig_json": true,
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 23.31887763277491,
+      "max_key_step_at": [
+        26.0,
+        "mixamorig:LeftArm"
+      ],
+      "seam_matrix_error": null,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "start_contract_error": 0.0,
+      "end_contract_error": 0.0,
+      "max_floor_penetration_m": 0.0006857741391286254,
+      "max_contact_slide_m_per_120hz_sample": 0.00012822168346347183,
+      "max_contact_slide_at_frame": 3.0,
+      "ground_note": "static floor",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8210592269897461
+      ],
+      "events": {},
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.627206802368164e-05,
+        "max_animated_matrix_error": 1.8615275621414185e-05,
+        "seam_error": null,
+        "actions": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Stagger_v02": [
+            1.0,
+            49.0
+          ]
+        },
+        "only_armature": true
+      },
+      "checks": {
+        "fps_30": true,
+        "bones_65": true,
+        "bone_order": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flips": true,
+        "key_step": true,
+        "seam": true,
+        "start_contract": true,
+        "end_contract": true,
+        "floor_penetration": true,
+        "contact_slide": true,
+        "cargo_height": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true
+    }
+  },
+  "contract_references": {
+    "v01_clips": "C:\\Dev\\wt_escape\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Escape_Police_v01",
+    "sit": "C:/Dev/wt_idlecargo/ArtSource/Characters/SAUSAGE_BUDDY_01/Animations/Idle_Knock_v03/Cargo_Sit_Idle_v04.blend"
+  },
+  "pass": true
+}

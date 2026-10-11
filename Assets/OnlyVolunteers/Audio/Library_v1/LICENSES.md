@@ -1,6 +1,6 @@
 # Library_v1: sources and licenses
 
-Every file in this folder, where its audio came from, and under what license. Generated 2026-10-07 (rev3) from `manifest_v1.json` (which has the same data plus loudness, gain, processing and checksums). Only sources on the download list Fedya approved on 2026-10-06 were used.
+Every file in this folder, where its audio came from, and under what license. The original tables were generated 2026-10-07 (rev3) from `manifest_v1.json`; the vehicle addendum was added 2026-10-11 from local sources authorized in task G2. The manifest also has loudness, gain, processing and checksums. The original rev3 used only sources on the download list Fedya approved on 2026-10-06.
 
 License texts: CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/ ; Mixkit Sound Effects Free License https://mixkit.co/license/#sfxFree
 
@@ -9,6 +9,7 @@ License texts: CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/ ; Mixk
 | Source | Page | Author | License |
 |---|---|---|---|
 | NOX Sound, *Essentials Series* (itch.io, free download path) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (stated on the page and in Essentials_Series_README.pdf: "All these sounds are under CC0 license.") |
+| NOX Sound, *Vehicle Essentials* (inside Essentials Series) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (covered by Essentials_Series_README.pdf) |
 | Kenney, *Impact Sounds* and *Interface Sounds* | https://kenney.nl/assets/impact-sounds , https://kenney.nl/assets/interface-sounds | Kenney (kenney.nl) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (page and bundled License.txt) |
 | rubberduck, *100 CC0 metal and wood SFX* and *40 CC0 water/splash/slime SFX* (OpenGameArt) | https://opengameart.org/content/100-cc0-metal-and-wood-sfx , https://opengameart.org/content/40-cc0-water-splash-slime-sfx | rubberduck | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | BigSoundBank, 7 named pages | see per-file table | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
@@ -318,3 +319,58 @@ Layered clips list every layer. A time range is the segment cut from the origina
 | `amb_birds_02.wav` | `Ambiance_Nature_Meadow_Birds_Flies_Calm_Loop_Stereo.wav` (2.00-35.00 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | `amb_fountain_01.wav` | `Ambiance_Stream_Calm_Loop_Stereo.wav` (0.00-16.50 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | `amb_fountain_02.wav` | `loop_water_02.ogg` (0.00-6.90 s) | https://opengameart.org/content/40-cc0-water-splash-slime-sfx | rubberduck (OpenGameArt) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+### vehicle
+
+| File | Original file (segment) | Source page | Author | License |
+|---|---|---|---|---|
+| `van_engine_idle_01.wav` | `Vehicle_Truck_Idle_Exterior_Front_Loop_Stereo_01.wav` (0.26–7.20 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_engine_idle_02.wav` | `Vehicle_Truck_Idle_Exterior_Rear_Loop_Stereo_01.wav` (0.90–7.20 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_engine_low_01.wav` | `Vehicle_Truck_Drive_Exterior_Loop_Stereo_01.wav` (0.26–6.00 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_engine_high_01.wav` | `Vehicle_Truck_Drive_Exterior_Loop_Stereo_02.wav` (0.74–6.80 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_drive_dirt_01.wav` | `Vehicle_Truck_Drive_Dirty_Ground_Exterior_Loop_Stereo.wav` (0.26–5.52 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_drive_grass_01.wav` | `Vehicle_Truck_Drive_Grass_Exterior_Loop_Stereo.wav` (0.26–4.72 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `police_engine_idle_01.wav` | `Vehicle_Car_Engine_Idle_Exterior_Loop_Mono_02.wav` (1.06–7.36 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `police_engine_low_01.wav` | `Vehicle_Car_Engine_1000_RPM_Front_Exterior_Loop_Mono.wav` (0.26–6.40 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `police_engine_high_01.wav` | `Vehicle_Car_Engine_2000_RPM_Front_Exterior_Loop_Mono.wav` (1.54–8.00 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_body_rattle_01.wav` | `Vehicle_Truck_Body_Movement_Interior_Mono_01.wav` (0.00–1.79 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_body_rattle_02.wav` | `Vehicle_Truck_Body_Movement_Interior_Mono_02.wav` (0.00–3.01 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_body_rattle_03.wav` | `Vehicle_Truck_Body_Movement_Interior_Mono_03.wav` (0.00–2.32 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_body_rattle_04.wav` | `Vehicle_Truck_Body_Movement_Interior_Mono_04.wav` (0.00–2.41 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_engine_start_01.wav` | `0967_big-diesel-engine.wav` (0.00–1.65 s) | https://bigsoundbank.com/big-diesel-engine-s0967.html | Joseph Sardin (BigSoundBank) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_engine_stop_01.wav` | `0967_big-diesel-engine.wav` (47.00–49.70 s) | https://bigsoundbank.com/big-diesel-engine-s0967.html | Joseph Sardin (BigSoundBank) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_handbrake_01.wav` | `Vehicle_Car_Hand_Brake_Mono_02.wav` (0.00–1.18 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_handbrake_02.wav` | `Vehicle_Car_Hand_Brake_Mono_03.wav` (0.00–0.86 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_handbrake_03.wav` | `Vehicle_Car_Hand_Brake_Mono_04.wav` (0.00–1.11 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `police_engine_start_01.wav` | `Vehicle_Car_Start_Engine_Exterior_Mono.wav` (0.00–0.87 s) | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+### vehicle: tyre and brake additions
+
+All files below are derived from BigSoundBank pages that state CC0 and allow download without an account. `van_brake_squeak` uses thin, high-passed parts of the tire-squeal recording; no separate car-brake squeak was found.
+
+| File | Original source and segment | Source page | Author | License |
+|---|---|---|---|---|
+| `van_tire_skid_01.wav` | `2371_screeching-tires-4_original.wav` (1,90–4,30 s) | https://bigsoundbank.com/screeching-tires-4-s2371.html | Dorian Clair | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_tire_chirp_01.wav` | `0500_tire-squeal_original.mp3` (0,23–1,08 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_tire_chirp_02.wav` | `0500_tire-squeal_original.mp3` (3,65–4,70 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_tire_chirp_03.wav` | `0500_tire-squeal_original.mp3` (7,05–7,96 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_tire_chirp_04.wav` | `0500_tire-squeal_original.mp3` (12,43–13,25 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_tire_chirp_05.wav` | `0500_tire-squeal_original.mp3` (17,67–18,59 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_tire_chirp_06.wav` | `0500_tire-squeal_original.mp3` (25,13–25,85 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_brake_squeak_01.wav` | `0500_tire-squeal_original.mp3` (14,32–14,92 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_brake_squeak_02.wav` | `0500_tire-squeal_original.mp3` (21,29–21,82 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `van_brake_squeak_03.wav` | `0500_tire-squeal_original.mp3` (28,77–29,28 s) | https://bigsoundbank.com/tire-squeal-s0500.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+
+### Skids and water (2026-10-11)
+
+| Source | Page | Author | Licence |
+|---|---|---|---|
+| NOX Essentials vehicle, footsteps, nature and Iceland recordings | https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound | NOX Sound | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Steps in the Mud; Shoes in the Water; Small Stream #4; Watercourse 5.2 | https://bigsoundbank.com/steps-in-the-mud-s0495.html ; https://bigsoundbank.com/shoes-in-the-water-s0690.html ; https://bigsoundbank.com/small-stream-4-s1354.html ; https://bigsoundbank.com/watercourse-5-2-s3137.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Small Cascade; Splash, Small #1; Splash, Big #3; Drops of Water #3 | https://bigsoundbank.com/small-cascade-s0507.html ; https://bigsoundbank.com/splash-small-1-s1529.html ; https://bigsoundbank.com/splash-big-3-s1521.html ; https://bigsoundbank.com/drops-of-water-3-s1386.html | Joseph Sardin | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Water Splash Slime SFX | https://opengameart.org/content/40-cc0-water-splash-slime-sfx | rubberduck | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Impact Sounds | https://kenney.nl/assets/impact-sounds | Kenney | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Jump into the water; Jumping into water; Running out from sea; Sea swimming loop; Swimming in calm water | https://mixkit.co/free-sound-effects/water/ ; https://mixkit.co/free-sound-effects/water/?page=2 | Mixkit | [Mixkit Sound Effects Free License](https://mixkit.co/license/#sfxFree), no standalone redistribution |
+
+The 16 new WAVs containing Mixkit audio (and their `.meta` files) are listed under `# Mixkit-licensed sounds` in `.gitignore`. The manifest marks each one `restricted_redistribution: true` and records all source WAV hashes.

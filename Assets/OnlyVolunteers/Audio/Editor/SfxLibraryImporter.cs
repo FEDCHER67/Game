@@ -14,7 +14,7 @@ namespace OnlyVolunteers.Audio.EditorTools
     // 2) "Refill library": for every event, the first folder that has clips for it wins:
     //    Assets/OnlyVolunteers/Audio/Library_v1 (recorded sounds named <event id>_NN, any subfolder; LICENSES.md there),
     //    then Assets/OnlyVolunteers/Audio/Final (file name = the prefix below, or prefix_NN), then the SFX_GEN placeholders.
-    //    Library_v1 clips get their import settings here (loops in world/ and the siren: Vorbis compressed in memory; the
+    //    Library_v1 clips get their import settings here (loops in world/ and vehicle/, and the siren: Vorbis compressed in memory; the
     //    rest: one-shots decompressed on load, Vorbis 0.8). Entries keep hand-tuned volume/pitch/3D settings; Locked
     //    entries also keep their clips. Missing entries are made with the defaults below. The library is
     //    Audio/Resources/SfxLibrary.asset (Sfx loads it from Resources).
@@ -29,6 +29,7 @@ namespace OnlyVolunteers.Audio.EditorTools
         private const string PlaceholderDir = AudioRoot + "/SFX_GEN";
         private const string FinalDir = AudioRoot + "/Final";
         private const string RecordedDir = AudioRoot + "/Library_v1";
+        private const string VehicleDir = RecordedDir + "/vehicle";
         private const string LibraryPath = AudioRoot + "/Resources/SfxLibrary.asset";
 
         private readonly struct Def
@@ -37,9 +38,11 @@ namespace OnlyVolunteers.Audio.EditorTools
             public readonly Vector2 Volume, Pitch;
             public readonly float MinDistance, MaxDistance, SpatialBlend, Cooldown;
             public readonly int Priority;
+            public readonly string RecordedFolder;
+            public readonly bool Loop;
 
             public Def(string id, string prefix, float volume, float pitchLow, float pitchHigh, float minDistance, float maxDistance,
-                       float cooldown, int priority, float spatialBlend = 1f)
+                       float cooldown, int priority, float spatialBlend = 1f, string recordedFolder = null, bool loop = false)
             {
                 Id = id;
                 Prefix = prefix;
@@ -50,6 +53,8 @@ namespace OnlyVolunteers.Audio.EditorTools
                 SpatialBlend = spatialBlend;
                 Cooldown = cooldown;
                 Priority = priority;
+                RecordedFolder = recordedFolder;
+                Loop = loop;
             }
         }
 
@@ -73,11 +78,34 @@ namespace OnlyVolunteers.Audio.EditorTools
             new(SfxIds.DoorRearSlam, "van_door_slam", 1f, 0.95f, 1.03f, 3f, 40f, 0.1f, 55),
             new(SfxIds.DoorSlideOpen, "slide_door_open", 0.9f, 0.98f, 1.02f, 2f, 30f, 0.1f, 60),
             new(SfxIds.DoorSlideClose, "slide_door_close", 0.95f, 0.98f, 1.02f, 2f, 30f, 0.1f, 60),
+            new(SfxIds.VanEngineIdle, "van_engine_idle", 1f, 1f, 1f, 4f, 40f, 0f, 70, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanEngineLow, "van_engine_low", 1f, 1f, 1f, 4f, 40f, 0f, 70, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanEngineHigh, "van_engine_high", 1f, 1f, 1f, 4f, 40f, 0f, 70, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanDriveDirt, "van_drive_dirt", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanDriveGrass, "van_drive_grass", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanBodyRattle, "van_body_rattle", 0.85f, 0.95f, 1.05f, 4f, 40f, 0.35f, 75, recordedFolder: VehicleDir),
+            new(SfxIds.VanEngineStart, "van_engine_start", 0.9f, 0.98f, 1.02f, 4f, 40f, 0f, 65, recordedFolder: VehicleDir),
+            new(SfxIds.VanEngineStop, "van_engine_stop", 0.9f, 0.98f, 1.02f, 4f, 40f, 0f, 65, recordedFolder: VehicleDir),
+            new(SfxIds.VanHandbrake, "van_handbrake", 0.85f, 0.97f, 1.03f, 4f, 40f, 0.2f, 75, recordedFolder: VehicleDir),
+            new(SfxIds.PoliceEngineIdle, "police_engine_idle", 1f, 1f, 1f, 4f, 60f, 0f, 60, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.PoliceEngineLow, "police_engine_low", 1f, 1f, 1f, 4f, 60f, 0f, 60, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.PoliceEngineHigh, "police_engine_high", 1f, 1f, 1f, 4f, 60f, 0f, 60, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.PoliceEngineStart, "police_engine_start", 0.9f, 0.98f, 1.02f, 4f, 60f, 0f, 55, recordedFolder: VehicleDir),
+            new(SfxIds.VanTireSkid, "van_tire_skid", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanTireChirp, "van_tire_chirp", 0.85f, 0.97f, 1.04f, 4f, 40f, 0.8f, 75, recordedFolder: VehicleDir),
+            new(SfxIds.VanBrakeSqueak, "van_brake_squeak", 0.7f, 0.98f, 1.03f, 4f, 40f, 0.2f, 75, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitMetalLight, "van_hit_metal_light", 0.85f, 0.96f, 1.04f, 3f, 45f, 0.05f, 55, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitMetalHeavy, "van_hit_metal_heavy", 0.95f, 0.94f, 1.03f, 4f, 55f, 0.05f, 45, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitWood, "van_hit_wood", 0.85f, 0.95f, 1.05f, 3f, 45f, 0.05f, 55, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitConcrete, "van_hit_concrete", 0.9f, 0.94f, 1.03f, 4f, 50f, 0.05f, 50, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitPlastic, "van_hit_plastic", 0.7f, 0.97f, 1.06f, 2f, 30f, 0.05f, 70, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitGlass, "van_hit_glass", 0.85f, 0.97f, 1.04f, 3f, 40f, 0.05f, 60, recordedFolder: VehicleDir),
+            new(SfxIds.VanHitFoliage, "van_hit_foliage", 0.55f, 0.96f, 1.06f, 2f, 25f, 0.05f, 80, recordedFolder: VehicleDir),
             // The player's own feet are ~1.7 m under the listener: MinDistance 2 plays them at full volume.
-            new(SfxIds.StepAsphalt, "footstep_asphalt", 0.55f, 0.95f, 1.06f, 2f, 20f, 0.15f, 150),
-            new(SfxIds.StepGrass, "footstep_grass", 0.6f, 0.95f, 1.06f, 2f, 18f, 0.15f, 150),
-            new(SfxIds.StepSand, "footstep_sand", 0.6f, 0.95f, 1.06f, 2f, 18f, 0.15f, 150),
-            new(SfxIds.StepMetal, "footstep_metal_floor", 0.65f, 0.95f, 1.06f, 2f, 20f, 0.15f, 150),
+            new(SfxIds.StepAsphalt, "footstep_asphalt", 0.40f, 0.95f, 1.06f, 2f, 20f, 0.15f, 150),
+            new(SfxIds.StepGrass, "footstep_grass", 0.42f, 0.95f, 1.06f, 2f, 18f, 0.15f, 150),
+            new(SfxIds.StepSand, "footstep_sand", 0.42f, 0.95f, 1.06f, 2f, 18f, 0.15f, 150),
+            new(SfxIds.StepMetal, "footstep_metal_floor", 0.45f, 0.95f, 1.06f, 2f, 20f, 0.15f, 150),
             new(SfxIds.NpcScream, "npc_scream", 0.9f, 1f, 1.1f, 3f, 50f, 0.3f, 50),
             new(SfxIds.NpcMumble, "npc_mumble_gibberish", 0.6f, 1f, 1.12f, 1.5f, 15f, 0.2f, 110),
             new(SfxIds.NpcWhimper, "npc_whimper", 0.55f, 1f, 1.12f, 1.5f, 15f, 0.2f, 110),
@@ -102,6 +130,28 @@ namespace OnlyVolunteers.Audio.EditorTools
             new(SfxIds.OperationTape, "operation_tape", 1f, 0.95f, 1.05f, 1f, 10f, 0.05f, 60, 0f),
             new(SfxIds.OperationCoolerLid, "operation_cooler_lid", 1f, 0.97f, 1.03f, 1f, 10f, 0.1f, 60, 0f),
             new(SfxIds.OperationHeartbeat, "operation_heartbeat", 0.6f, 0.98f, 1.02f, 1f, 10f, 0.2f, 70, 0f),
+            new(SfxIds.VanSkidGravel, "van_skid_gravel", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanSkidGrass, "van_skid_grass", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanSkidSand, "van_skid_sand", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanSkidMud, "van_skid_mud", 1f, 1f, 1f, 4f, 40f, 0f, 80, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanGravelSpray, "van_gravel_spray", 0.85f, 0.96f, 1.04f, 4f, 40f, 0.12f, 85, recordedFolder: VehicleDir),
+            new(SfxIds.StepWater, "step_water", 0.42f, 0.95f, 1.06f, 2f, 18f, 0.15f, 150, recordedFolder: RecordedDir + "/footsteps"),
+            new(SfxIds.StepWaterRun, "step_water_run", 0.44f, 0.95f, 1.06f, 2f, 20f, 0.12f, 150, recordedFolder: RecordedDir + "/footsteps"),
+            new(SfxIds.WaterWade, "water_wade", 1f, 1f, 1f, 3f, 30f, 0f, 110, recordedFolder: RecordedDir + "/world", loop: true),
+            new(SfxIds.AmbStream, "amb_stream", 1f, 1f, 1f, 5f, 70f, 0f, 160, recordedFolder: RecordedDir + "/world", loop: true),
+            new(SfxIds.AmbRiver, "amb_river", 1f, 1f, 1f, 6f, 90f, 0f, 160, recordedFolder: RecordedDir + "/world", loop: true),
+            new(SfxIds.AmbWaterfall, "amb_waterfall", 1f, 1f, 1f, 8f, 120f, 0f, 155, recordedFolder: RecordedDir + "/world", loop: true),
+            new(SfxIds.AmbLakeShore, "amb_lake_shore", 1f, 1f, 1f, 5f, 80f, 0f, 160, recordedFolder: RecordedDir + "/world", loop: true),
+            new(SfxIds.SplashSmall, "splash_small", 0.8f, 0.95f, 1.05f, 2f, 28f, 0.08f, 85, recordedFolder: RecordedDir + "/water"),
+            new(SfxIds.SplashBig, "splash_big", 0.9f, 0.95f, 1.05f, 3f, 45f, 0.1f, 75, recordedFolder: RecordedDir + "/water"),
+            new(SfxIds.WaterJumpIn, "water_jump_in", 0.9f, 0.96f, 1.04f, 3f, 45f, 0.1f, 80, recordedFolder: RecordedDir + "/water"),
+            new(SfxIds.WaterGetOut, "water_get_out", 0.8f, 0.96f, 1.04f, 2f, 28f, 0.1f, 100, recordedFolder: RecordedDir + "/water"),
+            new(SfxIds.WaterDrip, "water_drip", 0.65f, 0.95f, 1.05f, 2f, 18f, 0.06f, 140, recordedFolder: RecordedDir + "/water"),
+            new(SfxIds.SwimStroke, "swim_stroke", 0.8f, 0.95f, 1.05f, 2f, 25f, 0.12f, 110, recordedFolder: RecordedDir + "/water"),
+            new(SfxIds.SwimLoop, "swim_loop", 1f, 1f, 1f, 2f, 30f, 0f, 110, recordedFolder: RecordedDir + "/world", loop: true),
+            new(SfxIds.VanWaterEnter, "van_water_enter", 0.9f, 0.96f, 1.04f, 4f, 45f, 0.1f, 80, recordedFolder: VehicleDir),
+            new(SfxIds.VanWaterDrive, "van_water_drive", 1f, 1f, 1f, 4f, 40f, 0f, 90, recordedFolder: VehicleDir, loop: true),
+            new(SfxIds.VanPuddle, "van_puddle", 0.85f, 0.95f, 1.05f, 4f, 40f, 0.12f, 100, recordedFolder: VehicleDir),
         };
 
         [MenuItem("OnlyVolunteers/Audio/Import SFX_GEN v01 + fill library")]
@@ -155,6 +205,7 @@ namespace OnlyVolunteers.Audio.EditorTools
             SfxLibrary library = LoadOrCreateLibrary();
             ApplyRecordedImportSettings();
             List<(string name, AudioClip clip)> recorded = Clips(RecordedDir);
+            List<(string name, AudioClip clip)> vehicle = Clips(VehicleDir);
             List<(string name, AudioClip clip)> placeholders = Clips(PlaceholderDir);
             List<(string name, AudioClip clip)> finals = Clips(FinalDir);
             Undo.RecordObject(library, "Fill SFX library");
@@ -177,7 +228,7 @@ namespace OnlyVolunteers.Audio.EditorTools
                     report.Add($"{def.Id}: locked, {entry.Clips?.Length ?? 0} clips kept");
                     continue;
                 }
-                AudioClip[] clips = Matching(recorded, def.Id);
+                AudioClip[] clips = Matching(def.RecordedFolder == VehicleDir ? vehicle : recorded, def.Id);
                 string from = "Library_v1", by = def.Id;
                 if (clips.Length == 0)
                 {
@@ -261,8 +312,8 @@ namespace OnlyVolunteers.Audio.EditorTools
         private static void ApplyImportSettings(string assetPath) =>
             SetImport(assetPath, true, AudioClipLoadType.DecompressOnLoad, AudioCompressionFormat.ADPCM, 1f, true, false);
 
-        // Library_v1: ambience loops (world/) keep their channels (the fountains are mono files: point sources) and the
-        // siren loop (police_siren_*) is mono, both Vorbis 0.7 compressed in memory and loaded in the background. Every
+        // Library_v1: ambience loops (world/) keep their channels (the fountains are mono files: point sources); the
+        // siren and vehicle loops are mono. All loops use Vorbis 0.7 compressed in memory and load in the background. Every
         // other clip is a mono one-shot, decompressed on load from Vorbis 0.8: no ADPCM hiss on soft voices and steps.
         private static void ApplyRecordedImportSettings()
         {
@@ -273,8 +324,15 @@ namespace OnlyVolunteers.Audio.EditorTools
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 bool ambience = path.Contains("/world/");
                 bool siren = Path.GetFileName(path).StartsWith("police_siren", StringComparison.OrdinalIgnoreCase);
-                bool done = ambience || siren
-                    ? SetImport(path, siren, AudioClipLoadType.CompressedInMemory, AudioCompressionFormat.Vorbis, 0.7f, false, true)
+                bool vehicleLoop = false;
+                if (path.StartsWith(VehicleDir + "/", StringComparison.OrdinalIgnoreCase))
+                {
+                    string name = Path.GetFileNameWithoutExtension(path);
+                    foreach (Def def in Events)
+                        if (def.Loop && MatchesPrefix(name, def.Id)) { vehicleLoop = true; break; }
+                }
+                bool done = ambience || siren || vehicleLoop
+                    ? SetImport(path, siren || vehicleLoop, AudioClipLoadType.CompressedInMemory, AudioCompressionFormat.Vorbis, 0.7f, false, true)
                     : SetImport(path, true, AudioClipLoadType.DecompressOnLoad, AudioCompressionFormat.Vorbis, 0.8f, true, false);
                 if (done) changed++;
             }

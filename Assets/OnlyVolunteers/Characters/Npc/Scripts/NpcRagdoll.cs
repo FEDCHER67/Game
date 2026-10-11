@@ -32,8 +32,11 @@ namespace OnlyVolunteers.Characters.Npc
     //   spread up the chain to the trunk (SpreadShare at the joints); A3 every body gets Relief (20/35/45 % by holders on
     //   good or medium handles: a hand on the pelvis or the belly brings none, so A5 still holds) of its weight upward,
     //   gone the moment the last hand lets go; A4 joint drives: any holder keeps the waist and the
-    //   neck roughly in line, two holders split above and below the pelvis stiffen the waist and the hips into a hammock.
+    //   neck roughly in line, two holders split above and below the pelvis drive the waist and the hips softly (the body
+    //   sags in a U between them, ~0.2 m at the pelvis: the smoke test's r5c).
     //   A6 (leg lever) is not built: only if playtests show the legs folding on the van's edge.
+    //   One hand alone on an arm or a leg (Fedya's playtest 2026-10-11: "by the leg you lift him into the air"): no relief
+    //   and at most SoloLimbLift up (SoloLimbHeld), so the limb rises and the body drags on its back (smoke test r22).
     // - The van (GreyboxVanCargo, through INpcBody): loaded by its pelvis and collar like the capsule, at rest = every
     //   body; damped toward the van per body; teleports and ejection move the root with the bodies (MoveRigid,
     //   PlaceLying), so the root never stays far behind.
@@ -161,6 +164,8 @@ namespace OnlyVolunteers.Characters.Npc
 
         private readonly List<Collider> _ignored = new();
         private float _restoreIgnoredAt;
+        // IgnoreOverlapping: (own collider, vehicle collider) pairs ignored until they are apart.
+        private readonly List<(Collider own, Collider other)> _grace = new();
         private float _impactSpeed;
         private Collider _impactOther;
         private Vector3 _impactPoint;
@@ -221,10 +226,43 @@ namespace OnlyVolunteers.Characters.Npc
             }
         }
 
+        /// <summary>Fedya's playtest 2026-10-11: one hold alone, on an arm or a leg (NpcRagdollProfile.SoloLimbRule): no A3
+        /// relief, and that hand lifts at most SoloLimbLift, so the limb comes up and the trunk stays on the ground.</summary>
+        public bool SoloLimbHeld
+        {
+            get
+            {
+                NpcRagdollProfile p = Profile;
+                if (p == null || !p.SoloLimbRule) return false;
+                int part = -1, holds = 0;
+                for (int i = 0; i < Claims.Length; i++)
+                {
+                    if (Claims[i].Holder == null) continue;
+                    holds++;
+                    part = Claims[i].Part;
+                }
+                return holds == 1 && part >= 0 && part < p.Parts.Length && IsLimb(p.Parts[part].Kind);
+            }
+        }
+
+        /// <summary>The force the last hold applied (after the solo-limb lift cap), for the smoke test.</summary>
+        public Vector3 LastHoldForce { get; private set; }
+
         public Rigidbody MainBody => _active && _root >= 0 ? _bodies[_root] : null;
         public Rigidbody BodyOf(int part) => _active && _bodies != null && part >= 0 && part < _bodies.Length ? _bodies[part] : null;
         public ConfigurableJoint JointOf(int part) => _active && _joints != null && part >= 0 && part < _joints.Length ? _joints[part] : null;
         public Transform BoneOf(int part) => Resolve() && part >= 0 && part < _bones.Length ? _bones[part] : null;
+        public bool HasRequiredBodies
+        {
+            get
+            {
+                if (!_active || !Resolve() || _hips == null || _bones == null || _bodies == null ||
+                    _bones.Length != _bodies.Length || _root < 0 || _root >= _bodies.Length) return false;
+                for (int i = 0; i < _bodies.Length; i++)
+                    if (_bones[i] == null || _bodies[i] == null) return false;
+                return true;
+            }
+        }
         /// <summary>The Hips bone (the pelvis part's): the get-up clips' root is placed by it (NpcGetUp).</summary>
         public Transform Hips => Resolve() ? _hips : null;
         /// <summary>The rig's Animator (NpcRig), off while the ragdoll is built.</summary>
@@ -275,6 +313,12 @@ namespace OnlyVolunteers.Characters.Npc
         private void OnEnable()
         {
             if (_active) Live.Add(this); // after a script reload in Play mode the static set is empty again
+        }
+
+        private void OnDisable()
+        {
+            Live.Remove(this);
+            RevokeAll();
         }
 
         private void OnDestroy() => Live.Remove(this);
@@ -531,9 +575,10 @@ namespace OnlyVolunteers.Characters.Npc
             _blendScale = Mathf.Max(0.1f, blendScale);
             RevokeAll();
             RestoreIgnored();
+            EndGrace(true);
             _impactSpeed = 0f;
             _impactOther = null;
-            bool snapshot = Resolve() && _allBones != null;
+            bool snapshot = HasRequiredBodies && _allBones != null;
             if (snapshot)
             {
                 for (int k = 0; k < _allBones.Length; k++)
@@ -737,14 +782,16 @@ namespace OnlyVolunteers.Characters.Npc
         {
             if (!_active) return;
             if (_ignored.Count > 0 && Time.time >= _restoreIgnoredAt) RestoreIgnored();
+            if (_grace.Count > 0) EndGrace(false);
             if (_impactSpeed > 0f) RaiseImpact();
             if (_pins.Count > 0) HoldPins();
             NpcRagdollProfile p = Profile;
             int holders = HolderCount;
             SetTone(p.CarryTone ? ToneFor(holders) : 0);
             // A3: lighter while held (before the solver step, like the hands' forces); a bad handle brings no relief
-            // unless the profile says so (one hand on the pelvis must not lift the hips).
-            float relief = p.ReliefFor(p.BadHandleRelief ? holders : HoldersOn(Handle.Good) + HoldersOn(Handle.Medium));
+            // unless the profile says so (one hand on the pelvis must not lift the hips), nor does one hand alone on an
+            // arm or a leg (SoloLimbHeld: one hand on an ankle lifted the whole body).
+            float relief = SoloLimbHeld ? 0f : p.ReliefFor(p.BadHandleRelief ? holders : HoldersOn(Handle.Good) + HoldersOn(Handle.Medium));
             if (relief > 0f)
             {
                 Vector3 up = -Physics.gravity * relief;
@@ -822,7 +869,7 @@ namespace OnlyVolunteers.Characters.Npc
             NpcRagdollProfile p = Profile;
             var limp = new JointDrive { positionSpring = 0f, positionDamper = 0f, maximumForce = float.MaxValue };
             var held = new JointDrive { positionSpring = p.HeldSpring, positionDamper = p.HeldDamper, maximumForce = p.HeldMaxTorque };
-            // The waist: in line while held, a stiff hammock when carried by a split pair.
+            // The waist: in line while held; carried by a split pair, a soft spring the body sags against (a U, not a plank).
             ConfigurableJoint waist = _joints[_chest];
             if (waist != null)
             {
@@ -1218,8 +1265,8 @@ namespace OnlyVolunteers.Characters.Npc
             _bodies[_chest].AddForce(impulse, ForceMode.Impulse);
         }
 
-        /// <summary>Contacts of every ragdoll collider with these are ignored for a while (the van that just knocked the
-        /// NPC over), then restored.</summary>
+        /// <summary>Contacts of every ragdoll collider with these are ignored for a while, then restored (the van's knock
+        /// before 2026-10-11, GreyboxNpc.LegacyVanKnock: the smoke test's before rows).</summary>
         public void IgnoreFor(IEnumerable<Collider> others, float seconds)
         {
             if (!_active) return;
@@ -1242,6 +1289,86 @@ namespace OnlyVolunteers.Characters.Npc
                     if (IsLive(own)) Physics.IgnoreCollision(own, c, false);
             }
             _ignored.Clear();
+        }
+
+        /// <summary>m: a grace pair (IgnoreOverlapping) collides again once its two colliders overlap by less than this.</summary>
+        public const float GraceExit = 0.01f;
+
+        /// <summary>INpcBody (a vehicle's knock, Fedya's playtest 2026-10-11): each ragdoll collider that overlaps one of
+        /// 'others' now stops colliding with it until the two are apart again (checked every physics step); every other pair
+        /// collides at once. So the parts born inside the bumper pass out of it, and no pair comes back into contact while
+        /// overlapping: the old fixed 0.5 s let the van drive into the thrown body, then shut it in the windshield or a door.</summary>
+        public void IgnoreOverlapping(IEnumerable<Collider> others)
+        {
+            if (!_active || others == null) return;
+            foreach (Collider other in others)
+            {
+                if (!Touchable(other, _colliders)) continue;
+                foreach (Collider own in _colliders)
+                {
+                    if (!IsLive(own) || Graced(own, other) || !Overlapping(own, other, 0f)) continue;
+                    Physics.IgnoreCollision(own, other, true);
+                    _grace.Add((own, other));
+                }
+            }
+        }
+
+        /// <summary>Pairs still in the knock's grace (the smoke test).</summary>
+        public int GraceCount => _grace.Count;
+
+        private bool Graced(Collider own, Collider other)
+        {
+            foreach ((Collider a, Collider b) in _grace)
+                if (a == own && b == other) return true;
+            return false;
+        }
+
+        // The grace pairs collide again once apart (or gone); all: every pair now (back to a plain NPC).
+        private void EndGrace(bool all)
+        {
+            for (int i = _grace.Count - 1; i >= 0; i--)
+            {
+                (Collider own, Collider other) = _grace[i];
+                bool live = IsLive(own) && IsLive(other);
+                if (!all && live && Overlapping(own, other, GraceExit)) continue;
+                if (live) Physics.IgnoreCollision(own, other, false);
+                _grace.RemoveAt(i);
+            }
+        }
+
+        /// <summary>A vehicle's collider a downed body can meet: live, solid, not a wheel, not the body's own, on a layer that
+        /// touches NpcBody (the downed body's colliders also include Vehicle, CollideWithVehicles).</summary>
+        public static bool Touchable(Collider c, ICollection<Collider> own) =>
+            IsLive(c) && !c.isTrigger && !(c is WheelCollider) && (own == null || !own.Contains(c)) &&
+            ((OvLayers.VehicleMask & (1 << c.gameObject.layer)) != 0 || !Physics.GetIgnoreLayerCollision(OvLayers.NpcBody, c.gameObject.layer));
+
+        /// <summary>Whether two colliders overlap by more than 'depth' (m), at their bodies' physics poses (an interpolated
+        /// body's transform trails it). One of them must be a primitive (ComputePenetration).</summary>
+        public static bool Overlapping(Collider a, Collider b, float depth)
+        {
+            Bounds ab = a.bounds;
+            ab.Expand(0.02f);
+            if (!ab.Intersects(b.bounds)) return false;
+            ColliderPose(a, out Vector3 pa, out Quaternion qa);
+            ColliderPose(b, out Vector3 pb, out Quaternion qb);
+            return Physics.ComputePenetration(a, pa, qa, b, pb, qb, out _, out float d) && d > depth;
+        }
+
+        /// <summary>A collider's world pose from its body's physics pose (Rigidbody position and rotation).</summary>
+        public static void ColliderPose(Collider c, out Vector3 position, out Quaternion rotation)
+        {
+            Rigidbody rb = c.attachedRigidbody;
+            Transform t = c.transform;
+            if (rb == null)
+            {
+                position = t.position;
+                rotation = t.rotation;
+                return;
+            }
+            Transform bt = rb.transform;
+            Quaternion inverse = Quaternion.Inverse(bt.rotation);
+            position = rb.position + rb.rotation * (inverse * (t.position - bt.position));
+            rotation = rb.rotation * (inverse * t.rotation);
         }
 
         private static bool IsLive(Collider c) => c != null && c.enabled && c.gameObject.activeInHierarchy;
@@ -1335,12 +1462,16 @@ namespace OnlyVolunteers.Characters.Npc
         /// <summary>A hand's force on the held part. A2 (SpreadForce): on a limb or the head only (1 - SpreadShare) of it
         /// goes to the held bone at the hold; the rest is split evenly over its parents up to the trunk (the chest or the
         /// pelvis), each share at the joint where the bone below hangs on it. A forearm: 60 % at the hand's hold, 20 % to
-        /// the upper arm at the elbow, 20 % to the chest at the shoulder. Trunk holds are not spread.</summary>
+        /// the upper arm at the elbow, 20 % to the chest at the shoulder. Trunk holds are not spread. One hand alone on an
+        /// arm or a leg (SoloLimbHeld) lifts at most SoloLimbLift (Fedya's playtest 2026-10-11): the limb comes up, the
+        /// trunk stays down; sideways the handle's cap is unchanged (dragging).</summary>
         public void ApplyHoldForce(int part, Vector3 worldPoint, Vector3 force)
         {
             Rigidbody rb = BodyOf(part);
             if (rb == null) return;
             NpcRagdollProfile p = Profile;
+            if (force.y > p.SoloLimbLift && SoloLimbHeld) force.y = p.SoloLimbLift;
+            LastHoldForce = force;
             Kind kind = p.Parts[part].Kind;
             if (!p.SpreadForce || p.SpreadShare <= 0f || kind == Kind.Pelvis || kind == Kind.Chest)
             {
