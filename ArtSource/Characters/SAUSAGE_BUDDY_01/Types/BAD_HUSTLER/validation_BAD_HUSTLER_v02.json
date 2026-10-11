@@ -1,0 +1,333 @@
+{
+  "asset": "SAUSAGE_BUDDY_BAD_HUSTLER_v02",
+  "variant": "BAD_HUSTLER",
+  "height_m": 1.769,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8001,
+      "vertices": 4193,
+      "materials": [
+        "BAD_HUSTLER_Leather",
+        "BAD_HUSTLER_Leather_Rib",
+        "BAD_HUSTLER_Turtleneck",
+        "BAD_HUSTLER_Lapel",
+        "BAD_HUSTLER_Button",
+        "BAD_HUSTLER_Gold",
+        "BAD_HUSTLER_Jeans",
+        "BAD_HUSTLER_Socks",
+        "BAD_HUSTLER_Shoes",
+        "BAD_HUSTLER_Shoe_Sole",
+        "BAD_HUSTLER_Hair",
+        "BAD_HUSTLER_HairComb"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0009,
+    "Panic_Run_Loop": 0.0782,
+    "Panic_TurnFlee": 0.0909,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0502,
+      "max": 0.0909
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.1066
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.1066,
+      "max": 0.1066
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.1066
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0299,
+      "max": 0.0909
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2727,
+      "max": 0.0009
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0327,
+      "max": 0.0908
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0299,
+      "max": 0.0945
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0945,
+      "max": 0.0945
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.157,
+      "max": 0.0909
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Темщик",
+    "group": "Неблагополучный район",
+    "body": {},
+    "idle_arm_down_deg": 74.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Blink": 0.3,
+      "Happy": 0.25
+    },
+    "slots": {
+      "BAD_HUSTLER_Leather": {
+        "default": "#1E1C1C",
+        "metal": false
+      },
+      "BAD_HUSTLER_Leather_Rib": {
+        "default": "#161414",
+        "metal": false
+      },
+      "BAD_HUSTLER_Lapel": {
+        "default": "#282424",
+        "metal": false
+      },
+      "BAD_HUSTLER_Button": {
+        "default": "#121214",
+        "metal": false
+      },
+      "BAD_HUSTLER_Turtleneck": {
+        "default": "#2C2C34",
+        "metal": false
+      },
+      "BAD_HUSTLER_Jeans": {
+        "default": "#708AB2",
+        "metal": false
+      },
+      "BAD_HUSTLER_Socks": {
+        "default": "#1E1E22",
+        "metal": false
+      },
+      "BAD_HUSTLER_Shoes": {
+        "default": "#101012",
+        "metal": false
+      },
+      "BAD_HUSTLER_Shoe_Sole": {
+        "default": "#1E1A18",
+        "metal": false
+      },
+      "BAD_HUSTLER_Hair": {
+        "default": "#221E1C",
+        "metal": false
+      },
+      "BAD_HUSTLER_HairComb": {
+        "default": "#121010",
+        "metal": false
+      },
+      "BAD_HUSTLER_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "BAD_HUSTLER_Bag": {
+        "default": "#402A1E",
+        "metal": false
+      },
+      "BAD_HUSTLER_Bag_Strap": {
+        "default": "#281C16",
+        "metal": false
+      },
+      "BAD_HUSTLER_Phone": {
+        "default": "#282A2E",
+        "metal": false
+      },
+      "BAD_HUSTLER_Phone_Screen": {
+        "default": "#7AA070",
+        "metal": false
+      },
+      "BAD_HUSTLER_Phone_Keys": {
+        "default": "#B0B0A8",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "BAD_HUSTLER_Leather": "#5A3622",
+        "BAD_HUSTLER_Leather_Rib": "#462A1A",
+        "BAD_HUSTLER_Lapel": "#663E28",
+        "BAD_HUSTLER_Turtleneck": "#141418",
+        "BAD_HUSTLER_Jeans": "#1E1E22"
+      },
+      {
+        "BAD_HUSTLER_Leather": "#2C2C30",
+        "BAD_HUSTLER_Leather_Rib": "#222226",
+        "BAD_HUSTLER_Lapel": "#36363A",
+        "BAD_HUSTLER_Turtleneck": "#7A202A",
+        "BAD_HUSTLER_Jeans": "#42547C",
+        "BAD_HUSTLER_Bag": "#181616"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 15553,
+  "part_triangles": {
+    "HUSTLER_Jacket": 1568,
+    "Skin_Head": 1088,
+    "HUSTLER_Hair": 1024,
+    "HUSTLER_Shoe_Upper": 1000,
+    "HUSTLER_Jeans": 816,
+    "HUSTLER_Chain": 684,
+    "HUSTLER_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "HUSTLER_Lapel": 484,
+    "Skin_Arm": 480,
+    "HUSTLER_Turtleneck": 448,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "HUSTLER_ShirtV": 367,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "HUSTLER_Collar": 296,
+    "Skin_Nose": 288,
+    "HUSTLER_Socks": 288,
+    "HUSTLER_Mustache": 240,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "HUSTLER_Flap": 88,
+    "HUSTLER_Btn": 16,
+    "HUSTLER_Comb": 10
+  }
+}

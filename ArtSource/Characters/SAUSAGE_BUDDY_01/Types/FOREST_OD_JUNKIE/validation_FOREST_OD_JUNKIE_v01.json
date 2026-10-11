@@ -1,0 +1,325 @@
+{
+  "asset": "SAUSAGE_BUDDY_FOREST_OD_JUNKIE_v01",
+  "variant": "FOREST_OD_JUNKIE",
+  "height_m": 1.789,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9630,
+      "vertices": 5446,
+      "materials": [
+        "FOREST_OD_JUNKIE_Hoodie",
+        "FOREST_OD_JUNKIE_Hoodie_Rib",
+        "FOREST_OD_JUNKIE_Cords",
+        "FOREST_OD_JUNKIE_Pants",
+        "FOREST_OD_JUNKIE_Pants_Rib",
+        "FOREST_OD_JUNKIE_Dirt",
+        "Buddy_Skin",
+        "FOREST_OD_JUNKIE_Socks",
+        "FOREST_OD_JUNKIE_Slides",
+        "FOREST_OD_JUNKIE_Hair",
+        "FOREST_OD_JUNKIE_EyeBags",
+        "FOREST_OD_JUNKIE_Stubble",
+        "FOREST_OD_JUNKIE_Drool"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0586,
+    "Panic_TurnFlee": 0.0569,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0586
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.002,
+      "max": 0.0808
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.068,
+      "max": 0.0808
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.002,
+      "max": 0.0808
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0335,
+      "max": 0.0586
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0333,
+      "max": 0.0618
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0335,
+      "max": 0.078
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.078,
+      "max": 0.078
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2089,
+      "max": 0.0586
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Передознутый торчок",
+    "group": "Лесная полоса",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 74.0,
+    "face_defaults": {
+      "Blink": 0.65,
+      "Worried": 0.3
+    },
+    "slots": {
+      "FOREST_OD_JUNKIE_Hoodie": {
+        "default": "#68705C",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Hoodie_Rib": {
+        "default": "#585F4E",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Cords": {
+        "default": "#D6D2C4",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Pants": {
+        "default": "#808086",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Pants_Rib": {
+        "default": "#6C6C72",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Socks": {
+        "default": "#C6C0B0",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Slides": {
+        "default": "#282A2E",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Dirt": {
+        "default": "#605646",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Hair": {
+        "default": "#3E362E",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_EyeBags": {
+        "default": "#8A7092",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Stubble": {
+        "default": "#5A5048",
+        "metal": false
+      },
+      "FOREST_OD_JUNKIE_Drool": {
+        "default": "#C4E2F0",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "FOREST_OD_JUNKIE_Hoodie": "#464850",
+        "FOREST_OD_JUNKIE_Hoodie_Rib": "#3A3C44",
+        "FOREST_OD_JUNKIE_Cords": "#B6B6B0",
+        "FOREST_OD_JUNKIE_Pants": "#343848",
+        "FOREST_OD_JUNKIE_Pants_Rib": "#2C303E",
+        "FOREST_OD_JUNKIE_Slides": "#982C2A"
+      },
+      {
+        "FOREST_OD_JUNKIE_Hoodie": "#86644C",
+        "FOREST_OD_JUNKIE_Hoodie_Rib": "#725440",
+        "FOREST_OD_JUNKIE_Cords": "#E8DEC4",
+        "FOREST_OD_JUNKIE_Pants": "#5A6050",
+        "FOREST_OD_JUNKIE_Pants_Rib": "#4E5446",
+        "FOREST_OD_JUNKIE_Socks": "#E0DCD0",
+        "FOREST_OD_JUNKIE_Slides": "#2A3E7A"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16606,
+  "part_triangles": {
+    "FOREST_OD_JUNKIE_Hoodie": 2016,
+    "FOREST_OD_JUNKIE_Hood": 1440,
+    "Skin_Head": 1088,
+    "FOREST_OD_JUNKIE_Pants": 880,
+    "FOREST_OD_JUNKIE_HoodRim": 656,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "FOREST_OD_JUNKIE_Foot_Upper": 500,
+    "FOREST_OD_JUNKIE_SockFoot_Upper": 500,
+    "Skin_Arm": 480,
+    "FOREST_OD_JUNKIE_Fringe": 460,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "FOREST_OD_JUNKIE_Pocket": 380,
+    "FOREST_OD_JUNKIE_Stubble_Dot": 360,
+    "Pupil": 336,
+    "FOREST_OD_JUNKIE_Foot_Sole": 336,
+    "FOREST_OD_JUNKIE_SockFoot_Sole": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "FOREST_OD_JUNKIE_Socks": 288,
+    "FOREST_OD_JUNKIE_EyeBag": 248,
+    "FOREST_OD_JUNKIE_Cord": 204,
+    "FOREST_OD_JUNKIE_Strap": 204,
+    "Brow": 168,
+    "FOREST_OD_JUNKIE_Toe": 168,
+    "Shine": 160,
+    "FOREST_OD_JUNKIE_ToeHole": 144,
+    "FOREST_OD_JUNKIE_Dirt": 124,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "FOREST_OD_JUNKIE_DroolDrop": 100,
+    "FOREST_OD_JUNKIE_Drool": 80,
+    "FOREST_OD_JUNKIE_Aglet": 64,
+    "FOREST_OD_JUNKIE_HoleRim": 60,
+    "FOREST_OD_JUNKIE_PocketSlot": 52,
+    "FOREST_OD_JUNKIE_Hole": 30
+  }
+}

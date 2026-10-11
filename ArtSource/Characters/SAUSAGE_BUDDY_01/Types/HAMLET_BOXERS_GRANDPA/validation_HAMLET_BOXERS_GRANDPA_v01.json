@@ -1,0 +1,313 @@
+{
+  "asset": "SAUSAGE_BUDDY_HAMLET_BOXERS_GRANDPA_v01",
+  "variant": "HAMLET_BOXERS_GRANDPA",
+  "height_m": 1.785,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 6284,
+      "vertices": 4019,
+      "materials": [
+        "HAMLET_BOXERS_GRANDPA_Tank",
+        "HAMLET_BOXERS_GRANDPA_Stain",
+        "HAMLET_BOXERS_GRANDPA_Shorts",
+        "HAMLET_BOXERS_GRANDPA_Print",
+        "HAMLET_BOXERS_GRANDPA_Print2",
+        "HAMLET_BOXERS_GRANDPA_Valenki",
+        "HAMLET_BOXERS_GRANDPA_Galosh",
+        "HAMLET_BOXERS_GRANDPA_Hat",
+        "HAMLET_BOXERS_GRANDPA_Fur",
+        "HAMLET_BOXERS_GRANDPA_Mustache",
+        "HAMLET_BOXERS_GRANDPA_Blush",
+        "HAMLET_BOXERS_GRANDPA_Stubble"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0709
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.046,
+      "max": 0.0709
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0709
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0698
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Дед в семейниках",
+    "group": "Хутор",
+    "body": {
+      "belly": 1.0
+    },
+    "idle_arm_down_deg": 66.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Happy": 0.6,
+      "Blink": 0.25
+    },
+    "slots": {
+      "HAMLET_BOXERS_GRANDPA_Tank": {
+        "default": "#F0EEE6",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Stain": {
+        "default": "#C4B48C",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Shorts": {
+        "default": "#6EA0E1",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Print": {
+        "default": "#FAE26E",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Print2": {
+        "default": "#F6F6F0",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Valenki": {
+        "default": "#807A72",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Galosh": {
+        "default": "#18181A",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Hat": {
+        "default": "#463C34",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Fur": {
+        "default": "#78644E",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Mustache": {
+        "default": "#E2DED6",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Stubble": {
+        "default": "#C8C4BC",
+        "metal": false
+      },
+      "HAMLET_BOXERS_GRANDPA_Blush": {
+        "default": "#EC6E64",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "HAMLET_BOXERS_GRANDPA_Shorts": "#C83232",
+        "HAMLET_BOXERS_GRANDPA_Print": "#FAFAF6",
+        "HAMLET_BOXERS_GRANDPA_Print2": "#FAD23C"
+      },
+      {
+        "HAMLET_BOXERS_GRANDPA_Shorts": "#468C5A",
+        "HAMLET_BOXERS_GRANDPA_Print": "#FAC8D2",
+        "HAMLET_BOXERS_GRANDPA_Print2": "#FAFAF6",
+        "HAMLET_BOXERS_GRANDPA_Valenki": "#3C3A38"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 13260,
+  "part_triangles": {
+    "Skin_Head": 1088,
+    "HAMLET_BOXERS_GRANDPA_Valenok_Shoe_Upper": 1000,
+    "HAMLET_BOXERS_GRANDPA_Valenok_Shoe_Sole": 672,
+    "HAMLET_BOXERS_GRANDPA_Ushanka_Band": 640,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "HAMLET_BOXERS_GRANDPA_Shorts": 560,
+    "Skin_Arm": 480,
+    "HAMLET_BOXERS_GRANDPA_Ushanka_Crown": 480,
+    "HAMLET_BOXERS_GRANDPA_Valenok_Shaft": 448,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "HAMLET_BOXERS_GRANDPA_Tank": 368,
+    "HAMLET_BOXERS_GRANDPA_Stubble_Dot": 360,
+    "HAMLET_BOXERS_GRANDPA_FlowerB": 356,
+    "HAMLET_BOXERS_GRANDPA_FlowerF": 354,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "HAMLET_BOXERS_GRANDPA_Mustache": 240,
+    "HAMLET_BOXERS_GRANDPA_Ushanka_FrontFlap": 224,
+    "HAMLET_BOXERS_GRANDPA_Ushanka_FlapDown": 196,
+    "HAMLET_BOXERS_GRANDPA_Ushanka_FlapUp": 196,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "HAMLET_BOXERS_GRANDPA_Tank_Strap": 104,
+    "HAMLET_BOXERS_GRANDPA_Stain": 50,
+    "HAMLET_BOXERS_GRANDPA_Blush": 36
+  }
+}

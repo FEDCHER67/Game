@@ -1,0 +1,359 @@
+{
+  "asset": "SAUSAGE_BUDDY_PROM_FOREMAN_v02",
+  "variant": "PROM_FOREMAN",
+  "height_m": 1.856,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 10780,
+      "vertices": 6041,
+      "materials": [
+        "PROM_FOREMAN_Track",
+        "PROM_FOREMAN_Track_Rib",
+        "PROM_FOREMAN_Stripes",
+        "PROM_FOREMAN_Vest",
+        "PROM_FOREMAN_Reflect",
+        "PROM_FOREMAN_Trousers",
+        "PROM_FOREMAN_Dust",
+        "PROM_FOREMAN_Socks",
+        "PROM_FOREMAN_Shoe_Upper",
+        "PROM_FOREMAN_Shoe_Sole",
+        "PROM_FOREMAN_Shoe_Lace",
+        "PROM_FOREMAN_Hat",
+        "PROM_FOREMAN_Hair",
+        "PROM_FOREMAN_Mustache",
+        "PROM_FOREMAN_Stubble",
+        "PROM_FOREMAN_Pencil",
+        "PROM_FOREMAN_Pencil_Tip",
+        "PROM_FOREMAN_Tape",
+        "PROM_FOREMAN_Tape_Belt"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0812
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0812,
+      "max": 0.0812
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0812
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Прораб-эмигрант",
+    "group": "Промзона",
+    "body": {
+      "belly": 0.3
+    },
+    "idle_arm_down_deg": 74.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Happy": 0.45,
+      "Surprised": 0.1
+    },
+    "slots": {
+      "PROM_FOREMAN_Track": {
+        "default": "#242C46",
+        "metal": false
+      },
+      "PROM_FOREMAN_Track_Rib": {
+        "default": "#1C2238",
+        "metal": false
+      },
+      "PROM_FOREMAN_Stripes": {
+        "default": "#ECECE8",
+        "metal": false
+      },
+      "PROM_FOREMAN_Zip": {
+        "default": "#C8C8CC",
+        "metal": true
+      },
+      "PROM_FOREMAN_Vest": {
+        "default": "#DCF03C",
+        "metal": false
+      },
+      "PROM_FOREMAN_Reflect": {
+        "default": "#D2D6DC",
+        "metal": false
+      },
+      "PROM_FOREMAN_Trousers": {
+        "default": "#5C5E64",
+        "metal": false
+      },
+      "PROM_FOREMAN_Dust": {
+        "default": "#B0A692",
+        "metal": false
+      },
+      "PROM_FOREMAN_Socks": {
+        "default": "#ECEAE4",
+        "metal": false
+      },
+      "PROM_FOREMAN_Shoe_Upper": {
+        "default": "#6E6E74",
+        "metal": false
+      },
+      "PROM_FOREMAN_Shoe_Sole": {
+        "default": "#DCD8CE",
+        "metal": false
+      },
+      "PROM_FOREMAN_Shoe_Lace": {
+        "default": "#3C3C40",
+        "metal": false
+      },
+      "PROM_FOREMAN_Hat": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "PROM_FOREMAN_Hair": {
+        "default": "#1A1816",
+        "metal": false
+      },
+      "PROM_FOREMAN_Mustache": {
+        "default": "#1A1816",
+        "metal": false
+      },
+      "PROM_FOREMAN_Stubble": {
+        "default": "#28221E",
+        "metal": false
+      },
+      "PROM_FOREMAN_Pencil": {
+        "default": "#F0C83C",
+        "metal": false
+      },
+      "PROM_FOREMAN_Pencil_Tip": {
+        "default": "#282828",
+        "metal": false
+      },
+      "PROM_FOREMAN_Tape": {
+        "default": "#FAC828",
+        "metal": false
+      },
+      "PROM_FOREMAN_Tape_Belt": {
+        "default": "#1E1E20",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "PROM_FOREMAN_Vest": "#FA781E",
+        "PROM_FOREMAN_Hat": "#FAC828",
+        "PROM_FOREMAN_Track": "#1E1E22",
+        "PROM_FOREMAN_Track_Rib": "#18181C"
+      },
+      {
+        "PROM_FOREMAN_Track": "#781E28",
+        "PROM_FOREMAN_Track_Rib": "#601820",
+        "PROM_FOREMAN_Hat": "#E64632",
+        "PROM_FOREMAN_Trousers": "#3C4634"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 18332,
+  "part_triangles": {
+    "PROM_FOREMAN_Track": 2016,
+    "PROM_FOREMAN_Vest": 1744,
+    "PROM_FOREMAN_Hair": 1152,
+    "Skin_Head": 1088,
+    "PROM_FOREMAN_Shoe_Upper": 1000,
+    "PROM_FOREMAN_Trousers": 880,
+    "PROM_FOREMAN_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "PROM_FOREMAN_Hat_Dome": 416,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "PROM_FOREMAN_Stubble_Dot": 360,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "PROM_FOREMAN_Collar": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "PROM_FOREMAN_Socks": 288,
+    "PROM_FOREMAN_Lace": 256,
+    "PROM_FOREMAN_Hat_Rim": 256,
+    "PROM_FOREMAN_Mustache": 240,
+    "PROM_FOREMAN_Hat_Peak": 216,
+    "PROM_FOREMAN_BandF": 180,
+    "PROM_FOREMAN_BandB": 180,
+    "Brow": 168,
+    "PROM_FOREMAN_Hat_Ridge": 168,
+    "PROM_FOREMAN_Dust": 164,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "PROM_FOREMAN_Tape_Body": 108,
+    "PROM_FOREMAN_Tape_Clip": 108,
+    "Prop_Phone": 108,
+    "PROM_FOREMAN_Pencil_Body": 24,
+    "PROM_FOREMAN_Pencil_Tip": 24,
+    "PROM_FOREMAN_SleeveStripe": 8
+  }
+}

@@ -70,6 +70,28 @@ namespace OnlyVolunteers.Player
         private bool _canChainBhop;
         private bool _bhopChainActive;
         private bool _preserveLandingMomentum;
+        private bool _lookSuspended;
+
+        // While the phone is out the player stands still (no walking or jumping).
+        public bool MovementLocked { get; set; }
+
+        // A screen UI (the phone) needs a free cursor instead of mouse look.
+        public bool LookSuspended
+        {
+            get => _lookSuspended;
+            set
+            {
+                if (_lookSuspended == value)
+                    return;
+                _lookSuspended = value;
+                if (!isActiveAndEnabled)
+                    return;
+                if (value)
+                    ReleaseCursor();
+                else
+                    LockCursor();
+            }
+        }
 
         private void Awake()
         {
@@ -99,19 +121,27 @@ namespace OnlyVolunteers.Player
 
         private void OnEnable()
         {
-            LockCursor();
+            if (_lookSuspended)
+                ReleaseCursor();
+            else
+                LockCursor();
         }
 
         private void OnDisable()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            ReleaseCursor();
         }
 
         private void OnApplicationFocus(bool focused)
         {
-            if (focused && isActiveAndEnabled)
+            if (focused && isActiveAndEnabled && !_lookSuspended)
                 LockCursor();
+        }
+
+        private static void ReleaseCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         private static void LockCursor()
@@ -122,7 +152,7 @@ namespace OnlyVolunteers.Player
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !_lookSuspended)
                 LockCursor();
 
             float yawDelta = 0f;
@@ -134,8 +164,8 @@ namespace OnlyVolunteers.Player
                     -PitchLimit, PitchLimit);
             }
 
-            float moveForward = Input.GetAxisRaw("Vertical");
-            float moveRight = Input.GetAxisRaw("Horizontal");
+            float moveForward = MovementLocked ? 0f : Input.GetAxisRaw("Vertical");
+            float moveRight = MovementLocked ? 0f : Input.GetAxisRaw("Horizontal");
             bool hasMovementInput = moveForward != 0f || moveRight != 0f;
             bool diagonalInput = moveForward != 0f && moveRight != 0f;
             bool crouchHeld = Input.GetKey(KeyCode.LeftControl);
@@ -181,7 +211,7 @@ namespace OnlyVolunteers.Player
             bool crouched = effectiveCrouchHeld || physicallyCrouched;
             // OV stage1: no jump while stooped (low roof) or while another system blocks it (cargo bay).
             bool stooped = !crouched && Character.IsStooped;
-            bool jumpDown = !crouched && !stooped && !JumpBlocked && Input.GetKeyDown(KeyCode.Space);
+            bool jumpDown = !crouched && !stooped && !JumpBlocked && !MovementLocked && Input.GetKeyDown(KeyCode.Space);
             if (crouched || (!_wasStableGrounded && grounded) || (jumpDown && grounded))
                 ResetLongJump();
             if (jumpDown && !grounded)

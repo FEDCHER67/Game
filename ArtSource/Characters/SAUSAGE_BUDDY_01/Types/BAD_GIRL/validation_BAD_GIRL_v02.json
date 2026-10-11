@@ -1,0 +1,345 @@
+{
+  "asset": "SAUSAGE_BUDDY_BAD_GIRL_v02",
+  "variant": "BAD_GIRL",
+  "height_m": 1.938,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9368,
+      "vertices": 5184,
+      "materials": [
+        "BAD_GIRL_Jacket",
+        "BAD_GIRL_Top",
+        "BAD_GIRL_Spots",
+        "BAD_GIRL_Fur",
+        "BAD_GIRL_Skirt",
+        "BAD_GIRL_Tights",
+        "BAD_GIRL_Boots",
+        "BAD_GIRL_Boot_Sole",
+        "BAD_GIRL_Hair",
+        "BAD_GIRL_Hoops",
+        "BAD_GIRL_Blush",
+        "BAD_GIRL_Lips",
+        "BAD_GIRL_Eyeshadow"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0018,
+    "Panic_Run_Loop": 0.0512,
+    "Panic_TurnFlee": 0.0491,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0493,
+      "max": 0.0512
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0025,
+      "max": 0.1124
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.1124,
+      "max": 0.1124
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0026,
+      "max": 0.1124
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0327,
+      "max": 0.0512
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2718,
+      "max": 0.0018
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0325,
+      "max": 0.0545
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0327,
+      "max": 0.0704
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0704,
+      "max": 0.0704
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2261,
+      "max": 0.0512
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Девушка лёгкого поведения",
+    "group": "Неблагополучный район",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 74.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Blink": 0.35
+    },
+    "slots": {
+      "BAD_GIRL_Hair": {
+        "default": "#F6E296",
+        "metal": false
+      },
+      "BAD_GIRL_Jacket": {
+        "default": "#DAA456",
+        "metal": false
+      },
+      "BAD_GIRL_Spots": {
+        "default": "#482E1C",
+        "metal": false
+      },
+      "BAD_GIRL_Fur": {
+        "default": "#F0E2C8",
+        "metal": false
+      },
+      "BAD_GIRL_Top": {
+        "default": "#EC408E",
+        "metal": false
+      },
+      "BAD_GIRL_Skirt": {
+        "default": "#1C1A1E",
+        "metal": false
+      },
+      "BAD_GIRL_Tights": {
+        "default": "#2C2632",
+        "metal": false
+      },
+      "BAD_GIRL_Boots": {
+        "default": "#96162C",
+        "metal": false
+      },
+      "BAD_GIRL_Boot_Sole": {
+        "default": "#1A181A",
+        "metal": false
+      },
+      "BAD_GIRL_Hoops": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "BAD_GIRL_Lips": {
+        "default": "#D61A42",
+        "metal": false
+      },
+      "BAD_GIRL_Eyeshadow": {
+        "default": "#4684EC",
+        "metal": false
+      },
+      "BAD_GIRL_Blush": {
+        "default": "#F27092",
+        "metal": false
+      },
+      "BAD_GIRL_Bag": {
+        "default": "#EC408E",
+        "metal": false
+      },
+      "BAD_GIRL_Bag_Flap": {
+        "default": "#C42870",
+        "metal": false
+      },
+      "BAD_GIRL_Clasp": {
+        "default": "#D6AE4C",
+        "metal": true
+      }
+    },
+    "colourways": [
+      {
+        "BAD_GIRL_Hair": "#281E1E",
+        "BAD_GIRL_Jacket": "#ECECE8",
+        "BAD_GIRL_Spots": "#242428",
+        "BAD_GIRL_Fur": "#242428",
+        "BAD_GIRL_Top": "#7A34AA",
+        "BAD_GIRL_Skirt": "#7A34AA",
+        "BAD_GIRL_Boots": "#1C1A1E",
+        "BAD_GIRL_Bag": "#242428",
+        "BAD_GIRL_Bag_Flap": "#7A34AA"
+      },
+      {
+        "BAD_GIRL_Hair": "#B22A34",
+        "BAD_GIRL_Jacket": "#EC8CAC",
+        "BAD_GIRL_Spots": "#96285A",
+        "BAD_GIRL_Fur": "#FAF0F6",
+        "BAD_GIRL_Top": "#34C0D6",
+        "BAD_GIRL_Skirt": "#E2E2E6",
+        "BAD_GIRL_Tights": "#F0D6C4",
+        "BAD_GIRL_Boots": "#F0EEEA",
+        "BAD_GIRL_Bag": "#34C0D6",
+        "BAD_GIRL_Bag_Flap": "#2496AC",
+        "BAD_GIRL_Lips": "#EC3C78",
+        "BAD_GIRL_Eyeshadow": "#3EC07A"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16344,
+  "part_triangles": {
+    "GIRL_Jacket": 1424,
+    "Skin_Head": 1088,
+    "GIRL_Hair_Bob": 1024,
+    "GIRL_Boot_Shoe_Upper": 1000,
+    "GIRL_Tights": 752,
+    "GIRL_Boot_Shoe_Sole": 672,
+    "GIRL_FurCollar": 656,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "GIRL_FurCuff": 552,
+    "GIRL_Hoop": 504,
+    "Skin_Arm": 480,
+    "GIRL_Shaft": 448,
+    "GIRL_Hair_Beehive": 440,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "GIRL_Shadow": 330,
+    "Skin_Torso": 320,
+    "GIRL_Skirt": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "GIRL_FurEdge": 288,
+    "GIRL_Hair_Pouf": 288,
+    "GIRL_Spot_B": 208,
+    "GIRL_Spot_F": 182,
+    "Brow": 168,
+    "GIRL_Top": 162,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "GIRL_Lips": 82,
+    "GIRL_Blush": 36
+  }
+}

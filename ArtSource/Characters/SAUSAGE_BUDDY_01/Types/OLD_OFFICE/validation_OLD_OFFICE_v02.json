@@ -1,0 +1,367 @@
+{
+  "asset": "SAUSAGE_BUDDY_OLD_OFFICE_v02",
+  "variant": "OLD_OFFICE",
+  "height_m": 1.769,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8188,
+      "vertices": 4275,
+      "materials": [
+        "OLD_OFFICE_Shirt",
+        "OLD_OFFICE_Tie",
+        "OLD_OFFICE_Trousers",
+        "OLD_OFFICE_Belt",
+        "OLD_OFFICE_Buckle",
+        "OLD_OFFICE_Socks",
+        "OLD_OFFICE_Shoes",
+        "OLD_OFFICE_Shoe_Sole",
+        "OLD_OFFICE_Glasses",
+        "OLD_OFFICE_Hair",
+        "OLD_OFFICE_HairPart",
+        "OLD_OFFICE_Lanyard",
+        "OLD_OFFICE_Clip",
+        "OLD_OFFICE_Badge",
+        "OLD_OFFICE_Badge_Stripe",
+        "OLD_OFFICE_Badge_Photo",
+        "OLD_OFFICE_Badge_Line",
+        "OLD_OFFICE_EyeBags"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0718
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0718,
+      "max": 0.0718
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0718
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0407,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Работник офиса",
+    "group": "Старый город",
+    "body": {},
+    "idle_arm_down_deg": 74.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Worried": 0.35,
+      "Blink": 0.3
+    },
+    "slots": {
+      "OLD_OFFICE_Shirt": {
+        "default": "#B2CEEA",
+        "metal": false
+      },
+      "OLD_OFFICE_Tie": {
+        "default": "#283462",
+        "metal": false
+      },
+      "OLD_OFFICE_Trousers": {
+        "default": "#565A62",
+        "metal": false
+      },
+      "OLD_OFFICE_Belt": {
+        "default": "#24201E",
+        "metal": false
+      },
+      "OLD_OFFICE_Buckle": {
+        "default": "#C6C6CC",
+        "metal": true
+      },
+      "OLD_OFFICE_Socks": {
+        "default": "#28282E",
+        "metal": false
+      },
+      "OLD_OFFICE_Shoes": {
+        "default": "#1E1C1C",
+        "metal": false
+      },
+      "OLD_OFFICE_Shoe_Sole": {
+        "default": "#2E2824",
+        "metal": false
+      },
+      "OLD_OFFICE_Glasses": {
+        "default": "#18181A",
+        "metal": false
+      },
+      "OLD_OFFICE_Hair": {
+        "default": "#5A402E",
+        "metal": false
+      },
+      "OLD_OFFICE_HairPart": {
+        "default": "#3C2A1E",
+        "metal": false
+      },
+      "OLD_OFFICE_Lanyard": {
+        "default": "#285CBA",
+        "metal": false
+      },
+      "OLD_OFFICE_Clip": {
+        "default": "#C4C6CC",
+        "metal": true
+      },
+      "OLD_OFFICE_Badge": {
+        "default": "#F8F8F4",
+        "metal": false
+      },
+      "OLD_OFFICE_Badge_Stripe": {
+        "default": "#285CBA",
+        "metal": false
+      },
+      "OLD_OFFICE_Badge_Photo": {
+        "default": "#ECAA80",
+        "metal": false
+      },
+      "OLD_OFFICE_Badge_Line": {
+        "default": "#3C3E46",
+        "metal": false
+      },
+      "OLD_OFFICE_EyeBags": {
+        "default": "#A88292",
+        "metal": false
+      },
+      "OLD_OFFICE_Cup": {
+        "default": "#F6F4EE",
+        "metal": false
+      },
+      "OLD_OFFICE_Cup_Sleeve": {
+        "default": "#966840",
+        "metal": false
+      },
+      "OLD_OFFICE_Cup_Lid": {
+        "default": "#282422",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "OLD_OFFICE_Shirt": "#F2F2EE",
+        "OLD_OFFICE_Tie": "#98242A",
+        "OLD_OFFICE_Trousers": "#2A2E3A",
+        "OLD_OFFICE_Shoes": "#482E20",
+        "OLD_OFFICE_Lanyard": "#C42830",
+        "OLD_OFFICE_Badge_Stripe": "#C42830",
+        "OLD_OFFICE_Cup_Lid": "#F6F4EE",
+        "OLD_OFFICE_Cup_Sleeve": "#3C7850"
+      },
+      {
+        "OLD_OFFICE_Shirt": "#EAC6CC",
+        "OLD_OFFICE_Tie": "#3E3E42",
+        "OLD_OFFICE_Trousers": "#706656",
+        "OLD_OFFICE_Lanyard": "#2A8C60",
+        "OLD_OFFICE_Badge_Stripe": "#2A8C60",
+        "OLD_OFFICE_Cup": "#E8CEA0",
+        "OLD_OFFICE_Cup_Sleeve": "#E8CEA0",
+        "OLD_OFFICE_Cup_Lid": "#F6F4EE"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 15740,
+  "part_triangles": {
+    "OLD_OFFICE_Shirt": 1568,
+    "Skin_Head": 1088,
+    "OLD_OFFICE_Hair": 1024,
+    "OLD_OFFICE_Shoe_Upper": 1000,
+    "OLD_OFFICE_Trousers": 816,
+    "OLD_OFFICE_Shoe_Sole": 672,
+    "OLD_OFFICE_Glasses_Rim": 624,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "OLD_OFFICE_Badge": 516,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "OLD_OFFICE_Tie_Blade": 376,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "OLD_OFFICE_Collar": 296,
+    "Skin_Nose": 288,
+    "OLD_OFFICE_Socks": 288,
+    "OLD_OFFICE_Belt": 260,
+    "OLD_OFFICE_EyeBag": 248,
+    "OLD_OFFICE_Lanyard": 216,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "OLD_OFFICE_Glasses_Temple": 96,
+    "OLD_OFFICE_Tie_Knot": 60,
+    "OLD_OFFICE_BadgeStripe": 38,
+    "OLD_OFFICE_Glasses_Bridge": 36,
+    "OLD_OFFICE_BadgePhoto": 22,
+    "OLD_OFFICE_Buckle": 12,
+    "OLD_OFFICE_Clip": 12,
+    "OLD_OFFICE_BadgeLine": 6,
+    "OLD_OFFICE_HairPart": 2
+  }
+}

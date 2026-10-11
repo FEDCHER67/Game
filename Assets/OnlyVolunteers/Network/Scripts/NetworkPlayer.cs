@@ -4,6 +4,7 @@ using FishNet.Component.Transforming;
 using FishNet.Object;
 using FishNet.Transporting;
 using KinematicCharacterController.Examples;
+using OnlyVolunteers.Phone;
 using OnlyVolunteers.Player;
 using OnlyVolunteers.Player.Debugging;
 using OnlyVolunteers.Player.Physics;
@@ -23,9 +24,12 @@ namespace OnlyVolunteers.Network
         private Transform visualHead;
         private GameObject localHud;
         private GameObject localCrosshair;
+        private PhoneController phone;
         private float nextViewSend;
 
         public bool LocalControlEnabled => input != null && input.enabled;
+        // The phone occupies the hands: no grabbing while it is out.
+        public bool HandsBusy => phone != null && phone.IsOpen;
         public Camera ViewCamera => viewCamera;
         public Vector3 MotorPosition => character != null && character.Motor != null
             ? character.Motor.transform.position : transform.position;
@@ -60,6 +64,8 @@ namespace OnlyVolunteers.Network
                 localHud.AddComponent<PhysicsDiagnosticsHud>();
                 localCrosshair = new GameObject("[Network] Crosshair");
                 localCrosshair.AddComponent<TestCrosshairHud>();
+                phone = PhoneController.Create(viewCamera, input);
+                phone.OpenChanged += open => { if (localCrosshair != null) localCrosshair.SetActive(!open); };
                 NetworkSession.Active?.LocalPlayerChanged(this);
             }
             else
@@ -80,6 +86,7 @@ namespace OnlyVolunteers.Network
             SetLocalControl(false);
             if (localHud != null) Destroy(localHud);
             if (localCrosshair != null) Destroy(localCrosshair);
+            if (phone != null) Destroy(phone.gameObject);
             base.OnStopClient();
         }
 

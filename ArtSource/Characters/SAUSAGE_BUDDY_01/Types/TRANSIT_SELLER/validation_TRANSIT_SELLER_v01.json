@@ -1,0 +1,330 @@
+{
+  "asset": "SAUSAGE_BUDDY_TRANSIT_SELLER_v01",
+  "variant": "TRANSIT_SELLER",
+  "height_m": 1.748,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9916,
+      "vertices": 5135,
+      "materials": [
+        "TRANSIT_SELLER_Tee",
+        "TRANSIT_SELLER_Apron",
+        "TRANSIT_SELLER_Apron_Pocket",
+        "TRANSIT_SELLER_Apron_Strap",
+        "TRANSIT_SELLER_Stains",
+        "TRANSIT_SELLER_Trousers",
+        "TRANSIT_SELLER_Socks",
+        "TRANSIT_SELLER_Sandals",
+        "TRANSIT_SELLER_Sandal_Strap",
+        "TRANSIT_SELLER_Hair",
+        "TRANSIT_SELLER_Beard",
+        "TRANSIT_SELLER_Pencil",
+        "TRANSIT_SELLER_Pencil_Tip"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0766
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0766,
+      "max": 0.0766
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0766
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0833
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Толстый продавец с бородой",
+    "group": "Переход",
+    "body": {
+      "belly": 1.0
+    },
+    "idle_arm_down_deg": 66.0,
+    "face_defaults": {
+      "Happy": 0.35
+    },
+    "slots": {
+      "TRANSIT_SELLER_Tee": {
+        "default": "#84A8CE",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Apron": {
+        "default": "#ECE6D6",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Apron_Pocket": {
+        "default": "#D6CEBA",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Apron_Strap": {
+        "default": "#CEC4AC",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Stains": {
+        "default": "#B0885C",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Trousers": {
+        "default": "#605E5A",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Socks": {
+        "default": "#E8E6DE",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Sandals": {
+        "default": "#70462A",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Sandal_Strap": {
+        "default": "#583620",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Beard": {
+        "default": "#30241E",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Hair": {
+        "default": "#30241E",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Pencil": {
+        "default": "#ECBC34",
+        "metal": false
+      },
+      "TRANSIT_SELLER_Pencil_Tip": {
+        "default": "#DEBE8C",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "TRANSIT_SELLER_Tee": "#CC4A42",
+        "TRANSIT_SELLER_Apron": "#3E5C98",
+        "TRANSIT_SELLER_Apron_Pocket": "#344E84",
+        "TRANSIT_SELLER_Apron_Strap": "#2E4678",
+        "TRANSIT_SELLER_Trousers": "#34363E",
+        "TRANSIT_SELLER_Socks": "#78787C",
+        "TRANSIT_SELLER_Beard": "#764026",
+        "TRANSIT_SELLER_Hair": "#764026"
+      },
+      {
+        "TRANSIT_SELLER_Tee": "#ECEAE2",
+        "TRANSIT_SELLER_Apron": "#962834",
+        "TRANSIT_SELLER_Apron_Pocket": "#80222C",
+        "TRANSIT_SELLER_Apron_Strap": "#761E28",
+        "TRANSIT_SELLER_Trousers": "#76664E",
+        "TRANSIT_SELLER_Sandals": "#28282C",
+        "TRANSIT_SELLER_Sandal_Strap": "#1E1E22",
+        "TRANSIT_SELLER_Beard": "#969490",
+        "TRANSIT_SELLER_Hair": "#969490"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 17468,
+  "part_triangles": {
+    "TSELL_Beard": 1800,
+    "TSELL_Apron": 1424,
+    "TSELL_Tee": 1248,
+    "Skin_Head": 1088,
+    "TSELL_Sandal_Foot_Upper": 1000,
+    "TSELL_Trousers": 880,
+    "TSELL_Sandal_Foot_Sole": 672,
+    "TSELL_Hair": 588,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "TSELL_Socks": 288,
+    "TSELL_Pocket": 272,
+    "TSELL_Sandal_ToeStrap": 256,
+    "TSELL_Sandal_InstepStrap": 256,
+    "TSELL_Mustache": 240,
+    "TSELL_Apron_Ties": 236,
+    "TSELL_Apron_BowLoop": 200,
+    "Brow": 168,
+    "TSELL_Sandal_HeelStrap": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "TSELL_Apron_NeckStrap": 104,
+    "TSELL_Apron_BowKnot": 100,
+    "TSELL_Apron_BowTail": 72,
+    "TSELL_Stain": 62,
+    "TSELL_Pencil_Body": 24,
+    "TSELL_Pencil_Tip": 24,
+    "TSELL_PocketSeam": 2
+  }
+}

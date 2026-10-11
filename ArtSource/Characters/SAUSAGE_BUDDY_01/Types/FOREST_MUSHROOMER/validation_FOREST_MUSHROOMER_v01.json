@@ -1,0 +1,359 @@
+{
+  "asset": "SAUSAGE_BUDDY_FOREST_MUSHROOMER_v01",
+  "variant": "FOREST_MUSHROOMER",
+  "height_m": 1.827,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 6538,
+      "vertices": 3422,
+      "materials": [
+        "FOREST_MUSHROOMER_Anorak",
+        "FOREST_MUSHROOMER_Anorak_Dark",
+        "FOREST_MUSHROOMER_Zip",
+        "FOREST_MUSHROOMER_Trousers",
+        "FOREST_MUSHROOMER_Boots",
+        "FOREST_MUSHROOMER_Boots_Sole",
+        "FOREST_MUSHROOMER_Beanie",
+        "FOREST_MUSHROOMER_Pompom",
+        "FOREST_MUSHROOMER_Hair"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props": {
+      "triangles": 2460,
+      "vertices": 1293,
+      "materials": [
+        "FOREST_MUSHROOMER_Basket",
+        "FOREST_MUSHROOMER_Basket_Dark",
+        "FOREST_MUSHROOMER_Moss",
+        "FOREST_MUSHROOMER_Stem",
+        "FOREST_MUSHROOMER_Gills",
+        "FOREST_MUSHROOMER_Cap_Brown",
+        "FOREST_MUSHROOMER_Cap_Red",
+        "FOREST_MUSHROOMER_Cap_Dots"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.2066
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.2066,
+      "max": 0.2066
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.2066
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Грибник",
+    "group": "Лесная полоса",
+    "body": {
+      "belly": 0.4
+    },
+    "idle_arm_down_deg": 74.0,
+    "face_defaults": {
+      "Happy": 0.35
+    },
+    "slots": {
+      "FOREST_MUSHROOMER_Anorak": {
+        "default": "#7E7A4E",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Anorak_Dark": {
+        "default": "#64603C",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Zip": {
+        "default": "#343228",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Trousers": {
+        "default": "#5C5E4A",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Boots": {
+        "default": "#242628",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Boots_Sole": {
+        "default": "#18181A",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Beanie": {
+        "default": "#3C5C9C",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Pompom": {
+        "default": "#EEECE4",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Hair": {
+        "default": "#CECCC6",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Basket": {
+        "default": "#C49656",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Basket_Dark": {
+        "default": "#966A38",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Moss": {
+        "default": "#5C783C",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Cap_Red": {
+        "default": "#D62822",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Cap_Dots": {
+        "default": "#FAF8F0",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Stem": {
+        "default": "#F4ECD6",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Gills": {
+        "default": "#ECDEBE",
+        "metal": false
+      },
+      "FOREST_MUSHROOMER_Cap_Brown": {
+        "default": "#804C28",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "FOREST_MUSHROOMER_Anorak": "#46543E",
+        "FOREST_MUSHROOMER_Anorak_Dark": "#364230",
+        "FOREST_MUSHROOMER_Trousers": "#3C4236",
+        "FOREST_MUSHROOMER_Boots": "#365436",
+        "FOREST_MUSHROOMER_Beanie": "#B03430",
+        "FOREST_MUSHROOMER_Pompom": "#ECD65C"
+      },
+      {
+        "FOREST_MUSHROOMER_Anorak": "#9C8E6E",
+        "FOREST_MUSHROOMER_Anorak_Dark": "#807256",
+        "FOREST_MUSHROOMER_Trousers": "#40424A",
+        "FOREST_MUSHROOMER_Boots": "#2A3452",
+        "FOREST_MUSHROOMER_Beanie": "#E8C446",
+        "FOREST_MUSHROOMER_Pompom": "#3C5C9C",
+        "FOREST_MUSHROOMER_Basket": "#AC8048"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16550,
+  "part_triangles": {
+    "FOREST_MUSHROOMER_Jacket": 1632,
+    "Skin_Head": 1088,
+    "FOREST_MUSHROOMER_Boot_Shoe_Upper": 1000,
+    "FOREST_MUSHROOMER_Trousers": 688,
+    "FOREST_MUSHROOMER_Boot_Shoe_Sole": 672,
+    "FOREST_MUSHROOMER_Hair": 588,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "FOREST_MUSHROOMER_Bolete_Cap": 504,
+    "Skin_Arm": 480,
+    "FOREST_MUSHROOMER_Beanie": 480,
+    "FOREST_MUSHROOMER_Boot_Shaft": 448,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "FOREST_MUSHROOMER_BigAgaric_Dot": 378,
+    "FOREST_MUSHROOMER_Hood": 356,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "FOREST_MUSHROOMER_BigAgaric_Cap": 280,
+    "FOREST_MUSHROOMER_Basket": 240,
+    "FOREST_MUSHROOMER_Mustache": 240,
+    "FOREST_MUSHROOMER_BasketRim": 192,
+    "FOREST_MUSHROOMER_Bolete_Stem": 192,
+    "FOREST_MUSHROOMER_BasketHandle": 176,
+    "Brow": 168,
+    "FOREST_MUSHROOMER_HoodPouch": 168,
+    "FOREST_MUSHROOMER_Agaric_Cap": 168,
+    "FOREST_MUSHROOMER_Pompom": 168,
+    "Shine": 160,
+    "FOREST_MUSHROOMER_Agaric_Dot": 126,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "FOREST_MUSHROOMER_Moss": 96,
+    "FOREST_MUSHROOMER_Pouch": 84,
+    "FOREST_MUSHROOMER_BigAgaric_Stem": 60,
+    "FOREST_MUSHROOMER_Agaric_Stem": 48,
+    "FOREST_MUSHROOMER_PouchFlap": 12,
+    "FOREST_MUSHROOMER_Zip": 2
+  }
+}

@@ -70,11 +70,16 @@ def head_capsule(skin):
     return weigh(ob, lambda p: chain(p.z, [(1.12, 'Spine2'), (1.20, 'Neck'), (1.26, 'Head')]))
 
 
+# Ears as on NPC_BASE_01, scaled to this head: a smooth ellipsoid half sunk into the side of the head that sticks out
+# ~3 cm (thin front-to-back, tall), read as a half-oval in the silhouette. The old flat ear with a separate inner
+# ellipsoid (v01-v04) poked through itself with a ragged edge (TASK-000241).
+EAR_C, EAR_R = (0.140, 0.008, 1.470), (0.034, 0.025, 0.054)
+
+
 def head_features(skin, nose_mat, inner_mat):
     parts = [G.ellipsoid('Skin_Nose', NOSE_C, NOSE_R, nose_mat, **G.res('nose', seg=20, rings=12))]
     for s in (1, -1):
-        parts.append(G.ellipsoid(f'Skin_Ear_{s}', (s * 0.138, 0.006, 1.468), (0.027, 0.038, 0.051), skin, **G.res('ear', seg=16, rings=10)))
-        parts.append(G.ellipsoid(f'Skin_EarInner_{s}', (s * 0.158, 0.004, 1.466), (0.008, 0.023, 0.033), inner_mat, **G.res('ear_inner', seg=12, rings=8)))
+        parts.append(G.ellipsoid(f'Skin_Ear_{s}', (s * EAR_C[0], EAR_C[1], EAR_C[2]), EAR_R, skin, **G.res('ear', seg=16, rings=10)))
     for o in parts:
         weigh(o, lambda p: {'Head': 1.0})
     return parts
@@ -168,7 +173,7 @@ def build_body(skin, nose_mat, inner_mat):
     return body
 
 # ------------------------------------------------------------------ face (separate object with expression shape keys)
-EXPRESSIONS = ('Basis', 'Blink', 'Surprised', 'Worried', 'Happy')
+EXPRESSIONS = ('Basis', 'Blink', 'Blink_L', 'Blink_R', 'Surprised', 'Worried', 'Happy')
 
 
 def head_surface_y(x, z, extra=0.0):
@@ -187,11 +192,13 @@ def face_parts(expr, mats):
     """Same topology for every expression; only positions change."""
     white, rim, pupil, shine, brow_m, mouth_m = mats
     eye_scale = {'Surprised': 1.12, 'Happy': 1.0}.get(expr, 1.0)
-    squash = {'Blink': 0.10, 'Happy': 0.72}.get(expr, 1.0)
     pupil_scale = {'Surprised': 0.72, 'Worried': 0.88}.get(expr, 1.0)
     pupil_dz = {'Worried': 0.006, 'Surprised': 0.0}.get(expr, -0.002)
     parts = []
     for s in (1, -1):
+        # Blink_L / Blink_R close one eye (left = +X); used for one-eyed peeking.
+        one_eye = (expr == 'Blink_L' and s > 0) or (expr == 'Blink_R' and s < 0)
+        squash = 0.10 if (expr == 'Blink' or one_eye) else {'Happy': 0.72}.get(expr, 1.0)
         cx, cy, cz = EYE_C
         rx, ry, rz = (r * eye_scale for r in EYE_R)
         rz_eff = rz * squash
@@ -218,22 +225,26 @@ def face_parts(expr, mats):
             z = 1.636 + arch + lift + tilt * (1 - t) - 0.004 * t
             pts.append(Vector((x, head_surface_y(x, z, 0.005), z)))
         parts.append(G.tube(f'Brow_{s}', pts, lambda i, n: 0.0074 + 0.0050 * math.sin(math.pi * i / (n - 1)), brow_m, **G.res('brow', seg=8), frame_up=(0, -1, 0)))
-    # Mouth: smile line, an "O" when surprised, a wobbly frown when worried.
+    # Mouth: one closed contour in every expression (a line is a contour squeezed flat), so mixing two
+    # expressions opens or closes the mouth instead of tearing an open line into a broken "C" (TASK-000243).
+    # Contour parameter th: 0 = left corner, pi/2 = top, pi = right corner, 3pi/2 = bottom.
+    def line_mouth(f, x0, x1):
+        def at(th):
+            u = (1 - math.cos(th)) / 2
+            return x0 + (x1 - x0) * u, f(u) + 0.0006 * math.sin(th)
+        return at
+    if expr == 'Surprised':
+        at = lambda th: (-0.016 * math.cos(th), 1.405 + 0.019 * math.sin(th))
+    elif expr == 'Worried':
+        at = line_mouth(lambda t: 1.408 - 0.008 * math.cos(2 * math.pi * t) * 0.6 - 0.006 * (1 - abs(2 * t - 1)), -0.030, 0.030)
+    elif expr == 'Happy':
+        at = line_mouth(lambda t: 1.402 + 0.030 * (2 * t - 1) ** 2, -0.045, 0.045)
+    else:
+        at = line_mouth(lambda t: 1.404 + 0.010 * (2 * t - 1) ** 2 + (0.004 * (t - 0.85) / 0.15 if t > 0.85 else 0.0), -0.036, 0.034)
+    n = 24
     pts = []
-    for k in range(13):
-        t = k / 12
-        if expr == 'Surprised':
-            a = 2 * math.pi * t + math.pi / 2
-            x, z = 0.016 * math.cos(a), 1.405 + 0.019 * math.sin(a)
-        elif expr == 'Worried':
-            x = -0.030 + 0.060 * t
-            z = 1.408 - 0.008 * math.cos(2 * math.pi * t) * 0.6 - 0.006 * (1 - abs(2 * t - 1))
-        elif expr == 'Happy':
-            x = -0.045 + 0.090 * t
-            z = 1.402 + 0.030 * (2 * t - 1) ** 2
-        else:
-            x = -0.036 + 0.070 * t
-            z = 1.404 + 0.010 * (2 * t - 1) ** 2 + (0.004 * (t - 0.85) / 0.15 if t > 0.85 else 0.0)
+    for k in range(n + 2):          # two extra points run over the start: the ring closes without a gap
+        x, z = at(2 * math.pi * k / n)
         pts.append(Vector((x, head_surface_y(x, z, 0.0025), z)))
     parts.append(G.tube('Mouth', pts, 0.0032, mouth_m, **G.res('mouth', seg=8), frame_up=(0, -1, 0)))
     return parts

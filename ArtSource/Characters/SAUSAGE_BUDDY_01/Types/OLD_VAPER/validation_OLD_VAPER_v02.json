@@ -1,0 +1,376 @@
+{
+  "asset": "SAUSAGE_BUDDY_OLD_VAPER_v02",
+  "variant": "OLD_VAPER",
+  "height_m": 1.818,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8935,
+      "vertices": 4755,
+      "materials": [
+        "OLD_VAPER_Hoodie",
+        "OLD_VAPER_Hoodie_Rib",
+        "OLD_VAPER_Print",
+        "OLD_VAPER_Cords",
+        "OLD_VAPER_Jeans",
+        "OLD_VAPER_Jeans_Cuff",
+        "OLD_VAPER_Rip",
+        "Buddy_Skin",
+        "OLD_VAPER_Shoe_Upper",
+        "OLD_VAPER_Shoe_Sole",
+        "OLD_VAPER_Shoe_Lace",
+        "OLD_VAPER_Shoe_Accent",
+        "OLD_VAPER_Cap",
+        "OLD_VAPER_Cap_Peak",
+        "OLD_VAPER_Hair",
+        "OLD_VAPER_Snap",
+        "OLD_VAPER_Goatee"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_RightHand": {
+      "triangles": 256,
+      "vertices": 134,
+      "materials": [
+        "OLD_VAPER_Vape",
+        "OLD_VAPER_Vape_Tip",
+        "OLD_VAPER_Vape_Light"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0016,
+    "Panic_Run_Loop": 0.0552,
+    "Panic_TurnFlee": 0.0539,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0495,
+      "max": 0.0552
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": 0.0003,
+      "max": 0.2065
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.2065,
+      "max": 0.2065
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": 0.0004,
+      "max": 0.2065
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.031,
+      "max": 0.0552
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.272,
+      "max": 0.0016
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0305,
+      "max": 0.0589
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.031,
+      "max": 0.0742
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0742,
+      "max": 0.0742
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2195,
+      "max": 0.0552
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Вейпер",
+    "group": "Старый город",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 74.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {
+      "Happy": 0.2,
+      "Blink": 0.3
+    },
+    "slots": {
+      "OLD_VAPER_Hoodie": {
+        "default": "#7A52BA",
+        "metal": false
+      },
+      "OLD_VAPER_Hoodie_Rib": {
+        "default": "#6844A2",
+        "metal": false
+      },
+      "OLD_VAPER_Cords": {
+        "default": "#F6F4EE",
+        "metal": false
+      },
+      "OLD_VAPER_Print": {
+        "default": "#96F0DC",
+        "metal": false
+      },
+      "OLD_VAPER_Jeans": {
+        "default": "#5C80B6",
+        "metal": false
+      },
+      "OLD_VAPER_Jeans_Cuff": {
+        "default": "#8CACD6",
+        "metal": false
+      },
+      "OLD_VAPER_Rip": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "OLD_VAPER_Shoe_Upper": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "OLD_VAPER_Shoe_Sole": {
+        "default": "#ECEAE4",
+        "metal": false
+      },
+      "OLD_VAPER_Shoe_Lace": {
+        "default": "#F04078",
+        "metal": false
+      },
+      "OLD_VAPER_Shoe_Accent": {
+        "default": "#F04078",
+        "metal": false
+      },
+      "OLD_VAPER_Cap": {
+        "default": "#1E1E22",
+        "metal": false
+      },
+      "OLD_VAPER_Cap_Peak": {
+        "default": "#F04078",
+        "metal": false
+      },
+      "OLD_VAPER_Snap": {
+        "default": "#101012",
+        "metal": false
+      },
+      "OLD_VAPER_Hair": {
+        "default": "#5C422E",
+        "metal": false
+      },
+      "OLD_VAPER_Goatee": {
+        "default": "#5C422E",
+        "metal": false
+      },
+      "OLD_VAPER_Vape": {
+        "default": "#3CD2C8",
+        "metal": true
+      },
+      "OLD_VAPER_Vape_Tip": {
+        "default": "#18181C",
+        "metal": false
+      },
+      "OLD_VAPER_Vape_Light": {
+        "default": "#FF5AAA",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "OLD_VAPER_Hoodie": "#242428",
+        "OLD_VAPER_Hoodie_Rib": "#1C1C20",
+        "OLD_VAPER_Print": "#F6783C",
+        "OLD_VAPER_Jeans": "#383C48",
+        "OLD_VAPER_Jeans_Cuff": "#545864",
+        "OLD_VAPER_Cap": "#F04078",
+        "OLD_VAPER_Cap_Peak": "#1E1E22",
+        "OLD_VAPER_Vape": "#F6783C"
+      },
+      {
+        "OLD_VAPER_Hoodie": "#96DEC4",
+        "OLD_VAPER_Hoodie_Rib": "#7EC8AE",
+        "OLD_VAPER_Print": "#7A52BA",
+        "OLD_VAPER_Jeans": "#282C34",
+        "OLD_VAPER_Jeans_Cuff": "#40444E",
+        "OLD_VAPER_Cap": "#F6F6F2",
+        "OLD_VAPER_Cap_Peak": "#3CD2C8",
+        "OLD_VAPER_Shoe_Accent": "#3C8CE6",
+        "OLD_VAPER_Vape": "#F04078"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16743,
+  "part_triangles": {
+    "TRANSIT_VAPER_Hoodie": 2016,
+    "Skin_Head": 1088,
+    "TRANSIT_VAPER_Shoe_Upper": 1000,
+    "TRANSIT_VAPER_Jeans": 880,
+    "TRANSIT_VAPER_Hood": 860,
+    "TRANSIT_VAPER_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "TRANSIT_VAPER_Hair": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "TRANSIT_VAPER_Pocket": 436,
+    "TRANSIT_VAPER_Crown": 416,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "TRANSIT_VAPER_HeelTab": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "TRANSIT_VAPER_HoodPouch": 288,
+    "TRANSIT_VAPER_Lace": 256,
+    "TRANSIT_VAPER_CapPeak": 256,
+    "TRANSIT_VAPER_Cloud": 200,
+    "TRANSIT_VAPER_RipRim": 198,
+    "Brow": 168,
+    "Shine": 160,
+    "TRANSIT_VAPER_Rip": 126,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "TRANSIT_VAPER_Vape": 108,
+    "Prop_Phone": 108,
+    "TRANSIT_VAPER_Vape_Led": 100,
+    "TRANSIT_VAPER_CapButton": 100,
+    "TRANSIT_VAPER_Cord": 96,
+    "TRANSIT_VAPER_Goatee": 80,
+    "TRANSIT_VAPER_SnapHole": 51,
+    "TRANSIT_VAPER_Vape_Tip": 48,
+    "TRANSIT_VAPER_PocketSlot": 44,
+    "TRANSIT_VAPER_Thread": 18,
+    "TRANSIT_VAPER_SnapStrap": 12
+  }
+}

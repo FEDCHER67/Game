@@ -1,0 +1,330 @@
+{
+  "asset": "SAUSAGE_BUDDY_PROM_SAILOR_v01",
+  "variant": "PROM_SAILOR",
+  "height_m": 1.799,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9708,
+      "vertices": 5047,
+      "materials": [
+        "PROM_SAILOR_Tel",
+        "PROM_SAILOR_Tel_Stripe",
+        "PROM_SAILOR_Coat",
+        "PROM_SAILOR_Brass",
+        "PROM_SAILOR_Trousers",
+        "PROM_SAILOR_Boots",
+        "PROM_SAILOR_Boots_Sole",
+        "PROM_SAILOR_Cap",
+        "PROM_SAILOR_CapBand",
+        "PROM_SAILOR_Visor",
+        "PROM_SAILOR_Gold",
+        "PROM_SAILOR_Hair",
+        "PROM_SAILOR_Beard"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_Head": {
+      "triangles": 108,
+      "vertices": 63,
+      "materials": [
+        "PROM_SAILOR_Pipe"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.113
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.1053,
+      "max": 0.113
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.113
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Морской волк (боцман)",
+    "group": "Промзона",
+    "body": {
+      "belly": 0.6
+    },
+    "idle_arm_down_deg": 70.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {
+      "Happy": 0.3,
+      "Blink": 0.35
+    },
+    "slots": {
+      "PROM_SAILOR_Tel": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "PROM_SAILOR_Tel_Stripe": {
+        "default": "#22346E",
+        "metal": false
+      },
+      "PROM_SAILOR_Coat": {
+        "default": "#1A1E2C",
+        "metal": false
+      },
+      "PROM_SAILOR_Brass": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "PROM_SAILOR_Trousers": {
+        "default": "#1A1E2C",
+        "metal": false
+      },
+      "PROM_SAILOR_Boots": {
+        "default": "#141416",
+        "metal": false
+      },
+      "PROM_SAILOR_Boots_Sole": {
+        "default": "#1E1E1E",
+        "metal": false
+      },
+      "PROM_SAILOR_Cap": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "PROM_SAILOR_CapBand": {
+        "default": "#1A1E2C",
+        "metal": false
+      },
+      "PROM_SAILOR_Visor": {
+        "default": "#101012",
+        "metal": false
+      },
+      "PROM_SAILOR_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "PROM_SAILOR_Beard": {
+        "default": "#C8C4BC",
+        "metal": false
+      },
+      "PROM_SAILOR_Hair": {
+        "default": "#C8C4BC",
+        "metal": false
+      },
+      "PROM_SAILOR_Pipe": {
+        "default": "#6E4022",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "PROM_SAILOR_Coat": "#282C28",
+        "PROM_SAILOR_Trousers": "#282C28",
+        "PROM_SAILOR_CapBand": "#282C28"
+      },
+      {
+        "PROM_SAILOR_Tel_Stripe": "#B42828",
+        "PROM_SAILOR_Cap": "#1A1E2C",
+        "PROM_SAILOR_Beard": "#965A32",
+        "PROM_SAILOR_Hair": "#965A32"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 17368,
+  "part_triangles": {
+    "PROM_SAILOR_Beard": 1800,
+    "PROM_SAILOR_Coat": 1524,
+    "PROM_SAILOR_Tel": 1280,
+    "PROM_SAILOR_Hair": 1152,
+    "Skin_Head": 1088,
+    "PROM_SAILOR_Boot_Shoe_Upper": 1000,
+    "PROM_SAILOR_Trousers": 816,
+    "PROM_SAILOR_Boot_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "PROM_SAILOR_Cap_Crown": 544,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "PROM_SAILOR_Collar": 296,
+    "Skin_Nose": 288,
+    "PROM_SAILOR_Cap_Visor": 216,
+    "PROM_SAILOR_Cap_Cord": 180,
+    "Brow": 168,
+    "PROM_SAILOR_Cap_Cockade": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "PROM_SAILOR_Pipe_Bowl": 60,
+    "PROM_SAILOR_Btn": 60,
+    "PROM_SAILOR_Pipe_Stem": 48
+  }
+}

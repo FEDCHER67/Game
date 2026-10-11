@@ -1,0 +1,336 @@
+{
+  "asset": "SAUSAGE_BUDDY_BAD_GOPNIK_v01",
+  "variant": "BAD_GOPNIK",
+  "height_m": 1.784,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 6516,
+      "vertices": 3456,
+      "materials": [
+        "BAD_GOPNIK_Jacket",
+        "BAD_GOPNIK_Jacket_Rib",
+        "BAD_GOPNIK_Stripes",
+        "BAD_GOPNIK_Zip",
+        "BAD_GOPNIK_Pants",
+        "BAD_GOPNIK_Pants_Rib",
+        "BAD_GOPNIK_Socks",
+        "BAD_GOPNIK_Shoes",
+        "BAD_GOPNIK_Shoe_Sole",
+        "BAD_GOPNIK_Cap",
+        "BAD_GOPNIK_Hair",
+        "BAD_GOPNIK_Husk"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props": {
+      "triangles": 840,
+      "vertices": 436,
+      "materials": [
+        "BAD_GOPNIK_Bag",
+        "BAD_GOPNIK_Seeds"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0009,
+    "Panic_Run_Loop": 0.0782,
+    "Panic_TurnFlee": 0.0909,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0502,
+      "max": 0.0909
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.069
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.069,
+      "max": 0.069
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.069
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.033,
+      "max": 0.0909
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2727,
+      "max": 0.0009
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0327,
+      "max": 0.0908
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0299,
+      "max": 0.0945
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0945,
+      "max": 0.0945
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.157,
+      "max": 0.0909
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Дворовый чемпион / гопник",
+    "group": "Неблагополучный район",
+    "body": {
+      "thin": 0.5
+    },
+    "idle_arm_down_deg": 74.0,
+    "face_defaults": {
+      "Blink": 0.25,
+      "Happy": 0.15
+    },
+    "slots": {
+      "BAD_GOPNIK_Jacket": {
+        "default": "#1E202C",
+        "metal": false
+      },
+      "BAD_GOPNIK_Jacket_Rib": {
+        "default": "#161820",
+        "metal": false
+      },
+      "BAD_GOPNIK_Stripes": {
+        "default": "#F2F2EE",
+        "metal": false
+      },
+      "BAD_GOPNIK_Zip": {
+        "default": "#C4C4CA",
+        "metal": true
+      },
+      "BAD_GOPNIK_Pants": {
+        "default": "#1E202C",
+        "metal": false
+      },
+      "BAD_GOPNIK_Pants_Rib": {
+        "default": "#161820",
+        "metal": false
+      },
+      "BAD_GOPNIK_Socks": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "BAD_GOPNIK_Shoes": {
+        "default": "#121214",
+        "metal": false
+      },
+      "BAD_GOPNIK_Shoe_Sole": {
+        "default": "#221E1C",
+        "metal": false
+      },
+      "BAD_GOPNIK_Cap": {
+        "default": "#48484C",
+        "metal": false
+      },
+      "BAD_GOPNIK_Hair": {
+        "default": "#362C26",
+        "metal": false
+      },
+      "BAD_GOPNIK_Husk": {
+        "default": "#222020",
+        "metal": false
+      },
+      "BAD_GOPNIK_Bag": {
+        "default": "#C6A26E",
+        "metal": false
+      },
+      "BAD_GOPNIK_Seeds": {
+        "default": "#262422",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "BAD_GOPNIK_Jacket": "#2646A2",
+        "BAD_GOPNIK_Jacket_Rib": "#1C347C",
+        "BAD_GOPNIK_Pants": "#2646A2",
+        "BAD_GOPNIK_Pants_Rib": "#1C347C",
+        "BAD_GOPNIK_Cap": "#766654"
+      },
+      {
+        "BAD_GOPNIK_Jacket": "#A8222A",
+        "BAD_GOPNIK_Jacket_Rib": "#801A20",
+        "BAD_GOPNIK_Pants": "#1E2024",
+        "BAD_GOPNIK_Pants_Rib": "#16181C",
+        "BAD_GOPNIK_Cap": "#28282C",
+        "BAD_GOPNIK_Shoes": "#E8E8E4"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 14908,
+  "part_triangles": {
+    "GOP_Jacket": 2016,
+    "Skin_Head": 1088,
+    "GOP_Shoe_Upper": 1000,
+    "GOP_Pants": 880,
+    "GOP_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "GOP_Hair": 512,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "GOP_Seeds_Seed": 384,
+    "GOP_Cap_Crown": 352,
+    "Pupil": 336,
+    "GOP_Seeds_Cone": 336,
+    "Skin_Torso": 320,
+    "GOP_Collar": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "GOP_Socks": 288,
+    "GOP_Cap_Peak": 216,
+    "Brow": 168,
+    "Shine": 160,
+    "GOP_Husk": 128,
+    "GOP_Seeds_Mound": 120,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "GOP_Cap_Button": 100,
+    "GOP_ZipPull": 12,
+    "GOP_SleeveStripe": 8,
+    "GOP_LegStripe": 8,
+    "GOP_Zip": 2,
+    "GOP_CollarZip": 2
+  }
+}
