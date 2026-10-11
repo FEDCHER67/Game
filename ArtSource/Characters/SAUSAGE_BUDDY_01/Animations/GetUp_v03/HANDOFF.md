@@ -4,14 +4,18 @@ Task: re-author the Sausage Buddy get-ups **GetUp_FromBack_v03** and **GetUp_Fro
 «переделай сам подъём со спины, подъём с живота»). Funny, dizzy, cartoon get-ups with personality (a dumb comic sausage
 person waking from a knock-out), readable silhouettes, not silly-clown. Stopped at the lead's request at a logical point.
 
-## State in one paragraph
+## State (cloud pass 2026-10-07, branch `claude/anim-getups-v03-qfjqmr`)
 
-The authoring framework is written and verified; the two **lying start poses** (the ragdoll-blend contract) are authored,
-grounded on the real meshes and reviewed in renders; the **performances are not authored yet** (`make_back()` /
-`make_belly()` return a 6-frame hold of the start pose). No `.blend`/`.fbx` deliverable exists; `--final` is guarded by
-`getup_choreo_v03.READY = False`. Detailed beat sheets for both clips are in `getup_choreo_v03.py` (`BEATS_BACK`,
-`BEATS_BELLY`) and summarised below. A plain-JSON rig + skinned mesh proxy lets the pipeline run without Git LFS
-(verified: identical metrics to 1 µm).
+**Performances authored, reviewed in three passes, validated; `READY = True`.** See `README.md` for the beats, the
+numbers, the review log and the build commands. hipsStart: back (0, 0, 0.1429) m, belly (0, 0, 0.2015) m (belly
+changed by the head fix). Stable: back f67.25 (0.80), belly f61 (0.73). `validation_v03.json` passes for both
+clips (built from the no-LFS JSON rig/proxy). New files: `validate_getups_v03.py`, `render_previews_v03.py`,
+`make_manifest_v03.py`, `README.md`, `validation_v03.json`, `GetUp_From*_v03_authoring.json`,
+`getup_manifest_v03.json`. The binaries (.blend/.fbx/MP4) could not be pushed from the cloud (LFS); rebuild them
+locally with the README commands.
+
+Original handoff state (kept for history): the framework and the two lying start poses were verified; the
+performances were stubs.
 
 ## Files (all new, all in this folder)
 
@@ -132,11 +136,13 @@ thigh 0.37 m, shin 0.315 m, ankle 0.115 m, Idle hips 0.8211 m; hood weighted to 
 
 ## What still looks wrong / open items
 
-- Performances unauthored (the whole job). Start with blocking at the beat frames, review every 2nd frame from both
-  views, then splines/overlap, then the procedural layers.
-- Belly start: head 2.8 cm above the floor (add ~5° neck flexion). Back start: head rests 2.4 cm up on the hood
-  (intended "pillow"), hands 1–3 mm above the floor (fine).
-- Validation, preview rendering, contact sheets, README/manifest scripts still to write; model them on
+- DONE (cloud pass): performances authored; belly head fixed (neck +4°, cheek on the floor); planted hands now
+  mesh-measured at 1 mm (`plantL/plantR`, `HAND_CLEAR`). Back start: head still rests 2.4 cm up on the hood
+  (intended "pillow").
+- Open: local EEVEE previews/contact sheets from the LFS source, FBX bind check against the real v02 FBX (the
+  validator does it automatically when the file is not an LFS pointer), Unity ragdoll-blend playtest.
+- DONE: validation, preview rendering (+ contact sheets/onion skins in `render_previews_v03.py`), README and
+  manifest scripts. Originally: model them on
   `GetUp_Idle_v01/validate_getups.py`, `Previews/render_mp4_v02.py`, `contact_sheets.ps1` (+ bone-list identity vs the
   v02 FBX, hand/knee floor checks, hipsStart/Stable reporting). Review renders so far went to a local scratch folder,
   not the repo.
