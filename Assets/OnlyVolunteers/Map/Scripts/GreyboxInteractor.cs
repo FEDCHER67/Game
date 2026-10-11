@@ -19,7 +19,7 @@ namespace OnlyVolunteers.Map
     // F9 (offline test aid): pins the point under the crosshair at hand height, as if another player held it; F9 within
     // 0.25 m of a pin drops that pin, F9 at nothing drops all of them.
     // F10 (stage 9 A/B switch): whether the next NPC knocked down lies as the stage-1 capsule or as the 11-body ragdoll
-    // (NpcRagdoll.Mode; every Play session starts with the capsule). A ragdoll can be grabbed by any part: the hint names
+    // (NpcRagdoll.Mode; every Play session starts with the ragdoll). A ragdoll can be grabbed by any part: the hint names
     // the part (head, collar, arm, leg...), "— тяжело" on the pelvis and belly.
     // E does the most specific thing in reach, in this order: in the cargo bay next to the sliding door, its inside handle
     // (canon section 151); pick up an item (the item draws its own "— E" label); open/close the cargo door on that side

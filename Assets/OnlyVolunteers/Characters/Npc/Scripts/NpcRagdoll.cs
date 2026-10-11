@@ -64,9 +64,9 @@ namespace OnlyVolunteers.Characters.Npc
         private const string BoxName = "RagdollFootBox";
 
         /// <summary>F10 (GreyboxInteractor): the body the next free NPC gets when it goes down. Every Play session starts
-        /// with the capsule. The cargo bay loads, carries and ejects ragdolls (stage 9 step 2), but one player alone does not
-        /// yet get one in through the rear doors reliably (RagdollSmokeTest r6b): the default flips after Fedya's playtest.</summary>
-        public static NpcBodyMode Mode = NpcBodyMode.Capsule;
+        /// with the ragdoll (Fedya 2026-10-11: a knocked-out NPC must move part by part); F10 falls back to the stage-1
+        /// capsule. Known: one player alone does not yet get a ragdoll in through the rear doors reliably (RagdollSmokeTest r6b).</summary>
+        public static NpcBodyMode Mode = NpcBodyMode.Ragdoll;
         /// <summary>At most this many ragdolls at once; a knockdown beyond it gets the capsule (§2.7).</summary>
         public static int Cap = DefaultCap;
         /// <summary>Test hook (RagdollSmokeTest): track bone motion at any distance from the player.</summary>
@@ -88,7 +88,7 @@ namespace OnlyVolunteers.Characters.Npc
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics()
         {
-            Mode = NpcBodyMode.Capsule;
+            Mode = NpcBodyMode.Ragdoll;
             Cap = DefaultCap;
             TrackAll = false;
             Live.Clear();

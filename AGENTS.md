@@ -19,7 +19,7 @@ The assistant of the active Work chat is the lead: it plans, writes tricky code,
 
 | Worker | How | Use for |
 |---|---|---|
-| GPT (default gpt-6.1-sol, needs Codex CLI >= 0.160; gpt-6-astra only for the hardest/biggest jobs; gpt-6-luna for trivial) | `codex exec -m gpt-6.1-sol -c 'model_reasoning_effort="..."'`; web research: `codex --search exec ...` | big specs/docs, map plans and data, Blender props, concept images and Tripo (only images the Work owner approved; Create must read exactly 100 credits), research, routine fixes |
+| GPT (default gpt-6.1-sol, needs Codex CLI >= 0.160; gpt-6-astra only for the hardest/biggest jobs; gpt-6-luna for trivial) | Fedya's side: the Codex desktop app, project Only_Volunteers, one new Work chat per task (Fedya 2026-10-11); `codex exec -m gpt-6.1-sol -c 'model_reasoning_effort="..."'` only if the app is unavailable | big specs/docs, map plans and data, Blender props, concept images and Tripo (only images the Work owner approved; Create must read exactly 100 credits), research, routine fixes, code tasks up to medium complexity from an exact brief, code reviews; never character animation |
 | ~~Claude Fable~~ | — | NOT USED: Fedya 2026-10-06 banned Fable for everything; art and second opinions go to Opus subagents |
 | DeepSeek flash | OpenCode CLI with its stored key: `opencode run "<msg>" -m deepseek/deepseek-flash --pure` | RU→EN translation of big texts, cheapest mechanical chores |
 | Claude Sonnet 5.5 | subagent or `claude -p` | only the simplest routine code; if a result misses the brief, its next tasks get even simpler |
@@ -28,3 +28,10 @@ The assistant of the active Work chat is the lead: it plans, writes tricky code,
 - Every Claude model (lead Opus, Sonnet) gets English input only: briefs, worker reports and source texts. Big Russian texts are first translated by DeepSeek into an English working copy outside the repo (Russian costs Claude several times more tokens). Team-facing docs and Russian-language deliverables stay Russian.
 - Write big outputs in parts; one huge file in a single response fails.
 - Usage limits are planned per week. Before an expensive job the lead states its cost; multi-agent workflows (ultracode) run only after the user's explicit go-ahead.
+
+## For GPT / Codex workers (Fedya 2026-10-11)
+
+- Do exactly what the brief says. Touch only the files it names; do not widen the scope, refactor or "improve" anything else.
+- If anything in the brief is unclear or contradicts the code, stop and ask in your report instead of guessing.
+- Never commit, push, edit WORK_SYNC.md or delete files; never overwrite an existing deliverable (new numbered revision instead).
+- Finish with the report format the brief asks for: what you changed (paths), how you checked it, what is still open.
