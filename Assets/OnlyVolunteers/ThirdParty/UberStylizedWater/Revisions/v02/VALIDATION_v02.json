@@ -1,0 +1,261 @@
+{
+  "task": "G14b + G14c",
+  "date": "2026-10-11",
+  "status": "OFFLINE_CHECKS_PASSED_UNITY_VISUAL_REVIEW_REQUIRED",
+  "unity_started": false,
+  "unity_import_verified": false,
+  "rendered_preview_available": false,
+  "csharp": {
+    "status": "PASS",
+    "language_version": "9.0",
+    "compiler": "Installed Unity 6000.5.11f1 DotNetSdk 8.0.318 Roslyn csc.dll",
+    "references": "Real installed UnityEditor/UnityEngine assemblies and existing URP/Core ScriptAssemblies; no stubs",
+    "exit_code": 0,
+    "warnings": 0,
+    "errors": 0,
+    "source": {
+      "path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Editor/Water_v02/WaterTestSceneBuilder_v02.cs",
+      "sha256": "79cc630fc6e9762d2276c45365b1674aa28e7d6de2de08c0f2764f5dc98bb0c8",
+      "guid": "1d545584631051a09cae515c06493fcc"
+    },
+    "compiled_dll_sha256": "4f95d1cfe161f13f6e6340deb2075e4625a6d836de2daaace3c7c8933f0829fb",
+    "response_file_sha256": "2b8ea291c623ac9fb94103dadbc051ce8dbb2a1c4b21a0ccccd76317f0fcd40b",
+    "project_check_limit": "New asmdef has no generated csproj before Unity import; direct C#9 compilation used."
+  },
+  "hlsl": {
+    "status": "PASS",
+    "compiler": "Microsoft DirectXShaderCompiler v1.9.2609",
+    "compiler_release": "https://github.com/microsoft/DirectXShaderCompiler/releases/tag/v1.9.2609",
+    "download_archive_sha256": "ad31b1fc8443175d204f77a611fdb3ef2ec42759bdc2f1167368de24a4a7e7f1",
+    "compiler_exe_sha256": "aa7965b3763d9c710baaa5a28cedcc633449962a75d1391d161a85304a41b3e2",
+    "scope": "HLSLPROGRAM entry points with Unity pragmas omitted; real pinned package includes; DXIL VS/PS6.0 with D3D11 and SHADER_TARGET45 defines",
+    "hlsl_version": 2018,
+    "successful_compilations": 24,
+    "instancing_harness": "Uses -flegacy-macro-expansion for UnityInstancing.hlsl macro token pasting. No package source patches.",
+    "variants": [
+      {
+        "name": "sea_VERTEX_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "sea_VERTEX_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "sea_FRAGMENT_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "sea_FRAGMENT_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "river_VERTEX_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "river_VERTEX_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "river_FRAGMENT_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "river_FRAGMENT_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "waterfall_VERTEX_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "waterfall_VERTEX_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "waterfall_FRAGMENT_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "waterfall_FRAGMENT_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "splash_VERTEX_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "splash_VERTEX_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "splash_FRAGMENT_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "splash_FRAGMENT_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "surface_minimal_VERTEX_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "surface_minimal_VERTEX_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "surface_minimal_FRAGMENT_plain",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "surface_minimal_FRAGMENT_shadow_fog",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "sea_VERTEX_instanced_cluster",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "sea_FRAGMENT_instanced_cluster",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "river_VERTEX_instanced_cluster",
+        "exit_code": 0,
+        "diagnostics": ""
+      },
+      {
+        "name": "river_FRAGMENT_instanced_cluster",
+        "exit_code": 0,
+        "diagnostics": ""
+      }
+    ],
+    "not_verified": [
+      "Unity ShaderLab import/variant selection/stripping",
+      "Native SM4.5 compiler path",
+      "Metal/Vulkan/mobile/XR",
+      "Runtime rendering or GPU timings"
+    ]
+  },
+  "asset_checks": {
+    "status": "PASS",
+    "material_count": 5,
+    "material_property_count": 64,
+    "candidate_entries": 5,
+    "active_manifest": "materials_v3_v05.json",
+    "protected_files_unchanged": 53,
+    "one_forward_pass": true,
+    "checks": [
+      "Unique YAML keys and material properties",
+      "All shader properties serialized",
+      "Mode/feature keyword agreement",
+      "Unique new GUIDs and resolved texture GUIDs",
+      "Exact G14c colours and sea mid stop",
+      "Candidate categories/entries agreement",
+      "Active manifests retain v01; v05 remains newest",
+      "Protected source/licence/package/URP hashes",
+      "Sea/lake displacement bounds",
+      "Bounded river phase continuity including reverse and zero flow",
+      "Editor source guards and single-camera creation"
+    ]
+  },
+  "retained_source_check": "25 declarations match original after reversing exactly two documented UV precision promotions.",
+  "checked_source_hashes": {
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Revisions/v02/UberStylizedWater_v02.shader": "872ccc45e71854f90243c81306a6d6939d6bf1f7fea24727ed74e20baa0100ba",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Revisions/v02/WaterStyle_v02.hlsl": "2cf09720dcadd802a35ff4f7f3cb9636b5d7ccc00dc37f433c7cbe0558170fec",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Revisions/v02/UberGraphPrimitives_v02.hlsl": "27a20cfd166f178cf6d12e3695de12048851ff1f905c990f019e574b209bc345",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Editor/Water_v02/WaterTestSceneBuilder_v02.cs": "79cc630fc6e9762d2276c45365b1674aa28e7d6de2de08c0f2764f5dc98bb0c8",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Sea_v02.mat": "2c0dc2cbb38f88c7a383097026b2219541f9cbe9c8d6dac3c62405d69806383f",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Lake_v02.mat": "182a392501e871911326a1cbdf39ba2baf532ca263ace90ceb49dbd882c42ae6",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_River_v02.mat": "1a232ffda7d6a780048cf07fa28289fab6cba83d30f48be5ff9af779ce46c756",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Waterfall_v02.mat": "801b3632aa3e79baf569e5add35c7ae798ff931c5fd07c5c4e8edf3e9f55b0e7",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_FoamSplash_v02.mat": "86db5eaa79332851a8ad24a25d733ada3741b6e566ea30448276d51238c86098",
+    "ArtSource/Textures/StyleKit_v3/candidate_water/water_entries_v02.json": "f8c4c9dfa8c23b5b0572c75d87afc60d9b569708d102d2abf7617d9000eccfea"
+  },
+  "protected_files_unchanged": {
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/LICENSE": "2def5a93859d1a8d868996bae6a8fc9d70fa81a2068398ccd0488870e1b8ac87",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/LICENSE.meta": "85a0512be9f30311dc72a5012b91fb9ca42d4b059e8ed51c19317efabe88ef27",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/README_G14_v01.md": "09a7b8d7ef0a74b14f88bf43f57d1f1b561fbd9245fb40ab5c3f4478728ed335",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/README_G14_v01.md.meta": "f28078d9b68a62ec8ec6b61df84f9a7070ac964d30b376bd31f90f6bd044231f",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Shader.meta": "f1dac2953d73df675f54b990561f269fec3b24e19bf1af03a82ee265d88cf7e0",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/SOURCE_MANIFEST_v01.json": "133c6b468c455dcc00b630b8f5879cbe7ef8f9c0cb5855f7770c01acc245b7d2",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/SOURCE_MANIFEST_v01.json.meta": "9771d18d6addd4ef5cb88a2f88fa116141478b5ac3c69d07540bdbd8863d3d03",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/SubGraphs.meta": "1f2b81ba6eeeb6924f0971e397900d3a10084b4ef2ba26d0231e257503776941",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Textures.meta": "c932d934916045dd566ddbaf02f2b7ef74691fef703d6489edf88a1215cae69b",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party.meta": "96c1f49b1ebc1e6907e971ad6743600dab0733c1433ddb47fb9e710da7f830ac",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Shader/UberStylizedWater.shader": "506eb9bab1035a8939a468f8ed44b44d0d44394de7c6ec8de0edb10fbc7d1ae4",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Shader/UberStylizedWater.shader.meta": "56975c6d3549c08e4c1b145d2cab56a82ae49ff326a5cbca8a48e90bcb30da7b",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/SubGraphs/CubeMap.hlsl": "75e98d35ec2e6c14056eadbb7a3c89e82bbf2b17810faac0ad12ebe996462637",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/SubGraphs/CubeMap.hlsl.meta": "e50e33de570ff98eac8d9e84be17a8234d88de9e21d61725d7c0fb8117f6debc",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Textures/Foam 1.png": "3bf1ec3c79632d81368fd21250a153d6e52acd54d1c4c480ab4bc123e0d79c7a",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Textures/Foam 1.png.meta": "b74423395fbf7e918014b78fdcdc9d3f7a5d684c0de7c3ba6d9ce8c506d21114",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Textures/Noise 2.png": "c410d1bf50a5e6097214c9e07e305398d09ea645512e7e7d16d9d055f641e132",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Textures/Noise 2.png.meta": "6054ab7a2605ff7b257903a17e9a02db5d784e8b695bcf90116a39f5dfe95513",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/ShaderGraphVariables-main.meta": "eb028f0ca9c1dbf8681e9921c9e4886ada72a03368182f2f207abe985e4690c8",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/URP_ShaderGraphCustomLighting-main.meta": "b12266178d038e131487037b40c5f809bd7c73372bf2a6baf5fa760081867a10",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/ShaderGraphVariables-main/LICENSE": "47a8d0ab26f4aa144068a3b03114874f34d34a8272f27630daa03e2daa70d22b",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/ShaderGraphVariables-main/LICENSE.meta": "2abfbd8fe8c4823afd959cb66ac0df49746034c89ab3a3055883179924ed0dac",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/URP_ShaderGraphCustomLighting-main/CustomLighting.hlsl": "51fda297d377312dc3b1519a923bc223c6c9052ce65c8abd0f85a47dd4e8492f",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/URP_ShaderGraphCustomLighting-main/CustomLighting.hlsl.meta": "461601542a525f6870c200a306f8a0b5e6985068c37f3218d43e55a6cda24f55",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/URP_ShaderGraphCustomLighting-main/LICENSE": "3598a821aeac6de84df80655cd2c44ad27c5201ed3e049523b8de0cb6266979f",
+    "Assets/OnlyVolunteers/ThirdParty/UberStylizedWater/Third Party/URP_ShaderGraphCustomLighting-main/LICENSE.meta": "09ac68abf979e995e169c03d10c131579db15dc4806aa4c0bde69ec86c97d904",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_8a_water_v03.mat": "a5d3835c4eafe152d927a9d57176393b25c3ca4920aedc50858ad8210284ab75",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_8a_water_v03.mat.meta": "b652284798bc83cbaf2f27ecd1a9beeb64b671f74979e406b442c64471beb506",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Lake.mat": "7deb3b6ac53a7558aa0da1dceee88473e7a3abca86bf48eacaf0f9d4e1a7d903",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Lake.mat.meta": "73ea08500a49b339e3448f60d4703d160e95bc0626e3d4c163513dd4cf52c420",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_River.mat": "6454f6e223f7f28afe9f079b2483b516f09238f504df9a452674b83b97188594",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_River.mat.meta": "ff0465e83ec6cc4fd231b21d55a6447959c1dd5ac0d4b265cd29aec48e33941c",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Sea.mat": "04239e4ec567ee18c05c4b44de12a99e6c931b76ad4f22d39e77d8876484e4d5",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Sea.mat.meta": "9742d547584d4773be9de89307a6e2e2f38a84ed66ea25013529a9f2d889a115",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/materials_v3_v03.json": "a2324b3681bb96a70f2c45cec0569b107f35da1fd36ec7b8d7b034354fb1a04a",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/materials_v3_v04.json": "08d6ea3de4cf309ad9b87ab44cfa5068cc4c62b74fba37561e0d0203cf938e0f",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/materials_v3_v05.json": "16ee98e21691f055a5fe087d38f6193cc2bf929db4b33dc61f7a253838165ed2",
+    "Assets/Settings/DefaultVolumeProfile.asset": "463776c51ae49d4fef980e8fd268081b2f505610d79315003faae1acff8f4115",
+    "Assets/Settings/DefaultVolumeProfile.asset.meta": "efbcb026cee6b8e32fdf27018c06b0515296a6ccbb43969e792fea270310700a",
+    "Assets/Settings/Mobile_Renderer.asset": "aa93274c9521fa941170becec9e87c5fa36b8587eefd5eeb5c0eed0d1d4b1dbe",
+    "Assets/Settings/Mobile_Renderer.asset.meta": "a148ee2b4987b05b8ff7ae5f9bf84916184f77aefddc821dceb551f5a69f8179",
+    "Assets/Settings/Mobile_RPAsset.asset": "ba642b95fe751d42a081a346b4dee94ced67b3e7c8ed8c4f2929f6eb51d55b18",
+    "Assets/Settings/Mobile_RPAsset.asset.meta": "53ea46647712c615fd1a3f2e0dddfa8559eeedc649e9a1dbf93ff913de28544c",
+    "Assets/Settings/PC_Renderer.asset": "3d0b01d8ded3327263b6690be128a3de58d17c514943ae42fe743a3e084a9c79",
+    "Assets/Settings/PC_Renderer.asset.meta": "b5df8ddb2708c6ed4c133a5ff9ee95a75cc20e4ee3ed6181366a61aedbaf31ec",
+    "Assets/Settings/PC_RPAsset.asset": "7b3794060807bb7989938dae6b6b1102800334925a1436f8427fed7043adbc6f",
+    "Assets/Settings/PC_RPAsset.asset.meta": "bb469b9b6f318e9e9bed29c3b2e73e79371c04743c6f95dd6603941f1cd3e53e",
+    "Assets/Settings/SampleSceneProfile.asset": "a8677d4bac051d24caa11cd622e39f968155ee277bfce132274f1de225692fe9",
+    "Assets/Settings/SampleSceneProfile.asset.meta": "2e23abc214069f0adbf2b2207f1db54be7876629ec2a3681d0f4aa5b61622ef0",
+    "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset": "70f22d92ce6d422db0f5687299c713977843f05552eae691e6456ea32cbba9d0",
+    "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset.meta": "f61661d8bc8dbe531daf09f6211ef978c7ba145c9207c8e76524396ae0722d7c",
+    "Packages/manifest.json": "004ea76c7283739264a22a5f01a62655fa24a5758180a7e8cde687578dde0ee1",
+    "Packages/packages-lock.json": "4d622925ee2536fa7a82c259743c903036cda68b379419ca38a276f1795c00d1"
+  },
+  "remaining": [
+    "Lead runs OnlyVolunteers/Art/Build Water Test Scene and captures actual Unity frames/animation.",
+    "Enable Depth/Opaque textures and make depth available before transparents on the chosen camera/renderer.",
+    "Subdivide nearby coarse map sea geometry and expand bounds before accepting vertex waves.",
+    "Claude merges only candidate water entries into the next reviewed complete numbered manifest.",
+    "Evaluate screen-space contact/refraction, transparent sorting, anti-aliasing and GPU cost in the actual map."
+  ]
+}

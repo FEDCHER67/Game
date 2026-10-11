@@ -41,10 +41,12 @@ namespace OnlyVolunteers.Map
             return true;
         }
 
-        internal static CrowdDirector Place(GameObject[] buddies, GrabPhysicsProfile grabProfile, bool sea, out int pool)
+        // revision: the scene's plan ("v16"): its own crowd_<rev>.json when there is one (Map/Data or ArtSource), so a newer
+        // plan's crowd file never leaks into an older scene's rebuild; null keeps the newest file (the old behaviour).
+        internal static CrowdDirector Place(GameObject[] buddies, GrabPhysicsProfile grabProfile, bool sea, out int pool, string revision = null)
         {
             pool = 0;
-            TextAsset data = EnsureData();
+            TextAsset data = (revision != null ? EnsureRevision(revision) : null) ?? EnsureData();
             if (data == null)
             {
                 Debug.LogError($"[Crowd] no crowd_vNN.json in {DataDir} or {SourceDir}; no crowd placed.");
@@ -109,6 +111,23 @@ namespace OnlyVolunteers.Map
             }
             string latest = Latest(Path.Combine(project, DataDir));
             return latest != null ? AssetDatabase.LoadAssetAtPath<TextAsset>($"{DataDir}/{Path.GetFileName(latest)}") : null;
+        }
+
+        // Map/Data/crowd_<rev>.json, copied in from ArtSource when only the source exists (never over an existing copy).
+        private static TextAsset EnsureRevision(string revision)
+        {
+            string project = Path.GetDirectoryName(Application.dataPath);
+            string file = $"crowd_{revision}.json";
+            string assetPath = $"{DataDir}/{file}";
+            string full = Path.Combine(project, assetPath), source = Path.Combine(project, SourceDir, file);
+            if (!File.Exists(full))
+            {
+                if (!File.Exists(source)) return null;
+                File.Copy(source, full);
+                AssetDatabase.ImportAsset(assetPath);
+                Debug.Log($"[Crowd] copied {file} into {DataDir}");
+            }
+            return AssetDatabase.LoadAssetAtPath<TextAsset>(assetPath);
         }
 
         private static string Latest(string dir)

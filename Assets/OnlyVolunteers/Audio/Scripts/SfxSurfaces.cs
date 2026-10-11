@@ -1,26 +1,32 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace OnlyVolunteers.Audio
 {
-    public enum SfxSurface : byte { Asphalt, Grass, Sand, Metal, Gravel, Mud }
+    public enum SfxSurface : byte { Asphalt, Grass, Sand, Metal, Gravel, Mud, Dirt }
 
     // What a foot stands on, for footstep sounds. The van (layers Vehicle / VehicleInterior) is metal; a Terrain is
     // read from its splat map (the strongest layer at that point, by the terrain layer's name: TL_meadow, TL_sand...);
     // anything else from its renderer's material name (Look_mat_ground_asphalt__..., Look_mat_road_dirt__...).
-    // Names are matched by keyword, once per collider / terrain layer, and cached. The only per-step allocation is the
-    // 1x1 splat sample on a Terrain (TerrainData.GetAlphamaps has no non-allocating form).
+    // Names and each terrain's dominant splat layer are cached at scene entry: no per-footfall splat allocation.
     public static class SfxSurfaces
     {
         private static readonly Dictionary<Collider, SfxSurface> ByCollider = new();
-        private static readonly Dictionary<TerrainData, SfxSurface[]> ByTerrainLayers = new();
+        private sealed class TerrainSurfaces
+        {
+            public int Width, Height;
+            public SfxSurface[] Cells;
+        }
+        private static readonly Dictionary<TerrainData, TerrainSurfaces> ByTerrain = new();
         private static int _vehicleLayer = -2, _vehicleInteriorLayer = -2;
 
         // Checked in this order: the first group with a keyword in the name wins; no keyword = Asphalt.
         private static readonly string[] MetalWords = { "metal", "iron", "steel", "rust", "van", "rail", "corrugated", "cargo" };
         private static readonly string[] MudWords = { "mud" };
-        private static readonly string[] GravelWords = { "gravel", "ballast", "dirt", "soil" };
+        private static readonly string[] GravelWords = { "gravel", "ballast" };
+        private static readonly string[] DirtWords = { "dirt", "soil" };
         private static readonly string[] SandWords = { "sand", "beach" };
         private static readonly string[] GrassWords = { "grass", "meadow", "lawn", "field", "forest", "hedge", "leaves", "moss" };
 
@@ -30,9 +36,19 @@ namespace OnlyVolunteers.Audio
             SfxSurface.Sand => SfxIds.StepSand,
             SfxSurface.Gravel => SfxIds.StepSand,
             SfxSurface.Mud => SfxIds.StepGrass,
+            SfxSurface.Dirt => SfxIds.StepGrass,
             SfxSurface.Metal => SfxIds.StepMetal,
             _ => SfxIds.StepAsphalt,
         };
+
+        /// <summary>Water overrides the dry surface; deep water suppresses discrete steps (the walker owns its loop).</summary>
+        public static string StepId(Collider ground, Vector3 foot, bool running)
+        {
+            float depth = WaterQuery.FootDepth(foot);
+            if (depth > 0.4f) return null;
+            if (depth >= 0.03f) return running ? SfxIds.StepWaterRun : SfxIds.StepWater;
+            return StepId(At(ground, foot));
+        }
 
         /// <summary>Surface of 'ground' at the world 'point' (null ground: asphalt).</summary>
         public static SfxSurface At(Collider ground, Vector3 point)
@@ -59,6 +75,7 @@ namespace OnlyVolunteers.Audio
             if (HasAny(name, MetalWords)) return SfxSurface.Metal;
             if (HasAny(name, MudWords)) return SfxSurface.Mud;
             if (HasAny(name, GravelWords)) return SfxSurface.Gravel;
+            if (HasAny(name, DirtWords)) return SfxSurface.Dirt;
             if (HasAny(name, SandWords)) return SfxSurface.Sand;
             if (HasAny(name, GrassWords)) return SfxSurface.Grass;
             return SfxSurface.Asphalt;
@@ -69,22 +86,47 @@ namespace OnlyVolunteers.Audio
             TerrainData data = terrain.terrainData;
             if (data == null || data.alphamapLayers == 0) return Classify(collider.sharedMaterial != null ? collider.sharedMaterial.name : null);
             TerrainData key = data;
-            if (!ByTerrainLayers.TryGetValue(key, out SfxSurface[] layers) || layers.Length != data.alphamapLayers)
-            {
-                TerrainLayer[] source = data.terrainLayers;
-                layers = new SfxSurface[data.alphamapLayers];
-                for (int i = 0; i < layers.Length; i++)
-                    layers[i] = Classify(i < source.Length && source[i] != null ? source[i].name : null);
-                ByTerrainLayers[key] = layers;
-            }
+            if (!ByTerrain.TryGetValue(key, out TerrainSurfaces surfaces)) surfaces = CacheTerrain(data);
             Vector3 local = point - terrain.transform.position;
             int x = Mathf.Clamp(Mathf.FloorToInt(local.x / data.size.x * data.alphamapWidth), 0, data.alphamapWidth - 1);
             int z = Mathf.Clamp(Mathf.FloorToInt(local.z / data.size.z * data.alphamapHeight), 0, data.alphamapHeight - 1);
-            float[,,] weights = data.GetAlphamaps(x, z, 1, 1);
-            int best = 0;
-            for (int i = 1; i < layers.Length; i++)
-                if (weights[0, 0, i] > weights[0, 0, best]) best = i;
-            return layers[best];
+            return surfaces.Cells[z * surfaces.Width + x];
+        }
+
+        private static TerrainSurfaces CacheTerrain(TerrainData data)
+        {
+            TerrainLayer[] source = data.terrainLayers;
+            var layers = new SfxSurface[data.alphamapLayers];
+            for (int i = 0; i < layers.Length; i++)
+                layers[i] = Classify(i < source.Length && source[i] != null ? source[i].name : null);
+            var surfaces = new TerrainSurfaces { Width = data.alphamapWidth, Height = data.alphamapHeight };
+            surfaces.Cells = new SfxSurface[surfaces.Width * surfaces.Height];
+            float[,,] weights = data.GetAlphamaps(0, 0, surfaces.Width, surfaces.Height);
+            for (int z = 0; z < surfaces.Height; z++)
+                for (int x = 0; x < surfaces.Width; x++)
+                {
+                    int best = 0;
+                    for (int i = 1; i < layers.Length; i++)
+                        if (weights[z, x, i] > weights[z, x, best]) best = i;
+                    surfaces.Cells[z * surfaces.Width + x] = layers[best];
+                }
+            ByTerrain[data] = surfaces;
+            return surfaces;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void WarmTerrains()
+        {
+            SceneManager.sceneLoaded -= SceneLoaded;
+            SceneManager.sceneLoaded += SceneLoaded;
+            SceneLoaded(default, LoadSceneMode.Single);
+        }
+
+        private static void SceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            foreach (Terrain terrain in Terrain.activeTerrains)
+                if (terrain.terrainData != null && terrain.terrainData.alphamapLayers > 0 && !ByTerrain.ContainsKey(terrain.terrainData))
+                    CacheTerrain(terrain.terrainData);
         }
 
         private static bool IsVan(int layer)
@@ -109,7 +151,8 @@ namespace OnlyVolunteers.Audio
         private static void ResetStatics()
         {
             ByCollider.Clear();
-            ByTerrainLayers.Clear();
+            SceneManager.sceneLoaded -= SceneLoaded;
+            ByTerrain.Clear();
             _vehicleLayer = _vehicleInteriorLayer = -2;
         }
     }

@@ -26,6 +26,10 @@ namespace OnlyVolunteers.Audio
         private AudioSource _sea;
         private AudioSource _office;
         private AudioSource[] _fountains;
+        private WaterData _water;
+        private AudioSource[] _waterSources;
+        private bool[] _waterSelected;
+        private float[] _waterGains;
 
         private int _lastHit = -1;
         private int _activeDistrict = int.MinValue;
@@ -77,7 +81,11 @@ namespace OnlyVolunteers.Audio
         private static void TryCreate()
         {
             if (_instance != null) return;
-            AmbienceData data = Resources.Load<AmbienceData>("Ambience_latest");
+            // The ambience of the scene's own plan revision (Map_Greybox_v16 -> Ambience_v16), else the v12-era Ambience_latest.
+            System.Text.RegularExpressions.Match revision =
+                System.Text.RegularExpressions.Regex.Match(SceneManager.GetActiveScene().name, @"_(v\d+)(_|$)");
+            AmbienceData data = revision.Success ? Resources.Load<AmbienceData>("Ambience_" + revision.Groups[1].Value) : null;
+            if (data == null) data = Resources.Load<AmbienceData>("Ambience_latest");
             if (data == null) return;
             Camera camera = Camera.main;
             if (camera == null) return;
@@ -131,6 +139,25 @@ namespace OnlyVolunteers.Audio
                 source.rolloffMode = AudioRolloffMode.Logarithmic;
                 StartLoop(source, fountainEntry);
                 _fountains[i] = source;
+            }
+
+            _water = WaterQuery.Data;
+            int waterCount = _water != null && _water.Emitters != null ? _water.Emitters.Length : 0;
+            _waterSources = new AudioSource[waterCount];
+            _waterSelected = new bool[waterCount];
+            _waterGains = new float[waterCount];
+            for (int i = 0; i < waterCount; i++)
+            {
+                WaterData.Emitter emitter = _water.Emitters[i];
+                SfxLibrary.Entry entry = Entry(emitter.SoundId);
+                AudioSource source = CreateSource("Water " + (i + 1), entry, true);
+                source.transform.position = emitter.Position;
+                source.minDistance = entry != null ? Mathf.Max(1f, entry.MinDistance) : 4f;
+                source.maxDistance = emitter.SoundId == SfxIds.AmbLakeShore ? 40f : 60f;
+                source.rolloffMode = AudioRolloffMode.Logarithmic;
+                source.clip = Pick(entry);
+                _waterSources[i] = source;
+                _waterGains[i] = entry != null ? Mathf.Clamp01((entry.Volume.x + entry.Volume.y) * 0.5f) : 0f;
             }
 
             SampleZones();
@@ -206,6 +233,7 @@ namespace OnlyVolunteers.Audio
 
         private void SampleZones()
         {
+            System.Array.Clear(_waterSelected, 0, _waterSelected.Length);
             Camera camera = Camera.main;
             AudioListener activeListener = camera != null ? camera.GetComponent<AudioListener>() : null;
             _listenerActive = activeListener != null && activeListener.enabled;
@@ -218,6 +246,11 @@ namespace OnlyVolunteers.Audio
             _listener = activeListener.transform;
 
             Vector3 position = _listener.position;
+            SelectWater(position, false, 4, 60f);
+            SelectWater(position, true, 2, 40f);
+            for (int i = 0; i < _waterSources.Length; i++)
+                if (_water.Emitters[i].SoundId == SfxIds.AmbWaterfall &&
+                    (_water.Emitters[i].Position - position).sqrMagnitude < 3600f) _waterSelected[i] = true;
             Vector2 point = new Vector2(position.x, position.z);
             int hit = FindDistrict(point);
             if (_activeDistrict == int.MinValue)
@@ -309,6 +342,35 @@ namespace OnlyVolunteers.Audio
             _office.volume = master * 0.35f * _officeLevel;
             for (int i = 0; i < _fountains.Length; i++)
                 _fountains[i].volume = master * 0.4f;
+            for (int i = 0; i < _waterSources.Length; i++)
+            {
+                AudioSource source = _waterSources[i];
+                bool active = _waterSelected[i] && master > 0f && source.clip != null;
+                source.volume = active ? master * _waterGains[i] : 0f;
+                if (active && !source.isPlaying) source.Play();
+                else if (!active && source.isPlaying) source.Stop();
+            }
+        }
+
+        private void SelectWater(Vector3 listener, bool lake, int limit, float radius)
+        {
+            // Fixed bounded selections; all candidate sources were allocated during Initialize.
+            for (int slot = 0; slot < limit; slot++)
+            {
+                int nearest = -1;
+                float best = radius * radius;
+                for (int i = 0; i < _waterSources.Length; i++)
+                {
+                    string id = _water.Emitters[i].SoundId;
+                    bool candidate = lake ? id == SfxIds.AmbLakeShore : id == SfxIds.AmbRiver || id == SfxIds.AmbStream;
+                    if (!candidate || _waterSelected[i] || _waterSources[i].clip == null) continue;
+                    float distance = (_water.Emitters[i].Position - listener).sqrMagnitude;
+                    if (distance >= best) continue;
+                    best = distance; nearest = i;
+                }
+                if (nearest < 0) break;
+                _waterSelected[nearest] = true;
+            }
         }
 
         private int FindDistrict(Vector2 point)

@@ -501,7 +501,7 @@ namespace OnlyVolunteers.Map
             if (setup.Crowd == CrowdKind.Director)
             {
                 UnityEngine.Object.DestroyImmediate(crowd.gameObject);
-                result.Director = MapCrowdPlacer.Place(buddies, npcGrabProfile, hasSea, out int pool);
+                result.Director = MapCrowdPlacer.Place(buddies, npcGrabProfile, hasSea, out int pool, setup.Revision);
                 result.Npcs = pool;
                 // Police v1 (Police/, docs/drafts/POLICE_V1_DRAFT.md): station, cars, crews; menu toggle MapPolicePlacer.Enabled.
                 if (result.Director != null && Police.MapPolicePlacer.Enabled)

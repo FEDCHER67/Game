@@ -8,6 +8,7 @@ namespace OnlyVolunteers.Inventory
     /// </summary>
     public sealed class OfflineWorldItem : MonoBehaviour
     {
+        public static event System.Action<OfflineWorldItem> Enabled;
         [SerializeField] private ItemDefinition definition;
         [SerializeField, Min(1)] private int count = 1;
         [Tooltip("Price per unit; 0 = the definition's base value.")]
@@ -26,7 +27,11 @@ namespace OnlyVolunteers.Inventory
             unitValue = Mathf.Max(0, value);
         }
 
-        private void OnEnable() => Items.Add(this);
+        private void OnEnable()
+        {
+            Items.Add(this);
+            Enabled?.Invoke(this);
+        }
         private void OnDisable() => Items.Remove(this);
 
         public static OfflineWorldItem Nearest(Vector3 from, float reach)

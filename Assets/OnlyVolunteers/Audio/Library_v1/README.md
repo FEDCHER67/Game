@@ -76,9 +76,9 @@
 - Звук есть, но код его не вызывает: `npc_gasp`, `npc_hurt`, `van_horn`, `police_whistle`, `cash_register`, `ui_pickup`, `ui_error`, `operation_cooler_lid`, `operation_heartbeat`.
 - Фоны `world/amb_*` в библиотеку не внесены: системы фоновых звуков пока нет.
 
-## ВАЖНО: Mixkit (24 файла) только локально
+## ВАЖНО: Mixkit (40 файлов) только локально
 
-24 файла содержат звук Mixkit. В `manifest_v1.json` у них стоит `restricted_redistribution: true`, в `LICENSES.md` — пометка Mixkit.
+40 файлов содержат звук Mixkit. В `manifest_v1.json` у них стоит `restricted_redistribution: true`, в `LICENSES.md` — пометка Mixkit.
 
 - В игре их использовать можно, раздавать отдельными файлами нельзя.
 - Репозиторий публичный, поэтому эти WAV вместе с `.meta` записаны в `.gitignore` (вариант Б). Имена файлов не менять.

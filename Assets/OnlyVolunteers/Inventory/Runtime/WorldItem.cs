@@ -14,6 +14,10 @@ namespace OnlyVolunteers.Inventory
     [RequireComponent(typeof(NetworkObject))]
     public sealed class WorldItem : NetworkBehaviour
     {
+        // Presentation observers live outside the Inventory assembly (e.g. the water audio watcher).
+        public static event System.Action<WorldItem> Enabled;
+        private void OnEnable() => Enabled?.Invoke(this);
+
         [SerializeField] private ItemDefinition definition;
         [SerializeField, Min(1)] private int initialCount = 1;
         [Tooltip("0 = use the definition's base value.")]

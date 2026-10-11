@@ -92,8 +92,9 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         public int PerfAsleep = 40;
         public int PerfAwake = 10;
         public int PerfFrames = 300;
-        [Tooltip("Run only some parts (set before Start; comma-separated tags, empty: everything): base (r2-r21, T2), legs " +
-                 "(r22), legsweep (r22's INFO sweep: the solo-limb rule off and at 60/90/120 N), ram (r23), runover (r24, r25).")]
+        [Tooltip("Run only some parts (set before Start; comma-separated tags, empty: everything but the INFO extras): base " +
+                 "(r2-r21, T2), legs (r22), ram (r23), runover (r24, r25); INFO extras: legsweep (r22 with the solo-limb rule " +
+                 "off and at 60/90/120 N), before (r23-r25's cases first with the van's knock and slide as before 2026-10-11).")]
         public string Only = "";
 
         private const string Tag = "[RagdollSmokeTest]";
@@ -297,6 +298,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         private Quaternion _vanRot0;
         private Vector3 _vo;        // the van root on the sandbox ground
         private Quaternion _yaw = Quaternion.identity;
+        private Quaternion _groundYaw = Quaternion.identity; // the sandbox ground's frame (r23-r25 lane; _yaw follows the van after r12)
         private string _vanSkip;    // why the van checks cannot run
 
         // T2.
@@ -424,7 +426,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         // Whether a part of the run is on (Only: empty runs everything).
         private bool Run(string tag)
         {
-            if (string.IsNullOrWhiteSpace(Only)) return tag != "legsweep";
+            if (string.IsNullOrWhiteSpace(Only)) return tag != "legsweep" && tag != "before";
             foreach (string t in Only.Split(','))
                 if (t.Trim() == tag) return true;
             return false;
@@ -490,6 +492,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             }
             // One box of ground: the NPC area (+-30 m), the van's place and the ride ahead of it.
             _ground = new GameObject("RagdollSmokeTest_Ground") { layer = 0 };
+            _groundYaw = _yaw;
             _ground.transform.SetPositionAndRotation(_o + _yaw * new Vector3(VanSide * 0.5f, -0.5f, RidePath * 0.5f - 20f), _yaw);
             _ground.AddComponent<BoxCollider>().size = new Vector3(140f, 1f, RidePath + 120f);
             Physics.SyncTransforms();
@@ -555,6 +558,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             Time.timeScale = 1f;
             _observe = null;
             RestoreSoloLimb();
+            SetLegacyVan(false);
             foreach (Hand h in _hands)
             {
                 if (h.Grabber != null) h.Grabber.ScriptRelease();
@@ -2756,7 +2760,8 @@ namespace OnlyVolunteers.Characters.Npc.Dev
 
         // "When you run over an NPC with the van he gets stuck in the van's geometry. Nothing may ever get stuck in any
         // geometry." Each case takes a fresh copy of a crowd NPC (not scared of the van) on a lane RamLane m to the side of
-        // the sandbox centre, the van's doors shut:
+        // the sandbox centre, in the sandbox ground's frame (_groundYaw: r12's ride turns _yaw, and a lane turned with it ran
+        // off the ground box, so the 50-70 km/h bodies "fell through the ground" in run 3), the van's doors shut:
         // r23: the van rams a standing NPC at 16 (just over GreyboxNpc.KnockSpeedKmh), 30, 50 and 70 km/h, at the middle of
         //   its front, at a front corner and grazing it with its side, as the ragdoll; and once as the capsule (F10) at
         //   50 km/h. It drives on for 1.5 s after the knock, brakes to a stop, waits 1 s and backs off 4 m.
@@ -2764,11 +2769,14 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         //   driving on; the van backing over one at 8 km/h.
         // r25: a wall across the lane: a body lying at its foot pushed at 10 km/h (the van pushes on until blocked for 2 s);
         //   a standing NPC with its back to it rammed at 30 km/h; then the van backs off.
-        // Stuck (any): a body collider inside a van (or wall) collider deeper than StuckDepth for StuckTime with their contact
-        // on (an ignored pair passes through, it is not stuck); a body part's centre boxed in by the van (a ray along each of
-        // its six axes meets it: the cab or the bay) or behind the wall; carried off by the van as it backs away (not riding
-        // on its roof or hood); NaN; fallen through the ground. Each case prints a row (INFO); a check passes when none of its
-        // cases is stuck. Time scale 1 from the run-up to the stop (the knock is looked for every rendered frame), then
+        // Stuck (any, at the end, after the van backed off 4 m): a body collider still inside a van (or wall) collider deeper
+        // than StuckDepth for the last StuckTime s with their contact on (an ignored pair passes through, it is not stuck); a
+        // body part's centre boxed in by the van (a ray along each of its six axes meets it: the cab or the bay; also looked
+        // for when the van has stopped) or behind the wall; carried off by the van as it backed away (not riding on its roof
+        // or hood); NaN; fallen through the ground. A body squeezed while the van pushes and free once it backs off is not
+        // stuck (the longest overlap is in the row). Each case prints a row (INFO); a check passes when none of its cases is
+        // stuck. Only "before" runs every case first with the van as before 2026-10-11 (INFO rows). Time scale 1 from the
+        // run-up to the stop (the knock is looked for every rendered frame and, since 2026-10-11, every physics step), then
         // TimeScale.
         private const float RamLane = 45f;
         private const float StuckDepth = 0.03f, StuckTime = 0.25f, CarriedLimit = 1.5f;
@@ -2791,8 +2799,43 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         private sealed class StuckProbe
         {
             public float Worst, WorstAt, WorstIgnored, Run, Longest, Now, NowIgnored;
-            public string WorstWhat = "-", NowWhat = "-";
+            public string WorstWhat = "-", NowWhat = "-", NowOn = "-";
             public bool Nan;
+            // INFO for launches: ticks a van wheel rested on the body (and its largest force), the biggest one-tick change of a
+            // body's velocity (a kick) after the knock's first 0.1 s.
+            public int WheelTicks;
+            public float WheelForce, Kick, KickAt, Tilt;
+            public string KickWhat = "-";
+        }
+
+        private readonly Dictionary<Rigidbody, Vector3> _lastPartV = new();
+
+        private void ProbeKicks(GreyboxNpc npc, StuckProbe probe, float since)
+        {
+            probe.Tilt = Mathf.Max(probe.Tilt, Vector3.Angle(_van.rotation * Vector3.up, Vector3.up));
+            if (npc == null || npc.State != NpcState.Down) return;
+            foreach (WheelCollider wheel in _van.GetComponentsInChildren<WheelCollider>())
+            {
+                if (!wheel.GetGroundHit(out WheelHit hit) || hit.collider == null || !hit.collider.transform.IsChildOf(npc.transform)) continue;
+                probe.WheelTicks++;
+                probe.WheelForce = Mathf.Max(probe.WheelForce, hit.force);
+            }
+            foreach (Rigidbody rb in npc.GetComponentsInChildren<Rigidbody>())
+            {
+                if (rb.isKinematic) continue;
+                Vector3 v = rb.linearVelocity;
+                if (_lastPartV.TryGetValue(rb, out Vector3 before) && Time.fixedTime - since > 0.1f)
+                {
+                    float kick = (v - before).magnitude;
+                    if (kick > probe.Kick)
+                    {
+                        probe.Kick = kick;
+                        probe.KickWhat = rb.name;
+                        probe.KickAt = Time.fixedTime - since;
+                    }
+                }
+                _lastPartV[rb] = v;
+            }
         }
 
         private static float RunUp(float kmh) => -(kmh / 3.6f * 1.2f + 4f);
@@ -2819,12 +2862,26 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 cases.Add(new VanCase { Check = "r25", Label = "pushes a lying body into a wall at 10 km/h", Lying = true, Kmh = 10f, StartZ = -10f, WallZ = 0.55f });
                 cases.Add(new VanCase { Check = "r25", Label = "rams a standing NPC against a wall at 30 km/h", Kmh = 30f, StartZ = RunUp(30f), WallZ = 0.45f, Yaw = 180f });
             }
+            if (Run("before"))
+            {
+                // INFO rows only: the same cases with the van's knock and body slide as before 2026-10-11.
+                SetLegacyVan(true);
+                int stuckBefore = 0;
+                foreach (VanCase c in cases)
+                {
+                    bool free = true;
+                    yield return VanCaseRun(c, ok => free = ok, "BEFORE ");
+                    if (!free) stuckBefore++;
+                }
+                SetLegacyVan(false);
+                Line(Inv($"{Tag} INFO van cases as before 2026-10-11: {stuckBefore}/{cases.Count} stuck"));
+            }
             var stuck = new Dictionary<string, List<string>>();
             var counts = new Dictionary<string, int>();
             foreach (VanCase c in cases)
             {
                 bool free = true;
-                yield return VanCaseRun(c, ok => free = ok);
+                yield return VanCaseRun(c, ok => free = ok, "");
                 counts[c.Check] = (counts.TryGetValue(c.Check, out int n) ? n : 0) + 1;
                 if (!stuck.ContainsKey(c.Check)) stuck[c.Check] = new List<string>();
                 if (!free) stuck[c.Check].Add(c.Label);
@@ -2844,16 +2901,23 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             }
         }
 
-        private IEnumerator VanCaseRun(VanCase c, Action<bool> result)
+        // The before rows (Only "before"): the van's knock and body slide as before 2026-10-11 (their test hooks).
+        private void SetLegacyVan(bool legacy)
         {
-            Progress = "van: " + c.Label;
+            GreyboxNpc.LegacyVanKnock = legacy;
+            VanInteriorColliders.LegacyBodySlide = legacy;
+        }
+
+        private IEnumerator VanCaseRun(VanCase c, Action<bool> result, string prefix)
+        {
+            Progress = "van: " + prefix + c.Label;
             foreach (Hand hand in _hands) ReleaseHand(hand);
             _observe = null;
-            Vector3 fwd = _yaw * Vector3.forward, right = _yaw * Vector3.right;
-            Vector3 lane = _o + _yaw * new Vector3(RamLane, 0f, 40f);
+            Vector3 fwd = _groundYaw * Vector3.forward, right = _groundYaw * Vector3.right;
+            Vector3 lane = _o + _groundYaw * new Vector3(RamLane, 0f, 40f); // on the ground whatever r12 did to _yaw
             Vector3 spot = lane + right * c.Offset + fwd * c.BodyZ;
             NpcRagdoll.Mode = c.Capsule ? NpcBodyMode.Capsule : NpcBodyMode.Ragdoll;
-            PlaceVan(lane + fwd * c.StartZ);
+            PlaceVan(lane + fwd * c.StartZ, _groundYaw);
             if (_cargo.DoorOpen(0)) _cargo.ToggleDoor(0);
             if (_cargo.DoorOpen(1)) _cargo.ToggleDoor(1);
             yield return WaitFor(DoorsShut, 3f);
@@ -2861,7 +2925,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             if (!float.IsNaN(c.WallZ))
             {
                 var go = new GameObject("RagdollSmokeTest_Wall") { layer = 0 };
-                go.transform.SetPositionAndRotation(lane + fwd * (c.WallZ + 0.2f) + Vector3.up * 1.5f, _yaw);
+                go.transform.SetPositionAndRotation(lane + fwd * (c.WallZ + 0.2f) + Vector3.up * 1.5f, _groundYaw);
                 wall = go.AddComponent<BoxCollider>();
                 wall.size = new Vector3(8f, 3f, 0.4f);
                 Physics.SyncTransforms();
@@ -2889,6 +2953,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             List<Collider> others = VanColliders();
             if (wall != null) others.Add(wall);
             var probe = new StuckProbe();
+            _lastPartV.Clear();
             float v = c.Kmh / 3.6f;
             _van.isKinematic = false;
             _van.linearVelocity = fwd * v;
@@ -2932,6 +2997,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 AfterTick();
                 ticks++;
                 Probe(npc, others, probe, knock);
+                ProbeKicks(npc, probe, knock >= 0f ? knock : t0);
                 if (knock >= 0f && ticks == ticksAtKnock + 1)
                 {
                     born = probe.NowIgnored;
@@ -2954,6 +3020,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 yield return Fixed;
                 AfterTick();
                 Probe(npc, others, probe, knock);
+                ProbeKicks(npc, probe, knock >= 0f ? knock : t0);
             }
             string rest = RestPlace(npc, wall, lane, fwd, out bool inside, out bool behind);
             // Back off 4 m, away from the body.
@@ -2966,6 +3033,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 yield return Fixed;
                 AfterTick();
                 Probe(npc, others, probe, knock);
+                ProbeKicks(npc, probe, knock >= 0f ? knock : t0);
             }
             for (int k = 0; k < Ticks(2f) && Mathf.Abs(_vanCtl.SpeedKmh) > 0.5f; k++)
             {
@@ -2974,6 +3042,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 yield return Fixed;
                 AfterTick();
                 Probe(npc, others, probe, knock);
+                ProbeKicks(npc, probe, knock >= 0f ? knock : t0);
             }
             _vanCtl.Throttle = 0f;
             _vanCtl.Handbrake = true;
@@ -2982,6 +3051,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                 yield return Fixed;
                 AfterTick();
                 Probe(npc, others, probe, knock);
+                ProbeKicks(npc, probe, knock >= 0f ? knock : t0);
             }
             Vector3 moved = _van.position - van0;
             float carried = moved.sqrMagnitude > 0.01f ? Vector3.Dot(npc.Center - body0, moved.normalized) : 0f;
@@ -2991,19 +3061,25 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             inside |= insideAfter;
             behind |= behindAfter;
             bool fell = npc.Center.y < _o.y - 0.3f;
+            int graces = npc.Ragdoll != null && npc.Ragdoll.Active ? npc.Ragdoll.GraceCount : -1;
+            bool graceOn = npc.Ragdoll != null && npc.Ragdoll.Active && npc.Ragdoll.GraceVehicle != null;
+            // The verdict is the end: still inside a collider (the last StuckTime s), boxed in, through the wall, carried off.
+            // A body squeezed while the van pushed on and free once it backed off is not stuck (the longest overlap: INFO).
             var why = new List<string>();
-            if (probe.Longest >= StuckTime) why.Add(Inv($"in {probe.WorstWhat} {probe.Worst:0.00} m for {probe.Longest:0.00} s"));
+            if (probe.Run >= StuckTime) why.Add(Inv($"still in {probe.NowOn} {probe.Now:0.00} m at the end"));
             if (inside) why.Add("boxed in by the van");
             if (behind) why.Add("through the wall");
             if (carriedOff) why.Add(Inv($"carried {carried:0.0} m by the van"));
             if (probe.Nan) why.Add("NaN");
             if (fell) why.Add("fell through the ground");
             bool stuck = why.Count > 0;
-            Line($"{Tag} INFO {c.Check} {c.Label}: " +
+            Line($"{Tag} INFO {prefix}{c.Check} {c.Label}: " +
                  (knock >= 0f ? Inv($"knocked at {knockKmh:0} km/h ({stepsPerFrame:0.0} physics steps per frame), born {born:0.00} m into {bornWhat}; ") :
                      (c.Lying ? "" : "NOT knocked; ")) +
                  Inv($"worst overlap with the contact on {probe.Worst:0.00} m ({probe.WorstWhat}, +{probe.WorstAt:0.00} s), longest {probe.Longest:0.00} s; ") +
-                 Inv($"ignored overlap up to {probe.WorstIgnored:0.00} m; path{(trace.Length > 0 ? trace : " -")} (van-local); rests {rest}; ") +
+                 Inv($"ignored overlap up to {probe.WorstIgnored:0.00} m, vehicle graces {(graces < 0 ? "-" : graces.ToString())}{(graceOn ? " (one still on)" : "")}; ") +
+                 Inv($"wheels on the body {probe.WheelTicks} ticks (max {probe.WheelForce:0} N), biggest kick {probe.Kick:0.0} m/s ({probe.KickWhat}, +{probe.KickAt:0.00} s), van tilt up to {probe.Tilt:0} deg; ") +
+                 Inv($"path{(trace.Length > 0 ? trace : " -")} (van-local); rests {rest}; ") +
                  Inv($"after backing off {moved.magnitude:0.0} m: {after}, the body moved {carried:0.0} m with the van; ") +
                  (stuck ? "STUCK: " + string.Join(", ", why) : "free"));
             _keepDown.Remove(npc);
@@ -3019,6 +3095,8 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         // tracker, not scared of the van or the player.
         private GreyboxNpc Clone(Vector3 feet, Quaternion rotation)
         {
+            // The crowd's pool may have switched the last template off meanwhile (run 2: the copy stayed inactive).
+            if (_template != null && (!_template.isActiveAndEnabled || _template.State != NpcState.Free)) _template = null;
             if (_template == null)
                 foreach (GreyboxNpc npc in GreyboxNpc.All)
                     if (npc != null && npc.isActiveAndEnabled && npc.State == NpcState.Free && !npc.InCargo && !PoliceOfficer.IsOfficer(npc) &&
@@ -3042,9 +3120,10 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             var copy = go.GetComponent<GreyboxNpc>();
             copy.VanScareRadius = 0f;
             copy.WalkerScareRadius = 0f;
+            go.SetActive(true);
             go.transform.SetParent(null, true); // active now: Awake and OnEnable run
             _clones.Add(go);
-            return copy;
+            return copy.isActiveAndEnabled ? copy : null;
         }
 
         // Every van collider an NPC body can meet (no wheels, triggers or the player's ramps; the NPC body slide counts).
@@ -3057,8 +3136,10 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             return list;
         }
 
-        // The van parked (kinematic: the handbrake) at 'root', on the frame's yaw.
-        private void PlaceVan(Vector3 root)
+        // The van parked (kinematic: the handbrake) at 'root', on the frame's yaw (or 'rotation').
+        private void PlaceVan(Vector3 root) => PlaceVan(root, _yaw);
+
+        private void PlaceVan(Vector3 root, Quaternion rotation)
         {
             _vanCtl.Throttle = 0f;
             _vanCtl.Steer = 0f;
@@ -3070,8 +3151,8 @@ namespace OnlyVolunteers.Characters.Npc.Dev
             }
             _van.isKinematic = true;
             _van.position = root;
-            _van.rotation = _yaw;
-            _van.transform.SetPositionAndRotation(root, _yaw);
+            _van.rotation = rotation;
+            _van.transform.SetPositionAndRotation(root, rotation);
             Physics.SyncTransforms();
         }
 
@@ -3145,7 +3226,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
         private void Probe(GreyboxNpc npc, List<Collider> others, StuckProbe probe, float knock)
         {
             probe.Now = probe.NowIgnored = 0f;
-            probe.NowWhat = "-";
+            probe.NowWhat = probe.NowOn = "-";
             if (npc == null || npc.State != NpcState.Down)
             {
                 probe.Run = 0f;
@@ -3169,8 +3250,7 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                     PhysicsPose(o, out Vector3 po, out Quaternion qo);
                     if (!Physics.ComputePenetration(b, pb, qb, o, po, qo, out _, out float d)) continue;
                     string pair = (b.attachedRigidbody != null ? b.attachedRigidbody.name : b.name) + " in " + o.name;
-                    if (Physics.GetIgnoreCollision(b, o) || Physics.GetIgnoreLayerCollision(b.gameObject.layer, o.gameObject.layer) &&
-                        (b.includeLayers.value & (1 << o.gameObject.layer)) == 0)
+                    if (!PairCollides(b, o))
                     {
                         if (d > probe.NowIgnored)
                         {
@@ -3185,12 +3265,30 @@ namespace OnlyVolunteers.Characters.Npc.Dev
                     what = pair;
                 }
             }
+            probe.NowOn = what;
             probe.Run = probe.Now > StuckDepth ? probe.Run + Time.fixedDeltaTime : 0f;
             probe.Longest = Mathf.Max(probe.Longest, probe.Run);
             if (probe.Now <= probe.Worst) return;
             probe.Worst = probe.Now;
             probe.WorstWhat = what;
             probe.WorstAt = knock >= 0f ? Time.fixedTime - knock : 0f;
+        }
+
+        // Whether PhysX lets the two touch: the pair not ignored, the layer matrix and the colliders' layer overrides (the
+        // higher priority of an exclusion and an inclusion wins; the van's body slide excludes everything while it is off).
+        private static bool PairCollides(Collider a, Collider b)
+        {
+            if (Physics.GetIgnoreCollision(a, b)) return false;
+            int la = 1 << a.gameObject.layer, lb = 1 << b.gameObject.layer;
+            bool aEx = (a.excludeLayers.value & lb) != 0, bEx = (b.excludeLayers.value & la) != 0;
+            bool aIn = (a.includeLayers.value & lb) != 0, bIn = (b.includeLayers.value & la) != 0;
+            if (aEx || bEx)
+            {
+                int ex = Mathf.Max(aEx ? a.layerOverridePriority : int.MinValue, bEx ? b.layerOverridePriority : int.MinValue);
+                int inc = Mathf.Max(aIn ? a.layerOverridePriority : int.MinValue, bIn ? b.layerOverridePriority : int.MinValue);
+                return inc > ex;
+            }
+            return aIn || bIn || !Physics.GetIgnoreLayerCollision(a.gameObject.layer, b.gameObject.layer);
         }
 
         // A collider's pose from its body's physics pose (the transforms of interpolated bodies trail it).

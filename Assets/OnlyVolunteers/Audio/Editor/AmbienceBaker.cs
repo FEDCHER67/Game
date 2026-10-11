@@ -12,7 +12,9 @@ namespace OnlyVolunteers.Audio.EditorTools
     // baked ambience follows the map scene rather than a newer unbuilt 2D plan.
     public static class AmbienceBaker
     {
-        private const string AssetPath = "Assets/OnlyVolunteers/Audio/Resources/Ambience_latest.asset";
+        // Per revision (Ambience_v16.asset next to the v12-era Ambience_latest.asset, which stays as it is): a newer plan
+        // must not replace the ambience of the scenes already built. AmbiencePlayer loads its scene's revision first.
+        private static string AssetPathFor(string revision) => "Assets/OnlyVolunteers/Audio/Resources/Ambience_" + revision + ".asset";
         private const string LibraryPath = "Assets/OnlyVolunteers/Audio/Resources/SfxLibrary.asset";
         private const string WorldClips = "Assets/OnlyVolunteers/Audio/Library_v1/world";
         private const string Tag = "[AmbienceBake]";
@@ -73,7 +75,8 @@ namespace OnlyVolunteers.Audio.EditorTools
                 return;
             }
 
-            AmbienceData data = AssetDatabase.LoadAssetAtPath<AmbienceData>(AssetPath);
+            string assetPath = AssetPathFor(revision);
+            AmbienceData data = AssetDatabase.LoadAssetAtPath<AmbienceData>(assetPath);
             bool created = data == null;
             if (created) data = ScriptableObject.CreateInstance<AmbienceData>();
             data.PlanRevision = revision;
@@ -82,7 +85,7 @@ namespace OnlyVolunteers.Audio.EditorTools
             data.Fountains = fountains.ToArray();
             data.Offices = offices.ToArray();
 
-            if (created) AssetDatabase.CreateAsset(data, AssetPath);
+            if (created) AssetDatabase.CreateAsset(data, assetPath);
             else EditorUtility.SetDirty(data);
 
             int foundClipCount = FillLibrary(library);
@@ -98,7 +101,7 @@ namespace OnlyVolunteers.Audio.EditorTools
                       districts.Count + " districts, " + coastlines.Count + " coastline segments, " +
                       fountains.Count + " fountains, " + offices.Count + " offices, " + foundClipCount +
                       " ambience clips. Unmapped plan districts: " +
-                      (unmapped.Count == 0 ? "none" : string.Join(", ", unmapped)) + ". Saved " + AssetPath, data);
+                      (unmapped.Count == 0 ? "none" : string.Join(", ", unmapped)) + ". Saved " + assetPath, data);
         }
 
         private static void ReadDistricts(Dictionary<string, object> plan, List<AmbienceData.District> output)

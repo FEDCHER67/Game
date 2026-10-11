@@ -38,6 +38,10 @@ namespace OnlyVolunteers.Vehicles
         private readonly float[] _pitchVelocity = new float[3];
         private AudioSource _dirt;
         private AudioSource _grass;
+        private AudioSource _waterDrive;
+        private readonly bool[] _wetWheels = new bool[4];
+        private int _waterWheelCount;
+        private float _nextWaterEnter;
         private AudioSource _skid;
         private readonly AudioSource[] _otherSkids = new AudioSource[4];
         private SkidSurface _skidSurface;
@@ -125,6 +129,8 @@ namespace OnlyVolunteers.Vehicles
             {
                 _dirt = MakeLoop(SfxIds.VanDriveDirt, maxDistance, 80, false);
                 _grass = MakeLoop(SfxIds.VanDriveGrass, maxDistance, 80, false);
+                _waterDrive = MakeLoop(SfxIds.VanWaterDrive, maxDistance, 80, false);
+                WaterBodyAudio.Ensure(gameObject);
                 _skid = MakeLoop(SfxIds.VanTireSkid, maxDistance, 80, false);
                 _otherSkids[0] = MakeLoop(SfxIds.VanSkidGravel, maxDistance, 80, false);
                 _otherSkids[1] = MakeLoop(SfxIds.VanSkidGrass, maxDistance, 80, false);
@@ -199,6 +205,10 @@ namespace OnlyVolunteers.Vehicles
             {
                 UpdateSurface(dt);
                 UpdateSkid(dt);
+                float waterSpeed = Mathf.Abs(_van.SpeedKmh);
+                float waterGain = Mathf.InverseLerp(3f, 50f, waterSpeed);
+                _waterDrive.pitch = Mathf.Lerp(0.9f, 1.1f, waterGain);
+                FadeSurface(_waterDrive, _waterWheelCount >= 2 && waterSpeed > 3f ? Mathf.Lerp(0.2f, 1f, waterGain) : 0f, dt / 0.2f);
             }
 #if UNITY_EDITOR
             if (_van != null && DebugLog && Time.time >= _nextDebugLog)
@@ -369,6 +379,7 @@ namespace OnlyVolunteers.Vehicles
             switch (SfxSurfaces.At(hit.collider, hit.point))
             {
                 case SfxSurface.Gravel: return SkidSurface.Gravel;
+                case SfxSurface.Dirt: return SkidSurface.Gravel;
                 case SfxSurface.Grass: return SkidSurface.Grass;
                 case SfxSurface.Sand: return SkidSurface.Sand;
                 case SfxSurface.Mud: return SkidSurface.Mud;
@@ -380,7 +391,7 @@ namespace OnlyVolunteers.Vehicles
         {
             if (wheel == null || !wheel.GetGroundHit(out WheelHit hit) || hit.collider == null) return;
             SfxSurface surface = SfxSurfaces.At(hit.collider, hit.point);
-            if (surface == SfxSurface.Sand || surface == SfxSurface.Gravel || surface == SfxSurface.Mud)
+            if (surface == SfxSurface.Sand || surface == SfxSurface.Gravel || surface == SfxSurface.Dirt || surface == SfxSurface.Mud)
                 _surface = SurfaceBed.Dirt;
             else if (surface == SfxSurface.Grass && _surface == SurfaceBed.None)
                 _surface = SurfaceBed.Grass;
@@ -430,6 +441,7 @@ namespace OnlyVolunteers.Vehicles
         private void FixedUpdate()
         {
             if (_van == null) return;
+            SampleWaterWheels();
             float jump = 0f;
             float rearSlipSum = 0f;
             int groundedRear = 0;
@@ -463,6 +475,7 @@ namespace OnlyVolunteers.Vehicles
             bool wheelspinChirp = _wheelspinArmed && throttle > 0.8f && speed < 10f;
             if (throttle > 0.8f) _wheelspinArmed = false;
             if (_skidSurface == SkidSurface.Asphalt && (slipChirp || wheelspinChirp) && Time.time >= _nextChirp &&
+                RearSkidSurface() == SkidSurface.Asphalt &&
                 Sfx.PlayAt(SfxIds.VanTireChirp, transform.position))
                 _nextChirp = Time.time + 0.8f;
             _lastRearSideSlip = _rearSideSlip;
@@ -491,6 +504,38 @@ namespace OnlyVolunteers.Vehicles
             _lastHandbrake = handbrake;
         }
 
+        private void SampleWaterWheels()
+        {
+            _waterWheelCount = 0;
+            bool entered = false, puddle = false;
+            Vector3 entryPoint = transform.position;
+            for (int i = 0; i < _wheels.Length; i++)
+            {
+                WheelCollider wheel = _wheels[i];
+                if (wheel == null) { _wetWheels[i] = false; continue; }
+                wheel.GetWorldPose(out Vector3 centre, out _);
+                Vector3 point = centre - wheel.transform.up * wheel.radius;
+                if (wheel.GetGroundHit(out WheelHit hit)) point = hit.point;
+                bool wet = WaterQuery.SurfaceAt(point, out float y, out WaterKind kind) && point.y < y;
+                if (wet)
+                {
+                    _waterWheelCount++;
+                    if (!_wetWheels[i])
+                    {
+                        entered = true;
+                        entryPoint = new Vector3(point.x, y, point.z);
+                        puddle |= kind == WaterKind.Puddle;
+                    }
+                }
+                _wetWheels[i] = wet;
+            }
+            if (!entered || Time.time < _nextWaterEnter) return;
+            float gain = Mathf.Lerp(0.15f, 1f, Mathf.InverseLerp(0f, 50f, Mathf.Abs(_van.SpeedKmh)));
+            Sfx.PlayAt(SfxIds.VanWaterEnter, entryPoint, gain);
+            if (puddle) Sfx.PlayAt(SfxIds.VanPuddle, entryPoint, gain);
+            _nextWaterEnter = Time.time + 2f;
+        }
+
         private void OnDisable()
         {
             if (_scanner) return;
@@ -498,6 +543,9 @@ namespace OnlyVolunteers.Vehicles
                 if (_engine[i] != null) { _engine[i].volume = 0f; _engine[i].Stop(); }
             if (_dirt != null) _dirt.Stop();
             if (_grass != null) _grass.Stop();
+            if (_waterDrive != null) { _waterDrive.Stop(); _waterDrive.volume = 0f; }
+            _waterWheelCount = 0;
+            Array.Clear(_wetWheels, 0, _wetWheels.Length);
             if (_skid != null) _skid.Stop();
             for (int i = 0; i < _otherSkids.Length; i++)
                 if (_otherSkids[i] != null) _otherSkids[i].Stop();

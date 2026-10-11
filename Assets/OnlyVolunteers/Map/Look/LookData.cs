@@ -184,6 +184,8 @@ namespace OnlyVolunteers.Map.Look
         public string id, kind, type, district, label, style, roof;
         public int floors;
         public float floor_h, h, front_deg, x, y;
+        // v17+ game scale: ground-storey height (shop fronts 3.3 m); 0 in older plans = every storey floor_h.
+        public float ground_h;
         public float[] fp, tris, rects, ent;
         public string wall, trim, roof_col, sign_text;
         public int sign_side = -1;

@@ -43,6 +43,7 @@ namespace OnlyVolunteers.Map
         // ApplyCapsuleRadius works whichever Awake (this, the character's, the motor's) runs first.
         private void Awake()
         {
+            WaterBodyAudio.Ensure(gameObject);
             if (CapsuleRadius > 0f && Kcc != null && Kcc.Character != null)
                 Kcc.Character.ApplyCapsuleRadius(CapsuleRadius);
         }
@@ -98,11 +99,13 @@ namespace OnlyVolunteers.Map
             Step(motor, volume);
         }
 
-        private static void Step(KinematicCharacterMotor motor, float volume)
+        private void Step(KinematicCharacterMotor motor, float volume)
         {
             CharacterGroundingReport ground = motor.GroundingStatus;
             Vector3 feet = ground.FoundAnyGround ? ground.GroundPoint : motor.TransientPosition;
-            Sfx.PlayAt(SfxSurfaces.StepId(SfxSurfaces.At(ground.GroundCollider, feet)), feet, volume * 0.6f);
+            bool running = Vector3.ProjectOnPlane(motor.BaseVelocity, motor.CharacterUp).magnitude > WalkSpeed + 0.1f;
+            string id = SfxSurfaces.StepId(ground.GroundCollider, feet, running);
+            if (id != null) Sfx.PlayAt(id, feet, volume * 0.6f);
         }
 
         public override Transform Body => Kcc.Character.transform;
@@ -122,6 +125,7 @@ namespace OnlyVolunteers.Map
 
         public override void Teleport(Vector3 position, float yawDegrees)
         {
+            if (TryGetComponent(out WaterBodyAudio waterAudio)) waterAudio.Rebase();
             Quaternion rotation = Quaternion.Euler(0f, yawDegrees, 0f);
             // A fresh state also drops the velocity, grounding and any rigidbody the player stood on (e.g. the van roof).
             Kcc.Character.Motor.ApplyState(new KinematicCharacterMotorState { Position = position, Rotation = rotation }, true);

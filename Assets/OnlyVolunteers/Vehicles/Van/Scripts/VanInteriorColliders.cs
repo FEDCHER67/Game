@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace OnlyVolunteers.Vehicles
@@ -28,7 +29,10 @@ namespace OnlyVolunteers.Vehicles
     //   hanging against the vertical bumper face: pulled level, nothing turned the pull into lift (RagdollSmokeTest r6b, 2
     //   runs of 3). The slide runs from the ground 0.57 m behind the bumper up to its top edge (46 degrees), slippery (0.05,
     //   Minimum, Play mode only), so hips and legs ride up it. Its own kinematic body, like the ramps; switched off when the
-    //   project has no NpcSlide layer (it would block everything).
+    //   project has no NpcSlide layer (it would block everything). Fedya's playtest 2026-10-11: it works only while a rear
+    //   door is open and the van stands (SlideMaxSpeed); otherwise it excludes every layer. It reaches the ground behind the
+    //   bumper, so a van driving or backing over a lying body met the body with it (backing over one at 8 km/h it held the
+    //   chest for 3 s in the smoke test).
     // Then every collider of the van, doors and wheels included, goes on layer Vehicle (when the project has it); the
     // ramps then go on VehicleInterior (or are switched off when the project has no such layer).
     // Runtime setup, idempotent by child name: an existing Van.prefab instance (grey-box scenes) gets it in Awake without a
@@ -46,6 +50,20 @@ namespace OnlyVolunteers.Vehicles
 
         [Tooltip("Draw the two new steps (the model has no step mesh).")]
         public bool ShowSteps = true;
+
+        [Tooltip("Stage 9 (Fedya's playtest 2026-10-11): the NPC body slide works only while a rear door is open and the van " +
+                 "is slower than this (m/s).")]
+        public float SlideMaxSpeed = 1f;
+        /// <summary>Test hook (RagdollSmokeTest's before rows): the body slide always on, as before 2026-10-11.</summary>
+        public static bool LegacyBodySlide;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => LegacyBodySlide = false;
+
+        private readonly List<BoxCollider> _slides = new();
+        private bool _slideOn = true;
+        private Rigidbody _vanBody;
+        private VanDoor[] _rearDoors;
 
         // VanSetupBuilder's Floor box, the reference for the Blender -> van-root offset.
         private static readonly Vector3 FloorMin = new(-0.94f, -1.70f, 0.35f);
@@ -165,9 +183,44 @@ namespace OnlyVolunteers.Vehicles
             foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in BodySlides)
             {
                 Ramp(holder, name, low, high, halfWidth, layer);
-                if (Application.isPlaying && holder.Find(name) is Transform t && t.TryGetComponent(out BoxCollider box))
-                    box.sharedMaterial = Slippery;
+                if (!Application.isPlaying || !(holder.Find(name) is Transform t) || !t.TryGetComponent(out BoxCollider box)) continue;
+                box.sharedMaterial = Slippery;
+                if (!_slides.Contains(box)) _slides.Add(box);
             }
+        }
+
+        // The slide is for loading at a standstill (SlideMaxSpeed, a rear door open). Off, it excludes every layer: the shape
+        // stays, because switching a collider off and on drops its ignore pairs (the standing NPCs' with the van). Coming on
+        // under a body it pushes the body out, as it always did with a body laid there.
+        private void FixedUpdate()
+        {
+            if (_slides.Count == 0) return;
+            bool on = LegacyBodySlide || SlideWanted();
+            if (on == _slideOn) return;
+            _slideOn = on;
+            foreach (BoxCollider slide in _slides)
+            {
+                if (slide == null) continue;
+                slide.excludeLayers = on ? 0 : ~0;
+                slide.layerOverridePriority = on ? 0 : 100;
+            }
+        }
+
+        private bool SlideWanted()
+        {
+            if (_vanBody == null) _vanBody = GetComponent<Rigidbody>();
+            if (_vanBody != null && _vanBody.linearVelocity.sqrMagnitude > SlideMaxSpeed * SlideMaxSpeed) return false;
+            if (_rearDoors == null)
+            {
+                var rear = new List<VanDoor>();
+                foreach (VanDoor door in GetComponentsInChildren<VanDoor>(true))
+                    if (door.name.Contains("Rear")) rear.Add(door);
+                _rearDoors = rear.ToArray();
+            }
+            if (_rearDoors.Length == 0) return true; // no rear doors found: on, as before
+            foreach (VanDoor door in _rearDoors)
+                if (door != null && door.Openness > 0.3f) return true;
+            return false;
         }
 
         private static PhysicsMaterial Slippery => _slippery != null ? _slippery : _slippery = new PhysicsMaterial("VanBodySlide")

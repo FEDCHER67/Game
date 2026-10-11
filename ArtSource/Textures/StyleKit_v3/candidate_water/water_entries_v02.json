@@ -1,0 +1,157 @@
+{
+  "schema": "OnlyVolunteers.StyleKitV3/1",
+  "candidate_only": true,
+  "water_revision": 2,
+  "brief": "G14b + G14c",
+  "date": "2026-10-11",
+  "baseline_manifest": "Assets/OnlyVolunteers/Art/StyleKit_v3/materials_v3_v05.json",
+  "merge_instruction": "После ревью Claude объединяет categories и entries по category с актуальным полным манифестом. Это только 5 водных записей; не заменять ими весь манифест. Активный v05 не изменён.",
+  "categories": {
+    "8a_water": {
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Sea_v02.mat",
+      "metres_per_tile": {
+        "x": 3.6,
+        "y": 3.6
+      }
+    },
+    "8a_water_lake": {
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Lake_v02.mat",
+      "metres_per_tile": {
+        "x": 2.4,
+        "y": 2.4
+      }
+    },
+    "8a_water_river": {
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_River_v02.mat",
+      "metres_per_tile": {
+        "x": 0.9,
+        "y": 0.9
+      }
+    },
+    "8a_water_waterfall": {
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Waterfall_v02.mat",
+      "metres_per_tile": {
+        "x": 1.0,
+        "y": 1.0
+      }
+    },
+    "8a_water_foamsplash": {
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_FoamSplash_v02.mat",
+      "metres_per_tile": {
+        "x": 1.0,
+        "y": 1.0
+      }
+    }
+  },
+  "entries": [
+    {
+      "category": "8a_water",
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Sea_v02.mat",
+      "metres_per_tile": {
+        "x": 3.6,
+        "y": 3.6
+      },
+      "palette_key": "water",
+      "palette_hex": "#2F5868",
+      "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/8a_water/8a_water_v03_normal.png",
+      "shader": "OnlyVolunteers/Uber Stylized Water v02",
+      "water_revision": 2,
+      "colour_brief": "G14c muted",
+      "shallow_hex": "#6FA3A0",
+      "deep_hex": "#2F5868",
+      "foam_hex": "#E6E3D8",
+      "fresnel_hex": "#9FB3BF",
+      "environment_reflections": false,
+      "notes": "G14b effects + G14c muted palette. One forward pass. See docs/art/G14_WATER_v02.md; no automatic activation.",
+      "shallow_depth_m": 1.5,
+      "deep_depth_m": 6,
+      "mid_hex": "#4A7F8C",
+      "mid_depth_m": 3.25
+    },
+    {
+      "category": "8a_water_lake",
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Lake_v02.mat",
+      "metres_per_tile": {
+        "x": 2.4,
+        "y": 2.4
+      },
+      "palette_key": "water",
+      "palette_hex": "#3A5E5A",
+      "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/8a_water/8a_water_v03_normal.png",
+      "shader": "OnlyVolunteers/Uber Stylized Water v02",
+      "water_revision": 2,
+      "colour_brief": "G14c muted",
+      "shallow_hex": "#7AA595",
+      "deep_hex": "#3A5E5A",
+      "foam_hex": "#E6E3D8",
+      "fresnel_hex": "#9FB3BF",
+      "environment_reflections": false,
+      "notes": "G14b effects + G14c muted palette. One forward pass. See docs/art/G14_WATER_v02.md; no automatic activation.",
+      "shallow_depth_m": 1.5,
+      "deep_depth_m": 6
+    },
+    {
+      "category": "8a_water_river",
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_River_v02.mat",
+      "metres_per_tile": {
+        "x": 0.9,
+        "y": 0.9
+      },
+      "palette_key": "water",
+      "palette_hex": "#44706F",
+      "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/8a_water/8a_water_v03_normal.png",
+      "shader": "OnlyVolunteers/Uber Stylized Water v02",
+      "water_revision": 2,
+      "colour_brief": "G14c muted",
+      "shallow_hex": "#7AA39A",
+      "deep_hex": "#44706F",
+      "foam_hex": "#E6E3D8",
+      "fresnel_hex": "#9FB3BF",
+      "environment_reflections": false,
+      "notes": "G14b effects + G14c muted palette. One forward pass. See docs/art/G14_WATER_v02.md; no automatic activation.",
+      "shallow_depth_m": 1.5,
+      "deep_depth_m": 6,
+      "flow_contract": "UV1.xy = signed world-XZ velocity m/s; material multiplier 1.2"
+    },
+    {
+      "category": "8a_water_waterfall",
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_Waterfall_v02.mat",
+      "metres_per_tile": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "palette_key": "water",
+      "palette_hex": "#7AA39A",
+      "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/8a_water/8a_water_v03_normal.png",
+      "shader": "OnlyVolunteers/Uber Stylized Water v02",
+      "water_revision": 2,
+      "colour_brief": "G14c muted",
+      "shallow_hex": "#7AA39A",
+      "deep_hex": "#44706F",
+      "foam_hex": "#E6E3D8",
+      "fresnel_hex": "#9FB3BF",
+      "environment_reflections": false,
+      "notes": "G14b effects + G14c muted palette. One forward pass. See docs/art/G14_WATER_v02.md; no automatic activation."
+    },
+    {
+      "category": "8a_water_foamsplash",
+      "material_path": "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_Water_FoamSplash_v02.mat",
+      "metres_per_tile": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "palette_key": "water",
+      "palette_hex": "#E6E3D8",
+      "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/8a_water/8a_water_v03_normal.png",
+      "shader": "OnlyVolunteers/Uber Stylized Water v02",
+      "water_revision": 2,
+      "colour_brief": "G14c muted",
+      "shallow_hex": "#7AA39A",
+      "deep_hex": "#44706F",
+      "foam_hex": "#E6E3D8",
+      "fresnel_hex": "#9FB3BF",
+      "environment_reflections": false,
+      "notes": "G14b effects + G14c muted palette. One forward pass. See docs/art/G14_WATER_v02.md; no automatic activation."
+    }
+  ]
+}

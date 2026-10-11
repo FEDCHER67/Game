@@ -128,7 +128,11 @@ namespace OnlyVolunteers.Map
         private float _shapeHeight;
         private readonly List<Collider> _ignored = new();
         private float _restoreIgnoredAt;
-        private readonly List<Collider> _grace = new(); // IgnoreOverlapping: ignored until apart
+        // Fedya's playtest 2026-10-11: a vehicle that knocked it over or drives into it (NpcRagdoll.VehicleGrace).
+        private readonly NpcRagdoll.VehicleGrace _grace = new();
+        private readonly List<Collider> _own = new();
+        private Rigidbody _watchVehicle;
+        private float _watchUntil, _dragFor;
         private float _lastContact = -1f;
         private readonly List<DebugPin> _pins = new();
 
@@ -307,6 +311,7 @@ namespace OnlyVolunteers.Map
             // Stage 9 step 4 (GPT review finding 3): a lying body meets police cars (they exclude the NPC layers for the
             // standing crowd's sake); sitters and escapers in the bay do not (SeatedShape).
             NpcRagdoll.CollideWithVehicles(_capsule, true);
+            NpcRagdoll.IgnoreWheels(OwnColliders());
             SetShape(Height);
             _rb.mass = DownedMass;
             _rb.linearDamping = LinearDamping;
@@ -329,7 +334,8 @@ namespace OnlyVolunteers.Map
         {
             RevokeAll();
             _ignored.Clear(); // the pairs die with the capsule
-            _grace.Clear();
+            _grace.End();
+            _watchVehicle = null;
             _seated = false;
             _growing = false;
             if (_rb != null) DestroyImmediate(_rb);
@@ -517,30 +523,70 @@ namespace OnlyVolunteers.Map
             _ignored.Clear();
         }
 
-        /// <summary>A vehicle that just knocked it over (Fedya's playtest 2026-10-11): those of 'others' the capsule overlaps
-        /// now are ignored until it is apart from each (FixedUpdate); everything else collides at once. Like
-        /// NpcRagdoll.IgnoreOverlapping: no pair comes back into contact while overlapping.</summary>
-        public void IgnoreOverlapping(IEnumerable<Collider> others)
+        /// <summary>A vehicle that just knocked it over (Fedya's playtest 2026-10-11): born overlapping it, the capsule and
+        /// the vehicle stop colliding until they are apart (NpcRagdoll.VehicleGrace, as the ragdoll).</summary>
+        public void IgnoreWhileOverlapping(Rigidbody vehicle)
         {
-            if (!IsLive(_capsule) || others == null) return;
-            foreach (Collider c in others)
-            {
-                if (c == _capsule || _grace.Contains(c) || !NpcRagdoll.Touchable(c, null) || !NpcRagdoll.Overlapping(_capsule, c, 0f)) continue;
-                Physics.IgnoreCollision(_capsule, c, true);
-                _grace.Add(c);
-            }
+            if (IsLive(_capsule) && OwnColliders() != null) _grace.TryStart(_own, vehicle, 0f);
         }
 
-        private void EndGrace()
+        private List<Collider> OwnColliders()
         {
-            for (int i = _grace.Count - 1; i >= 0; i--)
+            _own.Clear();
+            if (_capsule != null) _own.Add(_capsule);
+            return _own.Count > 0 ? _own : null;
+        }
+
+        // The crush and drag rules (NpcRagdoll.WatchCrush, the same numbers): lying, outside a cargo bay, the vehicle moving;
+        // driven deeper than CrushDepth into the capsule, or carrying it along at ground level for DragTime: they stop
+        // colliding until apart.
+        private void WatchCrush()
+        {
+            Rigidbody vehicle = _watchVehicle;
+            if (vehicle == null || !vehicle.gameObject.activeInHierarchy || _seated || GreyboxNpc.LegacyVanKnock || InCargoBay() ||
+                OwnColliders() == null)
             {
-                Collider c = _grace[i];
-                bool live = IsLive(_capsule) && IsLive(c);
-                if (live && NpcRagdoll.Overlapping(_capsule, c, NpcRagdoll.GraceExit)) continue;
-                if (live) Physics.IgnoreCollision(_capsule, c, false);
-                _grace.RemoveAt(i);
+                _watchVehicle = null;
+                _dragFor = 0f;
+                return;
             }
+            bool near = _grace.Near(_own, vehicle, NpcRagdoll.DragApart);
+            if (near) _watchUntil = Time.time + NpcRagdoll.CrushWatch; // still at it
+            float decay = NpcRagdoll.DragDecay * Time.fixedDeltaTime; // the drag timer counts down, never resets (a dragged body jolts)
+            if (vehicle.isKinematic || vehicle.linearVelocity.sqrMagnitude < NpcRagdoll.CrushSpeed * NpcRagdoll.CrushSpeed)
+            {
+                _dragFor = Mathf.Max(0f, _dragFor - decay);
+                return;
+            }
+            if (_grace.TryStart(_own, vehicle, NpcRagdoll.CrushDepth))
+            {
+                _dragFor = 0f;
+                return;
+            }
+            bool dragged = NpcRagdoll.DragRule && near && HolderCount == 0 &&
+                           NpcRagdoll.CarriedAlong(vehicle, _rb.linearVelocity, _rb.worldCenterOfMass);
+            _dragFor = dragged ? _dragFor + Time.fixedDeltaTime : Mathf.Max(0f, _dragFor - decay);
+            if (_dragFor < NpcRagdoll.DragTime) return;
+            _dragFor = 0f;
+            _grace.StartUntilFar(_own, vehicle);
+        }
+
+        private bool InCargoBay()
+        {
+            Vector3 centre = _rb != null ? _rb.worldCenterOfMass : transform.position;
+            foreach (VanCargoSpace bay in VanCargoSpace.All)
+                if (bay != null && bay.Contains(centre, 0.3f)) return true;
+            return false;
+        }
+
+        private void NoteVehicle(Collision collision)
+        {
+            Rigidbody rb = collision.rigidbody;
+            Collider other = collision.collider;
+            if (rb == null || rb.isKinematic || other == null || (OvLayers.VehicleMask & (1 << other.gameObject.layer)) == 0) return;
+            if (_watchVehicle != rb && _grace.Active) return;
+            _watchVehicle = rb;
+            _watchUntil = Time.time + NpcRagdoll.CrushWatch;
         }
 
         private static bool IsLive(Collider c) => c != null && c.enabled && c.gameObject.activeInHierarchy;
@@ -549,7 +595,8 @@ namespace OnlyVolunteers.Map
         {
             if (_rb == null) return;
             if (_ignored.Count > 0 && Time.time >= _restoreIgnoredAt) RestoreIgnored();
-            if (_grace.Count > 0) EndGrace();
+            if (_grace.Active) _grace.Tick();
+            else if (_watchVehicle != null && Time.time < _watchUntil) WatchCrush();
             if (_growing && _capsule != null)
             {
                 _shapeHeight = Mathf.MoveTowards(_shapeHeight, Height, UnseatGrowSpeed * Time.fixedDeltaTime);
@@ -569,6 +616,7 @@ namespace OnlyVolunteers.Map
         {
             _lastContact = Time.fixedTime;
             if (collision.contactCount == 0) return;
+            NoteVehicle(collision);
             if (collision.rigidbody != null && collision.rigidbody.isKinematic) return;
             ContactPoint contact = collision.GetContact(0);
             float speed = Mathf.Abs(Vector3.Dot(collision.relativeVelocity, contact.normal));

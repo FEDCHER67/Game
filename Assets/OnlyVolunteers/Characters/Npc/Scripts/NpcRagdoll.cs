@@ -4,6 +4,7 @@ using System.Globalization;
 using OnlyVolunteers.Audio;
 using OnlyVolunteers.Map;
 using OnlyVolunteers.Player.Physics;
+using OnlyVolunteers.Vehicles;
 using UnityEngine;
 using Kind = OnlyVolunteers.Characters.Npc.NpcRagdollProfile.Kind;
 using Handle = OnlyVolunteers.Characters.Npc.NpcRagdollProfile.Handle;
@@ -37,6 +38,10 @@ namespace OnlyVolunteers.Characters.Npc
     //   A6 (leg lever) is not built: only if playtests show the legs folding on the van's edge.
     //   One hand alone on an arm or a leg (Fedya's playtest 2026-10-11: "by the leg you lift him into the air"): no relief
     //   and at most SoloLimbLift up (SoloLimbHeld), so the limb rises and the body drags on its back (smoke test r22).
+    // - Vehicles (Fedya's playtest 2026-10-11, "he gets stuck in the van's geometry"; smoke test r23-r25): born partly inside
+    //   the vehicle that knocked it, the body and that vehicle ignore each other until apart (VehicleGrace); a moving vehicle
+    //   driving deeper than CrushDepth into it outside a cargo bay does the same (the crush rule); wheels never ride on it
+    //   (IgnoreWheels).
     // - The van (GreyboxVanCargo, through INpcBody): loaded by its pelvis and collar like the capsule, at rest = every
     //   body; damped toward the van per body; teleports and ejection move the root with the bodies (MoveRigid,
     //   PlaceLying), so the root never stays far behind.
@@ -96,6 +101,9 @@ namespace OnlyVolunteers.Characters.Npc
             TrackAll = false;
             Live.Clear();
             HandleProfiles.Clear();
+            Wheels.Clear();
+            _wheelsFound = float.NegativeInfinity;
+            DragRule = true;
             _pawn = null;
             _nextPawnSearch = 0f;
             _listenerFrame = -1;
@@ -164,8 +172,6 @@ namespace OnlyVolunteers.Characters.Npc
 
         private readonly List<Collider> _ignored = new();
         private float _restoreIgnoredAt;
-        // IgnoreOverlapping: (own collider, vehicle collider) pairs ignored until they are apart.
-        private readonly List<(Collider own, Collider other)> _grace = new();
         private float _impactSpeed;
         private Collider _impactOther;
         private Vector3 _impactPoint;
@@ -452,6 +458,7 @@ namespace OnlyVolunteers.Characters.Npc
             }
             PhysicsMaterial material = Material(p);
             for (int i = 0; i < n; i++) AddColliders(i, p, material);
+            IgnoreWheels(_colliders);
             for (int i = 0; i < n; i++) SetupBody(i, p);
             for (int i = 0; i < n; i++)
                 if (p.Parts[i].Parent >= 0) _joints[i] = MakeJoint(i, p);
@@ -575,7 +582,9 @@ namespace OnlyVolunteers.Characters.Npc
             _blendScale = Mathf.Max(0.1f, blendScale);
             RevokeAll();
             RestoreIgnored();
-            EndGrace(true);
+            _grace.End();
+            _watchVehicle = null;
+            _dragFor = 0f;
             _impactSpeed = 0f;
             _impactOther = null;
             bool snapshot = HasRequiredBodies && _allBones != null;
@@ -782,7 +791,8 @@ namespace OnlyVolunteers.Characters.Npc
         {
             if (!_active) return;
             if (_ignored.Count > 0 && Time.time >= _restoreIgnoredAt) RestoreIgnored();
-            if (_grace.Count > 0) EndGrace(false);
+            if (_grace.Active) _grace.Tick();
+            else if (_watchVehicle != null && Time.time < _watchUntil) WatchCrush();
             if (_impactSpeed > 0f) RaiseImpact();
             if (_pins.Count > 0) HoldPins();
             NpcRagdollProfile p = Profile;
@@ -1291,56 +1301,241 @@ namespace OnlyVolunteers.Characters.Npc
             _ignored.Clear();
         }
 
-        /// <summary>m: a grace pair (IgnoreOverlapping) collides again once its two colliders overlap by less than this.</summary>
-        public const float GraceExit = 0.01f;
+        // ---------- Vehicles: the knock's grace and the crush rule (Fedya's playtest 2026-10-11) ----------
 
-        /// <summary>INpcBody (a vehicle's knock, Fedya's playtest 2026-10-11): each ragdoll collider that overlaps one of
-        /// 'others' now stops colliding with it until the two are apart again (checked every physics step); every other pair
-        /// collides at once. So the parts born inside the bumper pass out of it, and no pair comes back into contact while
-        /// overlapping: the old fixed 0.5 s let the van drive into the thrown body, then shut it in the windshield or a door.</summary>
-        public void IgnoreOverlapping(IEnumerable<Collider> others)
+        /// <summary>m: a body and a vehicle in grace collide again once none of the body's colliders overlaps the vehicle by
+        /// more than this.</summary>
+        public const float GraceExit = 0.01f;
+        /// <summary>m: a moving vehicle (CrushSpeed) that has driven this deep into a downed body outside a cargo bay stops
+        /// colliding with it until they are apart (the crush rule): the body is pinned against the ground or a wall, and
+        /// pushing on would drive it into them, under the van or along with it.</summary>
+        public const float CrushDepth = 0.05f;
+        public const float CrushSpeed = 1.5f;
+        /// <summary>s: after touching a vehicle a body looks for the crush this long (renewed while they still touch).</summary>
+        public const float CrushWatch = 1f;
+        /// <summary>The drag rule (with the crush rule): a vehicle moving at CrushSpeed or more that has carried a downed body
+        /// along for DragTime s (at it, the body at ground level, DragBelow under the vehicle's centre of mass, moving with it
+        /// at half its speed or more, nobody holding it) stops colliding with it until they are DragApart m apart: a van
+        /// backing off or driving on dragged a body lying against or under its front along (smoke test r23, r25). The van's
+        /// centre of mass is 0.60 m over its root (VanController), a police car's 0.45 m: a lying body (0.12-0.25 m, bouncing
+        /// while dragged) is under it by more than DragBelow, one on the hood, a step or the bay floor is not. The timer
+        /// counts down at DragDecay of its pace while the drag lapses for a moment (a dragged body jolts), never resets.</summary>
+        public static bool DragRule = true;
+        public const float DragTime = 0.25f, DragBelow = 0.2f, DragApart = 0.1f, DragDecay = 0.5f;
+
+        /// <summary>Whether a downed body (its velocity, its centre of mass) is being carried along by a moving vehicle at
+        /// ground level (the drag rule): not riding on its roof or hood.</summary>
+        public static bool CarriedAlong(Rigidbody vehicle, Vector3 bodyVelocity, Vector3 bodyCentre)
         {
-            if (!_active || others == null) return;
-            foreach (Collider other in others)
+            if (vehicle == null) return false;
+            Vector3 v = vehicle.linearVelocity;
+            float speed = v.magnitude;
+            return speed >= CrushSpeed && Vector3.Dot(bodyVelocity, v / speed) >= 0.5f * speed &&
+                   bodyCentre.y < vehicle.worldCenterOfMass.y - DragBelow;
+        }
+
+        /// <summary>A downed body (the ragdoll's colliders, or the stage-1 capsule) and one vehicle not colliding at all while
+        /// they overlap: from a knock (the parts born inside the bumper; INpcBody.IgnoreWhileOverlapping), the crush rule
+        /// or the drag rule. Every pair of the body's and the vehicle's colliders is ignored until none of the body's colliders
+        /// overlaps the vehicle any more (the drag rule: until their bounds are DragApart apart), then all come back at once:
+        /// the vehicle passes through instead of shutting a part in the van or pushing it through the ground or a wall or along
+        /// with it, and no part is let back into contact inside it (before 2026-10-11 a fixed 0.5 s let the van drive into
+        /// the thrown body and then shut it in the windshield). Wheels: IgnoreWheels.</summary>
+        public sealed class VehicleGrace
+        {
+            private readonly List<Collider> _all = new();     // the vehicle's colliders a body can meet
+            private IReadOnlyList<Collider> _own;
+            private Rigidbody _cached;
+            private bool _untilFar;
+
+            /// <summary>The vehicle in grace with the body (null: none).</summary>
+            public Rigidbody Vehicle { get; private set; }
+            public bool Active => Vehicle != null && _own != null;
+            /// <summary>Times a grace started (the smoke test).</summary>
+            public int Started { get; private set; }
+
+            /// <summary>Starts when one of 'own' overlaps one of the vehicle's colliders by more than 'depth' (true; also true
+            /// when a grace with this vehicle is on already).</summary>
+            public bool TryStart(IReadOnlyList<Collider> own, Rigidbody vehicle, float depth)
             {
-                if (!Touchable(other, _colliders)) continue;
-                foreach (Collider own in _colliders)
+                if (Active) return Vehicle == vehicle;
+                if (own == null || vehicle == null || !AnyOverlap(own, vehicle, depth)) return false;
+                Begin(own, vehicle, false);
+                return true;
+            }
+
+            /// <summary>The drag rule's grace: starts at once, lasts until the bounds are DragApart apart.</summary>
+            public void StartUntilFar(IReadOnlyList<Collider> own, Rigidbody vehicle)
+            {
+                if (Active || own == null || vehicle == null) return;
+                Cache(vehicle);
+                Begin(own, vehicle, true);
+            }
+
+            private void Begin(IReadOnlyList<Collider> own, Rigidbody vehicle, bool untilFar)
+            {
+                foreach (Collider o in own)
+                    if (IsLive(o))
+                        foreach (Collider v in _all)
+                            if (IsLive(v)) Physics.IgnoreCollision(o, v, true);
+                _own = own;
+                Vehicle = vehicle;
+                _untilFar = untilFar;
+                Started++;
+            }
+
+            /// <summary>Every physics step: over once none of the body's colliders overlaps the vehicle (the drag rule: is near
+            /// it), or the vehicle is gone.</summary>
+            public void Tick()
+            {
+                if (_own == null) return;
+                if (Vehicle != null && Vehicle.gameObject.activeInHierarchy &&
+                    (_untilFar ? Near(_own, Vehicle, DragApart) : AnyOverlap(_own, Vehicle, GraceExit))) return;
+                End();
+            }
+
+            /// <summary>Whether the bounds of one of 'own', grown by 'margin', meet those of one of the vehicle's colliders.</summary>
+            public bool Near(IReadOnlyList<Collider> own, Rigidbody vehicle, float margin)
+            {
+                Cache(vehicle);
+                foreach (Collider o in own)
                 {
-                    if (!IsLive(own) || Graced(own, other) || !Overlapping(own, other, 0f)) continue;
-                    Physics.IgnoreCollision(own, other, true);
-                    _grace.Add((own, other));
+                    if (!IsLive(o)) continue;
+                    Bounds b = o.bounds;
+                    b.Expand(margin * 2f);
+                    foreach (Collider v in _all)
+                        if (IsLive(v) && b.Intersects(v.bounds)) return true;
+                }
+                return false;
+            }
+
+            /// <summary>Every pair collides again now.</summary>
+            public void End()
+            {
+                if (_own != null)
+                    foreach (Collider o in _own)
+                        if (IsLive(o))
+                            foreach (Collider v in _all)
+                                if (IsLive(v)) Physics.IgnoreCollision(o, v, false);
+                _own = null;
+                Vehicle = null;
+            }
+
+            /// <summary>Whether one of 'own' overlaps one of the vehicle's solid colliders by more than 'depth'.</summary>
+            public bool AnyOverlap(IReadOnlyList<Collider> own, Rigidbody vehicle, float depth)
+            {
+                Cache(vehicle);
+                foreach (Collider o in own)
+                {
+                    if (!IsLive(o)) continue;
+                    foreach (Collider v in _all)
+                        if (IsLive(v) && Overlapping(o, v, depth)) return true;
+                }
+                return false;
+            }
+
+            private void Cache(Rigidbody vehicle)
+            {
+                if (vehicle == _cached && (_all.Count > 0 || vehicle == null)) return;
+                if (Active && vehicle != Vehicle) return; // the ignored pairs belong to the vehicle in grace
+                _cached = vehicle;
+                _all.Clear();
+                if (vehicle == null) return;
+                foreach (Collider c in vehicle.GetComponentsInChildren<Collider>())
+                {
+                    if (c.isTrigger || c is WheelCollider) continue;
+                    if ((OvLayers.VehicleMask & (1 << c.gameObject.layer)) == 0 &&
+                        Physics.GetIgnoreLayerCollision(OvLayers.NpcBody, c.gameObject.layer)) continue; // the player's ramps
+                    _all.Add(c);
                 }
             }
         }
 
-        /// <summary>Pairs still in the knock's grace (the smoke test).</summary>
-        public int GraceCount => _grace.Count;
+        private static readonly List<WheelCollider> Wheels = new();
+        private static float _wheelsFound = float.NegativeInfinity;
 
-        private bool Graced(Collider own, Collider other)
+        /// <summary>Fedya's playtest 2026-10-11: no vehicle wheel (WheelCollider) takes a downed body for the road; driving
+        /// over one, a wheel's suspension pressed a part into the ground with the vehicle's weight. Called when a body is
+        /// built; the scene's wheels are looked up again at most every 5 s.</summary>
+        public static void IgnoreWheels(IReadOnlyList<Collider> own)
         {
-            foreach ((Collider a, Collider b) in _grace)
-                if (a == own && b == other) return true;
+            if (own == null) return;
+            if (Time.time - _wheelsFound > 5f || Time.time < _wheelsFound)
+            {
+                _wheelsFound = Time.time;
+                Wheels.Clear();
+                Wheels.AddRange(FindObjectsByType<WheelCollider>(FindObjectsInactive.Exclude));
+            }
+            foreach (WheelCollider wheel in Wheels)
+                if (IsLive(wheel))
+                    foreach (Collider o in own)
+                        if (IsLive(o)) Physics.IgnoreCollision(o, wheel, true);
+        }
+
+        private readonly VehicleGrace _grace = new();
+        private Rigidbody _watchVehicle;
+        private float _watchUntil, _dragFor;
+
+        /// <summary>The vehicle in grace with this body (the knock or the crush rule), null when none; how many graces began.</summary>
+        public Rigidbody GraceVehicle => _grace.Active ? _grace.Vehicle : null;
+        public int GraceCount => _grace.Started;
+
+        /// <summary>INpcBody (a vehicle's knock): if a part was born inside the vehicle, the body and the vehicle stop
+        /// colliding until they are apart (VehicleGrace); otherwise they collide at once.</summary>
+        public void IgnoreWhileOverlapping(Rigidbody vehicle)
+        {
+            if (_active) _grace.TryStart(_colliders, vehicle, 0f);
+        }
+
+        // The crush and drag rules (VehicleGrace), checked for a while after this body touched a vehicle: not in a cargo bay
+        // (a loaded body braking into the partition must never pass through it), the vehicle moving; a part driven deeper
+        // than CrushDepth, or the body carried along at ground level for DragTime.
+        private void WatchCrush()
+        {
+            Rigidbody vehicle = _watchVehicle;
+            if (vehicle == null || !vehicle.gameObject.activeInHierarchy || GreyboxNpc.LegacyVanKnock || InCargoBay())
+            {
+                _watchVehicle = null;
+                _dragFor = 0f;
+                return;
+            }
+            bool near = _grace.Near(_colliders, vehicle, DragApart);
+            if (near) _watchUntil = Time.time + CrushWatch; // still at it (a van stopped against it may drive off again)
+            if (vehicle.isKinematic || vehicle.linearVelocity.sqrMagnitude < CrushSpeed * CrushSpeed)
+            {
+                _dragFor = Mathf.Max(0f, _dragFor - DragDecay * Time.fixedDeltaTime);
+                return;
+            }
+            if (_grace.TryStart(_colliders, vehicle, CrushDepth))
+            {
+                _dragFor = 0f;
+                return;
+            }
+            bool dragged = DragRule && near && HolderCount == 0 && CarriedAlong(vehicle, _bodies[_root].linearVelocity, CenterOfMass);
+            _dragFor = dragged ? _dragFor + Time.fixedDeltaTime : Mathf.Max(0f, _dragFor - DragDecay * Time.fixedDeltaTime);
+            if (_dragFor < DragTime) return;
+            _dragFor = 0f;
+            _grace.StartUntilFar(_colliders, vehicle);
+        }
+
+        private bool InCargoBay()
+        {
+            Vector3 pelvis = Landmark(NpcLandmark.Pelvis), collar = Landmark(NpcLandmark.Collar);
+            foreach (VanCargoSpace bay in VanCargoSpace.All)
+                if (bay != null && (bay.Contains(pelvis, 0.3f) || bay.Contains(collar, 0.3f))) return true;
             return false;
         }
 
-        // The grace pairs collide again once apart (or gone); all: every pair now (back to a plain NPC).
-        private void EndGrace(bool all)
+        // A contact with a vehicle (its layer, a moving body) starts the crush watch.
+        private void NoteVehicle(Collision collision)
         {
-            for (int i = _grace.Count - 1; i >= 0; i--)
-            {
-                (Collider own, Collider other) = _grace[i];
-                bool live = IsLive(own) && IsLive(other);
-                if (!all && live && Overlapping(own, other, GraceExit)) continue;
-                if (live) Physics.IgnoreCollision(own, other, false);
-                _grace.RemoveAt(i);
-            }
+            Rigidbody rb = collision.rigidbody;
+            Collider other = collision.collider;
+            if (rb == null || rb.isKinematic || other == null || (OvLayers.VehicleMask & (1 << other.gameObject.layer)) == 0) return;
+            if (_watchVehicle != rb && _grace.Active) return; // one vehicle at a time
+            _watchVehicle = rb;
+            _watchUntil = Time.time + CrushWatch;
         }
-
-        /// <summary>A vehicle's collider a downed body can meet: live, solid, not a wheel, not the body's own, on a layer that
-        /// touches NpcBody (the downed body's colliders also include Vehicle, CollideWithVehicles).</summary>
-        public static bool Touchable(Collider c, ICollection<Collider> own) =>
-            IsLive(c) && !c.isTrigger && !(c is WheelCollider) && (own == null || !own.Contains(c)) &&
-            ((OvLayers.VehicleMask & (1 << c.gameObject.layer)) != 0 || !Physics.GetIgnoreLayerCollision(OvLayers.NpcBody, c.gameObject.layer));
 
         /// <summary>Whether two colliders overlap by more than 'depth' (m), at their bodies' physics poses (an interpolated
         /// body's transform trails it). One of them must be a primitive (ComputePenetration).</summary>
@@ -1380,6 +1575,7 @@ namespace OnlyVolunteers.Characters.Npc
         internal void OnPartCollision(int part, Collision collision)
         {
             if (!_active || collision.contactCount == 0) return;
+            NoteVehicle(collision);
             Kind kind = Profile.Parts[part].Kind;
             if (kind != Kind.Pelvis && kind != Kind.Chest && kind != Kind.Head) return;
             Collider other = collision.collider;

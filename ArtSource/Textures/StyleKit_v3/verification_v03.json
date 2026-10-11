@@ -1,0 +1,816 @@
+{
+  "revision": 3,
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "pillow": "12.3.0",
+  "numpy": "2.5.4",
+  "byte_identical_rerender": true,
+  "sets": [
+    {
+      "category": "1a_grass",
+      "files": {
+        "albedo": {
+          "sha256": "2db9359d49802c435046bf7e18103f088484a42d876d11520ff6018730a450b0",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "99578291fc3a8b8c295b61c9e24c194e5e411dafa7f2066a733417c0b000cf7e",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "4cea8b6ccee132ef2923cdd5387fb3f2b62e92705dc1a807410fe61fda861e52",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "OpenGL from explicit filename",
+      "geometric_luminance_to_palette_ratio": 1.0000003078498243,
+      "output_normal_y_height_covariance": 0.0,
+      "mask_channel_min": [
+        0,
+        251,
+        0,
+        22
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        26
+      ]
+    },
+    {
+      "category": "1b_dirt_road",
+      "files": {
+        "albedo": {
+          "sha256": "d514f56afedd5e6827edcef78c31ef303c31aa151e60c16c7033188475ce669a",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "ee65eab6a2943534e8d26e4240dfe6f0ac4f44098aa33f181dbf4588ced8fd17",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "b0980447296cd90fc36c71b3647490267ad2d418a41a41e76dc0284205c5a656",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.000000178376363,
+      "output_normal_y_height_covariance": 21.621097564697266,
+      "mask_channel_min": [
+        0,
+        251,
+        0,
+        15
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        18
+      ]
+    },
+    {
+      "category": "1c_beach_sand",
+      "files": {
+        "albedo": {
+          "sha256": "da3c6a5e4eb780bb865e6049c6b9ef3019cc161f17741c87325dd17818a026b9",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "e44ee6d87730cc511520034f7da337198332a96ad18469c587de4f320dfcea12",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "905d997246dacdd27617b1eba8236b033cee92433366e0927d6a742e7a35d207",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.000000178376363,
+      "output_normal_y_height_covariance": 35.49369812011719,
+      "mask_channel_min": [
+        0,
+        252,
+        0,
+        20
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        21
+      ]
+    },
+    {
+      "category": "1d_gravel",
+      "files": {
+        "albedo": {
+          "sha256": "b83495deec740b15d061010fcc9ec133ad737ea7e2a8877db3d7b6b3dc21908b",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "7622ba985f9647708009071a5faa23dca31762bb562b28f4ad3cd0a6a1928def",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "ef1118b69af86da414f262a092bca21357af97584b2d4452ee3530ed7a3806aa",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.000000860663744,
+      "output_normal_y_height_covariance": 82.39482116699219,
+      "mask_channel_min": [
+        0,
+        248,
+        0,
+        18
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        23
+      ]
+    },
+    {
+      "category": "1e_mud",
+      "files": {
+        "albedo": {
+          "sha256": "46e9636f221eed7f412d0d6599dc87beb7ef2bdf14c2865757238ebef6ea4841",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "fdf46a21c79c25c835ab7ac2e24d66dac6a66b86b6d475c4e2726206e57c102b",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "809fc798c221e6d909e747299267e8ebc6c8c6d5d3cff319f4935b7fb1753341",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000001115300572,
+      "output_normal_y_height_covariance": 7.125231742858887,
+      "mask_channel_min": [
+        0,
+        250,
+        0,
+        129
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        139
+      ]
+    },
+    {
+      "category": "2a_asphalt",
+      "files": {
+        "albedo": {
+          "sha256": "dcd9ebd0b5c58abb0cfda87b810f25fea14510fab6e6fcc76f4e84805818ce2b",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "b67e32d9d2eb273a1991e3e5832a500928451699fcff26b5e8daec489f3f6698",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "b9d002f8c9d83cad81c4f218299e5ca00a87b9fb724f4992b7b1f2e1dc36c1cf",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 0.9999999966797731,
+      "output_normal_y_height_covariance": 38.29351806640625,
+      "mask_channel_min": [
+        0,
+        252,
+        0,
+        22
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        24
+      ]
+    },
+    {
+      "category": "2b_sidewalk_tiles",
+      "files": {
+        "albedo": {
+          "sha256": "1d323908d49f882be54fe1a2fb57cd51fad91c5f9e23d1dcdf297f9b32b14ebe",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "1da82c2fbae11c89650d51a0eabdbf0e80b43c5ba4c7b4f24c2a53365425d07b",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "34e4254ba7d0d24e2916c73a2b8881f53fe34d41791ba5577c39a051ba82ceb1",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000001974753798,
+      "output_normal_y_height_covariance": 396.5859069824219,
+      "mask_channel_min": [
+        0,
+        245,
+        0,
+        21
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        24
+      ]
+    },
+    {
+      "category": "2c_cobblestone",
+      "files": {
+        "albedo": {
+          "sha256": "2eedcc32a074db51abbf5d8c800579501ebaf902372fa45c2035913e413e96f4",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "2d623c66995bb90c96b17cdcd10f0bd9ba28d30bcbe7c148cb4d4db4b2f410d3",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "34defe785dd194b103f42e37800de098e758fcc1f322de847477c727e648bd8b",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000056744251256,
+      "output_normal_y_height_covariance": 965.927734375,
+      "mask_channel_min": [
+        0,
+        244,
+        0,
+        21
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        23
+      ]
+    },
+    {
+      "category": "3a_brick",
+      "files": {
+        "albedo": {
+          "sha256": "d78c8ffbaf59e066d569cb90f996153b541e281102a4a9decf2050595e47ec4d",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "8f3094bec0884dfdf443a0ce44077492e159094c4ab3ab1ffde812944f4637e7",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "34a8b255f1e86579e172529485dc988dbdbd99e904364d321711e259969a196a",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000033543000852,
+      "output_normal_y_height_covariance": 3060.3955078125,
+      "mask_channel_min": [
+        0,
+        245,
+        0,
+        21
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        29
+      ]
+    },
+    {
+      "category": "3b_plaster_stucco",
+      "files": {
+        "albedo": {
+          "sha256": "f367adf14cdf5c380eda79ef92b12f04779caa8f1f1465c0020591403e210ffe",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "4f70c1b1025e7ebef9aef2ef713379b93dc91b828477910a7ed179462c7c3e1d",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "643b114524ff00f52cc463cdbc271efbeea7676968a215ce12c133708080d7be",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000000839229968,
+      "output_normal_y_height_covariance": 0.08369922637939453,
+      "mask_channel_min": [
+        0,
+        255,
+        0,
+        27
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        27
+      ]
+    },
+    {
+      "category": "3c_concrete_panels",
+      "files": {
+        "albedo": {
+          "sha256": "9a726ce18098816ab8279d42bedf3a9bda8e34ed8446626a0f47f97fb30a3c02",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "aec9e24e1e83c596c614c1987536b077d64073c2d5baad2e553b062116d9f8f1",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "a0d0c46c79f5269c82b08e237eae116b81197f3ba3f20273efb8e3148fda4f31",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000000567574512,
+      "output_normal_y_height_covariance": 22.703262329101562,
+      "mask_channel_min": [
+        0,
+        254,
+        0,
+        27
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        28
+      ]
+    },
+    {
+      "category": "3d_cinder_blocks",
+      "files": {
+        "albedo": {
+          "sha256": "f63ad72a9b1f00361213d41440da2d86a8efd71189d27b724ef7ec2a82983300",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "bb7a64c56758b301000d3b340205d38fbea21766b15c3227f67538511fc0ba62",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "5a11d1c69b442b53e4296d41b11a97a3391cc4658a5f6b7ea9e32c6a22ad6d23",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000002543056132,
+      "output_normal_y_height_covariance": 82.02195739746094,
+      "mask_channel_min": [
+        0,
+        243,
+        0,
+        22
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        26
+      ]
+    },
+    {
+      "category": "4a_clay_roof_tiles",
+      "files": {
+        "albedo": {
+          "sha256": "789810d3b813fe45cd295f98f13578565b742d1dcacf41b420d0a0ac9ba6ab0e",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "cb5f458a5f95af47b9cdea6bb008de87c0c00d6ed4775cf45d68109fd1e9d781",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "e4fd8b7c556adef38f808494a196a9b4466d3d700c51b53a7fc2963c9ce1dc40",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000348320529404,
+      "output_normal_y_height_covariance": 1332.98291015625,
+      "mask_channel_min": [
+        0,
+        235,
+        0,
+        26
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        33
+      ]
+    },
+    {
+      "category": "4b_slate_shingles",
+      "files": {
+        "albedo": {
+          "sha256": "e838fc4b38a52c7d4025dc8dcc14a9558566501f1b60db39e012ba42eed19242",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "f087cf849e5a4c6092805fabb3d6bb9ffbad79e4ac9a7e3d267115bee79b31e5",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "211e63c9afc6c8657abccc71e88684b38fe583dd59cbac64d0cad46e5a9cb86d",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "OpenGL from explicit filename; slate relief capped at 19 degrees after 50% reduction",
+      "geometric_luminance_to_palette_ratio": 1.0000006400066515,
+      "output_normal_y_height_covariance": 0.4324367940425873,
+      "mask_channel_min": [
+        0,
+        255,
+        0,
+        26
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        48
+      ]
+    },
+    {
+      "category": "4c_corrugated_metal",
+      "files": {
+        "albedo": {
+          "sha256": "c04a8c22412c2a440c1b4c14648eaa266eb7026df18c92f614a89138ea5746a2",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "e4cfab7f2e054a371633934d4b9babb6f41eefa2405af9296441eb2bcef26bc1",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "379e9486aecf788a15841052c3ca31796d841c0007529f9a3deb8683621c42c9",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 0.9999999213198926,
+      "output_normal_y_height_covariance": 0.007979382760822773,
+      "mask_channel_min": [
+        255,
+        252,
+        0,
+        67
+      ],
+      "mask_channel_max": [
+        255,
+        255,
+        0,
+        73
+      ]
+    },
+    {
+      "category": "4d_flat_bitumen_roof",
+      "files": {
+        "albedo": {
+          "sha256": "c6e771cc7e52b7516bf2bb888ac24e8529bc677634bf47afbd1433e6289c4d49",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "53aae2f9d06fc2c8e7cee77a2efcb46a9b78b73a2308915472befb0b8990e465",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "fb2607ba91d856dd7a97b28cf9f8e04b5b9148c3eb35240a240077537a9b7bfb",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "OpenGL from explicit filename",
+      "geometric_luminance_to_palette_ratio": 1.000000183347945,
+      "output_normal_y_height_covariance": 0.025033827871084213,
+      "mask_channel_min": [
+        0,
+        255,
+        0,
+        29
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        31
+      ]
+    },
+    {
+      "category": "5a_wood_planks_fences",
+      "files": {
+        "albedo": {
+          "sha256": "4a72ee076013c258c553c2710dbc2aebbcae8cc0d08721704f394319becc53da",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "888d4e809330c123a109c132e6b3d6f0fe24b5add93a3cd38809a72e320c7454",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "2eeb68aa5b133e538864540425ab32387513cf2b0ee0060860f5ba83f54e8ac4",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000008708895245,
+      "output_normal_y_height_covariance": 1247.8162841796875,
+      "mask_channel_min": [
+        0,
+        244,
+        0,
+        26
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        31
+      ]
+    },
+    {
+      "category": "5b_logs",
+      "files": {
+        "albedo": {
+          "sha256": "7253d2f51cc57780c006cda0f5be4cb793a1ac499136ab5cfe0ae619d2ee2395",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "9069159308d938c48f9a54d5c73ad891a7f8faab625342ea5de1d0582ef8b190",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "58d17913716b19c32d697835e7cb47b70e48548e498ab6333c5ccbe29751e085",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "OpenGL from explicit filename",
+      "geometric_luminance_to_palette_ratio": 1.0000000746403082,
+      "output_normal_y_height_covariance": 74.18082427978516,
+      "mask_channel_min": [
+        0,
+        255,
+        0,
+        24
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        24
+      ]
+    },
+    {
+      "category": "5b_logs_endcap",
+      "files": {
+        "albedo": {
+          "sha256": "99ede6b3d56214c1f6df45b8af5f84d03d2749858192b1a55da1d67429e8668b",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "6a1abdd43f22d2f126ca77f41ef1cbde4b5558ddc95bab0640987dc35759a3a0",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "23f1d5db752f6c07bd7232fbe5ff19a40b07106895f7478ea2b561ed5d317d97",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "OpenGL from explicit filename",
+      "geometric_luminance_to_palette_ratio": 1.0000000746403082,
+      "output_normal_y_height_covariance": 1.0279109477996826,
+      "mask_channel_min": [
+        0,
+        255,
+        0,
+        24
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        25
+      ]
+    },
+    {
+      "category": "6a_painted_metal_panels",
+      "files": {
+        "albedo": {
+          "sha256": "a813574a38512d274a6eb2772b64ff7830ab3a8d0b2125a4e31cebd033749374",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "5765f9ee190658d75bd535b993b98a5aad74c4b534de189fab9b1b332421ecc6",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "de919ec343954474f0f6d19162aff4ef033a810d6dce4f4efb9a9703437c1b23",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000002795631633,
+      "output_normal_y_height_covariance": 214.48123168945312,
+      "mask_channel_min": [
+        0,
+        238,
+        0,
+        55
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        66
+      ]
+    },
+    {
+      "category": "6b_lightly_weathered_metal",
+      "files": {
+        "albedo": {
+          "sha256": "552434a85029704e0f5a11053933ef29029738ca80855bb6edafa6dfa13d873e",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "157df0c21d5c57999df3818b5b70a5e52f4b96558265d96e8830bba4e85d924c",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "7cafcc9e46098ddd6afb27968402045bb02a240ebbe422b89ce8b393f983ba9d",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.0000001227057014,
+      "output_normal_y_height_covariance": 6.191153526306152,
+      "mask_channel_min": [
+        46,
+        254,
+        0,
+        44
+      ],
+      "mask_channel_max": [
+        46,
+        255,
+        0,
+        54
+      ]
+    },
+    {
+      "category": "7b_tree_bark",
+      "files": {
+        "albedo": {
+          "sha256": "07999b0df136e5e8093002e351a49a813b80bcd6c4c592f15074808ac01547af",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "b7b92da3cc1a808ea9d2ee94b54c02a2db518e372517a6cf4af4c37d740be3d3",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "7dee7a5799491422dde2f797869c4c23fce66efc4262176dc6132e43ed5b9fe4",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.00000015426523,
+      "output_normal_y_height_covariance": 30.058452606201172,
+      "mask_channel_min": [
+        0,
+        244,
+        0,
+        15
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        16
+      ]
+    },
+    {
+      "category": "8a_water",
+      "files": {
+        "albedo": {
+          "sha256": "eac89bf88ad5f10459bdc07072dddf17579566454a78443af6b32b07ea657ddc",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "normal": {
+          "sha256": "da192e2b64e72ad8c56a9806bc3226b67716e498d995931ab2f19605517fc0f0",
+          "deterministic": true,
+          "seam_equal": true
+        },
+        "mask": {
+          "sha256": "d90d6c4b61dad232c76566c7f4d4b7cc5f90ba11d1103d74528115ce3886629c",
+          "deterministic": true,
+          "seam_equal": true
+        }
+      },
+      "normal_format_evidence": "Height-gradient Y orientation verified; green flipped=False",
+      "geometric_luminance_to_palette_ratio": 1.000000298407898,
+      "output_normal_y_height_covariance": 28.200267791748047,
+      "mask_channel_min": [
+        0,
+        254,
+        0,
+        144
+      ],
+      "mask_channel_max": [
+        0,
+        255,
+        0,
+        145
+      ]
+    }
+  ],
+  "game_pngs": 69,
+  "original_hashes_unchanged": true
+}

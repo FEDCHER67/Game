@@ -42,11 +42,11 @@ namespace OnlyVolunteers.Characters.Npc
         /// <summary>One crawl step: a horizontal impulse plus a small hop (m/s up).</summary>
         void Scoot(Vector3 push, float hop);
         void IgnoreFor(IEnumerable<Collider> others, float seconds);
-        /// <summary>A vehicle that just knocked it over (Fedya's playtest 2026-10-11): contacts with those of 'others' that
-        /// overlap this body now are ignored, each pair until the two are apart again; everything else collides at once.
-        /// The parts born inside the bumper pass out of it, and no pair comes back while overlapping (a body let back into
-        /// contact inside the van's colliders stayed stuck in its windshield, roof or door).</summary>
-        void IgnoreOverlapping(IEnumerable<Collider> others);
+        /// <summary>A vehicle that just knocked it over (Fedya's playtest 2026-10-11): if the body was born overlapping it,
+        /// the body and the vehicle stop colliding until none of the body overlaps the vehicle any more
+        /// (NpcRagdoll.VehicleGrace; a body let back into contact inside the van's colliders stayed stuck in its windshield,
+        /// roof or a door). The body also keeps the crush rule: a moving vehicle driving deep into it passes through.</summary>
+        void IgnoreWhileOverlapping(Rigidbody vehicle);
         void RevokeAll();
         /// <summary>Tears one hold loose, preferring holds near the landmark. False if nobody holds it.</summary>
         bool Tear(NpcLandmark preferred);

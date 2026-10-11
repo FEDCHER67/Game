@@ -2207,13 +2207,19 @@ def main(argv=None):
     ap.add_argument('--no-extras', action='store_true', help='skip the hand-sited garages, wrecks and beach furniture (extras_v12.py)')
     ap.add_argument('--no-kits', action='store_true', help='skip the parked vehicles and landmarks (extras_v12_kits.py)')
     ap.add_argument('--out', default=None, help='output path (default look_<rev>_flat.json next to this script)')
+    ap.add_argument('--plan', default=None, help='optional source plan path (default ../MAP_PLAN_R01_<rev>.json)')
     ap.add_argument('--lake-depth', type=float, default=1.1, help='lake bed depth (design 2.0; 1.1 keeps 0.8 m fordable)')
     ap.add_argument('--canal-depth', type=float, default=1.2)
     ap.add_argument('--seed', type=int, default=12)
     o = ap.parse_args(argv)
     rev = o.rev if o.rev.startswith('v') else 'v' + o.rev
-    plan_path = os.path.join(MAP_DIR, f'MAP_PLAN_R01_{rev}.json')
+    plan_path = o.plan or os.path.join(MAP_DIR, f'MAP_PLAN_R01_{rev}.json')
     plan = json.load(open(plan_path, encoding='utf-8'))
+    # Exact World v11 geometry is isolated from the unchanged legacy algorithms.
+    if plan.get('world_v11') and rev == 'v16':
+        sys.path.insert(0, MAP_DIR)
+        from map_plan_v16 import write_flat
+        return write_flat(plan, 'look', o.out or os.path.join(HERE, 'look_v16_flat.json'), no_veg=o.no_veg)
     dressing_path = None
     if not o.no_dressing:
         dressing_path = o.dressing or os.path.join(MAP_DIR, f'MAP_DRESSING_R01_{rev}.json')

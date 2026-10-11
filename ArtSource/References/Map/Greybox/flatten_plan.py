@@ -11,7 +11,17 @@ ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
 REV = next((a for a in ARGS if a.startswith('v')), 'v05')
 S = float(sys.argv[sys.argv.index('--scale') + 1]) if '--scale' in sys.argv else 1.0
 FLOORS = {9: 5, 12: 7, 16: 10, 20: 13, 22: 13} if S < 1.0 else {}
-plan = json.load(open(os.path.join(HERE, '..', f'MAP_PLAN_R01_{REV}.json'), encoding='utf-8'))
+PLAN_PATH = sys.argv[sys.argv.index('--plan') + 1] if '--plan' in sys.argv else os.path.join(HERE, '..', f'MAP_PLAN_R01_{REV}.json')
+plan = json.load(open(PLAN_PATH, encoding='utf-8'))
+# World v11 uses an optional, isolated adapter. Legacy revisions keep the original path below.
+if plan.get('world_v11') and REV == 'v16':
+    if S != 1.0 or '--thin' in sys.argv or '--narrow' in sys.argv:
+        sys.exit('v16 preserves approved metre geometry; scale/thin/narrow are unsupported')
+    sys.path.insert(0, os.path.dirname(HERE))
+    from map_plan_v16 import write_flat
+    dst = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv else os.path.join(HERE, 'greybox_v16_flat.json')
+    write_flat(plan, 'greybox', dst)
+    sys.exit(0)
 
 
 def flat(pts):
@@ -281,6 +291,8 @@ for v in plan.get('vegetation_parcels', []):
 xs = [p[0] for p in bnd]; ys = [p[1] for p in bnd]
 out['bounds'] = [min(xs) * S, min(ys) * S, max(xs) * S, max(ys) * S]
 dst = os.path.join(HERE, f'greybox_{REV}' + (f'_s{round(S * 100):03d}' if S != 1.0 else '') + '_flat.json')
+if '--out' in sys.argv:
+    dst = sys.argv[sys.argv.index('--out') + 1]
 json.dump(out, open(dst, 'w', encoding='utf-8'), ensure_ascii=False)
 print(f"hedges {len(out['hedges'])}, roads {len(out['roads'])}, buildings {len(out['buildings'])} (functional {len(func_centers)}), water {len(out['water'])}, sea {len(out['sea'])}, beaches {len(out['beaches'])}, "
       f"points {len(out['points'])}, walls {len(out['walls'])}, barriers {len(out['barriers'])} -> {dst}")

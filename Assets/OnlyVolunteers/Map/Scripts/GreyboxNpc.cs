@@ -308,6 +308,7 @@ namespace OnlyVolunteers.Map
             _ragdoll.Grabbable = State == NpcState.Down && _ragdoll.Active;
             // After a script reload: a sitter keeps its sit clips (the visual is still posed for them).
             if (State == NpcState.CargoSeated && _body.Seated) _seatClips = _getUp.CanSitUp;
+            WaterBodyAudio.Ensure(gameObject);
         }
 
         private void OnDisable()
@@ -487,8 +488,8 @@ namespace OnlyVolunteers.Map
 
         /// <summary>Hit by a fast vehicle (the van, a police car): down with the vehicle's velocity at the NPC times
         /// KnockAhead plus KnockLift up, stunned like a fist to the torso. Fedya's playtest 2026-10-11 ("he gets stuck in
-        /// the van's geometry"): the parts born inside the vehicle stop colliding with it only until they are out of it
-        /// (IgnoreOverlapping), the rest of the body collides at once, and the body leaves faster than the vehicle comes.</summary>
+        /// the van's geometry"): born partly inside the vehicle, the body ignores it only until they are apart
+        /// (IgnoreWhileOverlapping), and it leaves faster than the vehicle comes.</summary>
         public void KnockOver(Rigidbody vehicle)
         {
             Vector3 velocity = vehicle != null ? vehicle.GetPointVelocity(Center) * KnockAhead : Vector3.zero;
@@ -501,9 +502,8 @@ namespace OnlyVolunteers.Map
             ExtendStun(WeaponStun.Fist.Duration(HitZone.Torso));
             if (vehicle != null)
             {
-                Collider[] parts = vehicle.GetComponentsInChildren<Collider>();
-                if (LegacyVanKnock) Down.IgnoreFor(parts, VanKnockIgnore);
-                else Down.IgnoreOverlapping(parts);
+                if (LegacyVanKnock) Down.IgnoreFor(vehicle.GetComponentsInChildren<Collider>(), VanKnockIgnore);
+                else Down.IgnoreWhileOverlapping(vehicle);
             }
             Face.Set("Surprised", 100f, 10000f);
         }
