@@ -1,0 +1,112 @@
+{
+  "revision": "v04",
+  "source": "json",
+  "source_sha256_unchanged": "skipped: LFS sources absent",
+  "action": {
+    "name": "Walk",
+    "actions_in_blend": [
+      "Walk"
+    ],
+    "frame_range": [
+      1.0,
+      21.0
+    ],
+    "fps": 30,
+    "frames_per_cycle": 20,
+    "loop_s": 0.6666666666666666,
+    "nominal_speed_m_s": 1.5,
+    "stride_m": 1.0,
+    "step_m": 0.5,
+    "stance_fraction_per_leg": 0.585,
+    "double_support_fraction_total": 0.16999999999999993,
+    "fcurves": 263,
+    "keys_per_curve": 41,
+    "all_keys_finite": true,
+    "quaternion_sign_flips": 0,
+    "max_quaternion_norm_error": 8.313032751061655e-08,
+    "max_rotation_step_per_half_frame_deg": 8.469906816396884,
+    "max_rotation_step_bone": "mixamorig:LeftLeg",
+    "seam_max_key_difference": 0.0,
+    "seam_velocity_jump_max": 0.03882479667663574,
+    "interior_velocity_change_max": 0.10793986916542053,
+    "key_digest_sha256": "e97bf9b964a8e207cd2f177117c5fac64007bc32132e60beeeb49833ea94b3a5"
+  },
+  "hips_motion_m": {
+    "lateral_sway_range": 0.04345932602882385,
+    "forward_range": 5.587935447692871e-09,
+    "vertical_range": 0.06576013565063477,
+    "mean_xy": [
+      0.0,
+      -5.587935447692871e-10
+    ],
+    "height_min_max": [
+      0.7450000047683716,
+      0.8107601404190063
+    ]
+  },
+  "contact_A": {
+    "lowest_vertex_m": -0.0006770245381630957,
+    "stance_sole_height_error_m": {
+      "Left": 0.0006770198815502226,
+      "Right": 0.0006770245381630957
+    },
+    "support_slide_m": {
+      "Left": 0.0007296710511999206,
+      "Right": 0.0007296614749957936
+    },
+    "touchdown_liftoff_skim_m": {
+      "Left": 0.0007296710511999206,
+      "Right": 0.0007296614749957936
+    }
+  },
+  "contact_B": {
+    "lowest_vertex_m": -0.0006770245381630957,
+    "stance_sole_height_error_m": {
+      "Left": 0.0006770198815502226,
+      "Right": 0.0006770245381630957
+    },
+    "support_slide_m": {
+      "Left": 0.0007296710511999206,
+      "Right": 0.0007296614749957936
+    },
+    "touchdown_liftoff_skim_m": {
+      "Left": 0.0007296710511999206,
+      "Right": 0.0007296614749957936
+    }
+  },
+  "fbx_reimport": {
+    "reference": "rig_Buddy_Mixamo65.json (Walk_v02.fbx absent)",
+    "armature": "Buddy_Rig_Mixamo65",
+    "bones": 65,
+    "root_bones": [
+      "mixamorig:Hips"
+    ],
+    "actions": {
+      "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Walk": [
+        1.0,
+        21.0
+      ]
+    },
+    "only_armature_objects": true,
+    "bone_names_and_parents_identical_to_reference": true,
+    "bone_order_identical_to_reference": "n/a for JSON",
+    "max_bind_matrix_error_vs_reference": 1.65402889251709e-05,
+    "max_world_pose_matrix_error_vs_blend": 0.0003949403762817383,
+    "worst_pose_bone": "mixamorig:RightHandThumb4 @ frame 17"
+  },
+  "checks": {
+    "sources_unchanged": "skipped",
+    "single_take_walk": true,
+    "finite_keys": true,
+    "no_quaternion_flips": true,
+    "exact_loop_seam": true,
+    "seam_velocity_jump_le_interior": true,
+    "no_penetration_le_1mm": true,
+    "support_sole_height_error_le_1mm": true,
+    "support_slide_le_1mm": true,
+    "touchdown_liftoff_skim_le_1mm": true,
+    "fbx_65_bones_same_as_reference": true,
+    "fbx_pose_matches_blend": true
+  },
+  "all_pass": true
+}
