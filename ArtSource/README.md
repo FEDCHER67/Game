@@ -12,6 +12,7 @@ Current editable prototypes for the upcoming visual review. These are working as
 - Props/SYRINGE-ASTRA-001 — restored syringe source/export and fill-animation previews; not imported into Unity.
 - Props/HEART-ASTRA-007 — restored editable heart and export with historical provenance limitations; not imported into Unity.
 - References/SausageBuddy_reference.png — character reference.
+- References/Map/World_v11 — approved 2D world map v11 (11.10.2026): final PNG, master SVG, WORLD_MAP_v11.json in metres, district crops and plans, look references. Input for the 3D map; see docs/WORLD_MAP_3D_BRIEF.md.
 
 Each prop retains its current .blend, .fbx, previews, and any textures/provenance. Blender backups and disposable Working/MotionPreview intermediates were deleted. Asset reports are historical; references to those removed paths are not runnable instructions. Preserve rights/provenance evidence during future art changes.
 
