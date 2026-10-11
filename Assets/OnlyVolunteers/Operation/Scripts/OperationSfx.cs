@@ -1,3 +1,4 @@
+using OnlyVolunteers.Audio;
 using UnityEngine;
 
 namespace OnlyVolunteers.Operation
@@ -15,20 +16,54 @@ namespace OnlyVolunteers.Operation
     }
 
     /// <summary>
-    /// Placeholder cartoon sounds synthesised in code (no audio assets yet). Each cue name matches a row of the sound
-    /// table in docs/drafts/OPERATION_PRESENTATION_DRAFT.md, so real recordings can replace them one by one.
+    /// Cartoon sounds of the operation table. A cue plays a recorded clip of its SfxLibrary entry (operation_strap,
+    /// operation_tick, ...; Audio/Library_v1) with that entry's volume and pitch range; a cue without clips falls back to
+    /// the placeholder synthesised in code. Each cue name matches a row of the sound table in
+    /// docs/drafts/OPERATION_PRESENTATION_DRAFT.md.
     /// </summary>
     public static class OperationSfx
     {
         private const int Rate = 44100;
         private static AudioClip[] clips;
 
+        // Library id per cue, in OperationCue order.
+        private static readonly string[] Ids =
+        {
+            SfxIds.OperationStrap, SfxIds.OperationTick, SfxIds.OperationSlit, SfxIds.OperationYelp,
+            SfxIds.OperationBoing, SfxIds.OperationPop, SfxIds.OperationRip, SfxIds.OperationTape,
+        };
+
         public static void Play(AudioSource source, OperationCue cue, float volume = 0.6f)
         {
             if (source == null) return;
+            if (PlayRecorded(source, cue, volume)) return;
             if (clips == null) clips = Build();
             source.pitch = Random.Range(0.93f, 1.07f);
             source.PlayOneShot(clips[(int)cue], volume);
+        }
+
+        // A random clip of the cue's library entry (not the one played last time; empty slots, e.g. local-only files
+        // missing on this machine, are skipped), false when the entry has none.
+        private static bool PlayRecorded(AudioSource source, OperationCue cue, float volume)
+        {
+            int index = (int)cue;
+            SfxLibrary library = Sfx.Library;
+            SfxLibrary.Entry entry = library != null && index < Ids.Length ? library.Find(Ids[index]) : null;
+            if (entry == null || entry.Clips == null || entry.Clips.Length == 0) return false;
+            int count = entry.Clips.Length;
+            int pick = Random.Range(0, count);
+            if (count > 1 && pick == entry.LastClip) pick = (pick + 1 + Random.Range(0, count - 1)) % count;
+            for (int i = 0; i < count; i++)
+            {
+                int at = (pick + i) % count;
+                AudioClip clip = entry.Clips[at];
+                if (clip == null) continue;
+                entry.LastClip = at;
+                source.pitch = Random.Range(entry.Pitch.x, entry.Pitch.y);
+                source.PlayOneShot(clip, volume * Random.Range(entry.Volume.x, entry.Volume.y));
+                return true;
+            }
+            return false;
         }
 
         private static AudioClip[] Build()

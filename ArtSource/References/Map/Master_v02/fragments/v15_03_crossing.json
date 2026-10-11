@@ -1,0 +1,1170 @@
+{
+  "id": "v15_03_crossing",
+  "frame": "Master_v02/frame/m2_frame.json",
+  "region": "03_crossing",
+  "units": "metre",
+  "fingerprint": "a316e0d2c4230ebb69f8854c9cead0053db1903ea0a22b06036c43a010a0f2fd",
+  "layers": {
+    "districts": [
+      {
+        "id": "transition",
+        "name_ru": "Перекрёсток [Crossing]",
+        "color": "#e1e2ca",
+        "polygon_m": [
+          [
+            357.852,
+            533.23
+          ],
+          [
+            359.88,
+            348.729
+          ],
+          [
+            372.045,
+            260.533
+          ],
+          [
+            420.705,
+            247.354
+          ],
+          [
+            534.244,
+            244.313
+          ],
+          [
+            537.285,
+            384.21
+          ],
+          [
+            636.632,
+            396.375
+          ],
+          [
+            618.385,
+            475.447
+          ],
+          [
+            605.206,
+            523.093
+          ],
+          [
+            575.808,
+            546.409
+          ],
+          [
+            480.516,
+            523.093
+          ]
+        ],
+        "parent_id": null,
+        "notes_ru": "Контур зоны приблизительный; не ограда.",
+        "area_m2": 61399.671,
+        "building_count": 9,
+        "share_percent": 9.24,
+        "change_region": "03_crossing"
+      }
+    ],
+    "roads": [
+      {
+        "id": "ACCESS_F06_BUYER",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            507.887,
+            415.636
+          ],
+          [
+            507.887,
+            427.128
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 11.492,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "BUYER_YARD"
+      },
+      {
+        "id": "ACCESS_F06_GAS",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            422.9720532872808,
+            363.3579895749729
+          ],
+          [
+            436.252,
+            363.358
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 13.28,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_SPINE"
+      },
+      {
+        "id": "ACCESS_F06_HUT",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            419.27,
+            347.465
+          ],
+          [
+            411.188,
+            353.673
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 10.191,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_SPINE"
+      },
+      {
+        "id": "ACCESS_F06_RUINS",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            429.908702970297,
+            399.2090297029703
+          ],
+          [
+            409.089,
+            405.707
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 21.81,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_SPINE"
+      },
+      {
+        "id": "ACCESS_F15_CROSS_EAST",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            540.327,
+            351.77
+          ],
+          [
+            529.848,
+            351.77
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 10.479,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "DT_WEST"
+      },
+      {
+        "id": "ACCESS_F15_CROSS_NORTH",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            490.13897026185566,
+            479.4715123214197
+          ],
+          [
+            492.299,
+            494.569
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 15.251,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_NORTH"
+      },
+      {
+        "id": "ACCESS_F15_CROSS_SOUTH",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            519.7459596586411,
+            313.2785964869018
+          ],
+          [
+            516.072,
+            296.623
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 17.056,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_DOWNTOWN"
+      },
+      {
+        "id": "ACCESS_F15_CROSS_WEST",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            428.815,
+            479.502
+          ],
+          [
+            409.719,
+            479.502
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 19.096,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_NORTH"
+      },
+      {
+        "id": "ACCESS_F15_GAS_SHED",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            479.18999980340527,
+            317.286003834518
+          ],
+          [
+            479.19,
+            340.96
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 23.674,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "CROSS_DOWNTOWN"
+      },
+      {
+        "id": "ACCESS_POINT_P09-4",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            475.65599394393416,
+            393.5288183658047
+          ],
+          [
+            476.461,
+            417.663
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 24.148,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "BUYER_YARD"
+      },
+      {
+        "id": "ACCESS_POINT_P13",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            632.578,
+            444.021
+          ],
+          [
+            591.014,
+            435.911
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 42.348,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "BUYER_YARD",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "transition"
+        ],
+        "polyline_m": [
+          [
+            429.828,
+            398.402
+          ],
+          [
+            451.117,
+            394.347
+          ],
+          [
+            475.65599394393416,
+            393.5288183658047
+          ],
+          [
+            481.529,
+            393.333
+          ],
+          [
+            507.887,
+            393.333
+          ],
+          [
+            507.887,
+            415.636
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 100.762,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "03_crossing"
+      }
+    ],
+    "paths": [],
+    "water": [
+      {
+        "id": "LAKE",
+        "kind": "lake",
+        "polygon_m": [
+          [
+            567.191,
+            456.312
+          ],
+          [
+            563.263,
+            455.045
+          ],
+          [
+            560.475,
+            453.271
+          ],
+          [
+            558.827,
+            450.99
+          ],
+          [
+            558.321,
+            448.202
+          ],
+          [
+            558.257,
+            445.478
+          ],
+          [
+            558.637,
+            442.817
+          ],
+          [
+            559.461,
+            440.219
+          ],
+          [
+            560.728,
+            437.685
+          ],
+          [
+            562.756,
+            435.594
+          ],
+          [
+            565.544,
+            433.947
+          ],
+          [
+            569.092,
+            432.743
+          ],
+          [
+            573.4,
+            431.983
+          ],
+          [
+            577.202,
+            431.792
+          ],
+          [
+            580.496,
+            432.173
+          ],
+          [
+            583.284,
+            433.123
+          ],
+          [
+            585.565,
+            434.644
+          ],
+          [
+            587.593,
+            436.671
+          ],
+          [
+            589.367,
+            439.205
+          ],
+          [
+            590.887,
+            442.247
+          ],
+          [
+            592.154,
+            445.795
+          ],
+          [
+            592.218,
+            448.899
+          ],
+          [
+            591.077,
+            451.56
+          ],
+          [
+            588.733,
+            453.778
+          ],
+          [
+            585.185,
+            455.552
+          ],
+          [
+            581.257,
+            456.693
+          ],
+          [
+            576.948,
+            457.199
+          ],
+          [
+            572.26,
+            457.073
+          ]
+        ],
+        "center_m": [
+          574.9808412749421,
+          444.91702206456773
+        ],
+        "name_ru": "Пруд у перекрёстка",
+        "district_id": "transition",
+        "change_region": "03_crossing"
+      }
+    ],
+    "building_masses": [],
+    "functional_buildings": [
+      {
+        "type": "shadow_buyer",
+        "group": "shadow",
+        "icon": "Т",
+        "color": "#927179",
+        "id": "F06_BUYER",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Приёмка",
+        "center_m": [
+          506.873,
+          439.966
+        ],
+        "width_m": 20.275,
+        "depth_m": 35.482,
+        "footprint_m": [
+          [
+            489.132,
+            450.103
+          ],
+          [
+            489.132,
+            429.828
+          ],
+          [
+            524.614,
+            429.828
+          ],
+          [
+            524.614,
+            450.103
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          506.00000000000006,
+          250.00026042026303
+        ],
+        "poi_id": "P04",
+        "change_region": "03_crossing",
+        "entrance_m": [
+          507.887,
+          429.828
+        ],
+        "van_stop_m": [
+          507.887,
+          427.128
+        ],
+        "access_road_id": "ACCESS_F06_BUYER"
+      },
+      {
+        "type": "gas_station",
+        "group": "service",
+        "icon": "С",
+        "color": "#709dac",
+        "id": "F06_GAS",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "АЗС",
+        "center_m": [
+          451.117,
+          357.852
+        ],
+        "width_m": 16.22,
+        "depth_m": 24.33,
+        "footprint_m": [
+          [
+            438.952,
+            365.962
+          ],
+          [
+            438.952,
+            349.742
+          ],
+          [
+            463.282,
+            349.742
+          ],
+          [
+            463.282,
+            365.962
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          451.00002959321176,
+          331.0003334168521
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          438.952,
+          363.358
+        ],
+        "van_stop_m": [
+          436.252,
+          363.358
+        ],
+        "access_road_id": "ACCESS_F06_GAS"
+      },
+      {
+        "type": "hut",
+        "group": "base",
+        "icon": "Б",
+        "color": "#aa6045",
+        "id": "F06_HUT",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Хижина",
+        "center_m": [
+          397.389,
+          363.935
+        ],
+        "width_m": 17.234,
+        "depth_m": 23.317,
+        "footprint_m": [
+          [
+            385.73,
+            372.552
+          ],
+          [
+            385.73,
+            355.318
+          ],
+          [
+            409.047,
+            355.318
+          ],
+          [
+            409.047,
+            372.552
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          398.0000670779466,
+          324.9998165220873
+        ],
+        "poi_id": "B02",
+        "change_region": "03_crossing",
+        "entrance_m": [
+          409.047,
+          355.318
+        ],
+        "van_stop_m": [
+          411.188,
+          353.673
+        ],
+        "access_road_id": "ACCESS_F06_HUT"
+      },
+      {
+        "type": "abandoned_farm",
+        "group": "rural",
+        "icon": "Ф",
+        "color": "#a5a36a",
+        "id": "F06_RUINS",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Руины фермы",
+        "center_m": [
+          396.375,
+          414.622
+        ],
+        "width_m": 16.22,
+        "depth_m": 20.275,
+        "footprint_m": [
+          [
+            386.237,
+            422.732
+          ],
+          [
+            386.237,
+            406.512
+          ],
+          [
+            406.512,
+            406.512
+          ],
+          [
+            406.512,
+            422.732
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          396.9998165220874,
+          275.0001124542045
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          406.512,
+          406.512
+        ],
+        "van_stop_m": [
+          409.089,
+          405.707
+        ],
+        "access_road_id": "ACCESS_F06_RUINS"
+      },
+      {
+        "id": "F15_CROSS_EAST",
+        "type": "small_house",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Дом",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          517.01,
+          351.77
+        ],
+        "width_m": 18.248,
+        "depth_m": 20.275,
+        "footprint_m": [
+          [
+            506.873,
+            360.894
+          ],
+          [
+            506.873,
+            342.646
+          ],
+          [
+            527.148,
+            342.646
+          ],
+          [
+            527.148,
+            360.894
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          516.0000394576156,
+          336.9998638712262
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          527.148,
+          351.77
+        ],
+        "van_stop_m": [
+          529.848,
+          351.77
+        ],
+        "access_road_id": "ACCESS_F15_CROSS_EAST"
+      },
+      {
+        "id": "F15_CROSS_NORTH",
+        "type": "small_house",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Дом",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          503.832,
+          506.873
+        ],
+        "width_m": 19.262,
+        "depth_m": 22.302,
+        "footprint_m": [
+          [
+            492.681,
+            516.504
+          ],
+          [
+            492.681,
+            497.242
+          ],
+          [
+            514.983,
+            497.242
+          ],
+          [
+            514.983,
+            516.504
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          503.0002347728129,
+          183.99999999999994
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          492.681,
+          497.242
+        ],
+        "van_stop_m": [
+          492.299,
+          494.569
+        ],
+        "access_road_id": "ACCESS_F15_CROSS_NORTH"
+      },
+      {
+        "id": "F15_CROSS_SOUTH",
+        "type": "small_house",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Дом",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          504.846,
+          284.862
+        ],
+        "width_m": 18.247,
+        "depth_m": 21.289,
+        "footprint_m": [
+          [
+            494.201,
+            293.986
+          ],
+          [
+            494.201,
+            275.739
+          ],
+          [
+            515.49,
+            275.739
+          ],
+          [
+            515.49,
+            293.986
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          503.9999921084769,
+          403.00012429148927
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          515.49,
+          293.986
+        ],
+        "van_stop_m": [
+          516.072,
+          296.623
+        ],
+        "access_road_id": "ACCESS_F15_CROSS_SOUTH"
+      },
+      {
+        "id": "F15_CROSS_WEST",
+        "type": "small_house",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Дом",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          396.375,
+          486.598
+        ],
+        "width_m": 17.234,
+        "depth_m": 21.289,
+        "footprint_m": [
+          [
+            385.73,
+            495.215
+          ],
+          [
+            385.73,
+            477.981
+          ],
+          [
+            407.019,
+            477.981
+          ],
+          [
+            407.019,
+            495.215
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          396.99981652208743,
+          204.0000789152313
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          407.019,
+          479.502
+        ],
+        "van_stop_m": [
+          409.719,
+          479.502
+        ],
+        "access_road_id": "ACCESS_F15_CROSS_WEST"
+      },
+      {
+        "id": "F15_GAS_SHED",
+        "type": "maintenance_shed",
+        "district_id": "transition",
+        "district": "transition",
+        "label_ru": "Сервис АЗС",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          477.474,
+          350.756
+        ],
+        "width_m": 14.192,
+        "depth_m": 18.247,
+        "footprint_m": [
+          [
+            468.351,
+            357.852
+          ],
+          [
+            468.351,
+            343.66
+          ],
+          [
+            486.598,
+            343.66
+          ],
+          [
+            486.598,
+            357.852
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          477.0001321830122,
+          338.0001144270853
+        ],
+        "change_region": "03_crossing",
+        "entrance_m": [
+          479.19,
+          343.66
+        ],
+        "van_stop_m": [
+          479.19,
+          340.96
+        ],
+        "access_road_id": "ACCESS_F15_GAS_SHED"
+      }
+    ],
+    "functional_sites": [
+      {
+        "id": "BUYER_COMPOUND",
+        "type": "production_yard",
+        "district_id": "transition",
+        "polygon_m": [
+          [
+            452.638,
+            469.871
+          ],
+          [
+            452.638,
+            403.978
+          ],
+          [
+            528.669,
+            403.978
+          ],
+          [
+            528.669,
+            469.871
+          ]
+        ],
+        "label_ru": "Двор приёмки",
+        "change_region": "03_crossing"
+      },
+      {
+        "id": "GAS_FORECOURT",
+        "type": "parking",
+        "district_id": "transition",
+        "polygon_m": [
+          [
+            426.787,
+            357.852
+          ],
+          [
+            426.787,
+            323.385
+          ],
+          [
+            487.612,
+            323.385
+          ],
+          [
+            487.612,
+            357.852
+          ]
+        ],
+        "label_ru": "АЗС · площадка",
+        "change_region": "03_crossing"
+      }
+    ],
+    "points": [
+      {
+        "id": "B02",
+        "canonical_id": "B02",
+        "name_ru": "Хижина",
+        "position_m": [
+          409.047,
+          355.318
+        ],
+        "district_id": "transition",
+        "category": "base",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "team_shared": true,
+        "retained_after_move": true,
+        "interior": true,
+        "access_reserve_m": [
+          20,
+          25
+        ],
+        "door_clearance_target_m": 2.4,
+        "source_master_key": "F06_HUT",
+        "mapping_confidence": "proposed",
+        "change_region": "03_crossing",
+        "building_id": "F06_HUT",
+        "van_stop_m": [
+          411.188,
+          353.673
+        ],
+        "access_road_id": "ACCESS_F06_HUT",
+        "road_node_id": "Nbb0c42f9fb76",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P04",
+        "canonical_id": "P04",
+        "name_ru": "Теневая приёмка",
+        "position_m": [
+          507.887,
+          429.828
+        ],
+        "district_id": "transition",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": true,
+        "source_master_key": "F06_BUYER",
+        "mapping_confidence": "proposed",
+        "change_region": "03_crossing",
+        "building_id": "F06_BUYER",
+        "van_stop_m": [
+          507.887,
+          427.128
+        ],
+        "access_road_id": "ACCESS_F06_BUYER",
+        "road_node_id": "Nd6c543b09e44",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P09-4",
+        "canonical_id": "P09",
+        "name_ru": "Запасная: переход",
+        "position_m": [
+          476.461,
+          417.663
+        ],
+        "district_id": "transition",
+        "category": "meeting",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "meeting_role": "backup",
+        "source_master_key": "03: buyer yard; proposed meeting",
+        "mapping_confidence": "proposed",
+        "change_region": "03_crossing",
+        "van_stop_m": [
+          476.461,
+          417.663
+        ],
+        "access_road_id": "ACCESS_POINT_P09-4",
+        "road_node_id": "N98a2b7f6cdbd",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P13",
+        "canonical_id": "P13",
+        "name_ru": "Озеро: доступ",
+        "position_m": [
+          591.014,
+          435.911
+        ],
+        "district_id": "transition",
+        "category": "water_access",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "03: pond edge",
+        "mapping_confidence": "proposed",
+        "change_region": "03_crossing",
+        "van_stop_m": [
+          591.014,
+          435.911
+        ],
+        "access_road_id": "ACCESS_POINT_P13",
+        "road_node_id": "N758e9bfcca79",
+        "van_node_gap_m": 0.0
+      }
+    ],
+    "plots": [],
+    "microdistricts": [],
+    "farmsteads": [],
+    "vegetation_parcels": [],
+    "crop_fields": [],
+    "hills": [],
+    "beaches": [],
+    "outfalls": [],
+    "water_crossings": [],
+    "pedestrian_water_crossings": []
+  }
+}

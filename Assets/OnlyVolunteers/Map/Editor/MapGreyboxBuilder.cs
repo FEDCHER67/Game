@@ -321,6 +321,8 @@ namespace OnlyVolunteers.Map
             // Static: two Buddies standing at each CrowdSpots point (the grey-box crowd, the fallback). Director: a
             // CrowdDirector with a pool of Buddies walking crowd_vNN.json instead (look map only, MapCrowdPlacer).
             public CrowdKind Crowd = CrowdKind.Static;
+            // Plan revision of the scene ("v12"): the police bake the same plan (null = the newest).
+            public string Revision;
         }
 
         internal enum CrowdKind { Static, Director }
@@ -331,6 +333,7 @@ namespace OnlyVolunteers.Map
             public GreyboxPawn Pawn;
             public int Npcs, Pickups, CrowdSlots;
             public CrowdDirector Director;
+            public GameObject Police;
         }
 
         // NPC capsule for spawn checks (SpawnBuddy's CharacterController) and the KCC player's (prefab radius 0.5).
@@ -497,6 +500,12 @@ namespace OnlyVolunteers.Map
                 UnityEngine.Object.DestroyImmediate(crowd.gameObject);
                 result.Director = MapCrowdPlacer.Place(buddies, npcGrabProfile, hasSea, out int pool);
                 result.Npcs = pool;
+                // Police v1 (Police/, docs/drafts/POLICE_V1_DRAFT.md): station, cars, crews; menu toggle MapPolicePlacer.Enabled.
+                if (result.Director != null && Police.MapPolicePlacer.Enabled)
+                    result.Police = Police.MapPolicePlacer.Place(setup.Revision, ground, buddies, npcGrabProfile, hasSea);
+                // No real police (switched off or the placement failed): the crowd's placeholder hook, as before.
+                if (result.Director != null && result.Police == null && result.Director.GetComponent<CrowdPoliceHook>() == null)
+                    result.Director.gameObject.AddComponent<CrowdPoliceHook>();
             }
             return result;
         }
@@ -621,11 +630,11 @@ namespace OnlyVolunteers.Map
             so.FindProperty("holdDistance").floatValue = 2.5f;
             so.FindProperty("springStrength").floatValue = 1200f;
             so.FindProperty("dampingRatio").floatValue = 0.6f;
-            so.FindProperty("maxForce").floatValue = 200f;
-            so.FindProperty("maxLinearSpeed").floatValue = 4.5f;
+            so.FindProperty("maxForce").floatValue = 240f;
+            so.FindProperty("maxLinearSpeed").floatValue = 6f;
             so.FindProperty("maxAngularSpeed").floatValue = 8f;
             so.FindProperty("breakDistance").floatValue = 2.2f;
-            so.FindProperty("soloHorizontalMaxForce").floatValue = 220f;
+            so.FindProperty("soloHorizontalMaxForce").floatValue = 260f;
             // NpcBody (lying) and NpcSeated (a passenger running for a door can be grabbed too).
             so.FindProperty("acquisitionLayers").intValue = OvLayers.NpcMask;
             so.ApplyModifiedPropertiesWithoutUndo();

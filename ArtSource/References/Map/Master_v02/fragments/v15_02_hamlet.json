@@ -1,0 +1,2011 @@
+{
+  "id": "v15_02_hamlet",
+  "frame": "Master_v02/frame/m2_frame.json",
+  "region": "02_hamlet",
+  "units": "metre",
+  "fingerprint": "c7287899e7b2d3c3920b96361cbd23b3653fe0ab6182e466332c23df3fba314f",
+  "layers": {
+    "districts": [
+      {
+        "id": "village",
+        "name_ru": "Хутор [Hamlet]",
+        "color": "#dbe1b7",
+        "polygon_m": [
+          [
+            66.907,
+            479.502
+          ],
+          [
+            59.811,
+            386.237
+          ],
+          [
+            62.852,
+            260.533
+          ],
+          [
+            329.467,
+            259.519
+          ],
+          [
+            337.577,
+            346.701
+          ],
+          [
+            333.522,
+            498.763
+          ],
+          [
+            292.973,
+            504.846
+          ]
+        ],
+        "parent_id": null,
+        "notes_ru": "Контур зоны приблизительный; не ограда.",
+        "area_m2": 63628.831,
+        "building_count": 15,
+        "share_percent": 9.57,
+        "change_region": "02_hamlet"
+      }
+    ],
+    "roads": [
+      {
+        "id": "ACCESS_F06_BARN",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            248.21700221306662,
+            422.04397344101756
+          ],
+          [
+            248.148,
+            424.027
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.984,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_FIELD"
+      },
+      {
+        "id": "ACCESS_F06_BUS",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            169.296,
+            393.333
+          ],
+          [
+            169.296,
+            396.209
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.876,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_BASE"
+      },
+      {
+        "id": "ACCESS_F06_CHURCH",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            131.50496449059136,
+            425.11363304219793
+          ],
+          [
+            135.941,
+            437.426
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 13.087,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_CHURCH"
+      },
+      {
+        "id": "ACCESS_F06_GRANDPA",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            162.199,
+            393.333
+          ],
+          [
+            161.334,
+            396.797
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.57,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_BASE"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_01",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            117.595,
+            432.87
+          ],
+          [
+            117.595,
+            434.731
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.861,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_CHURCH"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_02",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            179.433,
+            450.103
+          ],
+          [
+            179.433,
+            453.486
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.383,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_MAIN"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_03",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            262.14396183593857,
+            423.20445800638686
+          ],
+          [
+            258.874,
+            446.921
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 23.941,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_FIELD"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_04",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            259.19798232209445,
+            357.1529437214188
+          ],
+          [
+            252.722,
+            345.512
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 13.321,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_05",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            286.383,
+            333.016
+          ],
+          [
+            289.766,
+            333.016
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.383,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_06",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            292.64200525447416,
+            301.3710001847759
+          ],
+          [
+            298.383,
+            301.371
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 5.741,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_HAMLET_07",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            281.29711761654016,
+            272.07776996498495
+          ],
+          [
+            280.484,
+            275.156
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.184,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_PHARM",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            200.96954722969724,
+            298.0040679211283
+          ],
+          [
+            206.132,
+            298.004
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 5.162,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_SOUTH"
+      },
+      {
+        "id": "ACCESS_F06_VSHOP",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            219.8320168664047,
+            368.4521813128107
+          ],
+          [
+            219.904,
+            370.866
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.415,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_CROSSING"
+      },
+      {
+        "id": "ACCESS_F06_WATER",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            302.096,
+            387.251
+          ],
+          [
+            302.096,
+            388.099
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.848,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_WATER"
+      },
+      {
+        "id": "ACCESS_F07_AD_POLE",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            203.54164211120343,
+            382.54972632399694
+          ],
+          [
+            187.674,
+            370.626
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 19.848,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet",
+        "access_only": true,
+        "parent_road_id": "HAMLET_MAIN"
+      },
+      {
+        "id": "HAMLET_BASE",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            199.13570103637392,
+            395.4371584595863
+          ],
+          [
+            173.351,
+            393.333
+          ],
+          [
+            169.296,
+            393.333
+          ],
+          [
+            162.199,
+            393.333
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 37.022,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "HAMLET_CHURCH",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            195.653,
+            415.636
+          ],
+          [
+            181.461,
+            426.787
+          ],
+          [
+            156.117,
+            422.732
+          ],
+          [
+            131.50496449059136,
+            425.11363304219793
+          ],
+          [
+            124.691,
+            425.773
+          ],
+          [
+            117.595,
+            432.87
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 85.324,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "HAMLET_FIELD",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            195.653,
+            415.636
+          ],
+          [
+            232.148,
+            420.705
+          ],
+          [
+            248.21700221306662,
+            422.04397344101756
+          ],
+          [
+            262.14396183593857,
+            423.20445800638686
+          ],
+          [
+            268.643,
+            423.746
+          ],
+          [
+            311.22,
+            430.842
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 116.631,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "HAMLET_LOOP",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            213.9,
+            369.004
+          ],
+          [
+            216.055,
+            368.497
+          ],
+          [
+            220.363,
+            367.483
+          ],
+          [
+            226.826,
+            365.962
+          ],
+          [
+            235.443,
+            363.935
+          ],
+          [
+            243.743,
+            361.781
+          ],
+          [
+            251.726,
+            359.5
+          ],
+          [
+            259.19798232209445,
+            357.1529437214188
+          ],
+          [
+            259.392,
+            357.092
+          ],
+          [
+            266.742,
+            354.558
+          ],
+          [
+            272.888,
+            351.453
+          ],
+          [
+            277.83,
+            347.778
+          ],
+          [
+            281.568,
+            343.533
+          ],
+          [
+            284.102,
+            338.718
+          ],
+          [
+            286.383,
+            333.016
+          ],
+          [
+            288.411,
+            326.426
+          ],
+          [
+            290.185,
+            318.95
+          ],
+          [
+            291.705,
+            310.586
+          ],
+          [
+            292.592,
+            302.793
+          ],
+          [
+            292.64200525447416,
+            301.3710001847759
+          ],
+          [
+            292.846,
+            295.57
+          ],
+          [
+            292.466,
+            288.918
+          ],
+          [
+            291.452,
+            282.835
+          ],
+          [
+            288.918,
+            277.83
+          ],
+          [
+            284.863,
+            273.901
+          ],
+          [
+            281.29711761654016,
+            272.07776996498495
+          ],
+          [
+            279.287,
+            271.05
+          ],
+          [
+            272.191,
+            269.276
+          ],
+          [
+            264.714,
+            268.263
+          ],
+          [
+            256.858,
+            268.009
+          ],
+          [
+            248.621,
+            268.516
+          ],
+          [
+            240.004,
+            269.783
+          ],
+          [
+            231.768,
+            271.43
+          ],
+          [
+            223.911,
+            273.458
+          ],
+          [
+            216.435,
+            275.866
+          ],
+          [
+            209.339,
+            278.653
+          ],
+          [
+            204.016,
+            280.744
+          ],
+          [
+            200.468,
+            282.138
+          ],
+          [
+            198.694,
+            282.835
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 236.711,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "HAMLET_MAIN",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            213.9,
+            369.004
+          ],
+          [
+            203.54164211120343,
+            382.54972632399694
+          ],
+          [
+            200.722,
+            386.237
+          ],
+          [
+            199.13570103637392,
+            395.4371584595863
+          ],
+          [
+            195.653,
+            415.636
+          ],
+          [
+            179.433,
+            435.911
+          ],
+          [
+            179.433,
+            450.103
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 91.684,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "HAMLET_SOUTH",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            213.9,
+            369.004
+          ],
+          [
+            204.777,
+            323.385
+          ],
+          [
+            200.96954722969724,
+            298.0040679211283
+          ],
+          [
+            198.694,
+            282.835
+          ],
+          [
+            190.584,
+            247.354
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 123.922,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "HAMLET_WATER",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "village"
+        ],
+        "polyline_m": [
+          [
+            297.05029453780514,
+            359.0146180351795
+          ],
+          [
+            303.11,
+            380.155
+          ],
+          [
+            302.096,
+            387.251
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 29.16,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "02_hamlet"
+      }
+    ],
+    "paths": [],
+    "water": [
+      {
+        "id": "HAMLET_POND",
+        "kind": "lake",
+        "polygon_m": [
+          [
+            181.461,
+            346.701
+          ],
+          [
+            181.186,
+            349.556
+          ],
+          [
+            180.369,
+            352.34
+          ],
+          [
+            179.03,
+            354.985
+          ],
+          [
+            177.201,
+            357.427
+          ],
+          [
+            174.928,
+            359.604
+          ],
+          [
+            172.267,
+            361.464
+          ],
+          [
+            169.283,
+            362.96
+          ],
+          [
+            166.05,
+            364.055
+          ],
+          [
+            162.647,
+            364.724
+          ],
+          [
+            159.158,
+            364.949
+          ],
+          [
+            155.669,
+            364.724
+          ],
+          [
+            152.266,
+            364.055
+          ],
+          [
+            149.033,
+            362.96
+          ],
+          [
+            146.049,
+            361.464
+          ],
+          [
+            143.388,
+            359.604
+          ],
+          [
+            141.115,
+            357.427
+          ],
+          [
+            139.287,
+            354.985
+          ],
+          [
+            137.947,
+            352.34
+          ],
+          [
+            137.13,
+            349.556
+          ],
+          [
+            136.856,
+            346.701
+          ],
+          [
+            137.13,
+            343.847
+          ],
+          [
+            137.947,
+            341.062
+          ],
+          [
+            139.287,
+            338.417
+          ],
+          [
+            141.115,
+            335.976
+          ],
+          [
+            143.388,
+            333.798
+          ],
+          [
+            146.049,
+            331.939
+          ],
+          [
+            149.033,
+            330.443
+          ],
+          [
+            152.266,
+            329.347
+          ],
+          [
+            155.669,
+            328.678
+          ],
+          [
+            159.158,
+            328.454
+          ],
+          [
+            162.647,
+            328.678
+          ],
+          [
+            166.05,
+            329.347
+          ],
+          [
+            169.283,
+            330.443
+          ],
+          [
+            172.267,
+            331.939
+          ],
+          [
+            174.928,
+            333.798
+          ],
+          [
+            177.201,
+            335.976
+          ],
+          [
+            179.03,
+            338.417
+          ],
+          [
+            180.369,
+            341.062
+          ],
+          [
+            181.186,
+            343.847
+          ]
+        ],
+        "center_m": [
+          159.15812893749884,
+          346.7012317789782
+        ],
+        "name_ru": "Пруд хутора",
+        "district_id": "village",
+        "change_region": "02_hamlet"
+      }
+    ],
+    "building_masses": [
+      {
+        "id": "F06_HAMLET_01",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          117.594,
+          444.02
+        ],
+        "width_m": 20.275,
+        "depth_m": 13.179,
+        "floors": 1,
+        "polygon_m": [
+          [
+            107.457,
+            450.61
+          ],
+          [
+            107.457,
+            437.431
+          ],
+          [
+            127.732,
+            437.431
+          ],
+          [
+            127.732,
+            450.61
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          121.99996448814592,
+          246.00024463721684
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          117.595,
+          437.431
+        ],
+        "van_stop_m": [
+          117.595,
+          434.731
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_01"
+      },
+      {
+        "id": "F06_HAMLET_02",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          180.446,
+          463.282
+        ],
+        "width_m": 21.289,
+        "depth_m": 14.192,
+        "floors": 1,
+        "polygon_m": [
+          [
+            169.802,
+            470.378
+          ],
+          [
+            169.802,
+            456.186
+          ],
+          [
+            191.091,
+            456.186
+          ],
+          [
+            191.091,
+            470.378
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          183.99971590516753,
+          226.99992305764954
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          179.433,
+          456.186
+        ],
+        "van_stop_m": [
+          179.433,
+          453.486
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_02"
+      },
+      {
+        "id": "F06_HAMLET_03",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          247.354,
+          456.186
+        ],
+        "width_m": 22.302,
+        "depth_m": 13.179,
+        "floors": 1,
+        "polygon_m": [
+          [
+            236.203,
+            462.775
+          ],
+          [
+            236.203,
+            449.596
+          ],
+          [
+            258.505,
+            449.596
+          ],
+          [
+            258.505,
+            462.775
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          249.99997632543065,
+          234.00019728807803
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          258.505,
+          449.596
+        ],
+        "van_stop_m": [
+          258.874,
+          446.921
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_03"
+      },
+      {
+        "id": "F06_HAMLET_04",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          240.258,
+          334.536
+        ],
+        "width_m": 22.302,
+        "depth_m": 17.234,
+        "floors": 1,
+        "polygon_m": [
+          [
+            229.107,
+            343.153
+          ],
+          [
+            229.107,
+            325.919
+          ],
+          [
+            251.409,
+            325.919
+          ],
+          [
+            251.409,
+            343.153
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          243.00019531519726,
+          354.0001775592703
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          251.409,
+          343.153
+        ],
+        "van_stop_m": [
+          252.722,
+          345.512
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_04"
+      },
+      {
+        "id": "F06_HAMLET_05",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          305.137,
+          339.605
+        ],
+        "width_m": 25.343,
+        "depth_m": 14.192,
+        "floors": 1,
+        "polygon_m": [
+          [
+            292.466,
+            346.701
+          ],
+          [
+            292.466,
+            332.509
+          ],
+          [
+            317.809,
+            332.509
+          ],
+          [
+            317.809,
+            346.701
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          306.99995462374204,
+          348.9999112203649
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          292.466,
+          333.016
+        ],
+        "van_stop_m": [
+          289.766,
+          333.016
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_05"
+      },
+      {
+        "id": "F06_HAMLET_06",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          313.247,
+          302.096
+        ],
+        "width_m": 24.329,
+        "depth_m": 16.22,
+        "floors": 1,
+        "polygon_m": [
+          [
+            301.083,
+            310.206
+          ],
+          [
+            301.083,
+            293.986
+          ],
+          [
+            325.412,
+            293.986
+          ],
+          [
+            325.412,
+            310.206
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          314.9999861898345,
+          386.00030382364025
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          301.083,
+          301.371
+        ],
+        "van_stop_m": [
+          298.383,
+          301.371
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_06"
+      },
+      {
+        "id": "F06_HAMLET_07",
+        "district_id": "village",
+        "kind": "rural_house",
+        "center_m": [
+          267.629,
+          284.862
+        ],
+        "width_m": 24.33,
+        "depth_m": 14.193,
+        "floors": 1,
+        "polygon_m": [
+          [
+            255.464,
+            291.959
+          ],
+          [
+            255.464,
+            277.766
+          ],
+          [
+            279.794,
+            277.766
+          ],
+          [
+            279.794,
+            291.959
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          270.0000552406619,
+          403.00012429148927
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          279.794,
+          277.766
+        ],
+        "van_stop_m": [
+          280.484,
+          275.156
+        ],
+        "access_road_id": "ACCESS_F06_HAMLET_07"
+      }
+    ],
+    "functional_buildings": [
+      {
+        "type": "barn_yard",
+        "group": "rural",
+        "icon": "Ф",
+        "color": "#a5a36a",
+        "id": "F06_BARN",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Амбар",
+        "center_m": [
+          235.189,
+          433.884
+        ],
+        "width_m": 15.206,
+        "depth_m": 33.453,
+        "footprint_m": [
+          [
+            218.207,
+            440.898
+          ],
+          [
+            218.738,
+            425.701
+          ],
+          [
+            252.171,
+            426.869
+          ],
+          [
+            251.64,
+            442.066
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          237.9999289762919,
+          255.9997908746372
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          248.054,
+          426.725
+        ],
+        "van_stop_m": [
+          248.148,
+          424.027
+        ],
+        "access_road_id": "ACCESS_F06_BARN"
+      },
+      {
+        "type": "bus_stop",
+        "group": "service",
+        "icon": "С",
+        "color": "#709dac",
+        "id": "F06_BUS",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Остановка",
+        "center_m": [
+          169.296,
+          401.443
+        ],
+        "width_m": 5.069,
+        "depth_m": 5.069,
+        "footprint_m": [
+          [
+            166.761,
+            403.978
+          ],
+          [
+            166.761,
+            398.909
+          ],
+          [
+            171.83,
+            398.909
+          ],
+          [
+            171.83,
+            403.978
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          172.99991911188798,
+          287.9999171390073
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          169.296,
+          398.909
+        ],
+        "van_stop_m": [
+          169.296,
+          396.209
+        ],
+        "access_road_id": "ACCESS_F06_BUS"
+      },
+      {
+        "type": "church",
+        "group": "landmark",
+        "icon": "О",
+        "color": "#c6b6d4",
+        "id": "F06_CHURCH",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Церковь",
+        "center_m": [
+          145.98,
+          450.103
+        ],
+        "width_m": 20.275,
+        "depth_m": 18.247,
+        "footprint_m": [
+          [
+            136.856,
+            460.241
+          ],
+          [
+            136.856,
+            439.966
+          ],
+          [
+            155.103,
+            439.966
+          ],
+          [
+            155.103,
+            460.241
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "readable",
+        "source_master_px": [
+          150.00007496946967,
+          239.99972774245225
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          136.856,
+          439.966
+        ],
+        "van_stop_m": [
+          135.941,
+          437.426
+        ],
+        "access_road_id": "ACCESS_F06_CHURCH"
+      },
+      {
+        "type": "grandpa_house",
+        "group": "base",
+        "icon": "Б",
+        "color": "#aa6045",
+        "id": "F06_GRANDPA",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Дом деда",
+        "center_m": [
+          146.993,
+          407.526
+        ],
+        "width_m": 16.22,
+        "depth_m": 27.371,
+        "footprint_m": [
+          [
+            133.308,
+            415.636
+          ],
+          [
+            133.308,
+            399.416
+          ],
+          [
+            160.679,
+            399.416
+          ],
+          [
+            160.679,
+            415.636
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          151.0003255253288,
+          281.9998934644377
+        ],
+        "poi_id": "P02",
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          160.679,
+          399.416
+        ],
+        "van_stop_m": [
+          161.334,
+          396.797
+        ],
+        "access_road_id": "ACCESS_F06_GRANDPA"
+      },
+      {
+        "type": "pharmacy",
+        "group": "health",
+        "icon": "+",
+        "color": "#e1ebe0",
+        "id": "F06_PHARM",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Аптека",
+        "center_m": [
+          220.997,
+          295.0
+        ],
+        "width_m": 15.206,
+        "depth_m": 24.33,
+        "footprint_m": [
+          [
+            208.832,
+            302.603
+          ],
+          [
+            208.832,
+            287.397
+          ],
+          [
+            233.162,
+            287.397
+          ],
+          [
+            233.162,
+            302.603
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          224.00036695582523,
+          393.00008483387364
+        ],
+        "poi_id": "P03",
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          208.832,
+          298.004
+        ],
+        "van_stop_m": [
+          206.132,
+          298.004
+        ],
+        "access_road_id": "ACCESS_F06_PHARM"
+      },
+      {
+        "type": "village_shop",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F06_VSHOP",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Сельмаг",
+        "center_m": [
+          233.162,
+          382.182
+        ],
+        "width_m": 17.234,
+        "depth_m": 26.357,
+        "footprint_m": [
+          [
+            219.983,
+            390.799
+          ],
+          [
+            219.983,
+            373.565
+          ],
+          [
+            246.34,
+            373.565
+          ],
+          [
+            246.34,
+            390.799
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          235.99992108476877,
+          307.0002387185745
+        ],
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          219.983,
+          373.565
+        ],
+        "van_stop_m": [
+          219.904,
+          370.866
+        ],
+        "access_road_id": "ACCESS_F06_VSHOP"
+      },
+      {
+        "type": "water_tower",
+        "group": "landmark",
+        "icon": "О",
+        "color": "#c6b6d4",
+        "id": "F06_WATER",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Водобашня",
+        "center_m": [
+          302.096,
+          395.361
+        ],
+        "width_m": 9.124,
+        "depth_m": 9.124,
+        "footprint_m": [
+          [
+            297.534,
+            399.923
+          ],
+          [
+            297.534,
+            390.799
+          ],
+          [
+            306.658,
+            390.799
+          ],
+          [
+            306.658,
+            399.923
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "readable",
+        "source_master_px": [
+          303.9996961763597,
+          293.9999408135766
+        ],
+        "poi_id": "WATER_TOWER",
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          302.096,
+          390.799
+        ],
+        "van_stop_m": [
+          302.096,
+          388.099
+        ],
+        "access_road_id": "ACCESS_F06_WATER"
+      },
+      {
+        "type": "advertising_pole",
+        "group": "landmark",
+        "icon": "О",
+        "color": "#c6b6d4",
+        "id": "F07_AD_POLE",
+        "district_id": "village",
+        "district": "village",
+        "label_ru": "Объявление",
+        "center_m": [
+          184.502,
+          367.99
+        ],
+        "width_m": 2.028,
+        "depth_m": 2.028,
+        "footprint_m": [
+          [
+            183.488,
+            369.004
+          ],
+          [
+            183.488,
+            366.976
+          ],
+          [
+            185.516,
+            366.976
+          ],
+          [
+            185.516,
+            369.004
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          188.00022490840902,
+          320.9998007390411
+        ],
+        "poi_id": "P01",
+        "change_region": "02_hamlet",
+        "entrance_m": [
+          185.516,
+          369.004
+        ],
+        "van_stop_m": [
+          187.674,
+          370.626
+        ],
+        "access_road_id": "ACCESS_F07_AD_POLE"
+      }
+    ],
+    "functional_sites": [],
+    "points": [
+      {
+        "id": "P01",
+        "canonical_id": "P01",
+        "name_ru": "Объявление",
+        "position_m": [
+          185.516,
+          369.004
+        ],
+        "district_id": "village",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "F07_AD_POLE",
+        "mapping_confidence": "proposed",
+        "change_region": "02_hamlet",
+        "building_id": "F07_AD_POLE",
+        "van_stop_m": [
+          187.674,
+          370.626
+        ],
+        "access_road_id": "ACCESS_F07_AD_POLE",
+        "road_node_id": "N130bc101cbda",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P02",
+        "canonical_id": "P02",
+        "name_ru": "Дом и двор деда",
+        "position_m": [
+          160.679,
+          399.416
+        ],
+        "district_id": "village",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": true,
+        "van_repair_parts_in_yard": true,
+        "source_master_key": "F06_GRANDPA",
+        "mapping_confidence": "proposed",
+        "change_region": "02_hamlet",
+        "building_id": "F06_GRANDPA",
+        "van_stop_m": [
+          161.334,
+          396.797
+        ],
+        "access_road_id": "ACCESS_F06_GRANDPA",
+        "road_node_id": "N08ae5bd7cb14",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P03",
+        "canonical_id": "P03",
+        "name_ru": "Аптека",
+        "position_m": [
+          208.832,
+          298.004
+        ],
+        "district_id": "village",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": true,
+        "source_master_key": "F06_PHARM",
+        "mapping_confidence": "proposed",
+        "change_region": "02_hamlet",
+        "building_id": "F06_PHARM",
+        "van_stop_m": [
+          206.132,
+          298.004
+        ],
+        "access_road_id": "ACCESS_F06_PHARM",
+        "road_node_id": "N6fa65ee1bd6e",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "WATER_TOWER",
+        "canonical_id": "WATER_TOWER",
+        "name_ru": "Водонапорная башня",
+        "position_m": [
+          302.096,
+          390.799
+        ],
+        "district_id": "village",
+        "category": "landmark",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "F06_WATER",
+        "mapping_confidence": "readable",
+        "change_region": "02_hamlet",
+        "building_id": "F06_WATER",
+        "van_stop_m": [
+          302.096,
+          388.099
+        ],
+        "access_road_id": "ACCESS_F06_WATER",
+        "road_node_id": "N7eaa140fe45b",
+        "van_node_gap_m": 0.0
+      }
+    ],
+    "plots": [],
+    "microdistricts": [],
+    "farmsteads": [],
+    "vegetation_parcels": [
+      {
+        "id": "ORCHARD06_1",
+        "kind": "orchard",
+        "district_id": "village",
+        "polygon_m": [
+          [
+            265.095,
+            349.235
+          ],
+          [
+            265.095,
+            321.864
+          ],
+          [
+            282.328,
+            321.864
+          ],
+          [
+            282.328,
+            349.235
+          ]
+        ],
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "ORCHARD06_2",
+        "kind": "orchard",
+        "district_id": "village",
+        "polygon_m": [
+          [
+            303.617,
+            288.411
+          ],
+          [
+            303.617,
+            277.26
+          ],
+          [
+            326.933,
+            277.26
+          ],
+          [
+            326.933,
+            288.411
+          ]
+        ],
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "ORCHARD06_3",
+        "kind": "orchard",
+        "district_id": "village",
+        "polygon_m": [
+          [
+            155.61,
+            423.239
+          ],
+          [
+            155.61,
+            395.868
+          ],
+          [
+            172.844,
+            395.868
+          ],
+          [
+            172.844,
+            423.239
+          ]
+        ],
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "ORCHARD06_4",
+        "kind": "orchard",
+        "district_id": "village",
+        "polygon_m": [
+          [
+            225.558,
+            318.316
+          ],
+          [
+            225.558,
+            308.179
+          ],
+          [
+            246.847,
+            308.179
+          ],
+          [
+            246.847,
+            318.316
+          ]
+        ],
+        "change_region": "02_hamlet"
+      }
+    ],
+    "crop_fields": [
+      {
+        "id": "FIELD13_1",
+        "district_id": "village",
+        "crop": "wheat",
+        "stripe_count": 8,
+        "stripe_direction": "north_south",
+        "polygon_m": [
+          [
+            292.973,
+            465.309
+          ],
+          [
+            295.0,
+            431.856
+          ],
+          [
+            330.481,
+            437.938
+          ],
+          [
+            326.426,
+            470.378
+          ]
+        ],
+        "area_m2": 1152.52,
+        "label_ru": "Поле",
+        "change_region": "02_hamlet"
+      },
+      {
+        "id": "FIELD13_2",
+        "district_id": "village",
+        "crop": "wheat",
+        "stripe_count": 8,
+        "stripe_direction": "north_south",
+        "polygon_m": [
+          [
+            107.457,
+            306.151
+          ],
+          [
+            126.718,
+            274.725
+          ],
+          [
+            162.199,
+            281.821
+          ],
+          [
+            135.842,
+            311.22
+          ]
+        ],
+        "area_m2": 1109.9,
+        "label_ru": "Поле",
+        "change_region": "02_hamlet"
+      }
+    ],
+    "hills": [],
+    "beaches": [],
+    "outfalls": [],
+    "water_crossings": [],
+    "pedestrian_water_crossings": []
+  }
+}

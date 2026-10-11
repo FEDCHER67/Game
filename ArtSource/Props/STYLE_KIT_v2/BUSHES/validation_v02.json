@@ -1,0 +1,500 @@
+{
+  "family": "SK2-BUSHES-001",
+  "kit": "STYLE_KIT_v2",
+  "style_bible": "v2",
+  "bible_date": "2026-10-06",
+  "revision": "v02",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root mesh of every asset: centre of the base on the ground (0, 0, 0)",
+  "palette": "_lib/Look_Palette_v2.png (+ .json): UV0 inside the swatch cell; alpha = smoothness",
+  "description": "Bushes v2: BU_Round, BU_Flower (lilac), BU_Scrub + BU_Hedge_Low / BU_Hedge_High modules (bible 6.4)",
+  "assets": {
+    "BU_Round": {
+      "triangles": 240,
+      "triangle_budget": [
+        1,
+        300
+      ],
+      "size_m": [
+        1.592,
+        1.331,
+        1.097
+      ],
+      "bounds_min": [
+        -0.815,
+        -0.671,
+        0.0
+      ],
+      "bounds_max": [
+        0.777,
+        0.66,
+        1.097
+      ],
+      "swatches": [
+        "grad.bush"
+      ],
+      "swatch_families": [
+        "leaf"
+      ],
+      "min_member_m": null,
+      "facet_ratio_min": 0.272,
+      "jitter_m": 0.0,
+      "geometry_sha1": "a38dfc406e37cb5c48b43594e8f6ac27ccf31f9c",
+      "objects": {
+        "BU_Round": {
+          "triangles": 240,
+          "vertices": 126,
+          "faces": 240,
+          "shells": 3,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_300": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "use": "lawns, yards, beds; groups of 3 or 5",
+      "fbx": "BU_Round_v02.fbx"
+    },
+    "BU_Flower": {
+      "triangles": 420,
+      "triangle_budget": [
+        1,
+        450
+      ],
+      "size_m": [
+        1.785,
+        1.608,
+        1.65
+      ],
+      "bounds_min": [
+        -0.89,
+        -0.795,
+        0.0
+      ],
+      "bounds_max": [
+        0.896,
+        0.813,
+        1.65
+      ],
+      "swatches": [
+        "grad.bush",
+        "lilac"
+      ],
+      "swatch_families": [
+        "leaf",
+        "lilac"
+      ],
+      "min_member_m": 0.24,
+      "facet_ratio_min": 0.272,
+      "jitter_m": 0.0,
+      "geometry_sha1": "da95b2235c2d7b84f37d535d5b63ebf690195e9d",
+      "objects": {
+        "BU_Flower": {
+          "triangles": 420,
+          "vertices": 234,
+          "faces": 420,
+          "shells": 12,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_450": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "flower": "lilac",
+      "use": "parks, the square, yards",
+      "fbx": "BU_Flower_v02.fbx"
+    },
+    "BU_Scrub": {
+      "triangles": 292,
+      "triangle_budget": [
+        1,
+        350
+      ],
+      "size_m": [
+        1.642,
+        1.217,
+        1.438
+      ],
+      "bounds_min": [
+        -0.785,
+        -0.598,
+        0.0
+      ],
+      "bounds_max": [
+        0.858,
+        0.619,
+        1.438
+      ],
+      "swatches": [
+        "grad.bush",
+        "wood"
+      ],
+      "swatch_families": [
+        "leaf",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.271,
+      "jitter_m": 0.0,
+      "geometry_sha1": "670bc5db4934d976af62ac7328154b9aabaee806",
+      "objects": {
+        "BU_Scrub": {
+          "triangles": 292,
+          "vertices": 156,
+          "faces": 272,
+          "shells": 5,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_350": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "use": "arches, industrial zone, field edges",
+      "fbx": "BU_Scrub_v02.fbx"
+    },
+    "BU_Hedge_Low": {
+      "triangles": 230,
+      "triangle_budget": [
+        1,
+        260
+      ],
+      "size_m": [
+        2.0,
+        0.9,
+        0.795
+      ],
+      "bounds_min": [
+        -1.0,
+        -0.45,
+        0.0
+      ],
+      "bounds_max": [
+        1.0,
+        0.45,
+        0.795
+      ],
+      "swatches": [
+        "grad.hedge.v2"
+      ],
+      "swatch_families": [
+        "leaf"
+      ],
+      "min_member_m": 0.6,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "39c432ce14e91377b3ae5b5420e3ff1e24979316",
+      "objects": {
+        "BU_Hedge_Low": {
+          "triangles": 230,
+          "vertices": 117,
+          "faces": 126,
+          "shells": 1,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_260": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "module_m": 2.0,
+      "use": "the square, paths, flower beds",
+      "fbx": "BU_Hedge_Low_v02.fbx"
+    },
+    "BU_Hedge_High": {
+      "triangles": 230,
+      "triangle_budget": [
+        1,
+        260
+      ],
+      "size_m": [
+        2.0,
+        0.9,
+        1.145
+      ],
+      "bounds_min": [
+        -1.0,
+        -0.45,
+        0.0
+      ],
+      "bounds_max": [
+        1.0,
+        0.45,
+        1.145
+      ],
+      "swatches": [
+        "grad.hedge.v2"
+      ],
+      "swatch_families": [
+        "leaf"
+      ],
+      "min_member_m": 0.6,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "860ddded02392415faeba7e77022fb528794ab70",
+      "objects": {
+        "BU_Hedge_High": {
+          "triangles": 230,
+          "vertices": 117,
+          "faces": 126,
+          "shells": 1,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_260": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "module_m": 2.0,
+      "use": "elite gardens, park edges",
+      "fbx": "BU_Hedge_High_v02.fbx"
+    },
+    "BU_Hedge_Low_End": {
+      "triangles": 152,
+      "triangle_budget": [
+        1,
+        160
+      ],
+      "size_m": [
+        0.448,
+        0.81,
+        0.739
+      ],
+      "bounds_min": [
+        0.0,
+        -0.405,
+        0.0
+      ],
+      "bounds_max": [
+        0.448,
+        0.405,
+        0.739
+      ],
+      "swatches": [
+        "grad.hedge.v2"
+      ],
+      "swatch_families": [
+        "leaf"
+      ],
+      "min_member_m": 0.6,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "38abc60042bc6a8bccbcb601c4ea58506557fbb6",
+      "objects": {
+        "BU_Hedge_Low_End": {
+          "triangles": 152,
+          "vertices": 78,
+          "faces": 87,
+          "shells": 1,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_160": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "module_m": 0.45,
+      "use": "free end of a low hedge run: origin at the joint, extends along +X (rotate 180 deg for the start)",
+      "fbx": "BU_Hedge_Low_End_v02.fbx"
+    },
+    "BU_Hedge_High_End": {
+      "triangles": 152,
+      "triangle_budget": [
+        1,
+        160
+      ],
+      "size_m": [
+        0.448,
+        0.81,
+        1.065
+      ],
+      "bounds_min": [
+        0.0,
+        -0.405,
+        0.0
+      ],
+      "bounds_max": [
+        0.448,
+        0.405,
+        1.065
+      ],
+      "swatches": [
+        "grad.hedge.v2"
+      ],
+      "swatch_families": [
+        "leaf"
+      ],
+      "min_member_m": 0.6,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "0629795fdd55df4d4f8b20280153cd37fee7f058",
+      "objects": {
+        "BU_Hedge_High_End": {
+          "triangles": 152,
+          "vertices": 78,
+          "faces": 87,
+          "shells": 1,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_160": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "module_m": 0.45,
+      "use": "free end of a high hedge run: origin at the joint, extends along +X",
+      "fbx": "BU_Hedge_High_End_v02.fbx"
+    }
+  },
+  "total_assets": 7,
+  "total_triangles": 1716,
+  "all_checks_passed": true,
+  "notes": [
+    "Hedge modules are 2.0 m long; v02b: rounded-box section (0.9 m deep, 0.12 m bevel, domed top, leaf.light top band) with a templated lobe every 1 m; modules tile end to end in a crease, BU_Hedge_*_End closes a run with a dome. Low hedge 0.75 m (v01: 0.6 m read as a log on the square).",
+    "Uniform instance scale 0.92-1.08 (bible 6.4); bushes under ground-floor windows stay <= 1.0 m (BU_Round at 0.92).",
+    "The .blend shows the assets in rows along +X; every FBX has its root at the origin."
+  ],
+  "files": {
+    "blend": "SK2-BUSHES-001_v02.blend",
+    "atlas": "_lib/Look_Palette_v2.png",
+    "atlas_layout": "_lib/Look_Palette_v2.json"
+  }
+}

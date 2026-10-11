@@ -2,6 +2,18 @@
 
 Статус: черновик, ветка `cloud/sfx-hookup`. Код написан в облачной сессии без Unity: компиляция, импорт и прослушивание в игре **не проверены**. Громкость, высота и дистанции — первые прикидки, их подбирают на слух в Play mode.
 
+## Настоящие звуки: Library_v1 (07.10)
+
+- `Assets/OnlyVolunteers/Audio/Library_v1/`: 241 записанный звук на 45 id (`<категория>/<id>_NN.wav`). Источники и лицензии — в `LICENSES.md`, разбор и что слушать — в `README.md` там же.
+- Импортёр ищет клипы для id так: сначала Library_v1 (по самому id), потом `Final/` (по префиксу), потом заглушки SFX_GEN. Заглушка осталась только у `phone_buzz`.
+- Меню **OnlyVolunteers → Audio → Refill library + reset tuning to defaults** заполняет библиотеку и сбрасывает громкость, высоту, 3D и дистанции на значения из таблицы `Events`. Обычный **Refill library from Audio folders** ручную подстройку не трогает.
+- Новые id в `SfxIds`: `npc_hurt`, `police_whistle`, `van_horn`, `ui_pickup`, `ui_error`, `operation_*`.
+- Хуки:
+  - `OperationSfx` играет записи `operation_*`, синтез в коде остался запасным;
+  - `PoliceUnit` берёт петлю сирены `police_siren_01` (`Clips[0]`);
+  - остальные хуки прежние.
+- 24 файла Mixkit хранятся только локально (`.gitignore`). На машине без них `Sfx` пропускает пустые ячейки в записи и выбирает из остальных клипов.
+
 ## Что сделано
 
 - `Assets/OnlyVolunteers/Audio/Scripts/SfxLibrary.cs` — ScriptableObject: id события → список AudioClip, диапазон громкости и высоты, 3D (SpatialBlend, Min/MaxDistance), кулдаун на id, приоритет, флаг `Locked`.
@@ -44,7 +56,9 @@
 | `npc_mumble` | `npc_mumble_gibberish_*` | `GreyboxNpc.UpdateDown` | фаза Groggy (вторая часть оглушения), каждые 2.5–5 с (`MumbleInterval`) |
 | `npc_whimper` | `npc_whimper_*` | `GreyboxNpc.UpdateSeated` | сидит в кузове, каждые 4–9 с (`WhimperInterval`) |
 | `organ_squish` | `organ_squish_*` | `GreyboxInteractor` (E) | подобран предмет с `ItemKind.Organ` (офлайн-подбор) |
-| `npc_gasp`, `police_siren`, `phone_buzz`, `cash_register` | `npc_gasp_*`, `police_siren_short`, `phone_buzz`, `cash_register` | — | лежат в библиотеке, ни к чему не подключены |
+| `police_siren` | Library_v1 `police_siren_01` (петля) | `PoliceUnit.SetSiren` | машина полиции включила сирену: свой зацикленный AudioSource берёт `Clips[0]` |
+| `operation_*` | Library_v1 `operation_*` | `OperationSfx.Play` | реплики операционного стола; без клипов — синтез в коде |
+| `npc_gasp`, `npc_hurt`, `police_whistle`, `van_horn`, `phone_buzz`, `cash_register`, `ui_pickup`, `ui_error` | Library_v1 по id; `phone_buzz` — заглушка SFX_GEN | — | лежат в библиотеке, ни к чему не подключены |
 
 Правило префикса: имя файла (без расширения) равно префиксу или «префикс_цифры». `footstep_sand_03` попадает в `footstep_sand`; `van_door_open_slow` в `van_door_open` уже не попадёт.
 

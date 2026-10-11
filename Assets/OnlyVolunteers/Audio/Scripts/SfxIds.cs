@@ -37,10 +37,30 @@ namespace OnlyVolunteers.Audio
         // Items
         public const string OrganSquish = "organ_squish";
 
+        // Police: the siren loop (PoliceUnit plays Clips[0] on its own looping AudioSource)
+        public const string PoliceSiren = "police_siren";
+
         // In the library, not hooked to anything yet
         public const string NpcGasp = "npc_gasp";
-        public const string PoliceSiren = "police_siren";
+        public const string NpcHurt = "npc_hurt";
+        public const string PoliceWhistle = "police_whistle";
+        public const string VanHorn = "van_horn";
         public const string PhoneBuzz = "phone_buzz";
         public const string CashRegister = "cash_register";
+        public const string UiPickup = "ui_pickup";
+        public const string UiError = "ui_error";
+
+        // Operation table: OperationSfx plays these when the library has clips, its own synth otherwise.
+        // CoolerLid and Heartbeat have clips but no OperationCue yet.
+        public const string OperationStrap = "operation_strap";
+        public const string OperationTick = "operation_tick";
+        public const string OperationSlit = "operation_slit";
+        public const string OperationYelp = "operation_yelp";
+        public const string OperationBoing = "operation_boing";
+        public const string OperationPop = "operation_pop";
+        public const string OperationRip = "operation_rip";
+        public const string OperationTape = "operation_tape";
+        public const string OperationCoolerLid = "operation_cooler_lid";
+        public const string OperationHeartbeat = "operation_heartbeat";
     }
 }

@@ -1,0 +1,140 @@
+// Map_Look_v13_trial builder (STYLE_BIBLE_v2 section 12, revision v2b). Run through the Unity MCP execute_code tool
+// (CodeDom C# 6) with the editor not in Play mode; it reads out/ground_v2b.txt and out/place_v2b.txt written by
+// make_layout.py, rebuilds the scene from scratch and saves it. Not a project script on purpose (.cs.txt).
+if (UnityEditor.EditorApplication.isPlaying) return "PLAYING - abort";
+string SCENE = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v13_trial.unity";
+string D = "Assets/OnlyVolunteers/Art/StyleKit_v2";
+string LAY = "C:/Dev/Game/ArtSource/Props/STYLE_KIT_v2/TRIAL_SCENE/out/";
+var ci = System.Globalization.CultureInfo.InvariantCulture;
+var sb = new System.Text.StringBuilder();
+var t0 = System.DateTime.Now;
+var cur = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+if (cur.isDirty && cur.path != SCENE) return "active scene dirty: " + cur.path;
+UnityEngine.SceneManagement.Scene scene;
+if (System.IO.File.Exists(SCENE)) {
+  scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(SCENE, UnityEditor.SceneManagement.OpenSceneMode.Single);
+  foreach (var r0 in scene.GetRootGameObjects()) UnityEngine.Object.DestroyImmediate(r0);
+} else {
+  scene = UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene, UnityEditor.SceneManagement.NewSceneMode.Single);
+}
+System.Func<string, UnityEngine.Color> hex = (h) => { UnityEngine.Color c; UnityEngine.ColorUtility.TryParseHtmlString(h, out c); return c; };
+var groups = new System.Collections.Generic.Dictionary<string, UnityEngine.Transform>();
+System.Func<string, UnityEngine.Transform> group = (n) => { UnityEngine.Transform t; if (!groups.TryGetValue(n, out t)) { t = new UnityEngine.GameObject(n).transform; groups[n] = t; } return t; };
+
+// ------------------------------------------------------------------ ground meshes
+var matMap = new System.Collections.Generic.Dictionary<string, string> {
+  { "meadow", "SK2_Ground_Meadow" }, { "lawn", "SK2_Ground_Lawn" }, { "road", "SK2_Ground_Road" }, { "asphalt", "SK2_Ground_Asphalt" },
+  { "paving", "SK2_Ground_Paving_Walk" }, { "pavingsq", "SK2_Ground_Paving_Square" }, { "pavingdark", "SK2_Ground_PavingDark" },
+  { "curb", "SK2_Ground_Curb" }, { "mark", "SK2_Ground_Mark" }, { "greylight", "SK2_Ground_GreyLight" }, { "water", "SK2_Ground_Water" },
+  { "sand", "SK2_Ground_Sand" }, { "field", "SK2_Ground_Field" }, { "terracotta", "SK2_Ground_Terracotta" }, { "wood", "SK2_Ground_Wood" } };
+var lines = System.IO.File.ReadAllLines(LAY + "ground_v2b.txt");
+var gGround = group("Ground");
+for (int li = 0; li + 2 < lines.Length; li++) {
+  if (!lines[li].StartsWith("MAT ")) continue;
+  var hd = lines[li].Split(' ');
+  string mname = hd[1];
+  var vf = lines[li + 1].Split(' ');
+  var tf = lines[li + 2].Split(' ');
+  var verts = new UnityEngine.Vector3[vf.Length / 3];
+  var uvs = new UnityEngine.Vector2[vf.Length / 3];
+  for (int i = 0; i < verts.Length; i++) {
+    float x = float.Parse(vf[3 * i], ci), y = float.Parse(vf[3 * i + 1], ci), z = float.Parse(vf[3 * i + 2], ci);
+    verts[i] = new UnityEngine.Vector3(x, y, z); uvs[i] = new UnityEngine.Vector2(x, z);
+  }
+  var tris = new int[tf.Length];
+  for (int i = 0; i < tf.Length; i++) tris[i] = int.Parse(tf[i]);
+  string mpath = D + "/Meshes/Map_Look_v13_trial_Ground_" + mname + ".asset";
+  var mesh = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Mesh>(mpath);
+  bool fresh = mesh == null;
+  if (fresh) mesh = new UnityEngine.Mesh();
+  mesh.Clear(); mesh.name = "Map_Look_v13_trial_Ground_" + mname; mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+  mesh.vertices = verts; mesh.uv = uvs; mesh.triangles = tris; mesh.RecalculateNormals(); mesh.RecalculateBounds();
+  if (fresh) UnityEditor.AssetDatabase.CreateAsset(mesh, mpath); else UnityEditor.EditorUtility.SetDirty(mesh);
+  var go = new UnityEngine.GameObject("Ground_" + mname); go.transform.SetParent(gGround, false); go.isStatic = true;
+  go.AddComponent<UnityEngine.MeshFilter>().sharedMesh = mesh;
+  var mr = go.AddComponent<UnityEngine.MeshRenderer>();
+  mr.sharedMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(D + "/Materials/" + matMap[mname] + ".mat");
+  if (mname == "water" || mname == "mark") mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+  sb.AppendLine("ground " + mname + " tris=" + tris.Length / 3 + (mr.sharedMaterial == null ? " NO MATERIAL" : ""));
+}
+
+// ------------------------------------------------------------------ placements
+var cache = new System.Collections.Generic.Dictionary<string, UnityEngine.GameObject>();
+var missing = new System.Collections.Generic.HashSet<string>();
+System.Func<string, UnityEngine.GameObject> asset = (key) => {
+  UnityEngine.GameObject go;
+  if (cache.TryGetValue(key, out go)) return go;
+  string path = null;
+  if (key.StartsWith("kit:")) {
+    string n = key.Substring(4);
+    foreach (var cand in new[] { D + "/Models/" + n + "_v02.fbx", D + "/Models/Plan/" + n + "_v02.fbx", D + "/Models/" + n + "_v01.fbx" })
+      if (System.IO.File.Exists(cand)) { path = cand; break; }
+  } else path = key.Substring(7);
+  go = path == null ? null : UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>(path);
+  cache[key] = go;
+  return go;
+};
+int placed = 0;
+var pl = System.IO.File.ReadAllLines(LAY + "place_v2b.txt");
+foreach (var line in pl) {
+  if (line.Length < 3) continue;
+  var f = line.Split('|');
+  var a = asset(f[0]);
+  if (a == null) { missing.Add(f[0]); continue; }
+  var inst = (UnityEngine.GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(a, group(f[6]));
+  var t = inst.transform;
+  t.position = new UnityEngine.Vector3(float.Parse(f[1], ci), float.Parse(f[2], ci), float.Parse(f[3], ci));
+  t.rotation = UnityEngine.Quaternion.Euler(0f, float.Parse(f[4], ci), 0f) * t.rotation;
+  float s = float.Parse(f[5], ci);
+  if (s != 1f) t.localScale = t.localScale * s;
+  if (f[6] == "Buildings" || f[6] == "Trees" || f[6] == "Hedges" || f[6] == "Bushes" || f[6] == "Grass") inst.isStatic = true;
+  placed++;
+}
+sb.AppendLine("placed=" + placed + " missing=" + string.Join(",", new System.Collections.Generic.List<string>(missing).ToArray()));
+// NPCs: the prefabs are unchanged; their Animator evaluates its default (idle) state once so the bones leave the bind pose
+int k = 0;
+if (groups.ContainsKey("NPC")) foreach (UnityEngine.Transform t in groups["NPC"]) { var an = t.GetComponent<UnityEngine.Animator>(); if (an != null) { an.Rebind(); an.Update(0f); an.Update(0.35f + 0.21f * k); } k++; }
+
+// ------------------------------------------------------------------ light (bible 9.1, critique 12: fog 150-1200 m in the horizon colour)
+var gLight = group("Lighting");
+var sunGo = new UnityEngine.GameObject("Sun"); sunGo.transform.SetParent(gLight, false);
+var sun = sunGo.AddComponent<UnityEngine.Light>(); sun.type = UnityEngine.LightType.Directional;
+sun.color = hex("#FFF4E4"); sun.intensity = 0.8f; sun.shadows = UnityEngine.LightShadows.Soft; sun.shadowStrength = 1f;
+sunGo.transform.rotation = UnityEngine.Quaternion.Euler(45f, 45f, 0f);
+var sunData = sunGo.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalLightData>();
+UnityEngine.RenderSettings.sun = sun;
+UnityEngine.RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
+UnityEngine.RenderSettings.ambientSkyColor = hex("#ADC0E6"); UnityEngine.RenderSettings.ambientEquatorColor = hex("#CCD2DC"); UnityEngine.RenderSettings.ambientGroundColor = hex("#AAA294");
+UnityEngine.RenderSettings.ambientIntensity = 1f;
+UnityEngine.RenderSettings.fog = true; UnityEngine.RenderSettings.fogMode = UnityEngine.FogMode.Linear; UnityEngine.RenderSettings.fogColor = hex("#D7E5F1");
+UnityEngine.RenderSettings.fogStartDistance = 150f; UnityEngine.RenderSettings.fogEndDistance = 1200f;
+UnityEngine.RenderSettings.skybox = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(D + "/Lighting/Look_Sky_v2.mat");
+UnityEngine.RenderSettings.defaultReflectionMode = UnityEngine.Rendering.DefaultReflectionMode.Skybox;
+UnityEngine.RenderSettings.reflectionIntensity = 1f;
+var volGo = new UnityEngine.GameObject("PostFX_v2"); volGo.transform.SetParent(gLight, false);
+var vol = volGo.AddComponent<UnityEngine.Rendering.Volume>(); vol.isGlobal = true; vol.priority = 1f;
+vol.sharedProfile = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.VolumeProfile>(D + "/Lighting/Look_PostFX_v2.asset");
+
+// ------------------------------------------------------------------ cameras: square_a and play_npc_clock solved from the 05.10 shots (1 px median)
+var gCams = group("Cameras");
+System.Func<string, UnityEngine.Vector3, UnityEngine.Quaternion, float, bool, UnityEngine.Camera> camFn = (n, pos, rot, fov, on) => {
+  var go = new UnityEngine.GameObject(n); go.transform.SetParent(gCams, false);
+  go.transform.SetPositionAndRotation(pos, rot);
+  var c = go.AddComponent<UnityEngine.Camera>(); c.fieldOfView = fov; c.nearClipPlane = 0.1f; c.farClipPlane = 3000f; c.allowMSAA = true; c.allowHDR = true;
+  var ad = go.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+  ad.renderPostProcessing = true; ad.antialiasing = UnityEngine.Rendering.Universal.AntialiasingMode.None; ad.renderShadows = true;
+  c.enabled = on; if (on) go.tag = "MainCamera";
+  return c;
+};
+camFn("Cam_SquareA", new UnityEngine.Vector3(600.037f, 13.975f, 512.065f), UnityEngine.Quaternion.Euler(11.127f, 53.772f, 0f), 55.13f, true);
+camFn("Cam_PlayNpcClock", new UnityEngine.Vector3(645.94f, 3.08f, 538.80f), UnityEngine.Quaternion.Euler(17.54f, 224.80f, 0f), 55.08f, false);
+var eye = new UnityEngine.Vector3(526.38f, 1.6f, 499.47f);
+camFn("Cam_Facade_1p6m", eye, UnityEngine.Quaternion.LookRotation(new UnityEngine.Vector3(536.61f, 4.6f, 510.44f) - eye), 55f, false);
+var weye = new UnityEngine.Vector3(545f, 92f, 415f);
+camFn("Cam_Wide", weye, UnityEngine.Quaternion.LookRotation(new UnityEngine.Vector3(662f, 0f, 560f) - weye), 50f, false);
+
+UnityEditor.AssetDatabase.SaveAssets();
+UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene, SCENE);
+sb.AppendLine("saved " + SCENE + " in " + (System.DateTime.Now - t0).TotalSeconds.ToString("F1") + " s");
+return sb.ToString();

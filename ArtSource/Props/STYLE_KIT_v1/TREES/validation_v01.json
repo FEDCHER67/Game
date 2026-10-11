@@ -1,0 +1,975 @@
+{
+  "family": "SK1-TREES-001",
+  "kit": "STYLE_KIT_v1",
+  "style_bible": "v1",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); *_Emissive / *_Water are children",
+  "palette": "Look_Palette_v1.png (256 x 256, 16 px cells): UV0 at the swatch cell centre, gradient rows encode height in V; vertex colour Col = same colour x AO; UV1 = metre-scale box projection for detail maps",
+  "description": "Style-bible trees: linden, birch, poplar, pine, spruce, apple; A = large, B = small. Smooth gradient lobes without jitter, thick visible trunks, branches entering the crown from below, flat faceted trunks.",
+  "assets": {
+    "TR_Linden_A": {
+      "triangles": 376,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        5.231,
+        5.5,
+        6.97
+      ],
+      "bounds_min": [
+        -2.538,
+        -2.75,
+        0.0
+      ],
+      "bounds_max": [
+        2.693,
+        2.75,
+        6.97
+      ],
+      "swatches": [
+        "grad_crown",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Linden_A": 0
+      },
+      "objects": {
+        "TR_Linden_A": {
+          "triangles": 376,
+          "vertices": 202,
+          "faces": 298,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 94.5913
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_8_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Linden A ~7 m: lollipop crown 5.5 m wide, trunk visible 2.3 m (33 %), top lobe pushed right, dark underside. Old-town square rows.",
+      "row": 1,
+      "species": "Linden",
+      "min_member_m": 0.14,
+      "height_m": 6.97,
+      "crown_from_m": 2.3,
+      "crown_width_m": 5.5,
+      "trunk_diameter_m": 0.64,
+      "fbx": "TR_Linden_A_v01.fbx"
+    },
+    "TR_Linden_B": {
+      "triangles": 376,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        3.804,
+        4.0,
+        5.217
+      ],
+      "bounds_min": [
+        -1.988,
+        -1.971,
+        0.0
+      ],
+      "bounds_max": [
+        1.816,
+        2.029,
+        5.217
+      ],
+      "swatches": [
+        "grad_crown",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Linden_B": 0
+      },
+      "objects": {
+        "TR_Linden_B": {
+          "triangles": 376,
+          "vertices": 202,
+          "faces": 298,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 38.7941
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_8_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Linden B ~5 m: rounder and squatter, top lobe to the left. Yards, old-town side streets.",
+      "row": 0,
+      "species": "Linden",
+      "min_member_m": 0.14,
+      "height_m": 5.22,
+      "crown_from_m": 1.6,
+      "crown_width_m": 4.0,
+      "trunk_diameter_m": 0.48,
+      "fbx": "TR_Linden_B_v01.fbx"
+    },
+    "TR_Birch_A": {
+      "triangles": 548,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        3.48,
+        3.259,
+        9.59
+      ],
+      "bounds_min": [
+        -1.448,
+        -1.418,
+        0.0
+      ],
+      "bounds_max": [
+        2.032,
+        1.841,
+        9.59
+      ],
+      "swatches": [
+        "grad_crown_light",
+        "trunk_birch",
+        "trunk_mark"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Birch_A": 0
+      },
+      "objects": {
+        "TR_Birch_A": {
+          "triangles": 548,
+          "vertices": 286,
+          "faces": 386,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 35.0248
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Birch A ~9 m: white trunk with 7 two-face dashes and a dark foot, two tall airy lobes + a small top, 2 white branches.",
+      "row": 1,
+      "species": "Birch",
+      "min_member_m": 0.12,
+      "height_m": 8.95,
+      "crown_from_m": 3.0,
+      "crown_width_m": 3.92,
+      "trunk_diameter_m": 0.42,
+      "fbx": "TR_Birch_A_v01.fbx"
+    },
+    "TR_Birch_B": {
+      "triangles": 484,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        2.674,
+        2.35,
+        6.916
+      ],
+      "bounds_min": [
+        -1.602,
+        -0.978,
+        0.0
+      ],
+      "bounds_max": [
+        1.072,
+        1.372,
+        6.916
+      ],
+      "swatches": [
+        "grad_crown_light",
+        "trunk_birch",
+        "trunk_mark"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Birch_B": 0
+      },
+      "objects": {
+        "TR_Birch_B": {
+          "triangles": 484,
+          "vertices": 254,
+          "faces": 354,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 13.0058
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_8_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Birch B ~6.5 m: young, leaning the other way, 5 dashes.",
+      "row": 0,
+      "species": "Birch",
+      "min_member_m": 0.12,
+      "height_m": 6.46,
+      "crown_from_m": 2.2,
+      "crown_width_m": 2.8,
+      "trunk_diameter_m": 0.36,
+      "fbx": "TR_Birch_B_v01.fbx"
+    },
+    "TR_Poplar_A": {
+      "triangles": 316,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        2.663,
+        2.8,
+        10.127
+      ],
+      "bounds_min": [
+        -1.331,
+        -1.4,
+        0.0
+      ],
+      "bounds_max": [
+        1.331,
+        1.4,
+        10.127
+      ],
+      "swatches": [
+        "grad_crown",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Poplar_A": 0
+      },
+      "objects": {
+        "TR_Poplar_A": {
+          "triangles": 316,
+          "vertices": 166,
+          "faces": 274,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 32.8223
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Poplar A ~11 m: column of three tall lobes, pointed top, trunk visible 1.1 m. Avenue rows, industrial zone.",
+      "row": 1,
+      "species": "Poplar",
+      "min_member_m": 0.14,
+      "height_m": 10.13,
+      "crown_from_m": 1.1,
+      "crown_width_m": 2.8,
+      "trunk_diameter_m": 0.4,
+      "fbx": "TR_Poplar_A_v01.fbx"
+    },
+    "TR_Poplar_B": {
+      "triangles": 316,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        2.187,
+        2.3,
+        8.215
+      ],
+      "bounds_min": [
+        -1.071,
+        -1.15,
+        0.0
+      ],
+      "bounds_max": [
+        1.116,
+        1.15,
+        8.215
+      ],
+      "swatches": [
+        "grad_crown",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Poplar_B": 0
+      },
+      "objects": {
+        "TR_Poplar_B": {
+          "triangles": 316,
+          "vertices": 166,
+          "faces": 274,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 18.1773
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Poplar B ~8 m: plumper column.",
+      "row": 0,
+      "species": "Poplar",
+      "min_member_m": 0.119,
+      "height_m": 8.22,
+      "crown_from_m": 0.8,
+      "crown_width_m": 2.3,
+      "trunk_diameter_m": 0.34,
+      "fbx": "TR_Poplar_B_v01.fbx"
+    },
+    "TR_Pine_A": {
+      "triangles": 456,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        6.692,
+        5.52,
+        12.307
+      ],
+      "bounds_min": [
+        -3.015,
+        -2.498,
+        0.0
+      ],
+      "bounds_max": [
+        3.677,
+        3.022,
+        12.307
+      ],
+      "swatches": [
+        "grad_pine",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Pine_A": 0
+      },
+      "objects": {
+        "TR_Pine_A": {
+          "triangles": 456,
+          "vertices": 244,
+          "faces": 378,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 69.4737
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.5_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Scots pine A ~12 m: bare trunk 5.4 m, three flat pads stepping up on alternate sides, dome. Forest dominant.",
+      "row": 1,
+      "species": "Pine",
+      "min_member_m": 0.14,
+      "height_m": 12.31,
+      "crown_from_m": 5.4,
+      "crown_width_m": 6.0,
+      "trunk_diameter_m": 0.52,
+      "fbx": "TR_Pine_A_v01.fbx"
+    },
+    "TR_Pine_B": {
+      "triangles": 356,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        5.397,
+        4.6,
+        9.432
+      ],
+      "bounds_min": [
+        -2.231,
+        -2.3,
+        0.0
+      ],
+      "bounds_max": [
+        3.166,
+        2.3,
+        9.432
+      ],
+      "swatches": [
+        "grad_pine",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Pine_B": 0
+      },
+      "objects": {
+        "TR_Pine_B": {
+          "triangles": 356,
+          "vertices": 190,
+          "faces": 290,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 35.1872
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.5_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Scots pine B ~9 m: two pads + dome, bigger dome relative to height.",
+      "row": 0,
+      "species": "Pine",
+      "min_member_m": 0.132,
+      "height_m": 9.43,
+      "crown_from_m": 4.0,
+      "crown_width_m": 5.0,
+      "trunk_diameter_m": 0.44,
+      "fbx": "TR_Pine_B_v01.fbx"
+    },
+    "TR_Spruce_A": {
+      "triangles": 118,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        3.696,
+        3.696,
+        10.0
+      ],
+      "bounds_min": [
+        -1.848,
+        -1.848,
+        0.0
+      ],
+      "bounds_max": [
+        1.848,
+        1.848,
+        10.0
+      ],
+      "swatches": [
+        "grad_pine",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Spruce_A": 0
+      },
+      "objects": {
+        "TR_Spruce_A": {
+          "triangles": 118,
+          "vertices": 67,
+          "faces": 61,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 27.7524
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Spruce A ~10 m: three faceted cones, 30 % overlap, spire. Forest by the swamp, 2-3 at the church.",
+      "row": 1,
+      "species": "Spruce",
+      "min_member_m": 0.28,
+      "height_m": 10.0,
+      "crown_from_m": 0.8,
+      "crown_width_m": 4.0,
+      "trunk_diameter_m": 0.4,
+      "fbx": "TR_Spruce_A_v01.fbx"
+    },
+    "TR_Spruce_B": {
+      "triangles": 118,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        2.772,
+        2.772,
+        7.0
+      ],
+      "bounds_min": [
+        -1.386,
+        -1.386,
+        0.0
+      ],
+      "bounds_max": [
+        1.386,
+        1.386,
+        7.0
+      ],
+      "swatches": [
+        "grad_pine",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Spruce_B": 0
+      },
+      "objects": {
+        "TR_Spruce_B": {
+          "triangles": 118,
+          "vertices": 67,
+          "faces": 61,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 11.1006
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_13_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Spruce B ~7 m.",
+      "row": 0,
+      "species": "Spruce",
+      "min_member_m": 0.224,
+      "height_m": 7.0,
+      "crown_from_m": 0.6,
+      "crown_width_m": 3.0,
+      "trunk_diameter_m": 0.32,
+      "fbx": "TR_Spruce_B_v01.fbx"
+    },
+    "TR_Apple_A": {
+      "triangles": 544,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        4.615,
+        3.052,
+        4.348
+      ],
+      "bounds_min": [
+        -2.114,
+        -1.342,
+        0.0
+      ],
+      "bounds_max": [
+        2.501,
+        1.71,
+        4.348
+      ],
+      "swatches": [
+        "fruit_red",
+        "grad_crown_dark",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Apple_A": 0
+      },
+      "objects": {
+        "TR_Apple_A": {
+          "triangles": 544,
+          "vertices": 306,
+          "faces": 482,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 19.0001
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_8_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Apple A ~4.5 m: crooked trunk, 3 limbs, two lobes side by side + one on top, 10 red apples on the outer surface. Hamlet yards.",
+      "row": 1,
+      "species": "Apple",
+      "min_member_m": 0.14,
+      "height_m": 4.54,
+      "crown_from_m": 1.35,
+      "crown_width_m": 4.9,
+      "trunk_diameter_m": 0.3,
+      "fbx": "TR_Apple_A_v01.fbx"
+    },
+    "TR_Apple_B": {
+      "triangles": 504,
+      "triangle_budget": [
+        100,
+        1200
+      ],
+      "size_m": [
+        3.476,
+        2.289,
+        3.24
+      ],
+      "bounds_min": [
+        -1.901,
+        -0.95,
+        0.0
+      ],
+      "bounds_max": [
+        1.575,
+        1.339,
+        3.24
+      ],
+      "swatches": [
+        "fruit_red",
+        "grad_crown_dark",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "TR_Apple_B": 0
+      },
+      "objects": {
+        "TR_Apple_B": {
+          "triangles": 504,
+          "vertices": 282,
+          "faces": 442,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 7.8328
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_1200": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_8_m": true,
+        "crown_from_le_0.35_h": true,
+        "trunk_diameter_ge_0.3_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Apple B ~3.2 m: 8 apples.",
+      "row": 0,
+      "species": "Apple",
+      "min_member_m": 0.14,
+      "height_m": 3.38,
+      "crown_from_m": 1.0,
+      "crown_width_m": 3.7,
+      "trunk_diameter_m": 0.3,
+      "fbx": "TR_Apple_B_v01.fbx"
+    }
+  },
+  "total_assets": 12,
+  "total_triangles": 4512,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in rows along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "SK1-TREES-001_v01.blend",
+    "palette": "_lib/Look_Palette_v1.png"
+  }
+}

@@ -1,0 +1,61 @@
+===== districts 9
+{"id": "forest", "name_ru": "Лес", "color": "#b3caa9", "polygon_m": [[112, 366], "...162 pts"], "parent_id": null, "notes_ru": "Лес по референсу Феди: слева болото, справа озеро, снизу холм, вагон у костра; л…", "area_m2": 47517.385, "building_count": 1, "share_percent": 9.03}
+  all keys: {'id': 9, 'name_ru': 9, 'color': 9, 'polygon_m': 9, 'parent_id': 9, 'notes_ru': 9, 'area_m2': 9, 'building_count': 9, 'share_percent': 9}
+===== roads 114
+   class {'rural_road': 60, 'highway': 4, 'town_street': 45, 'alley': 5}
+{"id": "START_ROAD", "class": "rural_road", "width_m": 3.8, "district_ids": ["forest", "village"], "polyline_m": [[205.5, 444.5], "...37 pts"], "lanes": 1, "length_m": 136.181}
+  all keys: {'id': 114, 'class': 114, 'width_m': 114, 'district_ids': 114, 'polyline_m': 114, 'lanes': 114, 'length_m': 114, 'approved_straight_exception': 3, 'joins_road_ids': 9, 'approved_extra_interdistrict_link': 1, 'reshaped_v14_ru': 1, 'trimmed_v14_ru': 1, 'access_only': 77, 'parent_road_id': 77, 'reshaped_v13_ru': 6, 'van_through_arch_ids': 2, 'turning_head_site_id': 2, 'note_ru': 1}
+===== points 45
+   category {'base': 6, 'poi': 17, 'landmark': 4, 'atm': 3, 'reference': 4, 'meeting': 4, 'water_access': 3, 'bin': 2, 'exit': 2}
+{"id": "B01", "canonical_id": "B01", "name_ru": "Вагон", "position_m": [207.195, 439.096], "district_id": "forest", "category": "base", "label_offset_px": [-140, 32], "team_shared": true, "retained_after_move": true, "interior": true, "access_reserve_m": [20, 25], "door_clearance_target_m": 2.4, "road_node_id": "N0812"}
+  all keys: {'id': 45, 'canonical_id': 45, 'name_ru': 45, 'position_m': 45, 'district_id': 45, 'category': 45, 'label_offset_px': 45, 'team_shared': 5, 'retained_after_move': 5, 'interior': 16, 'access_reserve_m': 5, 'door_clearance_target_m': 5, 'road_node_id': 45, 'van_repair_parts_in_yard': 1, 'landmark': 1, 'arrest_spawn': 1, 'meeting_role': 4, 'van_entry': 1, 'exit_guaranteed': 1, 'wanted_on_crossing': 2}
+===== water 11
+   kind {'lake': 2, 'river': 2, 'concrete_canal': 1, 'sea': 1, 'swamp_pond': 5}
+{"id": "LAKE", "kind": "lake", "name_ru": "Малое озеро", "polygon_m": [[417.5, 566.3333333333333], "...48 pts"], "center_m": [435, 575], "district_id": "transition"}
+  all keys: {'id': 11, 'kind': 11, 'name_ru': 11, 'polygon_m': 8, 'center_m': 7, 'district_id': 7, 'width_m': 3, 'centerline_m': 3, 'short_tunnel_road_ids': 2, 'wet_width_m': 1, 'depth_target_m': 1, 'banks': 1, 'bed': 1, 'van_entry_point': 1, 'material': 1, 'height_target_m': 1, 'tree_line': 1, 'return_rule': 1, 'offshore_band_m': 1}
+===== building_masses 42
+   kind {'rural_house': 5, 'rural_outbuilding': 6, 'small_house': 14, 'panel': 11, 'tower': 2, 'midrise': 4}
+{"id": "F06_1_1", "district_id": "village", "kind": "rural_house", "center_m": [200, 600], "width_m": 14, "depth_m": 10, "floors": 1, "polygon_m": [[193.0, 595.0], "...4 pts"]}
+  all keys: {'id': 42, 'district_id': 42, 'kind': 42, 'center_m': 42, 'width_m': 42, 'depth_m': 42, 'floors': 42, 'polygon_m': 42, 'entrance_m': 21, 'access_road_id': 7, 'subtype': 4, 'rotation_deg': 32, 'unit_width_m': 14, 'detached': 14, 'layout_policy': 14, 'block': 11, 'role': 17, 'entrances_face': 17, 'gateway_arches': 11, 'twin_id': 2, 'height_target_m': 6}
+===== functional_buildings 51
+   type {'wagon_base': 1, 'grandpa_house': 1, 'pharmacy': 1, 'barn_yard': 1, 'village_shop': 1, 'bus_stop': 1, 'water_tower': 1, 'hut': 1, 'shadow_buyer': 1, 'gas_station': 1, 'abandoned_farm': 1, 'garage_base': 1, 'bar': 2, 'den': 1, 'shop_24h': 1, 'kiosk': 3, 'car_workshop': 1, 'hospital': 1, 'police_station': 1, 'bank': 1, 'atm_pavilion': 1, 'supermarket': 2, 'cafe': 1, 'church': 1, 'house_base': 1, 'mansion': 4, 'private_security': 1, 'industrial_complex': 1, 'depot': 1, 'tow_yard': 1, 'industrial_chimney': 1, 'warehouse': 1, 'maintenance_shed': 1, 'prestige_base': 1, 'advertising_pole': 1, 'casino': 1, 'beer_kiosk': 1, 'atm_shop': 1, 'pawn_shop': 1, 'fast_food': 1, 'payday_loans': 1, 'betting_shop': 1, 'storage_tank': 1, 'toilet_shower': 1}
+{"id": "F06_WAGON", "type": "wagon_base", "district": "forest", "district_id": "forest", "label_ru": "Вагон", "group": "base", "center_m": [209.58, 435.28], "width_m": 18, "depth_m": 3, "footprint_m": [[202.742, 429.239], "...4 pts"], "storeys": 1, "footprint_shape": "rect", "color": "#aa6045", "icon": "Б", "source_building_id": "WAGON06", "poi_id": "B01", "entrance_m": [207.195, 439.096], "access_road_id": "START_ROAD", "rotation_deg": 32, "on_rail": true}
+  all keys: {'id': 51, 'type': 51, 'district': 50, 'district_id': 51, 'label_ru': 51, 'group': 50, 'center_m': 51, 'width_m': 51, 'depth_m': 51, 'footprint_m': 51, 'storeys': 51, 'footprint_shape': 50, 'color': 50, 'icon': 50, 'source_building_id': 4, 'poi_id': 24, 'entrance_m': 51, 'access_road_id': 51, 'rotation_deg': 24, 'on_rail': 1, 'purchasable': 1, 'nave_center_m': 1, 'nave_size_m': 1, 'tower_size_m': 1, 'tower_height_target_m': 1, 'accessible': 5, 'height_target_m': 3, 'main_house_footprint_m': 1, 'attached_garage_footprint_m': 1, 'garage_storeys': 1, 'architectural_style': 1, 'lake_facing_direction': 1, 'van_garage': 1}
+===== functional_sites 29
+   type {'tow_parking': 1, 'meeting': 4, 'parked_van': 1, 'production_yard': 1, 'lake_terrace': 1, 'churchyard': 1, 'parking': 4, 'culvert': 1, 'turnaround': 2, 'hangout': 1, 'rail_tunnel_portal': 1, 'square': 3, 'garage_yard': 1, 'rail_stub': 1, 'drop_off': 1, 'turning_head': 2, 'bollard_line': 1, 'quay': 1, 'fountain': 1}
+{"id": "F06_TOW_YARD", "type": "tow_parking", "district_id": "industrial", "building_id": "F06_TOW", "polygon_m": [[908.726, 738.0], "...28 pts"], "capacity_vans": 8}
+  all keys: {'id': 29, 'type': 29, 'district_id': 29, 'building_id': 10, 'polygon_m': 21, 'capacity_vans': 5, 'position_m': 7, 'poi_id': 4, 'label_ru': 27, 'low_plot_wall': 1, 'polyline_m': 3, 'width_m': 1, 'tunnel_carrier': 1, 'blocks_foot_bypass': 1, 'doubles_as': 1, 'dressing_hints': 3, 'blocks_van': 2, 'blocks_foot': 2, 'closure': 1, 'surface': 3, 'shell_count': 1, 'shells_m': 1, 'dressing_only': 2, 'embedded_in_pavement': 1, 'aisle_road_id': 2, 'bays': 2, 'diameter_m': 2, 'road_id': 2, 'post_height_m': 1, 'post_spacing_m': 1, 'point_id': 1, 'landmark_point_id': 1, 'tower_ids': 1, 'fountain_site_id': 1, 'lawns_m': 1, 'trees_m': 1, 'dressing_hints_ru': 1, 'basin_radius_m': 1, 'monument': 1, 'access_polyline_m': 1, 'access_road_id': 1, 'source': 1}
+===== plots 23
+   kind {'farmstead': 4, 'front_yard': 14, 'elite_garden': 4, 'villa_yard': 1}
+{"id": "FARM06_1", "kind": "farmstead", "district_id": "village", "polygon_m": [[230.912, 607.0], "...48 pts"]}
+  all keys: {'id': 23, 'kind': 23, 'district_id': 23, 'polygon_m': 23, 'building_id': 4, 'accessible': 4}
+===== paths 19
+   class {'passage': 4, 'foot_lane': 8, 'trail': 7}
+{"id": "WALK_BEACH", "class": "passage", "width_m": 2.5, "polyline_m": [[420, 281], "...95 pts"], "district_id": "beach", "district_ids": ["beach"], "walkable": true, "van_access": false, "length_m": 733.236, "rerouted_v14_ru": "В бухте тропа по песку ближе к дюне."}
+  all keys: {'id': 19, 'class': 19, 'width_m': 19, 'polyline_m': 19, 'district_id': 19, 'district_ids': 19, 'walkable': 19, 'van_access': 19, 'length_m': 19, 'rerouted_v14_ru': 1, 'joins_way_ids': 14, 'through_arch_ids': 7, 'ends_as': 1, 'note': 1, 'end_v14_ru': 3, 'turns': 1, 'summit_m': 1}
+===== beaches 2
+{"id": "BEACH", "name_ru": "Пляж", "polygon_m": [[330, 320], "...228 pts"], "land_edge_m": [[330, 320], "...106 pts"], "sea_edge_m": [[313.506, 267.532], "...122 pts"], "width_m": 55, "surface": "sand", "access_road_ids": ["BEACH_ACCESS", "BEACH_VALLEY_ACCESS"], "closed_ends_ru": "Концы закрыты скалами. Два входа: элитный холм и Малая долина.", "bay_id": "BAY14_PARKING"}
+  all keys: {'id': 2, 'name_ru': 2, 'polygon_m': 2, 'land_edge_m': 2, 'sea_edge_m': 2, 'width_m': 2, 'surface': 2, 'access_road_ids': 2, 'closed_ends_ru': 2, 'bay_id': 1, 'foot_access_path_ids': 1}
+===== crop_fields 5
+{"id": "FIELD13_1", "district_id": "village", "crop": "wheat", "stripe_count": 3, "stripe_direction": "north_south", "polygon_m": [[222, 718], "...24 pts"], "area_m2": 1208.6, "label_ru": "Поле пшеницы"}
+  all keys: {'id': 5, 'district_id': 5, 'crop': 5, 'stripe_count': 5, 'stripe_direction': 5, 'polygon_m': 5, 'area_m2': 5, 'label_ru': 5}
+===== vegetation_parcels 20
+   kind {'orchard': 4, 'interdistrict_barrier': 16}
+{"id": "ORCHARD06_1", "kind": "orchard", "district_id": "village", "polygon_m": [[223.227, 620.0], "...48 pts"]}
+  all keys: {'id': 20, 'kind': 20, 'district_id': 20, 'polygon_m': 20, 'axis_m': 16, 'blocks_foot': 16, 'blocks_van': 16, 'material': 16, 'height_target_m': 16, 'tree_line': 16, 'continuity_group': 16, 'gate_road_ids': 16, 'barrier_role': 5, 'gate': 2, 'ends_ru': 2, 'label_ru': 2}
+===== microdistricts 5
+{"id": "AB13_1", "center_m": [501, 777], "angle": 0, "yard_polygon_m": [[506.694, 777.0], "...24 pts"], "building_ids": ["R13_P01", "R13_P02", "F13_DISCOUNTER", "F13_BEER"], "arrangement": "alley_block", "opening_direction": "lanes and arches", "shared_courtyard": true}
+  all keys: {'id': 5, 'center_m': 5, 'angle': 5, 'yard_polygon_m': 5, 'building_ids': 5, 'arrangement': 5, 'opening_direction': 5, 'shared_courtyard': 5}
+===== farmsteads 4
+{"id": "FARM06_1", "center_m": [200, 600], "yard_polygon_m": [[230.912, 607.0], "...48 pts"], "building_ids": ["F06_1_1", "F06_1_2"], "start_cluster": true, "district_id": "village"}
+  all keys: {'id': 4, 'center_m': 4, 'yard_polygon_m': 4, 'building_ids': 4, 'start_cluster': 4, 'district_id': 4}
+===== hills 2
+{"id": "HILL_ELITE", "center_m": [899, 566], "radii_m": [99, 115], "height_target_m": 24}
+  all keys: {'id': 2, 'center_m': 2, 'radii_m': 2, 'height_target_m': 2, 'polygon_m': 1, 'district_id': 1, 'summit_path_id': 1, 'dressing_hints_ru': 1}
+===== exits 2
+{"id": "NW", "post_id": "P16", "dead_end_m": [159, 657], "dead_end_type": "landslide", "road_id": "EXIT_NW", "return_via_post_only": true, "blocks_foot_bypass": true, "barrier_materials": ["steep_hills", "dense_forest", "rock_scarp"], "barrier_polygons_m": [[[179.9, 656.544], "...6 pts"], [[174.1, 671.456], "...6 pts"]], "barrier_height_target_m": 8, "barrier_width_m": 8, "post_trigger_polygon_m": [[180.599, 656.816], "...4 pts"], "post_trigger_width_m": 16, "dead_end_node_id": "N0299"}
+  all keys: {'id': 2, 'post_id': 2, 'dead_end_m': 2, 'dead_end_type': 2, 'road_id': 2, 'return_via_post_only': 2, 'blocks_foot_bypass': 2, 'barrier_materials': 2, 'barrier_polygons_m': 2, 'barrier_height_target_m': 2, 'barrier_width_m': 2, 'post_trigger_polygon_m': 2, 'post_trigger_width_m': 2, 'dead_end_node_id': 2}
+===== water_crossings 2
+   kind {'short_canal_tunnel': 1, 'bridge': 1}
+{"id": "S01", "road_id": "TRANSITION_DIRECT", "water_id": "RIVER_N", "position_m": [447.4650975080558, 611.5262325824937], "deck_axis_m": [[438.5365360029042, 613.379755545898], [456.3936590132074, 609.6727096190893]], "kind": "short_canal_tunnel", "tunnel_carrier": "water_below_road"}
+  all keys: {'id': 2, 'road_id': 2, 'water_id': 2, 'position_m': 2, 'deck_axis_m': 2, 'kind': 2, 'tunnel_carrier': 2}

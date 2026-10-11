@@ -1,0 +1,119 @@
+{
+  "asset": "SURGLAMP-ASTRA-001",
+  "reference_revision": "Rev02",
+  "date": "2026-10-05",
+  "approval": "Rev02 explicitly approved here 2026-10-05 by Fedya: ок",
+  "generator": "ordinary ChatGPT browser UI",
+  "conversation": "https://chatgpt.com/g/g-p-6aadbaaa21c081918dcf9006013794cd-only-volunteers/c/6aadbae4-9db8-83eb-b549-cced1b1c33b2",
+  "local_image_edits": false,
+  "generation_chain": "FRONT new request; LEFT Rev01 from FRONT rejected; LEFT Rev02 from FRONT; RIGHT Rev02 from LEFT Rev02; BACK Rev02 from FRONT",
+  "front_revision_reused": "Rev01 FRONT copied byte-identically into exact Rev02 pack",
+  "views": [
+    {
+      "view": "FRONT",
+      "file": "TripoViews/Rev02/01_front.png",
+      "original_download": "Минималистичная хирургическая лампа на колёсах.png",
+      "generator_revision": "Rev01",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1093950,
+      "sha256": "41a3ca10c79f51af721a95f7fd222068ffba88f8e965637ba9c504f5e5f383a3",
+      "byte_identical": true,
+      "browser_proof": "Source/chatgpt_front_Rev01_proof.png"
+    },
+    {
+      "view": "LEFT",
+      "file": "TripoViews/Rev02/02_left.png",
+      "original_download": "Медицинская лампа на колёсной стойке.png",
+      "generator_revision": "Rev02",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1239310,
+      "sha256": "9aef97359fb2e7faf5647fdca007f2d236e3461c1edc75167c74cc389fe166c6",
+      "byte_identical": true,
+      "browser_proof": "Source/chatgpt_left_Rev02_proof.png"
+    },
+    {
+      "view": "RIGHT",
+      "file": "TripoViews/Rev02/03_right.png",
+      "original_download": "Медицинский светильник на четырёх колёсах.png",
+      "generator_revision": "Rev02",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1200894,
+      "sha256": "790b4fa9beeae59543886e3bacade7fe18e987ed335e9dbf851047f0b8aaaf4b",
+      "byte_identical": true,
+      "browser_proof": "Source/chatgpt_right_Rev02_proof.png"
+    },
+    {
+      "view": "BACK",
+      "file": "TripoViews/Rev02/04_back.png",
+      "original_download": "Медицинская лампа_ вид сзади.png",
+      "generator_revision": "Rev02",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1214510,
+      "sha256": "b2c3ed7d184c84e4afe6ab975a67691ae5ebd400133104423687cd4ece51d34e",
+      "byte_identical": true,
+      "browser_proof": "Source/chatgpt_back_Rev02_proof.png"
+    }
+  ],
+  "rejected_views": [
+    {
+      "file": "TripoViews/Rev01/02_left.png",
+      "reason": "three-quarter head angle shows too much diffuser; superseded by edge-on LEFT Rev02",
+      "sha256": "20eee6abd072c2cfc7c3804c088139440ae0a9ae15da1345a9fd2a5c05d381ab"
+    }
+  ],
+  "tripo_generations": 1,
+  "tripo_credits_spent": 100,
+  "last_confirmed_balance": 80,
+  "target_triangles": [
+    600,
+    1200
+  ],
+  "nominal_height_m": 1.7,
+  "nominal_base_width_m": 0.65,
+  "planned_create_credits": 100,
+  "planned_balance_after_generation": 80,
+  "notes": "Original PNGs are artistic orthographic approximations, with minor framing variations; no pixel-exact CAD equivalence claimed.",
+  "generation_status": "completed",
+  "tripo_settings": {
+    "mode": "multi-view",
+    "mesh": "Smart Mesh",
+    "topology": "quads",
+    "model": "P2.0",
+    "target_faces": 1000,
+    "create_credits": 100
+  },
+  "review_scope": "six latest-party models only, per Fedya reply",
+  "tripo_model_id": "a99e975c-520d-4d22-9c06-b5b030ecb78b",
+  "balance_before_generation": 180,
+  "all_four_reference_slots_cleared": true,
+  "source_fbx": {
+    "file": "C:\\Dev\\Game\\Working\\Tripo\\surglamp_tripo_base.fbx",
+    "original_download": "C:\\Users\\Zeyo-ne\\Downloads\\surglamp_astra_001_tripo_base.fbx",
+    "bytes": 56096,
+    "sha256": "da87efa42105db31e6eb00634277705b827609b6d3146154c8a5be9464483304",
+    "byte_identical": true,
+    "triangles": 1926,
+    "vertices": 1011,
+    "polygons": 1119,
+    "nonmanifold_edges": 50
+  },
+  "tripo_proofs": [
+    "Source/tripo_settings_create100.png",
+    "Source/tripo_result_balance80.png",
+    "Source/tripo_slots_cleared.png",
+    "Source/tripo_export_fbx.png"
+  ],
+  "final_blender_revision": "v01",
+  "final_triangles": 1168,
+  "mesh_validation_pass": true,
+  "interface_validation_pass": true,
+  "fbx_roundtrip_pass": true,
+  "paid_extras": false,
+  "final_acceptance": "v01 explicitly accepted here 2026-10-05 by Claude on behalf of Fedya: 1168 triangles, straight shaft, four feet with casters, continuous head/gooseneck; six-model party closed, balance80.",
+  "review_scene": "C:\\Dev\\Game\\Working\\Reviews\\TRIPO_PARTY_2026-10-05_v01.blend",
+  "party_status": "all six final models accepted, closed; no further generations authorized"
+}

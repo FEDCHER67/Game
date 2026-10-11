@@ -1,0 +1,7726 @@
+{
+  "family": "SK2-PLANHOUSES-001",
+  "kit": "STYLE_KIT_v2",
+  "style_bible": "v2",
+  "bible_date": "2026-10-06",
+  "revision": "v02",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root mesh of every asset: centre of the base on the ground (0, 0, 0)",
+  "palette": "_lib/Look_Palette_v2.png (+ .json): UV0 inside the swatch cell; alpha = smoothness",
+  "description": "Plan buildings of the trial region (look_v12_flat.json, x 440-960, y 360-870) built with the facade grammar of bible 7 - preview of the ProceduralBuilding roll-out",
+  "assets": {
+    "HS_P_F06_1_2": {
+      "triangles": 1414,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        9.43,
+        7.384
+      ],
+      "bounds_min": [
+        -4.0,
+        -4.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        4.51,
+        7.384
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_Planks_v2|wood",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "grey.dark",
+        "mustard",
+        "paving",
+        "teal",
+        "teal.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "teal",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "feca3ee3498fa7013a21c7f7568361e9088f3f0e",
+      "objects": {
+        "HS_P_F06_1_2": {
+          "triangles": 1414,
+          "vertices": 903,
+          "faces": 781,
+          "shells": 98,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Planks_v2_wood",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "wood",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_1_2",
+      "plan_type": "rural_outbuilding",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_1_2_v02.fbx"
+    },
+    "HS_P_F06_24": {
+      "triangles": 2544,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        14.5,
+        25.88,
+        7.0
+      ],
+      "bounds_min": [
+        -7.25,
+        -13.63,
+        0.0
+      ],
+      "bounds_max": [
+        7.25,
+        12.25,
+        7.0
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1062a8c9198586ac13f7ecba33f303c5d69be52a",
+      "objects": {
+        "HS_P_F06_24": {
+          "triangles": 2544,
+          "vertices": 1592,
+          "faces": 1396,
+          "shells": 163,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "civic",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_24",
+      "plan_type": "shop_24h",
+      "plan_style": "civic",
+      "district": "residential",
+      "fbx": "HS_P_F06_24_v02.fbx"
+    },
+    "HS_P_F06_3_1": {
+      "triangles": 2240,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.02,
+        11.42,
+        8.456
+      ],
+      "bounds_min": [
+        -7.51,
+        -5.92,
+        0.0
+      ],
+      "bounds_max": [
+        7.51,
+        5.5,
+        8.456
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "teal",
+        "teal.dark",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "teal",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "5753549431f60ec7f01a0481603952ad00814e5e",
+      "objects": {
+        "HS_P_F06_3_1": {
+          "triangles": 2240,
+          "vertices": 1428,
+          "faces": 1225,
+          "shells": 154,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_3_1",
+      "plan_type": "rural_house",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_3_1_v02.fbx"
+    },
+    "HS_P_F06_3_2": {
+      "triangles": 1414,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        9.43,
+        7.384
+      ],
+      "bounds_min": [
+        -4.0,
+        -4.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        4.51,
+        7.384
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mint",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mint",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "788f9405132943a7a9b75a827c91fbbb45454cb5",
+      "objects": {
+        "HS_P_F06_3_2": {
+          "triangles": 1414,
+          "vertices": 903,
+          "faces": 781,
+          "shells": 98,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "mint",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_3_2",
+      "plan_type": "rural_outbuilding",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_3_2_v02.fbx"
+    },
+    "HS_P_F06_4_1": {
+      "triangles": 2088,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        11.0,
+        15.43,
+        7.951
+      ],
+      "bounds_min": [
+        -5.5,
+        -7.92,
+        0.0
+      ],
+      "bounds_max": [
+        5.5,
+        7.51,
+        7.951
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "grey.dark",
+        "mint",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mint",
+        "mustard",
+        "paving",
+        "red",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "80529280c338b642de191f8cc62bfe5154525d5b",
+      "objects": {
+        "HS_P_F06_4_1": {
+          "triangles": 2088,
+          "vertices": 1332,
+          "faces": 1143,
+          "shells": 144,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "oldtown",
+        "wall": "mint",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_4_1",
+      "plan_type": "rural_house",
+      "plan_style": "oldtown",
+      "district": "village",
+      "fbx": "HS_P_F06_4_1_v02.fbx"
+    },
+    "HS_P_F06_4_2": {
+      "triangles": 1414,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        9.02,
+        8.42,
+        7.384
+      ],
+      "bounds_min": [
+        -4.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        4.51,
+        4.0,
+        7.384
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "6732acaaf7c66c97f59ab62eaed75a43b3abfeb7",
+      "objects": {
+        "HS_P_F06_4_2": {
+          "triangles": 1414,
+          "vertices": 903,
+          "faces": 781,
+          "shells": 98,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_4_2",
+      "plan_type": "rural_outbuilding",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_4_2_v02.fbx"
+    },
+    "HS_P_F06_6_1": {
+      "triangles": 2144,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        11.0,
+        15.43,
+        8.456
+      ],
+      "bounds_min": [
+        -5.5,
+        -7.92,
+        0.0
+      ],
+      "bounds_max": [
+        5.5,
+        7.51,
+        8.456
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_Planks_v2|wood",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "glass.light",
+        "grey",
+        "grey.dark",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "03a6499804bf0c9ec069f8770194cb3f776d7aa7",
+      "objects": {
+        "HS_P_F06_6_1": {
+          "triangles": 2144,
+          "vertices": 1364,
+          "faces": 1177,
+          "shells": 146,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Planks_v2_wood",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "wood",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_6_1",
+      "plan_type": "rural_house",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_6_1_v02.fbx"
+    },
+    "HS_P_F06_6_2": {
+      "triangles": 1414,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        9.43,
+        7.384
+      ],
+      "bounds_min": [
+        -4.0,
+        -4.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        4.51,
+        7.384
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "0a4653e8c2dbf1e48e1a72d5a9a6ae8067b33ee6",
+      "objects": {
+        "HS_P_F06_6_2": {
+          "triangles": 1414,
+          "vertices": 903,
+          "faces": 781,
+          "shells": 98,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_6_2",
+      "plan_type": "rural_outbuilding",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_6_2_v02.fbx"
+    },
+    "HS_P_F06_ATM": {
+      "triangles": 416,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        5.4,
+        6.52,
+        3.85
+      ],
+      "bounds_min": [
+        -2.7,
+        -3.32,
+        0.0
+      ],
+      "bounds_max": [
+        2.7,
+        3.2,
+        3.85
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b4cce8c515bc371de412be9798f1240e56b072c2",
+      "objects": {
+        "HS_P_F06_ATM": {
+          "triangles": 416,
+          "vertices": 246,
+          "faces": 235,
+          "shells": 22,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "commercial",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "commercial",
+      "plan_id": "F06_ATM",
+      "plan_type": "atm_pavilion",
+      "plan_style": "commercial",
+      "district": "residential",
+      "fbx": "HS_P_F06_ATM_v02.fbx"
+    },
+    "HS_P_F06_BANK": {
+      "triangles": 8212,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        27.0,
+        20.13,
+        18.515
+      ],
+      "bounds_min": [
+        -13.5,
+        -10.63,
+        0.0
+      ],
+      "bounds_max": [
+        13.5,
+        9.5,
+        18.515
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "red.dark",
+        "slate",
+        "slate.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "slate"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b48430e9adb7593d6c19cb8a0ca4d7afb9ea291b",
+      "objects": {
+        "HS_P_F06_BANK": {
+          "triangles": 8212,
+          "vertices": 5220,
+          "faces": 4377,
+          "shells": 557,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "civic",
+        "wall": "ochre",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_BANK",
+      "plan_type": "bank",
+      "plan_style": "civic",
+      "district": "old_town",
+      "fbx": "HS_P_F06_BANK_v02.fbx"
+    },
+    "HS_P_F06_BAR": {
+      "triangles": 3140,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        17.0,
+        26.14,
+        9.669
+      ],
+      "bounds_min": [
+        -8.5,
+        -13.63,
+        0.0
+      ],
+      "bounds_max": [
+        8.5,
+        12.51,
+        9.669
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving",
+        "slate",
+        "slate.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "56e26b5e9cfc51fe245049d4c71b1390a4f6a05d",
+      "objects": {
+        "HS_P_F06_BAR": {
+          "triangles": 3140,
+          "vertices": 1984,
+          "faces": 1731,
+          "shells": 207,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "civic",
+        "wall": "cream",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_BAR",
+      "plan_type": "bar",
+      "plan_style": "civic",
+      "district": "residential",
+      "fbx": "HS_P_F06_BAR_v02.fbx"
+    },
+    "HS_P_F06_BARN": {
+      "triangles": 1776,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        9.42,
+        9.775
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.92,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.5,
+        9.775
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "teal",
+        "teal.dark",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "teal",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "6c31a083d60f9517438eed608dc7876570518567",
+      "objects": {
+        "HS_P_F06_BARN": {
+          "triangles": 1776,
+          "vertices": 1132,
+          "faces": 977,
+          "shells": 122,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_BARN",
+      "plan_type": "barn_yard",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_BARN_v02.fbx"
+    },
+    "HS_P_F06_BUS": {
+      "triangles": 236,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        4.7,
+        10.7,
+        3.342
+      ],
+      "bounds_min": [
+        -2.35,
+        -5.35,
+        0.0
+      ],
+      "bounds_max": [
+        2.35,
+        5.35,
+        3.342
+      ],
+      "swatches": [
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "03c0fd727ae894e6bfa8e860c6931d8b718a31b8",
+      "objects": {
+        "HS_P_F06_BUS": {
+          "triangles": 236,
+          "vertices": 150,
+          "faces": 136,
+          "shells": 16,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "commercial",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "kiosk",
+      "plan_id": "F06_BUS",
+      "plan_type": "bus_stop",
+      "plan_style": "commercial",
+      "district": "village",
+      "fbx": "HS_P_F06_BUS_v02.fbx"
+    },
+    "HS_P_F06_BUYER": {
+      "triangles": 1044,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        20.8,
+        14.8,
+        5.908
+      ],
+      "bounds_min": [
+        -10.4,
+        -7.4,
+        0.0
+      ],
+      "bounds_max": [
+        10.4,
+        7.4,
+        5.908
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving",
+        "slate",
+        "teal"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "30aaa3ebbed0fef98e439d75369aa0a0e9762718",
+      "objects": {
+        "HS_P_F06_BUYER": {
+          "triangles": 1044,
+          "vertices": 648,
+          "faces": 590,
+          "shells": 63,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "shed",
+        "wall": "grey",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_BUYER",
+      "plan_type": "shadow_buyer",
+      "plan_style": "shed",
+      "district": "transition",
+      "fbx": "HS_P_F06_BUYER_v02.fbx"
+    },
+    "HS_P_F06_CAFE2": {
+      "triangles": 4866,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.0,
+        21.5,
+        12.66
+      ],
+      "bounds_min": [
+        -7.5,
+        -11.0,
+        0.0
+      ],
+      "bounds_max": [
+        7.5,
+        10.5,
+        12.66
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "6706cbaa46825029750976bb43592801117fa5f8",
+      "objects": {
+        "HS_P_F06_CAFE2": {
+          "triangles": 4866,
+          "vertices": 3071,
+          "faces": 2621,
+          "shells": 319,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_CAFE2",
+      "plan_type": "cafe",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_F06_CAFE2_v02.fbx"
+    },
+    "HS_P_F06_CHIMNEY": {
+      "triangles": 200,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.93,
+        8.93,
+        85.0
+      ],
+      "bounds_min": [
+        -4.465,
+        -4.465,
+        0.0
+      ],
+      "bounds_max": [
+        4.465,
+        4.465,
+        85.0
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "brick.dark",
+        "chalk",
+        "grey",
+        "ink",
+        "red"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "grey",
+        "ink",
+        "red"
+      ],
+      "min_member_m": 1.2,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "6f4b59878cefed8889f1d022ab66df0117947689",
+      "objects": {
+        "HS_P_F06_CHIMNEY": {
+          "triangles": 200,
+          "vertices": 104,
+          "faces": 110,
+          "shells": 2,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "industrial",
+        "style": "industrial",
+        "wall": "brick",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "grey.light",
+        "plinth": "grey",
+        "door": "teal",
+        "accent": "red"
+      },
+      "archetype": "chimney",
+      "plan_id": "F06_CHIMNEY",
+      "plan_type": "industrial_chimney",
+      "plan_style": "industrial",
+      "district": "industrial",
+      "fbx": "HS_P_F06_CHIMNEY_v02.fbx"
+    },
+    "HS_P_F06_CHURCH": {
+      "triangles": 5952,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        31.02,
+        14.13,
+        15.851
+      ],
+      "bounds_min": [
+        -15.51,
+        -7.63,
+        0.0
+      ],
+      "bounds_max": [
+        15.51,
+        6.5,
+        15.851
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving",
+        "slate",
+        "slate.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "179d10d4527330d4d7d9fa601e0ac4c5b64b4dc4",
+      "objects": {
+        "HS_P_F06_CHURCH": {
+          "triangles": 5952,
+          "vertices": 3782,
+          "faces": 3200,
+          "shells": 403,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "civic",
+        "wall": "cream",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_CHURCH",
+      "plan_type": "church",
+      "plan_style": "civic",
+      "district": "transition",
+      "fbx": "HS_P_F06_CHURCH_v02.fbx"
+    },
+    "HS_P_F06_COMPLEX": {
+      "triangles": 1924,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        28.8,
+        46.8,
+        13.748
+      ],
+      "bounds_min": [
+        -14.4,
+        -23.4,
+        0.0
+      ],
+      "bounds_max": [
+        14.4,
+        23.4,
+        13.748
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "glass",
+        "grey",
+        "grey.light",
+        "ink",
+        "mustard",
+        "paving",
+        "teal",
+        "teal.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "4e87ffe4c30b1564c25fac74267ffdb2cae02ff7",
+      "objects": {
+        "HS_P_F06_COMPLEX": {
+          "triangles": 1924,
+          "vertices": 1168,
+          "faces": 1110,
+          "shells": 103,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "industrial",
+        "style": "industrial",
+        "wall": "brick",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "grey.light",
+        "plinth": "grey",
+        "door": "teal",
+        "accent": "red"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_COMPLEX",
+      "plan_type": "industrial_complex",
+      "plan_style": "industrial",
+      "district": "industrial",
+      "fbx": "HS_P_F06_COMPLEX_v02.fbx"
+    },
+    "HS_P_F06_DEN": {
+      "triangles": 4604,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        17.0,
+        20.13,
+        12.537
+      ],
+      "bounds_min": [
+        -8.5,
+        -10.63,
+        0.0
+      ],
+      "bounds_max": [
+        8.5,
+        9.5,
+        12.537
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving",
+        "slate",
+        "slate.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "34069c3255567541a6509caa2587761b6374c300",
+      "objects": {
+        "HS_P_F06_DEN": {
+          "triangles": 4604,
+          "vertices": 2924,
+          "faces": 2472,
+          "shells": 311,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "civic",
+        "wall": "cream",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_DEN",
+      "plan_type": "den",
+      "plan_style": "civic",
+      "district": "residential",
+      "fbx": "HS_P_F06_DEN_v02.fbx"
+    },
+    "HS_P_F06_DEPOT": {
+      "triangles": 1592,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        20.8,
+        36.82,
+        12.319
+      ],
+      "bounds_min": [
+        -10.4,
+        -18.41,
+        0.0
+      ],
+      "bounds_max": [
+        10.4,
+        18.41,
+        12.319
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "grey.dark",
+        "grey.light",
+        "ink",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "3acadf0dab3c24b659eafbd46dcddcb8419d35aa",
+      "objects": {
+        "HS_P_F06_DEPOT": {
+          "triangles": 1592,
+          "vertices": 972,
+          "faces": 916,
+          "shells": 88,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "industrial",
+        "style": "industrial",
+        "wall": "brick",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "grey.light",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "mustard"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_DEPOT",
+      "plan_type": "depot",
+      "plan_style": "industrial",
+      "district": "industrial",
+      "fbx": "HS_P_F06_DEPOT_v02.fbx"
+    },
+    "HS_P_F06_GAS": {
+      "triangles": 1922,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        11.82,
+        22.52,
+        5.65
+      ],
+      "bounds_min": [
+        -8.82,
+        -11.32,
+        0.0
+      ],
+      "bounds_max": [
+        3.0,
+        11.2,
+        5.65
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "teal",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "teal",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "4780148f0aa21a3689589ebef8adad18a29fcae8",
+      "objects": {
+        "HS_P_F06_GAS": {
+          "triangles": 1922,
+          "vertices": 1179,
+          "faces": 1069,
+          "shells": 115,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "commercial",
+        "wall": "chalk",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "teal",
+        "frame": "ink"
+      },
+      "archetype": "commercial",
+      "plan_id": "F06_GAS",
+      "plan_type": "gas_station",
+      "plan_style": "commercial",
+      "district": "transition",
+      "fbx": "HS_P_F06_GAS_v02.fbx"
+    },
+    "HS_P_F06_GBASE": {
+      "triangles": 148,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        18.6,
+        28.6,
+        3.42
+      ],
+      "bounds_min": [
+        -9.3,
+        -14.3,
+        0.0
+      ],
+      "bounds_max": [
+        9.3,
+        14.3,
+        3.42
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "grey",
+        "mustard",
+        "teal"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "grey",
+        "mustard",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "19050a62b284920e2b67ef1886884cc384af48c5",
+      "objects": {
+        "HS_P_F06_GBASE": {
+          "triangles": 148,
+          "vertices": 82,
+          "faces": 97,
+          "shells": 4,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "industrial",
+        "wall": "brick",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "garages",
+      "plan_id": "F06_GBASE",
+      "plan_type": "garage_base",
+      "plan_style": "industrial",
+      "district": "residential",
+      "fbx": "HS_P_F06_GBASE_v02.fbx"
+    },
+    "HS_P_F06_GRANDPA": {
+      "triangles": 2112,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.02,
+        11.42,
+        8.456
+      ],
+      "bounds_min": [
+        -7.51,
+        -5.92,
+        0.0
+      ],
+      "bounds_max": [
+        7.51,
+        5.5,
+        8.456
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "98270e6157a8d2886ec026f86cfba548b5c8946a",
+      "objects": {
+        "HS_P_F06_GRANDPA": {
+          "triangles": 2112,
+          "vertices": 1348,
+          "faces": 1155,
+          "shells": 146,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "rural_wood",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_GRANDPA",
+      "plan_type": "grandpa_house",
+      "plan_style": "rural_wood",
+      "district": "village",
+      "fbx": "HS_P_F06_GRANDPA_v02.fbx"
+    },
+    "HS_P_F06_GUARD": {
+      "triangles": 556,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.4,
+        9.52,
+        3.85
+      ],
+      "bounds_min": [
+        -4.2,
+        -4.82,
+        0.0
+      ],
+      "bounds_max": [
+        4.2,
+        4.7,
+        3.85
+      ],
+      "swatches": [
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving"
+      ],
+      "swatch_families": [
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "2dfffb5ca2dda0862da04afd73d11aab536f0b02",
+      "objects": {
+        "HS_P_F06_GUARD": {
+          "triangles": 556,
+          "vertices": 332,
+          "faces": 316,
+          "shells": 30,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "elite",
+        "style": "commercial",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "ink",
+        "accent": "cobalt"
+      },
+      "archetype": "commercial",
+      "plan_id": "F06_GUARD",
+      "plan_type": "private_security",
+      "plan_style": "commercial",
+      "district": "elite",
+      "fbx": "HS_P_F06_GUARD_v02.fbx"
+    },
+    "HS_P_F06_HBASE": {
+      "triangles": 8812,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        25.0,
+        19.42,
+        16.615
+      ],
+      "bounds_min": [
+        -12.5,
+        -9.92,
+        0.0
+      ],
+      "bounds_max": [
+        12.5,
+        9.5,
+        16.615
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "54dd14208edcd21fb41b941228f2362e0c52367e",
+      "objects": {
+        "HS_P_F06_HBASE": {
+          "triangles": 8812,
+          "vertices": 5624,
+          "faces": 4669,
+          "shells": 609,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_HBASE",
+      "plan_type": "house_base",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_F06_HBASE_v02.fbx"
+    },
+    "HS_P_F06_HOSPITAL": {
+      "triangles": 14492,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        36.5,
+        27.88,
+        13.8
+      ],
+      "bounds_min": [
+        -18.25,
+        -14.63,
+        0.0
+      ],
+      "bounds_max": [
+        18.25,
+        13.25,
+        13.8
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mint",
+        "mustard",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mint",
+        "mustard",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "d6995447c0f7fd0b41ff7d32f6d47c0d57ee4bd6",
+      "objects": {
+        "HS_P_F06_HOSPITAL": {
+          "triangles": 14492,
+          "vertices": 9168,
+          "faces": 7733,
+          "shells": 970,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "civic",
+        "wall": "mint",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_HOSPITAL",
+      "plan_type": "hospital",
+      "plan_style": "civic",
+      "district": "residential",
+      "fbx": "HS_P_F06_HOSPITAL_v02.fbx"
+    },
+    "HS_P_F06_HUT": {
+      "triangles": 2472,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        17.02,
+        11.42,
+        8.256
+      ],
+      "bounds_min": [
+        -8.51,
+        -5.92,
+        0.0
+      ],
+      "bounds_max": [
+        8.51,
+        5.5,
+        8.256
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_Planks_v2|wood",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "grey.dark",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving",
+        "teal",
+        "teal.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "teal",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "5735a890a194b5e4b368f76f4a3194ca96c57fb7",
+      "objects": {
+        "HS_P_F06_HUT": {
+          "triangles": 2472,
+          "vertices": 1576,
+          "faces": 1349,
+          "shells": 170,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Planks_v2_wood",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "rural_wood",
+        "wall": "wood",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_HUT",
+      "plan_type": "hut",
+      "plan_style": "rural_wood",
+      "district": "transition",
+      "fbx": "HS_P_F06_HUT_v02.fbx"
+    },
+    "HS_P_F06_K1": {
+      "triangles": 236,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        6.7,
+        8.7,
+        3.345
+      ],
+      "bounds_min": [
+        -3.35,
+        -4.35,
+        0.0
+      ],
+      "bounds_max": [
+        3.35,
+        4.35,
+        3.345
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "92cc4a10144af78bd4eec4d8013133041e3f89db",
+      "objects": {
+        "HS_P_F06_K1": {
+          "triangles": 236,
+          "vertices": 150,
+          "faces": 136,
+          "shells": 16,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "commercial",
+        "wall": "cobalt",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "kiosk",
+      "plan_id": "F06_K1",
+      "plan_type": "kiosk",
+      "plan_style": "commercial",
+      "district": "residential",
+      "fbx": "HS_P_F06_K1_v02.fbx"
+    },
+    "HS_P_F06_K2": {
+      "triangles": 236,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        6.7,
+        8.7,
+        3.345
+      ],
+      "bounds_min": [
+        -3.35,
+        -4.35,
+        0.0
+      ],
+      "bounds_max": [
+        3.35,
+        4.35,
+        3.345
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1ccac4740df3be5a6f31b459ebd7b3a30a4ec1dd",
+      "objects": {
+        "HS_P_F06_K2": {
+          "triangles": 236,
+          "vertices": 150,
+          "faces": 136,
+          "shells": 16,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "commercial",
+        "wall": "mustard",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "kiosk",
+      "plan_id": "F06_K2",
+      "plan_type": "kiosk",
+      "plan_style": "commercial",
+      "district": "residential",
+      "fbx": "HS_P_F06_K2_v02.fbx"
+    },
+    "HS_P_F06_K3": {
+      "triangles": 236,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.7,
+        6.7,
+        3.35
+      ],
+      "bounds_min": [
+        -4.35,
+        -3.35,
+        0.0
+      ],
+      "bounds_max": [
+        4.35,
+        3.35,
+        3.35
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "teal"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "7c9205e6ffb41eb0511eaef5897767ed461dcbda",
+      "objects": {
+        "HS_P_F06_K3": {
+          "triangles": 236,
+          "vertices": 150,
+          "faces": 136,
+          "shells": 16,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "commercial",
+        "wall": "teal",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "kiosk",
+      "plan_id": "F06_K3",
+      "plan_type": "kiosk",
+      "plan_style": "commercial",
+      "district": "residential",
+      "fbx": "HS_P_F06_K3_v02.fbx"
+    },
+    "HS_P_F06_MAINT": {
+      "triangles": 956,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        12.8,
+        20.8,
+        7.628
+      ],
+      "bounds_min": [
+        -6.4,
+        -10.4,
+        0.0
+      ],
+      "bounds_max": [
+        6.4,
+        10.4,
+        7.628
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "grey",
+        "grey.light",
+        "ink",
+        "mustard",
+        "paving",
+        "slate"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "2e2248b73c8e156ee9305bb90e91ef971f422d6d",
+      "objects": {
+        "HS_P_F06_MAINT": {
+          "triangles": 956,
+          "vertices": 586,
+          "faces": 550,
+          "shells": 54,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "industrial",
+        "style": "shed",
+        "wall": "grey",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "grey.light",
+        "plinth": "asphalt",
+        "door": "cobalt",
+        "accent": "red"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_MAINT",
+      "plan_type": "maintenance_shed",
+      "plan_style": "shed",
+      "district": "industrial",
+      "fbx": "HS_P_F06_MAINT_v02.fbx"
+    },
+    "HS_P_F06_MANSION_2": {
+      "triangles": 4796,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.0,
+        22.13,
+        12.56
+      ],
+      "bounds_min": [
+        -7.5,
+        -11.63,
+        0.0
+      ],
+      "bounds_max": [
+        7.5,
+        10.5,
+        12.56
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "mustard.dark",
+        "paving",
+        "slate",
+        "slate.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "ae19e4cf9695acd4947ba161e5297641d717cbc5",
+      "objects": {
+        "HS_P_F06_MANSION_2": {
+          "triangles": 4796,
+          "vertices": 3058,
+          "faces": 2562,
+          "shells": 330,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "elite",
+        "style": "villa",
+        "wall": "cream",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "mustard"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_MANSION_2",
+      "plan_type": "mansion",
+      "plan_style": "villa",
+      "district": "elite",
+      "fbx": "HS_P_F06_MANSION_2_v02.fbx"
+    },
+    "HS_P_F06_MANSION_3": {
+      "triangles": 742,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        21.6,
+        15.6,
+        7.1
+      ],
+      "bounds_min": [
+        -10.8,
+        -7.8,
+        0.0
+      ],
+      "bounds_max": [
+        10.8,
+        7.8,
+        7.1
+      ],
+      "swatches": [
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b2aa8527c1d595c56853c4858b467e09c19493ba",
+      "objects": {
+        "HS_P_F06_MANSION_3": {
+          "triangles": 742,
+          "vertices": 465,
+          "faces": 412,
+          "shells": 47,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "elite",
+        "style": "villa",
+        "wall": "chalk",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "ink",
+        "accent": "mustard",
+        "frame": "ink"
+      },
+      "archetype": "villa_modern",
+      "plan_id": "F06_MANSION_3",
+      "plan_type": "mansion",
+      "plan_style": "villa",
+      "district": "elite",
+      "fbx": "HS_P_F06_MANSION_3_v02.fbx"
+    },
+    "HS_P_F06_MANSION_4": {
+      "triangles": 4520,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.0,
+        22.13,
+        12.56
+      ],
+      "bounds_min": [
+        -7.5,
+        -11.63,
+        0.0
+      ],
+      "bounds_max": [
+        7.5,
+        10.5,
+        12.56
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "mustard.dark",
+        "paving",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "ed3ec6fc6248368bf924c17377fc98e5784c7796",
+      "objects": {
+        "HS_P_F06_MANSION_4": {
+          "triangles": 4520,
+          "vertices": 2874,
+          "faces": 2424,
+          "shells": 307,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "elite",
+        "style": "villa",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_MANSION_4",
+      "plan_type": "mansion",
+      "plan_style": "villa",
+      "district": "elite",
+      "fbx": "HS_P_F06_MANSION_4_v02.fbx"
+    },
+    "HS_P_F06_PHARM": {
+      "triangles": 2184,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        11.0,
+        15.51,
+        8.251
+      ],
+      "bounds_min": [
+        -5.5,
+        -8.0,
+        0.0
+      ],
+      "bounds_max": [
+        5.5,
+        7.51,
+        8.251
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mint",
+        "mustard",
+        "paving",
+        "teal",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mint",
+        "mustard",
+        "paving",
+        "teal",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "046d44d091139664a7c71840242bb2ac080152ab",
+      "objects": {
+        "HS_P_F06_PHARM": {
+          "triangles": 2184,
+          "vertices": 1372,
+          "faces": 1205,
+          "shells": 140,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "oldtown",
+        "wall": "mint",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_PHARM",
+      "plan_type": "pharmacy",
+      "plan_style": "oldtown",
+      "district": "village",
+      "fbx": "HS_P_F06_PHARM_v02.fbx"
+    },
+    "HS_P_F06_POLICE": {
+      "triangles": 6748,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        31.0,
+        24.13,
+        15.27
+      ],
+      "bounds_min": [
+        -15.5,
+        -12.63,
+        0.0
+      ],
+      "bounds_max": [
+        15.5,
+        11.5,
+        15.27
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate",
+        "slate.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "af70b41335769b36a739daf509ca60076771cbdb",
+      "objects": {
+        "HS_P_F06_POLICE": {
+          "triangles": 6748,
+          "vertices": 4286,
+          "faces": 3614,
+          "shells": 456,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "civic",
+        "wall": "cream",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_POLICE",
+      "plan_type": "police_station",
+      "plan_style": "civic",
+      "district": "old_town",
+      "fbx": "HS_P_F06_POLICE_v02.fbx"
+    },
+    "HS_P_F06_REPAIR": {
+      "triangles": 1300,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        18.8,
+        32.8,
+        9.068
+      ],
+      "bounds_min": [
+        -9.4,
+        -16.4,
+        0.0
+      ],
+      "bounds_max": [
+        9.4,
+        16.4,
+        9.068
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1cce47998c91b87e263f71ecc9ae27d633958f6c",
+      "objects": {
+        "HS_P_F06_REPAIR": {
+          "triangles": 1300,
+          "vertices": 792,
+          "faces": 750,
+          "shells": 71,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "industrial",
+        "wall": "brick",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "red",
+        "accent": "cobalt"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_REPAIR",
+      "plan_type": "car_workshop",
+      "plan_style": "industrial",
+      "district": "old_town",
+      "fbx": "HS_P_F06_REPAIR_v02.fbx"
+    },
+    "HS_P_F06_RUINS": {
+      "triangles": 3416,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        24.5,
+        13.25,
+        6.2
+      ],
+      "bounds_min": [
+        -12.25,
+        -9.93,
+        0.0
+      ],
+      "bounds_max": [
+        12.25,
+        3.32,
+        6.2
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "5fa5aa99d5a94b5b7717dd7e7d271d8dea2b4cc1",
+      "objects": {
+        "HS_P_F06_RUINS": {
+          "triangles": 3416,
+          "vertices": 2126,
+          "faces": 1877,
+          "shells": 217,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_RUINS",
+      "plan_type": "abandoned_farm",
+      "plan_style": "oldtown",
+      "district": "transition",
+      "fbx": "HS_P_F06_RUINS_v02.fbx"
+    },
+    "HS_P_F06_SUPER": {
+      "triangles": 1444,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        20.4,
+        32.52,
+        5.65
+      ],
+      "bounds_min": [
+        -10.2,
+        -16.32,
+        0.0
+      ],
+      "bounds_max": [
+        10.2,
+        16.2,
+        5.65
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "panel",
+        "paving",
+        "red",
+        "red.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "panel",
+        "paving",
+        "red"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "e63884667524c580ffc9b52187e8c9da969b5c23",
+      "objects": {
+        "HS_P_F06_SUPER": {
+          "triangles": 1444,
+          "vertices": 870,
+          "faces": 827,
+          "shells": 77,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "commercial",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "cobalt"
+      },
+      "archetype": "commercial",
+      "plan_id": "F06_SUPER",
+      "plan_type": "supermarket",
+      "plan_style": "commercial",
+      "district": "old_town",
+      "fbx": "HS_P_F06_SUPER_v02.fbx"
+    },
+    "HS_P_F06_TOW": {
+      "triangles": 956,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        12.8,
+        20.8,
+        7.128
+      ],
+      "bounds_min": [
+        -6.4,
+        -10.4,
+        0.0
+      ],
+      "bounds_max": [
+        6.4,
+        10.4,
+        7.128
+      ],
+      "swatches": [
+        "PT_Planks_v2|wood",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "grey",
+        "grey.light",
+        "ink",
+        "mustard",
+        "paving"
+      ],
+      "swatch_families": [
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f4d2f185db2903d2b10cb9a47270bd5ac7e0a9b6",
+      "objects": {
+        "HS_P_F06_TOW": {
+          "triangles": 956,
+          "vertices": 586,
+          "faces": 550,
+          "shells": 54,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Planks_v2_wood"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "industrial",
+        "style": "shed",
+        "wall": "wood",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "grey.light",
+        "plinth": "grey",
+        "door": "cobalt",
+        "accent": "red"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_TOW",
+      "plan_type": "tow_yard",
+      "plan_style": "shed",
+      "district": "industrial",
+      "fbx": "HS_P_F06_TOW_v02.fbx"
+    },
+    "HS_P_F06_VSHOP": {
+      "triangles": 2698,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.0,
+        19.51,
+        9.351
+      ],
+      "bounds_min": [
+        -6.5,
+        -10.0,
+        0.0
+      ],
+      "bounds_max": [
+        6.5,
+        9.51,
+        9.351
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "4a34a656e5c9ea2d02cb125bb28db9f027726aef",
+      "objects": {
+        "HS_P_F06_VSHOP": {
+          "triangles": 2698,
+          "vertices": 1691,
+          "faces": 1483,
+          "shells": 171,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F06_VSHOP",
+      "plan_type": "village_shop",
+      "plan_style": "oldtown",
+      "district": "village",
+      "fbx": "HS_P_F06_VSHOP_v02.fbx"
+    },
+    "HS_P_F06_WAGON": {
+      "triangles": 236,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        3.7,
+        18.7,
+        3.937
+      ],
+      "bounds_min": [
+        -1.85,
+        -9.35,
+        0.0
+      ],
+      "bounds_max": [
+        1.85,
+        9.35,
+        3.937
+      ],
+      "swatches": [
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "slate",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b899669f99ab2020816ef7be02f56e2e96aa30ad",
+      "objects": {
+        "HS_P_F06_WAGON": {
+          "triangles": 236,
+          "vertices": 150,
+          "faces": 136,
+          "shells": 16,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "forest",
+        "style": "shed",
+        "wall": "grey",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "kiosk",
+      "plan_id": "F06_WAGON",
+      "plan_type": "wagon_base",
+      "plan_style": "shed",
+      "district": "forest",
+      "fbx": "HS_P_F06_WAGON_v02.fbx"
+    },
+    "HS_P_F06_WARE1": {
+      "triangles": 1320,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        18.8,
+        30.82,
+        10.915
+      ],
+      "bounds_min": [
+        -9.4,
+        -15.41,
+        0.0
+      ],
+      "bounds_max": [
+        9.4,
+        15.41,
+        10.915
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "grey.light",
+        "ink",
+        "mustard",
+        "slate",
+        "slate.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "slate"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "24dd07fd107904ef2d84b3c41e4a67b459ade4db",
+      "objects": {
+        "HS_P_F06_WARE1": {
+          "triangles": 1320,
+          "vertices": 804,
+          "faces": 764,
+          "shells": 72,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "industrial",
+        "style": "shed",
+        "wall": "grey",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "grey.light",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "mustard"
+      },
+      "archetype": "industrial",
+      "plan_id": "F06_WARE1",
+      "plan_type": "warehouse",
+      "plan_style": "shed",
+      "district": "industrial",
+      "fbx": "HS_P_F06_WARE1_v02.fbx"
+    },
+    "HS_P_F06_WATER": {
+      "triangles": 154,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        7.765,
+        7.765,
+        18.0
+      ],
+      "bounds_min": [
+        -3.883,
+        -3.883,
+        0.0
+      ],
+      "bounds_max": [
+        3.883,
+        3.883,
+        18.0
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "grey",
+        "ink",
+        "teal"
+      ],
+      "swatch_families": [
+        "brick",
+        "grey",
+        "ink",
+        "teal"
+      ],
+      "min_member_m": 0.25,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "0800fb13077cc7518ee8ca0d0b046710308b34bc",
+      "objects": {
+        "HS_P_F06_WATER": {
+          "triangles": 154,
+          "vertices": 85,
+          "faces": 104,
+          "shells": 4,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "industrial",
+        "wall": "brick",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "water_tower",
+      "plan_id": "F06_WATER",
+      "plan_type": "water_tower",
+      "plan_style": "industrial",
+      "district": "village",
+      "fbx": "HS_P_F06_WATER_v02.fbx"
+    },
+    "HS_P_F07_VILLA": {
+      "triangles": 7796,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.0,
+        38.2,
+        12.56
+      ],
+      "bounds_min": [
+        -7.5,
+        -23.7,
+        0.0
+      ],
+      "bounds_max": [
+        7.5,
+        14.5,
+        12.56
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "grey.dark",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "fa35686b90b5c79e337dc4397e61cc3867e04f9e",
+      "objects": {
+        "HS_P_F07_VILLA": {
+          "triangles": 7796,
+          "vertices": 4940,
+          "faces": 4187,
+          "shells": 524,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "fields",
+        "style": "villa",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "F07_VILLA",
+      "plan_type": "prestige_base",
+      "plan_style": "villa",
+      "district": "fields",
+      "fbx": "HS_P_F07_VILLA_v02.fbx"
+    },
+    "HS_P_F08_MANSION_1": {
+      "triangles": 742,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        15.6,
+        19.6,
+        7.1
+      ],
+      "bounds_min": [
+        -7.8,
+        -9.8,
+        0.0
+      ],
+      "bounds_max": [
+        7.8,
+        9.8,
+        7.1
+      ],
+      "swatches": [
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f2e57c99cb17399f72c049ddf9aa893dff626ce6",
+      "objects": {
+        "HS_P_F08_MANSION_1": {
+          "triangles": 742,
+          "vertices": 465,
+          "faces": 412,
+          "shells": 47,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "elite",
+        "style": "villa",
+        "wall": "chalk",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "ink",
+        "accent": "cobalt",
+        "frame": "ink"
+      },
+      "archetype": "villa_modern",
+      "plan_id": "F08_MANSION_1",
+      "plan_type": "mansion",
+      "plan_style": "villa",
+      "district": "elite",
+      "fbx": "HS_P_F08_MANSION_1_v02.fbx"
+    },
+    "HS_P_F12_BOWLING": {
+      "triangles": 1532,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        20.4,
+        32.52,
+        9.65
+      ],
+      "bounds_min": [
+        -10.2,
+        -16.32,
+        0.0
+      ],
+      "bounds_max": [
+        10.2,
+        16.2,
+        9.65
+      ],
+      "swatches": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "plum",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "plum",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f157f685a6cfb08dc883b39d3999175c6c4cef79",
+      "objects": {
+        "HS_P_F12_BOWLING": {
+          "triangles": 1532,
+          "vertices": 922,
+          "faces": 879,
+          "shells": 81,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "fields",
+        "style": "neon",
+        "wall": "plum",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "commercial",
+      "plan_id": "F12_BOWLING",
+      "plan_type": "bowling_arcade",
+      "plan_style": "neon",
+      "district": "fields",
+      "fbx": "HS_P_F12_BOWLING_v02.fbx"
+    },
+    "HS_P_F12_CASINO": {
+      "triangles": 1536,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        24.4,
+        36.52,
+        15.65
+      ],
+      "bounds_min": [
+        -12.2,
+        -18.32,
+        0.0
+      ],
+      "bounds_max": [
+        12.2,
+        18.2,
+        15.65
+      ],
+      "swatches": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "4ee0a4438005ab45667ce68952bc215d0470dc51",
+      "objects": {
+        "HS_P_F12_CASINO": {
+          "triangles": 1536,
+          "vertices": 928,
+          "faces": 877,
+          "shells": 83,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "fields",
+        "style": "neon",
+        "wall": "chalk",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "red",
+        "frame": "ink"
+      },
+      "archetype": "commercial",
+      "plan_id": "F12_CASINO",
+      "plan_type": "casino",
+      "plan_style": "neon",
+      "district": "fields",
+      "fbx": "HS_P_F12_CASINO_v02.fbx"
+    },
+    "HS_P_F12_NIGHTCLUB": {
+      "triangles": 1232,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        26.4,
+        18.52,
+        9.65
+      ],
+      "bounds_min": [
+        -13.2,
+        -9.32,
+        0.0
+      ],
+      "bounds_max": [
+        13.2,
+        9.2,
+        9.65
+      ],
+      "swatches": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "plum",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "plum",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "a6afa487fc0ac7baf1bb7f2d9ca5acb482c53063",
+      "objects": {
+        "HS_P_F12_NIGHTCLUB": {
+          "triangles": 1232,
+          "vertices": 752,
+          "faces": 693,
+          "shells": 71,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "fields",
+        "style": "neon",
+        "wall": "plum",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "teal"
+      },
+      "archetype": "commercial",
+      "plan_id": "F12_NIGHTCLUB",
+      "plan_type": "nightclub",
+      "plan_style": "neon",
+      "district": "fields",
+      "fbx": "HS_P_F12_NIGHTCLUB_v02.fbx"
+    },
+    "HS_P_O06_T1_U1": {
+      "triangles": 4512,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "4e536d35f8b04530746d6c255ce453ae224817bf",
+      "objects": {
+        "HS_P_O06_T1_U1": {
+          "triangles": 4512,
+          "vertices": 2884,
+          "faces": 2406,
+          "shells": 314,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T1_U1",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T1_U1_v02.fbx"
+    },
+    "HS_P_O06_T1_U2": {
+      "triangles": 4254,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        13.43,
+        13.601
+      ],
+      "bounds_min": [
+        -4.0,
+        -6.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        6.51,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b37e87a6003075a6b26fb815b282fbc2eb45245b",
+      "objects": {
+        "HS_P_O06_T1_U2": {
+          "triangles": 4254,
+          "vertices": 2719,
+          "faces": 2265,
+          "shells": 296,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T1_U2",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "transition",
+      "fbx": "HS_P_O06_T1_U2_v02.fbx"
+    },
+    "HS_P_O06_T1_U3": {
+      "triangles": 4352,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.662,
+      "jitter_m": 0.0,
+      "geometry_sha1": "bd62e982f446089bf1c0ffb5aebc1e283cd75722",
+      "objects": {
+        "HS_P_O06_T1_U3": {
+          "triangles": 4352,
+          "vertices": 2784,
+          "faces": 2411,
+          "shells": 304,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T1_U3",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "transition",
+      "fbx": "HS_P_O06_T1_U3_v02.fbx"
+    },
+    "HS_P_O06_T1_U4": {
+      "triangles": 4320,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.662,
+      "jitter_m": 0.0,
+      "geometry_sha1": "7fba68827c02f44406d6f3dec80cdb711c9a9c04",
+      "objects": {
+        "HS_P_O06_T1_U4": {
+          "triangles": 4320,
+          "vertices": 2756,
+          "faces": 2406,
+          "shells": 298,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T1_U4",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T1_U4_v02.fbx"
+    },
+    "HS_P_O06_T1_U5": {
+      "triangles": 4512,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "slate",
+        "slate.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f6b03c4b4368d443630076d85d2f3274d21075f0",
+      "objects": {
+        "HS_P_O06_T1_U5": {
+          "triangles": 4512,
+          "vertices": 2884,
+          "faces": 2406,
+          "shells": 314,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T1_U5",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T1_U5_v02.fbx"
+    },
+    "HS_P_O06_T1_U6": {
+      "triangles": 4254,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        13.43,
+        13.601
+      ],
+      "bounds_min": [
+        -4.0,
+        -6.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        6.51,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f76afd91056256a8ae1155059a85e5df0bc2ed6f",
+      "objects": {
+        "HS_P_O06_T1_U6": {
+          "triangles": 4254,
+          "vertices": 2719,
+          "faces": 2265,
+          "shells": 296,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T1_U6",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T1_U6_v02.fbx"
+    },
+    "HS_P_O06_T2_U2": {
+      "triangles": 3252,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        10.401
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        10.401
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "leaf",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "grey",
+        "leaf",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.662,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b1d8ed87749d2d4be8e1407d71edcefcb8f72c1f",
+      "objects": {
+        "HS_P_O06_T2_U2": {
+          "triangles": 3252,
+          "vertices": 2076,
+          "faces": 1848,
+          "shells": 225,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T2_U2",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T2_U2_v02.fbx"
+    },
+    "HS_P_O06_T2_U6": {
+      "triangles": 3252,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        10.401
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        10.401
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "leaf",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "grey",
+        "leaf",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.662,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f32ac84bc12696d1e68bb5a3379652351e778004",
+      "objects": {
+        "HS_P_O06_T2_U6": {
+          "triangles": 3252,
+          "vertices": 2076,
+          "faces": 1848,
+          "shells": 225,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T2_U6",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T2_U6_v02.fbx"
+    },
+    "HS_P_O06_T3_U1": {
+      "triangles": 4254,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        13.43,
+        13.601
+      ],
+      "bounds_min": [
+        -4.0,
+        -6.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        6.51,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "coral",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "slate",
+        "slate.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "coral",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "6a92bb373b53049e79b85516785a53273c674932",
+      "objects": {
+        "HS_P_O06_T3_U1": {
+          "triangles": 4254,
+          "vertices": 2719,
+          "faces": 2265,
+          "shells": 296,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "coral",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T3_U1",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T3_U1_v02.fbx"
+    },
+    "HS_P_O06_T3_U2": {
+      "triangles": 4110,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        13.43,
+        13.601
+      ],
+      "bounds_min": [
+        -4.0,
+        -6.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        6.51,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "coral",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "slate",
+        "slate.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "coral",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "4e6e492bf28fafe0681d6845c8a34b8f04903bb2",
+      "objects": {
+        "HS_P_O06_T3_U2": {
+          "triangles": 4110,
+          "vertices": 2623,
+          "faces": 2193,
+          "shells": 284,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "coral",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T3_U2",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T3_U2_v02.fbx"
+    },
+    "HS_P_O06_T3_U3": {
+      "triangles": 4320,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "glass.light",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.662,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b335d384659f1c850a9f678b45ac4569af509cef",
+      "objects": {
+        "HS_P_O06_T3_U3": {
+          "triangles": 4320,
+          "vertices": 2756,
+          "faces": 2406,
+          "shells": 298,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T3_U3",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T3_U3_v02.fbx"
+    },
+    "HS_P_O06_T3_U5": {
+      "triangles": 4544,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "slate",
+        "slate.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "mustard",
+        "ochre",
+        "paving",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "24712c6553e06ec5e45cd0cd5876ef0473dd4596",
+      "objects": {
+        "HS_P_O06_T3_U5": {
+          "triangles": 4544,
+          "vertices": 2912,
+          "faces": 2411,
+          "shells": 320,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "slate",
+        "roof_c": "slate",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T3_U5",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T3_U5_v02.fbx"
+    },
+    "HS_P_O06_T5_U1": {
+      "triangles": 4110,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        8.0,
+        13.43,
+        13.601
+      ],
+      "bounds_min": [
+        -4.0,
+        -6.92,
+        0.0
+      ],
+      "bounds_max": [
+        4.0,
+        6.51,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "chalk",
+        "cobalt",
+        "cobalt.dark",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "cobalt",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "025ca2859280de094015811962ad4e5075503720",
+      "objects": {
+        "HS_P_O06_T5_U1": {
+          "triangles": 4110,
+          "vertices": 2623,
+          "faces": 2193,
+          "shells": 284,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "village",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "grey",
+        "door": "wood",
+        "accent": "cobalt"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T5_U1",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "village",
+      "fbx": "HS_P_O06_T5_U1_v02.fbx"
+    },
+    "HS_P_O06_T5_U2": {
+      "triangles": 4544,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "a7b9ef6828cedec8476feaaa95b7016b783a5dff",
+      "objects": {
+        "HS_P_O06_T5_U2": {
+          "triangles": 4544,
+          "vertices": 2912,
+          "faces": 2411,
+          "shells": 320,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T5_U2",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "transition",
+      "fbx": "HS_P_O06_T5_U2_v02.fbx"
+    },
+    "HS_P_O06_T5_U3": {
+      "triangles": 4352,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "leaf",
+        "mustard",
+        "ochre",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.662,
+      "jitter_m": 0.0,
+      "geometry_sha1": "19ed207404946fa5ddab900180d9abe18203a2f1",
+      "objects": {
+        "HS_P_O06_T5_U3": {
+          "triangles": 4352,
+          "vertices": 2784,
+          "faces": 2411,
+          "shells": 304,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "transition",
+        "style": "oldtown",
+        "wall": "ochre",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "mustard"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T5_U3",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "transition",
+      "fbx": "HS_P_O06_T5_U3_v02.fbx"
+    },
+    "HS_P_O06_T5_U6": {
+      "triangles": 4544,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        13.02,
+        8.42,
+        13.601
+      ],
+      "bounds_min": [
+        -6.51,
+        -4.42,
+        0.0
+      ],
+      "bounds_max": [
+        6.51,
+        4.0,
+        13.601
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "PT_RoofTile_v2|terracotta",
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "red.dark",
+        "terracotta",
+        "terracotta.dark",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "red",
+        "terracotta",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "17ee9027e7c77e70c3f2af725452edd85ea478cc",
+      "objects": {
+        "HS_P_O06_T5_U6": {
+          "triangles": 4544,
+          "vertices": 2912,
+          "faces": 2411,
+          "shells": 320,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_RoofTile_v2_terracotta",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "roof_c": "terracotta",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "masonry",
+      "plan_id": "O06_T5_U6",
+      "plan_type": "small_house",
+      "plan_style": "oldtown",
+      "district": "old_town",
+      "fbx": "HS_P_O06_T5_U6_v02.fbx"
+    },
+    "HS_P_O06_TOWER_1": {
+      "triangles": 5378,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        20.6,
+        24.13,
+        43.15
+      ],
+      "bounds_min": [
+        -10.3,
+        -12.83,
+        0.0
+      ],
+      "bounds_max": [
+        10.3,
+        11.3,
+        43.15
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "2219682be889a085ea57cfc7b62e830e294886d4",
+      "objects": {
+        "HS_P_O06_TOWER_1": {
+          "triangles": 5378,
+          "vertices": 3345,
+          "faces": 3087,
+          "shells": 331,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "panel",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "tower",
+      "plan_id": "O06_TOWER_1",
+      "plan_type": "tower",
+      "plan_style": "panel",
+      "district": "old_town",
+      "fbx": "HS_P_O06_TOWER_1_v02.fbx"
+    },
+    "HS_P_O06_TOWER_2": {
+      "triangles": 5510,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        22.6,
+        22.13,
+        48.75
+      ],
+      "bounds_min": [
+        -11.3,
+        -11.83,
+        0.0
+      ],
+      "bounds_max": [
+        11.3,
+        10.3,
+        48.75
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "90832845060b5b7c62f2a83ac546306642b438dd",
+      "objects": {
+        "HS_P_O06_TOWER_2": {
+          "triangles": 5510,
+          "vertices": 3427,
+          "faces": 3176,
+          "shells": 339,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "panel",
+        "wall": "cream",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "archetype": "tower",
+      "plan_id": "O06_TOWER_2",
+      "plan_type": "tower",
+      "plan_style": "panel",
+      "district": "old_town",
+      "fbx": "HS_P_O06_TOWER_2_v02.fbx"
+    },
+    "HS_P_R06_C1_S1": {
+      "triangles": 33264,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        36.55
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        36.55
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving",
+        "teal"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "8fa862f671a57059572826fea393a564cea5a238",
+      "objects": {
+        "HS_P_R06_C1_S1": {
+          "triangles": 33264,
+          "vertices": 20838,
+          "faces": 17803,
+          "shells": 2105,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C1_S1",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C1_S1_v02.fbx"
+    },
+    "HS_P_R06_C1_S2": {
+      "triangles": 25200,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        28.15
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        28.15
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1cb69cefedfdf9fce9d9d1bb8e4344445dbe6445",
+      "objects": {
+        "HS_P_R06_C1_S2": {
+          "triangles": 25200,
+          "vertices": 15782,
+          "faces": 13531,
+          "shells": 1593,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C1_S2",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C1_S2_v02.fbx"
+    },
+    "HS_P_R06_C1_S3": {
+      "triangles": 27904,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        30.95
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        30.95
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1c810a2cf4ce3978fbe3b0328695d65e9d6fbaf8",
+      "objects": {
+        "HS_P_R06_C1_S3": {
+          "triangles": 27904,
+          "vertices": 17478,
+          "faces": 14963,
+          "shells": 1765,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C1_S3",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C1_S3_v02.fbx"
+    },
+    "HS_P_R06_C2_S1": {
+      "triangles": 33264,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        36.55
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        36.55
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "479f3f827ff3609c08810bbe6853fdb6be28caa1",
+      "objects": {
+        "HS_P_R06_C2_S1": {
+          "triangles": 33264,
+          "vertices": 20838,
+          "faces": 17803,
+          "shells": 2105,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "mustard"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C2_S1",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C2_S1_v02.fbx"
+    },
+    "HS_P_R06_C2_S2": {
+      "triangles": 25200,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        28.15
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        28.15
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "cobalt",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "9ab89a43cca1c196fdfcd57797c395c8bfd08080",
+      "objects": {
+        "HS_P_R06_C2_S2": {
+          "triangles": 25200,
+          "vertices": 15782,
+          "faces": 13531,
+          "shells": 1593,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "cobalt"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C2_S2",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C2_S2_v02.fbx"
+    },
+    "HS_P_R06_C2_S3": {
+      "triangles": 27904,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        30.95
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        30.95
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "cobalt",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "a9390abcb634a5f2d2467d06a316cacf729c993a",
+      "objects": {
+        "HS_P_R06_C2_S3": {
+          "triangles": 27904,
+          "vertices": 17478,
+          "faces": 14963,
+          "shells": 1765,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "cobalt"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C2_S3",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C2_S3_v02.fbx"
+    },
+    "HS_P_R06_C3_S1": {
+      "triangles": 33264,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        36.55
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        36.55
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving",
+        "red"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving",
+        "red"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "70c7e92f3761bb390713dc21c31985fb82c67bac",
+      "objects": {
+        "HS_P_R06_C3_S1": {
+          "triangles": 33264,
+          "vertices": 20838,
+          "faces": 17803,
+          "shells": 2105,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "red"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C3_S1",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C3_S1_v02.fbx"
+    },
+    "HS_P_R06_C3_S2": {
+      "triangles": 25200,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        28.15
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        28.15
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving",
+        "teal"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b5833803075680647eacd08aaef024f563e2536c",
+      "objects": {
+        "HS_P_R06_C3_S2": {
+          "triangles": 25200,
+          "vertices": 15782,
+          "faces": 13531,
+          "shells": 1593,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C3_S2",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C3_S2_v02.fbx"
+    },
+    "HS_P_R06_C3_S3": {
+      "triangles": 27904,
+      "triangle_budget": [
+        1,
+        60000
+      ],
+      "size_m": [
+        72.2,
+        13.65,
+        30.95
+      ],
+      "bounds_min": [
+        -36.1,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        36.1,
+        6.12,
+        30.95
+      ],
+      "swatches": [
+        "PT_PanelSeams_v2|panel",
+        "asphalt.dark",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "ink.light",
+        "mustard",
+        "panel",
+        "panel.light",
+        "paving",
+        "teal"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ink",
+        "mustard",
+        "panel",
+        "paving",
+        "teal"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "0493bb67090c5021241f508917783b3a0b09c1b2",
+      "objects": {
+        "HS_P_R06_C3_S3": {
+          "triangles": 27904,
+          "vertices": 17478,
+          "faces": 14963,
+          "shells": 1765,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_PanelSeams_v2_panel"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_60000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "grey",
+        "roof_c": "grey",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "teal"
+      },
+      "archetype": "slab",
+      "plan_id": "R06_C3_S3",
+      "plan_type": "slab",
+      "plan_style": "panel",
+      "district": "residential",
+      "fbx": "HS_P_R06_C3_S3_v02.fbx"
+    }
+  },
+  "total_assets": 76,
+  "total_triangles": 461642,
+  "all_checks_passed": true,
+  "notes": [
+    "One model per plan building of the trial region; colours by bible 7.5 (2.7 specials, 2.5 recipes by hash(id), 2.6 pairs, neighbour rule 12 m; panel blocks by balcony accent). Placement data: plan_buildings_v02.json.",
+    "Unity: position (plan x, 0, plan y), rotation Euler(0, unity_yaw, 0); the model front is local -Z.",
+    "The .blend shows the assets in rows along +X; every FBX has its root at the origin."
+  ],
+  "files": {
+    "blend": "SK2-PLANHOUSES-001_v02.blend",
+    "atlas": "_lib/Look_Palette_v2.png",
+    "atlas_layout": "_lib/Look_Palette_v2.json"
+  }
+}

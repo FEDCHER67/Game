@@ -1,0 +1,417 @@
+{
+  "family": "SK2-SQUARE-001",
+  "kit": "STYLE_KIT_v2",
+  "style_bible": "v2",
+  "bible_date": "2026-10-06",
+  "revision": "v02",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root mesh of every asset: centre of the base on the ground (0, 0, 0)",
+  "palette": "_lib/Look_Palette_v2.png (+ .json): UV0 inside the swatch cell; alpha = smoothness",
+  "description": "Square set v2: SQ_Fountain (+ monument), SQ_Bench, SQ_LampPost, SQ_Planter, SQ_ClockShaft (bible 2.7, 8, 12)",
+  "assets": {
+    "SQ_Fountain": {
+      "triangles": 2404,
+      "triangle_budget": [
+        1,
+        4000
+      ],
+      "size_m": [
+        7.265,
+        7.265,
+        5.257
+      ],
+      "bounds_min": [
+        -3.632,
+        -3.632,
+        0.0
+      ],
+      "bounds_max": [
+        3.632,
+        3.632,
+        5.257
+      ],
+      "swatches": [
+        "chalk",
+        "paving",
+        "slate.dark",
+        "water",
+        "water.light"
+      ],
+      "swatch_families": [
+        "chalk",
+        "paving",
+        "slate",
+        "water"
+      ],
+      "min_member_m": 0.12,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1bfdfb72bfc5de8d153f9c4218752340beaf0917",
+      "objects": {
+        "SQ_Fountain": {
+          "triangles": 2004,
+          "vertices": 1026,
+          "faces": 1094,
+          "shells": 15,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        },
+        "SQ_Fountain_Water": {
+          "triangles": 400,
+          "vertices": 210,
+          "faces": 248,
+          "shells": 5,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_4000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_4": true
+      },
+      "all_checks_passed": true,
+      "notes": "The water and the four jets are the child SQ_Fountain_Water (swap in an animated water material if wanted).",
+      "kind": "landmark",
+      "fbx": "SQ_Fountain_v02.fbx"
+    },
+    "SQ_Bench": {
+      "triangles": 1068,
+      "triangle_budget": [
+        1,
+        1500
+      ],
+      "size_m": [
+        1.8,
+        0.645,
+        0.962
+      ],
+      "bounds_min": [
+        -0.9,
+        -0.235,
+        0.0
+      ],
+      "bounds_max": [
+        0.9,
+        0.41,
+        0.962
+      ],
+      "swatches": [
+        "ink",
+        "wood"
+      ],
+      "swatch_families": [
+        "ink",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f2ad103061feb19bf5ef89a16347be2a6bd46f45",
+      "objects": {
+        "SQ_Bench": {
+          "triangles": 1068,
+          "vertices": 568,
+          "faces": 582,
+          "shells": 17,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_1500": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "seat_height_m": 0.45,
+      "kind": "prop near the player",
+      "fbx": "SQ_Bench_v02.fbx"
+    },
+    "SQ_LampPost": {
+      "triangles": 1168,
+      "triangle_budget": [
+        1,
+        1500
+      ],
+      "size_m": [
+        0.514,
+        0.54,
+        4.915
+      ],
+      "bounds_min": [
+        -0.257,
+        -0.27,
+        0.0
+      ],
+      "bounds_max": [
+        0.257,
+        0.27,
+        4.915
+      ],
+      "swatches": [
+        "ink",
+        "lamp_glow"
+      ],
+      "swatch_families": [
+        "ink",
+        "lamp_glow"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "80c392a2e52086426230b24ea2a20454d25b4aa4",
+      "objects": {
+        "SQ_LampPost": {
+          "triangles": 1156,
+          "vertices": 596,
+          "faces": 602,
+          "shells": 9,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        },
+        "SQ_LampPost_Emissive": {
+          "triangles": 12,
+          "vertices": 8,
+          "faces": 6,
+          "shells": 1,
+          "materials": [
+            "Look_Palette_v2_Emissive"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_1500": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "Lantern glass is the child SQ_LampPost_Emissive (lamp_glow, emission x1.5 day / x3 night).",
+      "kind": "prop near the player",
+      "fbx": "SQ_LampPost_v02.fbx"
+    },
+    "SQ_Planter": {
+      "triangles": 860,
+      "triangle_budget": [
+        1,
+        1500
+      ],
+      "size_m": [
+        1.334,
+        1.334,
+        1.123
+      ],
+      "bounds_min": [
+        -0.667,
+        -0.667,
+        0.0
+      ],
+      "bounds_max": [
+        0.667,
+        0.667,
+        1.123
+      ],
+      "swatches": [
+        "chalk",
+        "grad.bush",
+        "red"
+      ],
+      "swatch_families": [
+        "chalk",
+        "leaf",
+        "red"
+      ],
+      "min_member_m": 0.15,
+      "facet_ratio_min": 0.27,
+      "jitter_m": 0.0,
+      "geometry_sha1": "c459446aa2b026a99893bb8317a26e7f338b7335",
+      "objects": {
+        "SQ_Planter": {
+          "triangles": 860,
+          "vertices": 448,
+          "faces": 556,
+          "shells": 9,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_1500": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "kind": "prop near the player",
+      "fbx": "SQ_Planter_v02.fbx"
+    },
+    "SQ_ClockShaft": {
+      "triangles": 588,
+      "triangle_budget": [
+        1,
+        2500
+      ],
+      "size_m": [
+        3.64,
+        3.74,
+        9.0
+      ],
+      "bounds_min": [
+        -1.82,
+        -1.92,
+        0.0
+      ],
+      "bounds_max": [
+        1.82,
+        1.82,
+        9.0
+      ],
+      "swatches": [
+        "PT_Brick_v2|brick",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "mustard",
+        "paving",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "brick",
+        "chalk",
+        "glass",
+        "grey",
+        "mustard",
+        "paving",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "3f33c53bfa792c682d79470477a1c8df1ce08182",
+      "objects": {
+        "SQ_ClockShaft": {
+          "triangles": 588,
+          "vertices": 352,
+          "faces": 347,
+          "shells": 30,
+          "materials": [
+            "Look_Palette_v2",
+            "PT_Brick_v2_brick"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_2500": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Shaft of the free-standing clock tower; the LANDMARKS clock_tower_top sits on it at z = 9 m.",
+      "kind": "landmark",
+      "fbx": "SQ_ClockShaft_v02.fbx"
+    }
+  },
+  "total_assets": 5,
+  "total_triangles": 6088,
+  "all_checks_passed": true,
+  "notes": [
+    "Fountain: stone (paving) basin and pedestal, chalk rim and mouldings, a slate.dark monument, opaque water child.",
+    "Bevels: 2 segments, weighted normals (bible 3.5) on every prop the player can stand next to.",
+    "v02: SQ_ClockShaft (brick, PT_Brick_v2) for the plan clock tower; the lantern glass stays the emissive child, the daytime emission is switched off in the Unity material (critique 13c).",
+    "The .blend shows the assets in rows along +X; every FBX has its root at the origin."
+  ],
+  "files": {
+    "blend": "SK2-SQUARE-001_v02.blend",
+    "atlas": "_lib/Look_Palette_v2.png",
+    "atlas_layout": "_lib/Look_Palette_v2.json"
+  }
+}

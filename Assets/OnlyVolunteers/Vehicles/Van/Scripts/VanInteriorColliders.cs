@@ -22,6 +22,13 @@ namespace OnlyVolunteers.Vehicles
     //   floor edge or the bumper slides in when pushed by the ankles, while on the ground its far end still holds and
     //   pivots. Loaded bodies are kept in place by GreyboxVanCargo.LoadedDamping. Play mode only: an edit-time Build
     //   (VanSetupBuilder) must not bake a non-asset material into the prefab.
+    // - SlideRear (stage 9, NPC ragdoll): an invisible slide for NPC bodies only, on layer NpcSlide, which collides with
+    //   NpcBody and nothing else (the player, the van, vehicles, props and the world never touch it). A ragdoll dragged in
+    //   alone through the rear doors jammed with its hips hooked over the bumper's outer top edge (0.62 m) and its legs
+    //   hanging against the vertical bumper face: pulled level, nothing turned the pull into lift (RagdollSmokeTest r6b, 2
+    //   runs of 3). The slide runs from the ground 0.57 m behind the bumper up to its top edge (46 degrees), slippery (0.05,
+    //   Minimum, Play mode only), so hips and legs ride up it. Its own kinematic body, like the ramps; switched off when the
+    //   project has no NpcSlide layer (it would block everything).
     // Then every collider of the van, doors and wheels included, goes on layer Vehicle (when the project has it); the
     // ramps then go on VehicleInterior (or are switched off when the project has no such layer).
     // Runtime setup, idempotent by child name: an existing Van.prefab instance (grey-box scenes) gets it in Awake without a
@@ -72,6 +79,17 @@ namespace OnlyVolunteers.Vehicles
         private const string RampLayerName = "VehicleInterior"; // OvLayers.VehicleInterior (11)
         private const float RampThickness = 0.12f;
 
+        // Body slides (stage 9), Blender coordinates like the ramps: SlideRear from the ground at y 2.93 (0.57 m behind the
+        // bumper's outer face) up to 4 cm inside its outer top edge, 5 mm above its top (2.32, 0.625): 46 degrees.
+        private static readonly (string name, Vector3 low, Vector3 high, Vector3 halfWidth)[] BodySlides =
+        {
+            ("SlideRear", new(0f, 2.93f, 0f), new(0f, 2.32f, 0.625f), new(0.80f, 0f, 0f)),
+        };
+        private const string SlideBody = "BodySlides";
+        private const string SlideLayerName = "NpcSlide"; // OvLayers.NpcSlide (14)
+        private const float SlideFriction = 0.05f;
+        private static PhysicsMaterial _slippery;
+
         private static readonly string[] SmoothSurfaces =
             { "Floor", "BumperRear", "StepSlide", "StepRear", "HousingRearLeft", "HousingRearRight" };
         private const float SmoothFriction = 0.3f;
@@ -116,7 +134,51 @@ namespace OnlyVolunteers.Vehicles
             foreach (Collider c in GetComponentsInChildren<Collider>(true))
                 c.gameObject.layer = layer;
             BuildRamps(container);
+            BuildSlides(container);
         }
+
+        // ---------- Body slides (stage 9) ----------
+
+        private void BuildSlides(Transform container)
+        {
+            Transform holder = container.Find(SlideBody);
+            int layer = LayerMask.NameToLayer(SlideLayerName);
+            if (layer < 0)
+            {
+                Debug.LogWarning($"[Van] Layer '{SlideLayerName}' is missing (ProjectSettings/TagManager); the NPC body slide is off.");
+                if (holder != null) holder.gameObject.SetActive(false);
+                return;
+            }
+            if (holder == null)
+            {
+                holder = new GameObject(SlideBody).transform;
+                holder.SetParent(container, false);
+            }
+            holder.gameObject.SetActive(true);
+            holder.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            holder.localScale = Vector3.one;
+            if (!holder.TryGetComponent(out Rigidbody body)) body = holder.gameObject.AddComponent<Rigidbody>();
+            body.isKinematic = true;
+            body.useGravity = false;
+            body.interpolation = RigidbodyInterpolation.None;
+            holder.gameObject.layer = layer;
+            foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in BodySlides)
+            {
+                Ramp(holder, name, low, high, halfWidth, layer);
+                if (Application.isPlaying && holder.Find(name) is Transform t && t.TryGetComponent(out BoxCollider box))
+                    box.sharedMaterial = Slippery;
+            }
+        }
+
+        private static PhysicsMaterial Slippery => _slippery != null ? _slippery : _slippery = new PhysicsMaterial("VanBodySlide")
+        {
+            staticFriction = SlideFriction,
+            dynamicFriction = SlideFriction,
+            bounciness = 0f,
+            frictionCombine = PhysicsMaterialCombine.Minimum,
+            bounceCombine = PhysicsMaterialCombine.Minimum,
+            hideFlags = HideFlags.DontSave,
+        };
 
         // ---------- Ramps ----------
 

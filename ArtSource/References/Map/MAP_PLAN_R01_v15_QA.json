@@ -1,0 +1,89 @@
+{
+  "checks_passed": 48,
+  "checks_total": 48,
+  "all_geometry_checks_passed": true,
+  "two_runs_byte_identical": true,
+  "compared_outputs": 26,
+  "output_sha256": {
+    "MAP_PLAN_R01_v15.json": "544fa25b2d3a36d90a98e26e2b39c9f39b498b32621b8ab0d75f18e0529fa067",
+    "MAP_PLAN_R01_v15.png": "c43c521125e8051aa6b7654a343b64ebc261291b0c6a7a8add37b38e45d4dd63",
+    "MAP_PLAN_R01_v15.svg": "4c295817f17c761f2da1603f7653ffb37f3a41824781e91a736820774c592101",
+    "MAP_PLAN_R01_v15_compare_05_downtown.png": "a11029107e995b6e072e67a2ab5fd48a94f6b8e7302838cf3204f25a89d9f307",
+    "MAP_PLAN_R01_v15_compare_09_beach.png": "c57396f490ba856ea1454f09ae05664633db612ca5b0ceffe92b2b7bfc2a698f",
+    "MAP_PLAN_R01_v15_crop_01_forest.png": "733ad34debf9749734185a007b94da63b84e069d6624c527da5db54a50d1574a",
+    "MAP_PLAN_R01_v15_crop_02_hamlet.png": "3c44b186f3b46d1501d7ae16eede0652d86050362cf8eb79963a1b7f9134c982",
+    "MAP_PLAN_R01_v15_crop_03_crossing.png": "5b36870b12877af0c42b1f4dd5a99494efaf11678dc38b59ee66577518d6e687",
+    "MAP_PLAN_R01_v15_crop_04_rough.png": "7110bda83f123980cf9d9be3ba98a8a39a716150018f129722bc86ac976c7b8f",
+    "MAP_PLAN_R01_v15_crop_05_downtown.png": "49bcc350ba5212c512c9571e4e480b38bd450815b08e140120fedf942304c107",
+    "MAP_PLAN_R01_v15_crop_06_port.png": "956eb87d0a95807612be517f34ffb065804472a3734580ef39ffcd1f4a05ba5f",
+    "MAP_PLAN_R01_v15_crop_07_elite.png": "f790a593f8abe4c7da3a1b94a7d6d0475c7c16eebe75afc35997e742232f5694",
+    "MAP_PLAN_R01_v15_crop_08_valley.png": "b38992660768dfb42b0236c25e664de7cea10e56cfb47c4ee31e082f79d59abe",
+    "MAP_PLAN_R01_v15_crop_09_beach.png": "c79f661b78d9ecaa8e620c96a03b46c4263f12a5d1b9172e1b31b9634c4e4f74",
+    "MAP_PLAN_R01_v15_overlay.png": "96e88ca8d5cf98bdcfc0b147be5cb281ca4cac8312f486b3b8a23a72661f2202",
+    "MAP_PLAN_R01_v15_REPORT.md": "f5d97c8a8bec361b2b7419bd2a24d5d37f561ade40d3f0bf2f1daabbe0110058",
+    "Master_v02\\fragments\\v15_00_world.json": "0a5ecc6d4ad43ade3fed607398e63b6f1778a9b6d53e64bcb1b8955a0c2bcd67",
+    "Master_v02\\fragments\\v15_01_forest.json": "ad7c0075f9c404582fc74ac10329efc34f865912ac119a9f6a7ca5391241b1a9",
+    "Master_v02\\fragments\\v15_02_hamlet.json": "76f6fc25f25294d561c799a48a49910437e7263e2f577c0acfbbfac2ec973956",
+    "Master_v02\\fragments\\v15_03_crossing.json": "4b92ffc85a50cb80c2336a3a644f07f4aeb355cfa1d12c6c5a5a3d3586f18415",
+    "Master_v02\\fragments\\v15_04_rough.json": "24219163e5fd9685f72c8c672ae52e25183e8a12133a71312ade0a9b011356dc",
+    "Master_v02\\fragments\\v15_05_downtown.json": "9ab2cb1073723921f6edc9f66c79d1efbe7d7b4c130a6941d1e6b4e35de2f48c",
+    "Master_v02\\fragments\\v15_06_port.json": "8bbd9a5b87066339294eac93d8a139795cc7fe4f699a0ee490846e8479e87fb6",
+    "Master_v02\\fragments\\v15_07_elite.json": "e02c4428d583802c249a4270226de37319b5ed65de3ae64c11acd92fa41464c1",
+    "Master_v02\\fragments\\v15_08_valley.json": "ad3608f7d920f542487daaad02288797b453d2f88adb9f6b8ebadb74b17cce23",
+    "Master_v02\\fragments\\v15_09_beach.json": "a30d57815ec02ebe05b562da34d0bc2438f146c57206af1caeaf167a0a3b88ef"
+  },
+  "protected_inputs_unchanged": true,
+  "protected_input_count": 69,
+  "downstream": {
+    "greybox": {
+      "passed": true,
+      "buildings": 93,
+      "points": 45,
+      "output": "memory only"
+    },
+    "look": {
+      "passed": true,
+      "buildings": 93,
+      "warnings": [
+        "plan has more than one beach; only the first is exported",
+        "building F15_CROSS_NORTH: unknown functional type small_house, default look",
+        "building F15_CROSS_WEST: unknown functional type small_house, default look",
+        "building F15_CROSS_EAST: unknown functional type small_house, default look",
+        "building F15_CROSS_SOUTH: unknown functional type small_house, default look",
+        "building F13_SHAWARMA: unknown functional type fast_food, default look",
+        "building F13_BEER: unknown functional type beer_kiosk, default look",
+        "building F13_ATMSHOP: unknown functional type atm_shop, default look",
+        "building F13_LOMBARD: unknown functional type pawn_shop, default look",
+        "building F13_ZAIMY: unknown functional type payday_loans, default look",
+        "building F13_BETS: unknown functional type betting_shop, default look",
+        "building F15_OFFICE_1: unknown functional type office, default look",
+        "building F15_OFFICE_2: unknown functional type office, default look",
+        "building F13_TANK: unknown functional type storage_tank, default look",
+        "building F15_TANK_2: unknown functional type storage_tank, default look",
+        "building F13_PARK_WC: unknown functional type toilet_shower, default look",
+        "parking: no free spot for a fallback lot next to F06_SUPER",
+        "parking: no free spot for a fallback lot next to F06_HOSPITAL",
+        "parking: no free spot for a fallback lot next to F06_POLICE",
+        "parking: no free spot for a fallback lot next to F06_CAFE2",
+        "terrain: content 1510 x 1148 m exceeds 1280 x 1024, enlarged to 1536 x 1152"
+      ],
+      "output": "memory only",
+      "options": "no dressing, no vegetation, no legacy v12 extras/kits"
+    },
+    "legacy_limits_ru": [
+      "Dressing v12 жёстко ищет INDUSTRIAL_BEACH_FENCE_1 и другие объекты старой карты; автоматический запуск на v15 не выполнялся.",
+      "Crowd v12 жёстко читает v12 и проверяет hash dressing. Новая расстановка требует нового bake.",
+      "PoliceBaker читает тот же road_graph/points/P10/F06_POLICE; реальный Unity bake не запускался.",
+      "Старые flatteners не отображают все добавочные слои v14/v15, в частности port_wall, марину и детальный пляж. Это ограничение потребителей, не ошибка чтения схемы."
+    ],
+    "locality_guard": {
+      "passed": true,
+      "local_change_regions": [
+        "05_downtown"
+      ],
+      "outside_change_detected": true
+    }
+  },
+  "subjective_acceptance": "pending Fedya and Vadim",
+  "unity_or_vehicle_test": "not run; outside task scope"
+}

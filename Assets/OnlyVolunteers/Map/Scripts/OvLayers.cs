@@ -8,7 +8,9 @@ namespace OnlyVolunteers.Map
     // collides with everything:
     //   VehicleInterior x every layer - trigger/query volumes only;
     //   NpcSeated x NpcBody, NpcSeated x NpcSeated - NPCs sitting in the cargo bay ignore lying bodies and each other;
-    //   RemotePlayer x Vehicle - network proxies of other players do not push the van (draft, section 3).
+    //   RemotePlayer x Vehicle - network proxies of other players do not push the van (draft, section 3);
+    //   NpcSlide x every layer but NpcBody - the van's invisible slide for NPC bodies (stage 9, VanInteriorColliders):
+    //   only lying bodies ride on it; players, vehicles, props and rays (ShootMask) never meet it.
     // The KCC builds its CollidableLayers from this matrix in Awake, so Player must keep colliding with Vehicle.
     // TRAP for the network work (nothing uses RemotePlayer yet): a KCC motor on RemotePlayer (proxies of other players,
     // host/server simulation of them, client prediction) gets Vehicle dropped from its CollidableLayers by the pair above,
@@ -23,23 +25,26 @@ namespace OnlyVolunteers.Map
         public const int VehicleInterior = 11;
         public const int NpcBody = 12;
         public const int NpcSeated = 13;
+        public const int NpcSlide = 14;
 
         public const int PlayerMask = 1 << Player;
         public const int VehicleMask = 1 << Vehicle;
         public const int NpcMask = (1 << NpcBody) | (1 << NpcSeated);
-        // Hits (Q, later weapons) ignore our own capsule and the cargo-bay query volumes.
-        public const int ShootMask = ~((1 << Player) | (1 << VehicleInterior));
+        public const int NpcSlideMask = 1 << NpcSlide;
+        // Hits (Q, later weapons) ignore our own capsule, the cargo-bay query volumes and the van's body slide.
+        public const int ShootMask = ~((1 << Player) | (1 << VehicleInterior) | (1 << NpcSlide));
 
         private static readonly (int layer, string name)[] Names =
         {
             (Player, "Player"), (RemotePlayer, "RemotePlayer"), (Vehicle, "Vehicle"),
-            (VehicleInterior, "VehicleInterior"), (NpcBody, "NpcBody"), (NpcSeated, "NpcSeated"),
+            (VehicleInterior, "VehicleInterior"), (NpcBody, "NpcBody"), (NpcSeated, "NpcSeated"), (NpcSlide, "NpcSlide"),
         };
 
         /// <summary>Whether the table above says the two layers ignore each other.</summary>
         public static bool ShouldIgnore(int a, int b)
         {
             if (a == VehicleInterior || b == VehicleInterior) return true;
+            if (a == NpcSlide || b == NpcSlide) return !((a == NpcSlide && b == NpcBody) || (b == NpcSlide && a == NpcBody));
             if ((a == NpcSeated && (b == NpcBody || b == NpcSeated)) || (b == NpcSeated && a == NpcBody)) return true;
             return (a == RemotePlayer && b == Vehicle) || (a == Vehicle && b == RemotePlayer);
         }

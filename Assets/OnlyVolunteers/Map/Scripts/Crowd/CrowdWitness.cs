@@ -12,6 +12,8 @@ namespace OnlyVolunteers.Map.Crowd
         public NpcIncident Kind;
         public Vector3 Position;
         public CrowdWalker Reporter;
+        // The police officer the witness reported to (or the officer who saw it himself); null = a hotspot / phone.
+        public CrowdWalker Officer;
         public float Time;
     }
 

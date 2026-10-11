@@ -20,6 +20,11 @@ namespace OnlyVolunteers.Vehicles
     //   away from or slides along never block, so a body leaning on a closed door does not stop it from opening.
     // - A closing door stalled for StallBackoffAfter seconds backs off BackoffFraction and tries again: a foot in the door
     //   (canon section 138). A closing door that meets a body faster than ShoveSpeed shoves it (ShoveImpulse).
+    // - Stage 9: a body with IDoorPushTarget (a part of the NPC ragdoll) takes the push and the shove itself and spreads them
+    //   over the whole NPC; the numbers above are the capsule's and would fling a 1 kg limb. Every collider the door meets
+    //   in one step is grouped by its body (a ragdoll: all its parts, IDoorPushTarget.DoorPushGroup; else the rigidbody, so
+    //   a shin and its foot box count once): each group gets one push and at most one shove, at its deepest contact
+    //   (GPT review 2026-10-07, finding 1: it was one per collider, several times the budget on a folded ragdoll).
     // - The drawn pose is interpolated between physics ticks, like the van body itself; physics always sees the tick pose.
     // - Sound (Sfx, optional: silent without a library): a hinge door plays "open" as it leaves the latch and "close" as it
     //   latches, "slam" instead when it swung shut from at least SlamFrom open; the sliding door's sounds carry the whole
@@ -84,6 +89,18 @@ namespace OnlyVolunteers.Vehicles
         private readonly Collider[] _hits = new Collider[16];
         private readonly HashSet<Collider> _blocking = new();
         private readonly HashSet<Collider> _blockingNow = new();
+        private readonly List<Contact> _contacts = new();
+
+        // One body's share of a step's pushes: its deepest contact, and whether any of its colliders asked for a shove.
+        private struct Contact
+        {
+            public object Group;
+            public Rigidbody Body;
+            public IDoorPushTarget Target;
+            public Vector3 Push, At;
+            public float Force;
+            public bool Shove;
+        }
         private string _openSound, _closeSound, _slamSound;
         private float _closeFrom; // openness when the current close began (slam or soft close)
 
@@ -202,6 +219,7 @@ namespace OnlyVolunteers.Vehicles
             Vector3 half = Abs(Vector3.Scale(_box.size, scale)) * 0.5f;
             int count = Physics.OverlapBoxNonAlloc(centre, half, _hits, r1, BlockMask, QueryTriggerInteraction.Ignore);
             bool blocked = false;
+            _contacts.Clear();
             for (int i = 0; i < count; i++)
             {
                 Collider other = _hits[i];
@@ -228,17 +246,53 @@ namespace OnlyVolunteers.Vehicles
                 Vector3 push = -dir;
                 Vector3 at = other.ClosestPoint(centre);
                 float force = PushLimit * Mathf.Clamp01(depth1 / 0.03f);
-                rb.AddForceAtPosition(push * force, at, ForceMode.Force);
-                if (_vanBody != null) _vanBody.AddForceAtPosition(-push * force, at, ForceMode.Force);
-                if (closing && !_blocking.Contains(other) && DoorPointSpeed(at, p0, r0, p1, r1, dt, push) > ShoveSpeed)
-                {
-                    rb.AddForceAtPosition(push * ShoveImpulse, at, ForceMode.Impulse);
-                    if (_vanBody != null) _vanBody.AddForceAtPosition(-push * ShoveImpulse, at, ForceMode.Impulse);
-                }
+                // Stage 9: a ragdoll part spreads the push over its whole body (IDoorPushTarget), so a limb in the door is
+                // not flung by numbers tuned on the capsule; any other body takes it at the contact, as before.
+                rb.TryGetComponent(out IDoorPushTarget target);
+                bool shove = closing && !_blocking.Contains(other) && DoorPointSpeed(at, p0, r0, p1, r1, dt, push) > ShoveSpeed;
+                Gather(target != null ? target.DoorPushGroup ?? rb : rb, rb, target, push, at, force, shove);
             }
+            // One push (and at most one shove) per body; the van takes the reactions.
+            foreach (Contact c in _contacts)
+            {
+                Push(c.Body, c.Target, c.Push * c.Force, c.At, ForceMode.Force);
+                if (_vanBody != null) _vanBody.AddForceAtPosition(-c.Push * c.Force, c.At, ForceMode.Force);
+                if (!c.Shove) continue;
+                Push(c.Body, c.Target, c.Push * ShoveImpulse, c.At, ForceMode.Impulse);
+                if (_vanBody != null) _vanBody.AddForceAtPosition(-c.Push * ShoveImpulse, c.At, ForceMode.Impulse);
+            }
+            _contacts.Clear();
             _blocking.Clear();
             _blocking.UnionWith(_blockingNow);
             return blocked;
+        }
+
+        // Keeps the deepest contact of each group (the strongest push) and whether any of its contacts shoves.
+        private void Gather(object group, Rigidbody rb, IDoorPushTarget target, Vector3 push, Vector3 at, float force, bool shove)
+        {
+            for (int k = 0; k < _contacts.Count; k++)
+            {
+                Contact c = _contacts[k];
+                if (!ReferenceEquals(c.Group, group)) continue;
+                if (force > c.Force)
+                {
+                    c.Body = rb;
+                    c.Target = target;
+                    c.Push = push;
+                    c.At = at;
+                    c.Force = force;
+                }
+                c.Shove |= shove;
+                _contacts[k] = c;
+                return;
+            }
+            _contacts.Add(new Contact { Group = group, Body = rb, Target = target, Push = push, At = at, Force = force, Shove = shove });
+        }
+
+        private static void Push(Rigidbody rb, IDoorPushTarget target, Vector3 amount, Vector3 at, ForceMode mode)
+        {
+            if (target != null) target.DoorPush(amount, at, mode);
+            else rb.AddForceAtPosition(amount, at, mode);
         }
 
         // Moves a KCC character out of an opening door's next pose: along the floor (perpendicular to the van's up), by the

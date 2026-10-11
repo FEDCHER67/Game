@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a523913dd9a0c74dbd4de03248d5838, type: 3}
+  m_Name: PoliceConfig
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Police.PoliceConfig
+  StationPoint: P10
+  StationBuildingType: police_station
+  DefaultHomeBase: B01
+  CoreDistricts:
+  - old_town
+  Hotspots:
+  - Id: BAD_CENTER
+    Name: BAD_CENTER
+  - Id: BAD_BLOCK_2
+    Name: "\u0414\u0432\u043E\u0440 2"
+  - Id: P07
+    Name: "P07 \u043F\u0440\u0438\u0442\u043E\u043D"
+  - Id: CLOCK_SQUARE
+    Name: CLOCK_SQUARE
+  - Id: WITNESS_SUPERMARKET
+    Name: "\u0421\u0443\u043F\u0435\u0440\u043C\u0430\u0440\u043A\u0435\u0442"
+  - Id: WITNESS_CASINO
+    Name: "\u041A\u0430\u0437\u0438\u043D\u043E"
+  - Id: BEACH_VALLEY_ENTRY
+    Name: "\u041F\u043B\u044F\u0436 (\u0434\u043E\u043B\u0438\u043D\u0430)"
+  - Id: BEACH_ENTRY
+    Name: "\u041F\u043B\u044F\u0436 (\u044D\u043B\u0438\u0442\u043A\u0430)"
+  - Id: P15
+    Name: "\u042D\u043B\u0438\u0442\u043A\u0430 P15"
+  Loops:
+  - Name: L1
+    Districts:
+    - old_town
+    Waypoints:
+    - P05
+    - P09
+    - WITNESS_SUPERMARKET
+    - P13-5
+    - P13-3
+    - CLOCK_SQUARE
+    - P11
+    ScoreDay: 3
+    ScoreNight: 3
+  - Name: L2
+    Districts:
+    - fields
+    - beach
+    - transition
+    Waypoints:
+    - CLOCK_SQUARE
+    - 394,600
+    - WITNESS_CASINO
+    - BEACH_VALLEY_ENTRY
+    - WITNESS_CASINO
+    - 394,600
+    - CLOCK_SQUARE
+    ScoreDay: 1.5
+    ScoreNight: 3
+  - Name: L3
+    Districts:
+    - elite
+    - old_town
+    - beach
+    Waypoints:
+    - ELITE_GATE
+    - P15
+    - BEACH_ENTRY
+    - ELITE_GATE
+    - CLOCK_SQUARE
+    - P11
+    ScoreDay: 1
+    ScoreNight: 2
+  PatrolCarsDay: 2
+  PatrolCarsNight: 3
+  Cars: 4
+  MinRoadWidth: 3
+  NoPoliceRoadClasses:
+  - alley
+  SafeRadius: 60
+  PatrolAvoidHome: 25
+  Presence:
+  - District: residential
+    Patrol: 0.1
+    DispatchChance: 0.3
+    DispatchDelay: 25
+    ExtraCars: 0
+  - District: old_town
+    Patrol: 2
+    DispatchChance: 1
+    DispatchDelay: -1
+    ExtraCars: 1
+  DefaultPresence:
+    District: '*'
+    Patrol: 1
+    DispatchChance: 0.8
+    DispatchDelay: 4
+    ExtraCars: 0
+  PatrolMinPresence: 0.5
+  LowPresenceDetour: 8
+  VanPaceFactor: 1
+  VanRefLateral: 5
+  VanRefBrake: 5
+  PatrolCar:
+    VMax: 9.722222
+    A: 2
+    K: 0.03
+    ALat: 4
+    Brake: 4
+    Width: 1.8
+  ModelAlertAt: 4
+  ModelVanLeavesAt: 12
+  ModelSampleStep: 25
+  RadioDelay:
+    Day: 3
+    Night: 1.5
+  TipWindow:
+    Day: 20
+    Night: 30
+  EvadeTime:
+    Day: 10
+    Night: 15
+  LostSightTime:
+    Day: 6
+    Night: 9
+  SearchTime:
+    Day: 20
+    Night: 30
+  BaseWait:
+    Day: 8
+    Night: 12
+  RamCooldown:
+    Day: 6
+    Night: 4
+  FootChaseCap:
+    Day: 25
+    Night: 35
+  MaxCarsPerAlert:
+    Day: 2
+    Night: 3
+  BoardingTime: 3
+  EvadeDistance: 80
+  BaseEdgeBand: 20
+  GiveUpShakeTime: 2
+  IgnoreAfterGiveUp: 30
+  WantedClearsAfter: 60
+  WantedClearsAfterEvade: 5
+  CarSightRange: 45
+  CarSightHalfAngle: 75
+  CarAllRound: 15
+  RoofHeight: 1.6
+  PursuitSightRange: 70
+  LostSightDistance: 50
+  InterceptVanSpeed: 14
+  InterceptMargin: 3
+  InterceptWait: 15
+  InterceptMinChase: 8
+  InterceptHold: 15
+  TrackAllRound: 1
+  ChaseUTurnScale: 0.35
+  FootRespondRadius: 150
+  DirectBlockAfterStuck: 4
+  VanNearIncident: 40
+  RefEngineLevel: 1
+  RefBrakesLevel: 3
+  RefHandlingLevel: 3
+  TopSpeedRatio: 1.03
+  AccelRatio: 1.03
+  VanFastLateral: 8
+  VanFastBrake: 8
+  CornerGripRatio: 1.02
+  BrakeRatio: 1.02
+  TopSpeedKmh: 100
+  PatrolKmh: 35
+  TurnPenalty: 0.5
+  UTurnPenalty: 8
+  ReplanInterval: 0.5
+  RamDistance: 8
+  RamAngle: 20
+  RamMinVanKmh: 20
+  RamExtra: 3
+  RamMaxVanKmh: 50
+  BoxInVanKmh: 10
+  DismountVanKmh: 8
+  DismountDelay: 1.5
+  DismountRange: 25
+  CrewReturnDistance: 20
+  HeatStun: 8
+  HeatCapture: 15
+  HeatDrag: 8
+  HeatHitCop: 20
+  HeatRam: 10
+  HeatDecaySeconds: 8
+  HighHeat: 60
+  HeatFloorDistricts:
+  - old_town
+  - elite
+  HeatFloors:
+  - 0
+  - 0
+  MaxExtraOfficers: 2
+  ThinSpeed: 7.4
+  FatSpeed: 5.6
+  FatAnimFactor: 1.35
+  FatTripPerSecond: 0.04
+  TripTime: 1.2
+  OfficerRangeFactor: 1.3
+  ChaseStartRange: 40
+  ChaseDirectRange: 20
+  ChaseLoseDistance: 25
+  ChaseLoseTime: 5
+  BeatWindup: 0.45
+  BeatReach: 1.6
+  BeatStart: 1.4
+  BeatCooldown: 1.2
+  BeatSide: 5
+  BeatUp: 2.5
+  HitsToArrest: 3
+  ArrestWindow: 12
+  ArrestCashPercent: 10
+  WakeChaseRange: 30
+  LookAroundTime: 10
+  ShootMin: 6
+  ShootMax: 15
+  ShootAim: 1
+  ShootHitChance: 0.5
+  ShootCooldown: 12
+  NightShootChance: 0.25

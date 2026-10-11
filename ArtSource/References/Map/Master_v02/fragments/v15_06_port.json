@@ -1,0 +1,1940 @@
+{
+  "id": "v15_06_port",
+  "frame": "Master_v02/frame/m2_frame.json",
+  "region": "06_port",
+  "units": "metre",
+  "fingerprint": "eb936a60b6cdb83460e3477eab9fb0e20350e4336d4ae67a373c0a97734787c2",
+  "layers": {
+    "districts": [
+      {
+        "id": "industrial",
+        "name_ru": "Промышленный порт [Industrial Port]",
+        "color": "#c5ced0",
+        "polygon_m": [
+          [
+            918.454,
+            616.358
+          ],
+          [
+            933.66,
+            464.296
+          ],
+          [
+            949.88,
+            448.076
+          ],
+          [
+            1096.873,
+            460.241
+          ],
+          [
+            1108.024,
+            482.543
+          ],
+          [
+            1090.791,
+            621.426
+          ],
+          [
+            1069.502,
+            631.564
+          ]
+        ],
+        "parent_id": null,
+        "notes_ru": "Контур зоны приблизительный; не ограда.",
+        "area_m2": 29467.7,
+        "building_count": 8,
+        "share_percent": 4.43,
+        "change_region": "06_port"
+      }
+    ],
+    "roads": [
+      {
+        "id": "ACCESS_F06_CHIMNEY",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            989.8940072672856,
+            510.0527093802473
+          ],
+          [
+            990.317,
+            499.94
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 10.122,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_SOUTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_COMPLEX",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            989.0930080154609,
+            510.03267946060856
+          ],
+          [
+            988.549,
+            516.247
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.238,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_SOUTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_DEPOT",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            952.9970540215837,
+            605.5385340621744
+          ],
+          [
+            953.29,
+            602.193
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.358,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_NORTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_MAINT",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            1038.921021440842,
+            565.0335336630075
+          ],
+          [
+            1040.175,
+            547.106
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 17.971,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_NORTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_TOW",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            1041.4110012042297,
+            511.34095184269023
+          ],
+          [
+            1041.133,
+            515.306
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.975,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_SOUTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F06_WARE1",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            1035.4680103869687,
+            564.8747740840759
+          ],
+          [
+            1034.444,
+            576.583
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 11.753,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_NORTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F13_TANK",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            1021.4889636362567,
+            466.2342769179485
+          ],
+          [
+            1020.239,
+            476.907
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 10.746,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_SOUTH_LOOP"
+      },
+      {
+        "id": "ACCESS_F15_TANK_2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            1045.2750306116066,
+            469.3577668858457
+          ],
+          [
+            1044.406,
+            476.895
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 7.587,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_SOUTH_LOOP"
+      },
+      {
+        "id": "ACCESS_POINT_P09-3",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            993.5919954517836,
+            510.14518188380043
+          ],
+          [
+            993.471,
+            514.983
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.839,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port",
+        "access_only": true,
+        "parent_road_id": "PORT_SOUTH_LOOP"
+      },
+      {
+        "id": "PORT_CROSS",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            955.962,
+            556.547
+          ],
+          [
+            1008.677,
+            563.643
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 53.19,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_MAIN",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            943.798,
+            471.392
+          ],
+          [
+            961.031,
+            487.612
+          ],
+          [
+            959.004,
+            533.23
+          ],
+          [
+            955.962,
+            556.547
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 92.843,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_NORTH_LOOP",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            955.962,
+            556.547
+          ],
+          [
+            935.688,
+            556.547
+          ],
+          [
+            932.646,
+            603.179
+          ],
+          [
+            952.9970540215837,
+            605.5385340621744
+          ],
+          [
+            1002.595,
+            611.289
+          ],
+          [
+            1008.677,
+            563.643
+          ],
+          [
+            1035.4680103869687,
+            564.8747740840759
+          ],
+          [
+            1038.921021440842,
+            565.0335336630075
+          ],
+          [
+            1096.873,
+            567.698
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 273.744,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_QUAY_ACCESS",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            1096.873,
+            567.698
+          ],
+          [
+            1111.066,
+            566.684
+          ],
+          [
+            1116.134,
+            525.12
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 56.101,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_SOUTH_LOOP",
+        "class": "rural_road",
+        "width_m": 3.8,
+        "district_ids": [
+          "industrial"
+        ],
+        "polyline_m": [
+          [
+            959.004,
+            533.23
+          ],
+          [
+            984.347,
+            509.914
+          ],
+          [
+            989.0930080154609,
+            510.03267946060856
+          ],
+          [
+            989.8940072672856,
+            510.0527093802473
+          ],
+          [
+            993.5919954517836,
+            510.14518188380043
+          ],
+          [
+            1041.4110012042297,
+            511.34095184269023
+          ],
+          [
+            1065.447,
+            511.942
+          ],
+          [
+            1068.488,
+            472.406
+          ],
+          [
+            1045.2750306116066,
+            469.3577668858457
+          ],
+          [
+            1021.4889636362567,
+            466.2342769179485
+          ],
+          [
+            968.127,
+            459.227
+          ],
+          [
+            961.031,
+            487.612
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 285.696,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "06_port"
+      }
+    ],
+    "paths": [],
+    "water": [],
+    "building_masses": [],
+    "functional_buildings": [
+      {
+        "type": "industrial_chimney",
+        "group": "landmark",
+        "icon": "О",
+        "color": "#c6b6d4",
+        "id": "F06_CHIMNEY",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Труба",
+        "center_m": [
+          990.43,
+          488.626
+        ],
+        "width_m": 1.352,
+        "depth_m": 171.804,
+        "footprint_m": [
+          [
+            999.047,
+            488.626
+          ],
+          [
+            998.941,
+            489.974
+          ],
+          [
+            998.625,
+            491.288
+          ],
+          [
+            998.108,
+            492.538
+          ],
+          [
+            997.401,
+            493.69
+          ],
+          [
+            996.523,
+            494.719
+          ],
+          [
+            995.495,
+            495.597
+          ],
+          [
+            994.342,
+            496.303
+          ],
+          [
+            993.093,
+            496.821
+          ],
+          [
+            991.778,
+            497.136
+          ],
+          [
+            990.43,
+            497.242
+          ],
+          [
+            989.082,
+            497.136
+          ],
+          [
+            987.767,
+            496.821
+          ],
+          [
+            986.518,
+            496.303
+          ],
+          [
+            985.365,
+            495.597
+          ],
+          [
+            984.337,
+            494.719
+          ],
+          [
+            983.459,
+            493.69
+          ],
+          [
+            982.752,
+            492.538
+          ],
+          [
+            982.235,
+            491.288
+          ],
+          [
+            981.919,
+            489.974
+          ],
+          [
+            981.813,
+            488.626
+          ],
+          [
+            981.919,
+            487.278
+          ],
+          [
+            982.235,
+            485.963
+          ],
+          [
+            982.752,
+            484.714
+          ],
+          [
+            983.459,
+            483.561
+          ],
+          [
+            984.337,
+            482.533
+          ],
+          [
+            985.365,
+            481.654
+          ],
+          [
+            986.518,
+            480.948
+          ],
+          [
+            987.767,
+            480.43
+          ],
+          [
+            989.082,
+            480.115
+          ],
+          [
+            990.43,
+            480.009
+          ],
+          [
+            991.778,
+            480.115
+          ],
+          [
+            993.093,
+            480.43
+          ],
+          [
+            994.342,
+            480.948
+          ],
+          [
+            995.495,
+            481.654
+          ],
+          [
+            996.523,
+            482.533
+          ],
+          [
+            997.401,
+            483.561
+          ],
+          [
+            998.108,
+            484.714
+          ],
+          [
+            998.625,
+            485.963
+          ],
+          [
+            998.941,
+            487.278
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          983.0001558575816,
+          201.99999813560703
+        ],
+        "poi_id": "CHIMNEY",
+        "change_region": "06_port",
+        "entrance_m": [
+          990.43,
+          497.242
+        ],
+        "van_stop_m": [
+          990.317,
+          499.94
+        ],
+        "access_road_id": "ACCESS_F06_CHIMNEY"
+      },
+      {
+        "type": "industrial_complex",
+        "group": "base",
+        "icon": "Б",
+        "color": "#aa6045",
+        "id": "F06_COMPLEX",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Промкомплекс",
+        "center_m": [
+          1000.567,
+          531.203
+        ],
+        "width_m": 22.303,
+        "depth_m": 34.468,
+        "footprint_m": [
+          [
+            982.427,
+            540.81
+          ],
+          [
+            984.371,
+            518.592
+          ],
+          [
+            1018.707,
+            521.596
+          ],
+          [
+            1016.764,
+            543.814
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          992.9999330576447,
+          159.9998534796257
+        ],
+        "poi_id": "B05",
+        "change_region": "06_port",
+        "entrance_m": [
+          988.314,
+          518.937
+        ],
+        "van_stop_m": [
+          988.549,
+          516.247
+        ],
+        "access_road_id": "ACCESS_F06_COMPLEX"
+      },
+      {
+        "type": "depot",
+        "group": "industry",
+        "icon": "П",
+        "color": "#928ba4",
+        "id": "F06_DEPOT",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Депо",
+        "center_m": [
+          967.114,
+          587.973
+        ],
+        "width_m": 25.343,
+        "depth_m": 45.619,
+        "footprint_m": [
+          [
+            943.287,
+            598.608
+          ],
+          [
+            945.496,
+            573.361
+          ],
+          [
+            990.941,
+            577.337
+          ],
+          [
+            988.732,
+            602.584
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          960.0003117151632,
+          104.00017755927024
+        ],
+        "poi_id": "P14",
+        "change_region": "06_port",
+        "entrance_m": [
+          953.525,
+          599.504
+        ],
+        "van_stop_m": [
+          953.29,
+          602.193
+        ],
+        "access_road_id": "ACCESS_F06_DEPOT"
+      },
+      {
+        "type": "maintenance_shed",
+        "group": "industry",
+        "icon": "П",
+        "color": "#928ba4",
+        "id": "F06_MAINT",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Ремонтный сарай",
+        "center_m": [
+          1040.103,
+          539.313
+        ],
+        "width_m": 10.138,
+        "depth_m": 12.165,
+        "footprint_m": [
+          [
+            1033.682,
+            543.945
+          ],
+          [
+            1034.389,
+            533.832
+          ],
+          [
+            1046.525,
+            534.681
+          ],
+          [
+            1045.817,
+            544.794
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          1031.9998676162913,
+          151.99994142490323
+        ],
+        "change_region": "06_port",
+        "entrance_m": [
+          1040.363,
+          544.412
+        ],
+        "van_stop_m": [
+          1040.175,
+          547.106
+        ],
+        "access_road_id": "ACCESS_F06_MAINT"
+      },
+      {
+        "type": "tow_yard",
+        "group": "service",
+        "icon": "С",
+        "color": "#709dac",
+        "id": "F06_TOW",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Эвакуатор",
+        "center_m": [
+          1041.117,
+          523.093
+        ],
+        "width_m": 10.138,
+        "depth_m": 12.165,
+        "footprint_m": [
+          [
+            1034.696,
+            527.725
+          ],
+          [
+            1035.403,
+            517.612
+          ],
+          [
+            1047.538,
+            518.461
+          ],
+          [
+            1046.831,
+            528.574
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          1032.9998599254645,
+          167.999936867815
+        ],
+        "poi_id": "P12",
+        "change_region": "06_port",
+        "entrance_m": [
+          1040.945,
+          518.0
+        ],
+        "van_stop_m": [
+          1041.133,
+          515.306
+        ],
+        "access_road_id": "ACCESS_F06_TOW"
+      },
+      {
+        "type": "warehouse",
+        "group": "industry",
+        "icon": "П",
+        "color": "#928ba4",
+        "id": "F06_WARE1",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Склад 1",
+        "center_m": [
+          1046.186,
+          593.041
+        ],
+        "width_m": 25.344,
+        "depth_m": 42.576,
+        "footprint_m": [
+          [
+            1023.874,
+            603.81
+          ],
+          [
+            1026.083,
+            578.562
+          ],
+          [
+            1068.498,
+            582.273
+          ],
+          [
+            1066.289,
+            607.52
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          1037.9999895860394,
+          99.0001740684014
+        ],
+        "change_region": "06_port",
+        "entrance_m": [
+          1034.208,
+          579.273
+        ],
+        "van_stop_m": [
+          1034.444,
+          576.583
+        ],
+        "access_road_id": "ACCESS_F06_WARE1"
+      },
+      {
+        "type": "storage_tank",
+        "group": "industry",
+        "icon": "П",
+        "color": "#928ba4",
+        "id": "F13_TANK",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Резервуар",
+        "center_m": [
+          1018.815,
+          486.598
+        ],
+        "width_m": 1.113,
+        "depth_m": 141.507,
+        "footprint_m": [
+          [
+            1025.911,
+            486.598
+          ],
+          [
+            1025.824,
+            487.708
+          ],
+          [
+            1025.564,
+            488.791
+          ],
+          [
+            1025.138,
+            489.82
+          ],
+          [
+            1024.556,
+            490.769
+          ],
+          [
+            1023.833,
+            491.616
+          ],
+          [
+            1022.986,
+            492.339
+          ],
+          [
+            1022.036,
+            492.921
+          ],
+          [
+            1021.008,
+            493.347
+          ],
+          [
+            1019.925,
+            493.607
+          ],
+          [
+            1018.815,
+            493.694
+          ],
+          [
+            1017.705,
+            493.607
+          ],
+          [
+            1016.622,
+            493.347
+          ],
+          [
+            1015.593,
+            492.921
+          ],
+          [
+            1014.644,
+            492.339
+          ],
+          [
+            1013.797,
+            491.616
+          ],
+          [
+            1013.074,
+            490.769
+          ],
+          [
+            1012.492,
+            489.82
+          ],
+          [
+            1012.066,
+            488.791
+          ],
+          [
+            1011.806,
+            487.708
+          ],
+          [
+            1011.719,
+            486.598
+          ],
+          [
+            1011.806,
+            485.488
+          ],
+          [
+            1012.066,
+            484.405
+          ],
+          [
+            1012.492,
+            483.376
+          ],
+          [
+            1013.074,
+            482.427
+          ],
+          [
+            1013.797,
+            481.58
+          ],
+          [
+            1014.644,
+            480.857
+          ],
+          [
+            1015.593,
+            480.275
+          ],
+          [
+            1016.622,
+            479.849
+          ],
+          [
+            1017.705,
+            479.589
+          ],
+          [
+            1018.815,
+            479.502
+          ],
+          [
+            1019.925,
+            479.589
+          ],
+          [
+            1021.008,
+            479.849
+          ],
+          [
+            1022.036,
+            480.275
+          ],
+          [
+            1022.986,
+            480.857
+          ],
+          [
+            1023.833,
+            481.58
+          ],
+          [
+            1024.556,
+            482.427
+          ],
+          [
+            1025.138,
+            483.376
+          ],
+          [
+            1025.564,
+            484.405
+          ],
+          [
+            1025.824,
+            485.488
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          1011.0002457689935,
+          204.00007891523126
+        ],
+        "change_region": "06_port",
+        "entrance_m": [
+          1019.925,
+          479.589
+        ],
+        "van_stop_m": [
+          1020.239,
+          476.907
+        ],
+        "access_road_id": "ACCESS_F13_TANK"
+      },
+      {
+        "id": "F15_TANK_2",
+        "type": "storage_tank",
+        "district_id": "industrial",
+        "district": "industrial",
+        "label_ru": "Резервуар 2",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          1043.145,
+          485.584
+        ],
+        "width_m": 0.955,
+        "depth_m": 121.208,
+        "footprint_m": [
+          [
+            1049.227,
+            485.584
+          ],
+          [
+            1049.152,
+            486.536
+          ],
+          [
+            1048.929,
+            487.464
+          ],
+          [
+            1048.564,
+            488.346
+          ],
+          [
+            1048.065,
+            489.16
+          ],
+          [
+            1047.446,
+            489.885
+          ],
+          [
+            1046.72,
+            490.505
+          ],
+          [
+            1045.906,
+            491.004
+          ],
+          [
+            1045.024,
+            491.369
+          ],
+          [
+            1044.096,
+            491.592
+          ],
+          [
+            1043.145,
+            491.667
+          ],
+          [
+            1042.193,
+            491.592
+          ],
+          [
+            1041.265,
+            491.369
+          ],
+          [
+            1040.383,
+            491.004
+          ],
+          [
+            1039.569,
+            490.505
+          ],
+          [
+            1038.844,
+            489.885
+          ],
+          [
+            1038.224,
+            489.16
+          ],
+          [
+            1037.725,
+            488.346
+          ],
+          [
+            1037.36,
+            487.464
+          ],
+          [
+            1037.137,
+            486.536
+          ],
+          [
+            1037.062,
+            485.584
+          ],
+          [
+            1037.137,
+            484.633
+          ],
+          [
+            1037.36,
+            483.705
+          ],
+          [
+            1037.725,
+            482.823
+          ],
+          [
+            1038.224,
+            482.009
+          ],
+          [
+            1038.844,
+            481.283
+          ],
+          [
+            1039.569,
+            480.664
+          ],
+          [
+            1040.383,
+            480.165
+          ],
+          [
+            1041.265,
+            479.8
+          ],
+          [
+            1042.193,
+            479.577
+          ],
+          [
+            1043.145,
+            479.502
+          ],
+          [
+            1044.096,
+            479.577
+          ],
+          [
+            1045.024,
+            479.8
+          ],
+          [
+            1045.906,
+            480.165
+          ],
+          [
+            1046.72,
+            480.664
+          ],
+          [
+            1047.446,
+            481.283
+          ],
+          [
+            1048.065,
+            482.009
+          ],
+          [
+            1048.564,
+            482.823
+          ],
+          [
+            1048.929,
+            483.705
+          ],
+          [
+            1049.152,
+            484.633
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          1034.9999173201345,
+          204.99988575404228
+        ],
+        "change_region": "06_port",
+        "entrance_m": [
+          1044.096,
+          479.577
+        ],
+        "van_stop_m": [
+          1044.406,
+          476.895
+        ],
+        "access_road_id": "ACCESS_F15_TANK_2"
+      }
+    ],
+    "functional_sites": [
+      {
+        "id": "PORT_PIER",
+        "type": "pier",
+        "district_id": "industrial",
+        "polygon_m": [
+          [
+            1124.244,
+            525.12
+          ],
+          [
+            1125.258,
+            514.983
+          ],
+          [
+            1156.684,
+            520.052
+          ],
+          [
+            1154.657,
+            527.148
+          ]
+        ],
+        "label_ru": "Пирс порта",
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_QUAY",
+        "type": "quay",
+        "district_id": "industrial",
+        "polygon_m": [
+          [
+            1094.846,
+            597.096
+          ],
+          [
+            1103.969,
+            510.928
+          ],
+          [
+            1125.258,
+            512.955
+          ],
+          [
+            1117.148,
+            599.124
+          ]
+        ],
+        "label_ru": "Портовый причал",
+        "change_region": "06_port"
+      }
+    ],
+    "points": [
+      {
+        "id": "B05",
+        "canonical_id": "B05",
+        "name_ru": "Промкомплекс",
+        "position_m": [
+          988.314,
+          518.937
+        ],
+        "district_id": "industrial",
+        "category": "base",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "team_shared": true,
+        "retained_after_move": true,
+        "interior": true,
+        "access_reserve_m": [
+          20,
+          25
+        ],
+        "door_clearance_target_m": 2.4,
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "change_region": "06_port",
+        "building_id": "F06_COMPLEX",
+        "van_stop_m": [
+          988.549,
+          516.247
+        ],
+        "access_road_id": "ACCESS_F06_COMPLEX",
+        "road_node_id": "N8c145e4cc6ae",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "CHIMNEY",
+        "canonical_id": "CHIMNEY",
+        "name_ru": "Труба",
+        "position_m": [
+          990.43,
+          497.242
+        ],
+        "district_id": "industrial",
+        "category": "landmark",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "change_region": "06_port",
+        "building_id": "F06_CHIMNEY",
+        "van_stop_m": [
+          990.317,
+          499.94
+        ],
+        "access_road_id": "ACCESS_F06_CHIMNEY",
+        "road_node_id": "N9b970b62c7b8",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P09-3",
+        "canonical_id": "P09",
+        "name_ru": "Запасная: у ворот B05",
+        "position_m": [
+          993.471,
+          514.983
+        ],
+        "district_id": "industrial",
+        "category": "meeting",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "meeting_role": "backup",
+        "source_master_key": "06: production yard, proposed",
+        "mapping_confidence": "proposed",
+        "change_region": "06_port",
+        "van_stop_m": [
+          993.471,
+          514.983
+        ],
+        "access_road_id": "ACCESS_POINT_P09-3",
+        "road_node_id": "N96f052b3b04d",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P12",
+        "canonical_id": "P12",
+        "name_ru": "Стоянка эвакуатора",
+        "position_m": [
+          1040.945,
+          518.0
+        ],
+        "district_id": "industrial",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "change_region": "06_port",
+        "building_id": "F06_TOW",
+        "van_stop_m": [
+          1041.133,
+          515.306
+        ],
+        "access_road_id": "ACCESS_F06_TOW",
+        "road_node_id": "Nf71fa8bf4ddc",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P14",
+        "canonical_id": "P14",
+        "name_ru": "Заброшенное депо",
+        "position_m": [
+          953.525,
+          599.504
+        ],
+        "district_id": "industrial",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": "unconfirmed",
+        "source_master_key": "06: visible port structure; function proposed from v14",
+        "mapping_confidence": "proposed",
+        "change_region": "06_port",
+        "building_id": "F06_DEPOT",
+        "van_stop_m": [
+          953.29,
+          602.193
+        ],
+        "access_road_id": "ACCESS_F06_DEPOT",
+        "road_node_id": "Nd2aa685977a0",
+        "van_node_gap_m": 0.0
+      }
+    ],
+    "plots": [],
+    "microdistricts": [],
+    "farmsteads": [],
+    "vegetation_parcels": [
+      {
+        "id": "PORT_PERIMETER_01",
+        "kind": "interdistrict_barrier",
+        "material": "port_wall",
+        "district_id": "industrial",
+        "axis_m": [
+          [
+            919.468,
+            614.33
+          ],
+          [
+            1070.516,
+            630.55
+          ],
+          [
+            1089.777,
+            620.413
+          ],
+          [
+            1095.9015539795125,
+            571.0569274172794
+          ]
+        ],
+        "polygon_m": [
+          [
+            1070.473,
+            630.948
+          ],
+          [
+            919.425,
+            614.728
+          ],
+          [
+            919.511,
+            613.932
+          ],
+          [
+            1070.438,
+            630.139
+          ],
+          [
+            1089.406,
+            620.156
+          ],
+          [
+            1095.505,
+            571.008
+          ],
+          [
+            1096.299,
+            571.106
+          ],
+          [
+            1090.174,
+            620.462
+          ],
+          [
+            1090.167,
+            620.5
+          ],
+          [
+            1090.157,
+            620.537
+          ],
+          [
+            1090.143,
+            620.573
+          ],
+          [
+            1090.126,
+            620.608
+          ],
+          [
+            1090.106,
+            620.64
+          ],
+          [
+            1090.083,
+            620.671
+          ],
+          [
+            1090.056,
+            620.699
+          ],
+          [
+            1090.028,
+            620.725
+          ],
+          [
+            1089.996,
+            620.747
+          ],
+          [
+            1089.963,
+            620.767
+          ],
+          [
+            1070.702,
+            630.904
+          ],
+          [
+            1070.667,
+            630.921
+          ],
+          [
+            1070.629,
+            630.934
+          ],
+          [
+            1070.591,
+            630.943
+          ],
+          [
+            1070.552,
+            630.948
+          ],
+          [
+            1070.513,
+            630.95
+          ]
+        ],
+        "height_target_m": 3.0,
+        "blocks_van": true,
+        "blocks_foot": true,
+        "gate_road_ids": [
+          "ROUGH_PORT",
+          "PORT_NORTH_LOOP"
+        ],
+        "barrier_role": "property_fence",
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_PERIMETER_02",
+        "kind": "interdistrict_barrier",
+        "material": "port_wall",
+        "district_id": "industrial",
+        "axis_m": [
+          [
+            1096.7414598251028,
+            564.2883604299892
+          ],
+          [
+            1107.011,
+            481.529
+          ],
+          [
+            1096.873,
+            461.254
+          ],
+          [
+            949.88,
+            450.103
+          ],
+          [
+            934.674,
+            465.309
+          ],
+          [
+            934.1706959849103,
+            470.2414521657691
+          ]
+        ],
+        "polygon_m": [
+          [
+            1107.408,
+            481.578
+          ],
+          [
+            1097.138,
+            564.338
+          ],
+          [
+            1096.345,
+            564.239
+          ],
+          [
+            1106.599,
+            481.6
+          ],
+          [
+            1096.617,
+            461.636
+          ],
+          [
+            950.033,
+            450.516
+          ],
+          [
+            935.057,
+            465.491
+          ],
+          [
+            934.569,
+            470.282
+          ],
+          [
+            933.773,
+            470.201
+          ],
+          [
+            934.276,
+            465.268
+          ],
+          [
+            934.282,
+            465.23
+          ],
+          [
+            934.292,
+            465.192
+          ],
+          [
+            934.305,
+            465.155
+          ],
+          [
+            934.322,
+            465.12
+          ],
+          [
+            934.342,
+            465.086
+          ],
+          [
+            934.365,
+            465.055
+          ],
+          [
+            934.391,
+            465.026
+          ],
+          [
+            949.597,
+            449.82
+          ],
+          [
+            949.625,
+            449.794
+          ],
+          [
+            949.656,
+            449.772
+          ],
+          [
+            949.689,
+            449.752
+          ],
+          [
+            949.723,
+            449.735
+          ],
+          [
+            949.759,
+            449.722
+          ],
+          [
+            949.796,
+            449.712
+          ],
+          [
+            949.834,
+            449.706
+          ],
+          [
+            949.872,
+            449.703
+          ],
+          [
+            949.91,
+            449.704
+          ],
+          [
+            1096.903,
+            460.855
+          ],
+          [
+            1096.94,
+            460.86
+          ],
+          [
+            1096.977,
+            460.868
+          ],
+          [
+            1097.013,
+            460.879
+          ],
+          [
+            1097.047,
+            460.894
+          ],
+          [
+            1097.08,
+            460.912
+          ],
+          [
+            1097.111,
+            460.933
+          ],
+          [
+            1097.14,
+            460.956
+          ],
+          [
+            1097.167,
+            460.983
+          ],
+          [
+            1097.191,
+            461.012
+          ],
+          [
+            1097.212,
+            461.042
+          ],
+          [
+            1097.231,
+            461.075
+          ],
+          [
+            1107.369,
+            481.35
+          ],
+          [
+            1107.385,
+            481.386
+          ],
+          [
+            1107.397,
+            481.423
+          ],
+          [
+            1107.405,
+            481.461
+          ],
+          [
+            1107.41,
+            481.5
+          ],
+          [
+            1107.411,
+            481.539
+          ]
+        ],
+        "height_target_m": 3.0,
+        "blocks_van": true,
+        "blocks_foot": true,
+        "gate_road_ids": [
+          "ROUGH_PORT",
+          "PORT_NORTH_LOOP"
+        ],
+        "barrier_role": "property_fence",
+        "change_region": "06_port"
+      },
+      {
+        "id": "PORT_PERIMETER_03",
+        "kind": "interdistrict_barrier",
+        "material": "port_wall",
+        "district_id": "industrial",
+        "axis_m": [
+          [
+            932.9978883400009,
+            481.73513676737565
+          ],
+          [
+            919.468,
+            614.33
+          ]
+        ],
+        "polygon_m": [
+          [
+            919.07,
+            614.289
+          ],
+          [
+            932.6,
+            481.695
+          ],
+          [
+            933.396,
+            481.776
+          ],
+          [
+            919.866,
+            614.371
+          ]
+        ],
+        "height_target_m": 3.0,
+        "blocks_van": true,
+        "blocks_foot": true,
+        "gate_road_ids": [
+          "ROUGH_PORT",
+          "PORT_NORTH_LOOP"
+        ],
+        "barrier_role": "property_fence",
+        "change_region": "06_port"
+      }
+    ],
+    "crop_fields": [],
+    "hills": [],
+    "beaches": [],
+    "outfalls": [],
+    "water_crossings": [],
+    "pedestrian_water_crossings": []
+  }
+}

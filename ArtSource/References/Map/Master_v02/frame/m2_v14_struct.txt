@@ -1,0 +1,461 @@
+schema_version: str 3 = '2.0'
+title_ru: str 38 = 'VOLUNTEERS ONLY — план карты R01 / v14'
+specification: dict 4
+  path: str 31 = 'docs/CITY_MAP_REFERENCE_SPEC.md'
+  revision: str 3 = '1.1'
+  date: str 10 = '2026-10-04'
+  brief_override: str 206
+coordinates: dict 6
+  unit: str 5 = 'metre'
+  origin: str 48 = 'bottom-left of 1000 x 1000 metre reference frame'
+  x: str 4 = 'east'
+  y: str 5 = 'north'
+  unity_mapping: str 22 = '(x, terrain_height, y)'
+  district_outline_policy: str 102
+boundary: dict 4
+  polygon_m: list 431
+  barrier: str 137
+  barrier_band_m: int  = 5
+  coast_segments_m: list 187
+districts: list 9
+  [0] keys: ['id', 'name_ru', 'color', 'polygon_m', 'parent_id', 'notes_ru', 'area_m2', 'building_count', 'share_percent']
+road_classes: dict 8
+  highway: dict 3
+    name_ru: str 22 = 'Шоссе / проспект — 7 м'
+    width_m: int  = 7
+    color: str 7 = '#7b8989'
+  town_street: dict 3
+    name_ru: str 21 = 'Городская улица — 6 м'
+    width_m: int  = 6
+    color: str 7 = '#faf4e7'
+  rural_road: dict 3
+    name_ru: str 23 = 'Сельская дорога — 3.8 м'
+    width_m: float  = 3.8
+    color: str 7 = '#f4edda'
+  dirt_shortcut: dict 3
+    name_ru: str 26 = 'Грунт (срезок нет) — 3.5 м'
+    width_m: float  = 3.5
+    color: str 7 = '#c8ae82'
+  passage: dict 5
+    name_ru: str 30 = 'Локальный пеший проход — 2.5 м'
+    width_m: float  = 2.5
+    color: str 7 = '#567e67'
+    walkable: bool  = True
+    van_access: bool  = False
+  alley: dict 5
+    name_ru: str 35 = 'Проезд подворотен — 4.5 м, 1 полоса'
+    width_m: float  = 4.5
+    color: str 7 = '#eadcb6'
+    lanes: int  = 1
+    van_access: bool  = True
+  foot_lane: dict 5
+    name_ru: str 25 = 'Пеший проход / арка — 3 м'
+    width_m: float  = 3.0
+    color: str 7 = '#8f7350'
+    walkable: bool  = True
+    van_access: bool  = False
+  trail: dict 5
+    name_ru: str 18 = 'Лесная тропа — 2 м'
+    width_m: float  = 2.0
+    color: str 7 = '#7c6a43'
+    walkable: bool  = True
+    van_access: bool  = False
+roads: list 114
+  [0] keys: ['id', 'class', 'width_m', 'district_ids', 'polyline_m', 'lanes', 'length_m']
+points: list 45
+  [0] keys: ['id', 'canonical_id', 'name_ru', 'position_m', 'district_id', 'category', 'label_offset_px', 'team_shared', 'retained_after_move', 'interior', 'access_reserve_m', 'door_clearance_target_m', 'road_node_id']
+water: list 11
+  [0] keys: ['id', 'kind', 'name_ru', 'polygon_m', 'center_m', 'district_id']
+exits: list 2
+  [0] keys: ['id', 'post_id', 'dead_end_m', 'dead_end_type', 'road_id', 'return_via_post_only', 'blocks_foot_bypass', 'barrier_materials', 'barrier_polygons_m', 'barrier_height_target_m', 'barrier_width_m', 'post_trigger_polygon_m', 'post_trigger_width_m', 'dead_end_node_id']
+hills: list 2
+  [0] keys: ['id', 'center_m', 'radii_m', 'height_target_m']
+railway: dict 9
+  polyline_m: list 37
+  from_point: str 13 = 'RAIL_TUNNEL_W'
+  to_point: str 3 = 'B01'
+  service_road_id: NoneType  = None
+  active_trains: bool  = False
+  road_crossings: list 0
+  water_bridges: list 0
+  buffer_stop_m: list 2
+  notes_ru: str 98
+sightline: dict 11
+  from_point: str 3 = 'B01'
+  to_point: str 7 = 'CHIMNEY'
+  chimney_height_target_m: int  = 85
+  clearance_reserve_width_m: int  = 8
+  status: str 90
+  from_position_m: list 2
+  to_position_m: list 2
+  length_m: float  = 820.4
+  corridor_obstacles: list 4
+    [0] keys: ['id', 'storeys', 'distance_m']
+  chimney_angle_deg: float  = 5.9
+  obstacle_max_angle_deg: float  = 2.3
+field_parcels_m: list 2
+planning_notes_ru: list 7
+provenance: dict 7
+  brief: str 166
+  source_schema: str 21 = 'MAP_PLAN_R01_v13.json'
+  owner_decisions_date: str 10 = '2026-10-06'
+  reference_images: list 2
+  method: str 97
+  previous_files_sha256: (hashes)
+  pending_ru: list 2
+building_masses: list 42
+  [0] keys: ['id', 'district_id', 'kind', 'center_m', 'width_m', 'depth_m', 'floors', 'polygon_m']
+plots: list 23
+  [0] keys: ['id', 'kind', 'district_id', 'polygon_m']
+microdistricts: list 5
+  [0] keys: ['id', 'center_m', 'angle', 'yard_polygon_m', 'building_ids', 'arrangement', 'opening_direction', 'shared_courtyard']
+revision: str 3 = 'v14'
+comparison: dict 2
+  v13: dict 4
+    extent_m: list 2
+    building_count: int  = 89
+    land_area_m2: float  = 528858.046
+    building_counts_by_district: dict 9
+  policy: str 101
+geometry_repairs: list 0
+land_transfers: list 2
+  [0] keys: ['ids', 'from_district', 'to_district', 'note_ru']
+farmsteads: list 4
+  [0] keys: ['id', 'center_m', 'yard_polygon_m', 'building_ids', 'start_cluster', 'district_id']
+vegetation_parcels: list 20
+  [0] keys: ['id', 'kind', 'district_id', 'polygon_m']
+road_graph: dict 3
+  nodes: list 1346
+    [0] keys: ['id', 'position_m']
+  edges: list 1360
+    [0] keys: ['id', 'from_node', 'to_node', 'road_id', 'class', 'width_m', 'length_m', 'polyline_m', 'bridge', 'tunnel', 'bidirectional', 'walkable', 'van_access']
+  intersection_rule: str 89
+water_crossings: list 2
+  [0] keys: ['id', 'road_id', 'water_id', 'position_m', 'deck_axis_m', 'kind', 'tunnel_carrier']
+start_cluster_home_routes_m: dict 0
+residential_statistics: dict 6
+  complex_count: int  = 0
+  slab_count: int  = 0
+  panel_house_count: int  = 11
+  alley_block_count: int  = 7
+  physical_building_count: int  = 27
+  policy: str 46 = 'v13 alley district replaces the three U courts'
+hamlet_statistics: dict 5
+  farmstead_count: int  = 4
+  building_count: int  = 16
+  start_cluster_count: int  = 1
+  crop_field_count: int  = 5
+  church_in_village: bool  = True
+metrics: dict 8
+  area_m2: float  = 526225.168
+  bounds_m: list 4
+  extent_m: list 2
+  routes: list 25
+    [0] keys: ['from_id', 'to_id', 'length_m', 'edge_ids', 'road_ids', 'pedestrian_length_m', 'pedestrian_edge_ids', 'van_60_seconds', 'van_90_seconds', 'walk_5_minutes']
+  building_count: int  = 89
+  building_counts_by_district: dict 9
+    village: int  = 16
+    old_town: int  = 21
+    transition: int  = 8
+    residential: int  = 27
+    forest: int  = 1
+    elite: int  = 5
+    industrial: int  = 7
+    fields: int  = 2
+    beach_parking: int  = 2
+  common_landscape_area_m2: float  = 126389.379
+  timing_assumption: str 77 = 'constant-speed route arithmetic; not gameplay or subjective visual acceptance'
+validation: dict 5
+  passed: bool  = True
+  checks: list 160
+    [0] keys: ['name', 'passed', 'detail']
+  superseded_v13_checks: list 7
+    [0] keys: ['name', 'result_on_v14_data', 'replaced_by']
+  v13_suite_kept: int  = 133
+  v14_added: int  = 27
+functional_buildings: list 51
+  [0] keys: ['id', 'type', 'district', 'district_id', 'label_ru', 'group', 'center_m', 'width_m', 'depth_m', 'footprint_m', 'storeys', 'footprint_shape', 'color', 'icon', 'source_building_id', 'poi_id', 'entrance_m', 'access_road_id', 'rotation_deg', 'on_rail']
+functional_sites: list 29
+  [0] keys: ['id', 'type', 'district_id', 'building_id', 'polygon_m', 'capacity_vans']
+replaced_generic_building_ids: list 0
+paths: list 19
+  [0] keys: ['id', 'class', 'width_m', 'polyline_m', 'district_id', 'district_ids', 'walkable', 'van_access', 'length_m', 'rerouted_v14_ru']
+pedestrian_graph: dict 3
+  nodes: list 2035
+    [0] keys: ['id', 'position_m']
+  edges: list 2065
+    [0] keys: ['id', 'from_node', 'to_node', 'road_id', 'class', 'width_m', 'length_m', 'polyline_m', 'bridge', 'tunnel', 'bidirectional', 'walkable', 'van_access']
+  intersection_rule: str 89
+functional_statistics: dict 5
+  building_count: int  = 51
+  district_counts: dict 9
+    forest: int  = 1
+    village: int  = 8
+    transition: int  = 4
+    residential: int  = 16
+    old_town: int  = 6
+    elite: int  = 5
+    industrial: int  = 7
+    fields: int  = 2
+    beach_parking: int  = 2
+  type_counts: dict 44
+    wagon_base: int  = 1
+    grandpa_house: int  = 1
+    pharmacy: int  = 1
+    barn_yard: int  = 1
+    village_shop: int  = 1
+    bus_stop: int  = 1
+    water_tower: int  = 1
+    hut: int  = 1
+    shadow_buyer: int  = 1
+    gas_station: int  = 1
+    abandoned_farm: int  = 1
+    garage_base: int  = 1
+    bar: int  = 2
+    den: int  = 1
+    shop_24h: int  = 1
+    kiosk: int  = 3
+    car_workshop: int  = 1
+    hospital: int  = 1
+    police_station: int  = 1
+    bank: int  = 1
+    atm_pavilion: int  = 1
+    supermarket: int  = 2
+    cafe: int  = 1
+    church: int  = 1
+    house_base: int  = 1
+    mansion: int  = 4
+    private_security: int  = 1
+    industrial_complex: int  = 1
+    depot: int  = 1
+    tow_yard: int  = 1
+    industrial_chimney: int  = 1
+    warehouse: int  = 1
+    maintenance_shed: int  = 1
+    prestige_base: int  = 1
+    advertising_pole: int  = 1
+    casino: int  = 1
+    beer_kiosk: int  = 1
+    atm_shop: int  = 1
+    pawn_shop: int  = 1
+    fast_food: int  = 1
+    payday_loans: int  = 1
+    betting_shop: int  = 1
+    storage_tank: int  = 1
+    toilet_shower: int  = 1
+  promoted_existing_count: int  = 4
+  new_footprint_count: int  = 47
+passage_statistics: dict 4
+  count: int  = 19
+  total_length_m: float  = 2279.195
+  by_class: dict 3
+    passage: int  = 4
+    foot_lane: int  = 8
+    trail: int  = 7
+  policy: str 59 = 'walk only: beach, car-park paths, foot lanes, forest trails'
+distribution_targets: dict 1
+  policy: str 148
+beaches: list 2
+  [0] keys: ['id', 'name_ru', 'polygon_m', 'land_edge_m', 'sea_edge_m', 'width_m', 'surface', 'access_road_ids', 'closed_ends_ru', 'bay_id']
+render_statistics: dict 5
+  canvas_px: list 2
+  scale_px_per_m: float  = 1.6741
+  label_count: int  = 60
+  overlapping_label_pairs: int  = 1
+  crops: dict 3
+    old_town: dict 4
+    valley_beach: dict 4
+    elite_marina: dict 4
+forest_features: dict 8
+  swamp: dict 7
+    id: str 7 = 'SWAMP13'
+    kind: str 5 = 'swamp'
+    polygon_m: list 60
+    area_m2: float  = 4963.9
+    pond_ids: list 5
+    boardwalk_path_id: str 11 = 'TRAIL_SWAMP'
+    label_ru: str 6 = 'Болото'
+  lake: dict 2
+    water_id: str 11 = 'FOREST_LAKE'
+    label_ru: str 12 = 'Лесное озеро'
+  hill: dict 3
+    hill_id: str 11 = 'HILL_FOREST'
+    path_id: str 16 = 'PATH_HILL_SPIRAL'
+    label_ru: str 25 = 'Холм со спиральной тропой'
+  hangout: dict 2
+    site_id: str 9 = 'HANGOUT13'
+    base_id: str 3 = 'B01'
+  tunnel: dict 2
+    site_id: str 13 = 'RAIL_TUNNEL_W'
+    railway_end_m: list 2
+  cove: dict 2
+    beach_id: str 17 = 'BEACH_FOREST_COVE'
+    foot_path_id: str 10 = 'TRAIL_COVE'
+  rocks: list 10
+    [0] keys: ['id', 'polygon_m', 'barrier']
+  tree_policy: str 121
+crop_fields: list 5
+  [0] keys: ['id', 'district_id', 'crop', 'stripe_count', 'stripe_direction', 'polygon_m', 'area_m2', 'label_ru']
+removed_buildings: list 7
+  [0] keys: ['id', 'kind', 'from_district', 'access_road_id', 'reason_ru']
+outfalls: list 1
+  [0] keys: ['id', 'source_building_id', 'polyline_m', 'diameter_m', 'length_m', 'sleeves_under', 'plume_id', 'plume', 'dressing_hints_ru', 'label_ru']
+removed_barriers: list 12
+  [0] keys: ['id', 'kind', 'material', 'district_id', 'axis_from_m', 'axis_to_m', 'length_m', 'gate_road_ids', 'replaced_by_ids', 'reason_ru']
+moves: list 2
+  [0] keys: ['kind', 'id', 'from_m', 'to_m', 'distance_m', 'id_kept', 'reason_ru']
+alley_statistics: dict 22
+  panel_house_count: int  = 11
+  floors_range: list 2
+  panel_footprint_m2: int  = 4656
+  panel_floor_area_m2: int  = 33072
+  v12_slab_footprint_m2: int  = 7776
+  v12_slab_floor_area_m2: int  = 80352
+  gateway_arch_count: int  = 10
+  van_arch_count: int  = 2
+  business_counts: dict 14
+    garage_base: int  = 1
+    bar: int  = 2
+    den: int  = 1
+    shop_24h: int  = 1
+    kiosk: int  = 2
+    hospital: int  = 1
+    atm_pavilion: int  = 1
+    supermarket: int  = 1
+    beer_kiosk: int  = 1
+    atm_shop: int  = 1
+    pawn_shop: int  = 1
+    fast_food: int  = 1
+    payday_loans: int  = 1
+    betting_shop: int  = 1
+  physical_building_count: int  = 27
+  v12_physical_building_count: int  = 18
+  min_gap_between_buildings_m: float  = 6.45
+  alley_corridor_facade_to_facade_m: dict 5
+    ALLEY_W: float  = 15.35
+    COURT_B: float  = 30.24
+    ALLEY_C: float  = 23.94
+    LANE_C: float  = 29.33
+    ALLEY_X: float  = 8.89
+  alley_road_ids: list 5
+  foot_lane_ids: list 8
+  courtyard_ids: list 5
+  nearest_facade_gap_m: dict 27
+    F06_24: float  = 31.52
+    F06_ATM: float  = 12.5
+    F06_BAR: float  = 31.52
+    F06_DEN: float  = 19.81
+    F06_GBASE: float  = 15.5
+    F06_HOSPITAL: float  = 12.5
+    F06_K1: float  = 15.5
+    F06_K3: float  = 24.53
+    F13_ATMSHOP: float  = 8.84
+    F13_BAR2: float  = 6.45
+    F13_BEER: float  = 8.76
+    F13_BETS: float  = 11.01
+    F13_DISCOUNTER: float  = 15.62
+    F13_LOMBARD: float  = 10.97
+    F13_SHAWARMA: float  = 12.07
+    F13_ZAIMY: float  = 7.8
+    R13_P01: float  = 10.54
+    R13_P02: float  = 8.76
+    R13_P03: float  = 7.8
+    R13_P04: float  = 6.45
+    R13_P05: float  = 10.97
+    R13_P06: float  = 8.89
+    R13_P07: float  = 8.89
+    R13_P08: float  = 8.66
+    R13_P09: float  = 24.53
+    R13_P10: float  = 23.84
+    R13_P11: float  = 41.79
+  median_nearest_facade_gap_m: float  = 11.01
+  interleaved_business_ids: list 8
+  district_area_m2: int  = 63301
+  v12_district_area_m2: int  = 78399
+  built_coverage_percent: float  = 12.6
+change_regions: list 5
+  [0] keys: ['id', 'label_ru', 'kind', 'bbox_m', 'district_id', 'polygon_m']
+marina: dict 17
+  id: str 8 = 'MARINA14'
+  name_ru: str 15 = 'Пристань элитки'
+  purpose_ru: str 50 = 'Яхты и катера жителей элитного холма (Федя 06.10).'
+  root_m: list 2
+  axis_deg: float  = -21.9
+  quay_road_id: str 11 = 'MARINA_QUAY'
+  point_id: str 12 = 'ELITE_MARINA'
+  quay_site_id: str 13 = 'MARINA14_QUAY'
+  access_ru: str 87 = 'Бусик: элитка → BEACH_ACCESS → разворот на пляже → MARINA_QUAY; дальше пешком по пирсу.'
+  pier: dict 4
+    polygon_m: list 4
+    width_m: int  = 4
+    length_m: float  = 63.5
+    material: str 26 = 'деревянный настил на сваях'
+  t_head: dict 3
+    polygon_m: list 4
+    width_m: int  = 4
+    length_m: int  = 32
+  fingers: list 3
+    [0] keys: ['id', 'polygon_m', 'length_m']
+  berths: list 10
+    [0] keys: ['id', 'kind', 'polygon_m', 'size_m', 'occupied_by']
+  boats: list 7
+    [0] keys: ['id', 'kind', 'length_m', 'beam_m', 'berth_id', 'heading_deg', 'center_m', 'polygon_m', 'label_ru']
+  breakwater: dict 7
+    id: str 19 = 'MARINA14_BREAKWATER'
+    axis_m: list 21
+    polygon_m: list 42
+    width_m: float  = 6.0
+    material: str 12 = 'каменный мол'
+    light_m: list 2
+    label_ru: str 14 = 'Мол с огоньком'
+  walk_axis_m: list 2
+  dressing_hints_ru: list 5
+bay: dict 18
+  id: str 13 = 'BAY14_PARKING'
+  name_ru: str 24 = 'Бухта у пляжной парковки'
+  beach_id: str 5 = 'BEACH'
+  purpose_ru: str 90
+  opposite_site_ids: list 3
+  sea_edge_m: list 29
+  v13_sea_edge_m: list 13
+  apex_m: list 2
+  depth_m: float  = 34.4
+  mouth_m: list 2
+  mouth_width_m: float  = 124.6
+  water_area_m2: float  = 2632.9
+  sand_at_apex_m: float  = 20.9
+  rocks: list 2
+    [0] keys: ['id', 'polygon_m', 'barrier', 'label_ru']
+  walk_path_id: str 10 = 'WALK_BEACH'
+  car_park_path_ids: list 3
+  trimmed_path_vertices: dict 3
+    PATH_BEACH_W: int  = 3
+    PATH_BEACH_C: int  = 4
+    PATH_BEACH_E: int  = 3
+  swimming_ru: str 31 = 'Мелко и спокойно; дно песчаное.'
+v23_alignment: dict 10
+  source: str 42 = 'REF_FEDYA_v14_map_v23.png (1280 × 1280 px)'
+  method: str 48 = 'affine least squares px → m on 22 shared objects'
+  coefficients: list 2
+  anchor_count: int  = 22
+  residual_median_m: float  = 9.1
+  residual_max_m: float  = 13.1
+  clear_difference_m: int  = 40
+  objects: list 49
+    [0] keys: ['label_ru', 'v23_px', 'v23_m', 'decision', 'decision_ru', 'note_ru', 'v13_ref', 'v13_m', 'distance_m']
+  applied_moves: list 0
+  rule_ru: str 187
+old_town_statistics: dict 12
+  tower_ids: list 2
+  tower_floors: int  = 20
+  tower_footprint_m: list 2
+  tower_gap_m: float  = 8.0
+  square_area_m2: int  = 3303
+  fountain_basin_radius_m: float  = 7.0
+  houses_by_distance_from_towers: list 15
+    [0] keys: ['distance_m', 'id', 'kind', 'floors']
+  midrise_ids: list 4
+  low_house_count: int  = 9
+  functions: list 6
+  building_count: int  = 21
+  policy: str 134

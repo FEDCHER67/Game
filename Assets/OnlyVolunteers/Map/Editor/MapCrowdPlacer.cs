@@ -58,7 +58,8 @@ namespace OnlyVolunteers.Map
             var director = root.AddComponent<CrowdDirector>();
             director.Data = data;
             director.Sampler = Object.FindAnyObjectByType<MapHeightSampler>();
-            root.AddComponent<CrowdPoliceHook>();
+            // The placeholder police reaction, unless the real police come along (Police/MapPolicePlacer).
+            if (!Police.MapPolicePlacer.Enabled) root.AddComponent<CrowdPoliceHook>();
             var poolRoot = new GameObject("Pool").transform;
             poolRoot.SetParent(root.transform, false);
             director.PoolRoot = poolRoot;

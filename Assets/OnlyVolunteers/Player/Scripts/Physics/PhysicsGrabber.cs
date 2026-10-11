@@ -24,6 +24,9 @@ namespace OnlyVolunteers.Player.Physics
         private IGrabPointTarget pointTarget;
         private int pointIndex = -1;
         private GrabPhysicsProfile pointProfile;
+        // OV stage9: the point target's optional IGrabPointBodyGroup (the NPC ragdoll: hold mass, every collider of the
+        // NPC, its own force application); null for every other target, whose hold below is unchanged.
+        private IGrabPointBodyGroup pointGroup;
         private KccFirstPersonInput speedInput;
 
         // OV stage1 (Fedya's second playtest): the point hold starts at the distance the point was grabbed at and the mouse
@@ -36,6 +39,10 @@ namespace OnlyVolunteers.Player.Physics
         private Vector3 pointViewOffset;
         private float pointGrabTime;
         private const float PointOffsetFade = 0.3f;
+        // OV stage1 (third playtest, 2026-10-06): where the hand's target was last physics step, so the point hold can damp
+        // the body against the hand's own motion instead of the ground (see HoldPoint).
+        private Vector3 lastPointTarget;
+        private bool hasLastPointTarget;
         // Held colliders whose pair with the player (PhysX ignore + the KCC's IgnoredColliders) is restored only once the
         // two no longer overlap, so a body let go of inside the player's capsule is not shot out of it.
         private readonly System.Collections.Generic.List<Collider> apartPending = new();
@@ -73,6 +80,10 @@ namespace OnlyVolunteers.Player.Physics
         }
 
         public void ScriptRelease() => Release();
+
+        /// <summary>OV stage1 test hook: the force the point hold applied in the last physics step (zero when not holding a
+        /// point). NpcLoadingTest averages it; nothing in the game reads it.</summary>
+        public Vector3 LastPointForce { get; private set; }
 
         /// <summary>OV stage1: current point hold distance (0 when not holding a point); set clamps it like the wheel.</summary>
         public float PointHoldDistance
@@ -298,7 +309,7 @@ namespace OnlyVolunteers.Player.Physics
         // ---------- OV stage1: point grab (IGrabPointTarget) ----------
         // Differences from the original path, on purpose:
         // - the target picks the point (the NPC body: anywhere on its axis, where the ray hit) and the profile (e.g.
-        //   NpcGrabProfile: 200 N up/down, 220 N sideways per holder);
+        //   NpcGrabProfile: 240 N up/down, 260 N sideways per holder);
         // - the hold distance starts at the depth of the point along the view when grabbed (MinPointHold .. the profile's
         //   HoldDistance, the longest hold), the rest of the offset from the crosshair fades out over PointOffsetFade, and
         //   the mouse wheel changes it by WheelStep; the original path keeps the fixed HoldDistance;
@@ -308,16 +319,24 @@ namespace OnlyVolunteers.Player.Physics
         //   FixedUpdate), so the body is not shoved out of the capsule at the depenetration speed;
         // - the body's CCD, interpolation and maxAngularVelocity are left alone: up to three holders share one body, and
         //   saving/restoring them per holder would clobber each other;
-        // - damping and the speed limit are measured against what the player stands on (the van floor while riding in
-        //   the cargo bay), not the world: on the ground that is zero, i.e. the same as the original path;
+        // - the speed limit is measured against what the player stands on (the van floor while riding in the cargo bay),
+        //   not the world: on the ground that is zero, i.e. the same as the original path;
+        // - OV stage1 (third playtest, 2026-10-06): the damping is measured against the hand's target, not the ground.
+        //   Against the ground every hand cost 2ζ√(km) = 220 N per m/s of walking (k 1200, m 28 kg): at walking speed the
+        //   point trailed the hand by ~0.8 m, which ExternalSpeedScale read as "heavy" and throttled the player, and two
+        //   holders doubled the drag along with the force. The hand's velocity is the finite difference of its target
+        //   (plus the frame's velocity), clamped to the point profile's MaxLinearSpeed so a view flick cannot inject more
+        //   than one tick at the force cap. HoldPins in GreyboxNpcBody keeps zero (its anchors do not move);
         // - a far-behind point slows the player (ExternalSpeedScale), reset to 1 on release;
         // - ScriptDriven / ScriptGrab / ScriptRelease / PointHoldDistance: a test script (NpcLoadingTest) aims the camera and
         //   grabs instead of the mouse; off by default;
-        // - OV stage1 fix (2026-10-05): when the profile has SoloHorizontalMaxForce (NpcGrabProfile: 220 N), the sideways
+        // - OV stage1 fix (2026-10-05): when the profile has SoloHorizontalMaxForce (NpcGrabProfile: 260 N), the sideways
         //   part of the force is capped on its own and the vertical part by MaxForce (GrabPhysicsSolver's existing
         //   TryCalculateRelativeGrounded): lifting a body's end then tilts it about its other end instead of pulling that
         //   end along the ground. Profiles without it (0, the default) keep the plain clamp. The point is taken from the
-        //   body's physics pose (Rigidbody position/rotation), not its interpolated transform.
+        //   body's physics pose (Rigidbody position/rotation), not its interpolated transform;
+        // - OV stage9: a target that also implements IGrabPointBodyGroup (the NPC ragdoll, one body per bone) gives the
+        //   damping mass and every collider of the NPC to ignore, and applies the force itself.
 
         private void TryAcquirePoint(Rigidbody body, IGrabPointTarget target, RaycastHit hit)
         {
@@ -347,7 +366,11 @@ namespace OnlyVolunteers.Player.Physics
             pointViewOffset = Quaternion.Inverse(view.rotation) *
                 (claimWorld - (view.position + view.forward * pointHoldDistance));
             pointGrabTime = Time.fixedTime;
-            grabbedColliders = body.GetComponentsInChildren<Collider>();
+            hasLastPointTarget = false;
+            pointGroup = target as IGrabPointBodyGroup; // OV stage9
+            grabbedColliders = pointGroup != null
+                ? new System.Collections.Generic.List<Collider>(pointGroup.HeldColliders(point)).ToArray()
+                : body.GetComponentsInChildren<Collider>();
             foreach (Collider heldCollider in grabbedColliders)
             {
                 apartPending.Remove(heldCollider); // still waiting from an earlier hold: held again now
@@ -372,21 +395,36 @@ namespace OnlyVolunteers.Player.Physics
             Vector3 target = PointHoldTarget;
             Vector3 worldGrabPoint = grabbedBody.position + grabbedBody.rotation * localGrabPoint;
             Vector3 frameVelocity = FrameVelocity(worldGrabPoint);
+            // The damping follows the hand (see the notes above): the target's velocity since the last step, on top of
+            // the frame's, clamped to the profile's speed limit.
+            Vector3 handVelocity = frameVelocity;
+            if (hasLastPointTarget)
+            {
+                Vector3 relative = (target - lastPointTarget) / Time.fixedDeltaTime - frameVelocity;
+                handVelocity = frameVelocity + Vector3.ClampMagnitude(relative, pointProfile.MaxLinearSpeed);
+            }
+            lastPointTarget = target;
+            hasLastPointTarget = true;
             Vector3 error = target - worldGrabPoint;
             Vector3 pointVelocity = grabbedBody.GetPointVelocity(worldGrabPoint);
+            float holdMass = pointGroup != null ? pointGroup.HoldMass(pointIndex) : grabbedBody.mass; // OV stage9
             Vector3 force;
             bool held = pointProfile.SoloHorizontalMaxForce > 0f
-                ? GrabPhysicsSolver.TryCalculateRelativeGrounded(error, frameVelocity, pointVelocity,
-                    grabbedBody.mass, pointProfile, out force)
-                : GrabPhysicsSolver.TryCalculateRelative(error, frameVelocity, pointVelocity,
-                    grabbedBody.mass, pointProfile, out force);
+                ? GrabPhysicsSolver.TryCalculateRelativeGrounded(error, handVelocity, pointVelocity,
+                    holdMass, pointProfile, out force)
+                : GrabPhysicsSolver.TryCalculateRelative(error, handVelocity, pointVelocity,
+                    holdMass, pointProfile, out force);
             if (!held)
             {
                 Release(); // beyond the break distance
                 return;
             }
 
-            GrabPhysicsSolver.ApplyForce(grabbedBody, worldGrabPoint, force);
+            if (pointGroup != null)
+                pointGroup.ApplyHoldForce(pointIndex, worldGrabPoint, force); // OV stage9
+            else
+                GrabPhysicsSolver.ApplyForce(grabbedBody, worldGrabPoint, force);
+            LastPointForce = force;
             LimitVelocitiesRelative(grabbedBody, frameVelocity, pointProfile);
             if (speedInput != null)
                 speedInput.ExternalSpeedScale = Mathf.Clamp(1f - (error.magnitude - 0.6f) / 1.0f, 0.35f, 1f);
@@ -415,7 +453,10 @@ namespace OnlyVolunteers.Player.Physics
             pointTarget = null;
             pointIndex = -1;
             pointProfile = null;
+            pointGroup = null; // OV stage9
             pointViewOffset = Vector3.zero;
+            hasLastPointTarget = false;
+            LastPointForce = Vector3.zero;
             if (!(target is UnityEngine.Object targetObject) || targetObject != null)
                 target.Release(this, point);
             ReleasePointCollisions();

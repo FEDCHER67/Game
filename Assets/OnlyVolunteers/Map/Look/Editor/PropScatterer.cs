@@ -13,6 +13,9 @@ namespace OnlyVolunteers.Map.Look
     // their >= 4.5 m gates) and the elite ring; the map edge is a berm, rocks and an invisible blocker.
     public static class PropScatterer
     {
+        // Parked vehicles of this type are left out (the play build skips "car_police": the live police cars park there).
+        internal static string SkipVehicleType;
+
         public static void Build(LookData d, HeightModel hm, MapLookRegistry registry, LookAssetStore store, Transform parent,
             DistrictCombiner render, DistrictCombiner colliders, List<string> log)
         {
@@ -264,6 +267,7 @@ namespace OnlyVolunteers.Map.Look
             var steep = new List<string>();
             foreach (LookVehicle v in d.vehicles)
             {
+                if (!string.IsNullOrEmpty(SkipVehicleType) && v.type == SkipVehicleType) continue;
                 PrefabSlot slot = registry.ExactPrefabSlot("prop/" + v.type);   // never the prop/_default family prefab
                 MeshFilter mf = slot != null ? slot.prefab.GetComponent<MeshFilter>() : null;
                 if (mf == null || mf.sharedMesh == null)

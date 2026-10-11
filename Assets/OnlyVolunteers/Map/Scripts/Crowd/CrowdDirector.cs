@@ -37,6 +37,8 @@ namespace OnlyVolunteers.Map.Crowd
         [Tooltip("Scales every district target (1 = the file's counts).")]
         public float Density = 1f;
         public bool Police = true;
+        // Foot officers on top of the file's count (set by Police/PoliceDirector when districts run hot).
+        [System.NonSerialized] public int ExtraOfficers;
         [Tooltip("Fill the districts at Start straight onto their loops (at spots no camera sees).")]
         public bool Prewarm = true;
         [Tooltip("Seconds between spawns in one district.")]
@@ -49,8 +51,6 @@ namespace OnlyVolunteers.Map.Crowd
         [Header("Walking")]
         [Tooltip("Chance to stop at a POI when passing its access link.")]
         [Range(0f, 1f)] public float ActivityChance = 0.35f;
-        [Tooltip("Animator speed of the Run clip per m/s of walking speed (the Buddy has no walk clip yet).")]
-        public float WalkAnimPerMps = 0.24f;
         public float ReportRunSpeed = 3.6f;
 
         [Header("Witnesses")]
@@ -197,6 +197,15 @@ namespace OnlyVolunteers.Map.Crowd
             return n;
         }
 
+        // Police walkers not already on their way out.
+        private int PoliceStaying()
+        {
+            int n = 0;
+            foreach (CrowdWalker w in Walkers)
+                if (w.Role == CrowdRole.Police && w.Counts) n++;
+            return n;
+        }
+
         private void Balance(float now)
         {
             for (int d = 0; d < Map.Districts.Count; d++)
@@ -218,7 +227,7 @@ namespace OnlyVolunteers.Map.Crowd
                         }
                 }
             }
-            if (Police && Map.Patrol != null && PolicePresent() < Map.Patrol.Officers && now >= _nextPoliceSpawn)
+            if (Police && Map.Patrol != null && PolicePresent() < Map.Patrol.Officers + ExtraOfficers && now >= _nextPoliceSpawn)
             {
                 var spawns = new List<int>();
                 foreach (int d in Map.Patrol.Districts) spawns.AddRange(Map.Districts[d].Spawns);
@@ -227,6 +236,16 @@ namespace OnlyVolunteers.Map.Crowd
                     Spawn(CrowdRole.Police, Map.Spawns[spawn].District, spawn);
                     _nextPoliceSpawn = now + SpawnInterval * 4f;
                 }
+            }
+            else if (Police && Map.Patrol != null && PoliceStaying() > Map.Patrol.Officers + ExtraOfficers)
+            {
+                // The extra officers of a hot spell go home once it cools (one at a time, only one walking his loop).
+                foreach (CrowdWalker w in Walkers)
+                    if (w.Role == CrowdRole.Police && w.Counts && w.CanLeave && !w.Suspended)
+                    {
+                        w.Leave();
+                        break;
+                    }
             }
         }
 
@@ -420,14 +439,14 @@ namespace OnlyVolunteers.Map.Crowd
         private void OnIncident(GreyboxNpc victim, NpcIncident kind) => CrowdWitness.Evaluate(this, victim, kind);
 
         /// <summary>A witness reached a hotspot or an officer (or an officer saw it): the district's alert goes up one level.</summary>
-        public void RaiseAlert(int district, CrowdWalker reporter, NpcIncident kind, Vector3 where, string via)
+        public void RaiseAlert(int district, CrowdWalker reporter, NpcIncident kind, Vector3 where, string via, CrowdWalker officer = null)
         {
             if (district < 0 || district >= AlertLevel.Length) return;
             AlertLevel[district] = Mathf.Min(MaxAlert, Mathf.Floor(AlertLevel[district]) + 1f);
             var alert = new CrowdAlert
             {
                 District = district, DistrictId = Map.Districts[district].Id, DistrictName = Map.Districts[district].Name,
-                Level = Mathf.RoundToInt(AlertLevel[district]), Kind = kind, Position = where, Reporter = reporter, Via = via, Time = Time.time,
+                Level = Mathf.RoundToInt(AlertLevel[district]), Kind = kind, Position = where, Reporter = reporter, Officer = officer, Via = via, Time = Time.time,
             };
             string what = kind == NpcIncident.Captured ? "похищение" : "нападение";
             Debug.Log($"[Crowd] ALERT {alert.DistrictId} level {alert.Level}: {what} at ({where.x:0}, {where.z:0}) reported by " +

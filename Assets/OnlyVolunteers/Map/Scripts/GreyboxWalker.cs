@@ -3,11 +3,14 @@ using UnityEngine;
 namespace OnlyVolunteers.Map
 {
     // Grey-box on-foot test character (Fedya: walk around as the Sausage Buddy and get into the van).
-    // WASD relative to the camera, Shift runs. Not the networked player; the Buddy has only Idle and a panic run so far.
+    // WASD relative to the camera, Shift runs. Uses the Buddy's Idle, Walk and Run states; not the networked player.
     // Alternative to the first-person KCC pawn (menu "... walk as Buddy"), seen through GreyboxFollowCamera on Main Camera.
     [RequireComponent(typeof(CharacterController))]
     public sealed class GreyboxWalker : GreyboxPawn
     {
+        // Metres per second represented by each in-place clip at its original playback speed.
+        private const float WalkClipSpeed = 1.5f, RunClipSpeed = 3.2f;
+
         public float WalkSpeed = 2.4f;
         public float RunSpeed = 5.5f;
         public float TurnSpeed = 720f;
@@ -29,6 +32,8 @@ namespace OnlyVolunteers.Map
             // Scenes built before the pawn split referenced the follow camera only from the van seat; it sits on CameraTransform.
             if (Follow == null && CameraTransform != null) Follow = CameraTransform.GetComponent<GreyboxFollowCamera>();
         }
+
+        private void OnEnable() => _state = null;
 
         public override Transform Body => transform;
 
@@ -55,7 +60,10 @@ namespace OnlyVolunteers.Map
             _verticalSpeed = _controller.isGrounded ? -1f : _verticalSpeed - Gravity * Time.deltaTime;
             _controller.Move((move * (running ? RunSpeed : WalkSpeed) + Vector3.up * _verticalSpeed) * Time.deltaTime);
 
-            Play(moving ? "Run" : "Idle", moving ? (running ? 1.15f : 0.6f) : 1f);
+            float planarSpeed = Vector3.ProjectOnPlane(_controller.velocity, Vector3.up).magnitude;
+            if (planarSpeed > 0.15f)
+                Play(running ? "Run" : "Walk", Mathf.Clamp(planarSpeed / (running ? RunClipSpeed : WalkClipSpeed), 0.15f, 2f));
+            else Play("Idle", 1f);
             // Plain C# state does not survive a script reload in Play mode; rebuild it instead of throwing every frame.
             _face ??= new GreyboxFace(gameObject);
             _face.Set("Happy", running ? 0f : 60f, 200f);

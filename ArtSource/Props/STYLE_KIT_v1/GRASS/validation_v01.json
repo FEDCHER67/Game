@@ -1,0 +1,365 @@
+{
+  "family": "SK1-GRASS-001",
+  "kit": "STYLE_KIT_v1",
+  "style_bible": "v1",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); *_Emissive / *_Water are children",
+  "palette": "Look_Palette_v1.png (256 x 256, 16 px cells): UV0 at the swatch cell centre, gradient rows encode height in V; vertex colour Col = same colour x AO; UV1 = metre-scale box projection for detail maps",
+  "description": "Style-bible grass tufts (24 tris) and flower patches (60 tris): closed pyramids, one colour per patch, placed by PropScatterer in clusters of 5-9 inside a 2 m circle.",
+  "assets": {
+    "GR_Tuft_A": {
+      "triangles": 24,
+      "triangle_budget": [
+        12,
+        24
+      ],
+      "size_m": [
+        0.42,
+        0.42,
+        0.4
+      ],
+      "bounds_min": [
+        -0.22,
+        -0.17,
+        0.0
+      ],
+      "bounds_max": [
+        0.2,
+        0.25,
+        0.4
+      ],
+      "swatches": [
+        "grad_grass"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "GR_Tuft_A": 0
+      },
+      "objects": {
+        "GR_Tuft_A": {
+          "triangles": 24,
+          "vertices": 20,
+          "faces": 20,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.001
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_12_24": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "Tuft A 0.4 m: upright fan of four blades.",
+      "fbx": "GR_Tuft_A_v01.fbx"
+    },
+    "GR_Tuft_B": {
+      "triangles": 24,
+      "triangle_budget": [
+        12,
+        24
+      ],
+      "size_m": [
+        0.411,
+        0.36,
+        0.34
+      ],
+      "bounds_min": [
+        -0.111,
+        -0.22,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.14,
+        0.34
+      ],
+      "swatches": [
+        "grad_grass"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "GR_Tuft_B": 0
+      },
+      "objects": {
+        "GR_Tuft_B": {
+          "triangles": 24,
+          "vertices": 20,
+          "faces": 20,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0009
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_12_24": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "Tuft B 0.34 m: all blades blown to +X (wind), use rotated.",
+      "fbx": "GR_Tuft_B_v01.fbx"
+    },
+    "GR_Tuft_C": {
+      "triangles": 24,
+      "triangle_budget": [
+        12,
+        24
+      ],
+      "size_m": [
+        0.5,
+        0.58,
+        0.24
+      ],
+      "bounds_min": [
+        -0.26,
+        -0.3,
+        0.0
+      ],
+      "bounds_max": [
+        0.24,
+        0.28,
+        0.24
+      ],
+      "swatches": [
+        "grad_grass"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "GR_Tuft_C": 0
+      },
+      "objects": {
+        "GR_Tuft_C": {
+          "triangles": 24,
+          "vertices": 20,
+          "faces": 20,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0008
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_12_24": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "Tuft C 0.24 m: low, wide, flat star.",
+      "fbx": "GR_Tuft_C_v01.fbx"
+    },
+    "GR_Flowers_Yellow": {
+      "triangles": 60,
+      "triangle_budget": [
+        30,
+        60
+      ],
+      "size_m": [
+        0.6,
+        0.675,
+        0.416
+      ],
+      "bounds_min": [
+        -0.3,
+        -0.34,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.335,
+        0.416
+      ],
+      "swatches": [
+        "flower_yellow",
+        "grad_grass"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "GR_Flowers_Yellow": 0
+      },
+      "objects": {
+        "GR_Flowers_Yellow": {
+          "triangles": 60,
+          "vertices": 48,
+          "faces": 54,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0022
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_30_60": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "Flower patch: three yellow heads + three leaf blades. Meadow, hamlet, fields.",
+      "fbx": "GR_Flowers_Yellow_v01.fbx"
+    },
+    "GR_Flowers_White": {
+      "triangles": 60,
+      "triangle_budget": [
+        30,
+        60
+      ],
+      "size_m": [
+        0.6,
+        0.675,
+        0.416
+      ],
+      "bounds_min": [
+        -0.3,
+        -0.34,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.335,
+        0.416
+      ],
+      "swatches": [
+        "flower_white",
+        "grad_grass"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "GR_Flowers_White": 0
+      },
+      "objects": {
+        "GR_Flowers_White": {
+          "triangles": 60,
+          "vertices": 48,
+          "faces": 54,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 0.0022
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_30_60": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "Flower patch: three white heads + three leaf blades.",
+      "fbx": "GR_Flowers_White_v01.fbx"
+    }
+  },
+  "total_assets": 5,
+  "total_triangles": 192,
+  "all_checks_passed": true,
+  "notes": [
+    "The review .blend has the assets laid out in rows along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "SK1-GRASS-001_v01.blend",
+    "palette": "_lib/Look_Palette_v1.png"
+  }
+}

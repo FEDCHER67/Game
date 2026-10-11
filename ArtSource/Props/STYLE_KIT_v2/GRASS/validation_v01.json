@@ -1,0 +1,374 @@
+{
+  "family": "SK2-GRASS-001",
+  "kit": "STYLE_KIT_v2",
+  "style_bible": "v2",
+  "bible_date": "2026-10-06",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root mesh of every asset: centre of the base on the ground (0, 0, 0)",
+  "palette": "_lib/Look_Palette_v2.png (+ .json): UV0 inside the swatch cell; alpha = smoothness",
+  "description": "Grass v2: GR_Tuft_A/B (lawn), GR_Tuft_C (meadow), GR_Flowers_Chalk, GR_Flowers_Red (bible 6.5)",
+  "assets": {
+    "GR_Tuft_A": {
+      "triangles": 20,
+      "triangle_budget": [
+        1,
+        40
+      ],
+      "size_m": [
+        0.196,
+        0.234,
+        0.3
+      ],
+      "bounds_min": [
+        -0.097,
+        -0.106,
+        0.0
+      ],
+      "bounds_max": [
+        0.099,
+        0.128,
+        0.3
+      ],
+      "swatches": [
+        "grad.lawn"
+      ],
+      "swatch_families": [
+        "lawn"
+      ],
+      "min_member_m": 0.07,
+      "facet_ratio_min": 0.603,
+      "jitter_m": 0.0,
+      "geometry_sha1": "be2f3f762a05899e3efd1187db7a89f4c2fc5ddd",
+      "objects": {
+        "GR_Tuft_A": {
+          "triangles": 20,
+          "vertices": 20,
+          "faces": 20,
+          "shells": 5,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_40": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "height_m": 0.3,
+      "blades": 5,
+      "zone": "lawn",
+      "fbx": "GR_Tuft_A_v01.fbx"
+    },
+    "GR_Tuft_B": {
+      "triangles": 24,
+      "triangle_budget": [
+        1,
+        40
+      ],
+      "size_m": [
+        0.269,
+        0.264,
+        0.38
+      ],
+      "bounds_min": [
+        -0.155,
+        -0.119,
+        0.0
+      ],
+      "bounds_max": [
+        0.115,
+        0.145,
+        0.38
+      ],
+      "swatches": [
+        "grad.lawn"
+      ],
+      "swatch_families": [
+        "lawn"
+      ],
+      "min_member_m": 0.07,
+      "facet_ratio_min": 0.48,
+      "jitter_m": 0.0,
+      "geometry_sha1": "55325a96937f077914dad0161017c8a8f339589b",
+      "objects": {
+        "GR_Tuft_B": {
+          "triangles": 24,
+          "vertices": 24,
+          "faces": 24,
+          "shells": 6,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_40": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "height_m": 0.38,
+      "blades": 6,
+      "zone": "lawn",
+      "fbx": "GR_Tuft_B_v01.fbx"
+    },
+    "GR_Tuft_C": {
+      "triangles": 28,
+      "triangle_budget": [
+        1,
+        40
+      ],
+      "size_m": [
+        0.277,
+        0.302,
+        0.45
+      ],
+      "bounds_min": [
+        -0.147,
+        -0.168,
+        0.0
+      ],
+      "bounds_max": [
+        0.13,
+        0.134,
+        0.45
+      ],
+      "swatches": [
+        "grad.meadow"
+      ],
+      "swatch_families": [
+        "meadow"
+      ],
+      "min_member_m": 0.07,
+      "facet_ratio_min": 0.451,
+      "jitter_m": 0.0,
+      "geometry_sha1": "74b93dcb40b5c8f6f0d26bfa0829338ad80a25bf",
+      "objects": {
+        "GR_Tuft_C": {
+          "triangles": 28,
+          "vertices": 28,
+          "faces": 28,
+          "shells": 7,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_40": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_1": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "height_m": 0.45,
+      "blades": 7,
+      "zone": "meadow",
+      "fbx": "GR_Tuft_C_v01.fbx"
+    },
+    "GR_Flowers_Chalk": {
+      "triangles": 116,
+      "triangle_budget": [
+        1,
+        120
+      ],
+      "size_m": [
+        0.399,
+        0.379,
+        0.387
+      ],
+      "bounds_min": [
+        -0.208,
+        -0.169,
+        0.0
+      ],
+      "bounds_max": [
+        0.191,
+        0.209,
+        0.387
+      ],
+      "swatches": [
+        "chalk",
+        "grad.lawn"
+      ],
+      "swatch_families": [
+        "chalk",
+        "lawn"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.38,
+      "jitter_m": 0.0,
+      "geometry_sha1": "9bd4f4deb28ec7553c9b77b9fc6b4f661b9cc836",
+      "objects": {
+        "GR_Flowers_Chalk": {
+          "triangles": 116,
+          "vertices": 92,
+          "faces": 116,
+          "shells": 17,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_120": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "flower": "chalk",
+      "heads": 6,
+      "fbx": "GR_Flowers_Chalk_v01.fbx"
+    },
+    "GR_Flowers_Red": {
+      "triangles": 116,
+      "triangle_budget": [
+        1,
+        120
+      ],
+      "size_m": [
+        0.399,
+        0.379,
+        0.387
+      ],
+      "bounds_min": [
+        -0.208,
+        -0.169,
+        0.0
+      ],
+      "bounds_max": [
+        0.191,
+        0.209,
+        0.387
+      ],
+      "swatches": [
+        "grad.lawn",
+        "red"
+      ],
+      "swatch_families": [
+        "lawn",
+        "red"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": 0.38,
+      "jitter_m": 0.0,
+      "geometry_sha1": "5634a721f86c0be35d007dc598c39950b0cfad90",
+      "objects": {
+        "GR_Flowers_Red": {
+          "triangles": 116,
+          "vertices": 92,
+          "faces": 116,
+          "shells": 17,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_120": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_2": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "flower": "red",
+      "heads": 6,
+      "fbx": "GR_Flowers_Red_v01.fbx"
+    }
+  },
+  "total_assets": 5,
+  "total_triangles": 304,
+  "all_checks_passed": true,
+  "notes": [
+    "All grass normals point up (+Z): lit like the ground, no shimmer (bible 6.5). Cut off beyond 60 m, GPU instancing.",
+    "GR_Tuft_A/B carry the lawn ramp (old town, parks, yards), GR_Tuft_C the meadow ramp (hamlet, roadsides, field edges).",
+    "The .blend shows the assets in rows along +X; every FBX has its root at the origin."
+  ],
+  "files": {
+    "blend": "SK2-GRASS-001_v01.blend",
+    "atlas": "_lib/Look_Palette_v2.png",
+    "atlas_layout": "_lib/Look_Palette_v2.json"
+  }
+}

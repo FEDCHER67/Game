@@ -1,0 +1,945 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85b1ce9c676bc84d991957fecc565d4, type: 3}
+  m_Name: Buddy_RagdollProfile
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Characters.Npc.NpcRagdollProfile
+  Parts:
+  - Name: Pelvis
+    Kind: 0
+    Side: 0
+    Bone: mixamorig:Hips
+    Parent: -1
+    Mass: 5
+    Center: {x: 0, y: 0.045104086, z: 0.029001556}
+    Direction: 0
+    Radius: 0.14046262
+    Height: 0.29092523
+    Up: {x: 0, y: 1, z: 0}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 0
+    Axis: {x: 1, y: 0, z: 0}
+    Secondary: {x: 0, y: 1, z: 0}
+    LowX: 0
+    HighX: 0
+    LimitY: 0
+    LimitZ: 0
+    Reference: {x: 0, y: 0, z: 0, w: 1}
+    PosePosition: {x: 0, y: 0.82105917, z: -0.00000011920929}
+    PoseRotation: {x: -0, y: -0, z: -0, w: 1}
+    Handle: 2
+    Hint: "\u0442\u0430\u0437"
+  - Name: Chest
+    Kind: 1
+    Side: 0
+    Bone: mixamorig:Spine1
+    Parent: 0
+    Mass: 5.6
+    Center: {x: 0.00000020861626, y: 0.16905838, z: -0.017454132}
+    Direction: 0
+    Radius: 0.18199918
+    Height: 0.40472165
+    Up: {x: 0, y: 1, z: 0}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 1
+    Axis: {x: 1, y: 0, z: 0}
+    Secondary: {x: 0, y: 1, z: 0}
+    LowX: -25
+    HighX: 55
+    LimitY: 20
+    LimitZ: 25
+    Reference: {x: 0, y: 0, z: 0, w: 1}
+    PosePosition: {x: 0, y: 0.9910591, z: -0.00000011920929}
+    PoseRotation: {x: -0, y: -0, z: -0, w: 1}
+    Handle: 0
+    Hint: "\u0433\u0440\u0443\u0434\u044C"
+  - Name: Head
+    Kind: 2
+    Side: 0
+    Bone: mixamorig:Head
+    Parent: 1
+    Mass: 2.4
+    Center: {x: -0.00000012665987, y: 0.21363556, z: 0.019913737}
+    Direction: 1
+    Radius: 0.13941069
+    Height: 0.5672711
+    Up: {x: 0, y: 1, z: 0}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 1
+    Axis: {x: 1, y: 0, z: 0}
+    Secondary: {x: 0, y: 1, z: 0}
+    LowX: -40
+    HighX: 50
+    LimitY: 40
+    LimitZ: 30
+    Reference: {x: 0, y: 0, z: 0, w: 1}
+    PosePosition: {x: 0, y: 1.2510589, z: -0.00000011920929}
+    PoseRotation: {x: -0, y: -0, z: -0, w: 1}
+    Handle: 0
+    Hint: "\u0433\u043E\u043B\u043E\u0432\u0443"
+  - Name: UpperArm_L
+    Kind: 3
+    Side: 0
+    Bone: mixamorig:LeftArm
+    Parent: 1
+    Mass: 1.3
+    Center: {x: -0.000000037055855, y: 0.11500986, z: 0.000000015131427}
+    Direction: 1
+    Radius: 0.07484957
+    Height: 0.2898991
+    Up: {x: -0.0000002680391, y: 1.0000002, z: -0.000000070557455}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 2
+    Axis: {x: -0.0000002680391, y: 1.0000002, z: -0.000000070557455}
+    Secondary: {x: 0.99983096, y: 0.00000027980053, z: 0.018392917}
+    LowX: -50
+    HighX: 50
+    LimitY: 85
+    LimitZ: 85
+    Reference: {x: 0.4822457, y: -0.4822456, z: 0.5171451, w: 0.5171453}
+    PosePosition: {x: -0.19999996, y: 1.1660589, z: 0}
+    PoseRotation: {x: 0.69715023, y: -0.06932491, z: 0.7037003, w: 0.11824393}
+    Handle: 0
+    Hint: "\u043F\u043B\u0435\u0447\u043E"
+  - Name: ForeArm_L
+    Kind: 4
+    Side: 0
+    Bone: mixamorig:LeftForeArm
+    Parent: 3
+    Mass: 1
+    Center: {x: 0.00000002168006, y: 0.17783122, z: 0.000000027780503}
+    Direction: 1
+    Radius: 0.0540518
+    Height: 0.39890397
+    Up: {x: 0.00000012276266, y: 0.99999976, z: 0.00000004376803}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 1
+    Axis: {x: -0.0000002122584, y: 0.00000004103806, z: -0.99999994}
+    Secondary: {x: 0.00000012276266, y: 0.99999976, z: 0.00000004376803}
+    LowX: -13.498599
+    HighX: 126.5014
+    LimitY: 30
+    LimitZ: 10
+    Reference: {x: 0.0029787824, y: 0.031707916, z: -0.11767224, w: 0.9925417}
+    PosePosition: {x: -0.26051265, y: 0.9446824, z: 0.015480161}
+    PoseRotation: {x: 0.67814755, y: 0.0190728, z: 0.70684946, w: 0.20028949}
+    Handle: 0
+    Hint: "\u0440\u0443\u043A\u0443"
+  - Name: UpperArm_R
+    Kind: 3
+    Side: 1
+    Bone: mixamorig:RightArm
+    Parent: 1
+    Mass: 1.3
+    Center: {x: -0.0000000044972666, y: 0.11500966, z: -0.00000003529306}
+    Direction: 1
+    Radius: 0.07484822
+    Height: 0.28989792
+    Up: {x: 0.0000000033573955, y: 1.0000004, z: -0.000000043027}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 2
+    Axis: {x: 0.0000000033573955, y: 1.0000004, z: -0.000000043027}
+    Secondary: {x: -0.999831, y: 0.00000005148368, z: 0.018391648}
+    LowX: -50
+    HighX: 50
+    LimitY: 85
+    LimitZ: 85
+    Reference: {x: 0.48224583, y: 0.48224577, z: -0.51714516, w: 0.51714516}
+    PosePosition: {x: 0.19999996, y: 1.1660589, z: 0}
+    PoseRotation: {x: 0.6971507, y: 0.06932476, z: -0.7036998, w: 0.11824426}
+    Handle: 0
+    Hint: "\u043F\u043B\u0435\u0447\u043E"
+  - Name: ForeArm_R
+    Kind: 4
+    Side: 1
+    Bone: mixamorig:RightForeArm
+    Parent: 5
+    Mass: 1
+    Center: {x: -0.0000000031610767, y: 0.17776048, z: -0.00000004997657}
+    Direction: 1
+    Radius: 0.054145306
+    Height: 0.39883727
+    Up: {x: -0.000000026604852, y: 0.9999999, z: -0.00000029533368}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 1
+    Axis: {x: -0.0000013468589, y: 0.00000028883196, z: 1}
+    Secondary: {x: -0.000000026604852, y: 0.9999999, z: -0.00000029533368}
+    LowX: -13.498569
+    HighX: 126.501434
+    LimitY: 30
+    LimitZ: 10
+    Reference: {x: 0.0029786008, y: -0.031708047, z: 0.11767223, w: 0.99254173}
+    PosePosition: {x: 0.26051265, y: 0.9446826, z: 0.015480399}
+    PoseRotation: {x: 0.6781479, y: -0.01907289, z: -0.70684904, w: 0.20028988}
+    Handle: 0
+    Hint: "\u0440\u0443\u043A\u0443"
+  - Name: Thigh_L
+    Kind: 5
+    Side: 0
+    Bone: mixamorig:LeftUpLeg
+    Parent: 0
+    Mass: 3
+    Center: {x: 0.000000004697738, y: 0.18499994, z: -0.00000000125691}
+    Direction: 1
+    Radius: 0.08199998
+    Height: 0.43559995
+    Up: {x: 0.0000000028483722, y: 0.99999976, z: -0.0000000067941}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 1
+    Axis: {x: 0.99999976, y: -0.0000000028483749, z: -0.00000038923352}
+    Secondary: {x: 0.0000000028483722, y: 0.99999976, z: -0.0000000067941}
+    LowX: -20
+    HighX: 110
+    LimitY: 25
+    LimitZ: 35
+    Reference: {x: 0.00000019464642, y: 0, z: 0.99984765, w: 0.017452406}
+    PosePosition: {x: -0.1, y: 0.8010592, z: -0.00000011920929}
+    PoseRotation: {x: 0.00000019464642, y: -0, z: 0.99984765, w: 0.017452406}
+    Handle: 1
+    Hint: "\u0431\u0435\u0434\u0440\u043E"
+  - Name: Calf_L
+    Kind: 6
+    Side: 0
+    Bone: mixamorig:LeftLeg
+    Parent: 7
+    Mass: 2.2
+    Center: {x: -0.0000000036240029, y: 0.15749991, z: 0.0000000072099433}
+    Direction: 1
+    Radius: 0.044000622
+    Height: 0.35020044
+    Up: {x: -0.000000006240511, y: 0.9999997, z: 0.00000004577742}
+    BoxBone: mixamorig:LeftFoot
+    BoxCenter: {x: -0.0040424797, y: 0.0801959, z: 0.0027352837}
+    BoxRotation: {x: -0.0078049134, y: -0.4471455, z: -0.8942909, w: 0.015609886}
+    BoxSize: {x: 0.12738615, y: 0.08663218, z: 0.2847294}
+    BoxPoseCenter: {x: -0.12146905, y: 0.07043413, z: 0.06579779}
+    Joint: 1
+    Axis: {x: -0.99999976, y: -0.000000004597667, z: 0.000000089182926}
+    Secondary: {x: -0.000000006240511, y: 0.9999997, z: 0.00000004577742}
+    LowX: 0
+    HighX: 135
+    LimitY: 5
+    LimitZ: 5
+    Reference: {x: -0.0000000026331184, y: 0.00000015085128, z: 0.0000000018623614, w: 0.99999994}
+    PosePosition: {x: -0.11291282, y: 0.4312846, z: -0.00000011920929}
+    PoseRotation: {x: 0.00000004377216, y: -0, z: 0.99984765, w: 0.017452404}
+    Handle: 0
+    Hint: "\u043D\u043E\u0433\u0443"
+  - Name: Thigh_R
+    Kind: 5
+    Side: 1
+    Bone: mixamorig:RightUpLeg
+    Parent: 0
+    Mass: 3
+    Center: {x: -0.000000005386497, y: 0.18499994, z: 4.8712795e-10}
+    Direction: 1
+    Radius: 0.081999965
+    Height: 0.43559992
+    Up: {x: -0.000000006571393, y: 0.99999976, z: 0.0000000026331208}
+    BoxBone: 
+    BoxCenter: {x: 0, y: 0, z: 0}
+    BoxRotation: {x: 0, y: 0, z: 0, w: 1}
+    BoxSize: {x: 0, y: 0, z: 0}
+    BoxPoseCenter: {x: 0, y: 0, z: 0}
+    Joint: 1
+    Axis: {x: 0.99999976, y: 0.0000000065713937, z: -0.00000015085128}
+    Secondary: {x: -0.000000006571393, y: 0.99999976, z: 0.0000000026331208}
+    LowX: -20
+    HighX: 110
+    LimitY: 25
+    LimitZ: 35
+    Reference: {x: 0.00000007543713, y: 0, z: 0.99984765, w: -0.017452404}
+    PosePosition: {x: 0.1, y: 0.8010592, z: -0.00000011920929}
+    PoseRotation: {x: 0.00000007543713, y: -0, z: 0.99984765, w: -0.017452404}
+    Handle: 1
+    Hint: "\u0431\u0435\u0434\u0440\u043E"
+  - Name: Calf_R
+    Kind: 6
+    Side: 1
+    Bone: mixamorig:RightLeg
+    Parent: 9
+    Mass: 2.2
+    Center: {x: 0.00000000466409, y: 0.15749994, z: 0.000000007691218}
+    Direction: 1
+    Radius: 0.04400062
+    Height: 0.3502004
+    Up: {x: 0.0000000062405197, y: 0.9999997, z: 0.000000048833137}
+    BoxBone: mixamorig:RightFoot
+    BoxCenter: {x: -0.001445638, y: 0.080311485, z: 0.0025823514}
+    BoxRotation: {x: 0.0078049926, y: -0.4471455, z: -0.8942909, w: -0.015609926}
+    BoxSize: {x: 0.123817384, y: 0.08637419, z: 0.28359413}
+    BoxPoseCenter: {x: 0.12696052, y: 0.07043408, z: 0.065798506}
+    Joint: 1
+    Axis: {x: -0.99999976, y: 0.000000004597667, z: 0.00000008587905}
+    Secondary: {x: 0.0000000062405197, y: 0.9999997, z: 0.000000048833137}
+    LowX: 0
+    HighX: 135
+    LimitY: 5
+    LimitZ: 5
+    Reference: {x: 5.5262983e-10, y: 0.000000031660143, z: 0, w: 0.99999994}
+    PosePosition: {x: 0.11291282, y: 0.4312846, z: -0.00000011920929}
+    PoseRotation: {x: 0.00000004377216, y: -0, z: 0.99984765, w: -0.017452404}
+    Handle: 0
+    Hint: "\u043D\u043E\u0433\u0443"
+  LinearDamping: 0.05
+  AngularDamping: 0.6
+  MaxDepenetration: 3
+  MaxAngularVelocity: 20
+  SolverIterations: 12
+  SolverVelocityIterations: 4
+  SleepThreshold: 0.02
+  LimbInertiaScale: 1.5
+  StaticFriction: 1
+  DynamicFriction: 0.3
+  ProjectionDistance: 0.05
+  ProjectionAngle: 10
+  GoodForce: {x: 240, y: 260}
+  MediumForce: {x: 200, y: 220}
+  BadForce: {x: 150, y: 200}
+  CollarBand: 0.4
+  UseHoldMass: 1
+  HoldMass: 14
+  SpreadForce: 1
+  SpreadShare: 0.4
+  WeightRelief: 1
+  Relief:
+  - 0
+  - 0.2
+  - 0.35
+  - 0.45
+  BadHandleRelief: 0
+  CarryTone: 1
+  HeldSpring: 60
+  HeldMaxTorque: 40
+  HeldDamper: 2
+  CarryWaistSpring: 400
+  CarryHipSpring: 300
+  CarryMaxTorque: 90
+  CarryDamper: 20
+  CarryHipFlexion: 10
+  BoneMotionMax: 6
+  TrackRadius: 30
+  KnockSpin: 3
+  WakeBlend: 0.35
+  WakeBlendHead: 0.5
+  RollBlendScale: 1.8
+  GetUpBack:
+    State: GetUp_Back
+    Seconds: 2.8
+    HipsStart: {x: 0, y: 0.142908, z: 0}
+    Stable: 0.8006
+    Events: []
+    Role: GetUpBack
+    Speed: 0
+    Loop: 0
+  GetUpBelly:
+    State: GetUp_Belly
+    Seconds: 2.8
+    HipsStart: {x: 0, y: 0.201449, z: 0}
+    Stable: 0.7262
+    Events: []
+    Role: GetUpBelly
+    Speed: 0
+    Loop: 0
+  SitUp:
+    State: SitUp_Cargo
+    Seconds: 2.4
+    HipsStart: {x: 0, y: 0.307, z: 0}
+    Stable: 0
+    Events: []
+    Role: SitUp
+    Speed: 0
+    Loop: 0
+  SitIdle:
+    State: Cargo_Sit_Idle
+    Seconds: 4.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: SitIdle
+    Speed: 0
+    Loop: 1
+  Knock:
+    State: Cargo_Knock
+    Seconds: 3.3
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.62
+    - 0.78
+    - 0.94
+    - 1.1
+    - 1.4
+    Role: Knock
+    Speed: 0
+    Loop: 1
+  Scramble:
+    State: Escape_Scramble
+    Seconds: 0.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Scramble
+    Speed: 1.2
+    Loop: 1
+  JumpOut:
+    State: Cargo_JumpOut
+    Seconds: 1.1333
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.35
+    - 0.5667
+    Role: JumpOut
+    Speed: 3.2
+    Loop: 0
+  SeatYaw: 90
+  SeatOffset: {x: 0.00000035087646, y: -0, z: 0.11326944}
+  SeatMin: {x: -0.25874513, y: -0.46227586}
+  SeatMax: {x: 0.25874516, y: 0.46227586}
+  WalkSpeed: 1.5
+  RunSpeed: 3.2
+  Roles:
+  - State: Walk
+    Seconds: 0.6667
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Walk
+    Speed: 1.5
+    Loop: 1
+  - State: Run
+    Seconds: 0.3333
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Run
+    Speed: 4.5
+    Loop: 1
+  - State: Idle
+    Seconds: 4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Idle
+    Speed: 0
+    Loop: 1
+  - State: Idle_Bored
+    Seconds: 6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: IdleBored
+    Speed: 0
+    Loop: 1
+  - State: GetUp_Back
+    Seconds: 2.8
+    HipsStart: {x: 0, y: 0.142908, z: 0}
+    Stable: 0.8006
+    Events: []
+    Role: GetUpBack
+    Speed: 0
+    Loop: 0
+  - State: GetUp_Belly
+    Seconds: 2.8
+    HipsStart: {x: 0, y: 0.201449, z: 0}
+    Stable: 0.7262
+    Events: []
+    Role: GetUpBelly
+    Speed: 0
+    Loop: 0
+  - State: SitUp_Cargo
+    Seconds: 2.4
+    HipsStart: {x: 0, y: 0.307, z: 0}
+    Stable: 0
+    Events: []
+    Role: SitUp
+    Speed: 0
+    Loop: 0
+  - State: Cargo_Sit_Idle
+    Seconds: 4.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: SitIdle
+    Speed: 0
+    Loop: 1
+  - State: Cargo_Knock
+    Seconds: 3.3
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.62
+    - 0.78
+    - 0.94
+    - 1.1
+    - 1.4
+    Role: Knock
+    Speed: 0
+    Loop: 1
+  - State: Escape_Scramble_Start
+    Seconds: 0.8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: ScrambleStart
+    Speed: 0
+    Loop: 0
+  - State: Escape_Scramble
+    Seconds: 0.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Scramble
+    Speed: 1.2
+    Loop: 1
+  - State: Cargo_JumpOut
+    Seconds: 1.1333
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.35
+    - 0.5667
+    Role: JumpOut
+    Speed: 3.2
+    Loop: 0
+  - State: Flee_Run
+    Seconds: 0.5667
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 3.2
+    Loop: 1
+  - State: Struggle_Carried
+    Seconds: 1.6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Struggle
+    Speed: 0
+    Loop: 1
+  - State: Hit_React_Front
+    Seconds: 0.8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: HitFront
+    Speed: 0
+    Loop: 0
+  - State: Hit_React_Back
+    Seconds: 0.7667
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: HitBack
+    Speed: 0
+    Loop: 0
+  - State: Hit_React_Head
+    Seconds: 0.9
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: HitHead
+    Speed: 0
+    Loop: 0
+  - State: Stagger
+    Seconds: 1.4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Stagger
+    Speed: 0
+    Loop: 0
+  - State: Cop_Run
+    Seconds: 0.6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: RunCop
+    Speed: 3
+    Loop: 1
+  - State: Cop_Run_Fat
+    Seconds: 0.5667
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: RunCopFat
+    Speed: 1.8
+    Loop: 1
+  - State: Cop_Punch
+    Seconds: 1
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.45
+    Role: Punch
+    Speed: 0
+    Loop: 0
+  - State: Cop_Aim_Raise
+    Seconds: 0.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: AimRaise
+    Speed: 0
+    Loop: 0
+  - State: Cop_Aim
+    Seconds: 2
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Aim
+    Speed: 0
+    Loop: 1
+  - State: Cop_Trip
+    Seconds: 0.7333
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.7333
+    Role: Trip
+    Speed: 0
+    Loop: 0
+  - State: Cop_ShakeFist
+    Seconds: 2.2
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: ShakeFist
+    Speed: 0
+    Loop: 0
+  - State: BenchSit_Enter
+    Seconds: 2
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 1.12
+    Role: BenchSit/Enter
+    Speed: 0
+    Loop: 0
+  - State: BenchSit_Loop
+    Seconds: 7
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BenchSit/Loop
+    Speed: 0
+    Loop: 1
+  - State: BenchSit_Exit
+    Seconds: 1.7
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BenchSit/Exit
+    Speed: 0
+    Loop: 0
+  - State: BeachLie_Enter
+    Seconds: 2.9
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BeachLie/Enter
+    Speed: 0
+    Loop: 0
+  - State: BeachLie_Loop
+    Seconds: 7
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BeachLie/Loop
+    Speed: 0
+    Loop: 1
+  - State: BeachLie_Exit
+    Seconds: 3
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BeachLie/Exit
+    Speed: 0
+    Loop: 0
+  - State: SmokeCorner_Enter
+    Seconds: 1.9
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: SmokeCorner/Enter
+    Speed: 0
+    Loop: 0
+  - State: SmokeCorner_Loop
+    Seconds: 6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: SmokeCorner/Loop
+    Speed: 0
+    Loop: 1
+  - State: SmokeCorner_Exit
+    Seconds: 2.4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.55
+    - 0.98
+    Role: SmokeCorner/Exit
+    Speed: 0
+    Loop: 0
+  - State: PhoneTalk_Enter
+    Seconds: 1.3
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: ChurchSteps/Enter
+    Speed: 0
+    Loop: 0
+  - State: PhoneTalk_Loop
+    Seconds: 7
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: ChurchSteps/Loop
+    Speed: 0
+    Loop: 1
+  - State: PhoneTalk_Exit
+    Seconds: 1.4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: ChurchSteps/Exit
+    Speed: 0
+    Loop: 0
+  - State: BarDoor_Enter
+    Seconds: 1.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BarDoor/Enter
+    Speed: 0
+    Loop: 0
+  - State: BarDoor_Loop
+    Seconds: 7
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BarDoor/Loop
+    Speed: 0
+    Loop: 1
+  - State: BarDoor_Exit
+    Seconds: 1.3
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BarDoor/Exit
+    Speed: 0
+    Loop: 0
+  - State: ShopQueue_Loop
+    Seconds: 6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 3.25
+    - 3.5833
+    - 3.9167
+    Role: ShopQueue/Loop
+    Speed: 0
+    Loop: 1
+  - State: BusWait_Loop
+    Seconds: 6.5
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: BusWait/Loop
+    Speed: 0
+    Loop: 1
+  - State: KioskBuy
+    Seconds: 4.6
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 2.7
+    - 3.3
+    Role: Kiosk/Enter
+    Speed: 0
+    Loop: 0
+  - State: Chat_Loop
+    Seconds: 8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Playground/Loop
+    Speed: 0
+    Loop: 1
+  - State: Chat_Loop_Mirror
+    Seconds: 8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: Idle_Variant_A
+    Seconds: 4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: IdleA
+    Speed: 0
+    Loop: 1
+  - State: Idle_Variant_B
+    Seconds: 4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: GetUp_Back_v02
+    Seconds: 2.6
+    HipsStart: {x: 0, y: 0.307, z: 0}
+    Stable: 0.7
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: GetUp_Belly_v02
+    Seconds: 2.5
+    HipsStart: {x: 0, y: 0.24, z: 0}
+    Stable: 0.7
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: SitUp_Cargo_v03
+    Seconds: 2.1
+    HipsStart: {x: 0, y: 0.307, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 0
+  - State: Cargo_Sit_Idle_v03
+    Seconds: 4
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: Cargo_Knock_v03
+    Seconds: 2.8
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events:
+    - 0.84
+    - 1.22
+    - 1.63
+    Role: 
+    Speed: 0
+    Loop: 1
+  - State: Kiosk_Wait
+    Seconds: 6.0000005
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: Kiosk/Loop
+    Speed: 0
+    Loop: 1
+  - State: CasinoDoor_Wait
+    Seconds: 6.5000005
+    HipsStart: {x: 0, y: 0, z: 0}
+    Stable: 0
+    Events: []
+    Role: CasinoDoor/Loop
+    Speed: 0
+    Loop: 1
+  Placements:
+  - Activity: BenchSit
+    Prop: bench
+    Height: 0.3
+    Gap: 0.1
+    Reach: 1
+  - Activity: BarDoor
+    Prop: 
+    Height: 1
+    Gap: 0.36
+    Reach: 1.5
+  KnockInterval: {x: 4, y: 9}
+  KnockVanSpeed: 2
+  KnockVolume: 0.45
+  SettleSpeed: 0.5
+  SettleMax: 1
+  SideLimit: 0.3
+  SideRollTime: 0.3
+  SideRollAccel: 14
+  GetUpCrawlTime: 0.5
+  GetUpRetries: 3
+  GetUpCrawlPush: 40
+  GetUpCrawlHop: 0.6
+  HitPartSpeed: 6
+  DoorPartAccel: 30
+  DoorPartShove: 1.5
+  Struggle: 1
+  GroggyTone: 30
+  HeadLift: 30
+  LookAround: 35
+  PawSpring: 40
+  PawAmplitude: 35
+  PawFrequency: {x: 0.6, y: 1.2}
+  LegSpring: 30
+  LegAmplitude: 25
+  HeldAmplitude: 1.5
+  Wriggle: 10
+  KickSpring: 250
+  KickMaxTorque: 60
+  KickSeconds: 0.25
+  KickPartSpeed: 3
+  CrawlSpeed: 0.5
+  CrawlMaxForce: 320
+  CrawlCycle: 0.9
+  CrawlSpring: 60
+  CrawlVeer: 60
+  HopSeconds: 0.45
+  HopReach: 0.7
+  HopApex: 0.2
+  StumblePitch: 2.5
+  StumbleFeet: 0.2

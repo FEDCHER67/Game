@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OnlyVolunteers.Audio;
+using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Player.Physics;
 using OnlyVolunteers.Vehicles;
 using UnityEngine;
@@ -17,23 +18,32 @@ namespace OnlyVolunteers.Map
     // PointLocal are only anatomical landmarks now: GreyboxVanCargo's in-bay test (pelvis, collar), GreyboxNpc's ankle
     // kicks and Tear's preference.
     // Lever rule, no lift assist: lying stunned the body weighs DownedMass (28 kg, W 275 N); awake (sitting in the bay,
-    // escaping) it has Mass (40 kg). PhysicsGrabber holds a claim with NpcGrabProfile: up to 200 N up/down and 220 N
-    // sideways per hand, spring 1200, damping ratio 0.6. A body lying on the ground turns about the centre of its other
-    // end cap (0.28 m from the feet; 1.22 m from the feet for the head end), at any tilt, its centre of mass 0.47 m from that
-    // pivot. Lifting a point s (m from the feet) on the head side needs W*0.47/(s-0.28), on the foot side W*0.47/(1.22-s),
-    // at the centre of mass the whole W:
-    // - head top 110 N, collar 127 N, shin 133 N, ankle 113 N: one hand lifts them easily (55-67% of its 200 N);
-    // - between 0.574 and 0.926 m (hips, belly; the hint adds "тяжело") one hand is not enough and the point stays down;
-    //   two hands there (400 N) lift it;
-    // - one hand never lifts the whole body clear (200 N < W), two at the ends carry it (collar 151 N + ankle 124 N).
-    // Grip: static 1.6, sliding 0.5, combined by Average: ~1.1 / 0.55 on default ground (0.6), so the far end pivots
-    // instead of sliding. The van's floor, bumper top, steps and rear wheel housings use a Minimum-combined 0.3 material
-    // (VanInteriorColliders), which wins over Average, so a body leaning on the floor edge slides in when pushed.
+    // escaping) it has Mass (40 kg). PhysicsGrabber holds a claim with NpcGrabProfile: up to 240 N up/down and 260 N
+    // sideways per hand (third playtest, 2026-10-06; was 200/220), spring 1200, damping ratio 0.6. A body lying on the
+    // ground turns about the centre of its other end cap (0.28 m from the feet; 1.22 m from the feet for the head end), at
+    // any tilt, its centre of mass 0.47 m from that pivot. Lifting a point s (m from the feet) on the head side needs
+    // W*0.47/(s-0.28), on the foot side W*0.47/(1.22-s), at the centre of mass the whole W:
+    // - head top 110 N, collar 127 N, chest (0.95) 193 N, shin 133 N, ankle 113 N: one hand lifts them (45-80% of 240 N);
+    // - between 0.68 and 0.82 m (the hips; the hint adds "тяжело") one hand is not enough and the point stays down
+    //   (pelvis 0.80: 249 N); two hands there (480 N) lift it;
+    // - one hand never lifts the whole body clear (240 N < W), two carry it: collar + ankle 151 + 124 N, chest (0.95) +
+    //   shin (0.20) 202 + 73 N, so "arms and legs" works from the chest up.
+    // Grip: static 1.0, sliding 0.3, combined by Average: 0.8 / 0.45 on default ground (0.6): a flat body needs 220 N to
+    // start sliding (one hand's 260 N gets it going; measured ~190 N in a probe) and 124 N to keep sliding, 118 / 67 N
+    // with an end lifted, so a lifted end drags at a walk and the far end still pivots in an arc lift. These numbers hold
+    // only with Improved Patch Friction on (ProjectSettings/DynamicsManager, since 2026-10-06): with the legacy patch
+    // friction a lying capsule needed ~245 N to start and ~207 N to keep going whatever its material said, so a body
+    // pulled flat by the collar did not move at all. The van's floor, bumper top, steps and rear wheel housings use a
+    // Minimum-combined 0.3 material (VanInteriorColliders), which wins over Average, so a body leaning on the floor edge
+    // slides in when pushed.
     // The NPC logic can take any claim back (RevokeAll on waking, Tear when it kicks free). F9 debug pins (TogglePin) are
     // holders too: they stand in for a second or third player offline.
     // State is plain data (Claims, HolderCount, Grabbable) for a network version later.
+    // Stage 9: one of the two downed bodies (INpcBody, Characters/Npc): the capsule; the other is the 11-body NpcRagdoll
+    // (F10 picks which one a knockdown gets). Seated and escaping NPCs always use this capsule. The cargo members
+    // (Landmark, MaxRelativeSpeed, DampToward, MoveRigid, PlaceLying) are GreyboxVanCargo's stage-1 code moved here.
     [DisallowMultipleComponent]
-    public sealed class GreyboxNpcBody : MonoBehaviour, IGrabPointTarget
+    public sealed class GreyboxNpcBody : MonoBehaviour, IGrabPointTarget, INpcBody
     {
         public enum Point { Collar, LeftWrist, RightWrist, Pelvis, LeftAnkle, RightAnkle }
 
@@ -76,10 +86,11 @@ namespace OnlyVolunteers.Map
         public float SeatedHeight = 1.0f;
         [Tooltip("m/s: a sitter knocked down with no room to lie flat grows back to full length this fast (SetSeated).")]
         public float UnseatGrowSpeed = 2f;
-        [Tooltip("Sliding friction (dragging along the ground or the cargo floor).")]
-        public float Friction = 0.5f;
-        [Tooltip("Static friction: holds the far end in place while the other end is lifted, so the body pivots on it.")]
-        public float StaticFriction = 1.6f;
+        [Tooltip("Sliding friction (dragging along the ground or the cargo floor): 0.45 combined on default ground.")]
+        public float Friction = 0.3f;
+        [Tooltip("Static friction: holds the far end in place while the other end is lifted, so the body pivots on it " +
+                 "(0.8 combined on default ground: a flat body, 220 N, starts under one hand's 260 N).")]
+        public float StaticFriction = 1.0f;
         [Tooltip("Per second, only around the body's long axis: a lone capsule would otherwise roll away like a log.")]
         public float RollDamping = 4f;
         [Header("Sound (optional, Sfx)")]
@@ -162,6 +173,81 @@ namespace OnlyVolunteers.Map
             }
         }
 
+        // INpcBody (stage 9): the same capsule behind the shared interface; nothing changes for the capsule.
+        bool INpcBody.Grabbable
+        {
+            get => Grabbable;
+            set => Grabbable = value;
+        }
+
+        bool INpcBody.OnlyLegsHeld => OnlyAnklesHeld;
+        Rigidbody INpcBody.MainBody => _rb;
+        void INpcBody.Kick(NpcSide side, Vector3 impulse) => Kick(side == NpcSide.Left ? Point.LeftAnkle : Point.RightAnkle, impulse);
+
+        bool INpcBody.Tear(NpcLandmark preferred) => Tear(preferred switch
+        {
+            NpcLandmark.Pelvis => Point.Pelvis,
+            NpcLandmark.LeftAnkle => Point.LeftAnkle,
+            NpcLandmark.RightAnkle => Point.RightAnkle,
+            _ => Point.Collar,
+        });
+
+        /// <summary>World position of a landmark (physics pose): the stage-1 points; the head is the centre of the head
+        /// end's cap.</summary>
+        public Vector3 Landmark(NpcLandmark landmark) => landmark switch
+        {
+            NpcLandmark.Pelvis => PointWorld((int)Point.Pelvis),
+            NpcLandmark.Collar => PointWorld((int)Point.Collar),
+            NpcLandmark.LeftAnkle => PointWorld((int)Point.LeftAnkle),
+            NpcLandmark.RightAnkle => PointWorld((int)Point.RightAnkle),
+            _ => _rb != null
+                ? _rb.position + _rb.rotation * new Vector3(0f, Height - Radius, 0f)
+                : transform.TransformPoint(0f, Height - Radius, 0f),
+        };
+
+        // ---------- Cargo (INpcBody, GreyboxVanCargo; stage-1 behaviour unchanged) ----------
+
+        /// <summary>Its velocity relative to the frame's at its centre of mass (one body: the cargo bay's rest test).</summary>
+        public float MaxRelativeSpeed(Func<Vector3, Vector3> frameVelocity)
+        {
+            if (_rb == null) return 0f;
+            Vector3 frame = frameVelocity != null ? frameVelocity(_rb.worldCenterOfMass) : Vector3.zero;
+            return (_rb.linearVelocity - frame).magnitude;
+        }
+
+        public void DampToward(Func<Vector3, Vector3> frameVelocity, float perSecond, float settledSpeed)
+        {
+            if (_rb == null || frameVelocity == null) return;
+            Vector3 relative = _rb.linearVelocity - frameVelocity(_rb.worldCenterOfMass);
+            if (relative.sqrMagnitude > settledSpeed * settledSpeed) _rb.AddForce(-relative * (_rb.mass * perSecond));
+        }
+
+        public void MoveRigid(Vector3 fromPos, Quaternion fromRot, Vector3 toPos, Quaternion toRot, Vector3 velocity)
+        {
+            if (_rb == null) return;
+            Quaternion turn = toRot * Quaternion.Inverse(fromRot);
+            Vector3 p = toPos + turn * (_rb.position - fromPos);
+            Quaternion r = turn * _rb.rotation;
+            _rb.position = p;
+            _rb.rotation = r;
+            transform.SetPositionAndRotation(p, r);
+            _rb.linearVelocity = velocity;
+            _rb.angularVelocity = Vector3.zero;
+        }
+
+        /// <summary>Lying along 'flatForward', its middle over 'ground', the axis one radius (and a little) above it.</summary>
+        public void PlaceLying(Vector3 ground, Vector3 flatForward)
+        {
+            if (_rb == null) return;
+            Quaternion r = Quaternion.FromToRotation(Vector3.up, flatForward);
+            Vector3 root = ground + Vector3.up * (Radius + 0.05f) - flatForward * (Height * 0.5f);
+            _rb.position = root;
+            _rb.rotation = r;
+            transform.SetPositionAndRotation(root, r);
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
+
         // From the physics pose when there is a body (the transform shows the interpolated one).
         public Vector3 PointWorld(int point) =>
             _rb != null ? _rb.position + _rb.rotation * PointLocal[point] : transform.TransformPoint(PointLocal[point]);
@@ -182,8 +268,8 @@ namespace OnlyVolunteers.Map
                 _fallbackProfile.hideFlags = HideFlags.DontSave;
                 JsonUtility.FromJsonOverwrite(
                     "{\"acquireDistance\":2.2,\"holdDistance\":2.5,\"springStrength\":1200,\"dampingRatio\":0.6," +
-                    "\"maxForce\":200,\"maxLinearSpeed\":4.5,\"maxAngularSpeed\":8,\"breakDistance\":2.2," +
-                    "\"soloHorizontalMaxForce\":220," +
+                    "\"maxForce\":240,\"maxLinearSpeed\":6,\"maxAngularSpeed\":8,\"breakDistance\":2.2," +
+                    "\"soloHorizontalMaxForce\":260," +
                     "\"acquisitionLayers\":{\"m_Bits\":" + OvLayers.NpcMask + "}}", _fallbackProfile);
                 return _fallbackProfile;
             }
@@ -217,6 +303,9 @@ namespace OnlyVolunteers.Map
             gameObject.layer = OvLayers.NpcBody;
             _capsule.enabled = true;
             _capsule.sharedMaterial = Material;
+            // Stage 9 step 4 (GPT review finding 3): a lying body meets police cars (they exclude the NPC layers for the
+            // standing crowd's sake); sitters and escapers in the bay do not (SeatedShape).
+            NpcRagdoll.CollideWithVehicles(_capsule, true);
             SetShape(Height);
             _rb.mass = DownedMass;
             _rb.linearDamping = LinearDamping;
@@ -265,11 +354,7 @@ namespace OnlyVolunteers.Map
                 if (facing.sqrMagnitude < 1e-4f) facing = Flat(_rb.rotation * Vector3.forward);
                 rotation = facing.sqrMagnitude > 1e-4f ? Quaternion.LookRotation(facing.normalized) : Quaternion.identity;
                 position = centre - Vector3.up * (Radius - 0.02f);
-                _growing = false;
-                SetShape(SeatedHeight);
-                _rb.mass = Mass;
-                _rb.constraints = RigidbodyConstraints.FreezeRotation;
-                gameObject.layer = OvLayers.NpcSeated;
+                SeatedShape();
             }
             else
             {
@@ -290,12 +375,39 @@ namespace OnlyVolunteers.Map
                 _rb.mass = DownedMass;
                 _rb.constraints = RigidbodyConstraints.None;
                 gameObject.layer = OvLayers.NpcBody;
+                NpcRagdoll.CollideWithVehicles(_capsule, true);
             }
             _rb.angularVelocity = Vector3.zero;
             _rb.position = position;
             _rb.rotation = rotation;
             transform.SetPositionAndRotation(position, rotation);
             _rb.WakeUp();
+        }
+
+        /// <summary>Stage 9: straight into the seated capsule at a given pose, moving with 'velocity' (a ragdoll sitting up
+        /// in the cargo bay: NpcGetUp picks where it will sit; the van's velocity there).</summary>
+        public void ActivateSeated(Vector3 position, Quaternion rotation, Vector3 velocity)
+        {
+            Activate(velocity, Vector3.zero);
+            _seated = true;
+            SeatedShape();
+            _rb.position = position;
+            _rb.rotation = rotation;
+            transform.SetPositionAndRotation(position, rotation);
+            _rb.linearVelocity = velocity;
+            _rb.angularVelocity = Vector3.zero;
+            _rb.WakeUp();
+        }
+
+        // Sitting: the 1 m upright capsule, awake mass, rotation frozen (GreyboxVanCargo turns it), layer NpcSeated.
+        private void SeatedShape()
+        {
+            _growing = false;
+            SetShape(SeatedHeight);
+            _rb.mass = Mass;
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
+            gameObject.layer = OvLayers.NpcSeated;
+            NpcRagdoll.CollideWithVehicles(_capsule, false);
         }
 
         private void SetShape(float height) => SetShape(height, height * 0.5f);

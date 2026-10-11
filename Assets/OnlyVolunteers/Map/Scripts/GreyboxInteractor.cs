@@ -1,4 +1,5 @@
 using OnlyVolunteers.Audio;
+using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Inventory;
 using OnlyVolunteers.Player.Physics;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace OnlyVolunteers.Map
     // NPC, that the mouse wheel moves the hold nearer or farther (the hotbar's wheel is switched off meanwhile).
     // F9 (offline test aid): pins the point under the crosshair at hand height, as if another player held it; F9 within
     // 0.25 m of a pin drops that pin, F9 at nothing drops all of them.
+    // F10 (stage 9 A/B switch): whether the next NPC knocked down lies as the stage-1 capsule or as the 11-body ragdoll
+    // (NpcRagdoll.Mode; every Play session starts with the capsule). A ragdoll can be grabbed by any part: the hint names
+    // the part (head, collar, arm, leg...), "— тяжело" on the pelvis and belly.
     // E does the most specific thing in reach, in this order: in the cargo bay next to the sliding door, its inside handle
     // (canon section 151); pick up an item (the item draws its own "— E" label); open/close the cargo door on that side
     // (the driver works them with 1-4 and F); get into the driver's seat.
@@ -49,6 +53,7 @@ namespace OnlyVolunteers.Map
         private string _grabHint;
         private PhysicsGrabber _grabber;
         private bool _inventoryMuted; // switched InventoryInput off while an NPC body is held (it cycles slots on the wheel)
+        private float _bodyModeShownUntil; // F10: the new mode shows on screen until then (unscaled time)
 
         public WeaponStun CurrentWeapon => Weapon != null ? Weapon : WeaponStun.Fist;
 
@@ -82,6 +87,7 @@ namespace OnlyVolunteers.Map
             _grabHint = GrabHint();
             MuteInventoryWheel();
             if (Input.GetKeyDown(KeyCode.F9)) TogglePin();
+            if (Input.GetKeyDown(KeyCode.F10)) ToggleBodyMode();
 
             (_act, _label) = Resolve();
             if (Input.GetKeyDown(KeyCode.E) && GreyboxInput.EFree) Do(_act);
@@ -233,18 +239,34 @@ namespace OnlyVolunteers.Map
         {
             if (_grabber == null || !_grabber.isActiveAndEnabled || Pawn.ViewCamera == null) return null;
             if (_grabber.IsHolding)
-                return _grabber.GrabbedBody != null && _grabber.GrabbedBody.TryGetComponent(out GreyboxNpcBody _)
-                    ? "колесо — ближе/дальше"
-                    : null;
+                return HoldsNpc() ? "колесо — ближе/дальше" : null;
             Transform eye = Pawn.ViewCamera.transform;
             // Same mask as PhysicsGrabber.TryAcquire: everything but VehicleInterior (the van's invisible step ramps).
             if (!Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, GrabHintReach, ~(1 << OvLayers.VehicleInterior),
                     QueryTriggerInteraction.Ignore))
                 return null;
-            if (hit.rigidbody == null || !hit.rigidbody.TryGetComponent(out GreyboxNpcBody body)) return null;
-            if (hit.distance > body.Profile.AcquireDistance) return null;
-            string zone = body.GrabHintName(hit.point);
+            if (hit.rigidbody == null) return null;
+            string zone;
+            // Stage 9: a ragdoll part names itself (NpcRagdoll.GrabHintName).
+            if (hit.rigidbody.TryGetComponent(out NpcRagdollPart part) && part.Owner != null)
+            {
+                if (hit.distance > part.Owner.GrabReach) return null;
+                zone = part.Owner.GrabHintName(hit.collider, hit.point);
+            }
+            else
+            {
+                if (!hit.rigidbody.TryGetComponent(out GreyboxNpcBody body)) return null;
+                if (hit.distance > body.Profile.AcquireDistance) return null;
+                zone = body.GrabHintName(hit.point);
+            }
             return zone != null ? $"ЛКМ — взять за {zone}" : null;
+        }
+
+        // Holding a downed NPC: its capsule or any part of its ragdoll.
+        private bool HoldsNpc()
+        {
+            Rigidbody held = _grabber != null && _grabber.IsHolding ? _grabber.GrabbedBody : null;
+            return held != null && (held.TryGetComponent(out GreyboxNpcBody _) || held.TryGetComponent(out NpcRagdollPart _));
         }
 
         // The wheel moves a held NPC point nearer or farther (PhysicsGrabber) and also cycles Vadim's hotbar
@@ -252,8 +274,7 @@ namespace OnlyVolunteers.Map
         // its actions off), and back on once let go. Only what this script switched off is switched back on.
         private void MuteInventoryWheel()
         {
-            bool npcHold = _grabber != null && _grabber.IsHolding && _grabber.GrabbedBody != null &&
-                           _grabber.GrabbedBody.TryGetComponent(out GreyboxNpcBody _);
+            bool npcHold = HoldsNpc();
             if (npcHold && !_inventoryMuted && InventoryInput != null && InventoryInput.enabled)
             {
                 InventoryInput.enabled = false;
@@ -280,19 +301,45 @@ namespace OnlyVolunteers.Map
             else if (Camera.main != null) ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             else return;
             if (Physics.Raycast(ray, out RaycastHit hit, PinReach, OvLayers.NpcMask, QueryTriggerInteraction.Ignore) &&
-                hit.rigidbody != null && hit.rigidbody.TryGetComponent(out GreyboxNpcBody body))
+                hit.rigidbody != null)
             {
-                body.TogglePin(hit.point, PinLift);
-                return;
+                if (hit.rigidbody.TryGetComponent(out NpcRagdollPart part) && part.Owner != null)
+                {
+                    part.Owner.TogglePin(hit.collider, hit.point, PinLift);
+                    return;
+                }
+                if (hit.rigidbody.TryGetComponent(out GreyboxNpcBody body))
+                {
+                    body.TogglePin(hit.point, PinLift);
+                    return;
+                }
             }
             foreach (GreyboxNpc npc in GreyboxNpc.All)
-                if (npc != null && npc.Body != null) npc.Body.UnpinAll();
+            {
+                if (npc == null) continue;
+                if (npc.Body != null) npc.Body.UnpinAll();
+                if (npc.Ragdoll != null) npc.Ragdoll.UnpinAll();
+            }
+        }
+
+        // F10: capsule <-> ragdoll for the next knockdown (bodies already lying keep theirs).
+        private void ToggleBodyMode()
+        {
+            NpcRagdoll.Mode = NpcRagdoll.Mode == NpcBodyMode.Ragdoll ? NpcBodyMode.Capsule : NpcBodyMode.Ragdoll;
+            _bodyModeShownUntil = Time.unscaledTime + 3f;
+            Debug.Log($"[NPC] F10: the next knockdown lies as {(NpcRagdoll.Mode == NpcBodyMode.Ragdoll ? "the ragdoll" : "the capsule")}");
         }
 
         private static Vector3 Flat(Vector3 v) => new(v.x, 0f, v.z);
 
         private void OnGUI()
         {
+            if (Time.unscaledTime < _bodyModeShownUntil)
+            {
+                var top = new GUIStyle(GUI.skin.label) { fontSize = 20, alignment = TextAnchor.MiddleCenter };
+                string mode = NpcRagdoll.Mode == NpcBodyMode.Ragdoll ? "тряпичная кукла" : "капсула (как раньше)";
+                GUI.Label(new Rect(0f, 60f, Screen.width, 30f), $"F10 — тело NPC: {mode}, со следующего удара", top);
+            }
             string hint = _label;
             if (_grabHint != null) hint = hint == null ? _grabHint : $"{hint}     {_grabHint}";
             if (_canHit)

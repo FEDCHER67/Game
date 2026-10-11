@@ -5891,9 +5891,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -5917,19 +5919,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -5938,6 +5940,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -16878,9 +16883,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -16904,19 +16911,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -16925,6 +16932,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -19420,9 +19430,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -19446,19 +19458,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -19467,6 +19479,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -27190,9 +27205,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -27216,19 +27233,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -27237,6 +27254,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -29243,9 +29263,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -29269,19 +29291,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -29290,6 +29312,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -30378,9 +30403,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -30404,19 +30431,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -30425,6 +30452,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -35350,9 +35380,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -35376,19 +35408,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -35397,6 +35429,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -39855,9 +39890,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -39881,19 +39918,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -39902,6 +39939,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -40118,9 +40158,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -40144,19 +40186,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -40165,6 +40207,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -41351,9 +41396,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -41377,19 +41424,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -41398,6 +41445,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -43315,9 +43365,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -43341,19 +43393,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -43362,6 +43414,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -45594,6 +45649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 636468371}
   - component: {fileID: 636468370}
+  - component: {fileID: 636468372}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -45681,6 +45737,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &636468372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636468369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1001 &640532195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46468,9 +46553,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -46494,19 +46581,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -46515,6 +46602,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -46731,9 +46821,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -46757,19 +46849,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -46778,6 +46870,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -51323,9 +51418,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -51349,19 +51446,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -51370,6 +51467,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -54317,9 +54417,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -54343,19 +54445,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -54364,6 +54466,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -62577,9 +62682,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -62603,19 +62710,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -62624,6 +62731,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -65786,9 +65896,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -65812,19 +65924,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -65833,6 +65945,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -68077,9 +68192,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -68103,19 +68220,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -68124,6 +68241,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -70214,9 +70334,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -70240,19 +70362,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -70261,6 +70383,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -73793,9 +73918,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -73819,19 +73946,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -73840,6 +73967,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -80243,9 +80373,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -80269,19 +80401,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -80290,6 +80422,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -85653,9 +85788,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -85679,19 +85816,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -85700,6 +85837,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -86378,6 +86518,7 @@ MonoBehaviour:
   capacity: 12
   reach: 2.5
   startCash: 500
+  dropThrowSpeed: 1.5
 --- !u!114 &1229151076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88392,9 +88533,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -88418,19 +88561,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -88439,6 +88582,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -91377,9 +91523,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -91403,19 +91551,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -91424,6 +91572,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -93435,9 +93586,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -93461,19 +93614,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -93482,6 +93635,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -93586,9 +93742,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -93612,19 +93770,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -93633,6 +93791,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -95086,9 +95247,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -95112,19 +95275,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -95133,6 +95296,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -102132,6 +102298,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Map.GreyboxKccPawn
   CapsuleRadius: 0.35
+  StepLength: 2
+  RunStepLength: 2.75
+  WalkSpeed: 4.7
+  RunSpeed: 8.2
+  CrouchVolume: 0.4
+  LandingSpeed: 5
 --- !u!1 &1473443445
 GameObject:
   m_ObjectHideFlags: 0
@@ -108526,9 +108698,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -108552,19 +108726,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -108573,6 +108747,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -113367,9 +113544,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -113393,19 +113572,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -113414,6 +113593,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -115139,9 +115321,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -115165,19 +115349,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -115186,6 +115370,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -121835,9 +122022,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -121861,19 +122050,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -121882,6 +122071,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -125530,9 +125722,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -125556,19 +125750,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -125577,6 +125771,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -127825,9 +128022,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -127851,19 +128050,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -127872,6 +128071,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -133255,9 +133457,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -133281,19 +133485,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -133302,6 +133506,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -137946,9 +138153,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -137972,19 +138181,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -137993,6 +138202,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0
@@ -138861,9 +139073,11 @@ MonoBehaviour:
   Radius: 0.28
   SeatedHeight: 1
   UnseatGrowSpeed: 2
-  Friction: 0.5
-  StaticFriction: 1.6
+  Friction: 0.3
+  StaticFriction: 1
   RollDamping: 4
+  ThudMinSpeed: 1.2
+  ThudFullSpeed: 6
   _rb: {fileID: 0}
   _capsule: {fileID: 0}
   _seated: 0
@@ -138887,19 +139101,19 @@ MonoBehaviour:
   KnockSpeedKmh: 15
   HitImpulse: 60
   ReStunConditionCost: 5
-  OutShare: 0.5
-  KickInterval: {x: 0.8, y: 1.5}
+  OutShare: 0.6
+  KickInterval: {x: 1, y: 1.8}
   KickImpulse: 25
   KickTearChance:
   - 0
-  - 0.35
-  - 0.15
+  - 0.2
+  - 0.05
   - 0
   CrawlForce: 80
   CrawlPeriod: 0.6
   CrawlHop: 0.6
   EscapeCrawlForce: 120
-  ImpactWakeSpeed: 4.5
+  ImpactWakeSpeed: 5.5
   ImpactConditionCost: 5
   EarlyWakeLeft: 1
   ImpactGrace: 1.5
@@ -138908,6 +139122,9 @@ MonoBehaviour:
   VanKnockIgnore: 0.5
   LostCarrierMargin: 1
   SeatedVisualDrop: 0.4
+  ScreamCooldown: 6
+  MumbleInterval: {x: 2.5, y: 5}
+  WhimperInterval: {x: 4, y: 9}
   State: 0
   Phase: 0
   StunLeft: 0

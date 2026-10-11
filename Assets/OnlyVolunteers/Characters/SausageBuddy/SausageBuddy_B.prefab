@@ -2079,6 +2079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5109861055613089295}
   - component: {fileID: 2029286626006838591}
+  - component: {fileID: 8492654131363085485}
   m_Layer: 0
   m_Name: SausageBuddy_B
   m_TagString: Untagged
@@ -2127,6 +2128,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8492654131363085485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6893215535704209019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799461c1818bdce4b9a4bb0e43b66d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Characters.Npc.NpcRig
+  Ragdoll: {fileID: 11400000, guid: 9a4b6a8e3e5a81442b3267f9b6641f1c, type: 2}
+  Animator: {fileID: 2029286626006838591}
 --- !u!1 &6944327232466586452
 GameObject:
   m_ObjectHideFlags: 0

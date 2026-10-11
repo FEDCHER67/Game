@@ -1,0 +1,435 @@
+{
+  "family": "SK2-HOUSES-001",
+  "kit": "STYLE_KIT_v2",
+  "style_bible": "v2",
+  "bible_date": "2026-10-06",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root mesh of every asset: centre of the base on the ground (0, 0, 0)",
+  "palette": "_lib/Look_Palette_v2.png (+ .json): UV0 inside the swatch cell; alpha = smoothness",
+  "description": "Houses v2: old-town houses A (2 floors) and B (3 floors), mid-rise block (5 floors), panel-block section (5 floors) - facade grammar of bible 7",
+  "assets": {
+    "HS_OldTown_A": {
+      "triangles": 2876,
+      "triangle_budget": [
+        1,
+        3500
+      ],
+      "size_m": [
+        12.62,
+        9.82,
+        11.091
+      ],
+      "bounds_min": [
+        -6.31,
+        -5.12,
+        0.0
+      ],
+      "bounds_max": [
+        6.31,
+        4.7,
+        11.091
+      ],
+      "swatches": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "glass.light",
+        "grey",
+        "paving",
+        "red",
+        "terracotta",
+        "terracotta.dark"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "cream",
+        "glass",
+        "grey",
+        "paving",
+        "red",
+        "terracotta"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "f3fb14231db830ccd7532b0ff9a703b270e9bdaf",
+      "objects": {
+        "HS_OldTown_A": {
+          "triangles": 2876,
+          "vertices": 1800,
+          "faces": 1603,
+          "shells": 181,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_3500": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true,
+        "roof_wall_dL_ge_15": true,
+        "roof_allowed_for_wall_2_6": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "cream",
+        "roof": "terracotta",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "red",
+        "accent": "red"
+      },
+      "form": "2 floors, gable roof",
+      "wall_L": 88.4,
+      "extra_checks": {
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true,
+        "roof_wall_dL_ge_15": true,
+        "roof_allowed_for_wall_2_6": true
+      },
+      "fbx": "HS_OldTown_A_v01.fbx"
+    },
+    "HS_OldTown_B": {
+      "triangles": 2712,
+      "triangle_budget": [
+        1,
+        3500
+      ],
+      "size_m": [
+        9.8,
+        9.82,
+        13.844
+      ],
+      "bounds_min": [
+        -4.9,
+        -5.12,
+        0.0
+      ],
+      "bounds_max": [
+        4.9,
+        4.7,
+        13.844
+      ],
+      "swatches": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "coral",
+        "glass",
+        "glass.light",
+        "grey",
+        "paving",
+        "slate",
+        "slate.dark",
+        "wood"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "brick",
+        "chalk",
+        "coral",
+        "glass",
+        "grey",
+        "paving",
+        "slate",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b9953c37532bd0cef08da308bed7c46e09c00df7",
+      "objects": {
+        "HS_OldTown_B": {
+          "triangles": 2712,
+          "vertices": 1726,
+          "faces": 1463,
+          "shells": 185,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_3500": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true,
+        "roof_wall_dL_ge_15": true,
+        "roof_allowed_for_wall_2_6": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "oldtown",
+        "wall": "coral",
+        "roof": "slate",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": null
+      },
+      "form": "3 floors, hipped roof with pediment",
+      "wall_L": 72.8,
+      "extra_checks": {
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true,
+        "roof_wall_dL_ge_15": true,
+        "roof_allowed_for_wall_2_6": true
+      },
+      "fbx": "HS_OldTown_B_v01.fbx"
+    },
+    "HS_MidRise": {
+      "triangles": 6556,
+      "triangle_budget": [
+        1,
+        7000
+      ],
+      "size_m": [
+        17.5,
+        13.35,
+        19.45
+      ],
+      "bounds_min": [
+        -8.75,
+        -7.1,
+        0.0
+      ],
+      "bounds_max": [
+        8.75,
+        6.25,
+        19.45
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "glass.light",
+        "grey",
+        "grey.dark",
+        "ochre",
+        "paving",
+        "red",
+        "wood"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "glass",
+        "grey",
+        "ochre",
+        "paving",
+        "red",
+        "wood"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "1376681b7514e7ffe937d0227412d49bb0f21d85",
+      "objects": {
+        "HS_MidRise": {
+          "triangles": 6556,
+          "vertices": 4124,
+          "faces": 3519,
+          "shells": 425,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_7000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "old_town",
+        "style": "commercial (ground floor) + oldtown",
+        "wall": "ochre",
+        "roof": "flat",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "wood",
+        "accent": "red"
+      },
+      "form": "5 floors, shops on the ground floor, flat roof",
+      "wall_L": 80.5,
+      "extra_checks": {
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true
+      },
+      "fbx": "HS_MidRise_v01.fbx"
+    },
+    "HS_PanelSection": {
+      "triangles": 4828,
+      "triangle_budget": [
+        1,
+        14000
+      ],
+      "size_m": [
+        17.0,
+        13.65,
+        16.95
+      ],
+      "bounds_min": [
+        -8.5,
+        -7.53,
+        0.0
+      ],
+      "bounds_max": [
+        8.5,
+        6.12,
+        16.95
+      ],
+      "swatches": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "glass.light",
+        "grey",
+        "ink",
+        "panel",
+        "panel.dark",
+        "paving"
+      ],
+      "swatch_families": [
+        "asphalt",
+        "chalk",
+        "cobalt",
+        "glass",
+        "grey",
+        "ink",
+        "panel",
+        "paving"
+      ],
+      "min_member_m": 0.06,
+      "facet_ratio_min": null,
+      "jitter_m": 0.0,
+      "geometry_sha1": "464477094f0d174bec3c7f04e78f80caf4dd8de9",
+      "objects": {
+        "HS_PanelSection": {
+          "triangles": 4828,
+          "vertices": 2904,
+          "faces": 2975,
+          "shells": 247,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_14000": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "recipe": {
+        "district": "residential",
+        "style": "panel",
+        "wall": "panel",
+        "roof": "flat",
+        "deck": "grey",
+        "trim": "chalk",
+        "plinth": "asphalt",
+        "door": "ink",
+        "accent": "cobalt",
+        "seam": "panel.dark"
+      },
+      "form": "5-storey panel block, one entrance section",
+      "wall_L": 82.0,
+      "extra_checks": {
+        "trim_lighter_than_wall_ge_6_L": true,
+        "plinth_wall_dL_ge_12": true
+      },
+      "fbx": "HS_PanelSection_v01.fbx"
+    }
+  },
+  "total_assets": 4,
+  "total_triangles": 16972,
+  "all_checks_passed": true,
+  "notes": [
+    "Reference buildings for the facade grammar of bible 7.1-7.3 and for the trial frame; ProceduralBuilding keeps generating the map houses and is measured against these.",
+    "Windows are recessed cells of one closed body (reveal 0.15 m); trims are overlapping closed shells.",
+    "Old-town floor 3.2 m, panel floor 2.8 m, door 2.1-2.6 m, sill 0.9 m (bible 4.6).",
+    "The .blend shows the assets in rows along +X; every FBX has its root at the origin."
+  ],
+  "files": {
+    "blend": "SK2-HOUSES-001_v01.blend",
+    "atlas": "_lib/Look_Palette_v2.png",
+    "atlas_layout": "_lib/Look_Palette_v2.json"
+  }
+}

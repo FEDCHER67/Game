@@ -1,0 +1,1022 @@
+{
+  "family": "SK2-TREES-001",
+  "kit": "STYLE_KIT_v2",
+  "style_bible": "v2",
+  "bible_date": "2026-10-06",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root mesh of every asset: centre of the base on the ground (0, 0, 0)",
+  "palette": "_lib/Look_Palette_v2.png (+ .json): UV0 inside the swatch cell; alpha = smoothness",
+  "description": "Trees v2: linden (round), birch, poplar, spruce, pine - A and B each (bible 5.1-5.2)",
+  "assets": {
+    "TR_Round_A": {
+      "triangles": 536,
+      "triangle_budget": [
+        1,
+        700
+      ],
+      "size_m": [
+        6.005,
+        4.8,
+        7.945
+      ],
+      "bounds_min": [
+        -2.75,
+        -2.35,
+        0.0
+      ],
+      "bounds_max": [
+        3.255,
+        2.45,
+        7.945
+      ],
+      "swatches": [
+        "grad.leaf",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "leaf",
+        "wood"
+      ],
+      "min_member_m": 0.112,
+      "facet_ratio_min": 0.271,
+      "jitter_m": 0.0,
+      "geometry_sha1": "727f965e5b5534ec34476503fe997a43dff455f5",
+      "objects": {
+        "TR_Round_A": {
+          "triangles": 536,
+          "vertices": 286,
+          "faces": 486,
+          "shells": 9,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_700": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "round",
+      "variant": "A",
+      "plan_species": [
+        "linden",
+        "oak"
+      ],
+      "bible_table": {
+        "height_m": 8.0,
+        "crown_bottom_m": 2.8,
+        "trunk_d_m": 0.55,
+        "crown_width_m": 6.0
+      },
+      "measured": {
+        "height_m": 7.945,
+        "crown_width_m": 6.005,
+        "crown_bottom_m": 2.82
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Round_A_v01.fbx"
+    },
+    "TR_Round_B": {
+      "triangles": 436,
+      "triangle_budget": [
+        1,
+        550
+      ],
+      "size_m": [
+        4.422,
+        3.495,
+        6.0
+      ],
+      "bounds_min": [
+        -2.491,
+        -1.747,
+        0.0
+      ],
+      "bounds_max": [
+        1.931,
+        1.747,
+        6.0
+      ],
+      "swatches": [
+        "grad.leaf",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "leaf",
+        "wood"
+      ],
+      "min_member_m": 0.11,
+      "facet_ratio_min": 0.271,
+      "jitter_m": 0.0,
+      "geometry_sha1": "e103c984705fc1f5d8823d78322c6e2e0da01249",
+      "objects": {
+        "TR_Round_B": {
+          "triangles": 436,
+          "vertices": 232,
+          "faces": 392,
+          "shells": 7,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_550": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "round",
+      "variant": "B",
+      "plan_species": [
+        "linden",
+        "oak"
+      ],
+      "bible_table": {
+        "height_m": 6.0,
+        "crown_bottom_m": 2.4,
+        "trunk_d_m": 0.42,
+        "crown_width_m": 4.5
+      },
+      "measured": {
+        "height_m": 6.0,
+        "crown_width_m": 4.422,
+        "crown_bottom_m": 2.531
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Round_B_v01.fbx"
+    },
+    "TR_Birch_A": {
+      "triangles": 724,
+      "triangle_budget": [
+        1,
+        800
+      ],
+      "size_m": [
+        4.113,
+        3.467,
+        9.992
+      ],
+      "bounds_min": [
+        -1.962,
+        -1.733,
+        0.0
+      ],
+      "bounds_max": [
+        2.151,
+        1.733,
+        9.992
+      ],
+      "swatches": [
+        "chalk",
+        "grad.birch",
+        "ink"
+      ],
+      "swatch_families": [
+        "chalk",
+        "ink",
+        "leaf"
+      ],
+      "min_member_m": 0.104,
+      "facet_ratio_min": 0.281,
+      "jitter_m": 0.0,
+      "geometry_sha1": "6d3596a89a8de5c8df7db0d0dfdeb259553e8fdb",
+      "objects": {
+        "TR_Birch_A": {
+          "triangles": 724,
+          "vertices": 380,
+          "faces": 616,
+          "shells": 9,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_800": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "birch",
+      "variant": "A",
+      "plan_species": [
+        "birch"
+      ],
+      "bible_table": {
+        "height_m": 10.0,
+        "crown_bottom_m": 3.5,
+        "trunk_d_m": 0.36,
+        "crown_width_m": 4.5
+      },
+      "measured": {
+        "height_m": 9.992,
+        "crown_width_m": 4.113,
+        "crown_bottom_m": 3.573
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Birch_A_v01.fbx"
+    },
+    "TR_Birch_B": {
+      "triangles": 512,
+      "triangle_budget": [
+        1,
+        800
+      ],
+      "size_m": [
+        3.138,
+        2.773,
+        8.07
+      ],
+      "bounds_min": [
+        -1.55,
+        -1.337,
+        0.0
+      ],
+      "bounds_max": [
+        1.588,
+        1.437,
+        8.07
+      ],
+      "swatches": [
+        "chalk",
+        "grad.birch",
+        "ink"
+      ],
+      "swatch_families": [
+        "chalk",
+        "ink",
+        "leaf"
+      ],
+      "min_member_m": 0.104,
+      "facet_ratio_min": 0.282,
+      "jitter_m": 0.0,
+      "geometry_sha1": "ba475cdae13e1a3b174a4239c5056f19932aa418",
+      "objects": {
+        "TR_Birch_B": {
+          "triangles": 512,
+          "vertices": 268,
+          "faces": 426,
+          "shells": 6,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_800": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "birch",
+      "variant": "B",
+      "plan_species": [
+        "birch"
+      ],
+      "bible_table": {
+        "height_m": 8.0,
+        "crown_bottom_m": 3.0,
+        "trunk_d_m": 0.3,
+        "crown_width_m": 3.6
+      },
+      "measured": {
+        "height_m": 8.07,
+        "crown_width_m": 3.138,
+        "crown_bottom_m": 3.007
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Birch_B_v01.fbx"
+    },
+    "TR_Poplar_A": {
+      "triangles": 324,
+      "triangle_budget": [
+        1,
+        450
+      ],
+      "size_m": [
+        3.052,
+        2.747,
+        12.0
+      ],
+      "bounds_min": [
+        -1.493,
+        -1.374,
+        0.0
+      ],
+      "bounds_max": [
+        1.559,
+        1.374,
+        12.0
+      ],
+      "swatches": [
+        "grad.leaf",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "leaf",
+        "wood"
+      ],
+      "min_member_m": 0.3,
+      "facet_ratio_min": 0.243,
+      "jitter_m": 0.0,
+      "geometry_sha1": "b39a5ef797c93d09bff55c279807753339d5ce8d",
+      "objects": {
+        "TR_Poplar_A": {
+          "triangles": 324,
+          "vertices": 166,
+          "faces": 180,
+          "shells": 2,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_450": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "poplar",
+      "variant": "A",
+      "plan_species": [
+        "poplar"
+      ],
+      "bible_table": {
+        "height_m": 12.0,
+        "crown_bottom_m": 1.6,
+        "trunk_d_m": 0.42,
+        "crown_width_m": 3.12
+      },
+      "measured": {
+        "height_m": 12.0,
+        "crown_width_m": 3.052,
+        "crown_bottom_m": 1.6
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Poplar_A_v01.fbx"
+    },
+    "TR_Poplar_B": {
+      "triangles": 300,
+      "triangle_budget": [
+        1,
+        450
+      ],
+      "size_m": [
+        2.415,
+        2.173,
+        9.5
+      ],
+      "bounds_min": [
+        -1.246,
+        -1.087,
+        0.0
+      ],
+      "bounds_max": [
+        1.169,
+        1.087,
+        9.5
+      ],
+      "swatches": [
+        "grad.leaf",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "leaf",
+        "wood"
+      ],
+      "min_member_m": 0.26,
+      "facet_ratio_min": 0.255,
+      "jitter_m": 0.0,
+      "geometry_sha1": "014ed0ee3125738c0b444da5828241934497f8e5",
+      "objects": {
+        "TR_Poplar_B": {
+          "triangles": 300,
+          "vertices": 154,
+          "faces": 168,
+          "shells": 2,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_450": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "poplar",
+      "variant": "B",
+      "plan_species": [
+        "poplar"
+      ],
+      "bible_table": {
+        "height_m": 9.5,
+        "crown_bottom_m": 1.4,
+        "trunk_d_m": 0.36,
+        "crown_width_m": 2.47
+      },
+      "measured": {
+        "height_m": 9.5,
+        "crown_width_m": 2.415,
+        "crown_bottom_m": 1.4
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Poplar_B_v01.fbx"
+    },
+    "TR_Spruce_A": {
+      "triangles": 224,
+      "triangle_budget": [
+        1,
+        320
+      ],
+      "size_m": [
+        5.081,
+        5.081,
+        11.0
+      ],
+      "bounds_min": [
+        -2.541,
+        -2.541,
+        0.0
+      ],
+      "bounds_max": [
+        2.541,
+        2.541,
+        11.0
+      ],
+      "swatches": [
+        "grad.conifer",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "conifer",
+        "wood"
+      ],
+      "min_member_m": 0.297,
+      "facet_ratio_min": 0.383,
+      "jitter_m": 0.0,
+      "geometry_sha1": "372750049e1661bd869f2d28bb645772116f5f24",
+      "objects": {
+        "TR_Spruce_A": {
+          "triangles": 224,
+          "vertices": 122,
+          "faces": 148,
+          "shells": 5,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_320": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "spruce",
+      "variant": "A",
+      "plan_species": [
+        "spruce"
+      ],
+      "bible_table": {
+        "height_m": 11.0,
+        "crown_bottom_m": 0.6,
+        "trunk_d_m": 0.35,
+        "crown_width_m": 5.5
+      },
+      "measured": {
+        "height_m": 11.0,
+        "crown_width_m": 5.081,
+        "crown_bottom_m": 0.6
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Spruce_A_v01.fbx"
+    },
+    "TR_Spruce_B": {
+      "triangles": 176,
+      "triangle_budget": [
+        1,
+        320
+      ],
+      "size_m": [
+        3.696,
+        3.696,
+        8.0
+      ],
+      "bounds_min": [
+        -1.848,
+        -1.848,
+        0.0
+      ],
+      "bounds_max": [
+        1.848,
+        1.848,
+        8.0
+      ],
+      "swatches": [
+        "grad.conifer",
+        "wood",
+        "wood.dark"
+      ],
+      "swatch_families": [
+        "conifer",
+        "wood"
+      ],
+      "min_member_m": 0.272,
+      "facet_ratio_min": 0.383,
+      "jitter_m": 0.0,
+      "geometry_sha1": "fb94750d6e0aeff5241c1449c31e3517aa74ab9e",
+      "objects": {
+        "TR_Spruce_B": {
+          "triangles": 176,
+          "vertices": 96,
+          "faces": 116,
+          "shells": 4,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_320": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "spruce",
+      "variant": "B",
+      "plan_species": [
+        "spruce"
+      ],
+      "bible_table": {
+        "height_m": 8.0,
+        "crown_bottom_m": 0.6,
+        "trunk_d_m": 0.32,
+        "crown_width_m": 4.0
+      },
+      "measured": {
+        "height_m": 8.0,
+        "crown_width_m": 3.696,
+        "crown_bottom_m": 0.6
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Spruce_B_v01.fbx"
+    },
+    "TR_Pine_A": {
+      "triangles": 472,
+      "triangle_budget": [
+        1,
+        650
+      ],
+      "size_m": [
+        5.954,
+        4.109,
+        12.99
+      ],
+      "bounds_min": [
+        -3.032,
+        -1.966,
+        0.0
+      ],
+      "bounds_max": [
+        2.922,
+        2.143,
+        12.99
+      ],
+      "swatches": [
+        "grad.conifer",
+        "wood.dark",
+        "wood.light"
+      ],
+      "swatch_families": [
+        "conifer",
+        "wood"
+      ],
+      "min_member_m": 0.12,
+      "facet_ratio_min": 0.247,
+      "jitter_m": 0.0,
+      "geometry_sha1": "09e465fd24caf541da6c192a1321b2d0356f29e0",
+      "objects": {
+        "TR_Pine_A": {
+          "triangles": 472,
+          "vertices": 252,
+          "faces": 414,
+          "shells": 8,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_650": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "pine",
+      "variant": "A",
+      "plan_species": [
+        "pine"
+      ],
+      "bible_table": {
+        "height_m": 13.0,
+        "crown_bottom_m": 7.0,
+        "trunk_d_m": 0.45,
+        "crown_width_m": 5.85
+      },
+      "measured": {
+        "height_m": 12.99,
+        "crown_width_m": 5.954,
+        "crown_bottom_m": 6.975
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Pine_A_v01.fbx"
+    },
+    "TR_Pine_B": {
+      "triangles": 372,
+      "triangle_budget": [
+        1,
+        650
+      ],
+      "size_m": [
+        4.698,
+        3.301,
+        9.9
+      ],
+      "bounds_min": [
+        -2.364,
+        -1.648,
+        0.0
+      ],
+      "bounds_max": [
+        2.334,
+        1.654,
+        9.9
+      ],
+      "swatches": [
+        "grad.conifer",
+        "wood.dark",
+        "wood.light"
+      ],
+      "swatch_families": [
+        "conifer",
+        "wood"
+      ],
+      "min_member_m": 0.12,
+      "facet_ratio_min": 0.251,
+      "jitter_m": 0.0,
+      "geometry_sha1": "86cda55f584ee27fcdc8242ff0f9cbfca62e594b",
+      "objects": {
+        "TR_Pine_B": {
+          "triangles": 372,
+          "vertices": 198,
+          "faces": 320,
+          "shells": 6,
+          "materials": [
+            "Look_Palette_v2"
+          ],
+          "non_manifold_or_open_edges": 0,
+          "duplicate_directed_edges": 0,
+          "shells_with_non_positive_volume": 0,
+          "uv_loops_outside_their_cell": 0,
+          "custom_normals": true
+        }
+      },
+      "checks": {
+        "triangles_within_budget_1_650": true,
+        "closed_meshes": true,
+        "normals_outward": true,
+        "uv0_on_palette_cells": true,
+        "swatches_from_bible": true,
+        "one_palette_material": true,
+        "pivot_at_origin": true,
+        "base_on_ground_min_z_0": true,
+        "deterministic_rebuild_identical": true,
+        "no_vertex_jitter": true,
+        "min_member_ge_0.06_m": true,
+        "facet_rule_organic_ge_1_8": true,
+        "swatches_le_3": true,
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "all_checks_passed": true,
+      "notes": "",
+      "species": "pine",
+      "variant": "B",
+      "plan_species": [
+        "pine"
+      ],
+      "bible_table": {
+        "height_m": 10.0,
+        "crown_bottom_m": 5.5,
+        "trunk_d_m": 0.36,
+        "crown_width_m": 4.5
+      },
+      "measured": {
+        "height_m": 9.9,
+        "crown_width_m": 4.698,
+        "crown_bottom_m": 5.61
+      },
+      "extra_checks": {
+        "branches_ge_0.10_m": true,
+        "height_matches_bible_5_1": true,
+        "height_in_species_range": true,
+        "crown_width_within_15pct_of_k_h": true,
+        "crown_bottom_ge_bible_min": true,
+        "crown_bottom_matches_table_0_15m": true
+      },
+      "fbx": "TR_Pine_B_v01.fbx"
+    }
+  },
+  "total_assets": 10,
+  "total_triangles": 4076,
+  "all_checks_passed": true,
+  "notes": [
+    "Heights are the A/B values of bible 5.1; in Unity TerrainBaker scales each tree to its plan height (5.3), so the model height only fixes proportions.",
+    "Gradients: grad.leaf (linden, poplar), grad.birch (one step lighter), grad.conifer (spruce, pine).",
+    "LOD1 (bible 5.2.7) is not part of v01.",
+    "The .blend shows the assets in rows along +X; every FBX has its root at the origin."
+  ],
+  "files": {
+    "blend": "SK2-TREES-001_v01.blend",
+    "atlas": "_lib/Look_Palette_v2.png",
+    "atlas_layout": "_lib/Look_Palette_v2.json"
+  }
+}

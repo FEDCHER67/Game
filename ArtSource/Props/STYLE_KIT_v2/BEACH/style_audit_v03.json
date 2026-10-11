@@ -1,0 +1,525 @@
+{
+  "revision": "v03",
+  "method": "CIELAB D65 from bible sRGB; actual PNG luminance histogram",
+  "scope": "All 17 BEACH assets; R2/R3/R4/R8 where applicable. R1 sloped building roofs absent. PNG B6 counts include all shadows, a stricter check than ink-material share. This does not certify URP sunlight calibration or game-camera acceptance.",
+  "assets": {
+    "BE_Umbrella_Red": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "red": {
+          "hex": "#D9473A",
+          "L_star": 51.346,
+          "band": "B4"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / red": 78.83,
+        "chalk / wood": 51.45,
+        "red / wood": 44.023
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Umbrella_Blue": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "cobalt": {
+          "hex": "#3E6FB8",
+          "L_star": 46.78,
+          "band": "B5"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / cobalt": 68.433,
+        "chalk / wood": 51.45,
+        "cobalt / wood": 71.138
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Umbrella_Orange": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "terracotta": {
+          "hex": "#D27A55",
+          "L_star": 60.141,
+          "band": "B4"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / terracotta": 54.987,
+        "chalk / wood": 51.45,
+        "terracotta / wood": 20.912
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Lounger": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "cobalt": {
+          "hex": "#3E6FB8",
+          "L_star": 46.78,
+          "band": "B5"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / cobalt": 68.433,
+        "chalk / wood": 51.45,
+        "cobalt / wood": 71.138
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_SideTable": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / wood": 51.45
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_LifeguardTower": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "red": {
+          "hex": "#D9473A",
+          "L_star": 51.346,
+          "band": "B4"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / red": 78.83,
+        "chalk / wood": 51.45,
+        "red / wood": 44.023
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Kiosk_Coffee": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "grey": {
+          "hex": "#A3A6AB",
+          "L_star": 68.02,
+          "band": "B3"
+        },
+        "teal": {
+          "hex": "#3F9196",
+          "L_star": 55.592,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / grey": 27.729,
+        "chalk / teal": 47.888,
+        "grey / teal": 27.192
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_ShowerToilet": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "cobalt": {
+          "hex": "#3E6FB8",
+          "L_star": 46.78,
+          "band": "B5"
+        },
+        "grey": {
+          "hex": "#A3A6AB",
+          "L_star": 68.02,
+          "band": "B3"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / cobalt": 68.433,
+        "chalk / grey": 27.729,
+        "cobalt / grey": 46.355
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Pier_Deck": {
+      "swatches": {
+        "wood.dark": {
+          "hex": "#815740",
+          "L_star": 40.984,
+          "band": "B5"
+        },
+        "wood.light": {
+          "hex": "#AB825B",
+          "L_star": 57.444,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "wood.dark / wood.light": 18.21
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Pier_End": {
+      "swatches": {
+        "wood.dark": {
+          "hex": "#815740",
+          "L_star": 40.984,
+          "band": "B5"
+        },
+        "wood.light": {
+          "hex": "#AB825B",
+          "L_star": 57.444,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "wood.dark / wood.light": 18.21
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Pier_Post": {
+      "swatches": {
+        "grey": {
+          "hex": "#A3A6AB",
+          "L_star": 68.02,
+          "band": "B3"
+        },
+        "grey.dark": {
+          "hex": "#8C8D92",
+          "L_star": 58.696,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "grey / grey.dark": 9.353
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_FlagPole": {
+      "swatches": {
+        "cobalt": {
+          "hex": "#3E6FB8",
+          "L_star": 46.78,
+          "band": "B5"
+        },
+        "wood": {
+          "hex": "#9C6E4A",
+          "L_star": 50.353,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "cobalt / wood": 71.138
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Palm_A": {
+      "swatches": {
+        "leaf.light": {
+          "hex": "#78A660",
+          "L_star": 63.433,
+          "band": "B4"
+        },
+        "wood.dark": {
+          "hex": "#815740",
+          "L_star": 40.984,
+          "band": "B5"
+        },
+        "wood.light": {
+          "hex": "#AB825B",
+          "L_star": 57.444,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "leaf.light / wood.dark": 49.849,
+        "leaf.light / wood.light": 40.027,
+        "wood.dark / wood.light": 18.21
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Palm_B": {
+      "swatches": {
+        "leaf.light": {
+          "hex": "#78A660",
+          "L_star": 63.433,
+          "band": "B4"
+        },
+        "wood.dark": {
+          "hex": "#815740",
+          "L_star": 40.984,
+          "band": "B5"
+        },
+        "wood.light": {
+          "hex": "#AB825B",
+          "L_star": 57.444,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "leaf.light / wood.dark": 49.849,
+        "leaf.light / wood.light": 40.027,
+        "wood.dark / wood.light": 18.21
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Planter_Palm": {
+      "swatches": {
+        "chalk": {
+          "hex": "#F4EFE6",
+          "L_star": 94.602,
+          "band": "B1"
+        },
+        "leaf.light": {
+          "hex": "#78A660",
+          "L_star": 63.433,
+          "band": "B4"
+        },
+        "wood.dark": {
+          "hex": "#815740",
+          "L_star": 40.984,
+          "band": "B5"
+        },
+        "wood.light": {
+          "hex": "#AB825B",
+          "L_star": 57.444,
+          "band": "B4"
+        }
+      },
+      "pair_deltaE76": {
+        "chalk / leaf.light": 49.951,
+        "chalk / wood.dark": 57.617,
+        "chalk / wood.light": 44.585,
+        "leaf.light / wood.dark": 49.849,
+        "leaf.light / wood.light": 40.027,
+        "wood.dark / wood.light": 18.21
+      },
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Rock_A": {
+      "swatches": {
+        "grey": {
+          "hex": "#A3A6AB",
+          "L_star": 68.02,
+          "band": "B3"
+        }
+      },
+      "pair_deltaE76": {},
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    },
+    "BE_Rock_B": {
+      "swatches": {
+        "grey": {
+          "hex": "#A3A6AB",
+          "L_star": 68.02,
+          "band": "B3"
+        }
+      },
+      "pair_deltaE76": {},
+      "checks": {
+        "bible_palette_only": true,
+        "no_B6_material_surfaces": true,
+        "R8_all_swatch_pairs_deltaE76_ge_9": true,
+        "geometry_unchanged_except_bollard": true
+      }
+    }
+  },
+  "contrast_relationships": {
+    "R2_kiosk_chalk_trim_over_teal_wall": true,
+    "R3_kiosk_grey_plinth_against_teal_wall": true,
+    "R3_shower_grey_plinth_against_chalk_wall": true,
+    "R4_palm_crown_against_sand": true,
+    "bollard_cap_darker_than_body": true,
+    "bollard_body_and_cap_distinct_from_wood_deck": true,
+    "bollard_lower_than_lounger_back": true
+  },
+  "previews": {
+    "01_BE_Pier_Post.png": {
+      "size_px": [
+        1200,
+        1100
+      ],
+      "sha256": "c04a3509a97ebd4a24a52a2ee7b3c6ee2f0308842e40b4910aa49446b1a12702",
+      "B6_pixels_percent": 0.0,
+      "B6_pixels_at_most_2_percent": true
+    },
+    "02_lineup.png": {
+      "size_px": [
+        2200,
+        1500
+      ],
+      "sha256": "0dab201433880e1ddfbc339086b0ced6141a1664cd8831aad7cb4eb1e3f9d2ba",
+      "B6_pixels_percent": 0.0749,
+      "B6_pixels_at_most_2_percent": true
+    },
+    "03_beach_reference_top.png": {
+      "size_px": [
+        2000,
+        1700
+      ],
+      "sha256": "43c895ca6c9e8ff8285b7aec56c2fb821549866aee83abe49de34195e43188a8",
+      "B6_pixels_percent": 0.0234,
+      "B6_pixels_at_most_2_percent": true
+    },
+    "04_beach_eye_level.png": {
+      "size_px": [
+        2000,
+        1100
+      ],
+      "sha256": "cb13ad8c9717d1c2fc6336896b5a1cfa2a0434b2be93f54d4db67cfd2468ffb2",
+      "B6_pixels_percent": 0.626,
+      "B6_pixels_at_most_2_percent": true
+    },
+    "05_style_neighbours.png": {
+      "size_px": [
+        1900,
+        1250
+      ],
+      "sha256": "e6b67e0ce3cf85172265e4003f295ae60498365cb80901f4c2f9480c3d7ac150",
+      "B6_pixels_percent": 0.1035,
+      "B6_pixels_at_most_2_percent": true
+    }
+  },
+  "checks": {
+    "all_17_asset_value_and_palette_checks": true,
+    "all_applicable_asset_contrast_relationships": true,
+    "five_fresh_v03_previews": true,
+    "no_preview_has_over_2_percent_B6_pixels": true
+  },
+  "all_checks_passed": true
+}

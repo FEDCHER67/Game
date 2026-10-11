@@ -1,0 +1,242 @@
+{
+  "family": "SK1-BUSHES-001",
+  "kit": "STYLE_KIT_v1",
+  "style_bible": "v1",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "axes": "Blender Z up, metres, front = -Y; FBX exported with axis_forward=-Z, axis_up=Y, apply_unit_scale=True",
+  "pivot": "root object of every asset: centre of the base on the ground (0,0,0); *_Emissive / *_Water are children",
+  "palette": "Look_Palette_v1.png (256 x 256, 16 px cells): UV0 at the swatch cell centre, gradient rows encode height in V; vertex colour Col = same colour x AO; UV1 = metre-scale box projection for detail maps",
+  "description": "Style-bible bushes: round, wild, lilac. Three smooth lobes per bush, flat bottoms, vertical palette gradient, one deliberate asymmetry each, no random jitter.",
+  "assets": {
+    "BU_Bush_Round": {
+      "triangles": 240,
+      "triangle_budget": [
+        100,
+        400
+      ],
+      "size_m": [
+        1.961,
+        1.25,
+        0.946
+      ],
+      "bounds_min": [
+        -0.971,
+        -0.65,
+        0.0
+      ],
+      "bounds_max": [
+        0.991,
+        0.6,
+        0.946
+      ],
+      "swatches": [
+        "grad_bush"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "BU_Bush_Round": 0
+      },
+      "objects": {
+        "BU_Bush_Round": {
+          "triangles": 240,
+          "vertices": 126,
+          "faces": 240,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 1.5395
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_400": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_3": true,
+        "height_le_2.1_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Round bush 1.1 m: two lobes side by side + one on top, light top / bush-green underside, flat bottom. Yards, parks.",
+      "min_member_m": null,
+      "height_m": 1.12,
+      "fbx": "BU_Bush_Round_v01.fbx"
+    },
+    "BU_Bush_Wild": {
+      "triangles": 352,
+      "triangle_budget": [
+        100,
+        400
+      ],
+      "size_m": [
+        1.956,
+        1.83,
+        1.624
+      ],
+      "bounds_min": [
+        -0.978,
+        -0.93,
+        0.0
+      ],
+      "bounds_max": [
+        0.978,
+        0.9,
+        1.624
+      ],
+      "swatches": [
+        "field_dry",
+        "grad_bush_dark",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "BU_Bush_Wild": 0
+      },
+      "objects": {
+        "BU_Bush_Wild": {
+          "triangles": 352,
+          "vertices": 188,
+          "faces": 334,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 1.8235
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_400": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": true,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_4": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_2.1_m": true
+      },
+      "all_checks_passed": true,
+      "notes": "Wild bush 1.4 m: three dark lobes of different sizes, one dry field_dry lobe, two thick dead twigs. Wastelands, village edges.",
+      "min_member_m": 0.08,
+      "height_m": 1.72,
+      "fbx": "BU_Bush_Wild_v01.fbx"
+    },
+    "BU_Bush_Lilac": {
+      "triangles": 408,
+      "triangle_budget": [
+        100,
+        450
+      ],
+      "size_m": [
+        1.996,
+        1.7,
+        2.352
+      ],
+      "bounds_min": [
+        -1.023,
+        -0.75,
+        -0.014
+      ],
+      "bounds_max": [
+        0.973,
+        0.95,
+        2.338
+      ],
+      "swatches": [
+        "blossom",
+        "grad_crown_dark",
+        "trunk"
+      ],
+      "materials": [
+        "Look_Palette"
+      ],
+      "uv_loops_outside_cell": {
+        "BU_Bush_Lilac": 0
+      },
+      "objects": {
+        "BU_Bush_Lilac": {
+          "triangles": 408,
+          "vertices": 228,
+          "faces": 381,
+          "materials": [
+            "Look_Palette"
+          ],
+          "origin_world": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "non_manifold_edges": 0,
+          "boundary_edges": 0,
+          "flipped_faces": 0,
+          "zero_area_faces": 0,
+          "signed_volume_m3": 1.6993
+        }
+      },
+      "sockets": {},
+      "checks": {
+        "triangles_within_budget_100_450": true,
+        "all_meshes_closed": true,
+        "all_normals_outward": true,
+        "no_zero_area_faces": true,
+        "stands_on_ground_min_z_0": false,
+        "root_pivot_at_origin": true,
+        "names_prefixed": true,
+        "uv0_inside_palette_cells": true,
+        "swatches_from_style_bible": true,
+        "no_vertex_jitter": true,
+        "colours_le_3": true,
+        "hard_members_ge_0.08_m": true,
+        "height_le_2.1_m": true
+      },
+      "all_checks_passed": false,
+      "notes": "Lilac 2.0 m: three heads on three 0.08 m stems, six blossom panicles. Soviet yards, old town.",
+      "min_member_m": 0.08,
+      "height_m": 2.05,
+      "fbx": "BU_Bush_Lilac_v01.fbx"
+    }
+  },
+  "total_assets": 3,
+  "total_triangles": 1000,
+  "all_checks_passed": false,
+  "notes": [
+    "The review .blend has the assets laid out in rows along +X; the FBX files have every root at the origin."
+  ],
+  "files": {
+    "blend": "SK1-BUSHES-001_v01.blend",
+    "palette": "_lib/Look_Palette_v1.png"
+  }
+}

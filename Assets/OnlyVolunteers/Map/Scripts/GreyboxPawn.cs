@@ -22,5 +22,9 @@ namespace OnlyVolunteers.Map
 
         public abstract void SetControlled(bool on);
         public abstract void Teleport(Vector3 position, float yawDegrees);
+
+        /// <summary>Thrown by a hit (a police officer's blow, Police/PoliceOfficer): adds this velocity and leaves the
+        /// ground for a moment. No-op for pawns that cannot be thrown.</summary>
+        public virtual void Knock(Vector3 velocity) { }
     }
 }

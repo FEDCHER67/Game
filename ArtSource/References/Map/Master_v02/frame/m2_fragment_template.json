@@ -1,0 +1,286 @@
+{
+ "_doc": "M2 district fragment template (Master v02 redo). One file per district: m2_frag_<crop_key>.json, plus one world fragment m2_frag_whole.json (fragment_kind 'world'). Copy this file, keep every top-level key, delete the example records you do not use, never leave placeholder values. Coordinates are metres in the M2 frame (m2_frame.json): x east, y north, origin = bottom-left of the land bbox; convert crop pixels with crops[<key>].crop_px_to_m. Round to 0.1 m. Polygons: counter-clockwise, not closed, >=3 points. Polylines in travel order; shared junctions must use identical coordinates. Keys starting with '_' are documentation and are ignored by the merger. The merger maps each layer onto the v14 container named in its '_v14' note, so downstream tools (map_dressing, Look flattener, greybox flatten_plan, crowd, police bake) keep reading the v14 schema 2.0.",
+ "fragment_version": "m2-1",
+ "fragment_kind": "district",
+ "frame": {"file": "m2_frame.json", "id": "M2_FRAME_MASTER_v02", "units": "metre", "axes": "x east, y north", "metres_per_px": 1.013746, "origin_px": [6.0, 684.0]},
+ "source": {"master": "REF_FEDYA_MASTER_v02_map.png", "crop_key": "04_rough", "crop_file": "m2_crop_04_rough.png", "grid_file": "m2_crop_04_rough_grid.png", "traced_by": "", "date": "2026-10-07"},
+
+ "district_registry_proposal": {
+  "_doc": "Lead proposal, not final: keep the v14 district ids so downstream tools and gameplay keep working; Russian label = name_ru + ' (' + master English name + ')'.",
+  "01": {"id": "forest", "name_en_master": "FOREST", "name_ru": "Лес", "label_ru": "Лес (FOREST)"},
+  "02": {"id": "village", "name_en_master": "HAMLET", "name_ru": "Хутор", "label_ru": "Хутор (HAMLET)"},
+  "03": {"id": "transition", "name_en_master": "CROSSING", "name_ru": "Перекрёсток", "label_ru": "Перекрёсток (CROSSING)"},
+  "04": {"id": "residential", "name_en_master": "ROUGH DISTRICT", "name_ru": "Район подворотен", "label_ru": "Район подворотен (ROUGH DISTRICT)"},
+  "05": {"id": "old_town", "name_en_master": "DOWNTOWN", "name_ru": "Старый город", "label_ru": "Старый город (DOWNTOWN)"},
+  "06": {"id": "industrial", "name_en_master": "INDUSTRIAL PORT", "name_ru": "Промзона и порт", "label_ru": "Промзона и порт (INDUSTRIAL PORT)"},
+  "07": {"id": "elite", "name_en_master": "ELITE HILL", "name_ru": "Элитный холм", "label_ru": "Элитный холм (ELITE HILL)"},
+  "08": {"id": "fields", "name_en_master": "QUIET VALLEY", "name_ru": "Малая долина", "label_ru": "Малая долина (QUIET VALLEY)"},
+  "09": {"id": "beach", "name_en_master": "CITY BEACH", "name_ru": "Городской пляж", "label_ru": "Городской пляж (CITY BEACH)"}
+ },
+
+ "id_convention": {
+  "_doc": "Ids are unique across all fragments: <layer prefix><district number>_<seq or NAME>. Gameplay point ids (B01-B06, P01-P16, P09-2 ...) are never renamed and are assigned only in the mapping step.",
+  "road": "RD04_01", "path": "WK04_01", "building_mass": "BM04_01", "functional_building": "FB04_GARAGE_BASE", "site": "ST04_01",
+  "plot": "PL04_01", "courtyard": "CY04_01", "water": "WA04_01", "crossing": "XB04_01", "beach": "BE09_01", "field": "FD02_01",
+  "vegetation": "VG04_01", "rock": "RK04_01", "fence": "FN04_01", "hill": "HL07_01", "label": "LB04_01"
+ },
+
+ "district": {
+  "_v14": "districts[] : id, name_ru, color, polygon_m, parent_id, notes_ru (area_m2, building_count, share_percent are derived by the merger)",
+  "_doc": "Organic envelope of the district as drawn by the master (its built area plus its own green), not a hard border. Neighbouring envelopes must not overlap; common landscape between districts stays outside every envelope. No fence on this outline.",
+  "id": "residential",
+  "master_number": "04",
+  "name_en_master": "ROUGH DISTRICT",
+  "name_ru": "Район подворотен",
+  "label_ru": "Район подворотен (ROUGH DISTRICT)",
+  "color": "#bdc9d0",
+  "polygon_m": [[600.0, 400.0], [900.0, 400.0], [900.0, 590.0], [600.0, 590.0]],
+  "label_anchor_m": [630.6, 554.5],
+  "parent_id": null,
+  "notes_ru": ""
+ },
+
+ "roads": [
+  {
+   "_v14": "roads[] (vehicle graph). Required: id, class, width_m, lanes, district_ids, polyline_m. Optional: joins_road_ids, access_only, parent_road_id, note_ru. length_m and road_graph are derived.",
+   "_classes": "asphalt road -> highway 7 m / 2 lanes, town_street 6 m / 2 lanes, alley 4.5 m / 1 lane; dirt road or track -> rural_road 3.8 m / 1 lane, dirt_shortcut 3.5 m / 1 lane. Width comes from the class, never from pixels. lanes <= 2 always.",
+   "id": "RD04_01",
+   "class": "town_street",
+   "master_legend": "asphalt_road",
+   "width_m": 6,
+   "lanes": 2,
+   "district_ids": ["residential"],
+   "polyline_m": [[600.0, 450.0], [700.0, 450.0]],
+   "joins_road_ids": [],
+   "access_only": false,
+   "parent_road_id": null,
+   "continues_in_fragment": null,
+   "note_ru": ""
+  }
+ ],
+
+ "paths": [
+  {
+   "_v14": "paths[] (walk-only graph). Required: id, class, width_m, polyline_m, district_id, district_ids, walkable true, van_access false.",
+   "_classes": "footpath / promenade -> passage 2.5 m, foot_lane 3 m (arches, lanes between blocks), trail 2 m (forest, hills). A wide promenade is a functional_site polygon (type promenade) plus a passage centreline.",
+   "id": "WK04_01",
+   "class": "passage",
+   "master_legend": "footpath_promenade",
+   "width_m": 2.5,
+   "polyline_m": [[650.0, 460.0], [650.0, 500.0]],
+   "district_id": "residential",
+   "district_ids": ["residential"],
+   "walkable": true,
+   "van_access": false,
+   "joins_way_ids": []
+  }
+ ],
+
+ "building_masses": [
+  {
+   "_v14": "building_masses[] (generic buildings). Required: id, district_id, kind, center_m, width_m, depth_m, rotation_deg, floors, polygon_m. Optional: entrance_m, access_road_id, role, block.",
+   "_kinds": "rural_house, rural_outbuilding, small_house, midrise, panel, tower; new for the master (lead to confirm): garage_row, shed, kiosk_stall, warehouse, generic. Unknown -> generic + a question.",
+   "_floors": "the master is 2D: floors are an estimate (rural 1-2, small_house 2-3, midrise 5-7, panel 5-9, tower 18-22, garage/warehouse 1); set floors_source 'estimate' unless a key text says otherwise.",
+   "id": "BM04_01",
+   "district_id": "residential",
+   "kind": "panel",
+   "center_m": [650.0, 520.0],
+   "width_m": 60.0,
+   "depth_m": 13.0,
+   "rotation_deg": 0.0,
+   "floors": 9,
+   "floors_source": "estimate",
+   "polygon_m": [[620.0, 513.5], [680.0, 513.5], [680.0, 526.5], [620.0, 526.5]],
+   "entrance_m": null,
+   "access_road_id": null,
+   "master_key": null
+  }
+ ],
+
+ "functional_buildings": [
+  {
+   "_v14": "functional_buildings[] (named buildings: bases, POI, shops, police, mansions...). Required: id, type, district_id, label_ru, group, center_m, width_m, depth_m, footprint_m, storeys, rotation_deg, entrance_m, access_road_id. Optional: poi_id (filled in the mapping step), color, icon.",
+   "_types": "use v14 types where they fit (wagon_base, grandpa_house, hut, garage_base, house_base, industrial_complex, prestige_base, police_station, bank, cafe, supermarket, hospital, church, mansion, warehouse, depot, ...). A building that carries a master object key or player-base badge goes here, not in building_masses.",
+   "id": "FB04_GARAGE_BASE",
+   "type": "garage_base",
+   "district_id": "residential",
+   "label_ru": "База-гараж",
+   "group": "base",
+   "center_m": [655.0, 420.0],
+   "width_m": 30.0,
+   "depth_m": 12.0,
+   "rotation_deg": 0.0,
+   "footprint_m": [[640.0, 414.0], [670.0, 414.0], [670.0, 426.0], [640.0, 426.0]],
+   "storeys": 1,
+   "entrance_m": [655.0, 413.0],
+   "access_road_id": "RD04_01",
+   "master_key": "04-XX or badge",
+   "poi_id": null
+  }
+ ],
+
+ "functional_sites": [
+  {
+   "_v14": "functional_sites[] : id, type, district_id, polygon_m | polyline_m | position_m, label_ru; optional building_id, capacity_vans, surface, diameter_m.",
+   "_types": "square, yard, sidewalk, parking, turnaround, pitch (football), playground, fountain (position_m + diameter_m), promenade, quay, pier (polygon on the sea), garage_yard, port_yard, churchyard, pool (elite pools: water=false, surface 'pool').",
+   "id": "ST04_01",
+   "type": "pitch",
+   "district_id": "residential",
+   "polygon_m": [[730.0, 450.0], [760.0, 450.0], [760.0, 470.0], [730.0, 470.0]],
+   "surface": "grass",
+   "label_ru": "Футбольное поле",
+   "master_key": null
+  }
+ ],
+
+ "plots": [
+  {
+   "_v14": "plots[] : id, kind (front_yard, farmstead, elite_garden, villa_yard, garden), district_id, polygon_m; optional building_id.",
+   "id": "PL04_01", "kind": "front_yard", "district_id": "residential", "polygon_m": [[640.0, 500.0], [660.0, 500.0], [660.0, 510.0], [640.0, 510.0]], "building_id": null
+  }
+ ],
+
+ "microdistricts": [
+  {
+   "_v14": "microdistricts[] (courtyard groups of panel blocks): id, center_m, angle, yard_polygon_m, building_ids, arrangement, opening_direction, shared_courtyard. Mostly 04.",
+   "id": "CY04_01", "center_m": [650.0, 540.0], "angle": 0, "yard_polygon_m": [[630.0, 530.0], [670.0, 530.0], [670.0, 550.0], [630.0, 550.0]], "building_ids": ["BM04_01"], "arrangement": "courtyard", "opening_direction": "S", "shared_courtyard": true
+  }
+ ],
+
+ "water": [
+  {
+   "_v14": "water[] : id, kind, name_ru, polygon_m and center_m (lakes, ponds) OR centerline_m and width_m (river, canal, stream); district_id or null for shared water. The sea, the main river and the bay belong to the world fragment.",
+   "_kinds": "lake, pond, swamp_pond, mountain_lake, river, stream, concrete_canal, sea",
+   "id": "WA04_01", "kind": "pond", "name_ru": "Пруд", "polygon_m": [[780.0, 420.0], [800.0, 420.0], [800.0, 428.0], [780.0, 428.0]], "center_m": [790.0, 424.0], "district_id": "residential"
+  }
+ ],
+
+ "water_crossings": [
+  {
+   "_v14": "water_crossings[] : id, road_id, water_id, position_m, deck_axis_m (two points across the water), kind (bridge, culvert, footbridge). Every road or path that crosses water needs one.",
+   "id": "XB03_01", "road_id": "RD03_01", "water_id": "RIVER", "position_m": [350.0, 345.0], "deck_axis_m": [[343.0, 345.0], [357.0, 345.0]], "kind": "bridge"
+  }
+ ],
+
+ "beaches": [
+  {
+   "_v14": "beaches[] : id, name_ru, polygon_m, land_edge_m, sea_edge_m, width_m, surface 'sand', access_road_ids, closed_ends_ru. 08 (small beach), 09 (city beach), 07 (elite sand strip on the bay).",
+   "id": "BE09_01", "name_ru": "Городской пляж", "polygon_m": [[550.0, 100.0], [800.0, 100.0], [800.0, 160.0], [550.0, 160.0]], "land_edge_m": [[550.0, 160.0], [800.0, 160.0]], "sea_edge_m": [[550.0, 100.0], [800.0, 100.0]], "width_m": 60, "surface": "sand", "access_road_ids": [], "closed_ends_ru": ""
+  }
+ ],
+
+ "crop_fields": [
+  {
+   "_v14": "crop_fields[] : id, district_id, crop, stripe_count, stripe_direction, polygon_m, label_ru (area_m2 derived). Legend 'Field' (yellow hatch).",
+   "id": "FD02_01", "district_id": "village", "crop": "wheat", "stripe_count": 4, "stripe_direction": "north_south", "polygon_m": [[290.0, 430.0], [330.0, 430.0], [330.0, 465.0], [290.0, 465.0]], "label_ru": "Поле пшеницы"
+  }
+ ],
+
+ "vegetation_areas": [
+  {
+   "_v14": "NEW layer. v14 stored no trees: tree_layers() scattered them inside district polygons. The master draws forest, groves, lawns, parks and gardens explicitly, so record them as areas; orchards map to vegetation_parcels kind 'orchard'.",
+   "_kinds": "forest (dense), grove (sparse trees), park, lawn, garden, orchard, hedge_row",
+   "id": "VG04_01", "kind": "lawn", "district_id": "residential", "polygon_m": [[700.0, 480.0], [720.0, 480.0], [720.0, 495.0], [700.0, 495.0]], "tree_density": "none"
+  }
+ ],
+
+ "tree_points_m": {
+  "_doc": "Optional: individually drawn trees as [x, y, crown_radius_m]; only where the master shows single trees that matter (squares, streets).",
+  "points": []
+ },
+
+ "rocks": [
+  {
+   "_v14": "forest_features.rocks / bay rocks / rock_scarp parcels. Legend 'Rocks, cliffs, ravines'. Coastal cliffs belong to the world fragment unless they sit inside the district.",
+   "id": "RK07_01", "kind": "cliff", "district_id": "elite", "polygon_m": [[1050.0, 300.0], [1060.0, 300.0], [1060.0, 340.0], [1050.0, 340.0]], "blocks_van": true, "blocks_foot": true
+  }
+ ],
+
+ "fences": [
+  {
+   "_v14": "vegetation_parcels[] kind 'interdistrict_barrier': id, kind, material, district_id, axis_m (polyline), polygon_m (thin band), height_target_m, blocks_foot, blocks_van, gate_road_ids, barrier_role.",
+   "_rule": "Only perimeters the master draws itself (legend 'Fence, perimeter': elite hill oval, port wall, compound walls). Never on a district border. Every road or path that crosses a fence needs a gate listed in gate_road_ids.",
+   "_materials": "elite_fence, port_wall, barbed_fence, low_wall, canal_railing, rock_scarp, dune_ridge",
+   "id": "FN07_01", "kind": "interdistrict_barrier", "material": "elite_fence", "barrier_role": "property_fence", "district_id": "elite", "axis_m": [[860.0, 300.0], [900.0, 290.0]], "polygon_m": [], "height_target_m": 2.4, "blocks_foot": true, "blocks_van": true, "gate_road_ids": []
+  }
+ ],
+
+ "hills": [
+  {
+   "_v14": "hills[] : id, center_m, radii_m, polygon_m, height_target_m, district_id, summit_path_id. 07 oval hill; contour lines in the master show the slope.",
+   "id": "HL07_01", "center_m": [960.0, 300.0], "radii_m": [100.0, 90.0], "polygon_m": [], "height_target_m": 24, "district_id": "elite"
+  }
+ ],
+
+ "railway": {
+  "_v14": "railway{} : polyline_m, buffer_stop_m, active_trains false (01 only: the wagon B01 on rails at the coast); null elsewhere.",
+  "polyline_m": [], "buffer_stop_m": null, "active_trains": false
+ },
+
+ "lamps_m": {
+  "_doc": "NEW layer from the master legend 'Lamp / grip anchor': positions only, no new mechanic. [x, y].",
+  "points": []
+ },
+
+ "master_keys": [
+  {
+   "_doc": "Every key drawn in the crop: object keys ('04-07' = district 04, object 07), player-base badges (black), district number circle. text_read empty + legible false when unreadable (most are at this resolution).",
+   "kind": "object_key",
+   "text_read": "",
+   "legible": false,
+   "position_m": [0.0, 0.0],
+   "attached_to_id": "FB04_GARAGE_BASE",
+   "caption_read": ""
+  }
+ ],
+
+ "points": [
+  {
+   "_v14": "points[] : id, canonical_id, name_ru, position_m, district_id, category (base, poi, landmark, atm, meeting, water_access, bin, exit, reference), label_offset_px; extras per id (team_shared, interior, access_reserve_m, door_clearance_target_m ...). Filled ONLY in the mapping step by the lead: tracers leave this list empty.",
+   "id": "B03", "canonical_id": "B03", "name_ru": "База-гараж", "position_m": [655.0, 413.0], "district_id": "residential", "category": "base", "label_offset_px": [0, 0], "source_master_key": "badge", "mapping_confidence": "proposed"
+  }
+ ],
+
+ "labels": [
+  {
+   "_doc": "Scheme labels, Russian; district labels carry the master English name in brackets. Renderer anchors; not gameplay.",
+   "id": "LB04_01", "kind": "district", "text_ru": "Район подворотен (ROUGH DISTRICT)", "position_m": [630.6, 554.5]
+  }
+ ],
+
+ "marina": {
+  "_doc": "07 only (Fedya: add the v14 elite marina to ELITE HILL). Do not retrace REF_FEDYA_MASTER_v02_marina.png: transplant MAP_PLAN_R01_v14.json 'marina' (pier, t_head, 3 fingers, 10 berths, 3 yachts + 4 motor boats, breakwater with light, walk_axis) by a rigid transform: rotate about v14 root_m [1050.657, 516.736] by (axis_deg_new - (-21.9)) and move the root to root_m_new on the elite coast waterline. Quay road from the elite loop road, van to the quay only.",
+  "transplant_from": "MAP_PLAN_R01_v14.json#marina",
+  "root_m_new": null,
+  "axis_deg_new": null,
+  "quay_road_id": null,
+  "access_note_ru": ""
+ },
+
+ "questions_ru": [
+  {"where_m": [0.0, 0.0], "topic": "", "question_ru": ""}
+ ],
+
+ "trace_qa": {
+  "_doc": "Tracer self-check before hand-off.",
+  "crop_key": "04_rough",
+  "all_inside_crop_extent": true,
+  "polygons_simple": true,
+  "buildings_overlap_none": true,
+  "roads_join_at_shared_vertices": true,
+  "edge_roads_listed_with_continues_in_fragment": true,
+  "fences_only_master_perimeters": true,
+  "notes": ""
+ },
+
+ "world_only": {
+  "_doc": "Filled only in m2_frag_whole.json (fragment_kind 'world'); district fragments leave these empty.",
+  "boundary": {"_v14": "boundary{} : polygon_m (playable land), barrier text, barrier_band_m, coast_segments_m [[a, b], ...]", "polygon_m": [], "barrier": "mountain ridge (world edge) on the N and W; coast on the S and E", "barrier_band_m": 5, "coast_segments_m": []},
+  "mountain_foot_m": {"_doc": "NEW: polyline of the foot of the mountain ridge (world edge), W to NE.", "polyline_m": []},
+  "sea": {"_v14": "water[] kind 'sea' : polygon_m (>=150 m offshore band), return_rule 'return_to_last_ground_point'", "id": "SEA", "polygon_m": [], "offshore_band_m": 150},
+  "bay": {"_v14": "bay{} : apex_m, mouth_m, sea_edge_m", "apex_m": null, "mouth_m": [], "sea_edge_m": []},
+  "river": {"_v14": "water[] kind 'river' : centerline_m from the mountain lake to the sea, width_m; river mouth at the city beach", "id": "RIVER", "centerline_m": [], "width_m": 6, "source_lake_id": "WA00_MOUNTAIN_LAKE"},
+  "trunk_roads": {"_doc": "Inter-district roads as one set of polylines with the junction points every district fragment must reuse.", "roads": [], "junctions_m": []},
+  "exits": {"_v14": "exits[] (v14 NW/NE posts P16, P16-2). The master shows no exit posts: leave empty and ask.", "items": []}
+ }
+}

@@ -1,0 +1,616 @@
+{
+ "id": "M2_FRAME_MASTER_v02",
+ "date": "2026-10-07",
+ "source": {
+  "file": "C:\\Dev\\Game\\ArtSource\\References\\Map\\REF_FEDYA_MASTER_v02_map.png",
+  "size_px": [
+   1280,
+   714
+  ],
+  "note": "Fedya Master v02 (06.10.2026), north up. The PNG is a 1280x714 downscaled screenshot: the right 53 px are a dark viewer margin and the left 6 px a dark edge; top and bottom of the map are cut by the frame. Object-key and base-key texts (2-3 px tall) are not readable even at 3-4x. The subtitle seems to say \"1 unit = 0.2 m\" (illegible; not used)."
+ },
+ "units": "metre",
+ "axes": {
+  "x": "east",
+  "y": "north",
+  "unity_mapping": "(x, terrain_height, y)"
+ },
+ "scale_bar": {
+  "row_px": [
+   595,
+   596
+  ],
+  "edges_px": [
+   955.9,
+   975.89,
+   995.31,
+   1015.08,
+   1034.79,
+   1054.71
+  ],
+  "marks_m": [
+   0.0,
+   20.0,
+   40.0,
+   60.0,
+   80.0,
+   100.0
+  ],
+  "fit_px_per_m": 0.98644,
+  "fit_residual_max_px": 0.202,
+  "end_to_end_px": 98.81
+ },
+ "transform": {
+  "metres_per_px": 1.013746,
+  "px_per_metre": 0.98644,
+  "uncertainty": "about +-0.5 percent (bar edges anti-aliased; fit residual max 0.202 px over 98.81 px)",
+  "origin_px": [
+   6.0,
+   684.0
+  ],
+  "origin_definition": "bottom-left corner of the land bbox (land = frame minus the connected sea; mountains count as land). Source-pixel coordinates are continuous: pixel (i, j) covers [i, i+1) x [j, j+1); its centre is (i+0.5, j+0.5).",
+  "src_px_to_m": "x_m = (u - 6.0) * 1.013746 ; y_m = (684.0 - v) * 1.013746",
+  "m_to_src_px": "u = 6.0 + x_m / 1.013746 ; v = 684.0 - y_m / 1.013746",
+  "crop_px_to_src_px": "u = box_x0 + (cx + 0.5)/upscale ; v = box_y0 + (cy + 0.5)/upscale",
+  "selftest": {
+   "scale_bar_length_m": 100.168,
+   "crop_roundtrip_max_err_m": 0.000581
+  }
+ },
+ "extents": {
+  "frame_px": [
+   6,
+   0,
+   1227,
+   714
+  ],
+  "frame_m": [
+   0.0,
+   -30.41,
+   1237.78,
+   693.4
+  ],
+  "land_bbox_px": [
+   6,
+   0,
+   1203,
+   684
+  ],
+  "land_bbox_m": [
+   0.0,
+   0.0,
+   1213.45,
+   693.4
+  ],
+  "land_note": "land bbox includes the mountain ridge (world edge) and runs to the frame on the W and N sides; sea south of y=0 has negative y",
+  "approx_playable_bbox_px": [
+   60,
+   55,
+   1170,
+   668
+  ],
+  "approx_playable_bbox_m": [
+   54.7,
+   16.2,
+   1180.0,
+   637.6
+  ],
+  "approx_playable_note": "hand estimate, +-10 m: mountain foot ~x60 px on the W, ~y55-195 px on the N; S coast ~y668 px; E to the port pier/outfall ~x1170 px. About 1.12 km E-W x 0.62 km N-S: wider than v14 (971 x 672 m) and over v14's \"playable extent <= 1000 m\" check -> lead/Fedya decision (scale bar taken as truth).",
+  "overlays_to_ignore_px": {
+   "title_box": [
+    15,
+    8,
+    280,
+    54
+   ],
+   "legend_scale_north": [
+    940,
+    555,
+    1227,
+    700
+   ]
+  }
+ },
+ "v14_comparison": {
+  "v14_extent_m": [
+   971.558,
+   671.718
+  ],
+  "v14_frame": "1000 x 1000 m, origin bottom-left",
+  "note": "Master v02 replaces the v14 layout; no v14 coordinates carry over except the marina geometry (transplant MAP_PLAN_R01_v14.json \"marina\" by a rigid transform onto the elite coast)."
+ },
+ "player_base_badges_px": {
+  "01_forest (wagon on rails)": [
+   146.5,
+   520.5
+  ],
+  "02_hamlet (building W of the junction)": [
+   144.5,
+   272.0
+  ],
+  "04_rough (SW block, L-shaped panel)": [
+   654.5,
+   275.0
+  ],
+  "05_downtown (SW block, green building)": [
+   570.5,
+   427.0
+  ],
+  "08_valley (blue building N of the pond)": [
+   497.5,
+   485.0
+  ]
+ },
+ "player_base_badges_m": {
+  "01_forest (wagon on rails)": [
+   142.4,
+   165.7
+  ],
+  "02_hamlet (building W of the junction)": [
+   140.4,
+   417.7
+  ],
+  "04_rough (SW block, L-shaped panel)": [
+   657.4,
+   414.6
+  ],
+  "05_downtown (SW block, green building)": [
+   572.3,
+   260.5
+  ],
+  "08_valley (blue building N of the pond)": [
+   498.3,
+   201.7
+  ]
+ },
+ "badges_note": "5 dark player-base badges confirmed; none found yet in 03, 06, 07, 09 (may be lighter or absent). Texts unreadable.",
+ "district_number_circles_px": {
+  "01": [
+   150,
+   499
+  ],
+  "02": [
+   228,
+   278
+  ],
+  "03": [
+   446,
+   306
+  ],
+  "04": [
+   628,
+   137
+  ],
+  "05": [
+   626,
+   346
+  ],
+  "06": [
+   954,
+   255
+  ],
+  "07": [
+   825,
+   346
+  ],
+  "08": [
+   381,
+   518
+  ],
+  "09": [
+   716,
+   517
+  ]
+ },
+ "crops": {
+  "whole": {
+   "file": "m2_crop_whole.png",
+   "title": "Whole master: coast, sea, bay, river, mountain edge, full road network",
+   "source_box_px": [
+    6,
+    0,
+    1227,
+    714
+   ],
+   "upscale": 2,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    2442,
+    1428
+   ],
+   "m_per_crop_px": 0.506873,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.506873,
+    "bx": 0.2534,
+    "ay": -0.506873,
+    "by": 693.1491
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    0.25,
+    -30.16,
+    1237.53,
+    693.15
+   ],
+   "grid_file": "m2_crop_whole_grid.png",
+   "grid_minor_m": 50,
+   "grid_major_m": 100,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "01_forest": {
+   "file": "m2_crop_01_forest.png",
+   "title": "01 FOREST (SW): wagon on rails at the coast, ponds, forest, SW coast",
+   "source_box_px": [
+    6,
+    370,
+    380,
+    690
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    1122,
+    960
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 0.169,
+    "ay": -0.337915,
+    "by": 318.1474
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    0.17,
+    -5.91,
+    378.97,
+    318.15
+   ],
+   "grid_file": "m2_crop_01_forest_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "02_hamlet": {
+   "file": "m2_crop_02_hamlet.png",
+   "title": "02 HAMLET (W): houses, fields, ponds, church-like building, dirt roads",
+   "source_box_px": [
+    40,
+    160,
+    430,
+    450
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    1170,
+    870
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 34.6363,
+    "ay": -0.337915,
+    "by": 531.0342
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    34.64,
+    237.39,
+    429.66,
+    531.03
+   ],
+   "grid_file": "m2_crop_02_hamlet_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "03_crossing": {
+   "file": "m2_crop_03_crossing.png",
+   "title": "03 CROSSING (centre-west): road hub, buildings, pond, river and bridges",
+   "source_box_px": [
+    315,
+    160,
+    610,
+    480
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    885,
+    960
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 313.4166,
+    "ay": -0.337915,
+    "by": 531.0342
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    313.42,
+    206.97,
+    612.13,
+    531.03
+   ],
+   "grid_file": "m2_crop_03_crossing_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "04_rough": {
+   "file": "m2_crop_04_rough.png",
+   "title": "04 ROUGH DISTRICT (N): panel blocks, courtyards, pitch, garages",
+   "source_box_px": [
+    585,
+    95,
+    905,
+    315
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    960,
+    660
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 587.1281,
+    "ay": -0.337915,
+    "by": 596.9277
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    587.13,
+    374.24,
+    911.19,
+    596.93
+   ],
+   "grid_file": "m2_crop_04_rough_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "05_downtown": {
+   "file": "m2_crop_05_downtown.png",
+   "title": "05 DOWNTOWN (centre): grid blocks, central square with fountain",
+   "source_box_px": [
+    515,
+    280,
+    845,
+    470
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    990,
+    570
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 516.1659,
+    "ay": -0.337915,
+    "by": 409.3846
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    516.17,
+    217.11,
+    850.36,
+    409.38
+   ],
+   "grid_file": "m2_crop_05_downtown_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "06_port": {
+   "file": "m2_crop_06_port.png",
+   "title": "06 INDUSTRIAL PORT (NE): walled port, pier, outfall",
+   "source_box_px": [
+    845,
+    35,
+    1195,
+    285
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    1050,
+    750
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 850.7022,
+    "ay": -0.337915,
+    "by": 657.7525
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    850.7,
+    404.65,
+    1205.18,
+    657.75
+   ],
+   "grid_file": "m2_crop_06_port_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "07_elite": {
+   "file": "m2_crop_07_elite.png",
+   "title": "07 ELITE HILL (E): oval hill, mansions, pools, loop road; SE coast and bay for the marina",
+   "source_box_px": [
+    785,
+    255,
+    1135,
+    625
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    1050,
+    1110
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 789.8774,
+    "ay": -0.337915,
+    "by": 434.7282
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    789.88,
+    59.98,
+    1144.35,
+    434.73
+   ],
+   "grid_file": "m2_crop_07_elite_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "08_valley": {
+   "file": "m2_crop_08_valley.png",
+   "title": "08 QUIET VALLEY (S-centre-west): big building, pond, road to the small beach",
+   "source_box_px": [
+    335,
+    435,
+    585,
+    680
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    750,
+    735
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 333.6915,
+    "ay": -0.337915,
+    "by": 252.2539
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    333.69,
+    4.22,
+    586.79,
+    252.25
+   ],
+   "grid_file": "m2_crop_08_valley_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "09_beach": {
+   "file": "m2_crop_09_beach.png",
+   "title": "09 CITY BEACH (S): sand, umbrellas, long pier, river mouth",
+   "source_box_px": [
+    525,
+    435,
+    835,
+    680
+   ],
+   "upscale": 3,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    930,
+    735
+   ],
+   "m_per_crop_px": 0.337915,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.337915,
+    "bx": 526.3033,
+    "ay": -0.337915,
+    "by": 252.2539
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    526.3,
+    4.22,
+    840.23,
+    252.25
+   ],
+   "grid_file": "m2_crop_09_beach_grid.png",
+   "grid_minor_m": 10,
+   "grid_major_m": 50,
+   "grid_note": "red verticals = x (east) in metres, blue horizontals = y (north) in metres; labels on major lines"
+  },
+  "legend": {
+   "file": "m2_crop_legend.png",
+   "title": "Legend, scale bar and north arrow (reference only, no grid)",
+   "source_box_px": [
+    940,
+    570,
+    1222,
+    700
+   ],
+   "upscale": 4,
+   "filter": "PIL LANCZOS (box resize)",
+   "size_px": [
+    1128,
+    520
+   ],
+   "m_per_crop_px": 0.253437,
+   "crop_px_to_m": {
+    "formula": "x_m = ax*cx + bx ; y_m = ay*cy + by  (cx right, cy down, pixel index; centre convention)",
+    "ax": 0.253437,
+    "bx": 946.9659,
+    "ay": -0.253437,
+    "by": 115.4404
+   },
+   "m_to_crop_px": {
+    "formula": "cx = (x_m - bx)/ax ; cy = (y_m - by)/ay"
+   },
+   "extent_m": [
+    946.97,
+    -16.09,
+    1232.59,
+    115.44
+   ]
+  }
+ },
+ "tracer_rules": [
+  "Trace in the *_grid.png (or compute from the clean crop with crop_px_to_m); write metres rounded to 0.1 m.",
+  "Polygons counter-clockwise, not closed (first point not repeated), >=3 points; polylines in travel order.",
+  "Widths come from the road class table, not from the blurry pixels (asphalt 2 lanes max).",
+  "Record uncertainty instead of guessing: put doubtful items in the fragment \"questions_ru\"."
+ ]
+}

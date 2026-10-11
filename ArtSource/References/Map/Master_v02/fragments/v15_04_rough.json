@@ -1,0 +1,3464 @@
+{
+  "id": "v15_04_rough",
+  "frame": "Master_v02/frame/m2_frame.json",
+  "region": "04_rough",
+  "units": "metre",
+  "fingerprint": "41151ce2b44ff283d35cb9bc56015dac8f0064af140627936e6f5d8c98498303",
+  "layers": {
+    "districts": [
+      {
+        "id": "residential",
+        "name_ru": "Район подворотен [Rough District]",
+        "color": "#d4d1b6",
+        "polygon_m": [
+          [
+            613.316,
+            565.67
+          ],
+          [
+            623.454,
+            480.516
+          ],
+          [
+            644.742,
+            401.443
+          ],
+          [
+            888.041,
+            426.787
+          ],
+          [
+            877.904,
+            581.89
+          ]
+        ],
+        "parent_id": null,
+        "notes_ru": "Контур зоны приблизительный; не ограда.",
+        "area_m2": 41483.328,
+        "building_count": 31,
+        "share_percent": 6.24,
+        "change_region": "04_rough"
+      }
+    ],
+    "roads": [
+      {
+        "id": "ACCESS_F06_24",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            771.4070109871595,
+            416.2778725563194
+          ],
+          [
+            771.407,
+            419.525
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.247,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "ACCESS_F06_ATM",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            713.677,
+            492.681
+          ],
+          [
+            713.677,
+            490.819
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.862,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_F06_BAR",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            648.797,
+            504.846
+          ],
+          [
+            648.797,
+            509.242
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.396,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_W"
+      },
+      {
+        "id": "ACCESS_F06_DEN",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            832.7210080371876,
+            421.7459150330176
+          ],
+          [
+            831.872,
+            446.391
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 24.66,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "ACCESS_F06_GBASE",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            684.1149103245618,
+            434.5713706327179
+          ],
+          [
+            678.869,
+            434.571
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 5.246,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_W_LANE"
+      },
+      {
+        "id": "ACCESS_F06_HOSPITAL",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            818.093,
+            522.079
+          ],
+          [
+            818.093,
+            523.434
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.355,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_E"
+      },
+      {
+        "id": "ACCESS_F06_K1",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            717.733,
+            509.914
+          ],
+          [
+            717.733,
+            516.845
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.931,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_F06_K3",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            869.4351019928048,
+            446.0010091329668
+          ],
+          [
+            864.891,
+            446.001
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.544,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_E_LANE"
+      },
+      {
+        "id": "ACCESS_F13_ATMSHOP",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            729.897,
+            509.914
+          ],
+          [
+            729.897,
+            517.859
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 7.945,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_F13_BAR2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            740.034,
+            509.914
+          ],
+          [
+            740.034,
+            508.052
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.862,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_F13_BEER",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            702.3090249604426,
+            409.17977117815866
+          ],
+          [
+            702.309,
+            418.005
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 8.825,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "ACCESS_F13_BETS",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            751.186,
+            509.914
+          ],
+          [
+            751.186,
+            509.066
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.848,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_F13_DISCOUNTER",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            863.712,
+            541.34
+          ],
+          [
+            866.08,
+            541.34
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.368,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_E_LANE"
+      },
+      {
+        "id": "ACCESS_F13_LOMBARD",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            741.048,
+            509.914
+          ],
+          [
+            741.048,
+            518.872
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 8.958,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_F13_SHAWARMA",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            759.296,
+            509.914
+          ],
+          [
+            759.296,
+            510.762
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.848,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_F13_ZAIMY",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            728.883,
+            509.914
+          ],
+          [
+            728.883,
+            507.039
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.875,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_GARAGE_LANE"
+      },
+      {
+        "id": "ACCESS_POINT_BAD_BLOCK",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            648.797,
+            504.846
+          ],
+          [
+            651.839,
+            506.873
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.655,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_W"
+      },
+      {
+        "id": "ACCESS_POINT_BAD_BLOCK_2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            819.3094,
+            514.5772
+          ],
+          [
+            818.093,
+            513.969
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.36,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_E"
+      },
+      {
+        "id": "ACCESS_POINT_BAD_BLOCK_3",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            834.0920375239557,
+            421.8756033068503
+          ],
+          [
+            832.285,
+            440.98
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 19.19,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "ACCESS_POINT_BAD_CENTER",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            727.87,
+            492.681
+          ],
+          [
+            727.87,
+            480.516
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 12.165,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_POINT_P09-2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            707.595,
+            492.681
+          ],
+          [
+            706.581,
+            486.598
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.167,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_POINT_P13-4",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            707.595,
+            492.681
+          ],
+          [
+            703.54,
+            478.488
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 14.761,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_R15_P01",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            679.7851090025389,
+            510.4440049559939
+          ],
+          [
+            673.893,
+            510.033
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 5.906,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_W_LANE"
+      },
+      {
+        "id": "ACCESS_R15_P02",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            678.6158405233791,
+            536.1609927491124
+          ],
+          [
+            680.102,
+            536.279
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.491,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_W_LANE"
+      },
+      {
+        "id": "ACCESS_R15_P03",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            774.502,
+            534.244
+          ],
+          [
+            771.002,
+            539.143
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.021,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_C_LANE"
+      },
+      {
+        "id": "ACCESS_R15_P04",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            796.0978887804528,
+            502.07742466098665
+          ],
+          [
+            795.435,
+            505.723
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.705,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_R15_P05",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            818.093,
+            522.079
+          ],
+          [
+            813.955,
+            521.665
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.159,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_E"
+      },
+      {
+        "id": "ACCESS_R15_P06",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            851.2109994098765,
+            509.60902418924104
+          ],
+          [
+            851.164,
+            509.865
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.26,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_R15_P07",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            668.344,
+            491.667
+          ],
+          [
+            668.154,
+            489.577
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.099,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_W"
+      },
+      {
+        "id": "ACCESS_R15_P08",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            681.237,
+            491.667
+          ],
+          [
+            681.689,
+            491.733
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.457,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_COURT_W"
+      },
+      {
+        "id": "ACCESS_R15_P09",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            722.134952921241,
+            411.3424315888333
+          ],
+          [
+            720.531,
+            420.968
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 9.758,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "ACCESS_R15_P10",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            780.4842119391889,
+            483.54702119517333
+          ],
+          [
+            777.262,
+            482.961
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.275,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_C_LANE"
+      },
+      {
+        "id": "ACCESS_R15_P11",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            786.6929348547375,
+            499.61424873911216
+          ],
+          [
+            787.429,
+            495.564
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.117,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_R15_P12",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            817.8269941286413,
+            420.33706207042184
+          ],
+          [
+            817.24,
+            430.175
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 9.855,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_PORT"
+      },
+      {
+        "id": "ACCESS_R15_P13",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            867.3486130466307,
+            469.30196535018047
+          ],
+          [
+            864.781,
+            468.903
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.598,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_E_LANE"
+      },
+      {
+        "id": "ACCESS_R15_P14",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            836.4420068749967,
+            509.2487181929373
+          ],
+          [
+            836.461,
+            509.102
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.148,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_MID"
+      },
+      {
+        "id": "ACCESS_R15_P15",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            687.566,
+            416.729
+          ],
+          [
+            687.622,
+            416.74
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 0.057,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough",
+        "access_only": true,
+        "parent_road_id": "ROUGH_W_LANE"
+      },
+      {
+        "id": "ROUGH_COURT_E",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            822.148,
+            508.9
+          ],
+          [
+            819.3094,
+            514.5772
+          ],
+          [
+            818.093,
+            517.01
+          ],
+          [
+            818.093,
+            522.079
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 14.136,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_COURT_W",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            681.237,
+            491.667
+          ],
+          [
+            668.344,
+            491.667
+          ],
+          [
+            652.852,
+            491.667
+          ],
+          [
+            648.797,
+            495.722
+          ],
+          [
+            648.797,
+            504.846
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 43.244,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_C_LANE",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            774.502,
+            534.244
+          ],
+          [
+            777.6397686546129,
+            509.9264863773453
+          ],
+          [
+            778.557,
+            502.818
+          ],
+          [
+            780.4842119391889,
+            483.54702119517333
+          ],
+          [
+            783.626,
+            452.131
+          ],
+          [
+            786.6729505227444,
+            417.5939779274417
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 117.298,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_E_LANE",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            863.712,
+            555.533
+          ],
+          [
+            863.712,
+            541.34
+          ],
+          [
+            863.712,
+            509.914
+          ],
+          [
+            867.3486130466307,
+            469.30196535018047
+          ],
+          [
+            869.4351019928048,
+            446.0010091329668
+          ],
+          [
+            869.794,
+            441.993
+          ],
+          [
+            886.014,
+            426.787
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 136.045,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_GARAGE_LANE",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            699.485,
+            509.914
+          ],
+          [
+            717.733,
+            509.914
+          ],
+          [
+            723.815,
+            509.914
+          ],
+          [
+            728.883,
+            509.914
+          ],
+          [
+            729.897,
+            509.914
+          ],
+          [
+            740.034,
+            509.914
+          ],
+          [
+            741.048,
+            509.914
+          ],
+          [
+            751.186,
+            509.914
+          ],
+          [
+            754.227,
+            509.914
+          ],
+          [
+            777.6397686546129,
+            509.9264863773453
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 78.155,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_MID",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            707.595,
+            492.681
+          ],
+          [
+            713.677,
+            492.681
+          ],
+          [
+            727.87,
+            492.681
+          ],
+          [
+            779.571,
+            497.749
+          ],
+          [
+            786.6929348547375,
+            499.61424873911216
+          ],
+          [
+            796.0978887804528,
+            502.07742466098665
+          ],
+          [
+            822.148,
+            508.9
+          ],
+          [
+            836.4420068749967,
+            509.2487181929373
+          ],
+          [
+            851.2109994098765,
+            509.60902418924104
+          ],
+          [
+            863.712,
+            509.914
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 157.813,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_W_LANE",
+        "class": "alley",
+        "width_m": 4.5,
+        "district_ids": [
+          "residential"
+        ],
+        "polyline_m": [
+          [
+            678.196,
+            545.395
+          ],
+          [
+            678.6158405233791,
+            536.1609927491124
+          ],
+          [
+            679.7851090025389,
+            510.4440049559939
+          ],
+          [
+            680.224,
+            500.791
+          ],
+          [
+            683.265,
+            438.952
+          ],
+          [
+            684.1149103245618,
+            434.5713706327179
+          ],
+          [
+            689.3247883690588,
+            407.7184849786396
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 138.38,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "04_rough"
+      }
+    ],
+    "paths": [],
+    "water": [
+      {
+        "id": "ROUGH_POND",
+        "kind": "lake",
+        "polygon_m": [
+          [
+            809.983,
+            398.402
+          ],
+          [
+            809.796,
+            399.195
+          ],
+          [
+            809.239,
+            399.969
+          ],
+          [
+            808.326,
+            400.703
+          ],
+          [
+            807.079,
+            401.382
+          ],
+          [
+            805.529,
+            401.986
+          ],
+          [
+            803.715,
+            402.503
+          ],
+          [
+            801.68,
+            402.918
+          ],
+          [
+            799.476,
+            403.223
+          ],
+          [
+            797.156,
+            403.409
+          ],
+          [
+            794.777,
+            403.471
+          ],
+          [
+            792.398,
+            403.409
+          ],
+          [
+            790.078,
+            403.223
+          ],
+          [
+            787.873,
+            402.918
+          ],
+          [
+            785.839,
+            402.503
+          ],
+          [
+            784.024,
+            401.986
+          ],
+          [
+            782.475,
+            401.382
+          ],
+          [
+            781.228,
+            400.703
+          ],
+          [
+            780.315,
+            399.969
+          ],
+          [
+            779.758,
+            399.195
+          ],
+          [
+            779.571,
+            398.402
+          ],
+          [
+            779.758,
+            397.609
+          ],
+          [
+            780.315,
+            396.836
+          ],
+          [
+            781.228,
+            396.101
+          ],
+          [
+            782.475,
+            395.423
+          ],
+          [
+            784.024,
+            394.818
+          ],
+          [
+            785.839,
+            394.301
+          ],
+          [
+            787.873,
+            393.886
+          ],
+          [
+            790.078,
+            393.582
+          ],
+          [
+            792.398,
+            393.396
+          ],
+          [
+            794.777,
+            393.333
+          ],
+          [
+            797.156,
+            393.396
+          ],
+          [
+            799.476,
+            393.582
+          ],
+          [
+            801.68,
+            393.886
+          ],
+          [
+            803.715,
+            394.301
+          ],
+          [
+            805.529,
+            394.818
+          ],
+          [
+            807.079,
+            395.423
+          ],
+          [
+            808.326,
+            396.101
+          ],
+          [
+            809.239,
+            396.836
+          ],
+          [
+            809.796,
+            397.609
+          ]
+        ],
+        "center_m": [
+          794.7769291592916,
+          398.4022318343226
+        ],
+        "name_ru": "Пруд южнее района",
+        "district_id": "residential",
+        "change_region": "04_rough"
+      }
+    ],
+    "building_masses": [
+      {
+        "id": "R15_P01",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          649.22,
+          521.067
+        ],
+        "width_m": 46.633,
+        "depth_m": 44.605,
+        "floors": 5,
+        "polygon_m": [
+          [
+            625.481,
+            536.272
+          ],
+          [
+            628.523,
+            495.722
+          ],
+          [
+            638.66,
+            496.736
+          ],
+          [
+            635.619,
+            524.107
+          ],
+          [
+            658.935,
+            527.148
+          ],
+          [
+            661.976,
+            495.722
+          ],
+          [
+            672.114,
+            496.736
+          ],
+          [
+            669.072,
+            540.327
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          646.4173224819585,
+          169.99848224406333
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          671.199,
+          509.845
+        ],
+        "van_stop_m": [
+          673.893,
+          510.033
+        ],
+        "access_road_id": "ACCESS_R15_P01"
+      },
+      {
+        "id": "R15_P02",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          688.841,
+          524.614
+        ],
+        "width_m": 13.179,
+        "depth_m": 39.536,
+        "floors": 5,
+        "polygon_m": [
+          [
+            682.251,
+            543.368
+          ],
+          [
+            685.292,
+            504.846
+          ],
+          [
+            695.43,
+            505.859
+          ],
+          [
+            692.389,
+            544.382
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          685.5001112718335,
+          166.49978103364776
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          682.794,
+          536.491
+        ],
+        "van_stop_m": [
+          680.102,
+          536.279
+        ],
+        "access_road_id": "ACCESS_R15_P02"
+      },
+      {
+        "id": "R15_P03",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          735.472,
+          542.861
+        ],
+        "width_m": 67.921,
+        "depth_m": 17.234,
+        "floors": 9,
+        "polygon_m": [
+          [
+            701.512,
+            544.382
+          ],
+          [
+            702.526,
+            534.244
+          ],
+          [
+            769.433,
+            541.34
+          ],
+          [
+            768.419,
+            551.478
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          731.4997800237929,
+          148.4999832305134
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          769.433,
+          541.34
+        ],
+        "van_stop_m": [
+          771.002,
+          539.143
+        ],
+        "access_road_id": "ACCESS_R15_P03"
+      },
+      {
+        "id": "R15_P04",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          788.384,
+          531.531
+        ],
+        "width_m": 19.261,
+        "depth_m": 48.66,
+        "floors": 5,
+        "polygon_m": [
+          [
+            778.557,
+            553.505
+          ],
+          [
+            786.667,
+            506.873
+          ],
+          [
+            797.818,
+            508.9
+          ],
+          [
+            790.722,
+            555.533
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          783.6936729465415,
+          159.67648230913562
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          794.952,
+          508.379
+        ],
+        "van_stop_m": [
+          795.435,
+          505.723
+        ],
+        "access_road_id": "ACCESS_R15_P04"
+      },
+      {
+        "id": "R15_P05",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          815.439,
+          538.458
+        ],
+        "width_m": 39.536,
+        "depth_m": 46.632,
+        "floors": 5,
+        "polygon_m": [
+          [
+            796.804,
+            554.519
+          ],
+          [
+            801.873,
+            511.942
+          ],
+          [
+            812.011,
+            513.969
+          ],
+          [
+            808.969,
+            544.382
+          ],
+          [
+            823.162,
+            545.395
+          ],
+          [
+            826.203,
+            518.024
+          ],
+          [
+            836.34,
+            520.052
+          ],
+          [
+            830.258,
+            558.574
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          810.3823318401181,
+          152.84293805971504
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          811.268,
+          521.396
+        ],
+        "van_stop_m": [
+          813.955,
+          521.665
+        ],
+        "access_road_id": "ACCESS_R15_P05"
+      },
+      {
+        "id": "R15_P06",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          850.518,
+          538.005
+        ],
+        "width_m": 16.22,
+        "depth_m": 51.701,
+        "floors": 9,
+        "polygon_m": [
+          [
+            842.423,
+            562.629
+          ],
+          [
+            847.492,
+            511.942
+          ],
+          [
+            858.643,
+            513.969
+          ],
+          [
+            853.574,
+            563.643
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          844.9856233022263,
+          153.28976854861378
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          850.682,
+          512.522
+        ],
+        "van_stop_m": [
+          851.164,
+          509.865
+        ],
+        "access_road_id": "ACCESS_R15_P06"
+      },
+      {
+        "id": "R15_P07",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          656.344,
+          470.796
+        ],
+        "width_m": 39.536,
+        "depth_m": 31.426,
+        "floors": 5,
+        "polygon_m": [
+          [
+            637.646,
+            486.598
+          ],
+          [
+            639.674,
+            456.186
+          ],
+          [
+            677.182,
+            460.241
+          ],
+          [
+            671.1,
+            486.598
+          ],
+          [
+            659.949,
+            487.612
+          ],
+          [
+            660.962,
+            471.392
+          ],
+          [
+            649.811,
+            470.378
+          ],
+          [
+            647.784,
+            487.612
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          653.4446434172108,
+          219.58773698357174
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          667.91,
+          486.888
+        ],
+        "van_stop_m": [
+          668.154,
+          489.577
+        ],
+        "access_road_id": "ACCESS_R15_P07"
+      },
+      {
+        "id": "R15_P08",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          693.606,
+          469.708
+        ],
+        "width_m": 18.247,
+        "depth_m": 50.687,
+        "floors": 5,
+        "polygon_m": [
+          [
+            684.279,
+            492.681
+          ],
+          [
+            691.375,
+            444.021
+          ],
+          [
+            702.526,
+            446.048
+          ],
+          [
+            696.444,
+            494.708
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          690.2008756592958,
+          220.660575132715
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          684.36,
+          492.122
+        ],
+        "van_stop_m": [
+          681.689,
+          491.733
+        ],
+        "access_road_id": "ACCESS_R15_P08"
+      },
+      {
+        "id": "R15_P09",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          718.239,
+          447.062
+        ],
+        "width_m": 17.234,
+        "depth_m": 48.66,
+        "floors": 9,
+        "polygon_m": [
+          [
+            709.622,
+            469.364
+          ],
+          [
+            714.691,
+            422.732
+          ],
+          [
+            726.856,
+            424.76
+          ],
+          [
+            721.787,
+            471.392
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          714.4999595559441,
+          242.9999861898345
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          720.087,
+          423.632
+        ],
+        "van_stop_m": [
+          720.531,
+          420.968
+        ],
+        "access_road_id": "ACCESS_R15_P09"
+      },
+      {
+        "id": "R15_P10",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          755.241,
+          481.022
+        ],
+        "width_m": 40.55,
+        "depth_m": 15.207,
+        "floors": 5,
+        "polygon_m": [
+          [
+            734.966,
+            484.571
+          ],
+          [
+            736.993,
+            473.419
+          ],
+          [
+            775.516,
+            477.474
+          ],
+          [
+            773.488,
+            488.626
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          751.0000138452848,
+          209.49999757506765
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          774.606,
+          482.478
+        ],
+        "van_stop_m": [
+          777.262,
+          482.961
+        ],
+        "access_road_id": "ACCESS_R15_P10"
+      },
+      {
+        "id": "R15_P11",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          797.129,
+          459.768
+        ],
+        "width_m": 21.289,
+        "depth_m": 68.935,
+        "floors": 5,
+        "polygon_m": [
+          [
+            786.667,
+            492.681
+          ],
+          [
+            795.791,
+            425.773
+          ],
+          [
+            807.956,
+            427.801
+          ],
+          [
+            797.818,
+            494.708
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          792.3198439105469,
+          230.46627733610194
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          787.912,
+          492.907
+        ],
+        "van_stop_m": [
+          787.429,
+          495.564
+        ],
+        "access_road_id": "ACCESS_R15_P11"
+      },
+      {
+        "id": "R15_P12",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          826.386,
+          457.273
+        ],
+        "width_m": 39.536,
+        "depth_m": 44.604,
+        "floors": 9,
+        "polygon_m": [
+          [
+            806.942,
+            472.406
+          ],
+          [
+            817.079,
+            432.87
+          ],
+          [
+            827.217,
+            435.911
+          ],
+          [
+            820.121,
+            462.268
+          ],
+          [
+            830.258,
+            465.309
+          ],
+          [
+            836.34,
+            436.925
+          ],
+          [
+            846.478,
+            439.966
+          ],
+          [
+            837.354,
+            477.474
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          821.1808209451768,
+          232.9277783068584
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          817.079,
+          432.87
+        ],
+        "van_stop_m": [
+          817.24,
+          430.175
+        ],
+        "access_road_id": "ACCESS_R15_P12"
+      },
+      {
+        "id": "R15_P13",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          854.576,
+          480.207
+        ],
+        "width_m": 18.248,
+        "depth_m": 47.646,
+        "floors": 5,
+        "polygon_m": [
+          [
+            845.464,
+            502.818
+          ],
+          [
+            852.56,
+            456.186
+          ],
+          [
+            863.712,
+            458.213
+          ],
+          [
+            856.615,
+            503.832
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          848.9881944780319,
+          210.30484305025243
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          862.114,
+          468.488
+        ],
+        "van_stop_m": [
+          864.781,
+          468.903
+        ],
+        "access_road_id": "ACCESS_R15_P13"
+      },
+      {
+        "id": "R15_P14",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          824.682,
+          499.27
+        ],
+        "width_m": 33.453,
+        "depth_m": 15.206,
+        "floors": 5,
+        "polygon_m": [
+          [
+            807.956,
+            502.818
+          ],
+          [
+            808.969,
+            491.667
+          ],
+          [
+            841.409,
+            495.722
+          ],
+          [
+            840.395,
+            506.873
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          819.4999127371216,
+          191.49993053325903
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          836.796,
+          506.423
+        ],
+        "van_stop_m": [
+          836.461,
+          509.102
+        ],
+        "access_road_id": "ACCESS_R15_P14"
+      },
+      {
+        "id": "R15_P15",
+        "district_id": "residential",
+        "kind": "panel",
+        "center_m": [
+          661.092,
+          423.828
+        ],
+        "width_m": 38.522,
+        "depth_m": 37.508,
+        "floors": 9,
+        "polygon_m": [
+          [
+            646.77,
+            445.034
+          ],
+          [
+            649.811,
+            408.54
+          ],
+          [
+            685.292,
+            414.622
+          ],
+          [
+            683.265,
+            424.76
+          ],
+          [
+            660.962,
+            422.732
+          ],
+          [
+            657.921,
+            446.048
+          ]
+        ],
+        "source_master_key": "",
+        "source_master_px": [
+          658.1277900200978,
+          265.9191312422654
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          684.974,
+          416.211
+        ],
+        "van_stop_m": [
+          687.622,
+          416.74
+        ],
+        "access_road_id": "ACCESS_R15_P15"
+      }
+    ],
+    "functional_buildings": [
+      {
+        "type": "shop_24h",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F06_24",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "24 часа",
+        "center_m": [
+          758.282,
+          428.814
+        ],
+        "width_m": 13.179,
+        "depth_m": 26.358,
+        "footprint_m": [
+          [
+            745.103,
+            435.404
+          ],
+          [
+            745.103,
+            422.225
+          ],
+          [
+            771.461,
+            422.225
+          ],
+          [
+            771.461,
+            435.404
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "readable",
+        "source_master_px": [
+          753.9999921084769,
+          261.00005721354273
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          771.407,
+          422.225
+        ],
+        "van_stop_m": [
+          771.407,
+          419.525
+        ],
+        "access_road_id": "ACCESS_F06_24"
+      },
+      {
+        "type": "atm_pavilion",
+        "group": "finance",
+        "icon": "$",
+        "color": "#87a875",
+        "id": "F06_ATM",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Банкомат",
+        "center_m": [
+          713.677,
+          485.584
+        ],
+        "width_m": 5.069,
+        "depth_m": 7.096,
+        "footprint_m": [
+          [
+            710.129,
+            488.119
+          ],
+          [
+            710.129,
+            483.05
+          ],
+          [
+            717.225,
+            483.05
+          ],
+          [
+            717.225,
+            488.119
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          709.9998184949683,
+          204.9998362508952
+        ],
+        "poi_id": "P11-3",
+        "change_region": "04_rough",
+        "entrance_m": [
+          713.677,
+          488.119
+        ],
+        "van_stop_m": [
+          713.677,
+          490.819
+        ],
+        "access_road_id": "ACCESS_F06_ATM"
+      },
+      {
+        "type": "bar",
+        "group": "food",
+        "icon": "Е",
+        "color": "#bd817d",
+        "id": "F06_BAR",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Бар",
+        "center_m": [
+          647.784,
+          517.01
+        ],
+        "width_m": 10.137,
+        "depth_m": 17.234,
+        "footprint_m": [
+          [
+            639.167,
+            522.079
+          ],
+          [
+            639.167,
+            511.942
+          ],
+          [
+            656.401,
+            511.942
+          ],
+          [
+            656.401,
+            522.079
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          645.0003018507596,
+          173.99996054238443
+        ],
+        "poi_id": "P06",
+        "change_region": "04_rough",
+        "entrance_m": [
+          648.797,
+          511.942
+        ],
+        "van_stop_m": [
+          648.797,
+          509.242
+        ],
+        "access_road_id": "ACCESS_F06_BAR"
+      },
+      {
+        "type": "den",
+        "group": "shadow",
+        "icon": "Т",
+        "color": "#927179",
+        "id": "F06_DEN",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Притон",
+        "center_m": [
+          829.752,
+          453.144
+        ],
+        "width_m": 8.11,
+        "depth_m": 4.055,
+        "footprint_m": [
+          [
+            827.724,
+            457.199
+          ],
+          [
+            827.724,
+            449.089
+          ],
+          [
+            831.779,
+            449.089
+          ],
+          [
+            831.779,
+            457.199
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          824.5003935897158,
+          237.00045573546032
+        ],
+        "poi_id": "P07",
+        "change_region": "04_rough",
+        "entrance_m": [
+          831.779,
+          449.089
+        ],
+        "van_stop_m": [
+          831.872,
+          446.391
+        ],
+        "access_road_id": "ACCESS_F06_DEN"
+      },
+      {
+        "type": "garage_base",
+        "group": "base",
+        "icon": "Б",
+        "color": "#aa6045",
+        "id": "F06_GBASE",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "База-гараж",
+        "center_m": [
+          670.087,
+          431.856
+        ],
+        "width_m": 8.11,
+        "depth_m": 12.165,
+        "footprint_m": [
+          [
+            664.004,
+            435.911
+          ],
+          [
+            664.004,
+            427.801
+          ],
+          [
+            676.169,
+            427.801
+          ],
+          [
+            676.169,
+            435.911
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          667.0003886575139,
+          257.9997987661604
+        ],
+        "poi_id": "B03",
+        "change_region": "04_rough",
+        "entrance_m": [
+          676.169,
+          434.571
+        ],
+        "van_stop_m": [
+          678.869,
+          434.571
+        ],
+        "access_road_id": "ACCESS_F06_GBASE"
+      },
+      {
+        "type": "hospital",
+        "group": "health",
+        "icon": "+",
+        "color": "#e1ebe0",
+        "id": "F06_HOSPITAL",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Больница · C03",
+        "center_m": [
+          818.093,
+          533.231
+        ],
+        "width_m": 14.193,
+        "depth_m": 8.11,
+        "footprint_m": [
+          [
+            814.038,
+            540.327
+          ],
+          [
+            814.038,
+            526.134
+          ],
+          [
+            822.148,
+            526.134
+          ],
+          [
+            822.148,
+            540.327
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          812.9999782983115,
+          157.99989741019942
+        ],
+        "poi_id": "P08",
+        "change_region": "04_rough",
+        "entrance_m": [
+          818.093,
+          526.134
+        ],
+        "van_stop_m": [
+          818.093,
+          523.434
+        ],
+        "access_road_id": "ACCESS_F06_HOSPITAL"
+      },
+      {
+        "type": "kiosk",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F06_K1",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Киоск 1",
+        "center_m": [
+          717.733,
+          522.08
+        ],
+        "width_m": 5.069,
+        "depth_m": 5.069,
+        "footprint_m": [
+          [
+            715.198,
+            524.614
+          ],
+          [
+            715.198,
+            519.545
+          ],
+          [
+            720.267,
+            519.545
+          ],
+          [
+            720.267,
+            524.614
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          714.0003274982097,
+          168.99969420347895
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          717.733,
+          519.545
+        ],
+        "van_stop_m": [
+          717.733,
+          516.845
+        ],
+        "access_road_id": "ACCESS_F06_K1"
+      },
+      {
+        "type": "kiosk",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F06_K3",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Киоск 3",
+        "center_m": [
+          858.643,
+          445.034
+        ],
+        "width_m": 6.083,
+        "depth_m": 7.096,
+        "footprint_m": [
+          [
+            855.095,
+            448.076
+          ],
+          [
+            855.095,
+            441.993
+          ],
+          [
+            862.191,
+            441.993
+          ],
+          [
+            862.191,
+            448.076
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          853.0001361287739,
+          244.99999408135767
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          862.191,
+          446.001
+        ],
+        "van_stop_m": [
+          864.891,
+          446.001
+        ],
+        "access_road_id": "ACCESS_F06_K3"
+      },
+      {
+        "type": "atm_shop",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F13_ATMSHOP",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Продукты · банкомат",
+        "center_m": [
+          729.897,
+          523.093
+        ],
+        "width_m": 5.068,
+        "depth_m": 7.096,
+        "footprint_m": [
+          [
+            726.349,
+            525.627
+          ],
+          [
+            726.349,
+            520.559
+          ],
+          [
+            733.445,
+            520.559
+          ],
+          [
+            733.445,
+            525.627
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          725.9998816271531,
+          167.9999368678151
+        ],
+        "poi_id": "P11-2",
+        "change_region": "04_rough",
+        "entrance_m": [
+          729.897,
+          520.559
+        ],
+        "van_stop_m": [
+          729.897,
+          517.859
+        ],
+        "access_road_id": "ACCESS_F13_ATMSHOP"
+      },
+      {
+        "type": "bar",
+        "group": "food",
+        "icon": "Е",
+        "color": "#bd817d",
+        "id": "F13_BAR2",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Рюмочная",
+        "center_m": [
+          740.034,
+          502.818
+        ],
+        "width_m": 5.068,
+        "depth_m": 7.097,
+        "footprint_m": [
+          [
+            736.486,
+            505.352
+          ],
+          [
+            736.486,
+            500.284
+          ],
+          [
+            743.583,
+            500.284
+          ],
+          [
+            743.583,
+            505.352
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          735.9999210847687,
+          188.0000157830463
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          740.034,
+          505.352
+        ],
+        "van_stop_m": [
+          740.034,
+          508.052
+        ],
+        "access_road_id": "ACCESS_F13_BAR2"
+      },
+      {
+        "type": "beer_kiosk",
+        "group": "food",
+        "icon": "Е",
+        "color": "#bd817d",
+        "id": "F13_BEER",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Разливное пиво",
+        "center_m": [
+          700.499,
+          425.774
+        ],
+        "width_m": 10.137,
+        "depth_m": 5.069,
+        "footprint_m": [
+          [
+            697.964,
+            430.842
+          ],
+          [
+            697.964,
+            420.705
+          ],
+          [
+            703.033,
+            420.705
+          ],
+          [
+            703.033,
+            430.842
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          697.0000138101655,
+          263.9998224407297
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          702.309,
+          420.705
+        ],
+        "van_stop_m": [
+          702.309,
+          418.005
+        ],
+        "access_road_id": "ACCESS_F13_BEER"
+      },
+      {
+        "type": "betting_shop",
+        "group": "finance",
+        "icon": "$",
+        "color": "#c4875a",
+        "id": "F13_BETS",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Ставки",
+        "center_m": [
+          751.186,
+          503.832
+        ],
+        "width_m": 5.069,
+        "depth_m": 7.096,
+        "footprint_m": [
+          [
+            747.638,
+            506.366
+          ],
+          [
+            747.638,
+            501.297
+          ],
+          [
+            754.734,
+            501.297
+          ],
+          [
+            754.734,
+            506.366
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          747.0002110982434,
+          187.00025844738224
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          751.186,
+          506.366
+        ],
+        "van_stop_m": [
+          751.186,
+          509.066
+        ],
+        "access_road_id": "ACCESS_F13_BETS"
+      },
+      {
+        "type": "supermarket",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F13_DISCOUNTER",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Дискаунтер",
+        "center_m": [
+          872.835,
+          541.34
+        ],
+        "width_m": 23.316,
+        "depth_m": 8.11,
+        "footprint_m": [
+          [
+            868.78,
+            552.998
+          ],
+          [
+            868.78,
+            529.682
+          ],
+          [
+            876.89,
+            529.682
+          ],
+          [
+            876.89,
+            552.998
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          866.9996981492405,
+          150.00035906430207
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          868.78,
+          541.34
+        ],
+        "van_stop_m": [
+          866.08,
+          541.34
+        ],
+        "access_road_id": "ACCESS_F13_DISCOUNTER"
+      },
+      {
+        "type": "pawn_shop",
+        "group": "finance",
+        "icon": "$",
+        "color": "#c4875a",
+        "id": "F13_LOMBARD",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Ломбард",
+        "center_m": [
+          741.048,
+          524.106
+        ],
+        "width_m": 5.069,
+        "depth_m": 7.096,
+        "footprint_m": [
+          [
+            737.5,
+            526.641
+          ],
+          [
+            737.5,
+            521.572
+          ],
+          [
+            744.596,
+            521.572
+          ],
+          [
+            744.596,
+            526.641
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          736.9996784204328,
+          167.00017953215115
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          741.048,
+          521.572
+        ],
+        "van_stop_m": [
+          741.048,
+          518.872
+        ],
+        "access_road_id": "ACCESS_F13_LOMBARD"
+      },
+      {
+        "type": "fast_food",
+        "group": "food",
+        "icon": "Е",
+        "color": "#bd817d",
+        "id": "F13_SHAWARMA",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Шаурма 24",
+        "center_m": [
+          759.296,
+          515.996
+        ],
+        "width_m": 5.069,
+        "depth_m": 10.137,
+        "footprint_m": [
+          [
+            754.227,
+            518.531
+          ],
+          [
+            754.227,
+            513.462
+          ],
+          [
+            764.364,
+            513.462
+          ],
+          [
+            764.364,
+            518.531
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          754.9997494441409,
+          175.0002110982436
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          759.296,
+          513.462
+        ],
+        "van_stop_m": [
+          759.296,
+          510.762
+        ],
+        "access_road_id": "ACCESS_F13_SHAWARMA"
+      },
+      {
+        "type": "payday_loans",
+        "group": "finance",
+        "icon": "$",
+        "color": "#c4875a",
+        "id": "F13_ZAIMY",
+        "district_id": "residential",
+        "district": "residential",
+        "label_ru": "Займы до зарплаты",
+        "center_m": [
+          728.883,
+          501.804
+        ],
+        "width_m": 5.069,
+        "depth_m": 7.096,
+        "footprint_m": [
+          [
+            725.335,
+            504.339
+          ],
+          [
+            725.335,
+            499.27
+          ],
+          [
+            732.431,
+            499.27
+          ],
+          [
+            732.431,
+            504.339
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "",
+        "mapping_confidence": "proposed",
+        "source_master_px": [
+          724.9996310712941,
+          188.99977311871027
+        ],
+        "change_region": "04_rough",
+        "entrance_m": [
+          728.883,
+          504.339
+        ],
+        "van_stop_m": [
+          728.883,
+          507.039
+        ],
+        "access_road_id": "ACCESS_F13_ZAIMY"
+      }
+    ],
+    "functional_sites": [
+      {
+        "id": "GARAGE15_ROW_1",
+        "type": "garage_yard",
+        "district_id": "residential",
+        "polygon_m": [
+          [
+            713.17,
+            526.641
+          ],
+          [
+            713.17,
+            519.545
+          ],
+          [
+            756.761,
+            519.545
+          ],
+          [
+            756.761,
+            526.641
+          ]
+        ],
+        "label_ru": "Ряд гаражей",
+        "shell_count": 6,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "GARAGE15_ROW_2",
+        "type": "garage_yard",
+        "district_id": "residential",
+        "polygon_m": [
+          [
+            714.184,
+            506.366
+          ],
+          [
+            714.184,
+            499.27
+          ],
+          [
+            755.748,
+            499.27
+          ],
+          [
+            755.748,
+            506.366
+          ]
+        ],
+        "label_ru": "Ряд гаражей",
+        "shell_count": 6,
+        "change_region": "04_rough"
+      },
+      {
+        "id": "ROUGH_FOOTBALL",
+        "type": "football_pitch",
+        "district_id": "residential",
+        "polygon_m": [
+          [
+            739.021,
+            466.323
+          ],
+          [
+            739.021,
+            441.993
+          ],
+          [
+            773.488,
+            441.993
+          ],
+          [
+            773.488,
+            466.323
+          ]
+        ],
+        "label_ru": "Футбольное поле",
+        "surface": "grass",
+        "change_region": "04_rough"
+      }
+    ],
+    "points": [
+      {
+        "id": "B03",
+        "canonical_id": "B03",
+        "name_ru": "База-гараж",
+        "position_m": [
+          676.169,
+          434.571
+        ],
+        "district_id": "residential",
+        "category": "base",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "team_shared": true,
+        "retained_after_move": true,
+        "interior": true,
+        "access_reserve_m": [
+          20,
+          25
+        ],
+        "door_clearance_target_m": 2.4,
+        "source_master_key": "F06_GBASE",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "building_id": "F06_GBASE",
+        "van_stop_m": [
+          678.869,
+          434.571
+        ],
+        "access_road_id": "ACCESS_F06_GBASE",
+        "road_node_id": "N848a3ab4ea8b",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "BAD_BLOCK",
+        "canonical_id": "BAD_BLOCK",
+        "name_ru": "Подворотня 1",
+        "position_m": [
+          651.839,
+          506.873
+        ],
+        "district_id": "residential",
+        "category": "reference",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "04: courtyard / proposed v14 gameplay mapping",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "van_stop_m": [
+          651.839,
+          506.873
+        ],
+        "access_road_id": "ACCESS_POINT_BAD_BLOCK",
+        "road_node_id": "Ne3195aeed523",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "BAD_BLOCK_2",
+        "canonical_id": "BAD_BLOCK_2",
+        "name_ru": "Подворотня 2",
+        "position_m": [
+          818.093,
+          513.969
+        ],
+        "district_id": "residential",
+        "category": "reference",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "04: courtyard / proposed v14 gameplay mapping",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "van_stop_m": [
+          818.093,
+          513.969
+        ],
+        "access_road_id": "ACCESS_POINT_BAD_BLOCK_2",
+        "road_node_id": "N09b8acc9e661",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "BAD_BLOCK_3",
+        "canonical_id": "BAD_BLOCK_3",
+        "name_ru": "Подворотня 3",
+        "position_m": [
+          832.285,
+          440.98
+        ],
+        "district_id": "residential",
+        "category": "reference",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "04: courtyard / proposed v14 gameplay mapping",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "van_stop_m": [
+          832.285,
+          440.98
+        ],
+        "access_road_id": "ACCESS_POINT_BAD_BLOCK_3",
+        "road_node_id": "N5c1c9bd77edc",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "BAD_CENTER",
+        "canonical_id": "BAD_CENTER",
+        "name_ru": "Центр района подворотен",
+        "position_m": [
+          727.87,
+          480.516
+        ],
+        "district_id": "residential",
+        "category": "reference",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "04: courtyard / proposed v14 gameplay mapping",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "van_stop_m": [
+          727.87,
+          480.516
+        ],
+        "access_road_id": "ACCESS_POINT_BAD_CENTER",
+        "road_node_id": "Na2b348a82483",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P06",
+        "canonical_id": "P06",
+        "name_ru": "Бар",
+        "position_m": [
+          648.797,
+          511.942
+        ],
+        "district_id": "residential",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": true,
+        "source_master_key": "F06_BAR",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "building_id": "F06_BAR",
+        "van_stop_m": [
+          648.797,
+          509.242
+        ],
+        "access_road_id": "ACCESS_F06_BAR",
+        "road_node_id": "Nd39a08cfe74e",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P07",
+        "canonical_id": "P07",
+        "name_ru": "Притон",
+        "position_m": [
+          831.779,
+          449.089
+        ],
+        "district_id": "residential",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": true,
+        "source_master_key": "F06_DEN",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "building_id": "F06_DEN",
+        "van_stop_m": [
+          831.872,
+          446.391
+        ],
+        "access_road_id": "ACCESS_F06_DEN",
+        "road_node_id": "N10ac381164fc",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P08",
+        "canonical_id": "P08",
+        "name_ru": "Больница — работа C03",
+        "position_m": [
+          818.093,
+          526.134
+        ],
+        "district_id": "residential",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": false,
+        "landmark": "cross",
+        "source_master_key": "F06_HOSPITAL",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "building_id": "F06_HOSPITAL",
+        "van_stop_m": [
+          818.093,
+          523.434
+        ],
+        "access_road_id": "ACCESS_F06_HOSPITAL",
+        "road_node_id": "Ne8bd57b9f0ef",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P09-2",
+        "canonical_id": "P09",
+        "name_ru": "Запасная: подворотни",
+        "position_m": [
+          706.581,
+          486.598
+        ],
+        "district_id": "residential",
+        "category": "meeting",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "meeting_role": "backup",
+        "source_master_key": "04: courtyard / proposed v14 gameplay mapping",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "van_stop_m": [
+          706.581,
+          486.598
+        ],
+        "access_road_id": "ACCESS_POINT_P09-2",
+        "road_node_id": "N5194626fadb3",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P11-2",
+        "canonical_id": "P11",
+        "name_ru": "ATM в магазине «Продукты»",
+        "position_m": [
+          729.897,
+          520.559
+        ],
+        "district_id": "residential",
+        "category": "atm",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "F13_ATMSHOP",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "building_id": "F13_ATMSHOP",
+        "van_stop_m": [
+          729.897,
+          517.859
+        ],
+        "access_road_id": "ACCESS_F13_ATMSHOP",
+        "road_node_id": "N348b1a7e91ef",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P11-3",
+        "canonical_id": "P11",
+        "name_ru": "ATM у больницы",
+        "position_m": [
+          713.677,
+          488.119
+        ],
+        "district_id": "residential",
+        "category": "atm",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "F06_ATM",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "building_id": "F06_ATM",
+        "van_stop_m": [
+          713.677,
+          490.819
+        ],
+        "access_road_id": "ACCESS_F06_ATM",
+        "road_node_id": "N83ce9c711fe9",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P13-4",
+        "canonical_id": "P13",
+        "name_ru": "Мусорки",
+        "position_m": [
+          703.54,
+          478.488
+        ],
+        "district_id": "residential",
+        "category": "bin",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "04: courtyard / proposed v14 gameplay mapping",
+        "mapping_confidence": "proposed",
+        "change_region": "04_rough",
+        "van_stop_m": [
+          703.54,
+          478.488
+        ],
+        "access_road_id": "ACCESS_POINT_P13-4",
+        "road_node_id": "N3e818ac6887c",
+        "van_node_gap_m": 0.0
+      }
+    ],
+    "plots": [],
+    "microdistricts": [],
+    "farmsteads": [],
+    "vegetation_parcels": [],
+    "crop_fields": [],
+    "hills": [],
+    "beaches": [],
+    "outfalls": [],
+    "water_crossings": [],
+    "pedestrian_water_crossings": []
+  }
+}

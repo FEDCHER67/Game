@@ -1,0 +1,4079 @@
+{
+  "id": "v15_05_downtown",
+  "frame": "Master_v02/frame/m2_frame.json",
+  "region": "05_downtown",
+  "units": "metre",
+  "fingerprint": "a449945d2142c5288c866dc94e0a4c0a037a52344f68bc78f43be2beea22cba8",
+  "layers": {
+    "districts": [
+      {
+        "id": "old_town",
+        "name_ru": "Город [Downtown]",
+        "color": "#e7ddc8",
+        "polygon_m": [
+          [
+            539.313,
+            380.155
+          ],
+          [
+            539.313,
+            234.175
+          ],
+          [
+            816.066,
+            234.175
+          ],
+          [
+            816.066,
+            380.155
+          ]
+        ],
+        "parent_id": null,
+        "notes_ru": "Контур зоны приблизительный; не ограда.",
+        "area_m2": 40400.403,
+        "building_count": 19,
+        "share_percent": 6.08,
+        "change_region": "05_downtown"
+      }
+    ],
+    "roads": [
+      {
+        "id": "ACCESS_F06_CAFE2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            620.086,
+            327.604
+          ],
+          [
+            632.426,
+            327.604
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 12.34,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_W_AVENUE"
+      },
+      {
+        "id": "ACCESS_F06_HBASE",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            584.445,
+            284.341
+          ],
+          [
+            585.214,
+            275.422
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 8.952,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_F06_POLICE",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            567.645,
+            380.155
+          ],
+          [
+            567.645,
+            374.927
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 5.228,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_NORTH"
+      },
+      {
+        "id": "ACCESS_F06_REPAIR",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            616.44,
+            257.613
+          ],
+          [
+            617.842,
+            257.613
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.402,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_W_AVENUE"
+      },
+      {
+        "id": "ACCESS_F06_SUPER",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            732.66,
+            327.605
+          ],
+          [
+            715.876,
+            327.605
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 16.784,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_E_AVENUE"
+      },
+      {
+        "id": "ACCESS_F15_BOOKS",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            642.911,
+            276.414
+          ],
+          [
+            642.911,
+            283.454
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 7.04,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_F15_OFFICE_1",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            656.091,
+            276.414
+          ],
+          [
+            656.091,
+            269.034
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 7.38,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_F15_OFFICE_2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            734.255,
+            256.602
+          ],
+          [
+            732.398,
+            256.602
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 1.857,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_E_AVENUE"
+      },
+      {
+        "id": "ACCESS_F15_POLICE_2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            816.066,
+            259.033
+          ],
+          [
+            811.701,
+            259.033
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.365,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_EAST"
+      },
+      {
+        "id": "ACCESS_F15_RESTAURANT",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            705.389,
+            276.414
+          ],
+          [
+            705.389,
+            283.454
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 7.04,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_F15_TAXI",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            734.255,
+            262.144
+          ],
+          [
+            742.38,
+            262.144
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 8.125,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_E_AVENUE"
+      },
+      {
+        "id": "ACCESS_O14_TOWER_E",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            698.748,
+            380.155
+          ],
+          [
+            698.748,
+            373.794
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.361,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_NORTH"
+      },
+      {
+        "id": "ACCESS_O14_TOWER_W",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            649.54,
+            380.155
+          ],
+          [
+            649.54,
+            373.794
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.361,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_NORTH"
+      },
+      {
+        "id": "ACCESS_O15_RES_01",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            540.327,
+            335.023
+          ],
+          [
+            545.636,
+            335.325
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 5.318,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_WEST"
+      },
+      {
+        "id": "ACCESS_O15_RES_02",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            620.086,
+            322.469
+          ],
+          [
+            616.273,
+            321.912
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.853,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_W_AVENUE"
+      },
+      {
+        "id": "ACCESS_O15_RES_03",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            771.705,
+            380.155
+          ],
+          [
+            771.705,
+            373.794
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 6.361,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_NORTH"
+      },
+      {
+        "id": "ACCESS_O15_RES_04",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            816.066,
+            334.173
+          ],
+          [
+            811.815,
+            334.173
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.251,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_EAST"
+      },
+      {
+        "id": "ACCESS_O15_RES_05",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            732.66,
+            332.615
+          ],
+          [
+            737.498,
+            333.18
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 4.871,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_E_AVENUE"
+      },
+      {
+        "id": "ACCESS_O15_RES_06",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            780.086,
+            284.341
+          ],
+          [
+            779.9,
+            287.505
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.169,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_POINT_CLOCK_SQUARE",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            674.094,
+            276.414
+          ],
+          [
+            674.094,
+            290.684
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 14.27,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_POINT_P09",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            674.778,
+            276.414
+          ],
+          [
+            674.778,
+            280.264
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 3.85,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_POINT_P10-2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            795.556,
+            235.189
+          ],
+          [
+            795.556,
+            245.382
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 10.193,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_SOUTH"
+      },
+      {
+        "id": "ACCESS_POINT_P11",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            620.086,
+            311.749
+          ],
+          [
+            653.585,
+            311.749
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 33.499,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_W_AVENUE"
+      },
+      {
+        "id": "ACCESS_POINT_P11-DT2",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            683.059,
+            276.414
+          ],
+          [
+            695.059,
+            311.749
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 37.317,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "ACCESS_POINT_P13-3",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            585.945,
+            235.189
+          ],
+          [
+            585.945,
+            217.955
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 17.234,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_SOUTH"
+      },
+      {
+        "id": "ACCESS_POINT_P13-5",
+        "class": "alley",
+        "width_m": 3.8,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            713.746,
+            276.414
+          ],
+          [
+            713.746,
+            278.905
+          ]
+        ],
+        "lanes": 1,
+        "length_m": 2.491,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown",
+        "access_only": true,
+        "parent_road_id": "DT_CROSS"
+      },
+      {
+        "id": "DT_CROSS",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            540.327,
+            284.341
+          ],
+          [
+            584.445,
+            284.341
+          ],
+          [
+            620.086,
+            284.341
+          ],
+          [
+            620.086,
+            276.414
+          ],
+          [
+            642.911,
+            276.414
+          ],
+          [
+            656.091,
+            276.414
+          ],
+          [
+            674.094,
+            276.414
+          ],
+          [
+            674.778,
+            276.414
+          ],
+          [
+            683.059,
+            276.414
+          ],
+          [
+            705.389,
+            276.414
+          ],
+          [
+            713.746,
+            276.414
+          ],
+          [
+            732.66,
+            276.414
+          ],
+          [
+            732.66,
+            284.341
+          ],
+          [
+            780.086,
+            284.341
+          ],
+          [
+            816.066,
+            284.341
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 291.593,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_EAST",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            816.066,
+            380.155
+          ],
+          [
+            816.066,
+            334.173
+          ],
+          [
+            816.066,
+            284.862
+          ],
+          [
+            816.066,
+            284.341
+          ],
+          [
+            816.066,
+            259.033
+          ],
+          [
+            816.066,
+            235.189
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 144.966,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_E_AVENUE",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            732.66,
+            380.155
+          ],
+          [
+            732.66,
+            332.615
+          ],
+          [
+            732.66,
+            327.605
+          ],
+          [
+            732.66,
+            276.414
+          ],
+          [
+            734.255,
+            267.353
+          ],
+          [
+            734.255,
+            262.144
+          ],
+          [
+            734.255,
+            256.602
+          ],
+          [
+            734.255,
+            235.189
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 145.105,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_NORTH",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            540.327,
+            380.155
+          ],
+          [
+            567.645,
+            380.155
+          ],
+          [
+            620.086,
+            380.155
+          ],
+          [
+            649.54,
+            380.155
+          ],
+          [
+            674.141,
+            380.155
+          ],
+          [
+            698.748,
+            380.155
+          ],
+          [
+            732.66,
+            380.155
+          ],
+          [
+            771.705,
+            380.155
+          ],
+          [
+            816.066,
+            380.155
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 275.739,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_SOUTH",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            540.327,
+            235.189
+          ],
+          [
+            577.835,
+            235.189
+          ],
+          [
+            585.945,
+            235.189
+          ],
+          [
+            616.44,
+            235.189
+          ],
+          [
+            676.169,
+            235.189
+          ],
+          [
+            734.255,
+            235.189
+          ],
+          [
+            765.378,
+            235.189
+          ],
+          [
+            795.556,
+            235.189
+          ],
+          [
+            816.066,
+            235.189
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 275.739,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_WEST",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            540.327,
+            380.155
+          ],
+          [
+            540.327,
+            351.77
+          ],
+          [
+            540.327,
+            335.023
+          ],
+          [
+            540.327,
+            313.247
+          ],
+          [
+            540.327,
+            284.341
+          ],
+          [
+            540.327,
+            235.189
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 144.966,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_W_AVENUE",
+        "class": "town_street",
+        "width_m": 6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            620.086,
+            380.155
+          ],
+          [
+            620.086,
+            327.604
+          ],
+          [
+            620.086,
+            322.469
+          ],
+          [
+            620.086,
+            311.749
+          ],
+          [
+            620.086,
+            276.414
+          ],
+          [
+            616.44,
+            269.618
+          ],
+          [
+            616.44,
+            257.613
+          ],
+          [
+            616.44,
+            235.189
+          ]
+        ],
+        "lanes": 2,
+        "length_m": 145.882,
+        "walkable": true,
+        "van_access": true,
+        "change_region": "05_downtown"
+      }
+    ],
+    "paths": [
+      {
+        "id": "DT_E_PARK_PATH",
+        "class": "foot_lane",
+        "width_m": 1.6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            767.526,
+            347.537
+          ],
+          [
+            774.591,
+            330.096
+          ],
+          [
+            783.706,
+            315.147
+          ],
+          [
+            767.526,
+            298.385
+          ]
+        ],
+        "lanes": 0,
+        "length_m": 59.623,
+        "walkable": true,
+        "van_access": false,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_S_COURT_PATH",
+        "class": "foot_lane",
+        "width_m": 1.6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            684.121,
+            269.392
+          ],
+          [
+            684.349,
+            250.818
+          ],
+          [
+            694.832,
+            244.476
+          ]
+        ],
+        "lanes": 0,
+        "length_m": 30.828,
+        "walkable": true,
+        "van_access": false,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_W_COURT_PATH",
+        "class": "foot_lane",
+        "width_m": 1.6,
+        "district_ids": [
+          "old_town"
+        ],
+        "polyline_m": [
+          [
+            576.332,
+            343.007
+          ],
+          [
+            585.903,
+            320.809
+          ],
+          [
+            572.23,
+            297.932
+          ]
+        ],
+        "lanes": 0,
+        "length_m": 50.825,
+        "walkable": true,
+        "van_access": false,
+        "change_region": "05_downtown"
+      }
+    ],
+    "water": [],
+    "building_masses": [
+      {
+        "id": "O14_TOWER_E",
+        "district_id": "old_town",
+        "kind": "tower",
+        "center_m": [
+          698.748,
+          358.299
+        ],
+        "width_m": 26.435,
+        "depth_m": 26.954,
+        "floors": 20,
+        "polygon_m": [
+          [
+            685.26,
+            369.282
+          ],
+          [
+            685.26,
+            350.482
+          ],
+          [
+            690.73,
+            350.482
+          ],
+          [
+            690.73,
+            344.14
+          ],
+          [
+            706.454,
+            344.14
+          ],
+          [
+            706.454,
+            350.482
+          ],
+          [
+            711.695,
+            350.482
+          ],
+          [
+            711.695,
+            371.094
+          ],
+          [
+            697.338,
+            371.094
+          ],
+          [
+            697.338,
+            369.282
+          ]
+        ],
+        "source_master_key": "05:башня 2",
+        "source_master_px": [
+          695.2733730521442,
+          330.55897303217876
+        ],
+        "label_ru": "Башня 2",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          698.748,
+          371.094
+        ],
+        "van_stop_m": [
+          698.748,
+          373.794
+        ],
+        "access_road_id": "ACCESS_O14_TOWER_E"
+      },
+      {
+        "id": "O14_TOWER_W",
+        "district_id": "old_town",
+        "kind": "tower",
+        "center_m": [
+          649.54,
+          357.963
+        ],
+        "width_m": 26.435,
+        "depth_m": 27.181,
+        "floors": 20,
+        "polygon_m": [
+          [
+            636.721,
+            371.094
+          ],
+          [
+            636.721,
+            350.029
+          ],
+          [
+            640.367,
+            350.029
+          ],
+          [
+            640.367,
+            343.913
+          ],
+          [
+            657.687,
+            343.913
+          ],
+          [
+            657.687,
+            350.029
+          ],
+          [
+            663.156,
+            350.029
+          ],
+          [
+            663.156,
+            369.282
+          ],
+          [
+            650.394,
+            369.282
+          ],
+          [
+            650.394,
+            371.094
+          ]
+        ],
+        "source_master_key": "05:башня 1",
+        "source_master_px": [
+          646.7328873032626,
+          330.89097678210993
+        ],
+        "label_ru": "Башня 1",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          649.54,
+          371.094
+        ],
+        "van_stop_m": [
+          649.54,
+          373.794
+        ],
+        "access_road_id": "ACCESS_O14_TOWER_W"
+      },
+      {
+        "id": "O15_RES_01",
+        "district_id": "old_town",
+        "kind": "midrise",
+        "center_m": [
+          559.361,
+          323.023
+        ],
+        "width_m": 22.332,
+        "depth_m": 30.353,
+        "floors": 5,
+        "polygon_m": [
+          [
+            548.303,
+            335.986
+          ],
+          [
+            549.898,
+            307.898
+          ],
+          [
+            570.635,
+            310.164
+          ],
+          [
+            568.584,
+            338.251
+          ]
+        ],
+        "source_master_key": "жильё 5 этажей",
+        "source_master_px": [
+          557.7766156063186,
+          365.3566703980266
+        ],
+        "label_ru": "Жилой дом · 5 эт.",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          548.332,
+          335.478
+        ],
+        "van_stop_m": [
+          545.636,
+          335.325
+        ],
+        "access_road_id": "ACCESS_O15_RES_01"
+      },
+      {
+        "id": "O15_RES_02",
+        "district_id": "old_town",
+        "kind": "midrise",
+        "center_m": [
+          603.588,
+          334.469
+        ],
+        "width_m": 19.598,
+        "depth_m": 31.711,
+        "floors": 4,
+        "polygon_m": [
+          [
+            594.107,
+            348.67
+          ],
+          [
+            597.07,
+            318.771
+          ],
+          [
+            613.705,
+            320.809
+          ],
+          [
+            609.375,
+            350.482
+          ]
+        ],
+        "source_master_key": "жильё 4 этажей",
+        "source_master_px": [
+          601.4033331862067,
+          354.06645112728285
+        ],
+        "label_ru": "Жилой дом · 4 эт.",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          613.601,
+          321.522
+        ],
+        "van_stop_m": [
+          616.273,
+          321.912
+        ],
+        "access_road_id": "ACCESS_O15_RES_02"
+      },
+      {
+        "id": "O15_RES_03",
+        "district_id": "old_town",
+        "kind": "midrise",
+        "center_m": [
+          771.705,
+          361.448
+        ],
+        "width_m": 48.539,
+        "depth_m": 19.706,
+        "floors": 6,
+        "polygon_m": [
+          [
+            746.561,
+            366.111
+          ],
+          [
+            746.561,
+            351.388
+          ],
+          [
+            760.918,
+            351.388
+          ],
+          [
+            760.918,
+            354.333
+          ],
+          [
+            795.1,
+            354.333
+          ],
+          [
+            795.1,
+            371.094
+          ],
+          [
+            765.248,
+            371.094
+          ],
+          [
+            765.248,
+            366.111
+          ]
+        ],
+        "source_master_key": "жильё 6 этажей",
+        "source_master_px": [
+          767.2412844159486,
+          327.45275254322945
+        ],
+        "label_ru": "Жилой дом · 6 эт.",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          771.705,
+          371.094
+        ],
+        "van_stop_m": [
+          771.705,
+          373.794
+        ],
+        "access_road_id": "ACCESS_O15_RES_03"
+      },
+      {
+        "id": "O15_RES_04",
+        "district_id": "old_town",
+        "kind": "midrise",
+        "center_m": [
+          800.341,
+          334.173
+        ],
+        "width_m": 17.547,
+        "depth_m": 27.861,
+        "floors": 5,
+        "polygon_m": [
+          [
+            791.568,
+            348.104
+          ],
+          [
+            791.568,
+            320.243
+          ],
+          [
+            809.115,
+            320.243
+          ],
+          [
+            809.115,
+            348.104
+          ]
+        ],
+        "source_master_key": "жильё 5 этажей",
+        "source_master_px": [
+          795.4891817082384,
+          354.357762200788
+        ],
+        "label_ru": "Жилой дом · 5 эт.",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          809.115,
+          334.173
+        ],
+        "van_stop_m": [
+          811.815,
+          334.173
+        ],
+        "access_road_id": "ACCESS_O15_RES_04"
+      },
+      {
+        "id": "O15_RES_05",
+        "district_id": "old_town",
+        "kind": "midrise",
+        "center_m": [
+          750.258,
+          320.615
+        ],
+        "width_m": 20.054,
+        "depth_m": 30.806,
+        "floors": 3,
+        "polygon_m": [
+          [
+            740.18,
+            333.494
+          ],
+          [
+            743.826,
+            305.18
+          ],
+          [
+            760.234,
+            307.672
+          ],
+          [
+            756.816,
+            335.986
+          ]
+        ],
+        "source_master_key": "жильё 3 этажей",
+        "source_master_px": [
+          746.0851612828714,
+          367.73269861921284
+        ],
+        "label_ru": "Жилой дом · 3 эт.",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          740.18,
+          333.494
+        ],
+        "van_stop_m": [
+          737.498,
+          333.18
+        ],
+        "access_road_id": "ACCESS_O15_RES_05"
+      },
+      {
+        "id": "O15_RES_06",
+        "district_id": "old_town",
+        "kind": "midrise",
+        "center_m": [
+          792.086,
+          298.832
+        ],
+        "width_m": 30.764,
+        "depth_m": 17.894,
+        "floors": 4,
+        "polygon_m": [
+          [
+            776.414,
+            302.915
+          ],
+          [
+            776.414,
+            290.004
+          ],
+          [
+            807.178,
+            291.816
+          ],
+          [
+            805.811,
+            307.898
+          ],
+          [
+            784.162,
+            307.898
+          ],
+          [
+            784.162,
+            302.915
+          ]
+        ],
+        "source_master_key": "жильё 4 этажей",
+        "source_master_px": [
+          787.3459313552155,
+          389.21969092314623
+        ],
+        "label_ru": "Жилой дом · 4 эт.",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          779.741,
+          290.2
+        ],
+        "van_stop_m": [
+          779.9,
+          287.505
+        ],
+        "access_road_id": "ACCESS_O15_RES_06"
+      }
+    ],
+    "functional_buildings": [
+      {
+        "type": "cafe",
+        "group": "food",
+        "icon": "Е",
+        "color": "#bd817d",
+        "purchasable": true,
+        "id": "F06_CAFE2",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Кафе",
+        "center_m": [
+          642.874,
+          327.604
+        ],
+        "width_m": 10.873,
+        "depth_m": 15.496,
+        "footprint_m": [
+          [
+            635.126,
+            333.041
+          ],
+          [
+            635.126,
+            322.168
+          ],
+          [
+            650.622,
+            322.168
+          ],
+          [
+            650.622,
+            333.041
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:кафе",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          640.1568795339266,
+          360.8376891252839
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          635.126,
+          327.604
+        ],
+        "van_stop_m": [
+          632.426,
+          327.604
+        ],
+        "access_road_id": "ACCESS_F06_CAFE2"
+      },
+      {
+        "type": "house_base",
+        "group": "base",
+        "icon": "Б",
+        "color": "#aa6045",
+        "id": "F06_HBASE",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Будущая база #13",
+        "center_m": [
+          572.445,
+          260.361
+        ],
+        "width_m": 22.227,
+        "depth_m": 40.135,
+        "footprint_m": [
+          [
+            551.949,
+            269.845
+          ],
+          [
+            553.088,
+            247.647
+          ],
+          [
+            593.196,
+            250.818
+          ],
+          [
+            591.372,
+            273.243
+          ]
+        ],
+        "storeys": 2,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:13",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          570.6830735162897,
+          427.1698301834762
+        ],
+        "poi_id": "B04",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          585.446,
+          272.732
+        ],
+        "van_stop_m": [
+          585.214,
+          275.422
+        ],
+        "access_road_id": "ACCESS_F06_HBASE"
+      },
+      {
+        "type": "police_station",
+        "group": "civic",
+        "icon": "Г",
+        "color": "#7a8eb7",
+        "id": "F06_POLICE",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Полиция 1",
+        "center_m": [
+          567.645,
+          360.68
+        ],
+        "width_m": 15.855,
+        "depth_m": 37.175,
+        "footprint_m": [
+          [
+            553.088,
+            368.376
+          ],
+          [
+            553.088,
+            352.521
+          ],
+          [
+            557.874,
+            352.521
+          ],
+          [
+            557.874,
+            349.35
+          ],
+          [
+            574.281,
+            349.35
+          ],
+          [
+            574.281,
+            352.521
+          ],
+          [
+            582.941,
+            352.521
+          ],
+          [
+            582.941,
+            368.376
+          ],
+          [
+            574.509,
+            368.376
+          ],
+          [
+            574.509,
+            372.227
+          ],
+          [
+            557.874,
+            372.227
+          ],
+          [
+            557.874,
+            368.376
+          ]
+        ],
+        "storeys": 2,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:10 (повторяется на башне)",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          565.9483346007768,
+          328.21098121007947
+        ],
+        "poi_id": "P10",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          567.645,
+          372.227
+        ],
+        "van_stop_m": [
+          567.645,
+          374.927
+        ],
+        "access_road_id": "ACCESS_F06_POLICE"
+      },
+      {
+        "type": "car_workshop",
+        "group": "service",
+        "icon": "С",
+        "color": "#709dac",
+        "id": "F06_REPAIR",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Магазин для бусика #07",
+        "center_m": [
+          629.202,
+          257.613
+        ],
+        "width_m": 17.667,
+        "depth_m": 17.319,
+        "footprint_m": [
+          [
+            620.542,
+            266.447
+          ],
+          [
+            620.542,
+            248.78
+          ],
+          [
+            637.861,
+            248.78
+          ],
+          [
+            637.861,
+            266.447
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:07",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          626.6697732962695,
+          429.87963848932577
+        ],
+        "poi_id": "P05",
+        "change_region": "05_downtown",
+        "entrance_m": [
+          620.542,
+          257.613
+        ],
+        "van_stop_m": [
+          617.842,
+          257.613
+        ],
+        "access_road_id": "ACCESS_F06_REPAIR"
+      },
+      {
+        "type": "supermarket",
+        "group": "retail",
+        "icon": "М",
+        "color": "#d5a94e",
+        "id": "F06_SUPER",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Бутики",
+        "center_m": [
+          705.086,
+          327.605
+        ],
+        "width_m": 11.099,
+        "depth_m": 16.18,
+        "footprint_m": [
+          [
+            696.996,
+            333.154
+          ],
+          [
+            696.996,
+            322.055
+          ],
+          [
+            713.176,
+            322.055
+          ],
+          [
+            713.176,
+            333.154
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:бутики",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          701.5253091010964,
+          360.8376891252838
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          713.176,
+          327.605
+        ],
+        "van_stop_m": [
+          715.876,
+          327.605
+        ],
+        "access_road_id": "ACCESS_F06_SUPER"
+      },
+      {
+        "id": "F15_BOOKS",
+        "type": "village_shop",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Книги / подарки",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          642.911,
+          293.22
+        ],
+        "width_m": 14.723,
+        "depth_m": 17.729,
+        "footprint_m": [
+          [
+            633.987,
+            300.877
+          ],
+          [
+            633.987,
+            286.154
+          ],
+          [
+            652.901,
+            286.154
+          ],
+          [
+            652.901,
+            294.987
+          ],
+          [
+            649.939,
+            294.987
+          ],
+          [
+            649.939,
+            300.877
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:книги / подарки",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          640.1932848717777,
+          394.7556398707901
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          642.911,
+          286.154
+        ],
+        "van_stop_m": [
+          642.911,
+          283.454
+        ],
+        "access_road_id": "ACCESS_F15_BOOKS"
+      },
+      {
+        "id": "F15_OFFICE_1",
+        "type": "office",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Офис 1 #05",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          656.091,
+          257.161
+        ],
+        "width_m": 18.347,
+        "depth_m": 20.053,
+        "footprint_m": [
+          [
+            646.065,
+            266.334
+          ],
+          [
+            646.065,
+            247.987
+          ],
+          [
+            666.118,
+            247.987
+          ],
+          [
+            666.118,
+            266.334
+          ]
+        ],
+        "storeys": 2,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:05",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          653.1951553939547,
+          430.32649598617405
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          656.091,
+          266.334
+        ],
+        "van_stop_m": [
+          656.091,
+          269.034
+        ],
+        "access_road_id": "ACCESS_F15_OFFICE_1"
+      },
+      {
+        "id": "F15_OFFICE_2",
+        "type": "office",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Офис 2 #06",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          718.6,
+          256.602
+        ],
+        "width_m": 18.121,
+        "depth_m": 19.697,
+        "footprint_m": [
+          [
+            708.505,
+            266.221
+          ],
+          [
+            708.505,
+            248.1
+          ],
+          [
+            729.698,
+            248.1
+          ],
+          [
+            729.698,
+            262.823
+          ],
+          [
+            721.722,
+            262.823
+          ],
+          [
+            721.722,
+            266.221
+          ]
+        ],
+        "storeys": 2,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:06",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          714.8557794092462,
+          430.87788161913005
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          729.698,
+          256.602
+        ],
+        "van_stop_m": [
+          732.398,
+          256.602
+        ],
+        "access_road_id": "ACCESS_F15_OFFICE_2"
+      },
+      {
+        "id": "F15_POLICE_2",
+        "type": "police_station",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Полиция 2 #11",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          795.478,
+          259.033
+        ],
+        "width_m": 21.518,
+        "depth_m": 24.77,
+        "footprint_m": [
+          [
+            783.022,
+            269.845
+          ],
+          [
+            783.022,
+            248.327
+          ],
+          [
+            804.899,
+            248.327
+          ],
+          [
+            804.899,
+            251.045
+          ],
+          [
+            809.001,
+            251.045
+          ],
+          [
+            809.001,
+            266.221
+          ],
+          [
+            804.899,
+            266.221
+          ],
+          [
+            804.899,
+            269.845
+          ]
+        ],
+        "storeys": 2,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:11",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          790.6912445692641,
+          428.4792957965207
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          809.001,
+          259.033
+        ],
+        "van_stop_m": [
+          811.701,
+          259.033
+        ],
+        "access_road_id": "ACCESS_F15_POLICE_2"
+      },
+      {
+        "id": "F15_RESTAURANT",
+        "type": "cafe",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Кафе-ресторан",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          705.389,
+          293.367
+        ],
+        "width_m": 5.89,
+        "depth_m": 47.392,
+        "footprint_m": [
+          [
+            696.883,
+            300.877
+          ],
+          [
+            696.883,
+            294.987
+          ],
+          [
+            695.287,
+            294.987
+          ],
+          [
+            695.287,
+            286.154
+          ],
+          [
+            714.885,
+            286.154
+          ],
+          [
+            714.885,
+            300.877
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:кафе-ресторан",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          701.8243195009297,
+          394.6111703396482
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          705.389,
+          286.154
+        ],
+        "van_stop_m": [
+          705.389,
+          283.454
+        ],
+        "access_road_id": "ACCESS_F15_RESTAURANT"
+      },
+      {
+        "id": "F15_TAXI",
+        "type": "depot",
+        "district_id": "old_town",
+        "district": "old_town",
+        "label_ru": "Таксопарк #12",
+        "group": "building",
+        "icon": "",
+        "color": "#c7b49a",
+        "center_m": [
+          759.095,
+          262.144
+        ],
+        "width_m": 16.082,
+        "depth_m": 28.03,
+        "footprint_m": [
+          [
+            745.08,
+            270.185
+          ],
+          [
+            745.08,
+            254.103
+          ],
+          [
+            773.11,
+            254.103
+          ],
+          [
+            773.11,
+            270.185
+          ]
+        ],
+        "storeys": 1,
+        "footprint_shape": "polygon",
+        "rotation_deg": 0,
+        "source_master_key": "05:12",
+        "mapping_confidence": "detail_sheet",
+        "source_master_px": [
+          754.8019681458669,
+          425.4105703006473
+        ],
+        "change_region": "05_downtown",
+        "entrance_m": [
+          745.08,
+          262.144
+        ],
+        "van_stop_m": [
+          742.38,
+          262.144
+        ],
+        "access_road_id": "ACCESS_F15_TAXI"
+      }
+    ],
+    "functional_sites": [
+      {
+        "id": "DT_COURT_S",
+        "type": "park",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            670.562,
+            267.92
+          ],
+          [
+            670.562,
+            247.307
+          ],
+          [
+            699.959,
+            247.307
+          ],
+          [
+            699.959,
+            267.92
+          ]
+        ],
+        "label_ru": "Двор",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_COURT_W",
+        "type": "park",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            574.965,
+            346.858
+          ],
+          [
+            574.965,
+            295.214
+          ],
+          [
+            591.828,
+            295.214
+          ],
+          [
+            591.828,
+            346.858
+          ]
+        ],
+        "label_ru": "Двор",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_01",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          633.759,
+          317.865
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_02",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          633.759,
+          304.274
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_03",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          634.67,
+          283.662
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_04",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          641.735,
+          283.888
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_05",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          652.217,
+          303.142
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_06",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          655.636,
+          331.908
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_07",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          661.105,
+          335.759
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_08",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          659.282,
+          291.363
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_09",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          665.89,
+          283.435
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_10",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          682.298,
+          283.435
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_11",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          688.679,
+          291.363
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_12",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          691.869,
+          331.908
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_13",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          715.113,
+          317.865
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_14",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          714.657,
+          283.435
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_15",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          634.898,
+          243.796
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_16",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          641.963,
+          243.796
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_LAMP_17",
+        "type": "lamp",
+        "district_id": "old_town",
+        "position_m": [
+          721.266,
+          243.796
+        ],
+        "label_ru": "Фонарь / якорь хвата",
+        "grip_anchor": true,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_PARKING_E",
+        "type": "parking",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            715.455,
+            368.15
+          ],
+          [
+            715.455,
+            335.533
+          ],
+          [
+            730.267,
+            335.533
+          ],
+          [
+            730.267,
+            368.15
+          ]
+        ],
+        "label_ru": "Парковка",
+        "capacity_vans": 6,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_PARKING_W",
+        "type": "parking",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            622.251,
+            370.302
+          ],
+          [
+            622.251,
+            336.552
+          ],
+          [
+            628.859,
+            336.552
+          ],
+          [
+            628.859,
+            370.302
+          ]
+        ],
+        "label_ru": "Парковка",
+        "capacity_vans": 6,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_PARK_E",
+        "type": "park",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            762.627,
+            348.67
+          ],
+          [
+            762.627,
+            309.71
+          ],
+          [
+            788.833,
+            309.71
+          ],
+          [
+            788.833,
+            348.67
+          ]
+        ],
+        "label_ru": "Сквер",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_001",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          557.874,
+          376.531
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_002",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          580.89,
+          375.851
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_003",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          592.74,
+          375.851
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_004",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          605.501,
+          375.851
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_005",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          599.121,
+          368.603
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_006",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          609.603,
+          367.697
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_007",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          595.474,
+          364.299
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_008",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          587.726,
+          345.952
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_009",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          550.126,
+          342.781
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_010",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          564.254,
+          341.875
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_011",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          550.126,
+          301.783
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_012",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          556.734,
+          295.667
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_013",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          575.421,
+          300.65
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_014",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          585.448,
+          307.898
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_015",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          592.284,
+          302.462
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_016",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          599.121,
+          315.6
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_017",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          595.93,
+          296.799
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_018",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          605.729,
+          302.009
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_019",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          579.523,
+          337.798
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_020",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          587.498,
+          333.72
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_021",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          579.295,
+          321.036
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_022",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          568.812,
+          307.219
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_023",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          561.064,
+          300.197
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_024",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          637.633,
+          376.078
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_025",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          660.193,
+          376.078
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_026",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          680.247,
+          373.813
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_027",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          686.4,
+          376.078
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_028",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          710.783,
+          370.188
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_029",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          632.164,
+          342.781
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_030",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          640.823,
+          336.665
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_031",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          656.091,
+          341.875
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_032",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          661.561,
+          341.875
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_033",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          682.07,
+          341.875
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_034",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          691.413,
+          337.345
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_035",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          716.936,
+          341.875
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_036",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          718.759,
+          330.776
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_037",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          716.708,
+          321.942
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_038",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          719.215,
+          291.137
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_039",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          703.263,
+          283.888
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_040",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          694.604,
+          284.795
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_041",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          686.628,
+          283.662
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_042",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          677.74,
+          287.513
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_043",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          667.03,
+          287.286
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_044",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          657.231,
+          296.346
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_045",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          659.738,
+          288.645
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_046",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          642.874,
+          283.888
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_047",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          634.67,
+          283.435
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_048",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          751.802,
+          375.625
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_049",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          762.057,
+          375.625
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_050",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          783.022,
+          376.078
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_051",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          805.811,
+          375.172
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_052",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          811.052,
+          366.564
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_053",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          811.052,
+          358.863
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_054",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          775.274,
+          345.499
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_055",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          783.022,
+          340.289
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_056",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          769.122,
+          333.267
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_057",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          784.162,
+          324.887
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_058",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          774.591,
+          318.544
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_059",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          764.108,
+          314.467
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_060",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          782.567,
+          314.694
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_061",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          807.634,
+          312.655
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_062",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          766.387,
+          298.838
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_063",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          748.384,
+          297.253
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_064",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          808.773,
+          285.248
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_065",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          757.272,
+          284.341
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_066",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          744.51,
+          284.341
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_067",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          547.163,
+          269.845
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_068",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          596.386,
+          276.414
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_069",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          608.692,
+          269.165
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_070",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          595.247,
+          244.249
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_071",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          642.646,
+          269.392
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_072",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          656.319,
+          270.524
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_073",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          666.802,
+          269.392
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_074",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          674.322,
+          263.276
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_075",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          674.094,
+          249.686
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_076",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          684.805,
+          249.233
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_077",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          694.832,
+          249.459
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_078",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          700.529,
+          261.917
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_079",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          701.212,
+          268.033
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_080",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          752.03,
+          275.055
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_081",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          764.792,
+          275.055
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_082",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          775.73,
+          270.977
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_083",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          807.862,
+          275.281
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "DT_TREE_084",
+        "type": "tree",
+        "district_id": "old_town",
+        "position_m": [
+          812.192,
+          267.353
+        ],
+        "crown_radius_m": 2.0,
+        "label_ru": "Дерево",
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "FOUNTAIN14",
+        "type": "fountain",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            682.526,
+            310.39
+          ],
+          [
+            682.422,
+            311.701
+          ],
+          [
+            682.113,
+            312.98
+          ],
+          [
+            681.607,
+            314.195
+          ],
+          [
+            680.916,
+            315.316
+          ],
+          [
+            680.056,
+            316.316
+          ],
+          [
+            679.05,
+            317.17
+          ],
+          [
+            677.922,
+            317.857
+          ],
+          [
+            676.7,
+            318.361
+          ],
+          [
+            675.413,
+            318.668
+          ],
+          [
+            674.094,
+            318.771
+          ],
+          [
+            672.775,
+            318.668
+          ],
+          [
+            671.489,
+            318.361
+          ],
+          [
+            670.266,
+            317.857
+          ],
+          [
+            669.138,
+            317.17
+          ],
+          [
+            668.132,
+            316.316
+          ],
+          [
+            667.273,
+            315.316
+          ],
+          [
+            666.581,
+            314.195
+          ],
+          [
+            666.075,
+            312.98
+          ],
+          [
+            665.766,
+            311.701
+          ],
+          [
+            665.662,
+            310.39
+          ],
+          [
+            665.766,
+            309.079
+          ],
+          [
+            666.075,
+            307.8
+          ],
+          [
+            666.581,
+            306.585
+          ],
+          [
+            667.273,
+            305.464
+          ],
+          [
+            668.132,
+            304.464
+          ],
+          [
+            669.138,
+            303.61
+          ],
+          [
+            670.266,
+            302.923
+          ],
+          [
+            671.489,
+            302.419
+          ],
+          [
+            672.775,
+            302.112
+          ],
+          [
+            674.094,
+            302.009
+          ],
+          [
+            675.413,
+            302.112
+          ],
+          [
+            676.7,
+            302.419
+          ],
+          [
+            677.922,
+            302.923
+          ],
+          [
+            679.05,
+            303.61
+          ],
+          [
+            680.056,
+            304.464
+          ],
+          [
+            680.916,
+            305.464
+          ],
+          [
+            681.607,
+            306.585
+          ],
+          [
+            682.113,
+            307.8
+          ],
+          [
+            682.422,
+            309.079
+          ]
+        ],
+        "label_ru": "Фонтан",
+        "basin_radius_m": 8.3,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "POLICE14_PARKING",
+        "type": "parking",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            583.511,
+            368.603
+          ],
+          [
+            583.511,
+            352.747
+          ],
+          [
+            589.663,
+            352.747
+          ],
+          [
+            589.663,
+            368.603
+          ]
+        ],
+        "label_ru": "Парковка",
+        "capacity_vans": 6,
+        "change_region": "05_downtown"
+      },
+      {
+        "id": "SQUARE14",
+        "type": "square",
+        "district_id": "old_town",
+        "polygon_m": [
+          [
+            628.745,
+            335.986
+          ],
+          [
+            628.745,
+            280.717
+          ],
+          [
+            721.722,
+            280.717
+          ],
+          [
+            721.722,
+            335.986
+          ]
+        ],
+        "label_ru": "Центральная площадь",
+        "landmark_point_id": "CLOCK_SQUARE",
+        "tower_ids": [
+          "O14_TOWER_W",
+          "O14_TOWER_E"
+        ],
+        "fountain_site_id": "FOUNTAIN14",
+        "change_region": "05_downtown"
+      }
+    ],
+    "points": [
+      {
+        "id": "B04",
+        "canonical_id": "B04",
+        "name_ru": "Старый дом",
+        "position_m": [
+          585.446,
+          272.732
+        ],
+        "district_id": "old_town",
+        "category": "base",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "team_shared": true,
+        "retained_after_move": true,
+        "interior": true,
+        "access_reserve_m": [
+          20,
+          25
+        ],
+        "door_clearance_target_m": 2.4,
+        "source_master_key": "05:13",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "building_id": "F06_HBASE",
+        "van_stop_m": [
+          585.214,
+          275.422
+        ],
+        "access_road_id": "ACCESS_F06_HBASE",
+        "road_node_id": "Nb5581774bb9b",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "CLOCK_SQUARE",
+        "canonical_id": "CLOCK_SQUARE",
+        "name_ru": "Центральная площадь / фонтан",
+        "position_m": [
+          674.094,
+          290.684
+        ],
+        "district_id": "old_town",
+        "category": "landmark",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "05: центральная площадь (часы не показаны)",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          674.094,
+          290.684
+        ],
+        "access_road_id": "ACCESS_POINT_CLOCK_SQUARE",
+        "road_node_id": "N0092b286112c",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P05",
+        "canonical_id": "P05",
+        "name_ru": "Автомастерская",
+        "position_m": [
+          620.542,
+          257.613
+        ],
+        "district_id": "old_town",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": true,
+        "source_master_key": "05:07",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "building_id": "F06_REPAIR",
+        "van_stop_m": [
+          617.842,
+          257.613
+        ],
+        "access_road_id": "ACCESS_F06_REPAIR",
+        "road_node_id": "N77b183a56fd8",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P09",
+        "canonical_id": "P09",
+        "name_ru": "Встреча за супермаркетом",
+        "position_m": [
+          674.778,
+          280.264
+        ],
+        "district_id": "old_town",
+        "category": "meeting",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "meeting_role": "main",
+        "source_master_key": "05: proposed v14 point",
+        "mapping_confidence": "proposed",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          674.778,
+          280.264
+        ],
+        "access_road_id": "ACCESS_POINT_P09",
+        "road_node_id": "N37bc35dd7e04",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P10",
+        "canonical_id": "P10",
+        "name_ru": "Полиция",
+        "position_m": [
+          567.645,
+          372.227
+        ],
+        "district_id": "old_town",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "interior": "unconfirmed",
+        "arrest_spawn": "outside",
+        "source_master_key": "05:10 (повторяется на башне)",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "building_id": "F06_POLICE",
+        "van_stop_m": [
+          567.645,
+          374.927
+        ],
+        "access_road_id": "ACCESS_F06_POLICE",
+        "road_node_id": "N4ce82df1b5e4",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P10-2",
+        "canonical_id": "P10-2",
+        "name_ru": "Полиция 2",
+        "position_m": [
+          795.556,
+          245.382
+        ],
+        "district_id": "old_town",
+        "category": "poi",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "05:11",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          795.556,
+          245.382
+        ],
+        "access_road_id": "ACCESS_POINT_P10-2",
+        "road_node_id": "N222b0ec796c8",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P11",
+        "canonical_id": "P11",
+        "name_ru": "Банкомат у кафе",
+        "position_m": [
+          653.585,
+          311.749
+        ],
+        "district_id": "old_town",
+        "category": "atm",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "05: ATM слева",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          653.585,
+          311.749
+        ],
+        "access_road_id": "ACCESS_POINT_P11",
+        "road_node_id": "Nee00bc394d20",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P11-DT2",
+        "canonical_id": "P11-DT2",
+        "name_ru": "Банкомат у бутиков",
+        "position_m": [
+          695.059,
+          311.749
+        ],
+        "district_id": "old_town",
+        "category": "atm",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "05: ATM справа",
+        "mapping_confidence": "detail_sheet",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          695.059,
+          311.749
+        ],
+        "access_road_id": "ACCESS_POINT_P11-DT2",
+        "road_node_id": "Ndf52ba5aaf4b",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P13-3",
+        "canonical_id": "P13",
+        "name_ru": "Канал: спуск",
+        "position_m": [
+          585.945,
+          217.955
+        ],
+        "district_id": "old_town",
+        "category": "water_access",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "van_entry": true,
+        "exit_guaranteed": false,
+        "source_master_key": "05: proposed v14 point",
+        "mapping_confidence": "proposed",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          585.945,
+          217.955
+        ],
+        "access_road_id": "ACCESS_POINT_P13-3",
+        "road_node_id": "Na54ff2b61e3c",
+        "van_node_gap_m": 0.0
+      },
+      {
+        "id": "P13-5",
+        "canonical_id": "P13",
+        "name_ru": "Мусорки",
+        "position_m": [
+          713.746,
+          278.905
+        ],
+        "district_id": "old_town",
+        "category": "bin",
+        "label_offset_px": [
+          0,
+          0
+        ],
+        "source_master_key": "05: proposed v14 point",
+        "mapping_confidence": "proposed",
+        "change_region": "05_downtown",
+        "van_stop_m": [
+          713.746,
+          278.905
+        ],
+        "access_road_id": "ACCESS_POINT_P13-5",
+        "road_node_id": "N825a49ab952c",
+        "van_node_gap_m": 0.0
+      }
+    ],
+    "plots": [],
+    "microdistricts": [],
+    "farmsteads": [],
+    "vegetation_parcels": [],
+    "crop_fields": [],
+    "hills": [],
+    "beaches": [],
+    "outfalls": [],
+    "water_crossings": [],
+    "pedestrian_water_crossings": []
+  }
+}

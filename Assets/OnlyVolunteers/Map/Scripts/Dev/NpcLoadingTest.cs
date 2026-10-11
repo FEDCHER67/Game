@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Player.Physics;
 using OnlyVolunteers.Vehicles;
 using UnityEngine;
@@ -14,8 +15,12 @@ namespace OnlyVolunteers.Map.Dev
     // be got into the van"). Hands are real PhysicsGrabbers (ScriptDriven: this script aims their camera, grabs and lets
     // go; the force goes through HoldPoint -> GrabPhysicsSolver -> AddForceAtPosition exactly like a player's) with no
     // KCC: no capsule, no speed scaling, zero frame velocity. They lift a stunned NPC by the head, the feet and the pelvis on
-    // open ground, then load it through the sliding door and the rear doors (three start poses each), and finally once
-    // more through the rear doors with the fist's real head stun (g: Groggy kicks and crawling, INFO only).
+    // open ground, then load it through the sliding door and the rear doors (three start poses each), drag it at a walk
+    // (f), load it alone in one go through either door (h1, h2: Fedya's third playtest, 2026-10-06, "one player with a
+    // little effort"), carry it in with two hands by the shoulders and the legs (i: "two players, very easy"), and finally
+    // once more through the rear doors with the fist's real head stun (g: Groggy kicks and crawling, INFO only).
+    // Hands can crouch (eye 0.85 m, a 1 m capsule: the only way into the bay under the roof); on the van's invisible step
+    // ramps the stand check is skipped (the KCC climbs the floor edge there, an overlap test would flag it).
     // Sandbox: the van is parked 300 m above where it stands (kinematic, i.e. the handbrake; yaw only), on a 30 x 30 m box of
     // default ground. Scenario setup teleports the body; the loading itself never does. Afterwards the van, its doors and
     // its sea tracker are put back, and the NPC lies down where it stood and wakes a second later.
@@ -27,6 +32,7 @@ namespace OnlyVolunteers.Map.Dev
     // leans there with the feet on the ground (a rigid body cannot get its head down onto the floor while its feet are
     // down: the edge contact stays near s 1.25, see the INFO release lines), then the feet are lifted and pushed in after
     // it. A d/e failure: read the release line and the blocker names first; retune the hand only after the poses are right.
+    // Stage 9: this is the stage-1 capsule's test; it switches F10 (NpcRagdoll.Mode) to the capsule for its run and back.
     // Run: OnlyVolunteers/Map/Dev/NPC Loading Test (enters Play mode, runs, leaves), or add this component in Play mode.
     // Results: [NpcLoadingTest] lines in the console and the statics Done / Passed / LastReport / Progress (MCP polls them).
     // Unity MCP: check EditorApplication.isPlaying first (someone else may be testing), enter Play in Map_Greybox_v12 or
@@ -64,6 +70,23 @@ namespace OnlyVolunteers.Map.Dev
         // while sliding along it, which only warns (housingTicks).
         private const float HousingZMin = -2.04f, HousingZMax = -1.12f, HousingTop = 0.85f, HousingHalfGap = 0.27f;
         private const float WalkSpeed = 3f; // m/s, the player walking from the head to the feet in (g)
+        private const float PlayerWalkSpeed = 4.7f;  // KccFirstPersonInput.WalkSpeed: the drag in (f) runs at it
+        private const float CrouchEye = 0.85f, CrouchHeight = 1.0f;
+        private const float CarrySpeed = 1.2f;       // m/s backing into the bay with a body in hand (h, i)
+        // The held end rides over the bumper (0.62 m) / the floor edge (0.55 m, the step 0.28 before it): the head cap's
+        // centre (0.08 m behind the collar) must pass at 0.90 / 0.83 m or more; the hold sags ~0.12 m under the carry.
+        // Higher is worse: the body stands steeper, and the drag couple (collar pulled in, feet held back by friction)
+        // costs the hand F_h*tan(tilt) more lift (58 degrees at 1.15 m: ~195 N, the vertical cap; 53 degrees at 1.12:
+        // ~190 N). Lower is worse too: at 1.02 the head cap grazed the floor edge (0.84 m with the sag) and the ride over
+        // it jammed at both caps (269 N, lag p95 1.0 m), at 1.12 it rode over at 183 N.
+        private const float CarryRear = 1.12f, CarrySide = 1.12f;
+        private const float CarryInside = 0.40f;     // m: the collar this far past the edge, then the hand lowers it onto the edge (h)
+        private const float RideDrop = 0.30f;        // m of travel over which the collar comes down to the ride height (h)
+        private const float RideRear = 0.95f, RideSide = 0.90f; // collar height with the body lying on the bumper (0.62 + 0.28) / the floor edge (0.55 + 0.28)
+        private const float LoadTimeLimit = 12f;     // s from the first grab to "loaded", alone (h); half of it for two (i)
+        private const float EasyForceShare = 0.75f;  // mean hand force at most this share of the larger force cap (f, h, i)
+        private const float ClearanceMin = 0.15f;    // m: two hands lift the whole body at least this far off the ground (i)
+        private const float FlatPullMin = 1.2f;      // m of 3: a flat body simply pulled by the collar must come along (f2)
 
         private static readonly FieldInfo ViewCameraField =
             typeof(PhysicsGrabber).GetField("viewCamera", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -80,6 +103,8 @@ namespace OnlyVolunteers.Map.Dev
             public Vector3 Stand;     // where the feet are (XZ; the height comes from the ground under it)
             public Vector3 Target;    // where the hand is told to hold, world
             public float Hold = -1f;  // hold distance last set (-1: not holding)
+            public float Eye = StandEye, Height = StandHeight; // stance: standing, or crouched (Crouch)
+            public readonly List<float> Forces = new();        // |force| per tick of the current hold
         }
 
         private struct Leg
@@ -88,12 +113,13 @@ namespace OnlyVolunteers.Map.Dev
             public Vector3 FromTarget, ToTarget, FromStand, ToStand;
         }
 
-        // One check: its failures and lag samples.
+        // One check: its failures, lag samples and the hands' force samples (every holding hand, every tick).
         private sealed class Run
         {
             public readonly string Name;
             public readonly List<string> Fails = new();
             public readonly List<float> Lags = new();
+            public readonly List<float> Forces = new();
             public Run(string name) => Name = name;
             public void Fail(string why)
             {
@@ -122,6 +148,8 @@ namespace OnlyVolunteers.Map.Dev
         private Vector3 _npcHome;
         private float _npcHomeYaw;
         private bool _npcTaken;
+        private bool _modeSet;
+        private NpcBodyMode _mode0;
 
         private GrabPhysicsProfile _handProfile;
         private readonly List<Hand> _hands = new();
@@ -241,6 +269,10 @@ namespace OnlyVolunteers.Map.Dev
             for (int v = 0; v < 3; v++) yield return SideDoor(v);
             for (int v = 0; v < 3; v++) yield return RearDoors(v);
             yield return Drag();
+            yield return SoloLoad(0);
+            yield return SoloLoad(1);
+            yield return PairLoad();
+            yield return PairLiftInfo();
             yield return RealStun();
         }
 
@@ -314,6 +346,9 @@ namespace OnlyVolunteers.Map.Dev
             _npcHome = _npc.transform.position;
             _npcHomeYaw = _npc.transform.eulerAngles.y;
             _npcTaken = true;
+            _mode0 = NpcRagdoll.Mode;
+            _modeSet = true;
+            NpcRagdoll.Mode = NpcBodyMode.Capsule; // stage 9: this test drives the stage-1 capsule
             _npc.Hit(WeaponStun.Fist, HitZone.Torso, _npc.transform.position + _npc.transform.forward, _npc.Center);
             UnityEngine.Random.InitState(Seed);
             _body = _npc.Body;
@@ -402,6 +437,11 @@ namespace OnlyVolunteers.Map.Dev
                 }
                 if (_npc.State == NpcState.Down) _npc.StunLeft = Mathf.Min(_npc.StunLeft, 1f);
                 _npcTaken = false;
+            }
+            if (_modeSet)
+            {
+                NpcRagdoll.Mode = _mode0;
+                _modeSet = false;
             }
             if (_ground != null) Destroy(_ground);
             if (_vanMoved && _van != null)
@@ -580,7 +620,9 @@ namespace OnlyVolunteers.Map.Dev
             ReleaseAll();
         }
 
-        // One hand lifts one point 1 m, at 15 places along the body: the ends go up, the middle stays down.
+        // One hand lifts one point 1 m, at 15 places along the body: the ends go up, the middle stays down. With 240 N
+        // (third playtest) only the hips (0.68-0.82 m) stay down: 0.65 and 0.85 need 227 N and come up slowly, so only
+        // 0.75 (the centre of mass, the whole 275 N) is required to stay.
         private IEnumerator Sweep()
         {
             Progress = "c3";
@@ -615,7 +657,7 @@ namespace OnlyVolunteers.Map.Dev
                 pairs.Append(Inv($" {s:0.00}:{rise:0.00}"));
                 int k = Mathf.RoundToInt(s * 100f);
                 if ((k == 5 || k == 15 || k == 25 || k == 125 || k == 135 || k == 145) && rise < 0.60f) ok = false;
-                if ((k == 65 || k == 75 || k == 85) && rise > 0.10f) ok = false;
+                if (k == 75 && rise > 0.10f) ok = false;
             }
             Check("c3", ok, "s:rise" + pairs, run);
         }
@@ -700,7 +742,7 @@ namespace OnlyVolunteers.Map.Dev
             float time = lastRelease - firstGrab, p95 = Percentile(lags, 0.95f);
             bool ok = d1 && loaded >= 0f && p95 <= 0.35f;
             Check(name, ok, Inv($"D1 head=({head.x:0.00},{head.y:0.00}) v={speed:0.00} loaded={(loaded < 0f ? "no" : loaded.ToString("0.00", Inv0))}s ") +
-                            Inv($"time(info)={time:0.0}s lagP95={p95:0.00}m feetX={feetX:0.00}"), _run);
+                            Inv($"time(info)={time:0.0}s lagP95={p95:0.00}m force(info)={Mean(_run.Forces):0}N feetX={feetX:0.00}"), _run);
 
             // Soft: the door shuts on a loaded body; the feet are in.
             if (feetX > 0.77f) Warn(name, Inv($"feet tip x={feetX:0.00} > 0.77"));
@@ -797,7 +839,7 @@ namespace OnlyVolunteers.Map.Dev
             string bumper = float.IsPositiveInfinity(headOverBumper) ? "-" : headOverBumper.ToString("0.00", Inv0);
             Check(name, ok, Inv($"E1 head=({head.z:0.00},{head.y:0.00}) v={speed:0.00} overBumper={bumper}m ") +
                             Inv($"loaded={(loaded < 0f ? "no" : loaded.ToString("0.00", Inv0))}s time(info)={time:0.0}s lagP95={p95:0.00}m ") +
-                            Inv($"housingX={housingX:0.00}m housingTicks={housingTicks} feetZ={feetZ:0.00}"), _run);
+                            Inv($"force(info)={Mean(_run.Forces):0}N housingX={housingX:0.00}m housingTicks={housingTicks} feetZ={feetZ:0.00}"), _run);
 
             if (housingTicks > 0) Warn(name, $"{housingTicks} ticks touching the wheel housings");
             if (feetZ < -2.12f) Warn(name, Inv($"feet tip z={feetZ:0.00} < -2.12"));
@@ -846,8 +888,14 @@ namespace OnlyVolunteers.Map.Dev
             return false;
         }
 
-        // ---------- (f) dragging, informative ----------
+        // ---------- (f) dragging at a walk ----------
 
+        // One hand, the head end lifted to 0.90 m, walks away at the player's walking speed (4.7 m/s; no KCC here, so
+        // nothing slows the hand down): 1.5 m to get going, then 4.5 m at the walk. Third playtest (2026-10-06): over the
+        // last 0.4 s the body must move at 70% of the walk at least, trailing the hand by less than the 0.6 m at which
+        // PhysicsGrabber starts slowing a real player down (ExternalSpeedScale); the mean force is reported. Then f2,
+        // INFO: a flat body (nothing lifted) pulled by the collar at 2 m/s, against static friction 0.9 (248 N; one hand
+        // has 260 N sideways).
         private IEnumerator Drag()
         {
             Progress = "f";
@@ -858,20 +906,237 @@ namespace OnlyVolunteers.Map.Dev
             h.Stand = Flat(AxisPoint(1.30f)) + axis * 0.9f;
             if (!Grab(h, 1.30f))
             {
-                Line($"{Tag} INFO f no grab");
+                Check("f", false, "", _run);
                 yield break;
             }
             yield return Move(0.4f, To(h, Arc(AxisPoint(_body.Radius), _body.ClaimWorld(h.Slot), 0.90f)));
             Vector3 centre0 = _body.Rigidbody.worldCenterOfMass;
+            yield return Move(1.5f / 2.0f, To(h, h.Target + axis * 1.5f, h.Stand + axis * 1.5f));
+            _run.Lags.Clear();
+            _run.Forces.Clear();
+            _recordLag = true;
+            var speeds = new List<float>();
+            _observe = () => speeds.Add(Flat(_body.Rigidbody.linearVelocity).magnitude);
+            yield return Move(4.5f / PlayerWalkSpeed, To(h, h.Target + axis * 4.5f, h.Stand + axis * 4.5f));
+            _recordLag = false;
+            _observe = null;
+            float moved = Flat(_body.Rigidbody.worldCenterOfMass - centre0).magnitude;
+            int tail = Ticks(0.4f);
+            float speed = MeanTail(speeds, tail), lag = MeanTail(_run.Lags, tail), p95 = Percentile(_run.Lags, 0.95f);
+            float force = Mean(_run.Forces), cap = ForceCap();
+            // The force is information here: the mean covers the speed step from 2.0 to 4.7 m/s, where the hand pulls at
+            // its sideways cap for ~0.4 s on purpose.
+            bool ok = speed >= 0.7f * PlayerWalkSpeed && lag <= 0.60f;
+            Check("f", ok, Inv($"walk {PlayerWalkSpeed:0.0}m/s: body {speed:0.00}m/s lag={lag:0.00}m (p95 {p95:0.00}) ") +
+                           Inv($"moved={moved:0.00}m of 6.00m force(info)={force:0}N of {cap:0} sat={Saturated(_run.Forces, cap):0.00}"), _run);
+            ReleaseAll();
+
+            // f2: a flat body (nothing lifted) simply pulled by the collar at 2 m/s must come along: static 0.8 x 275 =
+            // 220 N on default ground against the hand's 260 N sideways, so it gets going at ~1.4 m/s^2, then slides at
+            // 137 N. (First run with static 0.9, 248 N: moved 0.00 m and the hold broke: a player who grabs and pulls
+            // without lifting felt nothing move.)
+            Progress = "f2";
+            _run = new Run("f2");
+            yield return Place(AreaRoot(W(-5.5f, 0f, 0f), axis), axis);
+            h.Stand = Flat(AxisPoint(1.30f)) + axis * 0.9f;
+            if (!Grab(h, 1.30f))
+            {
+                Check("f2", false, "", _run);
+                yield break;
+            }
+            centre0 = _body.Rigidbody.worldCenterOfMass;
+            yield return Move(3f / 2.0f, To(h, h.Target + axis * 3f, h.Stand + axis * 3f));
+            moved = Flat(_body.Rigidbody.worldCenterOfMass - centre0).magnitude;
+            Check("f2", moved >= FlatPullMin, Inv($"flat body pulled by the collar 3.00m at 2.0m/s: moved={moved:0.00}m (min {FlatPullMin:0.0}) ") +
+                                              Inv($"force(info)={Mean(_run.Forces):0}N sat={Saturated(_run.Forces, cap):0.00}"), _run);
+            ReleaseAll();
+        }
+
+        // ---------- (h) one player loads it alone, in one go ----------
+
+        // Fedya's third playtest (2026-10-06): one player, a little effort. The player has climbed into the bay first and
+        // stands crouched at the door; the hand takes the collar through the doorway and loads the body in one go, the
+        // way a player's hand naturally moves (first run, 2026-10-06: holding the collar at carry height all the way in
+        // kept the hand at its vertical cap, 237-240 N mean, the feet hauled up the bumper face):
+        // A: up on the arc to the carry height (CarrySide / CarryRear; the feet stay down);
+        // B: backing in at CarrySpeed, the collar at the carry height, until it is CarryInside past the edge: the head cap is
+        //    over the edge, the body leans on it with the feet still on the ground (the drag couple costs ~190 N here);
+        // C: the collar lowered to the ride height over RideDrop of travel, so the body lies on the edge like a plank
+        //    (the hand goes nearly slack: the edge and the feet carry it), then pulled in level: the feet swing up as the
+        //    body's middle passes the edge and the body slides in on the 0.3 floor, the collar to just short of the far
+        //    wall / the partition (the body is 1.5 m, so the feet end up inside too);
+        // D: lowered to the floor, let go.
+        // Checked: loaded within LoadTimeLimit of the grab, the hold never lost, and through the sliding door the mean force
+        // under EasyForceShare of the larger cap; the per-phase mean force and the lag (mean, p95) are reported. door 0:
+        // the sliding door (the bay is entered along -x; the body lies across the bay, so the hand steps aside in z, a bay
+        // is 1.88 m wide), 1: the rear doors (+z; the hand backs straight in).
+        // Through the rear doors the force is information only (measured 2026-10-06: ride phase ~280 N, both caps, lag
+        // p95 1.4 m, in after 4.7 s): once the head is over the bumper the body lies on it at ~34 degrees with the feet on
+        // the ground, and pulling the collar in hauls the whole 275 N up its own axis over the edge (W sin 34 = 155 N,
+        // plus ~100 N of friction, over cos 34): ~300 N sideways, more than any one hand here. That is physics, not
+        // tuning: alone, the rear way is the two-step e (head onto the bumper, then the feet lifted and pushed: ~170 N),
+        // or the sliding door (h1), whose step and floor edge are lower.
+        private IEnumerator SoloLoad(int door)
+        {
+            string name = door == 0 ? "h1" : "h2";
+            Progress = name;
+            _run = new Run(name);
+            Vector3 axis = _yaw * (door == 0 ? Vector3.left : Vector3.forward); // head toward the van
+            Vector3 centre = door == 0 ? W(2.85f - 0.75f, 0f, -0.10f) : W(0f, 0f, -4.60f + 0.75f);
+            yield return Place(AreaRoot(centre, axis), axis);
+            yield return EnsureOpen(door);
+            Hand h = _hands[0];
+            Crouch(h, true);
+            h.Stand = door == 0 ? W(0.75f, 0f, -0.10f) : W(0f, 0f, -1.75f); // in the bay, at the door
+            if (!Grab(h, 1.30f))
+            {
+                Check(name, false, "", _run);
+                yield break;
+            }
+            float grabbed = Time.fixedTime, loaded = -1f;
+            _observe = () =>
+            {
+                if (loaded < 0f && _npc.InCargo && ReferenceEquals(_npc.Carrier, _cargo.CargoSpace))
+                    loaded = Time.fixedTime - grabbed;
+            };
             _run.Lags.Clear();
             _recordLag = true;
-            yield return Move(3f / 1.2f, To(h, h.Target + axis * 3f, h.Stand + axis * 3f));
+            var marks = new List<int>();
+            // A
+            float carry = door == 0 ? CarrySide : CarryRear;
+            yield return Move(0.5f, To(h, Arc(AxisPoint(_body.Radius), _body.ClaimWorld(h.Slot), carry)));
+            marks.Add(_run.Forces.Count);
+            // B
+            float ride = door == 0 ? RideSide : RideRear;
+            Vector3 over = door == 0 ? W(SlideEdgeX - CarryInside, carry, -0.10f) : W(0f, carry, RearEdgeZ + CarryInside);
+            // The side-door hand steps aside toward the rear (z -0.75: the bench seat and the partition are at +z, the
+            // wheel housings start at z -1.12).
+            Vector3 standOver = door == 0 ? W(0f, 0f, -0.75f) : W(0f, 0f, RearEdgeZ + CarryInside + 0.70f);
+            yield return Move(Flat(over - h.Target).magnitude / CarrySpeed, To(h, over, standOver));
+            marks.Add(_run.Forces.Count);
+            // C
+            Vector3 drop = door == 0 ? W(SlideEdgeX - CarryInside - RideDrop, ride, -0.10f) : W(0f, ride, RearEdgeZ + CarryInside + RideDrop);
+            Vector3 standDrop = door == 0 ? W(-0.20f, 0f, -0.75f) : W(0f, 0f, RearEdgeZ + CarryInside + RideDrop + 0.70f);
+            yield return Move(RideDrop / CarrySpeed, To(h, drop, standDrop));
+            Vector3 collarIn = door == 0 ? W(-0.70f, ride, -0.10f) : W(0f, ride, -0.70f);
+            Vector3 standIn = door == 0 ? W(-0.45f, 0f, -0.75f) : W(0f, 0f, -0.10f);
+            yield return Move(Flat(collarIn - h.Target).magnitude / CarrySpeed, To(h, collarIn, standIn));
+            marks.Add(_run.Forces.Count);
+            // D
+            yield return Move(0.4f, To(h, collarIn - Vector3.up * (ride - 0.85f)));
+            marks.Add(_run.Forces.Count);
             _recordLag = false;
-            float moved = Flat(_body.Rigidbody.worldCenterOfMass - centre0).magnitude;
-            float lag = MeanTail(_run.Lags, _run.Lags.Count);
-            string fails = _run.Fails.Count > 0 ? " [" + string.Join("; ", _run.Fails) + "]" : "";
-            Line(Inv($"{Tag} INFO f lag={lag:0.00}m moved={moved:0.00}m of 3.00m") + fails);
+            ReleaseHand(h);
+            // Loaded = pelvis and collar in the box, nobody holding, at rest (< 0.25 m/s) for 0.5 s (GreyboxVanCargo).
+            yield return WaitFor(() => loaded >= 0f || Time.fixedTime - grabbed > LoadTimeLimit + 1f, 4f);
+            _observe = null;
+            float force = Mean(_run.Forces), cap = ForceCap();
+            float rest = _body.Rigidbody.linearVelocity.magnitude;
+            Vector3 feet = L(AxisPoint(0f)), head = L(AxisPoint(_body.Height));
+            bool ok = loaded >= 0f && loaded <= LoadTimeLimit && (door == 1 || force <= EasyForceShare * cap);
+            string limit = door == 0 ? Inv($" (limit {EasyForceShare * cap:0})") : "";
+            Check(name, ok, Inv($"loaded={(loaded < 0f ? "no" : loaded.ToString("0.0", Inv0))}s of {LoadTimeLimit:0} v={rest:0.00} ") +
+                            Inv($"force{(door == 1 ? "(info)" : "")}={force:0}N of {cap:0}{limit} sat={Saturated(_run.Forces, cap):0.00} ") +
+                            $"phases[{Phases(_run.Forces, marks, "lift", "carry", "ride", "lower")}] " +
+                            Inv($"lag={Mean(_run.Lags):0.00}m (p95 {Percentile(_run.Lags, 0.95f):0.00}) ") +
+                            Inv($"feet=({feet.x:0.00},{feet.z:0.00}) head=({head.x:0.00},{head.z:0.00})"), _run);
+            // Soft, as in d/e: the feet are in far enough for the door to shut.
+            if (door == 0 && feet.x > 0.77f) Warn(name, Inv($"feet tip x={feet.x:0.00} > 0.77"));
+            if (door == 1 && feet.z < -2.12f) Warn(name, Inv($"feet tip z={feet.z:0.00} < -2.12"));
             ReleaseAll();
+        }
+
+        // ---------- (i) two players: shoulders and legs ----------
+
+        // "Two players: very easy, one takes the legs, the other the arms, and in it goes." Hand A (crouched in the bay at
+        // the rear doors) takes the shoulders (s 1.15: 159 N static with the legs held at 0.20), hand B behind the feet
+        // takes the shins (116 N). Both lift to CarryRear: the whole body must be clear of the ground by ClearanceMin
+        // within 1.5 s; then they walk it in at CarrySpeed (A backs into the bay, B follows up to the step), lower it and
+        // let go. Checked: clearance, loaded within half the solo LoadTimeLimit, each hand's mean force under
+        // EasyForceShare of the larger cap, no hold lost.
+        private IEnumerator PairLoad()
+        {
+            const string name = "i";
+            Progress = name;
+            _run = new Run(name);
+            Vector3 axis = _yaw * Vector3.forward;
+            yield return Place(AreaRoot(W(0f, 0f, -4.60f + 0.75f), axis), axis);
+            yield return EnsureOpen(1);
+            Hand a = _hands[0], b = _hands[1];
+            Crouch(a, true);
+            a.Stand = W(0f, 0f, -1.75f);
+            b.Stand = FeetStand();
+            if (!Grab(a, 1.15f) || !Grab(b, 0.20f))
+            {
+                Check(name, false, "", _run);
+                ReleaseAll();
+                yield break;
+            }
+            float grabbed = Time.fixedTime, loaded = -1f, clearance = float.NegativeInfinity, tClear = -1f;
+            _observe = () =>
+            {
+                float low = Mathf.Min(Height(AxisPoint(_body.Radius)), Height(AxisPoint(_body.Height - _body.Radius))) - _body.Radius;
+                clearance = Mathf.Max(clearance, low);
+                if (tClear < 0f && low >= ClearanceMin) tClear = Time.fixedTime - grabbed;
+                if (loaded < 0f && _npc.InCargo && ReferenceEquals(_npc.Carrier, _cargo.CargoSpace))
+                    loaded = Time.fixedTime - grabbed;
+            };
+            Vector3 ta = a.Target, tb = b.Target;
+            _run.Lags.Clear();
+            _recordLag = true;
+            yield return Move(0.5f, To(a, new Vector3(ta.x, _o.y + CarryRear, ta.z)), To(b, new Vector3(tb.x, _o.y + CarryRear, tb.z)));
+            yield return Move(1.0f, To(a, a.Target), To(b, b.Target));
+            float lift = tClear;
+            // In: the shoulders to z -0.70 (the feet end then lies between the wheel housings), B up to the ground behind
+            // the rear step.
+            Vector3 shift = _yaw * new Vector3(0f, 0f, -0.70f - L(a.Target).z);
+            yield return Move(shift.magnitude / CarrySpeed, To(a, a.Target + shift, W(0f, 0f, -0.10f)), To(b, b.Target + shift, W(0f, 0f, -3.00f)));
+            Vector3 down = Vector3.down * (CarryRear - 0.85f);
+            yield return Move(0.4f, To(a, a.Target + down), To(b, b.Target + down));
+            _recordLag = false;
+            ReleaseAll();
+            yield return WaitFor(() => loaded >= 0f || Time.fixedTime - grabbed > LoadTimeLimit, 2.5f);
+            _observe = null;
+            float forceA = Mean(a.Forces), forceB = Mean(b.Forces), cap = ForceCap();
+            bool ok = lift >= 0f && lift <= 1.5f && loaded >= 0f && loaded <= LoadTimeLimit * 0.5f &&
+                      forceA <= EasyForceShare * cap && forceB <= EasyForceShare * cap;
+            Check(name, ok, Inv($"clear={clearance:0.00}m at {(lift < 0f ? "never" : lift.ToString("0.00", Inv0))}s ") +
+                            Inv($"loaded={(loaded < 0f ? "no" : loaded.ToString("0.0", Inv0))}s of {LoadTimeLimit * 0.5f:0} ") +
+                            Inv($"force shoulders={forceA:0}N legs={forceB:0}N of {cap:0} (limit {EasyForceShare * cap:0}) ") +
+                            Inv($"lag={Mean(_run.Lags):0.00}m (p95 {Percentile(_run.Lags, 0.95f):0.00})"), _run);
+        }
+
+        // INFO: the same two-hand lift on open ground with the top hand lower down ("за руки": the arms hang at 0.85-0.95),
+        // the legs at 0.20: how far the body comes off the ground and what the top hand carries. The static loads with
+        // 240 N per hand: 0.85 -> 233 N (just), 0.90 -> 216, 0.95 -> 202, 1.05 -> 178.
+        private IEnumerator PairLiftInfo()
+        {
+            Progress = "i-arms";
+            var pairs = new StringBuilder();
+            Vector3 axis = Vector3.right;
+            Hand a = _hands[0], b = _hands[1];
+            foreach (float s in new[] { 0.85f, 0.90f, 0.95f, 1.05f })
+            {
+                _run = new Run("i-arms");
+                yield return Place(AreaRoot(W(-7f, 0f, 0f), axis), axis);
+                a.Stand = Flat(AxisPoint(s)) + Side(axis) * 0.8f;
+                b.Stand = Flat(AxisPoint(0.20f)) - Side(axis) * 0.8f;
+                if (!Grab(a, s) || !Grab(b, 0.20f))
+                {
+                    pairs.Append(Inv($" {s:0.00}:nograb"));
+                    ReleaseAll();
+                    continue;
+                }
+                float clearance = float.NegativeInfinity;
+                _observe = () => clearance = Mathf.Max(clearance,
+                    Mathf.Min(Height(AxisPoint(_body.Radius)), Height(AxisPoint(_body.Height - _body.Radius))) - _body.Radius);
+                yield return Move(0.5f, To(a, a.Target + Vector3.up), To(b, b.Target + Vector3.up));
+                yield return Move(1.0f, To(a, a.Target), To(b, b.Target));
+                _observe = null;
+                pairs.Append(Inv($" {s:0.00}:{clearance:0.00}m/{Mean(a.Forces):0}N"));
+                ReleaseAll();
+            }
+            Line($"{Tag} INFO i-arms top hand s:clearance/force, legs at 0.20, 1 m lift:" + pairs + Fails(_run));
         }
 
         // ---------- (g) the real stun, informative ----------
@@ -988,6 +1253,7 @@ namespace OnlyVolunteers.Map.Dev
         {
             h.Slot = -1;
             h.Hold = -1f;
+            h.Forces.Clear();
             if (freeSpot && StandBlocked(h, StandMask | (1 << OvLayers.NpcBody), out string blocker))
                 _run?.Fail(Inv($"grabbing at s={s:0.00} from inside {blocker}"));
             Vector3 axis = _body.Rigidbody.rotation * Vector3.up;
@@ -1029,7 +1295,7 @@ namespace OnlyVolunteers.Map.Dev
         // target, within reach and no faster than a wheel turns, and the place it stands must be free.
         private void Aim(Hand h)
         {
-            Vector3 eye = Feet(h.Stand) + Vector3.up * StandEye;
+            Vector3 eye = Feet(h.Stand) + Vector3.up * h.Eye;
             Vector3 to = h.Target - eye;
             if (to.sqrMagnitude > 1e-6f) h.View.transform.SetPositionAndRotation(eye, Quaternion.LookRotation(to));
             else h.View.transform.position = eye;
@@ -1044,23 +1310,39 @@ namespace OnlyVolunteers.Map.Dev
             if (StandBlocked(h, StandMask, out string blocker)) _run?.Fail($"stand blocked by {blocker}");
         }
 
-        // A standing KCC capsule at the hand's place would overlap 'mask' (while holding: the world and the van, not the
-        // body it holds, which the KCC ignores).
+        // A KCC capsule of the hand's stance at the hand's place would overlap 'mask' (while holding: the world and the
+        // van, not the body it holds, which the KCC ignores). Not checked on the van's step ramps: there the KCC climbs
+        // the step and the floor edge, which a plain overlap test would flag.
         private bool StandBlocked(Hand h, int mask, out string blocker)
         {
-            Vector3 feet = Feet(h.Stand);
-            Collider[] hits = Physics.OverlapCapsule(feet + Vector3.up * 0.37f, feet + Vector3.up * (StandHeight - 0.35f),
+            Vector3 feet = Feet(h.Stand, out bool onRamp);
+            blocker = null;
+            if (onRamp) return false;
+            Collider[] hits = Physics.OverlapCapsule(feet + Vector3.up * 0.37f, feet + Vector3.up * (h.Height - 0.35f),
                 StandRadius, mask, QueryTriggerInteraction.Ignore);
             blocker = hits.Length > 0 ? hits[0].name : null;
             return hits.Length > 0;
         }
 
-        private Vector3 Feet(Vector3 stand)
+        private static void Crouch(Hand h, bool crouch)
+        {
+            h.Eye = crouch ? CrouchEye : StandEye;
+            h.Height = crouch ? CrouchHeight : StandHeight;
+        }
+
+        private Vector3 Feet(Vector3 stand) => Feet(stand, out _);
+
+        // Where the hand's feet are: on the ground, the van's step, bumper or floor, or one of its invisible ramps (onRamp).
+        private Vector3 Feet(Vector3 stand, out bool onRamp)
         {
             var from = new Vector3(stand.x, _o.y + 1.5f, stand.z);
-            return Physics.Raycast(from, Vector3.down, out RaycastHit hit, 3f, FeetMask, QueryTriggerInteraction.Ignore)
-                ? hit.point
-                : new Vector3(stand.x, _o.y, stand.z);
+            if (Physics.Raycast(from, Vector3.down, out RaycastHit hit, 3f, FeetMask, QueryTriggerInteraction.Ignore))
+            {
+                onRamp = hit.collider.gameObject.layer == OvLayers.VehicleInterior;
+                return hit.point;
+            }
+            onRamp = false;
+            return new Vector3(stand.x, _o.y, stand.z);
         }
 
         private static Vector3 HandPoint(Hand h) => h.Grabber.PointHoldTarget;
@@ -1103,7 +1385,7 @@ namespace OnlyVolunteers.Map.Dev
 
         private float HoldAt(Leg leg, float u)
         {
-            Vector3 eye = Feet(Vector3.Lerp(leg.FromStand, leg.ToStand, u)) + Vector3.up * StandEye;
+            Vector3 eye = Feet(Vector3.Lerp(leg.FromStand, leg.ToStand, u)) + Vector3.up * leg.Hand.Eye;
             return Vector3.Distance(Vector3.Lerp(leg.FromTarget, leg.ToTarget, u), eye);
         }
 
@@ -1155,6 +1437,9 @@ namespace OnlyVolunteers.Map.Dev
                     continue;
                 }
                 if (_recordLag && _run != null) _run.Lags.Add(Vector3.Distance(HandPoint(h), _body.ClaimWorld(h.Slot)));
+                float force = h.Grabber.LastPointForce.magnitude;
+                h.Forces.Add(force);
+                _run?.Forces.Add(force);
             }
             _observe?.Invoke();
         }
@@ -1166,6 +1451,7 @@ namespace OnlyVolunteers.Map.Dev
         private IEnumerator Place(Vector3 root, Vector3 axis)
         {
             ReleaseAll();
+            foreach (Hand h in _hands) Crouch(h, false); // every case starts with standing hands
             _observe = null;
             _recordLag = false;
             if (_npc.State != NpcState.Down || _body.Rigidbody == null || _body.Seated)
@@ -1275,6 +1561,40 @@ namespace OnlyVolunteers.Map.Dev
             sorted.Sort();
             return sorted[Mathf.Clamp(Mathf.CeilToInt(p * sorted.Count) - 1, 0, sorted.Count - 1)];
         }
+
+        private static float Mean(List<float> values) => MeanTail(values, values.Count);
+
+        // Share of the samples at (within 5% of) the cap: how much of the hold was the hand pulling as hard as it can.
+        private static float Saturated(List<float> forces, float cap)
+        {
+            if (forces.Count == 0) return 0f;
+            int n = 0;
+            foreach (float f in forces)
+                if (f >= 0.95f * cap) n++;
+            return (float)n / forces.Count;
+        }
+
+        // The larger of the hand's two caps (NpcGrabProfile: 240 N up/down, 260 N sideways).
+        private float ForceCap() => Mathf.Max(_body.Profile.MaxForce, _body.Profile.SoloHorizontalMaxForce);
+
+        // Mean force per phase: 'marks' are the sample counts at the end of each phase, in order.
+        private static string Phases(List<float> forces, List<int> marks, params string[] names)
+        {
+            var sb = new StringBuilder();
+            int from = 0;
+            for (int i = 0; i < marks.Count && i < names.Length; i++)
+            {
+                int to = Mathf.Clamp(marks[i], from, forces.Count);
+                float sum = 0f;
+                for (int k = from; k < to; k++) sum += forces[k];
+                if (i > 0) sb.Append(' ');
+                sb.Append(names[i]).Append('=').Append(to > from ? (sum / (to - from)).ToString("0", Inv0) : "-");
+                from = to;
+            }
+            return sb.ToString();
+        }
+
+        private static string Fails(Run run) => run != null && run.Fails.Count > 0 ? " [" + string.Join("; ", run.Fails) + "]" : "";
 
         private static readonly IFormatProvider Inv0 = System.Globalization.CultureInfo.InvariantCulture;
         private static string Inv(FormattableString s) => FormattableString.Invariant(s);

@@ -77,14 +77,21 @@ namespace OnlyVolunteers.Audio
             return true;
         }
 
-        // A random clip, not the one played last time when there is a choice.
+        // A random clip, not the one played last time when there is a choice. An empty slot (a clip missing on this
+        // machine, e.g. the local-only Mixkit files of Library_v1) is skipped for the next filled one.
         private static AudioClip Pick(SfxLibrary.Entry entry)
         {
             int count = entry.Clips.Length;
             int index = Random.Range(0, count);
             if (count > 1 && index == entry.LastClip) index = (index + 1 + Random.Range(0, count - 1)) % count;
-            entry.LastClip = index;
-            return entry.Clips[index];
+            for (int i = 0; i < count; i++)
+            {
+                int at = (index + i) % count;
+                if (entry.Clips[at] == null) continue;
+                entry.LastClip = at;
+                return entry.Clips[at];
+            }
+            return null;
         }
 
         // A free source (round robin), else the least important playing one that is not more important than this sound

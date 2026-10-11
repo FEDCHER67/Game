@@ -46,7 +46,19 @@ namespace OnlyVolunteers.Map.Look
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             string sceneName = $"Map_Look_{rev}_Play";
             var root = new GameObject($"MapLook_{rev}").transform;
-            MapHeightSampler sampler = MapLookBuilder.BuildEnvironment(rev, root, sceneName);
+            // The live police cars (Police/MapPolicePlacer) take the station lot: its static parked police cars stay out.
+            // Only when the police data is there (baked now if stale): a failed bake keeps the static cars and the placeholder.
+            bool police = MapCrowdPlacer.UseDirector && Police.MapPolicePlacer.Enabled && Police.MapPolicePlacer.EnsureData(rev, out _) != null;
+            PropScatterer.SkipVehicleType = police ? "car_police" : null;
+            MapHeightSampler sampler;
+            try
+            {
+                sampler = MapLookBuilder.BuildEnvironment(rev, root, sceneName);
+            }
+            finally
+            {
+                PropScatterer.SkipVehicleType = null;
+            }
             if (sampler == null) return;
             MapLookLighting.Apply(root);
             LookData data = MapLookBuilder.Load(rev);
@@ -63,6 +75,7 @@ namespace OnlyVolunteers.Map.Look
                 PostProcessing = true,
                 // The walking crowd (CrowdDirector, crowd_vNN.json); the menu toggle brings back the static grey-box crowd.
                 Crowd = MapCrowdPlacer.UseDirector ? MapGreyboxBuilder.CrowdKind.Director : MapGreyboxBuilder.CrowdKind.Static,
+                Revision = rev,
             };
             MapGreyboxBuilder.GameplayResult result = MapGreyboxBuilder.PlaceGameplay(setup);
             AddSurf(setup.SeaZone, data);
@@ -72,7 +85,7 @@ namespace OnlyVolunteers.Map.Look
             Vector3 van = result.Van.transform.position;
             Debug.Log($"[MapLook+Play] {rev} (builder r{GreyboxVanSeat.CurrentBuildRevision}): van at ({van.x:0.0}, {van.y:0.00}, {van.z:0.0}), " +
                       (result.Director != null ? $"CrowdDirector with {result.Npcs} pooled NPCs, " : $"{result.Npcs} of {result.CrowdSlots} crowd NPCs, ") +
-                      $"{result.Pickups} pickups; {layers} -> {scenePath} in {sw.Elapsed.TotalSeconds:0.0} s");
+                      $"{result.Pickups} pickups{(result.Police != null ? ", police" : "")}; {layers} -> {scenePath} in {sw.Elapsed.TotalSeconds:0.0} s");
         }
 
         // The beach runs under the sea's surface before the sea zone starts (the surf, BEACH_SURF): a point there below

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OnlyVolunteers.Characters.Npc;
 using UnityEngine;
 
 namespace OnlyVolunteers.Map.Crowd
@@ -11,8 +12,13 @@ namespace OnlyVolunteers.Map.Crowd
     // graph (CrowdGraph).
     // Loop -> POI: passing a POI's access link it may (ActivityChance, a free slot) walk in, take a slot and do the
     // activity for the POI's dwell time (sit on the bench, queue, wait at the bus stop, smoke, lie on the beach, stand at
-    // a door or on the church steps, hang around the playground), then walk back. No sit/lie clips yet: sitting sinks
-    // the standing mesh, lying tips it over (placeholders).
+    // a door or on the church steps, hang around the playground), then walk back. Stage 9 step 5: the NPC's NpcAnimDriver
+    // plays it (its speed while walking, the Activity while there: the activity's enter, loop and exit clips once
+    // clips.json installs them; it stands up with the exit clip before walking off). Activities without clips keep the
+    // stage-1 placeholders on the mesh: sitting sinks the standing mesh, lying tips it over. Clips that sit or lean on a
+    // prop behind the NPC (clips.json placement: the bench seat, a wall) need it there: on its way in the walker looks for
+    // it near the slot and makes for the spot in front of it (facing away), and on arrival is put exactly there and kept
+    // still (its CharacterController would push it off the bench); with no prop found it only stands at the slot.
     // GreyboxNpc keeps everything else: fleeing from the van or the pawn (the walker yields and rejoins after), going down,
     // the van. Stunned or captured -> Release: the pose is undone, the slot freed, the walker removed for good.
     [DisallowMultipleComponent]
@@ -28,13 +34,16 @@ namespace OnlyVolunteers.Map.Crowd
 
         public CrowdRole Role { get; private set; }
         public int District { get; private set; }
+        // Set by a police officer (Police/PoliceOfficer) while he works an incident himself: the walker lets go like
+        // while fleeing and rejoins its loop (Recover) when this goes back to false.
+        [System.NonSerialized] public bool Suspended;
         public Mode State => _mode;
         public GreyboxNpc Npc { get; private set; }
 
         /// <summary>Counts toward its district's target: not on the way out, not reporting, not released.</summary>
         public bool Counts => _mode != Mode.Released && _mode != Mode.DespawnWait && _goal != Goal.Leave && _goal != Goal.Report && !_pendingReport;
         public bool CanLeave => _mode == Mode.Route && !_pendingReport;
-        public bool CanWitness => _mode != Mode.Released && _goal != Goal.Report && !_pendingReport && Npc != null && Npc.State == NpcState.Free;
+        public bool CanWitness => !Suspended && _mode != Mode.Released && _goal != Goal.Report && !_pendingReport && Npc != null && Npc.State == NpcState.Free;
         public bool LyingDown => _mode == Mode.Activity && _activity == CrowdActivity.BeachLie;
         public Vector3 Eye => transform.position + Vector3.up * (LyingDown ? 0.4f : 1.55f);
 
@@ -59,6 +68,12 @@ namespace OnlyVolunteers.Map.Crowd
         private CrowdActivity _activity;
         private Vector2 _facing;
         private float _dwellUntil, _lastPoiTime;
+        // The dwell is over and the activity's exit clip plays (standing up from the bench) until _dwellUntil.
+        private bool _standingUp;
+        // Step 5: this visit's activity plays its clips (installed, and its prop found); at a prop: the exact slot (world
+        // feet) and kept still while there.
+        private bool _clips, _atProp, _still;
+        private Vector2 _slotSpot;
 
         private bool _pendingReport;
         private float _reactAt;
@@ -180,9 +195,10 @@ namespace OnlyVolunteers.Map.Crowd
                 return;
             }
             float now = Time.time;
-            if (Npc.Fleeing)
+            if (Npc.Fleeing || Suspended)
             {
-                // GreyboxNpc runs it away from the van or the pawn; the walker gives up its spot and waits.
+                // GreyboxNpc runs it away from the van or the pawn (or a police officer runs himself); the walker gives up
+                // its spot and waits.
                 if (!_wasFleeing)
                 {
                     _wasFleeing = true;
@@ -237,15 +253,13 @@ namespace OnlyVolunteers.Map.Crowd
             float dt = Time.deltaTime;
             var v = new Vector3(velocity.x, 0f, velocity.y);
             _vy = _controller.isGrounded ? -1f : _vy - Gravity * dt;
-            if (_controller.enabled) _controller.Move((v + Vector3.up * _vy) * dt);
+            if (_controller.enabled && !_still) _controller.Move((v + Vector3.up * _vy) * dt);
             float speed = v.magnitude;
             if (speed > 0.05f)
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(v), TurnSpeed * dt);
-            if (_mode != Mode.Activity)
-            {
-                if (speed > 0.15f) Npc.Animate("Run", Mathf.Clamp(speed * _director.WalkAnimPerMps, 0.15f, 1.2f));
-                else Npc.Animate("Idle", 1f);
-            }
+            // Step 5: the driver walks or runs it by the speed (the report run is fast enough to be a run).
+            if (_mode != Mode.Activity && Npc.Anim != null)
+                Npc.Anim.SetMove(_controller.enabled ? Vector3.ProjectOnPlane(_controller.velocity, Vector3.up).magnitude : 0f);
             if (now >= _nextGroundCheck)
             {
                 _nextGroundCheck = now + 1f;
@@ -395,7 +409,7 @@ namespace OnlyVolunteers.Map.Crowd
                     StartActivity();
                     break;
                 case Goal.Report:
-                    _director.RaiseAlert(_director.DistrictAt(_sawWhere), this, _sawKind, _sawWhere, _officer != null ? _officer.name : _reportVia);
+                    _director.RaiseAlert(_director.DistrictAt(_sawWhere), this, _sawKind, _sawWhere, _officer != null ? _officer.name : _reportVia, _officer);
                     _officer = null;
                     Leave();
                     break;
@@ -590,10 +604,68 @@ namespace OnlyVolunteers.Map.Crowd
             _slot = slot;
             _activity = poi.Activity;
             SlotPose(poi, slot, out Vector2 spot, out _facing);
+            // Step 5: the clips (if installed) and, for those on a prop, the spot in front of it.
+            NpcAnimDriver anim = Npc.Anim;
+            _clips = anim != null && anim.HasActivity(_activity);
+            _atProp = false;
+            NpcRagdollProfile.ActivityPlacement place = _clips ? anim.Placement(_activity) : null;
+            if (place != null) _clips = _atProp = AtProp(place, ref spot, ref _facing);
+            _slotSpot = spot;
             // Over the graph (along the loop to where the access link meets it, then the link), then to the slot.
             GoTo(poi.Position, Goal.ToPoi);
             _path.Add(spot);
         }
+
+        // Step 5: the prop an activity's clips sit or lean on (clips.json placement), near the slot: the nearest collider
+        // named like it within Reach at its height (a bench), else the wall straight behind the slot. The slot moves to Gap
+        // in front of its face and faces away from it. False: none there.
+        private bool AtProp(NpcRagdollProfile.ActivityPlacement place, ref Vector2 spot, ref Vector2 facing)
+        {
+            Vector3 feet = _director.Ground(spot);
+            Vector3 at = feet + Vector3.up * place.Height;
+            Vector3 face = new Vector3(facing.x, 0f, facing.y);
+            if (face.sqrMagnitude < 1e-4f) face = Vector3.forward;
+            face.Normalize();
+            Vector3 point, normal;
+            if (!string.IsNullOrEmpty(place.Prop))
+            {
+                int count = Physics.OverlapSphereNonAlloc(at, place.Reach, PropHits, ~0, QueryTriggerInteraction.Ignore);
+                float best = float.MaxValue;
+                point = normal = Vector3.zero;
+                for (int i = 0; i < count; i++)
+                {
+                    Collider c = PropHits[i];
+                    PropHits[i] = null;
+                    if (c == null || c.name.IndexOf(place.Prop, System.StringComparison.OrdinalIgnoreCase) < 0) continue;
+                    bool exact = c is BoxCollider || c is SphereCollider || c is CapsuleCollider || (c is MeshCollider mesh && mesh.convex);
+                    Vector3 near = exact ? c.ClosestPoint(at) : c.bounds.ClosestPoint(at);
+                    Vector3 off = near - at;
+                    off.y = 0f;
+                    if (off.sqrMagnitude >= best) continue;
+                    best = off.sqrMagnitude;
+                    point = near;
+                    // Away from the prop toward the slot (the slot inside it: toward the path).
+                    normal = off.sqrMagnitude > 1e-4f ? -off.normalized : face;
+                }
+                if (best == float.MaxValue) return false;
+            }
+            else
+            {
+                if (!Physics.Raycast(at + face * 0.5f, -face, out RaycastHit hit, place.Reach + 0.5f, ~0, QueryTriggerInteraction.Ignore) ||
+                    hit.collider.GetComponentInParent<GreyboxNpc>() != null)
+                    return false;
+                point = hit.point;
+                normal = new Vector3(hit.normal.x, 0f, hit.normal.z);
+                if (normal.sqrMagnitude < 1e-4f) return false;
+                normal.Normalize();
+            }
+            Vector3 root = point + normal * place.Gap;
+            spot = new Vector2(root.x, root.z);
+            facing = new Vector2(normal.x, normal.z);
+            return true;
+        }
+
+        private static readonly Collider[] PropHits = new Collider[24];
 
         // Where slot k of a POI stands and which way it faces. Out points from the POI toward the path.
         private static void SlotPose(CrowdPoi poi, int slot, out Vector2 spot, out Vector2 facing)
@@ -644,9 +716,24 @@ namespace OnlyVolunteers.Map.Crowd
             CrowdPoi poi = Map.Pois[_poi];
             _mode = Mode.Activity;
             _goal = Goal.None;
+            _standingUp = false;
             _dwellUntil = Time.time + Random.Range(poi.Dwell.x, poi.Dwell.y);
-            ApplyPose(_activity);
-            Npc.Animate("Idle", _activity == CrowdActivity.SmokeCorner ? 0.6f : 1f);
+            // Step 5: the activity's clips through the driver; without them the stage-1 placeholder on the mesh; clips on a
+            // prop that is not there: it only stands at the slot.
+            NpcAnimDriver anim = Npc.Anim;
+            bool installed = anim != null && anim.HasActivity(_activity);
+            if (!installed) ApplyPose(_activity);
+            if (_clips && _atProp)
+            {
+                // Exactly in front of the prop, facing away, and kept still there.
+                Vector3 feet = _director.Ground(_slotSpot);
+                bool was = _controller.enabled;
+                _controller.enabled = false;
+                transform.SetPositionAndRotation(feet, Quaternion.LookRotation(new Vector3(_facing.x, 0f, _facing.y)));
+                _controller.enabled = was;
+                _still = true;
+            }
+            if (anim != null) anim.SetActivity(_clips ? (int)_activity : -1);
         }
 
         private void TickActivity(float now)
@@ -658,9 +745,19 @@ namespace OnlyVolunteers.Map.Crowd
                 float look = (Mathf.PerlinNoise(now * 0.15f, GetHashCode() * 0.01f) - 0.5f) * 140f;
                 face = Rotate(face, look);
             }
-            if (face.sqrMagnitude > 1e-4f)
+            // On a prop (step 5) it stays as it was put: the clip faces away from the bench or the wall.
+            if (face.sqrMagnitude > 1e-4f && !_still)
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(face.x, 0f, face.y)), 120f * Time.deltaTime);
             if (now < _dwellUntil) return;
+            // Step 5: with an exit clip (standing up from the bench, off the wall) it plays that first, still in its slot.
+            float exit = !_standingUp && Npc.Anim != null ? Npc.Anim.ActivityExitSeconds(_activity) : 0f;
+            if (exit > 0f)
+            {
+                _standingUp = true;
+                _dwellUntil = now + exit;
+                Npc.Anim.SetActivity(-1);
+                return;
+            }
             CrowdPoi poi = Map.Pois[_poi];
             _lastPoi = _poi;
             _lastPoiTime = now;
@@ -670,10 +767,13 @@ namespace OnlyVolunteers.Map.Crowd
             GoTo(Loop[_index], Goal.FromPoi);
         }
 
-        // Leaves the POI slot and undoes the pose (if any). Mode and goal are the caller's.
+        // Leaves the POI slot and undoes the pose (if any); the driver's activity ends. Mode and goal are the caller's.
         private void EndActivityNow()
         {
             ResetPose();
+            _standingUp = false;
+            _still = false;
+            if (Npc != null && Npc.Anim != null) Npc.Anim.SetActivity(-1);
             if (_poi >= 0 && _director != null && _director.Map != null)
             {
                 CrowdPoi poi = Map.Pois[_poi];
@@ -687,7 +787,7 @@ namespace OnlyVolunteers.Map.Crowd
             _poi = _slot = -1;
         }
 
-        // No sit/lie clips yet: placeholders on the mesh, undone by ResetPose.
+        // Activities without clips (step 5: the driver has none for it): placeholders on the mesh, undone by ResetPose.
         private void ApplyPose(CrowdActivity activity)
         {
             if (_visual == null) return;
@@ -722,7 +822,7 @@ namespace OnlyVolunteers.Map.Crowd
             _sawWhere = where;
             if (Role == CrowdRole.Police)
             {
-                _director.RaiseAlert(_director.DistrictAt(where), this, kind, where, "полицейский видел сам");
+                _director.RaiseAlert(_director.DistrictAt(where), this, kind, where, "полицейский видел сам", this);
                 EndActivityNow();
                 _mode = Mode.Pause;
                 _pauseUntil = Time.time + 4f;
@@ -785,11 +885,7 @@ namespace OnlyVolunteers.Map.Crowd
             EndActivityNow();
             _mode = Mode.Released;
             _pendingReport = false;
-            if (Npc != null)
-            {
-                Npc.ExternalLocomotion = false;
-                Npc.Animate("Idle", 1f);
-            }
+            if (Npc != null) Npc.ExternalLocomotion = false; // GreyboxNpc (and its driver) take over
             SetPoliceLabel(false);
             if (_director != null) _director.Forget(this);
             Destroy(this);

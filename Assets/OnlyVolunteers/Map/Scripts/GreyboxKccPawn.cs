@@ -52,10 +52,14 @@ namespace OnlyVolunteers.Map
         // see them): this player's motor walks on them, Vadim's prefabs and other scenes are untouched. Nothing else uses
         // that layer as a collider (the cargo-bay volumes are maths, VanCargoSpace). The KCC cannot step onto the van's
         // own colliders (a dynamic rigidbody: no step handling there), hence ramps rather than MaxStepHeight.
+        // Stage 9 (ragdoll design §2.4): lying NPC bodies are never stable ground for this player, or a 1 kg forearm becomes
+        // a moving platform (AttachedRigidbody) that jitters or launches him; he is still blocked by them.
         private void Start()
         {
             KinematicCharacterMotor motor = Kcc != null && Kcc.Character != null ? Kcc.Character.Motor : null;
-            if (motor != null) motor.CollidableLayers |= 1 << OvLayers.VehicleInterior;
+            if (motor == null) return;
+            motor.CollidableLayers |= 1 << OvLayers.VehicleInterior;
+            motor.StableGroundLayers &= ~(1 << OvLayers.NpcBody);
         }
 
         // Footfalls by distance walked on stable ground, the surface under the feet picking the sound (SfxSurfaces:
@@ -107,6 +111,14 @@ namespace OnlyVolunteers.Map
         public override Stance Stance => Driving ? Stance.Seated : Kcc.Character.CurrentStance;
 
         public override void SetControlled(bool on) => gameObject.SetActive(on);
+
+        // Through the KCC's own public calls (the same ones its jump uses): no KCC file changes.
+        public override void Knock(Vector3 velocity)
+        {
+            if (Kcc == null || Kcc.Character == null || !isActiveAndEnabled) return;
+            Kcc.Character.Motor.ForceUnground();
+            Kcc.Character.AddVelocity(velocity);
+        }
 
         public override void Teleport(Vector3 position, float yawDegrees)
         {

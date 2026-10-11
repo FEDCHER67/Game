@@ -1,0 +1,29 @@
+// Renders every Cam_* of the open trial scene at 1920 x 1080 through PC_RPAsset_StyleTrial_v2 (MSAA 4x, shadows 180 m /
+// 4096, SSAO) and restores the project pipeline afterwards. Run through the Unity MCP execute_code tool.
+if (UnityEditor.EditorApplication.isPlaying) return "PLAYING - abort";
+string OUT = "C:/Dev/Game/ArtSource/Props/STYLE_KIT_v2/TRIAL_SCENE/out/";
+string PREFIX = "render_";
+int W = 1920, H = 1080;
+var sb = new System.Text.StringBuilder();
+var oldRp = UnityEngine.QualitySettings.renderPipeline;
+var trialRp = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.RenderPipelineAsset>("Assets/OnlyVolunteers/Art/StyleKit_v2/Lighting/PC_RPAsset_StyleTrial_v2.asset");
+try {
+  UnityEngine.QualitySettings.renderPipeline = trialRp;
+  foreach (var cam in UnityEngine.Object.FindObjectsByType<UnityEngine.Camera>(UnityEngine.FindObjectsSortMode.InstanceID)) {
+    if (!cam.name.StartsWith("Cam_")) continue;
+    var rt = new UnityEngine.RenderTexture(W, H, 24, UnityEngine.RenderTextureFormat.ARGB32, UnityEngine.RenderTextureReadWrite.sRGB);
+    rt.antiAliasing = 4; rt.Create();
+    var rt2 = new UnityEngine.RenderTexture(W, H, 0, UnityEngine.RenderTextureFormat.ARGB32, UnityEngine.RenderTextureReadWrite.sRGB); rt2.Create();
+    bool was = cam.enabled;
+    cam.targetTexture = rt; cam.Render(); cam.targetTexture = null; cam.enabled = was;
+    UnityEngine.Graphics.Blit(rt, rt2);
+    var prev = UnityEngine.RenderTexture.active; UnityEngine.RenderTexture.active = rt2;
+    var tex = new UnityEngine.Texture2D(W, H, UnityEngine.TextureFormat.RGB24, false, false);
+    tex.ReadPixels(new UnityEngine.Rect(0, 0, W, H), 0, 0); tex.Apply();
+    UnityEngine.RenderTexture.active = prev;
+    System.IO.File.WriteAllBytes(OUT + PREFIX + cam.name.Substring(4) + ".png", tex.EncodeToPNG());
+    sb.AppendLine(cam.name);
+    UnityEngine.Object.DestroyImmediate(tex); rt.Release(); rt2.Release(); UnityEngine.Object.DestroyImmediate(rt); UnityEngine.Object.DestroyImmediate(rt2);
+  }
+} finally { UnityEngine.QualitySettings.renderPipeline = oldRp; }
+return sb.ToString();

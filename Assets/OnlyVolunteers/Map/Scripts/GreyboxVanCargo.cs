@@ -1,18 +1,23 @@
+using System;
 using System.Collections.Generic;
+using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Vehicles;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace OnlyVolunteers.Map
 {
     // The van's cargo bay in the grey-box, NPC capture stage 1 (canon section 151, draft sections 2-3): physical loading,
     // NPCs riding along, escapes through an opening door, ejection, the cargo doors for the on-foot pawn and the cargo HUD.
-    // No slots, no load key: players drag and push the bodies in themselves (GreyboxNpcBody + PhysicsGrabber).
+    // No slots, no load key: players drag and push the bodies in themselves (PhysicsGrabber). Stage 9: downed bodies are
+    // read through INpcBody (GreyboxNpc.PhysicalBody), so the stage-1 capsule and the 11-body ragdoll load, ride and get
+    // ejected by the same rules; sitting and escaping NPCs are always the capsule (GreyboxNpc.Body).
     // - Loading: a downed body counts as loaded when, for LoadHold seconds, its pelvis and collar are inside the cargo box
-    //   (VanCargoSpace), nobody holds it and it is at rest RELATIVE TO THE VAN (|v - van point velocity| < LoadRestSpeed;
-    //   in a moving van the world speed is never zero). Then InCargo + Carrier on the NPC and a thud: an impulse down on the
-    //   van at that point, the suspension dips (no text). Pelvis or collar out of the box by more than UnloadMargin:
-    //   unloaded. Loaded bodies nobody holds are damped toward the van's velocity (F = (vanVel - v) m LoadedDamping), so
-    //   they settle and ride along; hard braking still throws them about.
+    //   (VanCargoSpace), nobody holds it and it is at rest RELATIVE TO THE VAN (every body of it: |v - van point velocity|
+    //   < LoadRestSpeed; in a moving van the world speed is never zero). Then InCargo + Carrier on the NPC and a thud: an
+    //   impulse down on the van at that point, the suspension dips (no text). Pelvis or collar out of the box by more than
+    //   UnloadMargin: unloaded. Loaded bodies nobody holds are damped toward the van's velocity, each of their bodies
+    //   (F = (vanVel - v) m LoadedDamping), so they settle and ride along; hard braking still throws them about.
     // - Passengers (CargoSeated, awake): GreyboxNpcBody.SetSeated makes them a 1 m upright capsule on layer NpcSeated;
     //   here they are kept moving with the van (F = (vanVel - v) m SeatedMatching) and turned with it (yaw relative to the
     //   van). One that ends up out of the bay anyway (braking with the door open) gets out like an escaper.
@@ -20,9 +25,13 @@ namespace OnlyVolunteers.Map
     //   holds first turns to that door with a surprised face (the warning), and after EscapeDelay goes for it: a passenger
     //   runs (target velocity = van point velocity + EscapeSpeed toward the doorway, one EscapeHop up), a lying Groggy body
     //   crawls (GreyboxNpc.CrawlToward, EscapeCrawlForce). Out past the doorway: above EscapeTumbleKmh it is Down again on
-    //   the road (fist to the torso, Condition - EscapeConditionCost); slower, a passenger is Free and flees, a Groggy body
-    //   is simply out (it wakes up where it lies). No progress for EscapeGiveUp seconds or the door closing: back to sitting
+    //   the road (fist to the torso, Condition - EscapeConditionCost); slower, a passenger hops down out of the door and
+    //   flees (stage 9 step 4: GreyboxNpc.JumpOut, it used to appear on the ground at once), a Groggy body is simply out
+    //   (it wakes up where it lies). No progress for EscapeGiveUp seconds or the door closing: back to sitting
     //   with a startled flash, and it tries again after EscapeRetry if the door stays open. Out (eyes shut) bodies stay put.
+    //   Stage 9 step 5: a runner not yet in front of the sliding door's opening first runs to a point inside the bay in
+    //   front of it (RunGoal), then out; its progress counts that detour (r18: from the rear edge of the opening it ran
+    //   straight at its middle and stuck on the side wall behind the doorway, which juts 0.1 m into the bay up high).
     // - Ejection: the van on its side or roof for EjectAfterFlip seconds, or in the sea: everyone in the bay is put outside
     //   (bodies placed, passengers stand up and run, a riding player via GreyboxPawn.Teleport). In the sea this waits for
     //   the van's SeaReturnTracker to put the van back on land, so they land next to it rather than in the water. Any other
@@ -92,9 +101,10 @@ namespace OnlyVolunteers.Map
                  "VanController.ResetCount) always count, however short.")]
         public float TeleportJump = 3f;
 
-        // Below this relative speed (m/s, squared) no matching force is applied, so bodies in a parked van can sleep
-        // (any non-zero AddForce wakes a body, and a body touching the van keeps the van's island awake too).
-        private const float SettledSpeedSqr = 0.05f * 0.05f;
+        // Below this relative speed (m/s) no matching force is applied, so bodies in a parked van can sleep (any non-zero
+        // AddForce wakes a body, and a body touching the van keeps the van's island awake too).
+        private const float SettledSpeed = 0.05f;
+        private const float SettledSpeedSqr = SettledSpeed * SettledSpeed;
 
         // Door 0 = sliding door, 1 = rear pair. Van-local points outside: where the pawn stands to use the door, and where
         // ejected passengers land.
@@ -103,6 +113,11 @@ namespace OnlyVolunteers.Map
         // plane's outward normal, van-local.
         private static readonly Vector3[] Doorway = { new(0.94f, 0.55f, -0.25f), new(0f, 0.55f, -2.21f) };
         private static readonly Vector3[] DoorwayNormal = { Vector3.right, Vector3.back };
+        // Stage 9 step 5 (r18): the sliding door's opening along the van (van-local z: the side wall's front edge behind it,
+        // the partition before it) and that side wall's inner face (x): above 1.30 m it juts 0.1 m into the bay
+        // (VanSetupBuilder RightWallHigh), where a sitter's 1 m capsule catches it with its shoulders.
+        private const float SlideOpenRear = -0.92f, SlideOpenFront = 0.42f, SlideWallInner = 0.80f;
+        private const float LineupMargin = 0.04f, LineupTolerance = 0.03f;
         // Inside handle of the sliding door, van-local.
         private static readonly Vector3 HandlePoint = new(0.8f, 1.0f, -0.25f);
         private static readonly string[] DoorNames = { "сдвижную дверь", "задние двери" };
@@ -119,6 +134,7 @@ namespace OnlyVolunteers.Map
             public float Best;      // escape: nearest it got to the doorway (m)
             public float ProgressAt;
             public float RetryAt;
+            public float RunFrom;   // escape: the run starts (step 5: after the Escape_Scramble_Start clip)
         }
 
         private VanController _van;
@@ -135,6 +151,7 @@ namespace OnlyVolunteers.Map
         private Vector3 _lastVanPos;
         private Quaternion _lastVanRot;
         private int _lastResetCount;
+        private Func<Vector3, Vector3> _frameVelocity; // the bay's PointVelocity, made once (no allocation per tick)
 
         public float SpeedKmh => _van != null ? _van.SpeedKmh : 0f;
         public Vector3 VanVelocity => _vanBody != null ? _vanBody.linearVelocity : Vector3.zero;
@@ -253,6 +270,36 @@ namespace OnlyVolunteers.Map
         // World point a metre out through the doorway: runners and crawlers aim there, so they always head out.
         private Vector3 EscapeGoal(int door) => _space.ToWorld(DoorwayLocal(door) + DoorwayNormal[door]);
 
+        // Stage 9 step 5 (r18): where a running passenger (the seated capsule, 'radius') heads. Through the sliding door it
+        // first lines up: while its capsule is not in front of the opening (it would catch the side wall beside it), a point
+        // inside the bay in front of the opening, at most as far out as the wall's inner face allows; then out (EscapeGoal).
+        // A sitter at the rear edge of the opening used to run straight at its middle and stick on the wall behind it. The
+        // rear doors are 1.6 m wide: straight out as before. lined: heading out now.
+        private Vector3 RunGoal(int door, Vector3 com, float radius, out bool lined)
+        {
+            lined = true;
+            if (door != SlideDoor) return EscapeGoal(door);
+            Vector3 local = _space.ToLocal(com);
+            float low = SlideOpenRear + radius + LineupMargin, high = SlideOpenFront - radius - LineupMargin;
+            float z = low <= high ? Mathf.Clamp(local.z, low, high) : (low + high) * 0.5f;
+            if (Mathf.Abs(local.z - z) <= LineupTolerance) return EscapeGoal(door);
+            lined = false;
+            float x = Mathf.Min(local.x, SlideWallInner - radius - LineupMargin);
+            return _space.ToWorld(new Vector3(x, Doorway[door].y, z));
+        }
+
+        // Metres a runner still has to go (its progress measure): to the doorway plane, plus the detour by the lineup point
+        // while it is not lined up. Crawlers (radius < 0) measure the doorway plane alone, as before.
+        private float LeftToGo(int door, Vector3 com, float radius)
+        {
+            if (radius < 0f) return ToDoorway(door, com);
+            Vector3 goal = RunGoal(door, com, radius, out bool lined);
+            if (lined) return ToDoorway(door, com);
+            Vector3 d = _space.ToLocal(goal) - _space.ToLocal(com);
+            d.y = 0f;
+            return d.magnitude + ToDoorway(door, goal);
+        }
+
         // The open door (past EscapeOpenness) nearest to a point, or -1.
         private int OpenDoorNear(Vector3 world)
         {
@@ -279,12 +326,13 @@ namespace OnlyVolunteers.Map
             float dt = Time.fixedDeltaTime;
             float now = Time.time;
             if (CheckMovedOrEjected(dt, now)) return;
+            _frameVelocity ??= _space.PointVelocity;
 
             _seen.Clear();
             foreach (GreyboxNpc npc in GreyboxNpc.All)
             {
                 if (npc == null || !npc.isActiveAndEnabled) continue;
-                GreyboxNpcBody body = npc.Body;
+                INpcBody body = npc.PhysicalBody;
                 if (body == null || !body.Active) continue;
                 bool ours = Ours(npc);
                 if (npc.InCargo && !ours) continue; // another van's
@@ -295,7 +343,7 @@ namespace OnlyVolunteers.Map
                         break;
                     case NpcState.CargoSeated:
                     case NpcState.Escaping:
-                        if (ours) TickPassenger(npc, body, dt, now);
+                        if (ours && npc.Body != null && npc.Body.Active) TickPassenger(npc, npc.Body, dt, now);
                         break;
                 }
             }
@@ -304,44 +352,44 @@ namespace OnlyVolunteers.Map
 
         private bool Ours(GreyboxNpc npc) => npc.InCargo && ReferenceEquals(npc.Carrier, _space);
 
-        // A downed body: loading it, unloading it, damping it, and a Groggy one crawling for an open door.
-        private void TickDown(GreyboxNpc npc, GreyboxNpcBody body, bool ours, float dt, float now)
+        // A downed body (the capsule or the ragdoll): loading it, unloading it, damping it, and a Groggy one crawling for
+        // an open door.
+        private void TickDown(GreyboxNpc npc, INpcBody body, bool ours, float dt, float now)
         {
-            Rigidbody rb = body.Rigidbody;
-            Vector3 com = rb.worldCenterOfMass;
-            Vector3 pelvis = body.PointWorld((int)GreyboxNpcBody.Point.Pelvis);
-            Vector3 collar = body.PointWorld((int)GreyboxNpcBody.Point.Collar);
-            Vector3 relative = rb.linearVelocity - _space.PointVelocity(com);
+            Rigidbody main = body.MainBody;
+            if (main == null) return;
+            Vector3 com = body.CenterOfMass;
+            Vector3 pelvis = body.Landmark(NpcLandmark.Pelvis);
+            Vector3 collar = body.Landmark(NpcLandmark.Collar);
             if (!ours)
             {
                 if (!_space.Contains(pelvis) || !_space.Contains(collar)) return; // not in the bay: not ours to track
-                Tracked loading = Track(npc, rb);
-                bool resting = _space.Upright && body.HolderCount == 0 && relative.magnitude < LoadRestSpeed;
+                Tracked loading = Track(npc, main.rotation);
+                bool resting = _space.Upright && body.HolderCount == 0 && body.MaxRelativeSpeed(_frameVelocity) < LoadRestSpeed;
                 loading.RestFor = resting ? loading.RestFor + dt : 0f;
                 if (loading.RestFor >= LoadHold) Load(npc, com, loading);
                 return;
             }
 
-            Tracked t = Track(npc, rb);
+            Tracked t = Track(npc, main.rotation);
             if (!_space.Contains(pelvis, UnloadMargin) || !_space.Contains(collar, UnloadMargin))
             {
                 // Out of the bay: a crawler on its way out gets the escape rules (the tumble at speed); a body that just
                 // slid out (braking with the door open) is simply no longer loaded, physics does the rest.
-                if (t.Running) GetOut(npc, rb, com);
+                if (t.Running) GetOut(npc, main.linearVelocity, com, Outward(t.Door, com));
                 else Unload(npc);
                 return;
             }
             if (npc.Phase == StunPhase.Groggy && body.HolderCount == 0)
             {
-                if (TickEscape(npc, body, t, com, now) && t.Running && KeepGoing(npc, rb, t, com, now))
+                if (TickEscape(npc, t, com, now) && t.Running && KeepGoing(npc, main.linearVelocity, t, com, now, -1f))
                     npc.CrawlGoal = EscapeGoal(t.Door);
             }
             else if (t.Door >= 0)
             {
                 StopEscape(npc, t, now); // held, or knocked Out again
             }
-            if (body.HolderCount == 0 && !t.Running && relative.sqrMagnitude > SettledSpeedSqr)
-                rb.AddForce(-relative * (rb.mass * LoadedDamping));
+            if (body.HolderCount == 0 && !t.Running) body.DampToward(_frameVelocity, LoadedDamping, SettledSpeed);
         }
 
         private void Load(GreyboxNpc npc, Vector3 at, Tracked t)
@@ -359,12 +407,12 @@ namespace OnlyVolunteers.Map
             npc.Carrier = null;
         }
 
-        // A sitting or escaping NPC.
+        // A sitting or escaping NPC (always the capsule).
         private void TickPassenger(GreyboxNpc npc, GreyboxNpcBody body, float dt, float now)
         {
             Rigidbody rb = body.Rigidbody;
             Vector3 com = rb.worldCenterOfMass;
-            Tracked t = Track(npc, rb);
+            Tracked t = Track(npc, rb.rotation);
             Vector3 vanVelocity = _space.PointVelocity(com);
             if (npc.State == NpcState.Escaping)
             {
@@ -384,17 +432,17 @@ namespace OnlyVolunteers.Map
             // Thrown out of the bay while sitting (braking with the door open, a shove): out, by the same rules.
             if (!_space.Contains(com, 0.3f))
             {
-                GetOut(npc, rb, com);
+                GetOut(npc, rb.linearVelocity, com, Outward(-1, com));
                 return;
             }
             Vector3 lag = vanVelocity - rb.linearVelocity;
             if (lag.sqrMagnitude > SettledSpeedSqr) rb.AddForce(lag * (rb.mass * SeatedMatching));
-            TickEscape(npc, body, t, com, now);
+            TickEscape(npc, t, com, now);
             Turn(rb, t, dt);
         }
 
         // Noticing an open door, the warning, and the start of the run. True while an escape is on (warning or running).
-        private bool TickEscape(GreyboxNpc npc, GreyboxNpcBody body, Tracked t, Vector3 com, float now)
+        private bool TickEscape(GreyboxNpc npc, Tracked t, Vector3 com, float now)
         {
             if (t.Door < 0)
             {
@@ -417,13 +465,19 @@ namespace OnlyVolunteers.Map
             t.TargetYaw = VanYaw(goal - com);
             if (now < t.GoAt) return true;
             t.Running = true;
-            t.Best = ToDoorway(t.Door, com);
+            t.Best = LeftToGo(t.Door, com, RunnerRadius(npc));
             t.ProgressAt = now;
+            t.RunFrom = now;
             if (npc.State == NpcState.CargoSeated)
             {
+                // Step 5: with the Escape_Scramble_Start clip it first springs onto hands and knees where it sits.
+                float start = npc.EscapeStartSeconds;
+                t.RunFrom = now + start;
+                t.ProgressAt = now + start;
                 npc.BeginEscape();
                 t.State = npc.State;
-                body.Rigidbody.AddForce(_space.Rotation * Vector3.up * EscapeHop, ForceMode.VelocityChange);
+                if (npc.Body != null && npc.Body.Rigidbody != null)
+                    npc.Body.Rigidbody.AddForce(_space.Rotation * Vector3.up * EscapeHop, ForceMode.VelocityChange);
             }
             else
             {
@@ -441,9 +495,19 @@ namespace OnlyVolunteers.Map
                 StopEscape(npc, t, now);
                 return;
             }
-            if (!KeepGoing(npc, rb, t, com, now)) return;
+            float radius = RunnerRadius(npc);
+            if (!KeepGoing(npc, rb.linearVelocity, t, com, now, radius)) return;
             Vector3 up = _space.Rotation * Vector3.up;
-            Vector3 toward = Vector3.ProjectOnPlane(EscapeGoal(t.Door) - com, up);
+            if (now < t.RunFrom)
+            {
+                // Step 5: the Escape_Scramble_Start clip plays in place first: it stays with the van, turned to its goal.
+                Vector3 lag = vanVelocity - rb.linearVelocity;
+                if (lag.sqrMagnitude > SettledSpeedSqr) rb.AddForce(lag * (rb.mass * SeatedMatching));
+                t.TargetYaw = VanYaw(Vector3.ProjectOnPlane(RunGoal(t.Door, com, radius, out _) - com, up));
+                return;
+            }
+            // Step 5 (r18): in front of the opening first (RunGoal), then out.
+            Vector3 toward = Vector3.ProjectOnPlane(RunGoal(t.Door, com, radius, out _) - com, up);
             if (toward.sqrMagnitude < 1e-4f) toward = _space.Rotation * DoorwayNormal[t.Door];
             Vector3 desired = vanVelocity + toward.normalized * EscapeSpeed;
             rb.AddForce(Vector3.ProjectOnPlane(desired - rb.linearVelocity, up) * (rb.mass * EscapeAccel));
@@ -451,14 +515,25 @@ namespace OnlyVolunteers.Map
         }
 
         // While running or crawling: past the doorway -> out; no progress for EscapeGiveUp -> gives up. True = keep going.
-        private bool KeepGoing(GreyboxNpc npc, Rigidbody rb, Tracked t, Vector3 com, float now)
+        // radius: the runner's capsule (progress counts the lineup detour, LeftToGo), < 0 for a crawler.
+        private bool KeepGoing(GreyboxNpc npc, Vector3 velocity, Tracked t, Vector3 com, float now, float radius)
         {
-            float left = ToDoorway(t.Door, com);
-            if (left < -EscapePast)
+            float toDoorway = ToDoorway(t.Door, com);
+            // Step 5: with the Cargo_JumpOut clip a runner leaving a slow van hands over to it already inside the doorway
+            // (the clip crawls to the sill itself, HopLead), once it is lined up in front of the opening.
+            float lead = radius >= 0f ? npc.HopLead : 0f;
+            bool hop = lead > 0f && toDoorway < lead && _space.PointVelocity(com).magnitude * 3.6f <= EscapeTumbleKmh;
+            if (hop)
             {
-                GetOut(npc, rb, com);
+                RunGoal(t.Door, com, radius, out bool lined);
+                hop = lined;
+            }
+            if (toDoorway < -EscapePast || hop)
+            {
+                GetOut(npc, velocity, com, Outward(t.Door, com));
                 return false;
             }
+            float left = LeftToGo(t.Door, com, radius);
             if (left < t.Best - 0.05f)
             {
                 t.Best = left;
@@ -472,15 +547,16 @@ namespace OnlyVolunteers.Map
             return true;
         }
 
-        // Out of the van: tumbles at speed (stunned again, costs Condition); slower, a passenger lands and flees, a Groggy
-        // body is just out of the bay.
-        private void GetOut(GreyboxNpc npc, Rigidbody rb, Vector3 com)
+        // Out of the van: tumbles at speed (stunned again, costs Condition; with F10 on the ragdoll it tumbles as one);
+        // slower, a passenger hops down along 'outward' and flees (stage 9 step 4, GreyboxNpc.JumpOut), a Groggy body is
+        // just out of the bay. velocity: the NPC's own.
+        private void GetOut(GreyboxNpc npc, Vector3 velocity, Vector3 com, Vector3 outward)
         {
             Forget(npc);
             if (_space.PointVelocity(com).magnitude * 3.6f > EscapeTumbleKmh)
             {
                 npc.Condition = Mathf.Max(0f, npc.Condition - EscapeConditionCost);
-                npc.LeaveCargo(true, rb.linearVelocity);
+                npc.LeaveCargo(true, velocity);
                 return;
             }
             if (npc.State == NpcState.Down)
@@ -489,7 +565,20 @@ namespace OnlyVolunteers.Map
                 npc.Carrier = null;
                 return;
             }
-            npc.LeaveCargo(false, Vector3.zero);
+            npc.JumpOut(outward);
+        }
+
+        // A passenger runs on its seated capsule (its radius); a lying Groggy body crawls (-1).
+        private static float RunnerRadius(GreyboxNpc npc) =>
+            npc.State == NpcState.Down || npc.Body == null || !npc.Body.Active ? -1f : npc.Body.Radius;
+
+        // Which way out (world, flat): through the door it went for, else away from the middle of the bay.
+        private Vector3 Outward(int door, Vector3 com)
+        {
+            Vector3 d = door >= 0 && door < DoorwayNormal.Length
+                ? _space.Rotation * DoorwayNormal[door]
+                : com - _space.ToWorld(_space.LocalBox.center);
+            return Flat(d);
         }
 
         // Escape off (door shut, no way through, held): back to sitting with a flash; may try again after EscapeRetry.
@@ -521,7 +610,8 @@ namespace OnlyVolunteers.Map
 
         // ---------- Bookkeeping ----------
 
-        private Tracked Track(GreyboxNpc npc, Rigidbody rb)
+        // rotation: the body's (the capsule's, the ragdoll's pelvis): a sitter's facing starts from it.
+        private Tracked Track(GreyboxNpc npc, Quaternion rotation)
         {
             _seen.Add(npc);
             if (_tracked.TryGetValue(npc, out Tracked t) && t.State == npc.State) return t;
@@ -536,7 +626,7 @@ namespace OnlyVolunteers.Map
             t.RestFor = 0f;
             t.Door = -1;
             t.Running = false;
-            t.Yaw = t.TargetYaw = VanYaw(rb.rotation * Vector3.forward);
+            t.Yaw = t.TargetYaw = VanYaw(rotation * Vector3.forward);
             if (npc.State == NpcState.Escaping)
             {
                 npc.CancelEscape(); // an escape nobody here started
@@ -620,21 +710,16 @@ namespace OnlyVolunteers.Map
             return false;
         }
 
-        // The van jumped (teleport): move the loaded NPCs and a riding player by the same move.
+        // The van jumped (teleport): move the loaded NPCs (every body of a ragdoll) and a riding player by the same move.
         private void CarryAlong(Vector3 fromPos, Quaternion fromRot, Vector3 toPos, Quaternion toRot)
         {
             Quaternion turn = toRot * Quaternion.Inverse(fromRot);
             foreach (GreyboxNpc npc in GreyboxNpc.All)
             {
-                if (npc == null || !Ours(npc) || npc.Body == null || !npc.Body.Active) continue;
-                Rigidbody rb = npc.Body.Rigidbody;
-                Vector3 p = toPos + turn * (rb.position - fromPos);
-                Quaternion r = turn * rb.rotation;
-                rb.position = p;
-                rb.rotation = r;
-                npc.transform.SetPositionAndRotation(p, r);
-                rb.linearVelocity = _vanBody.linearVelocity;
-                rb.angularVelocity = Vector3.zero;
+                if (npc == null || !Ours(npc)) continue;
+                INpcBody body = npc.PhysicalBody;
+                if (body == null || !body.Active) continue;
+                body.MoveRigid(fromPos, fromRot, toPos, toRot, _vanBody.linearVelocity);
             }
             if (RidingPawn() is GreyboxPawn pawn)
                 pawn.Teleport(toPos + turn * (pawn.Position - fromPos), pawn.Body.eulerAngles.y + turn.eulerAngles.y);
@@ -652,11 +737,13 @@ namespace OnlyVolunteers.Map
             int slot = 0;
             foreach (GreyboxNpc npc in GreyboxNpc.All)
             {
-                if (npc == null || npc.Body == null || !npc.Body.Active) continue;
+                if (npc == null) continue;
+                INpcBody body = npc.PhysicalBody;
+                if (body == null || !body.Active) continue;
                 bool inside = Ours(npc) || (!npc.InCargo && npc.State == NpcState.Down && _space.Contains(npc.Center));
                 if (!inside) continue;
                 Vector3 p = GroundBelow(_space.ToWorld(basePoint + along * (0.8f * Spread(slot++))));
-                Place(npc, p, flatForward);
+                Place(npc, body, p, flatForward);
             }
             if (RidingPawn() is GreyboxPawn pawn)
             {
@@ -668,28 +755,21 @@ namespace OnlyVolunteers.Map
         // 0, +1, -1, +2, -2, ...
         private static float Spread(int i) => i == 0 ? 0f : ((i + 1) / 2) * (i % 2 == 1 ? 1f : -1f);
 
-        private void Place(GreyboxNpc npc, Vector3 ground, Vector3 flatForward)
+        private void Place(GreyboxNpc npc, INpcBody body, Vector3 ground, Vector3 flatForward)
         {
             Forget(npc);
-            GreyboxNpcBody body = npc.Body;
-            Rigidbody rb = body.Rigidbody;
             if (npc.State == NpcState.Down)
             {
-                // Lying along the van, centre one radius above the ground.
-                Quaternion r = Quaternion.FromToRotation(Vector3.up, flatForward);
-                Vector3 root = ground + Vector3.up * (body.Radius + 0.05f) - flatForward * (body.Height * 0.5f);
-                rb.position = root;
-                rb.rotation = r;
-                npc.transform.SetPositionAndRotation(root, r);
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
+                // Lying along the van (the capsule's middle, the ragdoll's pelvis over the spot), at rest.
+                body.PlaceLying(ground, flatForward);
                 npc.InCargo = false;
                 npc.Carrier = null;
                 return;
             }
-            // Sitting or escaping: put the body there, then it gets up (StandUp finds the ground under it) and runs.
+            // Sitting or escaping (the capsule): put the body there, then it gets up (StandUp finds the ground under it)
+            // and runs.
             Vector3 seat = ground + Vector3.up * 0.05f;
-            rb.position = seat;
+            if (npc.Body != null && npc.Body.Rigidbody != null) npc.Body.Rigidbody.position = seat;
             npc.transform.position = seat;
             npc.LeaveCargo(false, Vector3.zero);
         }
