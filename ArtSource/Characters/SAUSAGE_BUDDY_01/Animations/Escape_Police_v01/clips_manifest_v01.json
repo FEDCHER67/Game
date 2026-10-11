@@ -1,0 +1,500 @@
+{
+  "package": "Escape_Police_v01",
+  "rig": "Buddy_Rig_Mixamo65 (65 bones, root mixamorig:Hips), A v04 bind (Idle_Knock_v03/rig_Buddy_Mixamo65_A_v04.json)",
+  "conventions": "30 fps, metres, +Z up (Blender) / Y up (FBX), faces -Y in Blender = +Z forward in Unity, in place unless noted; half-frame linear keys",
+  "unity_import": "Generic, Copy From Other Avatar = A v04 avatar, Preserve Hierarchy on, Anim. Compression Off, Resample Curves on; Loop Time on for loops (full take incl. the duplicated last frame), Loop Pose off",
+  "clips": [
+    {
+      "clip": "Escape_Scramble_Start",
+      "file": "Escape_Scramble_Start_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Escape_Scramble_Start_v01",
+      "frames": [
+        1,
+        25
+      ],
+      "fps": 30,
+      "duration_s": 0.8,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "provisional cargo sit pose (hips (-0.30, 0, 0.117), facing +X, back to the wall x = -0.65); swap in Cargo_Sit_Idle_v04 frame 1 when it exists",
+      "end": "Escape_Scramble frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        -0.3,
+        0.0,
+        0.117
+      ],
+      "hips_last": [
+        -0.0094,
+        0.0,
+        0.3219
+      ],
+      "use": "Cargo sub-machine: CargoSeated -> Escaping (door opens)",
+      "action_digest": "06bc54bab1855a8f",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Escape_Scramble",
+      "file": "Escape_Scramble_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Escape_Scramble_v01",
+      "frames": [
+        1,
+        16
+      ],
+      "fps": 30,
+      "duration_s": 0.5,
+      "loop": true,
+      "events_s": {},
+      "events_frame": {},
+      "start": "own frame 1 (left palm touchdown)",
+      "end": "frame 1 (exact seam)",
+      "ground": "in place on the van floor; floor rides +Y at 1.20 m/s",
+      "hips_first": [
+        -0.0094,
+        0.0,
+        0.3219
+      ],
+      "hips_last": [
+        -0.0094,
+        0.0,
+        0.3219
+      ],
+      "use": "Escaping loop (capsule runs for the door at 1.2 m/s)",
+      "action_digest": "ee3c3dd3fb42b6bc",
+      "validation": "20/20"
+    },
+    {
+      "clip": "JumpOut",
+      "file": "JumpOut_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|JumpOut_v01",
+      "frames": [
+        1,
+        35
+      ],
+      "fps": 30,
+      "duration_s": 1.1333,
+      "loop": false,
+      "events_s": {
+        "Land": 0.5667
+      },
+      "events_frame": {
+        "Land": 18.0
+      },
+      "start": "Escape_Scramble frame 1 raised by the van floor height (+0.55 m), exact",
+      "end": "Flee_Run frame 1 (exact)",
+      "ground": "in place; ground +Y: 1.2 m/s on the van floor until take-off (0.35 s), ramps in the air to 3.2 m/s within 0.1 s, then Flee_Run speed. Root = street level below the door; the van floor is +0.55 m",
+      "hips_first": [
+        -0.0094,
+        0.0,
+        0.8719
+      ],
+      "hips_last": [
+        -0.0113,
+        0.0,
+        0.725
+      ],
+      "use": "trigger JumpOut (below 12 km/h); hands over to Flee_Run / the existing flee run",
+      "action_digest": "f87cd3fe404d950a",
+      "validation": "19/20"
+    },
+    {
+      "clip": "Flee_Run",
+      "file": "Flee_Run_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Flee_Run_v01",
+      "frames": [
+        1,
+        18
+      ],
+      "fps": 30,
+      "duration_s": 0.5667,
+      "loop": true,
+      "events_s": {},
+      "events_frame": {},
+      "start": "own frame 1 (left heel touchdown)",
+      "end": "frame 1 (exact seam)",
+      "ground": "in place; ground +Y at 3.20 m/s (play at speed / 3.20)",
+      "hips_first": [
+        -0.0113,
+        0.0,
+        0.725
+      ],
+      "hips_last": [
+        -0.0113,
+        0.0,
+        0.725
+      ],
+      "use": "bonus: civilian panic run that JumpOut lands into",
+      "action_digest": "ddea2700a12d36e2",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Struggle_Carried",
+      "file": "Struggle_Carried_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Struggle_Carried_v01",
+      "frames": [
+        1,
+        49
+      ],
+      "fps": 30,
+      "duration_s": 1.6,
+      "loop": true,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact; additive reference pose)",
+      "end": "frame 1 (exact seam)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "additive layer while Carried (reference pose = frame 1 = Idle)",
+      "action_digest": "2790d9cf43e25a12",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Hit_React_Front",
+      "file": "Hit_React_Front_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Hit_React_Front_v01",
+      "frames": [
+        1,
+        25
+      ],
+      "fps": 30,
+      "duration_s": 0.8,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact)",
+      "end": "Idle frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "hit from the front (short, from/to Idle)",
+      "action_digest": "e21d902a52a64c83",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Hit_React_Back",
+      "file": "Hit_React_Back_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Hit_React_Back_v01",
+      "frames": [
+        1,
+        24
+      ],
+      "fps": 30,
+      "duration_s": 0.7667,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact)",
+      "end": "Idle frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "hit from behind",
+      "action_digest": "3d652b12974c43c2",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Hit_React_Head",
+      "file": "Hit_React_Head_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Hit_React_Head_v01",
+      "frames": [
+        1,
+        28
+      ],
+      "fps": 30,
+      "duration_s": 0.9,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact)",
+      "end": "Idle frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "hit on the head",
+      "action_digest": "85944d94d6556f36",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Stagger",
+      "file": "Stagger_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Stagger_v01",
+      "frames": [
+        1,
+        43
+      ],
+      "fps": 30,
+      "duration_s": 1.4,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact)",
+      "end": "Idle frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "dazed stagger (no ragdoll)",
+      "action_digest": "74bfc1f4945916e1",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_Run",
+      "file": "Cop_Run_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_Run_v01",
+      "frames": [
+        1,
+        19
+      ],
+      "fps": 30,
+      "duration_s": 0.6,
+      "loop": true,
+      "events_s": {},
+      "events_frame": {},
+      "start": "own frame 1 (left heel touchdown)",
+      "end": "frame 1 (exact seam)",
+      "ground": "in place; ground +Y at 3.00 m/s (play at speed / 3.00)",
+      "hips_first": [
+        -0.0102,
+        0.0,
+        0.712
+      ],
+      "hips_last": [
+        -0.0102,
+        0.0,
+        0.712
+      ],
+      "use": "police run, Speed blend tree",
+      "action_digest": "686acc11e530bf1d",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_Run_Fat",
+      "file": "Cop_Run_Fat_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_Run_Fat_v01",
+      "frames": [
+        1,
+        18
+      ],
+      "fps": 30,
+      "duration_s": 0.5667,
+      "loop": true,
+      "events_s": {},
+      "events_frame": {},
+      "start": "own frame 1 (left heel touchdown)",
+      "end": "frame 1 (exact seam)",
+      "ground": "in place; ground +Y at 1.80 m/s (play at speed / 1.80)",
+      "hips_first": [
+        -0.0282,
+        0.0,
+        0.715
+      ],
+      "hips_last": [
+        -0.0282,
+        0.0,
+        0.715
+      ],
+      "use": "fat officer run variant",
+      "action_digest": "13c24d50cc69f958",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_Punch",
+      "file": "Cop_Punch_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_Punch_v01",
+      "frames": [
+        1,
+        31
+      ],
+      "fps": 30,
+      "duration_s": 1.0,
+      "loop": false,
+      "events_s": {
+        "Hit": 0.45
+      },
+      "events_frame": {
+        "Hit": 14.5
+      },
+      "start": "Idle frame 1 (exact)",
+      "end": "Idle frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "trigger Beat; event Hit at 0.45 s = end of the 0.45 s telegraph",
+      "action_digest": "36e9a1b457dc15fe",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_Aim_Raise",
+      "file": "Cop_Aim_Raise_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_Aim_Raise_v01",
+      "frames": [
+        1,
+        16
+      ],
+      "fps": 30,
+      "duration_s": 0.5,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact)",
+      "end": "Cop_Aim frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.01,
+        0.7859
+      ],
+      "use": "Aim entry (UpperBody layer)",
+      "action_digest": "37eda132e14f49fb",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_Aim",
+      "file": "Cop_Aim_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_Aim_v01",
+      "frames": [
+        1,
+        61
+      ],
+      "fps": 30,
+      "duration_s": 2.0,
+      "loop": true,
+      "events_s": {},
+      "events_frame": {},
+      "start": "aim hold pose (= Cop_Aim_Raise last frame)",
+      "end": "frame 1 (exact seam)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.01,
+        0.7859
+      ],
+      "hips_last": [
+        0.0,
+        0.01,
+        0.7859
+      ],
+      "use": "Aim hold loop (UpperBody layer)",
+      "action_digest": "9f995b01ea957dc9",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_Trip",
+      "file": "Cop_Trip_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_Trip_v01",
+      "frames": [
+        1,
+        23
+      ],
+      "fps": 30,
+      "duration_s": 0.7333,
+      "loop": false,
+      "events_s": {
+        "Ragdoll": 0.7333
+      },
+      "events_frame": {
+        "Ragdoll": 23.0
+      },
+      "start": "Cop_Run frame 1 (exact)",
+      "end": "ragdoll hand-off pose (diving, airborne except the left toe)",
+      "ground": "in place; ground +Y at 3.00 m/s (same as Cop_Run); hips advance 0.36 m in the dive",
+      "hips_first": [
+        -0.0102,
+        0.0,
+        0.712
+      ],
+      "hips_last": [
+        0.0,
+        -0.36,
+        0.44
+      ],
+      "use": "police trip (4 %/s while running): play, then NpcRagdoll.Stumble at the end",
+      "action_digest": "593a1cb53d19305e",
+      "validation": "20/20"
+    },
+    {
+      "clip": "Cop_ShakeFist",
+      "file": "Cop_ShakeFist_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Cop_ShakeFist_v01",
+      "frames": [
+        1,
+        67
+      ],
+      "fps": 30,
+      "duration_s": 2.2,
+      "loop": false,
+      "events_s": {},
+      "events_frame": {},
+      "start": "Idle frame 1 (exact)",
+      "end": "Idle frame 1 (exact)",
+      "ground": "none (in place, static floor)",
+      "hips_first": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "hips_last": [
+        0.0,
+        0.0,
+        0.8211
+      ],
+      "use": "officer reacts to the van escaping",
+      "action_digest": "41e99579148b5f83",
+      "validation": "20/20"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "clip": "Cop_Punch_v01",
+  "action": "Cop_Punch_v01",
+  "frames": [
+    1,
+    31
+  ],
+  "fps": 30,
+  "duration_s": 1.0,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "Idle frame 1 (exact)",
+  "end_contract": "Idle frame 1 (exact)",
+  "events": {
+    "Hit": 0.45
+  },
+  "ground_speed": "none (in place, static floor)",
+  "beats": [
+    "0.00-0.08 small dip, fists clench",
+    "0.08-0.30 big telegraphed wind-up: body twists 30 deg to his right and leans back, right fist cocked by the ear, left arm points at the target",
+    "0.30-0.345 straining hold (quiver)",
+    "0.345-0.45 the punch snaps out at constant speed, body unwinds, hips lunge forward 5.5 cm",
+    "0.45 HIT (full extension, frame 14.5)",
+    "0.45-0.64 follow-through overshoot and hold",
+    "0.64-1.00 recover into Idle frame 1"
+  ],
+  "max_leg_ik_overreach_m": 1.5048148283014484e-09,
+  "max_arm_ik_overreach_m": 0.0,
+  "hips_first": [
+    0.0,
+    0.0,
+    0.8210592269897461
+  ],
+  "hips_last": [
+    0.0,
+    0.0,
+    0.8210592269897461
+  ]
+}
