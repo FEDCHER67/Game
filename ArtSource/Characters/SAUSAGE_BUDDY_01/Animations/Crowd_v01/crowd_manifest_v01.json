@@ -1,0 +1,378 @@
+{
+  "package": "Crowd_v01",
+  "fps": 30,
+  "rig": "Buddy_Rig_Mixamo65 (65 bones, root mixamorig:Hips)",
+  "contracts": {
+    "smoke": "SmokeCorner base: weight on the left leg, left forearm across the belly, right hand holds the cigarette at chest height (index+middle straight)",
+    "phone": "PhoneTalk base: right hand (palm) at the right ear, head tilted into it",
+    "lean": "BarDoor base: back/hood against a wall plane 0.36 m behind the root, right sole on the wall, hands in the hoodie pocket",
+    "bench_sit": "BenchSit base: sitting on a seat 0.45 m high, seat front edge 0.10 m behind the root, hands on the thighs, feet on their Idle spots",
+    "beach_lie": "BeachLie base: on the back on a towel behind the root (head toward +Y, hips ~0.4 m behind the root), hands behind the head, left knee up, right ankle crossed over the left knee",
+    "flee_run": "Flee_Panic_Run frame 1 (left forefoot touchdown); loop seam only, no transition contract",
+    "idle": "A v04 Idle frame 1 (exact raw values)"
+  },
+  "placement": {
+    "BenchSit": "seat top 0.45 m; seat front edge 0.10 m behind the root, depth 0.58 m; backrest from 0.70 m behind; the root stays on the floor in front of the bench (feet keep their Idle spots)",
+    "BeachLie": "towel (or sand) at floor level; the body lies behind the root: hips ~0.42 m, head top ~1.3 m behind; needs a free 0.9 x 2.2 m area from 0.45 m in front of the root",
+    "BarDoor": "wall plane 0.36 m behind the root (the hood touches it, the right sole rests on it)",
+    "KioskBuy": "kiosk counter in front: front edge 0.42 m ahead of the root, top 1.0 m (hands reach over it)",
+    "Chat": "two NPCs face each other 1.15 m apart; one plays Chat_Loop, the other Chat_Loop_Mirror at normalized time +0.5",
+    "SmokeCorner / PhoneTalk / ShopQueue / BusWait": "free standing, in place; no props (cigarette/phone implied by the hand)",
+    "Flee_Panic_Run": "in place; ground speed 4.5 m/s"
+  },
+  "clips": {
+    "ShopQueue_Loop": {
+      "file": "ShopQueue_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|ShopQueue_Loop",
+      "frames": [
+        1,
+        181
+      ],
+      "duration_s": 6.0,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "activity": "ShopQueue",
+      "role": "loop",
+      "events": {
+        "Tap": [
+          3.25,
+          3.5833333333333335,
+          3.9166666666666665
+        ]
+      },
+      "unity": ""
+    },
+    "BusWait_Loop": {
+      "file": "BusWait_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BusWait_Loop",
+      "frames": [
+        1,
+        196
+      ],
+      "duration_s": 6.5,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "activity": "BusWait",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "Chat_Loop": {
+      "file": "Chat_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Chat_Loop",
+      "frames": [
+        1,
+        241
+      ],
+      "duration_s": 8.0,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "activity": "Chat",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "KioskBuy": {
+      "file": "KioskBuy_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|KioskBuy",
+      "frames": [
+        1,
+        139
+      ],
+      "duration_s": 4.6,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "activity": "Kiosk",
+      "role": "oneshot",
+      "events": {
+        "Pay": 2.7,
+        "Take": 3.3
+      },
+      "unity": ""
+    },
+    "Chat_Loop_Mirror": {
+      "file": "Chat_Loop_Mirror_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Chat_Loop_Mirror",
+      "frames": [
+        1,
+        241
+      ],
+      "duration_s": 8.0,
+      "loop": true,
+      "start_contract": "idle",
+      "end_contract": "idle",
+      "activity": "Chat",
+      "role": "loop_mirror",
+      "events": {},
+      "unity": ""
+    },
+    "SmokeCorner_Enter": {
+      "file": "SmokeCorner_Enter_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|SmokeCorner_Enter",
+      "frames": [
+        1,
+        58
+      ],
+      "duration_s": 1.9,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "smoke",
+      "activity": "SmokeCorner",
+      "role": "enter",
+      "events": {},
+      "unity": ""
+    },
+    "SmokeCorner_Loop": {
+      "file": "SmokeCorner_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|SmokeCorner_Loop",
+      "frames": [
+        1,
+        181
+      ],
+      "duration_s": 6.0,
+      "loop": true,
+      "start_contract": "smoke",
+      "end_contract": "smoke",
+      "activity": "SmokeCorner",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "SmokeCorner_Exit": {
+      "file": "SmokeCorner_Exit_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|SmokeCorner_Exit",
+      "frames": [
+        1,
+        73
+      ],
+      "duration_s": 2.4,
+      "loop": false,
+      "start_contract": "smoke",
+      "end_contract": "idle",
+      "activity": "SmokeCorner",
+      "role": "exit",
+      "events": {
+        "Flick": 0.55,
+        "Step": 0.98
+      },
+      "unity": ""
+    },
+    "PhoneTalk_Enter": {
+      "file": "PhoneTalk_Enter_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|PhoneTalk_Enter",
+      "frames": [
+        1,
+        40
+      ],
+      "duration_s": 1.3,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "phone",
+      "activity": "PhoneTalk",
+      "role": "enter",
+      "events": {},
+      "unity": ""
+    },
+    "PhoneTalk_Loop": {
+      "file": "PhoneTalk_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|PhoneTalk_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "phone",
+      "end_contract": "phone",
+      "activity": "PhoneTalk",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "PhoneTalk_Exit": {
+      "file": "PhoneTalk_Exit_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|PhoneTalk_Exit",
+      "frames": [
+        1,
+        43
+      ],
+      "duration_s": 1.4,
+      "loop": false,
+      "start_contract": "phone",
+      "end_contract": "idle",
+      "activity": "PhoneTalk",
+      "role": "exit",
+      "events": {},
+      "unity": ""
+    },
+    "BarDoor_Enter": {
+      "file": "BarDoor_Enter_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BarDoor_Enter",
+      "frames": [
+        1,
+        46
+      ],
+      "duration_s": 1.5,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "lean",
+      "activity": "BarDoor",
+      "role": "enter",
+      "events": {},
+      "unity": ""
+    },
+    "BarDoor_Loop": {
+      "file": "BarDoor_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BarDoor_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "lean",
+      "end_contract": "lean",
+      "activity": "BarDoor",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "BarDoor_Exit": {
+      "file": "BarDoor_Exit_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BarDoor_Exit",
+      "frames": [
+        1,
+        40
+      ],
+      "duration_s": 1.3,
+      "loop": false,
+      "start_contract": "lean",
+      "end_contract": "idle",
+      "activity": "BarDoor",
+      "role": "exit",
+      "events": {},
+      "unity": ""
+    },
+    "BenchSit_Enter": {
+      "file": "BenchSit_Enter_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BenchSit_Enter",
+      "frames": [
+        1,
+        61
+      ],
+      "duration_s": 2.0,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "bench_sit",
+      "activity": "BenchSit",
+      "role": "enter",
+      "events": {
+        "Sit": 1.12
+      },
+      "unity": ""
+    },
+    "BenchSit_Loop": {
+      "file": "BenchSit_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BenchSit_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "bench_sit",
+      "end_contract": "bench_sit",
+      "activity": "BenchSit",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "BenchSit_Exit": {
+      "file": "BenchSit_Exit_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BenchSit_Exit",
+      "frames": [
+        1,
+        52
+      ],
+      "duration_s": 1.7,
+      "loop": false,
+      "start_contract": "bench_sit",
+      "end_contract": "idle",
+      "activity": "BenchSit",
+      "role": "exit",
+      "events": {},
+      "unity": ""
+    },
+    "BeachLie_Enter": {
+      "file": "BeachLie_Enter_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BeachLie_Enter",
+      "frames": [
+        1,
+        88
+      ],
+      "duration_s": 2.9,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "beach_lie",
+      "activity": "BeachLie",
+      "role": "enter",
+      "events": {},
+      "unity": ""
+    },
+    "BeachLie_Loop": {
+      "file": "BeachLie_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BeachLie_Loop",
+      "frames": [
+        1,
+        211
+      ],
+      "duration_s": 7.0,
+      "loop": true,
+      "start_contract": "beach_lie",
+      "end_contract": "beach_lie",
+      "activity": "BeachLie",
+      "role": "loop",
+      "events": {},
+      "unity": ""
+    },
+    "BeachLie_Exit": {
+      "file": "BeachLie_Exit_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|BeachLie_Exit",
+      "frames": [
+        1,
+        91
+      ],
+      "duration_s": 3.0,
+      "loop": false,
+      "start_contract": "beach_lie",
+      "end_contract": "idle",
+      "activity": "BeachLie",
+      "role": "exit",
+      "events": {},
+      "unity": ""
+    },
+    "Flee_Panic_Run": {
+      "file": "Flee_Panic_Run_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Flee_Panic_Run",
+      "frames": [
+        1,
+        11
+      ],
+      "duration_s": 0.3333333333333333,
+      "loop": true,
+      "start_contract": "flee_run",
+      "end_contract": "flee_run",
+      "activity": "Flee",
+      "role": "loop",
+      "events": {
+        "FootL": 0.0,
+        "FootR": 0.16666666666666666
+      },
+      "unity": "Loop Time on; authored at 4.5 m/s, play at ground speed / 4.5"
+    }
+  }
+}
