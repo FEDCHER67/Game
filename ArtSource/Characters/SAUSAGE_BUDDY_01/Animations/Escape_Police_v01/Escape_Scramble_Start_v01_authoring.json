@@ -1,0 +1,35 @@
+{
+  "clip": "Escape_Scramble_Start_v01",
+  "action": "Escape_Scramble_Start_v01",
+  "frames": [
+    1,
+    25
+  ],
+  "fps": 30,
+  "duration_s": 0.8,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "provisional cargo sit pose (hips (-0.30, 0, 0.117), facing +X, back to the wall x = -0.65); swap in Cargo_Sit_Idle_v04 frame 1 when it exists",
+  "end_contract": "Escape_Scramble frame 1 (exact)",
+  "events": {},
+  "ground_speed": "none (in place, static floor)",
+  "beats": [
+    "0.00-0.10 the knee hug (sit contract)",
+    "0.10-0.17 SNAP: head whips 58 deg to his right, toward the open doors (-Y); shoulders jolt up",
+    "0.17-0.32 frozen stare, trembling, presses back against the wall",
+    "0.32-0.80 lunges round 90 deg to his right onto hands and knees, body lifts and drops into the crawl",
+    "0.80 = Escape_Scramble frame 1 (the capsule starts moving)"
+  ],
+  "max_leg_ik_overreach_m": 0.0,
+  "max_arm_ik_overreach_m": 0.0,
+  "hips_first": [
+    -0.30000001192092896,
+    0.0,
+    0.11699998378753662
+  ],
+  "hips_last": [
+    -0.009399923495948315,
+    0.0,
+    0.32185178995132446
+  ]
+}

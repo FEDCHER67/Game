@@ -1,0 +1,34 @@
+{
+  "clip": "Cop_Aim_Raise_v01",
+  "action": "Cop_Aim_Raise_v01",
+  "frames": [
+    1,
+    16
+  ],
+  "fps": 30,
+  "duration_s": 0.5,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "Idle frame 1 (exact)",
+  "end_contract": "Cop_Aim frame 1 (exact)",
+  "events": {},
+  "ground_speed": "none (in place, static floor)",
+  "beats": [
+    "0.00-0.06 settle",
+    "0.06-0.30 arms swing up into the grip, knees bend, head drops to the sights",
+    "0.30-0.38 small overshoot (arms 4% past)",
+    "0.38-0.50 settles exactly on Cop_Aim frame 1"
+  ],
+  "max_leg_ik_overreach_m": 1.5048148283014484e-09,
+  "max_arm_ik_overreach_m": 0.0,
+  "hips_first": [
+    0.0,
+    0.0,
+    0.8210592269897461
+  ],
+  "hips_last": [
+    0.0,
+    0.009999999776482582,
+    0.7858555912971497
+  ]
+}

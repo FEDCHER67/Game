@@ -1,0 +1,38 @@
+{
+  "clip": "JumpOut_v01",
+  "action": "JumpOut_v01",
+  "frames": [
+    1,
+    35
+  ],
+  "fps": 30,
+  "duration_s": 1.1333333333333333,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "Escape_Scramble frame 1 raised by the van floor height (+0.55 m), exact",
+  "end_contract": "Flee_Run frame 1 (exact)",
+  "events": {
+    "Land": 0.5666666666666667
+  },
+  "ground_speed": "in place; ground +Y: 1.2 m/s on the van floor until take-off (0.35 s), ramps in the air to 3.2 m/s within 0.1 s, then Flee_Run speed. Root = street level below the door; the van floor is +0.55 m",
+  "beats": [
+    "0.00-0.27 frog hop: from the crawl, hands shove off and both feet snap under him onto the sill",
+    "0.27-0.35 crouched on the edge, arms swing back, peeks down (gulp), pushes off through the toes",
+    "0.35-0.567 steps off and falls: arms fly up and flail, cannonball tuck until the van is behind him, ballistic drop of 0.55 m",
+    "0.567 LAND on the left foot (= a Flee_Run touchdown): squash 9 cm, chest and head fold, arms splay",
+    "0.567-1.02 stumbling forward lean while the legs already run",
+    "1.133 = Flee_Run frame 1"
+  ],
+  "max_leg_ik_overreach_m": 0.0,
+  "max_arm_ik_overreach_m": 0.0,
+  "hips_first": [
+    -0.009399923495948315,
+    0.0,
+    0.8718518018722534
+  ],
+  "hips_last": [
+    -0.011292850598692894,
+    0.0,
+    0.7250000238418579
+  ]
+}

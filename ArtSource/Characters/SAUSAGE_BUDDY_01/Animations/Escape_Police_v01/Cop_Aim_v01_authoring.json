@@ -1,0 +1,34 @@
+{
+  "clip": "Cop_Aim_v01",
+  "action": "Cop_Aim_v01",
+  "frames": [
+    1,
+    61
+  ],
+  "fps": 30,
+  "duration_s": 2.0,
+  "loop": true,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_contract": "aim hold pose (= Cop_Aim_Raise last frame)",
+  "end_contract": "frame 1 (exact seam)",
+  "events": {},
+  "ground_speed": "none (in place, static floor)",
+  "beats": [
+    "two-handed pistol pose (no prop), elbows soft, knees bent, head tilted to sight with one eye",
+    "breathing, a slow aim drift (wrists move together)",
+    "1.0-1.3 nervous re-grip: support hand slides off and back, squint",
+    "2.0 seam = frame 1"
+  ],
+  "max_leg_ik_overreach_m": 0.0,
+  "max_arm_ik_overreach_m": 0.0018298120645172111,
+  "hips_first": [
+    0.0,
+    0.009999999776482582,
+    0.7858555912971497
+  ],
+  "hips_last": [
+    0.0,
+    0.009999999776482582,
+    0.7858555912971497
+  ]
+}
