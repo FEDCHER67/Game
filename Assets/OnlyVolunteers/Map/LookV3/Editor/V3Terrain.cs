@@ -28,6 +28,10 @@ namespace OnlyVolunteers.Map.Look.V3
         };
 
         private static float[,,] lastSplat;
+        private static string[] lastNames;
+        // The splat of the terrain being built (weights [z, x, layer] and layer names) until ReapplySplat (v17 grass reads it).
+        public static float[,,] PendingSplat => lastSplat;
+        public static string[] PendingNames => lastNames;
 
         private static Color V17Ground(string layer, string category)
         {
@@ -81,6 +85,7 @@ namespace OnlyVolunteers.Map.Look.V3
             Trees(d, td, registry, log);
             store.AddAsset(td, $"Terrain_{d.revision}.asset");
             lastSplat = splat;
+            lastNames = names;
 
             GameObject go = Terrain.CreateTerrainGameObject(td);
             go.name = "Terrain";

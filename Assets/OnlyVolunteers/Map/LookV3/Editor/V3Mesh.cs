@@ -263,6 +263,12 @@ namespace OnlyVolunteers.Map.Look.V3
             return tint && pos.Count > 0 ? Compact(mesh) : mesh;
         }
 
+        // Unity's static batching cannot take these compact meshes: the combined mesh it builds on entering Play has every
+        // SNorm8 normal zeroed, the lighting turns NaN and bloom blows the pixels up into big white blobs (v17 glare bug,
+        // 2026-10-12). Only meshes with float normals may be flagged BatchingStatic; the SRP Batcher handles the rest.
+        public static bool StaticBatchSafe(Mesh m) =>
+            m != null && (!m.HasVertexAttribute(VertexAttribute.Normal) || m.GetVertexAttributeFormat(VertexAttribute.Normal) == VertexAttributeFormat.Float32);
+
         // 28-32 bytes a vertex instead of 52: position float x3, normal and tangent snorm8 x4, colour unorm8 x4, UV half x2
         // when every UV fits half precision well (building meshes are local, |uv| < 48 m), else float x2 (world-space roads).
         private static Mesh Compact(Mesh src)

@@ -21,6 +21,15 @@ namespace OnlyVolunteers.Map.Look
     {
         public const float RoadLift = 0.04f, JunctionLift = 0.05f, PaintLift = 0.065f, GroundLift = 0.03f;
 
+        // Optional resampling of road and sidewalk centrelines (null = LookGeom.Resample, every older look). The style v3
+        // v17 build sets a corner-keeping resampler for its own build only (mitred 90-degree corners instead of cut ones).
+        public static Func<float[], float, float[]> LineResampler;
+
+        // Optional junction patch material (null result or hook = the rule below). v17: dirt crossings stay dirt.
+        public static Func<LookData, LookJunction, string> JunctionMaterial;
+
+        private static float[] ResampleLine(float[] pts, float step) => LineResampler != null ? LineResampler(pts, step) : LookGeom.Resample(pts, step, out _);
+
         public static List<LookPiece> Build(LookData d, Func<float, float, float> ground, List<BridgeDeck> decks)
         {
             float Surface(float x, float z) => MapHeightSampler.DeckHeight(decks, x, z, out float h) ? h : ground(x, z);
@@ -124,7 +133,7 @@ namespace OnlyVolunteers.Map.Look
             float[] cum = LookGeom.Cumulative(r.pts);
             float total = cum[cum.Length - 1], s0 = Mathf.Max(0f, r.trim_start), s1 = total - Mathf.Max(0f, r.trim_end);
             if (s1 - s0 < 0.3f) return;
-            float[] line = LookGeom.Resample(LookGeom.SubPolyline(r.pts, cum, s0, s1), 2f, out _);
+            float[] line = ResampleLine(LookGeom.SubPolyline(r.pts, cum, s0, s1), 2f);
             int n = LookGeom.Count(line);
             float hw = r.w / 2f;
             bool chipped = r.surface == "asphalt_worn" || r.surface == "dirt";
@@ -166,6 +175,7 @@ namespace OnlyVolunteers.Map.Look
                     mat = RoadMat(r);
                     if (r.cls == "highway" || r.cls == "town_street") break;
                 }
+            mat = JunctionMaterial?.Invoke(d, j) ?? mat;
             var draft = new MeshDraft();
             Drape(draft, draft.Slot(mat), j.tris, surface, JunctionLift, 3f);
             pieces.Add(new LookPiece { Name = j.id, Category = "road", Draft = draft, Centre = new Vector3(j.x, surface(j.x, j.y), j.y) });
@@ -199,7 +209,7 @@ namespace OnlyVolunteers.Map.Look
         private static void Sidewalk(List<LookPiece> pieces, LookData d, LookSidewalk s, Func<float, float, float> ground)
         {
             if (LookGeom.Count(s.pts) < 2) return;
-            float[] line = LookGeom.Resample(s.pts, 2f, out _);
+            float[] line = ResampleLine(s.pts, 2f);
             int n = LookGeom.Count(line);
             float roadSide = RoadSide(d, s, line);
             float hw = s.w / 2f, curb = Mathf.Clamp(s.curb, 0.04f, 0.12f);

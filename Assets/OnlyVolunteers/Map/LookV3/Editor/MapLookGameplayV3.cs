@@ -73,8 +73,12 @@ namespace OnlyVolunteers.Map.Look.V3
                 var camData = cam.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>() ?? cam.gameObject.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
                 camData.requiresDepthOption = UnityEngine.Rendering.Universal.CameraOverrideOption.On;
                 camData.requiresColorOption = UnityEngine.Rendering.Universal.CameraOverrideOption.On;
+                // v17: safety net against any NaN/Inf pixel that bloom would blow up into a glare blob.
+                if (MapLookBuilderV3.IsV17(rev)) camData.stopNaN = true;
                 EditorUtility.SetDirty(camData);
             }
+            // v17: Backslash toggles a free fly camera over the map (player and van input suspended meanwhile).
+            if (MapLookBuilderV3.IsV17(rev)) new GameObject("V3_FlyToggle").AddComponent<V3FlyToggle>();
             int moved = 0;
             foreach (Collider c in envRoot.GetComponentsInChildren<Collider>(true))
                 if (!c.isTrigger && c.gameObject.layer != 0)

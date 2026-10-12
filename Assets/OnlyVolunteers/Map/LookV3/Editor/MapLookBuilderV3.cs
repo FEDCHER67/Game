@@ -109,6 +109,9 @@ namespace OnlyVolunteers.Map.Look.V3
             foreach (var z in V3LookData.ForestZones) forest.Add(z.poly);
             MapLookRegistry registry = LookAssetStore.Registry();
             log.Add($"park trees added: {V3Dressing.AddParkTrees(d)}");
+            // v17 playtest fixes (2026-10-12): natural tree scatter; corner patches, mitred corners and sidewalks cut at
+            // carriageways; parked cars thinned (V3Fix17 says what in the plan data causes each).
+            if (v17) V3Fix17.Trees(d, log);
             Terrain terrain = V3Terrain.Build(d, hm, registry, store, parent, mud, forest, log);
             var samplerGo = new GameObject("MapHeightSampler");
             samplerGo.transform.SetParent(parent, false);
@@ -116,15 +119,33 @@ namespace OnlyVolunteers.Map.Look.V3
             sampler.Terrain = terrain;
             sampler.Decks = RoadMeshBuilder.Decks(d, hm.Height);
 
-            V3Ground.Roads(d, hm, sampler, store, parent, log);
+            if (v17)
+            {
+                V3Fix17.Roads(d, log);
+                RoadMeshBuilder.LineResampler = (pts, step) => V3Fix17.ResampleKeepCorners(pts, step);
+                RoadMeshBuilder.JunctionMaterial = V3Fix17.JunctionMaterial;
+                V3Fix17.Fences(d, log);
+            }
+            try
+            {
+                V3Ground.Roads(d, hm, sampler, store, parent, log);
+            }
+            finally
+            {
+                RoadMeshBuilder.LineResampler = null;
+                RoadMeshBuilder.JunctionMaterial = null;
+            }
+            if (v17) V3Fix17.Cars(d, log);
             V3Kit kit = V3Kit.Load();
             V3Buildings.Build(d, hm, kit, store, parent, log);
             V3Dressing.Build(d, hm, registry, store, parent, log);
             if (v17) V3Props17.Build(d, hm, registry, store, parent, log);
             V3Water.Build(d, hm, basins, store, parent, sampler, log);
+            if (v17) V3WaterAudio17.Bake(parent.Find("Water"), revision, log);
             V3Ground.Fences(hm, store, parent, log);
             V3Ground.RetainingWalls(d, hm, store, parent, log);
             V3Ground.Blockers(d, hm, parent);
+            if (v17) V3Grass.Build(terrain, V3Terrain.PendingSplat, V3Terrain.PendingNames, parent, store, log);
             AssetDatabase.SaveAssets();
             V3Terrain.ReapplySplat(terrain, log);
             log.Add($"assets: {store.MeshCount} meshes in {store.GeneratedDir}; environment built in {sw.Elapsed.TotalSeconds:0.0} s");

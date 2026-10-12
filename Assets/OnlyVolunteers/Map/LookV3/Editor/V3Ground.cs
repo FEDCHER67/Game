@@ -246,11 +246,13 @@ namespace OnlyVolunteers.Map.Look.V3
                 var cell = cells[ck];
                 if (cell.m.IsEmpty) continue;
                 GameObject go = cell.t.gameObject;
-                go.AddComponent<MeshFilter>().sharedMesh = store.AddMesh(cell.m.ToMesh(go.name, out string[] cats));
+                Mesh cellMesh = store.AddMesh(cell.m.ToMesh(go.name, out string[] cats));
+                go.AddComponent<MeshFilter>().sharedMesh = cellMesh;
                 var mr = go.AddComponent<MeshRenderer>();
                 mr.sharedMaterials = Mats(cats);
                 mr.shadowCastingMode = cell.solid ? ShadowCastingMode.On : ShadowCastingMode.Off;
-                GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccludeeStatic | StaticEditorFlags.BatchingStatic);
+                GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccludeeStatic |
+                    (V3Mesh.StaticBatchSafe(cellMesh) ? StaticEditorFlags.BatchingStatic : 0));
             }
             log.Add($"fences v3: {V3LookData.Fences.Count} runs, {bays} bays, {colliders} box colliders");
         }

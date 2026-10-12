@@ -348,7 +348,8 @@ namespace OnlyVolunteers.Map.Look.V3
             var mr = go.AddComponent<MeshRenderer>();
             mr.sharedMaterials = mats;
             mr.shadowCastingMode = cast ? ShadowCastingMode.On : ShadowCastingMode.Off;
-            GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccludeeStatic | StaticEditorFlags.BatchingStatic);
+            GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccludeeStatic |
+                (V3Mesh.StaticBatchSafe(mesh) ? StaticEditorFlags.BatchingStatic : 0));
             return mr;
         }
     }

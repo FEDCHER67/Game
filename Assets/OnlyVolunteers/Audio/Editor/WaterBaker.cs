@@ -24,6 +24,14 @@ namespace OnlyVolunteers.Audio.EditorTools
         {
             if (EditorApplication.isPlaying) { Debug.LogWarning("[WaterBake] Exit Play mode first."); return; }
             if (string.IsNullOrEmpty(revision)) { Debug.LogError("[WaterBake] No look_vNN_flat.json found."); return; }
+            // v17+: the plan has every body at -0.3 m and of kind "lake"; the style v3 look build bakes Water_<rev> from the
+            // built surfaces (pools on Elite Hill, river vs canal) instead (Map/LookV3/Editor/V3WaterAudio17).
+            if (OnlyVolunteers.Map.Look.V3.MapLookBuilderV3.IsV17(revision))
+            {
+                Debug.Log("[WaterBake] " + revision + ": baked by OnlyVolunteers/Map/Style v3/Build Map Look " + revision +
+                          " (+ Gameplay) from the built water surfaces; nothing to do here.");
+                return;
+            }
             try
             {
                 LookData look = MapLookBuilder.Load(revision);
