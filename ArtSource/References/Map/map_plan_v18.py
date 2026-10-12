@@ -17,6 +17,11 @@ houses (6-10 m), plot fences and yards, farmsteads, industrial/port, constructio
 forest undergrowth and clearings, fields, common-land rooms everywhere, relief (hills 3-15 m), grade fixes (terrain only),
 the plaza core and the Downtown vista stoppers, more Rough District playgrounds and trees. Fixed seeds throughout.
 
+Fedya's feedback on the v17 trial (2026-10-12), applied in place: the hamlet house plots move as whole units toward their
+neighbours (hamlet()), the moved plots' driveways are reshaped and the road/pedestrian graphs rebuilt with the v16 method, POIs
+inside moved houses move with them (listed exceptions to the protected layout); the empty hamlet land gets the fallback fill of
+small objects (~10 %); about 20 % of the trees and tall bushes v18 generated are thinned, densest first (thin_trees()).
+
 Schema: identical to v17 (plan keys v17_phase_a / v17_dressing, look key "v17", building key "v17"). Optional additions:
 plan "v18_phase_b" (rules, deviations, metrics, checks), building "v17.rev" = "v18" on records made or rescaled by v18,
 look "v17.phase" = "B", props scale "s" != 1 on a few props, new water records of kind "well"/"swimming_pool" (same kinds
@@ -79,14 +84,18 @@ FOOT = {'prop/bench_park': (0.7, 1.9), 'prop/bench_soviet': (0.7, 1.9), 'prop/be
         'prop/default_crate': (1.2, 1.2), 'prop/pipe_support': (1.0, 1.0), 'prop/pipe_support_040': (1.0, 1.0), 'prop/log_bench': (0.6, 2.4),
         'prop/beach_lifeguard_tower': (2.4, 2.4), 'prop/beach_sunlounger': (0.8, 2.0), 'prop/beach_umbrella_red': (0.3, 0.3),
         'prop/beach_umbrella_teal': (0.3, 0.3), 'prop/hedge_box': (1.0, 2.0), 'prop/fence_concrete_panel': (0.4, 3.0), 'prop/parking_barrier': (0.3, 3.0),
-        'prop/lamp_bollard': (0.3, 0.3), 'prop/lamp_iron': (0.35, 0.35), 'prop/gas_pump': (0.8, 1.2), 'prop/van_minibus': (2.0, 5.0)}
+        'prop/lamp_bollard': (0.3, 0.3), 'prop/lamp_iron': (0.35, 0.35), 'prop/gas_pump': (0.8, 1.2), 'prop/van_minibus': (2.0, 5.0),
+        # hamlet fill after Fedya's 2026-10-12 feedback; scarecrow / mailbox / cart_wooden are new kinds (no Unity model yet)
+        'prop/garage_metal_rust': (3.4, 6.0), 'prop/garage_metal_open': (3.4, 6.0), 'prop/scarecrow': (0.6, 1.2), 'prop/mailbox': (0.4, 0.4),
+        'prop/cart_wooden': (1.6, 3.0)}
 for _p in ('prop/play_swings', 'prop/play_slide', 'prop/play_sandbox', 'prop/play_carousel', 'prop/play_horizontal_bar', 'prop/play_carpet_rack'):
     FOOT[_p] = (2.4, 2.8)
 CAR = (1.9, 4.5)
 # Props a standing eye (1.7 m) cannot see over (sightline metric); cars, benches, bins, lamps and lattice pylons are see-through.
 TALL = {'prop/market_stall', 'prop/news_kiosk', 'prop/kiosk', 'prop/atm_pavilion', 'prop/ad_column', 'proc/clock_column', 'prop/busstop_shelter',
         'prop/busstop_shelter_vandalised', 'prop/truck_tow', 'prop/bus_city', 'prop/beach_lifeguard_tower', 'prop/hedge_box', 'prop/van_minibus',
-        'proc/dumpster_pad'}
+        'proc/dumpster_pad', 'prop/garage_metal_rust', 'prop/garage_metal_open'}
+NEW_PROP_KINDS = ('prop/scarecrow', 'prop/mailbox', 'prop/cart_wooden')   # not in MapLookRegistry yet: Unity skips and logs them
 OPAQUE_FENCES = {'fence_wood_yard', 'fence_profiled_sheet_blue', 'military_fence', 'concrete_port_yard_with_fence', 'high_fence_with_barbed_wire'}
 
 
@@ -138,6 +147,8 @@ def rehydrate(W, d):
     W.clear_zones = []          # v18: areas whose scatter-forest trees are removed (clearings, plots, yards)
     W.structs = []              # v18: new plan structures (haystacks, beds, lounger rows)
     W.new_water = []            # v18: wells and villa pools
+    W.hamlet_new_plots = []     # v18: (plot id, polygon) of the new fenced hamlet plots
+    W.tunnel = {}               # v18: id(tree) -> (road id, side, index along the road) of the common-land tree tunnels
     W.v18_props_from = len(W.props)
     W.v18_trees_from = len(W.trees)
     W.v18_pads_from = len(W.pads)
@@ -344,11 +355,15 @@ def trees_near(W, g, r=2.5, start=0):
     return unary_union([Point(x, y).buffer(r) for x, y in pts]) if pts else Polygon()
 
 
-def prepare(W, d):
-    """Shared exclusions: roads with sidewalks, water, bridge decks, every gameplay point (bases 14 m), van stops, police lots."""
+def exclusions(W, d):
     pts = [Point(p['position_m']).buffer(14 if p['category'] == 'base' else 4.5) for p in d['points']]
     pts += [Point(p['van_stop_m']).buffer(3.5) for p in d['points'] if p.get('van_stop_m')]
-    W.excl0 = unary_union([W.corridor.buffer(2.0), W.water.buffer(3.0), W.decks.buffer(8.0), unary_union(pts), W.police.buffer(2.5), W.driveways.buffer(2.5)])
+    return unary_union([W.corridor.buffer(2.0), W.water.buffer(3.0), W.decks.buffer(8.0), unary_union(pts), W.police.buffer(2.5), W.driveways.buffer(2.5)])
+
+
+def prepare(W, d):
+    """Shared exclusions: roads with sidewalks, water, bridge decks, every gameplay point (bases 14 m), van stops, police lots."""
+    W.excl0 = exclusions(W, d)
     W.boxes = district_boxes(d)
     W.border = unary_union([bx.exterior for bx in W.boxes.values()]).buffer(4.0)
     W.ridge = valid(Polygon(d['terrain_hints']['ridge']['out_of_bounds_polygon_m']))
@@ -784,6 +799,8 @@ def farm_plot(W, d, pid, district, pt, u, L, Wd, rng, items, house=True, beds=Tr
     fence(W, f'{pid}_fence', 'fence_wood_yard' if rng.random() < 0.6 else 'fence_dacha', list(orient(plot, 1).exterior.coords), district,
           1.6, gates=[(gate[0], gate[1], 3.0)], closed=True)
     W.clear_zones.append(plot)
+    if district == 'village' and zone == 'district':
+        W.hamlet_new_plots.append((pid, plot))
     items['plots'] += 1
     return plot
 
@@ -937,6 +954,535 @@ def village(W, d):
         f"{items['sheds']} sheds, {items['orchard_trees']} orchard trees, {items['vegetable_beds']} vegetable beds, {items['woodpiles']} woodpiles, "
         f"{items['wells']} wells, {items['haystacks']} haystacks, {items['hedgerows']} hedgerows.")
     return dict(items, resized=len(resized))
+
+
+# ---------------------------------------------------------------- Fedya 2026-10-12: a tighter hamlet
+HAMLET_TARGET = 0.30      # aimed cut of every big gap between neighbouring house plots (fallback: ~20 % + small-object fill)
+HAMLET_BIG_GAP = 8.0      # plot-to-plot gaps (fence to fence) from 8 m up count as "big"
+HAMLET_MAX_ACCESS = 20.0  # a moved plot stays within 20 m of a fixed hamlet street (or its old distance, if that was larger)
+HAMLET_FILL_SHARE = 0.10  # fallback: small objects cover ~10 % of the empty land left
+
+
+def hamlet_units(W, d):
+    """House plots that move as one unit: every v11 plot with a house (not the base 2 yard) and every new v18 plot."""
+    base_pts = [Point(p['position_m']) for p in d['points'] if p['category'] == 'base']
+    units = []
+    for s in d['structures']:
+        if s['district_id'] != 'village' or s['kind'] != 'plot_or_garden':
+            continue
+        g = valid(Polygon(s['polygon_m']))
+        if any(g.buffer(1.0).contains(q) for q in base_pts):
+            continue
+        hs = [b for b in W.buildings.values() if b['district_id'] == 'village' and b['world_kind'] == 'village_house' and g.contains(geom(b).centroid)]
+        if hs:
+            units.append(dict(id=s['id'], poly=g, house=hs[0]['id']))
+    for pid, plot in W.hamlet_new_plots:
+        units.append(dict(id=pid, poly=plot, house=f'{pid}_house'))
+    return units
+
+
+def hamlet_members(W, d, u, drive_ids):
+    """Everything that belongs to a plot unit: buildings, plan structures (plot, beds, haystacks), wells, fences, trees, props,
+    ground pads, solids, clear zones, POIs inside its house and its driveway."""
+    reg = u['poly'].buffer(1.0)
+    inr = lambda x, y: reg.contains(Point(x, y))
+    m = dict(buildings=[b['id'] for b in W.buildings.values() if b['district_id'] == 'village' and u['poly'].contains(geom(b).centroid)])
+    m['structures'] = [s for s in d['structures'] if s['district_id'] == 'village' and s['kind'] != 'meadow_with_grass_tufts' and (
+        (s.get('polygon_m') and len(s['polygon_m']) >= 3 and reg.contains(valid(Polygon(s['polygon_m'])).centroid)) or
+        (s.get('position_m') and s['kind'] != 'water_tower' and inr(*s['position_m'])))]
+    m['water'] = [w for w in d['water'] if w['id'] in W.new_water and reg.contains(valid(Polygon(w['polygon_m'])).centroid)]
+    m['fences'] = [f for f in W.fences if f['district_id'] == 'village' and reg.buffer(0.5).contains(LineString(f['polyline_m']))]
+    m['trees'] = [t for t in W.trees if inr(t['x'], t['y'])]
+    m['props'] = [p for p in W.props if inr(p['x'], p['y'])]
+    m['pads'] = [i for i, (g, _, _, _) in enumerate(W.pads) if reg.contains(g.centroid)]
+    m['solids'] = [i for i, (g, _) in enumerate(W.solid) if reg.buffer(0.5).contains(g)]
+    m['clear'] = [i for i, g in enumerate(W.clear_zones) if reg.buffer(0.5).contains(g)]
+    house = geom(W.buildings[u['house']]).buffer(0.3)
+    m['points'] = [p['id'] for p in d['points'] if house.contains(Point(p['position_m']))]
+    m['drive'] = [r['id'] for r in d['roads'] if r['id'] in drive_ids and reg.buffer(4.0).contains(Point(r['polyline_m'][-1]))]
+    return m
+
+
+def hamlet_solve(W, d, units, mem, drive_ids):
+    """Deterministic spring relaxation: every unit steps 0.5 m toward its two nearest neighbour plots while any of those gaps
+    is above (1 - HAMLET_TARGET) of its start; a step is taken only if the plot gets no deeper into fixed roads (all roads but
+    the plots' own driveways), fixed buildings, fields, the base yard, the water tower, fixed points / van stops, water or the
+    4 m district-border band than it was, keeps 2.5 m to other plots, stays near a hamlet street and widens no neighbour gap."""
+    V = W.boxes['village']
+    moving = {i for m in mem.values() for i in m['buildings']}
+    moved_pts = {i for m in mem.values() for i in m['points']}
+    fixed_roads = [(r, l) for r, l in W.roads if r['id'] not in drive_ids]
+    streets = [l for r, l in fixed_roads if r['district_id'] == 'village']
+    corr = unary_union([l.buffer(r['width_m'] / 2 + (r.get('sidewalk_width_m') or 0), cap_style=2, join_style=2) for r, l in fixed_roads if l.distance(V) < 30])
+    fixb = unary_union([geom(b) for b in W.buildings.values() if b['id'] not in moving and geom(b).intersects(V.buffer(10))])
+    uid = {u['id'] for u in units}
+    fixs = unary_union([valid(Polygon(s['polygon_m'])) for s in d['structures'] if s['district_id'] == 'village' and (
+                            s['kind'] in ('yellow_field', 'base_yard_van_spot') or (s['kind'] == 'plot_or_garden' and s['id'] not in uid))] +
+                       [Point(s['position_m']).buffer(s['radius_m'] + 1) for s in d['structures'] if s['district_id'] == 'village' and s['kind'] == 'water_tower'])
+    pts = []
+    for p in d['points']:
+        if p['id'] in moved_pts:
+            continue
+        pts.append(Point(p['position_m']).buffer(14 if p['category'] == 'base' else 4.5))
+        if p.get('van_stop_m'):
+            pts.append(Point(p['van_stop_m']).buffer(3.5))
+    OB = unary_union([corr.buffer(1.0), fixb.buffer(2.0), fixs.buffer(2.0), unary_union(pts), W.water.buffer(2.0)])
+    inner = V.buffer(-4.0)
+    U = {u['id']: u['poly'] for u in units}
+    ids = [u['id'] for u in units]
+    ov0 = {k: U[k].intersection(OB).area for k in ids}
+    out0 = {k: U[k].difference(inner).area for k in ids}
+    acc0 = {k: min(l.distance(U[k]) for l in streets) for k in ids}
+    T = {k: (0.0, 0.0) for k in ids}
+    placed = lambda k, t=None: shapely.affinity.translate(U[k], *(t or T[k]))
+    NB = set()
+    for a in ids:
+        for _, b in sorted((U[a].distance(U[b]), b) for b in ids if b != a)[:2]:
+            NB.add(tuple(sorted((a, b))))
+    NB = sorted(NB)
+    g0 = {p: U[p[0]].distance(U[p[1]]) for p in NB}
+
+    def ok(k, t):
+        g = shapely.affinity.translate(U[k], *t)
+        if g.difference(inner).area > out0[k] + 0.05 or g.intersection(OB).area > ov0[k] + 0.05:
+            return False
+        if min(l.distance(g) for l in streets) > max(acc0[k], HAMLET_MAX_ACCESS) + 0.01:
+            return False
+        cur = placed(k)
+        for o in ids:
+            if o != k:
+                dn = g.distance(placed(o))
+                if dn < 2.5 and dn < cur.distance(placed(o)) - 1e-6:
+                    return False
+        for p in NB:
+            if k in p:
+                o = p[1] if p[0] == k else p[0]
+                if g.distance(placed(o)) > max(g0[p], cur.distance(placed(o))) + 1e-6:
+                    return False
+        return True
+
+    ca = sa = math.sqrt(0.5)
+    for it in range(800):
+        moved = 0
+        for k in ids:
+            fx = fy = 0.0
+            cur = placed(k)
+            for p in NB:
+                if k not in p:
+                    continue
+                o = p[1] if p[0] == k else p[0]
+                if cur.distance(placed(o)) > max(3.0, (1 - HAMLET_TARGET) * g0[p]):
+                    a, b = shapely.ops.nearest_points(cur, placed(o))
+                    L = a.distance(b)
+                    fx, fy = fx + (b.x - a.x) / L, fy + (b.y - a.y) / L
+            L = math.hypot(fx, fy)
+            if L < 1e-6:
+                continue
+            ux, uy = fx / L, fy / L
+            for vx, vy in ((ux, uy), (ux * ca - uy * sa, ux * sa + uy * ca), (ux * ca + uy * sa, -ux * sa + uy * ca)):
+                t = (T[k][0] + vx * 0.5, T[k][1] + vy * 0.5)
+                if ok(k, t):
+                    T[k] = t
+                    moved += 1
+                    break
+        if not moved:
+            break
+    T = {k: (R(x), R(y)) for k, (x, y) in T.items()}
+    return T, NB, g0, it
+
+
+def shift_xy(p, t):
+    return [R(p[0] + t[0]), R(p[1] + t[1])]
+
+
+def hamlet_apply(W, d, mem, T):
+    """Translate every member of every unit by its vector."""
+    for k, m in mem.items():
+        t = T[k]
+        if t == (0.0, 0.0):
+            continue
+        for bid in m['buildings']:
+            b = W.buildings[bid]
+            b['footprint_m'] = [shift_xy(q, t) for q in b['footprint_m']]
+            b['center_m'] = shift_xy(b['center_m'], t)
+            b['entrance_m'] = shift_xy(b['entrance_m'], t)
+            if b.get('v17', {}).get('doors'):
+                b['v17']['doors'] = [shift_xy(q, t) for q in b['v17']['doors']]
+            b['v18_hamlet_shift_m'] = list(t)
+        for s in m['structures']:
+            if s.get('polygon_m') and len(s['polygon_m']) >= 3:
+                s['polygon_m'] = [shift_xy(q, t) for q in s['polygon_m']]
+            if s.get('position_m'):
+                s['position_m'] = shift_xy(s['position_m'], t)
+            s['v18_hamlet_shift_m'] = list(t)
+        for w in m['water']:
+            w['polygon_m'] = [shift_xy(q, t) for q in w['polygon_m']]
+        for f in m['fences']:
+            f['polyline_m'] = [shift_xy(q, t) for q in f['polyline_m']]
+            f['solid_runs_m'] = [[shift_xy(q, t) for q in run] for run in f['solid_runs_m']]
+            for g in f['gates']:
+                g['position_m'] = shift_xy(g['position_m'], t)
+        for tr in m['trees']:
+            tr['x'], tr['y'] = R(tr['x'] + t[0]), R(tr['y'] + t[1])
+        for p in m['props']:
+            p['x'], p['y'] = R(p['x'] + t[0]), R(p['y'] + t[1])
+        for i in m['pads']:
+            g, mat, ctx, prio = W.pads[i]
+            W.pads[i] = (shapely.affinity.translate(g, *t), mat, ctx, prio)
+        for i in m['solids']:
+            g, tag = W.solid[i]
+            W.solid[i] = (shapely.affinity.translate(g, *t), tag)
+        for i in m['clear']:
+            W.clear_zones[i] = shapely.affinity.translate(W.clear_zones[i], *t)
+        for p in d['points'] + d['pois']:
+            if p['id'] in m['points']:
+                p['position_m'] = shift_xy(p['position_m'], t)
+    W.tree_pts = [(t['x'], t['y']) for t in W.trees]
+    W._tree_n = -1
+
+
+def hamlet_clear(W, d, mem, units):
+    """Village dressing outside the plots that the moved plots now cover is removed (trees, props, haystacks, ground pads)."""
+    V = W.boxes['village']
+    mine_t = {id(t) for m in mem.values() for t in m['trees']}
+    mine_p = {id(p) for m in mem.values() for p in m['props']}
+    mine_s = {id(s) for m in mem.values() for s in m['structures']}
+    mine_i = {i for m in mem.values() for i in m['solids']}
+    mine_pad = {i for m in mem.values() for i in m['pads']}
+    cover = unary_union([m_['poly'] for m_ in units]).buffer(1.5)
+    cover1 = cover.buffer(1.0)
+    shapely.prepare(cover)
+    shapely.prepare(cover1)
+    gone = collections.Counter()
+    keep = []
+    for t in W.trees:
+        if id(t) not in mine_t and V.contains(Point(t['x'], t['y'])) and cover.contains(Point(t['x'], t['y'])):
+            gone['trees_bushes'] += 1
+            continue
+        keep.append(t)
+    W.trees = keep
+    W.tree_pts = [(t['x'], t['y']) for t in W.trees]
+    keep = []
+    for p in W.props:
+        q = Point(p['x'], p['y'])
+        if id(p) not in mine_p and V.contains(q) and cover1.contains(q):
+            gone['props'] += 1
+            continue
+        keep.append(p)
+    W.props = keep
+    hay = [s for s in d['structures'] if s['district_id'] == 'village' and s['kind'] == 'haystack' and id(s) not in mine_s and cover1.contains(Point(s['position_m']))]
+    for s in hay:
+        d['structures'].remove(s)
+        W.structs.remove(s)
+    gone['haystacks'] = len(hay)
+    solid, remap = [], {}
+    for i, (g, tag) in enumerate(W.solid):
+        if i in mine_i or tag in ('building', 'fence') or not (V.contains(g.centroid) and cover1.contains(g.centroid)):
+            remap[i] = len(solid)
+            solid.append((g, tag))
+    W.solid = solid
+    W.bidx = {k: remap[i] for k, i in W.bidx.items()}
+    W.bidx_rev = {remap[i]: k for i, k in W.bidx_rev.items()}
+    pads = []
+    for i, (g, mat, ctx, prio) in enumerate(W.pads):
+        if i not in mine_pad and g.intersects(V) and g.intersects(cover):
+            gone['pads_cut'] += 1
+            for q in parts(g.difference(cover)):
+                if q.area > 2:
+                    pads.append((q, mat, ctx, prio))
+            continue
+        pads.append((g, mat, ctx, prio))
+    W.pads = pads
+    W._tree_n = -1
+    return dict(gone)
+
+
+def hamlet_roads(W, d, mem, T, drive_ids):
+    """Reshape the driveways of moved plots (straight spur from the old street to the moved end), re-project the van stops of
+    the POIs that moved with their houses, rebuild both graphs with the v16 method and refresh the road-derived exclusions."""
+    streets = {r['id']: LineString(r['polyline_m']) for r in d['roads'] if r['district_id'] == 'village' and r['id'] not in drive_ids}
+    out = []
+    for k, m in mem.items():
+        t = T[k]
+        if t == (0.0, 0.0):
+            continue
+        for rid in m['drive']:
+            r = next(q for q in d['roads'] if q['id'] == rid)
+            a, z = r['polyline_m'][0], r['polyline_m'][-1]
+            parent = min(streets, key=lambda s: streets[s].distance(Point(a)))
+            pl = streets[parent]
+            nz = shift_xy(z, t)
+            na = pl.interpolate(pl.project(Point(nz)))
+            old = R(LineString(r['polyline_m']).length)
+            r['polyline_m'] = [[R(na.x), R(na.y)], nz]
+            r['length_m'] = LineString(r['polyline_m']).length
+            r['source_note'] = f'v18: reshaped after its plot moved by {R(math.hypot(*t))} m (Fedya 2026-10-12)'
+            out.append(dict(road=rid, parent=parent, length_before_m=old, length_after_m=R(r['length_m'])))
+    lines = {r['id']: LineString(r['polyline_m']) for r in d['roads']}
+    moved = {pid: k for k, m in mem.items() for pid in m['points'] if T[k] != (0.0, 0.0)}
+    for p in d['points']:
+        if p['id'] in moved:
+            l = lines[p['access_road_id']]
+            stop = l.interpolate(l.project(Point(p['position_m'])))
+            p['van_stop_m'] = list(stop.coords[0])
+            p['van_stop_offset_m'] = Point(p['position_m']).distance(stop)
+            p['access_status'] = 'v18: moved with its house (hamlet plot moved, Fedya 2026-10-12); van stop re-projected on the same access road'
+    old_nodes = {p['id']: p['road_node_id'] for p in d['points']}
+    d['road_graph'] = m16.graph(d['roads'])
+    d['pedestrian_graph'] = m16.graph(d['roads'] + d['paths'])
+    for p in d['points']:
+        n = m16.graph_stop(d['road_graph'], list(p['van_stop_m']))
+        if p['id'] in moved:
+            p['road_node_id'] = n['id']
+            p['van_node_gap_m'] = Point(n['position_m']).distance(Point(p['van_stop_m']))
+        elif n['id'] != old_nodes[p['id']]:
+            raise RuntimeError('graph rebuild changed the node of fixed point ' + p['id'])
+    W.roads = [(r, LineString(r['polyline_m'])) for r in d['roads'] + d['paths']]
+    W.carriage = unary_union([l.buffer(r['width_m'] / 2, cap_style=2, join_style=2) for r, l in W.roads])
+    W.corridor = unary_union([l.buffer(r['width_m'] / 2 + (r.get('sidewalk_width_m') or 0), cap_style=2, join_style=2) for r, l in W.roads])
+    deg = collections.Counter(n for e in d['road_graph']['edges'] for n in (e['from_node'], e['to_node']))
+    W.nodes = [Point(n['position_m']) for n in d['road_graph']['nodes'] if deg[n['id']] >= 3]
+    W.ends = [Point(n['position_m']) for n in d['road_graph']['nodes'] if deg[n['id']] == 1]
+    W.points = [Point(p['position_m']) for p in d['points']]
+    W.excl0 = exclusions(W, d)
+    return out, sorted(moved)
+
+
+def hamlet_fill(W, d, units):
+    """Fallback fill: small objects on the empty hamlet land left after the move (scarecrows, bushes, garages, a ruined shed or
+    barn, abandoned cars, crop rows, hay bales, a broken tractor, a cart, a well) until they cover ~10 % of it."""
+    V = W.boxes['village']
+    plots = unary_union([u['poly'] for u in units] + [valid(Polygon(s['polygon_m'])) for s in d['structures'] if s['district_id'] == 'village' and s['kind'] == 'plot_or_garden'])
+    fields = keep_open(d, 'village', ('yellow_field', 'vegetable_beds', 'base_yard_van_spot'), 1.0)
+    tower = unary_union([Point(s['position_m']).buffer(s['radius_m'] + 3) for s in d['structures'] if s['district_id'] == 'village' and s['kind'] == 'water_tower'])
+    zone = zone_of(W, V.buffer(-4.0), 1.5, extra=(plots.buffer(1.5), fields, tower))
+    empty = zone.area
+    st = dict(covered=0.0, k=0, wells=0, tractors=0, barns=0)
+    items = collections.Counter()
+    cyc = ['crop_rows', 'scarecrow', 'hay_bales', 'abandoned_car', 'ruined_shed', 'bushes', 'garage', 'cart', 'crop_rows', 'well', 'hay_bales',
+           'broken_tractor', 'abandoned_car', 'bushes', 'garage', 'scarecrow']
+
+    def bush_ring(pt, n, r, rr):
+        for j in range(n):
+            a = 2 * math.pi * (j + rr.uniform(0, 0.5)) / n
+            W.add_tree('bush', pt.x + r * math.cos(a), pt.y + r * math.sin(a), float(rr.uniform(1.1, 1.6)))
+
+    def place(part, pt, r, k):
+        if st['covered'] >= HAMLET_FILL_SHARE * empty:
+            return pt.buffer(r + 1.0)
+        rr = rng_for(f'hamlet-fill{k}')
+        u = edge_dir_near(part, pt)
+        v = side(u)
+        ch = cyc[st['k'] % len(cyc)]
+        st['k'] += 1
+        if ch == 'crop_rows' and r >= 5.0:
+            L, Wd = min(2 * r - 2.5, 18.0), min(2 * r - 2.5, 11.0)
+            g = orect(pt.x, pt.y, u[0], u[1], L, Wd).intersection(part)
+            W.add_pad(g.buffer(-0.3), 'dry_field', 'v18_crop_rows', prio=31)
+            st['covered'] += g.area
+            items['crop_row_patches'] += 1
+            if k % 2:
+                W.add_prop('prop/scarecrow', pt.x, pt.y, unity_yaw(*v), foot=(0.6, 1.2), tag='scarecrow')
+                items['scarecrows'] += 1
+            return g.buffer(1.5)
+        if ch == 'scarecrow':
+            W.add_prop('prop/scarecrow', pt.x, pt.y, float(rr.uniform(0, 360)), foot=(0.6, 1.2), tag='scarecrow')
+            bush_ring(pt, 3, 2.2, rr)
+            st['covered'] += 0.7 + 3 * math.pi
+            items['scarecrows'] += 1
+            items['bushes'] += 3
+            return pt.buffer(min(r, 4.5))
+        if ch == 'hay_bales' and r >= 3.2:
+            for j in range(3):
+                structure(W, d, f'02_v18b_bale_{k}_{j}', 'village', 'haystack', position_m=[R(pt.x + u[0] * (j - 1) * 2.9), R(pt.y + u[1] * (j - 1) * 2.9)], radius_m=1.2)
+            st['covered'] += 3 * math.pi * 1.44
+            items['hay_bales'] += 3
+            return pt.buffer(min(r, 5.0))
+        if ch == 'abandoned_car' and r >= 3.2:
+            W.add_prop('prop/car_wrecked' if k % 2 else 'prop/car_burnt', pt.x, pt.y, float(rr.uniform(0, 360)), foot=CAR, tag='car')
+            bush_ring(pt, 2, 3.0, rr)
+            st['covered'] += CAR[0] * CAR[1] + 2 * math.pi
+            items['abandoned_cars'] += 1
+            return pt.buffer(min(r, 4.5))
+        if ch == 'ruined_shed' and r >= 3.6:
+            barn = r >= 7.0 and st['barns'] < 1
+            L, Wd = (9.0, 6.0) if barn else (4.2, 3.4)
+            g = orect(pt.x, pt.y, u[0], u[1], L, Wd)
+            if part.contains(g):
+                st['barns'] += barn
+                bld(W, f'02_v18b_ruin_{k:03d}', 'village', 'barn' if barn else 'shed', 'barn' if barn else 'shed', g, 1, 3.2 if barn else 2.0, 3.2 if barn else 2.0,
+                    [(pt.x + v[0] * Wd / 2, pt.y + v[1] * Wd / 2)], roof='gable', recipe='ruined_barn' if barn else 'ruined_shed', label='ruined')
+                st['covered'] += g.area
+                items['ruined_barns' if barn else 'ruined_sheds'] += 1
+                return g.buffer(2.5)
+        if ch == 'garage' and r >= 4.0:
+            dr, _ = toward_road(W, pt)
+            W.add_prop('prop/garage_metal_rust' if k % 2 else 'prop/garage_metal_open', pt.x, pt.y, unity_yaw(*dr), foot=(3.4, 6.0), tag='garage')
+            st['covered'] += 3.4 * 6.0
+            items['garages'] += 1
+            return pt.buffer(min(r, 5.5))
+        if ch == 'cart' and r >= 3.0:
+            W.add_prop('prop/cart_wooden', pt.x, pt.y, float(rr.uniform(0, 360)), foot=(1.6, 3.0), tag='cart')
+            structure(W, d, f'02_v18b_bale_{k}_c', 'village', 'haystack', position_m=[R(pt.x + v[0] * 2.6), R(pt.y + v[1] * 2.6)], radius_m=1.2)
+            st['covered'] += 4.8 + math.pi * 1.44
+            items['carts'] += 1
+            items['hay_bales'] += 1
+            return pt.buffer(min(r, 4.5))
+        if ch == 'well' and st['wells'] < 2 and r >= 2.5:
+            st['wells'] += 1
+            well(W, d, f'02_v18b_well_{k}', 'village', pt.x, pt.y)
+            st['covered'] += math.pi * 1.21
+            items['wells'] += 1
+            return pt.buffer(min(r, 3.5))
+        if ch == 'broken_tractor' and st['tractors'] < 2 and r >= 3.2:
+            st['tractors'] += 1
+            W.add_prop('prop/tractor_small', pt.x, pt.y, float(rr.uniform(0, 360)), foot=(1.8, 3.4), tag='tractor')
+            bush_ring(pt, 2, 3.0, rr)
+            st['covered'] += 1.8 * 3.4 + 2 * math.pi
+            items['broken_tractors'] += 1
+            return pt.buffer(min(r, 4.5))
+        n = int(rr.integers(3, 6))
+        bush_ring(pt, n, min(r - 0.8, 2.5), rr)
+        st['covered'] += n * math.pi
+        items['bushes'] += n
+        return pt.buffer(min(r, 4.0))
+
+    greedy_fill(zone, place, 2.5)
+    # a mailbox beside the street gate of every house plot
+    for u in units:
+        reg = u['poly'].buffer(1.5)
+        gates = [g for f in W.fences if f['district_id'] == 'village' and reg.contains(LineString(f['polyline_m'])) for g in f['gates']]
+        if not gates:
+            continue
+        g = min(gates, key=lambda q: W.carriage.distance(Point(q['position_m'])))
+        c = Point(g['position_m'])
+        dr, _ = toward_road(W, c)
+        for sgn in (1, -1):
+            q = Point(c.x + dr[0] * 0.7 - dr[1] * sgn * (g['width_m'] / 2 + 0.6), c.y + dr[1] * 0.7 + dr[0] * sgn * (g['width_m'] / 2 + 0.6))
+            if W.carriage.buffer(0.5).disjoint(q) and occ_near(W, q.buffer(0.3)).is_empty:
+                W.add_prop('prop/mailbox', q.x, q.y, unity_yaw(dr[0], dr[1]), foot=(0.4, 0.4), tag='mailbox')
+                items['mailboxes'] += 1
+                break
+    return dict(items, empty_land_m2=R(empty), covered_m2=R(st['covered']), covered_pct=R(100 * st['covered'] / empty) if empty else 0)
+
+
+def hamlet_gaps(W, d, units, NB, g0):
+    """Plot-to-plot (fence to fence) gaps for the neighbour pairs fixed at the start, and house-to-house distances for each
+    house's two nearest houses at the start."""
+    B = W.buildings
+    S = {s['id']: s for s in d['structures']}
+    poly = {}
+    for u in units:
+        if u['id'] in S:
+            poly[u['id']] = valid(Polygon(S[u['id']]['polygon_m']))
+        else:
+            t = B[u['house']].get('v18_hamlet_shift_m', (0.0, 0.0))
+            poly[u['id']] = shapely.affinity.translate(u['poly'], *t)
+    rows = [dict(a=a, b=b, before_m=R(g0[(a, b)]), after_m=R(poly[a].distance(poly[b]))) for a, b in NB]
+    big = [q for q in rows if q['before_m'] >= HAMLET_BIG_GAP]
+    return rows, big
+
+
+def hamlet_house_pairs(houses0, houses1):
+    ids = sorted(houses0)
+    pairs = set()
+    for a in ids:
+        for _, b in sorted((houses0[a].distance(houses0[b]), b) for b in ids if b != a)[:2]:
+            pairs.add(tuple(sorted((a, b))))
+    return [dict(a=a, b=b, before_m=R(houses0[a].distance(houses0[b])), after_m=R(houses1[a].distance(houses1[b]))) for a, b in sorted(pairs)]
+
+
+def hamlet(W, d):
+    units = hamlet_units(W, d)
+    drive_ids = {r['id'] for r in d['roads'] if r['district_id'] == 'village' and r['id'].startswith('02_h_d') and r['id'] != '02_h_d_tower'}
+    mem = {u['id']: hamlet_members(W, d, u, drive_ids) for u in units}
+    houses0 = {u['house']: geom(W.buildings[u['house']]) for u in units}
+    T, NB, g0, iters = hamlet_solve(W, d, units, mem, drive_ids)
+    hamlet_apply(W, d, mem, T)
+    gone = hamlet_clear(W, d, mem, units)
+    drives, moved_pois = hamlet_roads(W, d, mem, T, drive_ids)
+    fill = hamlet_fill(W, d, units)
+    rows, big = hamlet_gaps(W, d, units, NB, g0)
+    houses1 = {u['house']: geom(W.buildings[u['house']]) for u in units}
+    hp = hamlet_house_pairs(houses0, houses1)
+    mean = lambda q, k: float(np.mean([x[k] for x in q])) if q else 0.0
+    cut = lambda q: R(100 * (1 - mean(q, 'after_m') / mean(q, 'before_m'))) if q else 0.0
+    hbig = [q for q in hp if q['before_m'] >= 30]
+    shifts = {k: dict(shift_m=list(t), dist_m=R(math.hypot(*t)), house=next(u['house'] for u in units if u['id'] == k),
+                      pois=[p for p in mem[k]['points'] if t != (0.0, 0.0)]) for k, t in T.items()}
+    res = dict(units=len(units), solver_rounds=iters, target_cut_pct=100 * HAMLET_TARGET, plot_shifts=shifts,
+               plot_gap_pairs=rows, big_plot_gaps=dict(n=len(big), mean_before_m=R(mean(big, 'before_m')), mean_after_m=R(mean(big, 'after_m')), cut_pct=cut(big)),
+               house_pairs=hp, house_gaps=dict(n=len(hp), mean_before_m=R(mean(hp, 'before_m')), mean_after_m=R(mean(hp, 'after_m')), cut_pct=cut(hp)),
+               house_gaps_ge_30m=dict(n=len(hbig), mean_before_m=R(mean(hbig, 'before_m')), mean_after_m=R(mean(hbig, 'after_m')), cut_pct=cut(hbig)),
+               removed_under_moved_plots=gone, driveways=drives, pois_moved_with_houses=moved_pois, fill=fill,
+               fallback=cut(big) < 100 * HAMLET_TARGET - 3)
+    n_moved = sum(1 for t in T.values() if t != (0.0, 0.0))
+    dev(f"Hamlet tightened (Fedya 2026-10-12): {n_moved} of {len(units)} house plots moved as whole units (house, fence, yard, sheds, garden) "
+        f"by up to {max(v['dist_m'] for v in shifts.values())} m toward their neighbours; big plot-to-plot gaps {res['big_plot_gaps']['mean_before_m']} -> "
+        f"{res['big_plot_gaps']['mean_after_m']} m ({res['big_plot_gaps']['cut_pct']} %), house-to-house {res['house_gaps']['mean_before_m']} -> "
+        f"{res['house_gaps']['mean_after_m']} m; {len(drives)} driveways reshaped; POIs moved with their houses: {', '.join(moved_pois) or 'none'}; "
+        f"fallback fill {fill['covered_pct']} % of {fill['empty_land_m2']} m2 empty land.")
+    return res
+
+
+def thin_trees(W, keep_ids, share=0.2):
+    """Deterministic ~20 % cut of the trees and tall bushes (>= eye height) v18 generated outside the phase A fixes: the
+    tree-tunnel rows lose every 5th tree (gaps of ~17 m); everything else is thinned densest-first (most neighbours within
+    8 m for trees, 5 m for tall bushes; ties by a hash of the position); a tree with fewer than 3 neighbours is never cut."""
+    cand = [t for t in W.trees if id(t) not in keep_ids and (t['sp'] != 'bush' or t['h'] >= EYE)]
+    tunnel = [t for t in cand if id(t) in W.tunnel]
+    cut = set()
+    for t in tunnel:
+        if W.tunnel[id(t)][2] % 5 == 2:
+            cut.add(id(t))
+    n_tun = len(cut)
+    out = dict(candidates=len(cand), tunnel=len(tunnel), tunnel_cut=n_tun)
+    for cls, rad in (('tree', 8.0), ('tall_bush', 5.0)):
+        pool = [t for t in cand if id(t) not in W.tunnel and (t['sp'] == 'bush') == (cls == 'tall_bush')]
+        need = int(round(share * len(pool)))
+        xy = np.array([(t['x'], t['y']) for t in pool]) if pool else np.zeros((0, 2))
+        cell = collections.defaultdict(list)
+        for i, (x, y) in enumerate(xy):
+            cell[(int(x // rad), int(y // rad))].append(i)
+        nb = []
+        for i, (x, y) in enumerate(xy):
+            cx, cy = int(x // rad), int(y // rad)
+            nb.append([j for a in (-1, 0, 1) for b in (-1, 0, 1) for j in cell[(cx + a, cy + b)] if j != i and (xy[j, 0] - x) ** 2 + (xy[j, 1] - y) ** 2 <= rad * rad])
+        cnt = [len(q) for q in nb]
+        key = lambda i: int(hashlib.md5(f"{pool[i]['x']:.3f},{pool[i]['y']:.3f}".encode()).hexdigest()[:8], 16)
+        heap = [(-cnt[i], key(i), i) for i in range(len(pool))]
+        heapq.heapify(heap)
+        alive = [True] * len(pool)
+        done = 0
+        while heap and done < need:
+            c, h, i = heapq.heappop(heap)
+            if not alive[i]:
+                continue
+            if -c != cnt[i]:
+                heapq.heappush(heap, (-cnt[i], h, i))
+                continue
+            if cnt[i] < 3:
+                break
+            alive[i] = False
+            cut.add(id(pool[i]))
+            done += 1
+            for j in nb[i]:
+                if alive[j]:
+                    cnt[j] -= 1
+        out[cls] = dict(pool=len(pool), cut=done)
+    removed = [t for t in W.trees if id(t) in cut]
+    W.trees = [t for t in W.trees if id(t) not in cut]
+    W.tree_pts = [(t['x'], t['y']) for t in W.trees]
+    out['cut_total'] = len(removed)
+    out['cut_pct'] = R(100 * len(removed) / len(cand)) if cand else 0
+    by = collections.Counter()
+    for t in removed:
+        p = Point(t['x'], t['y'])
+        by[next((k for k, bx in W.boxes.items() if bx.contains(p)), 'common')] += 1
+    out['cut_by_district'] = dict(sorted(by.items()))
+    dev(f"Trees thinned (Fedya 2026-10-12): {out['cut_total']} of {out['candidates']} v18 trees and tall bushes ({out['cut_pct']} %), densest first; "
+        f"the tree tunnels keep 4 of every 5 trees ({n_tun} cut, gaps of ~17 m); phase A fixes (plaza, vistas, Rough District yards) untouched.")
+    return out, removed
 
 
 # ---------------------------------------------------------------- industrial port, construction site, Tramduro
@@ -1525,11 +2071,12 @@ def common_land(W, d):
     # 1. Tree tunnels and billboards on the inter-district roads outside v17's box (v17 dressed the ones inside it).
     for r, l in roads:
         for sd in (1, -1):
-            for x, y, ux, uy in offset_points(l, sd * (r['width_m'] / 2 + 4.2), 8.5, 4.0 + rng.uniform(0, 3)):
+            for j, (x, y, ux, uy) in enumerate(offset_points(l, sd * (r['width_m'] / 2 + 4.2), 8.5, 4.0 + rng.uniform(0, 3))):
                 p = Point(x, y)
                 if v17box.contains(p) or not region.contains(p) or base_excl.contains(p) or dense.contains(p) or any(p.distance(n) < 18 for n in W.nodes) or W.corridor.buffer(3.0).contains(p):
                     continue
                 W.add_tree(['birch', 'poplar', 'linden', 'birch', 'oak'][int(rng.integers(5))], x, y, float(rng.uniform(10, 15)))
+                W.tunnel[id(W.trees[-1])] = (r['id'], sd, j)
                 items['tunnel_trees'] += 1
         s, sd = 60.0, 1
         while s < l.length - 40:
@@ -1892,8 +2439,17 @@ def lawn_circles(W, d, trees, props_solid, extra_obst=()):
 
 
 # ---------------------------------------------------------------- checks
-def protected_equal(d, d16):
-    """Vadim's layout must be byte-equal to v16 (v11) for every protected field."""
+def graph_edge_keys(g):
+    """Edges keyed by owner (a surface join by the roads it joins, since joins are numbered) and polyline."""
+    joins = {j['id']: tuple(j['source_road_ids']) for j in g['surface_connections']}
+    return {(joins.get(e['road_id'], (e['road_id'],)), json.dumps(e['polyline_m'])) for e in g['edges']}
+
+
+def protected_equal(d, d16, allow=None):
+    """Vadim's layout must be byte-equal to v16 (v11) for every protected field. allow (Fedya 2026-10-12): the reshaped hamlet
+    driveways, the POIs that moved inside their houses, and graph edges of those roads / of the roads their van stops split."""
+    allow = allow or {}
+    ar, ap, ag = set(allow.get('roads', ())), set(allow.get('points', ())), set(allow.get('graph_roads', ()))
     bad = []
     pick = lambda q, ks: {k: q.get(k) for k in ks}
     for a, b in zip(d16['districts'], d['districts']):
@@ -1902,7 +2458,15 @@ def protected_equal(d, d16):
     for key in ('roads', 'paths'):
         A = {r['id']: pick(r, ('polyline_m', 'class', 'width_m', 'source_class', 'van_access')) for r in d16[key]}
         B = {r['id']: pick(r, ('polyline_m', 'class', 'width_m', 'source_class', 'van_access')) for r in d[key]}
-        if A != B:
+        if A.keys() != B.keys() or {k for k in A if A[k] != B[k]} - ar:
+            bad.append(key)
+    for key in ('points', 'pois'):
+        A = {q['id']: q for q in d16[key]}
+        B = {q['id']: q for q in d[key]}
+        if A.keys() != B.keys() or {k for k in A if A[k] != B[k]} - ap:
+            bad.append(key)
+    for key in ('road_graph', 'pedestrian_graph'):
+        if d16[key] != d[key] and {r for k, _ in graph_edge_keys(d16[key]) ^ graph_edge_keys(d[key]) for r in k} - ag:
             bad.append(key)
     W16 = {w['id']: w for w in d16['water']}
     for w in d['water']:
@@ -1910,7 +2474,7 @@ def protected_equal(d, d16):
             bad.append('water ' + w['id'])
     if set(W16) - {w['id'] for w in d['water']}:
         bad.append('water removed')
-    for key in ('bridges', 'exits', 'points', 'pois', 'police_parking_proposals', 'road_graph', 'boundary', 'sand_areas', 'base_mapping', 'gameplay_mapping'):
+    for key in ('bridges', 'exits', 'police_parking_proposals', 'boundary', 'sand_areas', 'base_mapping', 'gameplay_mapping'):
         if d16[key] != d[key]:
             bad.append(key)
     for key in ('coast_segments', 'coast_polyline_m', 'land_polygon_m', 'ridge', 'small_mountain'):
@@ -1940,13 +2504,22 @@ def border_fences(d, fences):
     return bad
 
 
-def checks18(W, d, d16, T):
+def checks18(W, d, d16, T, allow=None):
     res = m17.check(W, d, d16)
+    allow = allow or {}
+    moved = set(allow.get('points', ()))
+    res['points_newly_inside_buildings'] = [p for p in res['points_newly_inside_buildings'] if p not in moved]
+    houses = {b['id']: geom(b) for b in d['functional_buildings'] if b.get('v18_hamlet_shift_m')}
+    res['hamlet_pois_inside_their_moved_house'] = {p['id']: any(g.contains(Point(p['position_m'])) for g in houses.values()) for p in d['points'] if p['id'] in moved}
+    res['hamlet_moved_buildings_on_roads'] = [k for k, g in houses.items() if g.intersects(W.corridor.buffer(-0.05))]
+    dl = [LineString(r['polyline_m']) for r in d['roads'] if r['id'] in set(allow.get('roads', ()))]
+    res['hamlet_driveways_through_buildings'] = [b['id'] for b in d['functional_buildings'] if b['district_id'] == 'village' and any(l.intersects(geom(b).buffer(-0.2)) for l in dl)]
+    res['protected_exceptions'] = {k: sorted(v) for k, v in allow.items()}
     sp = [Point(p['position_m']) for p in d['points'] if p['id'] in ('P02', 'B02')]
     b16 = {b['id'] for b in d16['functional_buildings']}
     res['spawn_clear'] = not any(g.contains(q) for q in sp for i, (g, t) in enumerate(W.solid) if not (t == 'building' and i in W.bidx_rev and W.bidx_rev[i] in b16))
     res['spawn_note'] = 'P02/B02 stand inside the base 2 hut since v11; only solids new in v17/v18 are tested.'
-    res['protected_layout_changed'] = protected_equal(d, d16)
+    res['protected_layout_changed'] = protected_equal(d, d16, allow)
     res['generated_fences_on_district_borders'] = border_fences(d, W.fences)
     roads = unary_union([LineString(r['polyline_m']) for r in d['roads'] + d['paths']])
     res['generated_fences_crossing_road_centrelines'] = [f['id'] for f in W.fences if any(LineString(run).intersects(roads) for run in f['solid_runs_m'] if len(run) > 1)]
@@ -1962,7 +2535,7 @@ def checks18(W, d, d16, T):
 
 
 # ---------------------------------------------------------------- flats, crowd, render
-def patch_flats(W, d, look, grey, pylons):
+def patch_flats(W, d, look, grey, pylons, mine_pts=None):
     blds = {b['id']: b for b in d['functional_buildings']}
     for lb in look['buildings']:
         b = blds[lb['id']]
@@ -1978,7 +2551,8 @@ def patch_flats(W, d, look, grey, pylons):
             lb['roof'] = 'gable'
         lb['v17_recipe'] = v.get('recipe', v.get('zone', ''))
     occ = unary_union([geom(b).buffer(1.5) for b in d['functional_buildings'] if b.get('v17')] + [g for g, t in W.solid if t != 'building'] + W.clear_zones)
-    mine = unary_union([Point(x, y).buffer(2.4) for x, y in W.tree_pts])
+    # scatter trees next to v18 trees go; the positions before the thinning are used so the cut trees leave real gaps
+    mine = unary_union([Point(x, y).buffer(2.4) for x, y in (W.tree_pts if mine_pts is None else mine_pts)])
     before = len(look['trees'])
     xs = np.array([t['x'] for t in look['trees']])
     ys = np.array([t['y'] for t in look['trees']])
@@ -2125,14 +2699,18 @@ def main(argv=None):
     plaza_core(W)
     gen['rough_rooms'] = rough_rooms(W, d)
     gen['vistas'] = vistas(W, d)
+    phase_a_trees = {id(t) for t in W.trees}          # v17 trees and the phase A fixes: never thinned
     print('v18: districts', flush=True)
     gen['rescaled'] = rescale_rest(W, d)
-    for name, fn in (('village', village), ('industrial', industrial), ('transition', transition), ('tramduro', tramduro), ('elite', elite),
+    for name, fn in (('village', village), ('hamlet', hamlet), ('industrial', industrial), ('transition', transition), ('tramduro', tramduro), ('elite', elite),
                      ('beach', beach), ('forest', forest), ('fields', fields_district)):
         print('  ', name, flush=True)
         gen[name] = fn(W, d)
     print('v18: common land', flush=True)
     gen['common'], pylons_new = common_land(W, d)
+    print('v18: thinning trees', flush=True)
+    pre_thin_pts = list(W.tree_pts)
+    gen['tree_thinning'], _ = thin_trees(W, phase_a_trees)
     print('v18: relief + grades', flush=True)
     skel = m16.flatten_look(d, no_veg=True)
     T = Terrain(skel, d['hills'])
@@ -2166,7 +2744,7 @@ def main(argv=None):
     print('v18: flats', flush=True)
     grey = m16.flatten_greybox(d)
     look = m16.flatten_look(d)
-    tb, ta = patch_flats(W, d, look, grey, pylons)
+    tb, ta = patch_flats(W, d, look, grey, pylons, pre_thin_pts)
     print(f'v18: trees {tb} scatter -> {ta} total', flush=True)
     print('v18: metrics', flush=True)
     T18 = Terrain(look, d['hills'])
@@ -2191,7 +2769,11 @@ def main(argv=None):
     metrics = dict(sightlines_eye_1_7m=sl, vista_axes_m=vx, empty_lawn_circles_v18=lawn18, buildings=stats, plaza_core=plaza, generation=gen,
                    relief_hills_added=len(hills), road_grades_over_8pct_v17=g17, props=len(W.props), dressing_trees=len(W.trees),
                    fences_added_v18=len(W.fences), look_trees=ta)
-    res = checks18(W, d, d16, T18)
+    hm = gen['hamlet']
+    allow = dict(roads=[q['road'] for q in hm['driveways']], points=hm['pois_moved_with_houses'],
+                 graph_roads=sorted({q['road'] for q in hm['driveways']} | {q['parent'] for q in hm['driveways']} |
+                                    {next(p['access_road_id'] for p in d['points'] if p['id'] == i) for i in hm['pois_moved_with_houses']}))
+    res = checks18(W, d, d16, T18, allow)
     d['checks'] = dict(d['checks'], v18=res)
     d['v18_phase_b'] = dict(rules=dict(storey_m=STOREY, shop_ground_m=SHOP_GROUND, village_house_m=[6, 10], village_empty_lawn_max_m=30,
                                        common_empty_lawn_max_m=60, plaza_open_paving_max_m=25, road_grade_max=ROAD_GRADE, relief_hills_m=[3, 15],
