@@ -43,3 +43,7 @@ The file contains no image textures or linked libraries. This does **not** remov
 - **HUMAN VISUAL SELECTION:** YES, as directed by the handoff. Visual selection and rights clearance are separate decisions.
 
 HEART-REFERENCE-004 remains historical/read-only and is not being promoted. HEART-ORIGINAL-005 and HEART-ORIGINAL-006 remain historical attempts; this candidate's source lineage is different from an independently authored reconstruction. No Git commit or push was made.
+
+
+## Rights statement — Fedya, 2026-10-13
+Fedya: the source model was obtained separately under a **CC BY** licence and then reworked by us. CC BY allows commercial use with attribution. TODO before release: record the original author name, title and source URL here and in THIRD_PARTY_NOTICES.md (credit line required).
