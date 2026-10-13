@@ -19,3 +19,23 @@ Movement is simulated by the owning player. Shared rigidbodies are simulated by 
 Current limitations: no server reconciliation of player movement; the connection/UI/test-spawn responsibilities share NetworkSession; generic props allow four holders; local grabbing remains single-holder. These choices require review before expanding the game. Do not describe this prototype as production-ready networking.
 
 Next gameplay boundaries, to implement only when needed: NPC body/grab points and resistance; environmental GripAnchor; van doors/loading state; NPC presentation. Capture and transport come before city/economy frameworks. No empty Core/Steam/manager layers.
+
+## Field Clinic kit
+
+An instruction bundle for agents (Claude and Codex). It contains no code and no downloaded dependencies, and it does not replace this file or `docs/CURRENT_STATE.md`.
+
+- **Kit:** `Tools/FieldClinicBrief/`. Start with `00_AUTOSTART.md`. It also holds:
+  - `01_SETUP_REFERENCE.md`;
+  - `02_FULL_GAME_BRIEF.md`, the full brief (an English copy for agents is kept outside the repo);
+  - `03_REPOSITORIES.json`, the 47-entry catalogue;
+  - `04_RESUME.md`, `05_CODEX_HANDOFF.md`, the original prompts and `CHECKSUMS.sha256`.
+- **Skills:** nine `fc-*` skills, mirrored in `.claude/skills/` (Claude) and `.agents/skills/` (Codex). They are `fc-project-bootstrap`, `fc-game-design`, `fc-vehicle-and-cameras`, `fc-patient-lifecycle`, `fc-interaction-and-surgery`, `fc-world-and-roads`, `fc-lowpoly-pipeline`, `fc-atmosphere-and-audio` and `fc-performance-and-playtests`.
+- **Persistent docs:**
+  - `docs/AgentRules.md`, `docs/SetupReport.md` and `docs/EnvironmentReport.md` (setup and rules);
+  - `docs/Progress.md` and `docs/NextAction.md` (current loop);
+  - `docs/DependencyDecisions.md` (all 47 catalogue entries classified, plus the next integrations);
+  - `docs/Dependencies.md` (what the project uses today);
+  - `THIRD_PARTY_NOTICES.md` (licences and attributions);
+  - `docs/ArtDirection.md` (the consolidated current look).
+  The kit refers to `Docs/ArtBible.md`; in this repo that role is served by `docs/ArtDirection.md` together with `docs/art/STYLE_BIBLE_v2.md`.
+- **Rule:** the kit's catalogue is a decision queue, not an install list. Existing systems are kept: FishNet, KCC, our van, ragdoll NPCs, the map pipeline and Uber Water. Duplicates of them are rejected (see `docs/DependencyDecisions.md`).
