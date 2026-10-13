@@ -22,8 +22,9 @@ namespace OnlyVolunteers.Map
     // (NpcRagdoll.Mode; every Play session starts with the ragdoll). A ragdoll can be grabbed by any part: the hint names
     // the part (head, collar, arm, leg...), "— тяжело" on the pelvis and belly.
     // E does the most specific thing in reach, in this order: in the cargo bay next to the sliding door, its inside handle
-    // (canon section 151); pick up an item (the item draws its own "— E" label); open/close the cargo door on that side
-    // (the driver works them with 1-4 and F); get into the driver's seat.
+    // (canon section 151); an action offered through GreyboxUses (the Field Clinic's operating table); pick up an item (the
+    // item draws its own "— E" label); open/close the cargo door on that side (the driver works them with 1-4 and F); get
+    // into the driver's seat.
     public sealed class GreyboxInteractor : MonoBehaviour
     {
         public GreyboxPawn Pawn;
@@ -40,13 +41,14 @@ namespace OnlyVolunteers.Map
         private const float PinReach = 6f;
         private const float PinLift = 0.8f;
 
-        private enum Act { None, Handle, PickupItem, ToggleDoor, Enter }
+        private enum Act { None, Handle, Use, PickupItem, ToggleDoor, Enter }
 
         private static readonly RaycastHit[] SweepHits = new RaycastHit[16];
 
         private float _nextHit;
         private Act _act;
         private Act _afterItem; // what E does instead when the item pickup fails (inventory full, cursor free)
+        private IGreyboxUse _use; // Act.Use: the GreyboxUses entry that offered it (the Field Clinic table)
         private string _label;
         private int _door = -1;
         private bool _canHit;
@@ -98,6 +100,13 @@ namespace OnlyVolunteers.Map
             // Inside the bay the handle wins: the door is right there and nothing else in reach matters more.
             if (Cargo != null && Cargo.AtInsideHandle(Pawn.Position))
                 return (Act.Handle, Cargo.DoorOpen(0) ? "E — закрыть сдвижную дверь (ручка)" : "E — открыть сдвижную дверь (ручка)");
+            // Actions offered by other systems (GreyboxUses: the Field Clinic's operating table) come next.
+            foreach (IGreyboxUse use in GreyboxUses.All)
+            {
+                if (use == null || !use.Offer(Pawn, out string useLabel)) continue;
+                _use = use;
+                return (Act.Use, useLabel);
+            }
             _door = Cargo != null ? Cargo.NearestDoor(Pawn.Position) : -1;
             Act below = _door >= 0 ? Act.ToggleDoor : Seat != null && Seat.CanEnter ? Act.Enter : Act.None;
             // The item carries its own "— E" label; if it cannot be picked up, E falls through to the act below.
@@ -128,6 +137,9 @@ namespace OnlyVolunteers.Map
                     break;
                 case Act.Handle:
                     Cargo.ToggleDoor(0);
+                    break;
+                case Act.Use:
+                    _use?.Use(Pawn);
                     break;
                 case Act.ToggleDoor:
                     Cargo.ToggleDoor(_door);

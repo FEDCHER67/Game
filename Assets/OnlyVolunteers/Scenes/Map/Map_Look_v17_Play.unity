@@ -412058,6 +412058,60 @@ MonoBehaviour:
   - {x: 838.079, y: 324.5}
   - {x: 838.079, y: 338}
   - {x: 823.594, y: 338}
+--- !u!1 &1278494531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278494533}
+  - component: {fileID: 1278494532}
+  m_Layer: 0
+  m_Name: FC_ClinicLoop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1278494532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278494531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe64cfd64c0600e4193ae9598e1bf61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Clinic.ClinicLoop
+  BaseName: "B01 \u0412\u0430\u0433\u043E\u043D"
+  PadXZ: {x: 205.5, y: 176}
+  TableXZ: {x: 209.5, y: 180.5}
+  TableYaw: 20
+  PadRadius: 2.5
+  ArrivedRadius: 25
+  KidneyItem: {fileID: 11400000, guid: 59f40c243a38437badda861bc30c8f84, type: 2}
+  QuickSave: 25
+  LoadOnStart: 1
+  ShowPanel: 1
+--- !u!4 &1278494533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278494531}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1278604996
 GameObject:
   m_ObjectHideFlags: 0
@@ -687004,3 +687058,4 @@ SceneRoots:
   - {fileID: 670588910}
   - {fileID: 703410349}
   - {fileID: 1918929850}
+  - {fileID: 1278494533}
