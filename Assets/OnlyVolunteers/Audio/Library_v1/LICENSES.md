@@ -20,7 +20,7 @@ NOX note: `amb_birds_02.wav` comes from the pack's `Sample_A_Sound_Effect` folde
 
 ## Mixkit: do not redistribute
 
-24 files below are marked **Mixkit** in the License column (some are Mixkit layered with CC0 material). The Mixkit license lets us ship them inside the game but forbids handing them out as standalone files or as part of a sound pack. The GitHub repository `FEDCHER67/Game` is public, so committing these WAVs would publish them as standalone files. They are listed in the repository `.gitignore` (with their `.meta` files): keep them local, or make the repository private and remove those lines.
+24 files below are marked **Mixkit** in the License column (some are Mixkit layered with CC0 material). The Mixkit license lets us ship them inside the game but forbids handing them out as standalone files or as part of a sound pack. The GitHub repository `FEDCHER67/Game` is public, so committing these WAVs would publish them as standalone files. Fedya decided on 2026-10-14 to commit them to the repository anyway for now, so that Vadim gets the same build. The Mixkit sounds will be replaced later.
 
 The CC0 files (NOX, Kenney, rubberduck, BigSoundBank) have no such limit.
 

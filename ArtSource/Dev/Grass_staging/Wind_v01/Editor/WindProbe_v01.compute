@@ -1,0 +1,15 @@
+#pragma kernel Probe
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "../Shaders/V19Wind.hlsl"
+struct Input {float4 positionResponse;float4 normalMask;};
+StructuredBuffer<Input> _Input;
+RWStructuredBuffer<float4> _Output;
+uint _Count;
+[numthreads(64,1,1)]
+void Probe(uint3 id:SV_DispatchThreadID)
+{
+    if(id.x>=_Count)return;
+    Input i=_Input[id.x];float3 p=i.positionResponse.xyz,n=i.normalMask.xyz;float flash;
+    V19WindDeform(float3(0,0,0),float3(0,1,0),i.positionResponse.w,.4,i.normalMask.w,p,n,flash);
+    _Output[id.x]=float4(p,flash);
+}

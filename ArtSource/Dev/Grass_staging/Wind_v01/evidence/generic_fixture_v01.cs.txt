@@ -1,0 +1,48 @@
+var wind=UnityEngine.Object.FindAnyObjectByType<OnlyVolunteers.Map.Wind.V19Wind>();
+var grass=UnityEngine.Object.FindAnyObjectByType<OnlyVolunteers.ThirdParty.GrassInstancerMB.ChunkedGrassRenderer24>();
+var objects=new System.Collections.Generic.List<UnityEngine.GameObject>();
+var mats=new System.Collections.Generic.List<UnityEngine.Material>();
+var go=new UnityEngine.GameObject("G24_GenericFixtureCamera");
+UnityEngine.RenderTexture rt=null; UnityEngine.Texture2D tex=null;
+var previous=UnityEngine.RenderTexture.active;bool oldSuppress=grass.suppressDrawing;
+var result=new System.Text.StringBuilder();
+try {
+grass.suppressDrawing=true;
+var camera=go.AddComponent<UnityEngine.Camera>();camera.enabled=false;camera.cullingMask=1<<31;
+camera.clearFlags=UnityEngine.CameraClearFlags.SolidColor;camera.backgroundColor=new UnityEngine.Color(.035f,.045f,.06f);
+camera.orthographic=true;camera.orthographicSize=5;camera.nearClipPlane=.1f;camera.farClipPlane=50;
+camera.transform.position=new UnityEngine.Vector3(0,4,-18);
+var data=go.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();data.renderPostProcessing=false;
+string[] names={"Grass","Bush","Foliage"};float[] height={1,4,8};float[] width={.5f,1.1f,.7f};
+for(int i=0;i<3;i++){
+var obj=UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Capsule);objects.Add(obj);obj.layer=31;
+obj.transform.position=new UnityEngine.Vector3(-4+4*i,height[i]/2,0);obj.transform.localScale=new UnityEngine.Vector3(width[i],height[i]/2,width[i]);
+var material=new UnityEngine.Material(UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>("Assets/OnlyVolunteers/Map/Wind/v01/Materials/Generic"+names[i]+"Wind_v01.mat"));mats.Add(material);
+material.SetVector("_WindPivotOS",new UnityEngine.Vector4(0,-1,0,0));obj.GetComponent<UnityEngine.Renderer>().sharedMaterial=material;
+result.AppendLine(names[i]+": built-in capsule; height="+height[i]+"; vertex colors="+obj.GetComponent<UnityEngine.MeshFilter>().sharedMesh.colors.Length+"; response="+material.GetFloat("_WindResponse")+"; passes="+material.passCount);
+for(int p=0;p<material.passCount;p++){bool ok=material.SetPass(p);result.AppendLine("  "+material.GetPassName(p)+" compiled="+ok);if(!ok)throw new System.Exception("Generic pass unavailable");}
+}
+wind.RefreshModelBounds();
+rt=new UnityEngine.RenderTexture(960,540,24,UnityEngine.RenderTextureFormat.ARGB32,UnityEngine.RenderTextureReadWrite.sRGB);rt.Create();camera.targetTexture=rt;
+tex=new UnityEngine.Texture2D(960,540,UnityEngine.TextureFormat.RGB24,false);
+for(int frame=0;frame<2;frame++){
+float time=frame==0?1.25f:3.75f;
+UnityEngine.Shader.SetGlobalVector("_V19WindDirectionTime",new UnityEngine.Vector4(1,0,time,1));
+UnityEngine.Shader.SetGlobalVector("_V19WindDetail",new UnityEngine.Vector4(0,45*UnityEngine.Mathf.Deg2Rad,0,0));
+camera.Render();camera.Render();UnityEngine.RenderTexture.active=rt;tex.ReadPixels(new UnityEngine.Rect(0,0,960,540),0,0);tex.Apply();
+string path="Working/Reviews/Wind/generic_material_fixture_"+(frame==0?"rest":"gust")+"_v01.png";
+if(System.IO.File.Exists(path))throw new System.Exception("Fixture output exists");
+System.IO.File.WriteAllBytes(path,tex.EncodeToPNG());
+}
+var shader=mats[0].shader;var messages=UnityEditor.ShaderUtil.GetShaderMessages(shader);
+foreach(var m in messages)result.AppendLine(m.severity+": "+m.message);
+if(UnityEditor.ShaderUtil.ShaderHasError(shader))throw new System.Exception("Generic shader errors");
+result.AppendLine("PASS: ordinary MeshRenderers, built-in unbaked mesh, no vertex colours; all four material passes compiled; automatic bounds padding applied; temporary objects removed.");
+System.IO.File.WriteAllText("Working/Reviews/Wind/generic_material_fixture_v01.txt",result.ToString());
+return result.ToString();
+} finally {
+grass.suppressDrawing=oldSuppress;wind.Publish();UnityEngine.RenderTexture.active=previous;
+foreach(var obj in objects)UnityEngine.Object.DestroyImmediate(obj);
+foreach(var mat in mats)UnityEngine.Object.DestroyImmediate(mat);
+UnityEngine.Object.DestroyImmediate(go);if(tex)UnityEngine.Object.DestroyImmediate(tex);if(rt){rt.Release();UnityEngine.Object.DestroyImmediate(rt);}
+}
