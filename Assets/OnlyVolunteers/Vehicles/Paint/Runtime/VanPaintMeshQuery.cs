@@ -24,6 +24,8 @@ namespace OnlyVolunteers.Vehicles.Paint
             {
                 if (part.filter == null || !part.filter.gameObject.activeInHierarchy) continue;
                 Mesh mesh = part.filter.sharedMesh;
+                // Meshes imported without Read/Write (the wheels) cannot be queried and are not paintable.
+                if (mesh == null || !mesh.isReadable) continue;
                 if (part.vertices == null) { part.vertices = mesh.vertices; part.uv = mesh.uv; part.triangles = mesh.triangles; }
                 Matrix4x4 inv = part.filter.transform.worldToLocalMatrix;
                 Vector3 origin = inv.MultiplyPoint3x4(ray.origin), direction = inv.MultiplyVector(ray.direction);
