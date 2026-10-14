@@ -17,18 +17,18 @@ namespace OnlyVolunteers.Map.Grass.Editor
         public const string Root="Assets/OnlyVolunteers/Map/Grass";
         public const string Vendor="Assets/OnlyVolunteers/ThirdParty/GrassInstancer_MB";
         const float ChunkSize=16, Step=.5f;
-        public static string Build(string revision="v01")
+        public static string Build(string revision="v01",string destinationScene=null)
         {
             if(EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play before baking grass");
             var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             if(!scene.name.StartsWith("Map_Look_v19")) throw new InvalidOperationException("G24 requires a v19 look scene");
-            if(Object.FindAnyObjectByType<ChunkedGrassRenderer24>()) throw new InvalidOperationException("Grass already exists; never stack layers");
+            if(Object.FindAnyObjectByType<ChunkedGrassRenderer24>()) throw new InvalidOperationException("Grass already exists; never stack layers or overwrite delivered revisions");
             var terrain=Object.FindAnyObjectByType<MapHeightSampler>()?.Terrain;
             var weather=Object.FindAnyObjectByType<DistrictWeather19V05>();
             if(!terrain || !weather) throw new InvalidOperationException("v19 terrain/weather missing");
             string output=Root+"/Baked_"+revision;
             if(Directory.Exists(output)) throw new IOException("Baked revision already exists: "+output);
-            string scenePath="Assets/OnlyVolunteers/Scenes/Map/"+scene.name+"_Grass_"+revision+".unity";
+            string scenePath=destinationScene??("Assets/OnlyVolunteers/Scenes/Map/"+scene.name+"_Grass_"+revision+".unity");
             if(File.Exists(scenePath)) throw new IOException("Scene revision already exists");
             var watch=System.Diagnostics.Stopwatch.StartNew();
             var exclusion=GrassExclusion24.Build(terrain);
@@ -36,6 +36,8 @@ namespace OnlyVolunteers.Map.Grass.Editor
             var alpha=td.GetAlphamaps(0,0,td.alphamapWidth,td.alphamapHeight);
             var names=td.terrainLayers.Select(t=>t?t.name.ToLowerInvariant():"").ToArray();
             var districtBounds=weather.districts.Select(d=>d.bounds).ToArray();var weights=new float[districtBounds.Length];
+            // Final v19 retains meadow splats in Downtown. Use its authored park polygons for land use.
+            var parkPolygons=MapLookBuilder.Load("v19").ground.Where(g=>g.soft&&g.mat=="park_grass").Select(g=>g.pts).ToArray();
             var byChunk=new SortedDictionary<int,List<ChunkedGrassRenderer24.Blade>>();
             var districtCounts=new SortedDictionary<string,int>();
             int nx=Mathf.CeilToInt(size.x/ChunkSize), candidates=0, rejectedHard=0;
@@ -70,7 +72,7 @@ namespace OnlyVolunteers.Map.Grass.Editor
                 if(beach)ground=Mathf.Max(ground,sand*.8f);
                 if(rough)ground=Mathf.Max(ground,dry*.75f);
                 if(ground<.55f)continue;
-                if(district=="old_town" && park<.55f)continue;
+                if(district=="old_town" && park<.55f && !parkPolygons.Any(p=>LookGeom.Inside(p,x,z)))continue;
                 if(forest && (meadow<.6f||canopy.Contains(Key(Mathf.FloorToInt(x/2),Mathf.FloorToInt(z/2)))))continue;
                 float patch=Mathf.PerlinNoise(x*.047f+14.2f,z*.047f+19.4f);
                 float pockets=Mathf.PerlinNoise(x*.18f+5.7f,z*.18f+28.1f);
@@ -87,7 +89,7 @@ namespace OnlyVolunteers.Map.Grass.Editor
                 if(td.GetSteepness(u,v)>34)continue;
                 float y=td.GetInterpolatedHeight(u,v)+origin.y;
                 // v19's dry flat yards are at Y=0; only water membership rejects them.
-                if((beach&&y<.1f) || ObjectWater(terrain,x,z,y))continue;
+                if(ObjectWater(terrain,x,z,y))continue;
                 DistrictBlend19.Weights(districtBounds,new Vector2(x,z),weather.blendMetres,weights);
                 float palette=0;for(int d=0;d<weights.Length;d++)palette+=weights[d]*weather.districts[d].palette;
                 palette=Mathf.Min(.999f,palette)+(rough?2:beach?4:0);
@@ -97,7 +99,7 @@ namespace OnlyVolunteers.Map.Grass.Editor
                     float bx=x+(Hash(ix,iz,10+b*3)-.5f)*.28f,bz=z+(Hash(ix,iz,11+b*3)-.5f)*.28f;
                     if(exclusion.Distance(bx,bz)<.75f)continue;
                     float by=td.GetInterpolatedHeight((bx-origin.x)/size.x,(bz-origin.z)/size.z)+origin.y;
-                    if((beach&&by<.1f)||ObjectWater(terrain,bx,bz,by))continue;
+                    if(ObjectWater(terrain,bx,bz,by))continue;
                     float h=roadside?Mathf.Lerp(.1f,.25f,Hash(ix,iz,30+b)):trim?Mathf.Lerp(.12f,.24f,Hash(ix,iz,30+b)):
                         rough?Mathf.Lerp(.22f,.48f,Hash(ix,iz,30+b)):beach?Mathf.Lerp(.28f,.55f,Hash(ix,iz,30+b)):Mathf.Lerp(.5f,.9f,Hash(ix,iz,30+b));
                     float yaw=Hash(ix,iz,40+b)*Mathf.PI*2;
@@ -134,7 +136,7 @@ namespace OnlyVolunteers.Map.Grass.Editor
             var mesh=MakeBlade();AssetDatabase.CreateAsset(mesh,output+"/Blade3Triangles_"+revision+".asset");
             var shader=Shader.Find("OnlyVolunteers/Grass/MB_TallGrass24");if(!shader)throw new InvalidOperationException("Grass shader missing");
             var mat=new Material(shader){name="TallGrass_"+revision,enableInstancing=true};AssetDatabase.CreateAsset(mat,output+"/TallGrass_"+revision+".mat");
-            var go=new GameObject("G24_TallGrass_"+revision);var renderer=go.AddComponent<ChunkedGrassRenderer24>();
+            var renderer=new GameObject("G24_TallGrass_"+revision).AddComponent<ChunkedGrassRenderer24>();
             renderer.data=data;renderer.bladeMesh=mesh;renderer.material=mat;renderer.visibility=AssetDatabase.LoadAssetAtPath<ComputeShader>(Vendor+"/GrassVisibility24.compute");
             EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene,scenePath);
             string evidence="Working/Reviews/Grass/bake_"+revision+".txt";Directory.CreateDirectory(Path.GetDirectoryName(evidence));

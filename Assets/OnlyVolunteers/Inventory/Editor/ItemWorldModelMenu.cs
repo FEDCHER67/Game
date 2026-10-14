@@ -34,15 +34,13 @@ namespace OnlyVolunteers.Inventory.Editor
 
         private static readonly Dictionary<string, Entry> Entries = new()
         {
-            ["Heart"] = new Entry(0.45f, 0.35f, 0.35f, 0.2f, "Assets/OnlyVolunteers/Props/Organs/HEART-ASTRA-007.fbx"),
-            ["Kidney"] = new Entry(0.45f, 0.2f, 0.35f, 0.2f, "Assets/OnlyVolunteers/Props/Organs/KIDNEY-ASTRA-001.fbx"),
-            ["Liver"] = new Entry(0.45f, 0.6f, 0.25f, 0.25f, "Assets/OnlyVolunteers/Props/Organs/LIVER-ASTRA-001.fbx"),
-            ["Lungs"] = new Entry(0.45f, 0.5f, 0.3f, 0.25f, "Assets/OnlyVolunteers/Props/Organs/LUNGS-ASTRA-001.fbx"),
-            ["Brain"] = new Entry(0.45f, 0.45f, 0.3f, 0.3f, "Assets/OnlyVolunteers/Props/Organs/BRAIN-ASTRA-002.fbx"),
-            // Not imported yet (ArtSource/Props/EYE-ASTRA-001); picked up once copied to one of these paths.
+            ["Heart"] = new Entry(0.45f, 0.35f, 0.35f, 0.2f, "Assets/OnlyVolunteers/Props/Organs/HEART-ASTRA-007_recolour_v01.fbx"),
+            ["Kidney"] = new Entry(0.45f, 0.2f, 0.35f, 0.2f, "Assets/OnlyVolunteers/Props/Organs/KIDNEY-ASTRA-001_recolour_v01.fbx"),
+            ["Liver"] = new Entry(0.45f, 0.6f, 0.25f, 0.25f, "Assets/OnlyVolunteers/Props/Organs/LIVER-ASTRA-001_recolour_v01.fbx"),
+            ["Lungs"] = new Entry(0.45f, 0.5f, 0.3f, 0.25f, "Assets/OnlyVolunteers/Props/Organs/LUNGS-ASTRA-001_recolour_v01.fbx"),
+            ["Brain"] = new Entry(0.45f, 0.45f, 0.3f, 0.3f, "Assets/OnlyVolunteers/Props/Organs/BRAIN-ASTRA-002_recolour_v01.fbx"),
             ["Eye"] = new Entry(0.2f, 0.05f, 0.5f, 0.15f,
-                "Assets/OnlyVolunteers/Props/Organs/EYE_ASTRA_001_v03.fbx",
-                "Assets/OnlyVolunteers/Props/Organs/EYE-ASTRA-001.fbx"),
+                "Assets/OnlyVolunteers/Props/Organs/EYE_ASTRA_001_v05.fbx"),
             ["Scalpel"] = new Entry(0.45f, 0.1f, 0.1f, 0f, "Assets/OnlyVolunteers/Props/ScalpelAstra/Model/SCALPEL-ASTRA-001.fbx"),
             // There is no cash item yet (cash is a number in the inventory); ready for one named Cash once
             // ArtSource/Props/CASH-ASTRA-001 is imported.

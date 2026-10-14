@@ -15,6 +15,8 @@ namespace OnlyVolunteers.Map.Grass.Editor
         int width, height;
         float[] clearance;
         public string Summary;
+        [Serializable] public sealed class Routes { public Route[] routes; }
+        [Serializable] public sealed class Route { public string name; public float[] points; }
         public float Distance(float x,float z)
         {
             int ix=Mathf.FloorToInt(x-origin.x),iz=Mathf.FloorToInt(z-origin.z);
@@ -28,6 +30,8 @@ namespace OnlyVolunteers.Map.Grass.Editor
             foreach(var mf in Object.FindObjectsByType<MeshFilter>())
             {
                 if(!mf.sharedMesh || !mf.gameObject.activeInHierarchy)continue;
+                // The giant sea triangles extend below dry land. Its per-cell water test is authoritative.
+                if(mf.name=="Sea")continue;
                 bool surface=false;
                 for(var t=mf.transform;t;t=t.parent)
                     if(t.name=="Roads"||t.name=="Water"||t.name=="RetainingWalls"||t.name.Contains("_big_")) {surface=true;break;}
@@ -41,9 +45,15 @@ namespace OnlyVolunteers.Map.Grass.Editor
                 Polygon(flat,mask.origin,fx,fz,hard);
             }
             var plan=MapLookBuilder.Load("v19");
-            foreach(var g in plan.ground)if(!g.soft)Polygon(g.pts,mask.origin,fx,fz,hard);
+            // Actual Roads meshes include the park cut-outs. Raw paving polygons overlap those
+            // cut-outs and would wrongly erase every Downtown lawn if rasterised again.
             foreach(var yard in plan.yards)
                 if(yard.ground!=null&&(yard.ground.Contains("pav")||yard.ground.Contains("asphalt")||yard.ground.Contains("concrete")))Polygon(yard.pts,mask.origin,fx,fz,hard);
+            var routeAsset=UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(GrassPlacement24.Root+"/Editor/ApprovedVanCorridors24.json");
+            if(!routeAsset)throw new InvalidOperationException("Approved van corridor data missing");
+            var routes=JsonUtility.FromJson<Routes>(routeAsset.text).routes;
+            foreach(var route in routes)for(int i=2;i<route.points.Length;i+=2)
+                Corridor(new Vector2(route.points[i-2],route.points[i-1]),new Vector2(route.points[i],route.points[i+1]),2,mask.origin,fx,fz,hard);
             mask.clearance=new float[mask.width*mask.height];Array.Fill(mask.clearance,50);
             int blocked=0;
             for(int z=0;z<fz;z++)for(int x=0;x<fx;x++)if(hard[z*fx+x])
@@ -52,7 +62,7 @@ namespace OnlyVolunteers.Map.Grass.Editor
                 for(int dz=-1;dz<=1;dz++)for(int dx=-1;dx<=1;dx++)
                 {int xx=(x+dx)/2,zz=(z+dz)/2;if(xx>=0&&zz>=0&&xx<mask.width&&zz<mask.height)mask.clearance[zz*mask.width+xx]=0;}
             }
-            mask.Chamfer();mask.Summary=$"{tris} surface triangles; {blocked} hard half-metre cells; footprint/paving/yard polygons; 1m distance grid";
+            mask.Chamfer();mask.Summary=$"{tris} surface triangles; {blocked} hard half-metre cells; footprint/paving/yard polygons; {routes.Length} approved van routes with 2m half-width; 1m distance grid";
             return mask;
         }
         static void Polygon(float[] poly,Vector3 origin,int fx,int fz,bool[] hard)
@@ -63,6 +73,20 @@ namespace OnlyVolunteers.Map.Grass.Editor
             for(int z=Mathf.Max(0,Mathf.FloorToInt((minZ-origin.z)/Fine));z<=Mathf.Min(fz-1,Mathf.CeilToInt((maxZ-origin.z)/Fine));z++)
                 for(int x=Mathf.Max(0,Mathf.FloorToInt((minX-origin.x)/Fine));x<=Mathf.Min(fx-1,Mathf.CeilToInt((maxX-origin.x)/Fine));x++)
                     if(LookGeom.Inside(poly,origin.x+(x+.5f)*Fine,origin.z+(z+.5f)*Fine))hard[z*fx+x]=true;
+        }
+        static void Corridor(Vector2 a,Vector2 b,float radius,Vector3 origin,int fx,int fz,bool[] hard)
+        {
+            var ab=b-a;float length=ab.sqrMagnitude;
+            int x0=Mathf.Max(0,Mathf.FloorToInt((Mathf.Min(a.x,b.x)-radius-origin.x)/Fine));
+            int x1=Mathf.Min(fx-1,Mathf.CeilToInt((Mathf.Max(a.x,b.x)+radius-origin.x)/Fine));
+            int z0=Mathf.Max(0,Mathf.FloorToInt((Mathf.Min(a.y,b.y)-radius-origin.z)/Fine));
+            int z1=Mathf.Min(fz-1,Mathf.CeilToInt((Mathf.Max(a.y,b.y)+radius-origin.z)/Fine));
+            for(int z=z0;z<=z1;z++)for(int x=x0;x<=x1;x++)
+            {
+                var p=new Vector2(origin.x+(x+.5f)*Fine,origin.z+(z+.5f)*Fine);
+                float t=length>1e-6f?Mathf.Clamp01(Vector2.Dot(p-a,ab)/length):0;
+                if((p-a-ab*t).sqrMagnitude<=radius*radius)hard[z*fx+x]=true;
+            }
         }
         void Chamfer()
         {

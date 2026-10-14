@@ -7,7 +7,8 @@ version=sys.argv[1] if len(sys.argv)>1 else 'v01'
 out=root/f'grass_{version}.jpg'
 assert not out.exists(),f'Refusing existing review sheet {out}'
 pairs=[('hamlet_meadow','Hamlet meadow'),('hamlet_road','Hamlet road edge'),('between_hill','Between-districts hill'),('rough_yard','Rough District yard'),('beach_dune','Beach dune')]
-files=[root/f'{key}_{side}_{version}.png' for key,_ in pairs for side in ('before','after')]+[root/f'wind_{i:02d}_{version}.png' for i in range(6)]
+def capture(key,side):return root/f'{key}_{side}_{"v02" if key=="rough_yard" and version=="v01" else version}.png'
+files=[capture(key,side) for key,_ in pairs for side in ('before','after')]+[root/f'wind_{i:02d}_{version}.png' for i in range(6)]
 assert all(p.exists() for p in files),'Missing actual captures: '+str([str(p) for p in files if not p.exists()])
 font=ImageFont.truetype('C:/Windows/Fonts/arial.ttf',25)
 title=ImageFont.truetype('C:/Windows/Fonts/arialbd.ttf',35)
@@ -22,7 +23,7 @@ y=110
 for key,label in pairs:
  for c,side in enumerate(('before','after')):
   x=pad+c*(tile+pad)
-  with Image.open(root/f'{key}_{side}_{version}.png') as im:sheet.paste(im.resize((tile,imageh),Image.Resampling.LANCZOS),(x,y+38))
+  with Image.open(capture(key,side)) as im:sheet.paste(im.resize((tile,imageh),Image.Resampling.LANCZOS),(x,y+38))
   draw.text((x,y),f'{label}  /  {side.upper()}',font=font,fill=(225,234,215))
  y+=rowh+pad
 draw.text((pad,y+4),'Wind progression | same camera, six shader-time samples',font=font,fill=(234,238,218));y+=61

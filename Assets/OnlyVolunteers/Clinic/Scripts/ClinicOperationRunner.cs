@@ -47,6 +47,7 @@ namespace OnlyVolunteers.Clinic
         private Vector3 _fromPosition;
         private Quaternion _fromRotation;
         private int _kidneyBaseValue = 250;
+        private ItemDefinition _kidneyItem;
 
         public bool Active => _phase != Phase.Idle;
         public KidneyMiniGame Game => _game;
@@ -59,6 +60,7 @@ namespace OnlyVolunteers.Clinic
         {
             _registry = registry;
             _station = station;
+            _kidneyItem = kidney;
             if (kidney != null) _kidneyBaseValue = kidney.BaseValue;
         }
 
@@ -117,7 +119,8 @@ namespace OnlyVolunteers.Clinic
                     if (Blend(_fromPosition, _fromRotation, anchor.position, anchor.rotation))
                     {
                         _phase = Phase.MiniGame;
-                        _game = new KidneyMiniGame(_station.Patient, false, _camera, _station.Audio, Comic);
+                        _game = new KidneyMiniGame(_station.Patient, false, _camera, _station.Audio, Comic,
+                            _kidneyItem != null ? _kidneyItem.WorldModel : null);
                     }
                     break;
                 case Phase.MiniGame:

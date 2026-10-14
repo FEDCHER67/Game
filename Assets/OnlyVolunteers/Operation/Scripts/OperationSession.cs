@@ -151,7 +151,8 @@ namespace OnlyVolunteers.Operation
             OperationPatient patient = table.Patient;
             if (patient == null || patient.KidneysLeft <= 0) return;
             operationStarted = Time.time;
-            game = new KidneyMiniGame(patient, patient.KidneysLeft == 1, player.ViewCamera, sfx, Comic);
+            game = new KidneyMiniGame(patient, patient.KidneysLeft == 1, player.ViewCamera, sfx, Comic,
+                kidneyItem != null ? kidneyItem.WorldModel : null);
             phase = Phase.MiniGame;
         }
 

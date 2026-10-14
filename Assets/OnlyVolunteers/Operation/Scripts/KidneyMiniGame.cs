@@ -10,7 +10,7 @@ namespace OnlyVolunteers.Operation
     /// 2) Pull: grab the kidney and drag the mouse up until it pops; a sudden yank tears it (one grade lower).
     /// 3) Tape: three strips of duct tape across the slit.
     /// Forgiving by design (canon 42): drifting off the line only pauses the cut; only a mostly sloppy cut or a yank
-    /// lowers the grade, by one step each. All geometry is placeholder primitives under the patient's visual.
+    /// lowers the grade, by one step each. The kidney uses the item model; guides remain cartoon primitives.
     /// </summary>
     public sealed class KidneyMiniGame
     {
@@ -46,6 +46,9 @@ namespace OnlyVolunteers.Operation
         private readonly Material organ;
         private readonly Material steel;
         private readonly Material tape;
+        private readonly GameObject kidneyModel;
+        private readonly bool mirrored;
+        private Vector3 kidneyRestScale;
 
         private Transform scalpel;
         private Transform tapeRoll;
@@ -63,12 +66,14 @@ namespace OnlyVolunteers.Operation
 
         /// <param name="mirrored">Second kidney: the incision is mirrored to the other side of the body.</param>
         public KidneyMiniGame(OperationPatient patient, bool mirrored, Camera camera, AudioSource sfx,
-            System.Action<string, Vector3, Color> comic)
+            System.Action<string, Vector3, Color> comic, GameObject kidneyModel = null)
         {
             this.patient = patient;
             this.camera = camera;
             this.sfx = sfx;
             this.comic = comic;
+            this.kidneyModel = kidneyModel;
+            this.mirrored = mirrored;
             space = patient.Visual;
             start = space.InverseTransformPoint(patient.KidneyIncisionStart.position);
             end = space.InverseTransformPoint(patient.KidneyIncisionEnd.position);
@@ -211,6 +216,7 @@ namespace OnlyVolunteers.Operation
             OperationSfx.Play(sfx, OperationCue.Slit);
             comic("ВЖУХ!", space.TransformPoint((start + end) * 0.5f), Color.white);
             kidney = BuildKidney();
+            kidneyRestScale = kidney.localScale;
             vessel = BuildVessel();
             Begin(Step.Pull);
         }
@@ -246,7 +252,7 @@ namespace OnlyVolunteers.Operation
             patient.Scream = Tension;
             float stretch = 1f + Tension * 0.5f;
             kidney.localPosition = mid + normal * (0.01f + raise);
-            kidney.localScale = new Vector3(0.12f / stretch, 0.065f * stretch, 0.075f / stretch);
+            kidney.localScale = Vector3.Scale(kidneyRestScale, new Vector3(1f / stretch, stretch, 1f / stretch));
             PlaceBetween(vessel, mid - normal * 0.02f, kidney.localPosition, 0.012f / stretch);
             if (Tension < 1f) return;
 
@@ -256,12 +262,25 @@ namespace OnlyVolunteers.Operation
             PoppedKidney = kidney;
             spawned.Remove(kidney.gameObject);
             kidney.SetParent(null, true);
-            kidney.localScale = new Vector3(0.12f, Yanked ? 0.045f : 0.065f, 0.075f);
+            kidney.localScale = Vector3.Scale(kidneyRestScale, new Vector3(1f, Yanked ? 0.045f / 0.065f : 1f, 1f));
             Vector3 world = kidney.position;
             Splash(world, Yanked ? 9 : 3);
             if (Yanked)
             {
-                kidney.GetComponent<Renderer>().sharedMaterial = MakeMaterial(new Color(0.52f, 0.2f, 0.25f));
+                // Keep each approved material region while retaining the existing bruised feedback.
+                foreach (Renderer renderer in kidney.GetComponentsInChildren<Renderer>())
+                {
+                    Material[] materials = renderer.sharedMaterials;
+                    for (int index = 0; index < materials.Length; index++)
+                    {
+                        if (materials[index] == null || !materials[index].HasProperty("_BaseColor")) continue;
+                        var tint = new MaterialPropertyBlock();
+                        renderer.GetPropertyBlock(tint, index);
+                        Color color = materials[index].GetColor("_BaseColor");
+                        tint.SetColor("_BaseColor", new Color(color.r * 0.75f, color.g * 0.75f, color.b * 0.75f, color.a));
+                        renderer.SetPropertyBlock(tint, index);
+                    }
+                }
                 OperationSfx.Play(sfx, OperationCue.Rip);
                 comic("ХРЯСЬ! Рывок — почка помята", world, new Color(1f, 0.5f, 0.4f));
             }
@@ -391,11 +410,54 @@ namespace OnlyVolunteers.Operation
 
         private Transform BuildKidney()
         {
-            GameObject bean = Primitive(PrimitiveType.Sphere, "Kidney", organ);
-            bean.transform.localPosition = (start + end) * 0.5f;
-            bean.transform.localRotation = Quaternion.LookRotation(direction, normal);
-            bean.transform.localScale = new Vector3(0.12f, 0.065f, 0.075f);
-            return bean.transform;
+            if (kidneyModel == null)
+            {
+                GameObject bean = Primitive(PrimitiveType.Sphere, "Kidney", organ);
+                bean.transform.localPosition = (start + end) * 0.5f;
+                bean.transform.localRotation = Quaternion.LookRotation(direction, normal);
+                bean.transform.localScale = new Vector3(0.12f, 0.065f, 0.075f);
+                return bean.transform;
+            }
+
+            var holder = new GameObject("Kidney").transform;
+            holder.SetParent(space, false);
+            spawned.Add(holder.gameObject);
+            Transform model = Object.Instantiate(kidneyModel, holder, false).transform;
+            Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
+            // The accepted asset is a pair. Show one existing half per operation, with no mesh edits.
+            Renderer selected = null;
+            float selectedX = mirrored ? float.NegativeInfinity : float.PositiveInfinity;
+            foreach (Renderer renderer in renderers)
+            {
+                float x = model.InverseTransformPoint(renderer.bounds.center).x;
+                if (selected == null || (mirrored ? x > selectedX : x < selectedX))
+                {
+                    selected = renderer;
+                    selectedX = x;
+                }
+            }
+            foreach (Renderer renderer in renderers) renderer.enabled = renderer == selected;
+            foreach (Collider collider in model.GetComponentsInChildren<Collider>()) collider.enabled = false;
+            model.localRotation = Quaternion.LookRotation(Vector3.down, Vector3.right);
+            if (selected != null)
+            {
+                Bounds world = selected.bounds;
+                Vector3 min = world.min, max = world.max;
+                var bounds = new Bounds(holder.InverseTransformPoint(world.center), Vector3.zero);
+                for (int corner = 0; corner < 8; corner++)
+                    bounds.Encapsulate(holder.InverseTransformPoint(new Vector3(
+                        (corner & 1) == 0 ? min.x : max.x,
+                        (corner & 2) == 0 ? min.y : max.y,
+                        (corner & 4) == 0 ? min.z : max.z)));
+                float longest = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+                // The integrated tube takes about half the model's length; keep the bean readable at table distance.
+                float fit = longest > 0.0001f ? 0.24f / longest : 1f;
+                model.localScale *= fit;
+                model.localPosition -= bounds.center * fit;
+            }
+            holder.localPosition = (start + end) * 0.5f;
+            holder.localRotation = Quaternion.LookRotation(direction, normal);
+            return holder;
         }
 
         private Transform BuildVessel() => Primitive(PrimitiveType.Cylinder, "Vessel", organ).transform;

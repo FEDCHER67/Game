@@ -31,8 +31,8 @@ namespace OnlyVolunteers.Vehicles.Paint
         public event Action<PaintStroke> StrokeCommitted;
         public event Action<string> HistoryChanged;
 
-        public void Configure(Shader shader, Renderer[] renderers, Vector3 worldSize)
-        { brushShader = shader; paintRenderers = renderers; atlasWorldSize = worldSize; }
+        public void Configure(Shader shader, Renderer[] renderers, Vector3 worldSize, string identity = null)
+        { brushShader = shader; paintRenderers = renderers; atlasWorldSize = worldSize; if (identity != null) vanId = identity; }
 
         void Awake()
         {

@@ -25,7 +25,7 @@ namespace OnlyVolunteers.Vehicles.Paint
             text = root.Q<TextField>("lettering"); swatch = root.Q("swatch");
             root.Q<Button>("stamp").clicked += Stamp;
             root.Q<Button>("cancel").clicked += Cancel;
-            text.RegisterCallback<KeyDownEvent>(OnTextKey);
+            text.RegisterCallback<KeyDownEvent>(OnTextKey, TrickleDown.TrickleDown);
             lastMessage = null;
             HideText();
         }
@@ -33,7 +33,7 @@ namespace OnlyVolunteers.Vehicles.Paint
         {
             if (root == null) return;
             root.Q<Button>("stamp").clicked -= Stamp; root.Q<Button>("cancel").clicked -= Cancel;
-            text.UnregisterCallback<KeyDownEvent>(OnTextKey);
+            text.UnregisterCallback<KeyDownEvent>(OnTextKey, TrickleDown.TrickleDown);
         }
         void Stamp() { input.SubmitText(text.value); }
         void Cancel() { input.CloseText(); }
@@ -62,5 +62,10 @@ namespace OnlyVolunteers.Vehicles.Paint
         }
         public void ShowText() { textPanel.style.display = DisplayStyle.Flex; text.schedule.Execute(() => { text.Focus(); text.SelectAll(); }); }
         public void HideText() { if (textPanel != null) textPanel.style.display = DisplayStyle.None; }
+        public void SetShown(bool shown) { if (root != null) root.style.display = shown ? DisplayStyle.Flex : DisplayStyle.None; }
+        public void SetMapHelp()
+        {
+            root.Q<Label>("save-help").text = "J  save  ·  L  load  ·  B away from tools  stow";
+        }
     }
 }

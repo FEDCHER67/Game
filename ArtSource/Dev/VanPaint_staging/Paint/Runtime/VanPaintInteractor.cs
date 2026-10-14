@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 namespace OnlyVolunteers.Vehicles.Paint
 {
     // Standalone test input. Main-map integration must gate its grab/phone/scroll owners.
+    [DefaultExecutionOrder(-900)]
     public sealed class VanPaintInteractor : MonoBehaviour
     {
         [SerializeField] Camera view;
@@ -14,6 +15,10 @@ namespace OnlyVolunteers.Vehicles.Paint
         [SerializeField] Transform brushHand;
         [SerializeField] Vector3 orbitCentre = new(0, 1, 0);
         [SerializeField] float brushRadius = .04f;
+        [SerializeField] VanPaintMeshQuery meshQuery;
+        [SerializeField] bool firstPerson;
+        [SerializeField] float reach = 12;
+        public event System.Action<bool> TextModeChanged;
         VanPaintProp can, brush;
         VanPaintSurface activeStroke;
         readonly List<PaintDab> segment = new();
@@ -32,6 +37,13 @@ namespace OnlyVolunteers.Vehicles.Paint
 
         public void Configure(Camera camera, VanPaintSurface surface, VanPaintHud display, Transform left, Transform right)
         { view = camera; van = surface; hud = display; canHand = left; brushHand = right; }
+        public void ConfigureFirstPerson(VanPaintMeshQuery query) { meshQuery = query; firstPerson = true; reach = 3.5f; }
+        public void StowTools()
+        {
+            FinishStroke(); if (TextOpen) CloseText();
+            if (can != null) can.ReturnToStand(); if (brush != null) brush.ReturnToStand();
+            can = null; brush = null;
+        }
 
         void Update()
         {
@@ -39,9 +51,9 @@ namespace OnlyVolunteers.Vehicles.Paint
             if (keyboard == null || mouse == null) return;
             if (!mouse.leftButton.isPressed) strokeLimitedUntilRelease = false;
             if (TextOpen) return; // All gameplay shortcuts/paint/orbit suspended while typing.
-            Ray ray = view.ScreenPointToRay(mouse.position.ReadValue());
-            bool overUi = hud != null && hud.BlocksPointer(mouse.position.ReadValue());
-            if (keyboard.bKey.wasPressedThisFrame && !overUi) PickUp(ray);
+            Ray ray = firstPerson ? new Ray(view.transform.position, view.transform.forward) : view.ScreenPointToRay(mouse.position.ReadValue());
+            bool overUi = !firstPerson && hud != null && hud.BlocksPointer(mouse.position.ReadValue());
+            if (!firstPerson && keyboard.bKey.wasPressedThisFrame && !overUi) PickUp(ray);
             if (keyboard.vKey.wasPressedThisFrame && !overUi) OpenText(ray);
             if (TextOpen) return;
             if (keyboard.zKey.wasPressedThisFrame) { FinishStroke(); van.UndoStroke(); Message = van.Status; }
@@ -56,7 +68,7 @@ namespace OnlyVolunteers.Vehicles.Paint
             float scroll = mouse.scroll.ReadValue().y;
             if (!overUi && HasTools && Mathf.Abs(scroll) > .01f)
                 brushRadius = Mathf.Clamp(brushRadius + Mathf.Sign(scroll) * .008f, .012f, .12f);
-            if (mouse.rightButton.isPressed && !overUi)
+            if (!firstPerson && mouse.rightButton.isPressed && !overUi)
             {
                 FinishStroke(); Vector2 delta = mouse.delta.ReadValue();
                 view.transform.RotateAround(orbitCentre, Vector3.up, delta.x * .15f);
@@ -74,7 +86,7 @@ namespace OnlyVolunteers.Vehicles.Paint
         public bool PickUp(Ray ray)
         {
             FinishStroke();
-            if (!Physics.Raycast(ray, out var hit, 12) || !hit.collider.GetComponentInParent<VanPaintProp>()) return false;
+            if (!Physics.Raycast(ray, out var hit, reach, ~0, QueryTriggerInteraction.Ignore) || !hit.collider.GetComponentInParent<VanPaintProp>()) return false;
             var prop = hit.collider.GetComponentInParent<VanPaintProp>();
             if (prop.IsBrush) { if (brush != null) brush.ReturnToStand(); brush = prop; prop.Hold(brushHand); }
             else { if (can != null) can.ReturnToStand(); can = prop; prop.Hold(canHand); }
@@ -83,25 +95,25 @@ namespace OnlyVolunteers.Vehicles.Paint
             return true;
         }
 
-        bool Hit(Ray ray, out RaycastHit hit, out VanPaintSurface surface)
+        bool Hit(Ray ray, out Vector2 uv, out VanPaintSurface surface)
         {
-            surface = null;
-            if (!Physics.Raycast(ray, out hit, 12)) return false;
+            surface = null; uv = default;
+            if (meshQuery != null) { surface = van; return meshQuery.TryHit(ray, reach, out uv); }
+            if (!Physics.Raycast(ray, out var hit, reach)) return false;
             var target = hit.collider.GetComponent<VanPaintTarget>();
             if (target == null || !target.Accepts(hit.triangleIndex)) return false;
-            surface = target.Surface; return true;
+            surface = target.Surface; uv = hit.textureCoord; return true;
         }
 
         public bool PaintAt(Ray ray)
         {
-            if (!HasTools || TextOpen || strokeLimitedUntilRelease || !Hit(ray, out var hit, out var surface)) { lastUv = null; return false; }
+            if (!HasTools || TextOpen || strokeLimitedUntilRelease || !Hit(ray, out var uv, out var surface)) { lastUv = null; return false; }
             if (activeStroke != surface)
             {
                 FinishStroke();
                 if (!surface.BeginStroke(CurrentColor)) { Message = surface.Status; return false; }
                 activeStroke = surface;
             }
-            Vector2 uv = hit.textureCoord;
             Rect island = surface.Island(uv);
             Vector2 radius = surface.UvPerMetre(uv) * brushRadius;
             segment.Clear();
@@ -122,8 +134,8 @@ namespace OnlyVolunteers.Vehicles.Paint
         public bool OpenText(Ray ray)
         {
             FinishStroke();
-            if (!HasTools || !Hit(ray, out var hit, out textSurface)) { Message = "Hold a brush and can; aim at the van body."; return false; }
-            textUv = hit.textureCoord; TextOpen = true; hud.ShowText(); return true;
+            if (!HasTools || !Hit(ray, out textUv, out textSurface)) { Message = "Hold a brush and can; aim at the van body."; return false; }
+            TextOpen = true; hud.ShowText(); TextModeChanged?.Invoke(true); return true;
         }
 
         public bool SubmitText(string text)
@@ -137,7 +149,7 @@ namespace OnlyVolunteers.Vehicles.Paint
             Message = "Painted: " + text.Trim().ToUpperInvariant(); CloseText(); return true;
         }
 
-        public void CloseText() { TextOpen = false; textSurface = null; hud.HideText(); }
+        public void CloseText() { TextOpen = false; textSurface = null; hud.HideText(); TextModeChanged?.Invoke(false); }
         void OnDisable() { FinishStroke(); }
         void OnApplicationFocus(bool focus) { if (!focus) FinishStroke(); }
     }

@@ -11,8 +11,10 @@ def compile(name,files,extra,editor=False):
     flags+=['-target:library','-nologo',f'-out:"{STAGE}/evidence/{name}.dll"']
     flags+=[f'-r:"{p}"' for p in extra]+[f'"{p}"' for p in files]
     rsp=STAGE/'evidence'/(name+'.rsp');rsp.write_text('\n'.join(flags),encoding='utf-8')
-    r=subprocess.run(['dotnet',str(CSC),'@'+str(rsp)],cwd=ROOT,capture_output=True,text=True)
+    r=subprocess.run(['dotnet',str(CSC),'@'+str(rsp)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace')
     print(name, 'PASS' if r.returncode==0 else 'FAIL');print(r.stdout);print(r.stderr)
     if r.returncode:sys.exit(r.returncode)
 compile('Grass24.RuntimeCheck',list((STAGE/'v01/Grass').glob('*.cs'))+list((STAGE/'v01/ThirdParty').glob('*.cs')),[ROOT/'Library/ScriptAssemblies/Assembly-CSharp.dll'])
-compile('Grass24.EditorCheck',list((STAGE/'v01/Grass/Editor').glob('*.cs')),[STAGE/'evidence/Grass24.RuntimeCheck.dll',ROOT/'Library/ScriptAssemblies/Assembly-CSharp.dll',ROOT/'Library/ScriptAssemblies/Assembly-CSharp-Editor.dll'],True)
+# Once imported, editor sources resolve runtime types from the actual project assembly.
+runtime_refs=[] if (ROOT/'Assets/OnlyVolunteers/Map/Grass').exists() else [STAGE/'evidence/Grass24.RuntimeCheck.dll']
+compile('Grass24.EditorCheck',list((STAGE/'v01/Grass/Editor').glob('*.cs')),runtime_refs+[ROOT/'Library/ScriptAssemblies/Assembly-CSharp.dll',ROOT/'Library/ScriptAssemblies/Assembly-CSharp-Editor.dll'],True)
