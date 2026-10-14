@@ -65,6 +65,9 @@ namespace OnlyVolunteers.Audio
         {
             string resourcePath = RevisionResourcePath(SceneManager.GetActiveScene().name);
             WaterData data = resourcePath != null ? Resources.Load<WaterData>(resourcePath) : null;
+            var ambience = Object.FindAnyObjectByType<AmbiencePlayer>();
+            if (ambience != null && ambience.SceneData != null && ambience.SceneData.WaterOverride != null)
+                data = ambience.SceneData.WaterOverride;
             if (data == null) data = Resources.Load<WaterData>("Water_latest");
             if (_grid == null || data != _data) Initialize(data);
             else ClearGroundCache();

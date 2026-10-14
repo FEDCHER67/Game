@@ -1,0 +1,579 @@
+{
+  "task": "G19",
+  "date": "2026-10-14",
+  "blender_version": "5.2.1 LTS",
+  "method": "Independent FBX reimport in Blender 5.2 background; compare against prepared master mesh-local data and manifest. Unity not opened.",
+  "status": "PASS",
+  "source_archive_unchanged": true,
+  "models": [
+    {
+      "id": "TREE_BARE_01",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 7.439849851742508e-07,
+      "max_vertex_distance_m": 8.596304041930125e-07,
+      "max_corner_normal_difference": 0.0002137901892299789,
+      "triangles": 514,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.001"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "TREE_BARE_02",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 9.402801515179249e-07,
+      "max_vertex_distance_m": 1.17407535071834e-06,
+      "max_corner_normal_difference": 0.0004871341283813439,
+      "triangles": 1550,
+      "source_topology_warning": true,
+      "non_manifold_edges_after_welding": 7,
+      "material_names": [
+        "MAT_HK_SourcePalette.002"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "TREE_BARE_03",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 8.803146362978964e-07,
+      "max_vertex_distance_m": 1.4662859939562622e-06,
+      "max_corner_normal_difference": 0.0004839953383462073,
+      "triangles": 1374,
+      "source_topology_warning": true,
+      "non_manifold_edges_after_welding": 18,
+      "material_names": [
+        "MAT_HK_SourcePalette.003"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_01",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 5.157928466281714e-08,
+      "max_vertex_distance_m": 4.0122603905956566e-08,
+      "max_corner_normal_difference": 9.59733438159241e-05,
+      "triangles": 174,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.004"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_02",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 4.768371586472142e-08,
+      "max_vertex_distance_m": 8.940696716308594e-08,
+      "max_corner_normal_difference": 7.128538748543426e-05,
+      "triangles": 180,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.005"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_03",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 5.1097488407148006e-08,
+      "max_vertex_distance_m": 1.0745380052412656e-07,
+      "max_corner_normal_difference": 0.0001697151280653241,
+      "triangles": 180,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.006"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_04",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 1.0465011596183516e-07,
+      "max_vertex_distance_m": 1.4901161193847656e-07,
+      "max_corner_normal_difference": 0.00014396694712374302,
+      "triangles": 734,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.007"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_05",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 7.153813896820793e-08,
+      "max_vertex_distance_m": 1.0745380052412656e-07,
+      "max_corner_normal_difference": 0.0004793767171600085,
+      "triangles": 383,
+      "source_topology_warning": true,
+      "non_manifold_edges_after_welding": 4,
+      "material_names": [
+        "MAT_HK_SourcePalette.008"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_06",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 6.02836608964985e-08,
+      "max_vertex_distance_m": 1.0745380052412656e-07,
+      "max_corner_normal_difference": 9.587050441075598e-05,
+      "triangles": 288,
+      "source_topology_warning": true,
+      "non_manifold_edges_after_welding": 1,
+      "material_names": [
+        "MAT_HK_SourcePalette.009"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_07",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 2.1505584718584103e-07,
+      "max_vertex_distance_m": 2.980232238769531e-07,
+      "max_corner_normal_difference": 0.0004793726002706138,
+      "triangles": 286,
+      "source_topology_warning": true,
+      "non_manifold_edges_after_welding": 1,
+      "material_names": [
+        "MAT_HK_SourcePalette.010"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_08",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 1.0394668581437116e-07,
+      "max_vertex_distance_m": 3.488272284357663e-07,
+      "max_corner_normal_difference": 0.000494185495876849,
+      "triangles": 984,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.011"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_09",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 4.8843383781971283e-08,
+      "max_vertex_distance_m": 3.5762786865234375e-07,
+      "max_corner_normal_difference": 0.0003355781572299163,
+      "triangles": 753,
+      "source_topology_warning": true,
+      "non_manifold_edges_after_welding": 14,
+      "material_names": [
+        "MAT_HK_SourcePalette.012"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_10",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 1.2703895568844104e-07,
+      "max_vertex_distance_m": 1.2013700256829907e-07,
+      "max_corner_normal_difference": 0.0005107646762378539,
+      "triangles": 2746,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.013"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    },
+    {
+      "id": "ROCK_11",
+      "status": "PASS",
+      "checks": {
+        "one_mesh_no_empty_objects": true,
+        "bbox_within_0_01_mm": true,
+        "geometry_bidirectional_distance_within_0_01_mm": true,
+        "triangle_count_matches": true,
+        "zero_degenerate_triangles": true,
+        "ground_contact": true,
+        "origin_zero": true,
+        "scale_one": true,
+        "rotation_zero": true,
+        "one_material": true,
+        "uv_corner_multiset_preserved": true,
+        "recomputed_normals_preserved": true,
+        "normal_lengths_valid": true,
+        "texture_found": true,
+        "no_animation": true,
+        "fbx_hash_matches_manifest": true,
+        "source_nonmanifold_count_unchanged": true
+      },
+      "bbox_max_error_m": 1.1920928955078125e-07,
+      "max_vertex_distance_m": 2.93518837679585e-07,
+      "max_corner_normal_difference": 0.0005021325388208805,
+      "triangles": 5642,
+      "source_topology_warning": false,
+      "non_manifold_edges_after_welding": 0,
+      "material_names": [
+        "MAT_HK_SourcePalette.014"
+      ],
+      "texture_paths": [
+        "C:\\Dev\\Game\\ArtSource\\ThirdParty\\happykeys_rocks_dead_trees\\v01\\fbx\\Gradient_Palette_v01.png"
+      ]
+    }
+  ],
+  "collider_proxies": [
+    {
+      "id": "TREE_BARE_01_TRUNK",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "TREE_BARE_01_BRANCH_LOW",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "TREE_BARE_02_TRUNK",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "TREE_BARE_03_TRUNK",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "TREE_BARE_03_BRANCH_LOW",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_02_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_03_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_04_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_05_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_06_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_07_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_08_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_09_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_10_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    },
+    {
+      "id": "ROCK_11_BOX",
+      "status": "PASS",
+      "closed_debug_mesh": true
+    }
+  ],
+  "unity": "NOT RUN - user explicitly prohibited opening/driving Unity.",
+  "topology": "Round-trip PASS does not certify watertight source geometry; six models carry explicit source topology warnings."
+}

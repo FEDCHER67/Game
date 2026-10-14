@@ -37,10 +37,24 @@ namespace OnlyVolunteers.Audio
         }
 
         public string PlanRevision;
+        // Optional revision-owned built-water data; null preserves existing scene-name lookup.
+        public WaterData WaterOverride;
         public District[] Districts = Array.Empty<District>();
         public Coastline[] Coastlines = Array.Empty<Coastline>();
         public Vector3[] Fountains = Array.Empty<Vector3>();
         public Vector3[] Offices = Array.Empty<Vector3>();
+
+        // Opt-in v19 spatial transitions. Earlier revisions keep the original time-based behaviour.
+        public float DistrictBlendMetres;
+        public Vector4[] BlendBounds = Array.Empty<Vector4>();
+        [Serializable]
+        public sealed class Spot
+        {
+            public string Name, SoundId, DistrictId;
+            public Vector3 Position;
+            public float Volume = .25f, Range = 20f;
+        }
+        public Spot[] Spots = Array.Empty<Spot>();
 
         // This table is preserved when the baker updates an existing asset. An unknown district is silent.
         public Mapping[] Mappings =

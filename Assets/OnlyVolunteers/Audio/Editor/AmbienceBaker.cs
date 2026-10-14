@@ -24,6 +24,35 @@ namespace OnlyVolunteers.Audio.EditorTools
             "amb_birds", "amb_city", "amb_office", "amb_sea", "amb_sea_gulls", "amb_fountain"
         };
 
+        // Checkpoint P uses v18 geometry while retaining a v19-only ambience asset.
+        public static AmbienceData BakeV19Palette(string sourceRevision, Vector4[] bounds, AmbienceData.Spot[] spots)
+        {
+            if (EditorApplication.isPlaying) throw new InvalidOperationException("Exit Play first.");
+            string path = AssetPathFor("v19");
+            if (File.Exists(path)) throw new IOException("v19 ambience exists; preserve its revision.");
+            var source = AssetDatabase.LoadAssetAtPath<AmbienceData>(AssetPathFor(sourceRevision));
+            if (source == null) throw new IOException("Missing source ambience " + sourceRevision);
+            var data = UnityEngine.Object.Instantiate(source);
+            data.PlanRevision = "v19"; data.DistrictBlendMetres = 60; data.BlendBounds = bounds; data.Spots = spots;
+            data.Mappings = V19Mappings();
+            AssetDatabase.CreateAsset(data, path); AssetDatabase.SaveAssetIfDirty(data);
+            return data;
+        }
+
+        private static AmbienceData.Mapping[] V19Mappings() => new[]
+        {
+            new AmbienceData.Mapping("forest", "", 0), // No generic cheerful birds in the dark forest.
+            new AmbienceData.Mapping("village", "amb_birds", .25f),
+            new AmbienceData.Mapping("transition", "", 0),
+            new AmbienceData.Mapping("residential", "", 0), // Crow/wind recordings awaiting licence approval.
+            new AmbienceData.Mapping("old_town", "amb_city", .42f),
+            new AmbienceData.Mapping("industrial", "amb_sea_gulls", .20f),
+            new AmbienceData.Mapping("elite", "amb_birds", .27f),
+            new AmbienceData.Mapping("fields", "amb_birds", .28f),
+            new AmbienceData.Mapping("beach", "amb_sea", .48f),
+            new AmbienceData.Mapping("tramduro", "amb_sea_gulls", .22f)
+        };
+
         [MenuItem("OnlyVolunteers/Audio/Bake Ambience Zones (latest plan)")]
         public static void Bake()
         {
@@ -84,6 +113,18 @@ namespace OnlyVolunteers.Audio.EditorTools
             data.Coastlines = coastlines.ToArray();
             data.Fountains = fountains.ToArray();
             data.Offices = offices.ToArray();
+            if (revision == "v19")
+            {
+                data.DistrictBlendMetres = 60;
+                data.BlendBounds = new Vector4[data.Districts.Length];
+                for (int i = 0; i < data.Districts.Length; i++)
+                {
+                    Vector2 lo = new Vector2(float.PositiveInfinity, float.PositiveInfinity), hi = -lo;
+                    foreach (var p in data.Districts[i].Polygon) { lo = Vector2.Min(lo,p); hi = Vector2.Max(hi,p); }
+                    data.BlendBounds[i] = new Vector4(lo.x,lo.y,hi.x,hi.y);
+                }
+                if (created) data.Mappings = V19Mappings();
+            }
 
             if (created) AssetDatabase.CreateAsset(data, assetPath);
             else EditorUtility.SetDirty(data);

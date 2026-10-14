@@ -36,3 +36,4 @@ The assistant of the active Work chat is the lead: it plans, writes tricky code,
 - If anything in the brief is unclear or contradicts the code, stop and ask in your report instead of guessing.
 - Never commit, push, edit WORK_SYNC.md or delete files; never overwrite an existing deliverable (new numbered revision instead).
 - Finish with the report format the brief asks for: what you changed (paths), how you checked it, what is still open.
+- Unity on this PC runs elevated, so at start it shows "Administrator Privileges Detected": always press **Ignore Warning**. Never press "Restart as Standard User"; it only loops back to the same dialog (Fedya 2026-10-14).

@@ -1,0 +1,7 @@
+PASS 2026-10-14T01:40:21.922270+00:00
+Staged G23 C# set compiled using Unity 6000.5.11f1 Roslyn and current Unity assembly references.
+Full Assembly-CSharp-Editor source compiled with the four proposed builder hooks substituted in staging; no errors; only two pre-existing obsolete FindObjectsByType warnings in V19PaletteTest.cs.
+Commands:
+NetCoreRuntime/dotnet.exe DotNetSdk/sdk/8.0.318/Roslyn/bincore/csc.dll @ArtSource/Dev/Trees_staging/compile_v02.rsp
+NetCoreRuntime/dotnet.exe DotNetSdk/sdk/8.0.318/Roslyn/bincore/csc.dll @ArtSource/Dev/Trees_staging/compile_builder_v02.rsp
+Live editor, shader, Play and captures pending exclusive Unity lock.

@@ -16,6 +16,13 @@ namespace OnlyVolunteers.Map.Look.V3
 
         public V3Store(string owner)
         {
+            // G18 builds never delete a previous asset set, including an interrupted attempt.
+            if (MapLookBuilderV3.Current == "v18" || MapLookBuilderV3.Current == "v19")
+            {
+                string original = owner;
+                int attempt = 1;
+                while (AssetDatabase.IsValidFolder($"{GeneratedRoot}/{owner}")) owner = original + "_build" + (++attempt).ToString("D3");
+            }
             Owner = owner;
             GeneratedDir = $"{GeneratedRoot}/{owner}";
             container = $"{GeneratedDir}/Meshes_{owner}.asset";
@@ -23,7 +30,12 @@ namespace OnlyVolunteers.Map.Look.V3
 
         public void Reset()
         {
-            if (AssetDatabase.IsValidFolder(GeneratedDir)) AssetDatabase.DeleteAsset(GeneratedDir);
+            if (AssetDatabase.IsValidFolder(GeneratedDir))
+            {
+                if (MapLookBuilderV3.Current == "v18" || MapLookBuilderV3.Current == "v19")
+                    throw new System.InvalidOperationException("Refusing to replace generated assets: " + GeneratedDir);
+                AssetDatabase.DeleteAsset(GeneratedDir);
+            }
             LookAssetStore.EnsureFolder(GeneratedDir);
         }
 

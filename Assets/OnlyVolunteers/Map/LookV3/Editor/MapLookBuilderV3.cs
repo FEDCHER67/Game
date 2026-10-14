@@ -25,6 +25,20 @@ namespace OnlyVolunteers.Map.Look.V3
         // v17+ (phase A, 2026-10-11): game scale, density, occlusion, muted atmosphere. "v17", "v18"... but not "v16"/"v12".
         public static bool IsV17(string revision) => !string.IsNullOrEmpty(revision) && revision.Length == 3 && string.CompareOrdinal(revision, "v17") >= 0;
 
+        [MenuItem("OnlyVolunteers/Map/Style v3/Build Map Look v18 (style v3)")]
+        public static void BuildMenuV18()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Build("Map_Look_v18", "v18");
+        }
+
+        [MenuItem("OnlyVolunteers/Map/Style v3/Build Map Look v19 (style v3)")]
+        public static void BuildMenuV19()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Build("Map_Look_v19", "v19");
+        }
+
         [MenuItem("OnlyVolunteers/Map/Style v3/Build Map Look v17 (style v3, phase A)")]
         public static void BuildMenuV17()
         {
@@ -84,6 +98,7 @@ namespace OnlyVolunteers.Map.Look.V3
             // Typed fences come from world_v11_extensions (V3Ground.Fences); the look_v1 elite ring entries are the same runs.
             d.elite_fence = new LookEliteFence[0];
             var hm = new HeightModel(d);
+            hm.CalmV19Pilots = revision == "v19";
             // v17: drivable grade <= 8 % through the new relief (embankments/cuttings come from the side blends).
             if (v17) hm.RoadGrade = 0.08f;
             hm.Bake();
@@ -146,6 +161,7 @@ namespace OnlyVolunteers.Map.Look.V3
             V3Ground.RetainingWalls(d, hm, store, parent, log);
             V3Ground.Blockers(d, hm, parent);
             if (v17) V3Grass.Build(terrain, V3Terrain.PendingSplat, V3Terrain.PendingNames, parent, store, log);
+            if (revision == "v19") V19Infill.Build(sampler, parent, store, log);
             AssetDatabase.SaveAssets();
             V3Terrain.ReapplySplat(terrain, log);
             log.Add($"assets: {store.MeshCount} meshes in {store.GeneratedDir}; environment built in {sw.Elapsed.TotalSeconds:0.0} s");

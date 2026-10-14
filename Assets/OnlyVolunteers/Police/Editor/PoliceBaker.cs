@@ -54,7 +54,7 @@ namespace OnlyVolunteers.Police
             Bake(write);
         }
 
-        public static string DataPath(string revision) => $"{DataDir}/police_{revision}.asset";
+        public static string DataPath(string revision) => $"{DataDir}/police_{revision}{(revision=="v19"?"_build_v08":"")}.asset";
 
         public static PoliceConfig EnsureConfig()
         {
@@ -91,7 +91,7 @@ namespace OnlyVolunteers.Police
             return best;
         }
 
-        public static string PlanPath(string revision) => Path.Combine(ProjectRoot, PlanDir, $"MAP_PLAN_R01_{revision}.json");
+        public static string PlanPath(string revision) => Path.Combine(ProjectRoot, PlanDir, $"MAP_PLAN_R01_{revision}{(revision=="v19"?"_build_v07":"")}.json");
 
         public static string PlanHash(string path)
         {
@@ -101,14 +101,14 @@ namespace OnlyVolunteers.Police
             return BitConverter.ToString(hash, 0, 6).Replace("-", "").ToLowerInvariant();
         }
 
-        public static string LookPath(string rev) => Path.Combine(ProjectRoot, MapLookBuilder.LookJsonDir, $"look_{rev}_flat.json");
+        public static string LookPath(string rev) => Path.Combine(ProjectRoot, MapLookBuilder.LookJsonDir, $"look_{rev}{(rev=="v19"?"_build_v07":"")}_flat.json");
 
         /// <summary>The crowd file of this revision, else the newest other one (fallback = true: its hotspots and districts
         /// may not match this plan).</summary>
         public static string CrowdPath(string rev, out bool fallback)
         {
             fallback = false;
-            string path = Path.Combine(ProjectRoot, CrowdDir, $"crowd_{rev}.json");
+            string path = Path.Combine(ProjectRoot, CrowdDir, $"crowd_{rev}{(rev=="v19"?"_build_v07":"")}.json");
             if (File.Exists(path)) return path;
             fallback = true;
             string dir = Path.Combine(ProjectRoot, CrowdDir);

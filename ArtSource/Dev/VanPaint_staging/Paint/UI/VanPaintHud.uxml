@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="VanPaintTheme.tss" />
+    <Style src="VanPaintHud.uss" />
+    <ui:VisualElement name="hud">
+        <ui:Label text="GRANDPA'S PAINT SHED" class="eyebrow" />
+        <ui:Label text="Make it yours." class="title" />
+        <ui:Label text="He painted the fence. You have a van." class="subtitle" />
+        <ui:VisualElement class="row"><ui:VisualElement name="swatch" /><ui:Label name="tools" /></ui:VisualElement>
+        <ui:Label name="size" />
+        <ui:Label text="B  pick brush / swap can   ·   LMB  paint" />
+        <ui:Label text="Wheel  brush size   ·   V  write at aim" />
+        <ui:Label text="Z  undo   ·   Delete twice  wipe" />
+        <ui:Label text="J  save   ·   L  load   ·   RMB drag  orbit" />
+        <ui:Label name="status" />
+    </ui:VisualElement>
+    <ui:VisualElement name="text-panel">
+        <ui:Label text="Brush lettering" class="title" />
+        <ui:Label text="The stamp stays at your aimed spot. Latin / Cyrillic / digits." />
+        <ui:TextField name="lettering" value="ТЦК" max-length="24" />
+        <ui:VisualElement class="row"><ui:Button name="stamp" text="Paint lettering  ↵" /><ui:Button name="cancel" text="Cancel  Esc" /></ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

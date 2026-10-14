@@ -15,10 +15,13 @@ namespace OnlyVolunteers.Map.Look.V3
     public static class V3Materials
     {
         public const string Root = "Assets/OnlyVolunteers/Map/LookV3";
-        public const string MaterialDir = Root + "/Materials";
-        public const string TempDir = MaterialDir + "/Temp";
-        public const string TextureDir = Root + "/Textures";
-        public const string LayerDir = Root + "/TerrainLayers";
+        // G18: later builds own their generated material/layer assets; v17 GUIDs and bytes stay intact.
+        private static string RevisionFolder => MapLookBuilderV3.Current == "v18" || MapLookBuilderV3.Current == "v19"
+            ? "/" + MapLookBuilderV3.Current : "";
+        public static string MaterialDir => Root + "/Materials" + RevisionFolder;
+        public static string TempDir => MaterialDir + "/Temp";
+        public static string TextureDir => Root + "/Textures" + RevisionFolder;
+        public static string LayerDir => Root + "/TerrainLayers" + RevisionFolder;
         public const string KitRoot = "Assets/OnlyVolunteers/Art/StyleKit_v3";
         public const string KitJson = KitRoot + "/materials_v3.json";
         public const string KitMaterialDir = KitRoot + "/Materials";

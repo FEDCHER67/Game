@@ -16,6 +16,20 @@ namespace OnlyVolunteers.Map.Look.V3
     {
         public const string LookScene = "Map_Look_v16", PlayScene = "Map_Look_v16_Play";
 
+        [MenuItem("OnlyVolunteers/Map/Style v3/Build Map Look v18 + Gameplay")]
+        public static void BuildMenuV18()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Build(true, "v18");
+        }
+
+        [MenuItem("OnlyVolunteers/Map/Style v3/Build Map Look v19 + Gameplay")]
+        public static void BuildMenuV19()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Build(true, "v19");
+        }
+
         [MenuItem("OnlyVolunteers/Map/Style v3/Build Map Look v17 + Gameplay (style v3, phase A)")]
         public static void BuildMenuV17()
         {
@@ -90,7 +104,7 @@ namespace OnlyVolunteers.Map.Look.V3
             EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), scenePath);
             // An earlier separate Play build of this session left its own generated folder: unused now.
             string old = V3Store.GeneratedRoot + "/" + PlayScene;
-            if (AssetDatabase.IsValidFolder(old)) AssetDatabase.DeleteAsset(old);
+            if (rev != "v18" && rev != "v19" && AssetDatabase.IsValidFolder(old)) AssetDatabase.DeleteAsset(old);
             Vector3 van = result.Van.transform.position;
             log.Add($"gameplay: van at ({van.x:0.0}, {van.y:0.00}, {van.z:0.0}), " +
                     (result.Director != null ? $"CrowdDirector with {result.Npcs} pooled NPCs ({(result.Director.Data != null ? result.Director.Data.name : "no data")}), " : $"{result.Npcs} crowd NPCs, ") +

@@ -1,0 +1,2156 @@
+{
+  "task": "G19",
+  "revision": "v01",
+  "date": "2026-10-14",
+  "asset_name": "Low poly rocks and trees",
+  "author": "Trekkerac / happykeys",
+  "licence": "CC0-1.0",
+  "source_url": "https://happykeys.itch.io/rocks-and-dead-trees",
+  "provenance": "source/PROVENANCE.md",
+  "source_archive_sha256": "a088b1462c6d5dfcc32b0c17bc11447fa8c540e9e38263ac533d5e48f2486d17",
+  "blender_version": "5.2.1 LTS",
+  "coordinate_system": "Blender right-handed XYZ, Z up; all lengths in metres; model-local origin on ground.",
+  "unity_coordinate_mapping": "(x,y,z) Blender -> (x,z,-y) Unity with FBX -Z forward/Y up. Proxy coordinates are model-local; ignore master lineup translations.",
+  "fbx_export_settings": {
+    "use_selection": true,
+    "object_types": [
+      "MESH"
+    ],
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "apply_unit_scale": true,
+    "global_scale": 1.0,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "FACE",
+    "add_leaf_bones": false,
+    "bake_anim": false,
+    "path_mode": "STRIP",
+    "use_custom_props": false
+  },
+  "fbx_reference": "ArtSource/Props/STYLE_KIT_v3/BUILDING_DETAILS/README.md",
+  "original_size_policy": "Use imported GLB world-space mesh extents before recentering; preserve baked source rotation/nonuniform scale, then one uniform scale factor.",
+  "rock_size_policy": "0.3-2.5 m measured by maximum bounding-box extent. Below 0.4 m: decorative, zero colliders.",
+  "collider_policy": "Analytic primitive definitions and hidden wire debug meshes in the prepared blend, not engine components or meshes embedded in FBXs. One conservative capsule per primary trunk; additional thick basal branch capsules only where branch surface reaches below 2.5 m. Thin twigs around 0.10 m diameter omitted. One bounds box per nondecorative rock.",
+  "recolour": {
+    "preview_only": true,
+    "grade_reference": "ArtSource/Textures/StyleKit_v3/candidate_v07/grade_v07.json",
+    "grade_sha256": "b3282ef21536423f4d285804ca15a303865436993468f33626ee6c537f1577ab",
+    "bark_source_category": "7b_tree_bark",
+    "bark_source_srgb": [
+      0.51934888,
+      0.39212146,
+      0.31416963
+    ],
+    "bark_preview_srgb": [
+      0.48818794719999997,
+      0.45230981476,
+      0.4423273987
+    ],
+    "bark_preview_hex": "#7C7371",
+    "bark_adjustment": "HSV saturation x0.30, value x0.94, retain hue; then +0.012 to sRGB blue. Task-specific cold grey-brown adaptation, not the unmodified v07 bark swatch.",
+    "rock_source_category": "1d_gravel",
+    "rock_preview_srgb": [
+      0.61047184,
+      0.62104715,
+      0.63332108
+    ],
+    "rock_preview_hex": "#9C9EA1",
+    "method": "Flat v07-derived swatches with roughness 0.9; source palette UVs retained. FBXs keep the original source palette."
+  },
+  "previews": [
+    "previews/lineup_v01.png",
+    "previews/rough_district_recolour_v01.png"
+  ],
+  "models": [
+    {
+      "id": "TREE_BARE_01",
+      "type": "tree_bare",
+      "source_object": "Tree.001",
+      "fbx": "fbx/TREE_BARE_01_v01.fbx",
+      "triangles": 514,
+      "vertices": 259,
+      "bounding_box_m": {
+        "min": [
+          -1.5265665,
+          -2.1899648,
+          0.0
+        ],
+        "max": [
+          1.5097121,
+          1.0174463,
+          5.0
+        ],
+        "size": [
+          3.0362787,
+          3.2074111,
+          5.0
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          4.6365557,
+          -4.3493066,
+          -0.102184
+        ],
+        "max": [
+          10.9614258,
+          2.3320496,
+          10.3133125
+        ],
+        "size": [
+          6.3248701,
+          6.6813564,
+          10.4154968
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        7.5728912,
+        0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.48005391351087545,
+      "target_dimension_m": 5,
+      "target_dimension": "height",
+      "pivot_source_world": [
+        7.8165455,
+        0.2126079,
+        -0.102184
+      ],
+      "pivot": "trunk base on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "tree_bark",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Bark_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "TREE_BARE_01_TRUNK",
+          "shape": "capsule",
+          "role": "trunk",
+          "radius_m": 0.48,
+          "height_m": 3.429008,
+          "sphere_centres_blender_m": [
+            [
+              0.0,
+              0.0,
+              0.48
+            ],
+            [
+              -0.32,
+              -0.2,
+              2.9200001
+            ]
+          ],
+          "center_blender_m": [
+            -0.16,
+            -0.1,
+            1.7
+          ],
+          "axis_blender": [
+            -0.1296067,
+            -0.0810042,
+            0.9882512
+          ],
+          "sphere_centres_unity_m": [
+            [
+              0.0,
+              0.48,
+              -0.0
+            ],
+            [
+              -0.32,
+              2.9200001,
+              0.2
+            ]
+          ],
+          "center_unity_m": [
+            -0.16,
+            1.7,
+            0.1
+          ],
+          "axis_unity": [
+            -0.1296067,
+            0.9882512,
+            0.0810042
+          ],
+          "note": "Single conservative capsule for the bent primary bole, 0-3.40 m.",
+          "blend_debug_object": "COL_TREE_BARE_01_TRUNK"
+        },
+        {
+          "id": "TREE_BARE_01_BRANCH_LOW",
+          "shape": "capsule",
+          "role": "lower_branch",
+          "radius_m": 0.12,
+          "height_m": 1.4487183,
+          "sphere_centres_blender_m": [
+            [
+              -0.32,
+              -0.18,
+              2.3699999
+            ],
+            [
+              0.83,
+              0.14,
+              2.5599999
+            ]
+          ],
+          "center_blender_m": [
+            0.255,
+            -0.02,
+            2.4649999
+          ],
+          "axis_blender": [
+            0.951421,
+            0.2647432,
+            0.1571913
+          ],
+          "sphere_centres_unity_m": [
+            [
+              -0.32,
+              2.3699999,
+              0.18
+            ],
+            [
+              0.83,
+              2.5599999,
+              -0.14
+            ]
+          ],
+          "center_unity_m": [
+            0.255,
+            2.4649999,
+            0.02
+          ],
+          "axis_unity": [
+            0.951421,
+            0.1571913,
+            -0.2647432
+          ],
+          "note": "Thick basal branch reaches below 2.5 m. Thin descending twigs excluded.",
+          "blend_debug_object": "COL_TREE_BARE_01_BRANCH_LOW"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "Rough District street or yard trees",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 0,
+        "faces_before": 514,
+        "faces_after": 514,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 0,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [],
+      "fbx_sha256": "78618f5068826fe37d0147597dd540a178fddb29b3f9299e11c9b727cb73cfbe",
+      "fbx_bytes": 34684,
+      "master_lineup_location_m": [
+        -6.1999998,
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "id": "TREE_BARE_02",
+      "type": "tree_bare",
+      "source_object": "Tree",
+      "fbx": "fbx/TREE_BARE_02_v01.fbx",
+      "triangles": 1550,
+      "vertices": 775,
+      "bounding_box_m": {
+        "min": [
+          -1.4713459,
+          -2.1354277,
+          -0.0
+        ],
+        "max": [
+          1.5438193,
+          1.3522229,
+          7.0
+        ],
+        "size": [
+          3.0151653,
+          3.4876506,
+          7.0
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          10.5285425,
+          -4.4766197,
+          -0.0693357
+        ],
+        "max": [
+          17.0950279,
+          3.118854,
+          15.1753998
+        ],
+        "size": [
+          6.5664854,
+          7.5954738,
+          15.2447357
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        13.5989857,
+        0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.4591749006183164,
+      "target_dimension_m": 7,
+      "target_dimension": "height",
+      "pivot_source_world": [
+        13.7328682,
+        0.1739566,
+        -0.0693357
+      ],
+      "pivot": "trunk base on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "tree_bark",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Bark_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "TREE_BARE_02_TRUNK",
+          "shape": "capsule",
+          "role": "trunk",
+          "radius_m": 0.28,
+          "height_m": 3.6030412,
+          "sphere_centres_blender_m": [
+            [
+              0.0,
+              0.0,
+              0.28
+            ],
+            [
+              -0.13,
+              -0.04,
+              3.3199999
+            ]
+          ],
+          "center_blender_m": [
+            -0.065,
+            -0.02,
+            1.8
+          ],
+          "axis_blender": [
+            -0.0427204,
+            -0.0131447,
+            0.9990006
+          ],
+          "sphere_centres_unity_m": [
+            [
+              0.0,
+              0.28,
+              -0.0
+            ],
+            [
+              -0.13,
+              3.3199999,
+              0.04
+            ]
+          ],
+          "center_unity_m": [
+            -0.065,
+            1.8,
+            0.02
+          ],
+          "axis_unity": [
+            -0.0427204,
+            0.9990006,
+            0.0131447
+          ],
+          "note": "Primary bole, 0-3.60 m. Main lateral branch begins above 2.5 m; the thin hanging twig is decorative.",
+          "blend_debug_object": "COL_TREE_BARE_02_TRUNK"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "Rough District street or yard trees",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 16,
+        "faces_before": 1578,
+        "faces_after": 1550,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 29,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 2,
+        "non_manifold_edges": 7,
+        "surface_status": "SOURCE_TOPOLOGY_WARNING"
+      },
+      "notes": [
+        "Source contains non-manifold/intersecting junctions after welding. Silhouette preserved; do not use this render mesh as a collision mesh.",
+        "The twig dipping below 2.5 m is approximately 0.10 m thick and deliberately has no capsule."
+      ],
+      "fbx_sha256": "adcdf77ea76b81e327e423e91ae07642cc5b44ca7aef4af3373505c5d2b6b949",
+      "fbx_bytes": 65228,
+      "master_lineup_location_m": [
+        -1.4,
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "id": "TREE_BARE_03",
+      "type": "tree_bare",
+      "source_object": "Tree0",
+      "fbx": "fbx/TREE_BARE_03_v01.fbx",
+      "triangles": 1374,
+      "vertices": 694,
+      "bounding_box_m": {
+        "min": [
+          -1.9702249,
+          -1.6804543,
+          0.0
+        ],
+        "max": [
+          2.6582592,
+          1.8667364,
+          9.0
+        ],
+        "size": [
+          4.6284838,
+          3.5471907,
+          9.0
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -5.5363884,
+          -4.7221246,
+          -0.1603756
+        ],
+        "max": [
+          7.4697843,
+          5.2455831,
+          25.1298828
+        ],
+        "size": [
+          13.0061722,
+          9.9677076,
+          25.2902584
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.35586825004524275,
+      "target_dimension_m": 9,
+      "target_dimension": "height",
+      "pivot_source_world": [
+        0.0,
+        0.0,
+        -0.1603756
+      ],
+      "pivot": "trunk base on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "tree_bark",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Bark_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "TREE_BARE_03_TRUNK",
+          "shape": "capsule",
+          "role": "trunk",
+          "radius_m": 0.65,
+          "height_m": 5.2041518,
+          "sphere_centres_blender_m": [
+            [
+              0.0,
+              0.0,
+              0.65
+            ],
+            [
+              -0.18,
+              0.0,
+              4.5500002
+            ]
+          ],
+          "center_blender_m": [
+            -0.09,
+            0.0,
+            2.6000001
+          ],
+          "axis_blender": [
+            -0.0461048,
+            0.0,
+            0.9989366
+          ],
+          "sphere_centres_unity_m": [
+            [
+              0.0,
+              0.65,
+              -0.0
+            ],
+            [
+              -0.18,
+              4.5500002,
+              -0.0
+            ]
+          ],
+          "center_unity_m": [
+            -0.09,
+            2.6000001,
+            -0.0
+          ],
+          "axis_unity": [
+            -0.0461048,
+            0.9989366,
+            -0.0
+          ],
+          "note": "Single conservative capsule for the bent primary bole, 0-5.20 m.",
+          "blend_debug_object": "COL_TREE_BARE_03_TRUNK"
+        },
+        {
+          "id": "TREE_BARE_03_BRANCH_LOW",
+          "shape": "capsule",
+          "role": "lower_branch",
+          "radius_m": 0.2,
+          "height_m": 1.6984221,
+          "sphere_centres_blender_m": [
+            [
+              -0.27,
+              -0.08,
+              2.48
+            ],
+            [
+              0.96,
+              -0.27,
+              2.8499999
+            ]
+          ],
+          "center_blender_m": [
+            0.345,
+            -0.175,
+            2.665
+          ],
+          "axis_blender": [
+            0.9473037,
+            -0.1463315,
+            0.2849612
+          ],
+          "sphere_centres_unity_m": [
+            [
+              -0.27,
+              2.48,
+              0.08
+            ],
+            [
+              0.96,
+              2.8499999,
+              0.27
+            ]
+          ],
+          "center_unity_m": [
+            0.345,
+            2.665,
+            0.175
+          ],
+          "axis_unity": [
+            0.9473037,
+            0.2849612,
+            0.1463315
+          ],
+          "note": "Thick low branch starts below 2.5 m; only its basal segment is proxied.",
+          "blend_debug_object": "COL_TREE_BARE_03_BRANCH_LOW"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "Rough District street or yard trees",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 0,
+        "faces_before": 1374,
+        "faces_after": 1374,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 0,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 12,
+        "non_manifold_edges": 18,
+        "surface_status": "SOURCE_TOPOLOGY_WARNING"
+      },
+      "notes": [
+        "Source contains non-manifold/intersecting junctions after welding. Silhouette preserved; do not use this render mesh as a collision mesh."
+      ],
+      "fbx_sha256": "f725402ed23f353448f425ee7eb51c052fd166adea7fe2a006a0b6d27f8aa885",
+      "fbx_bytes": 61628,
+      "master_lineup_location_m": [
+        4.4000001,
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_01",
+      "type": "rock",
+      "source_object": "rock0",
+      "fbx": "fbx/ROCK_01_v01.fbx",
+      "triangles": 174,
+      "vertices": 89,
+      "bounding_box_m": {
+        "min": [
+          -0.1500003,
+          -0.1084873,
+          -0.0
+        ],
+        "max": [
+          0.1499997,
+          0.1084873,
+          0.2227984
+        ],
+        "size": [
+          0.3,
+          0.2169746,
+          0.2227984
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -31.5092659,
+          -0.3131371,
+          0.0026625
+        ],
+        "max": [
+          -30.6583805,
+          0.3022645,
+          0.6345822
+        ],
+        "size": [
+          0.8508854,
+          0.6154016,
+          0.6319197
+        ]
+      },
+      "original_object_scale": [
+        0.3685704,
+        0.3685704,
+        0.6335999
+      ],
+      "original_scene_location": [
+        -31.0,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.3525739188849638,
+      "target_dimension_m": 0.3,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -31.0838223,
+        -0.0054363,
+        0.0026625
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [],
+      "decorative_no_collision": true,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 291,
+        "faces_before": 174,
+        "faces_after": 174,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 190,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [],
+      "fbx_sha256": "cd4541951ac3ad6ec6c5389aed1526202b755feb45eaffc3dd2126eb460a8e6f",
+      "fbx_bytes": 26588,
+      "master_lineup_location_m": [
+        -8.9360561,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_02",
+      "type": "rock",
+      "source_object": "Rock",
+      "fbx": "fbx/ROCK_02_v01.fbx",
+      "triangles": 180,
+      "vertices": 92,
+      "bounding_box_m": {
+        "min": [
+          -0.2283306,
+          -0.2341607,
+          0.0
+        ],
+        "max": [
+          0.2283306,
+          0.2341607,
+          0.55
+        ],
+        "size": [
+          0.4566612,
+          0.4683214,
+          0.55
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -4.9160404,
+          -0.9963088,
+          -0.2117704
+        ],
+        "max": [
+          -3.1867287,
+          0.7771583,
+          1.8710022
+        ],
+        "size": [
+          1.7293117,
+          1.7734671,
+          2.0827725
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -3.9182117,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.2640710879368726,
+      "target_dimension_m": 0.55,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -4.0513844,
+        -0.1095752,
+        -0.2117704
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_02_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            0.0,
+            0.0,
+            0.275
+          ],
+          "size_blender_m": [
+            0.4566612,
+            0.4683214,
+            0.55
+          ],
+          "center_unity_m": [
+            0.0,
+            0.275,
+            -0.0
+          ],
+          "size_unity_m": [
+            0.4566612,
+            0.55,
+            0.4683214
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_02_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 262,
+        "faces_before": 180,
+        "faces_after": 180,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 177,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [],
+      "fbx_sha256": "3d204bd7cf854b275bd0db12174d110e7d058438369ca80ce864b9c018f2f520",
+      "fbx_bytes": 27388,
+      "master_lineup_location_m": [
+        -8.1777258,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_03",
+      "type": "rock",
+      "source_object": "Rock.001",
+      "fbx": "fbx/ROCK_03_v01.fbx",
+      "triangles": 180,
+      "vertices": 92,
+      "bounding_box_m": {
+        "min": [
+          -0.425,
+          -0.3455529,
+          0.0
+        ],
+        "max": [
+          0.425,
+          0.3455529,
+          0.6079673
+        ],
+        "size": [
+          0.85,
+          0.6911058,
+          0.6079673
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -8.3598442,
+          -0.9963088,
+          -0.2340358
+        ],
+        "max": [
+          -5.6528234,
+          1.204677,
+          1.702176
+        ],
+        "size": [
+          2.7070208,
+          2.2009859,
+          1.9362117
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -6.9843063,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.31399832613033485,
+      "target_dimension_m": 0.85,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -7.0063338,
+        0.1041841,
+        -0.2340358
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_03_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            0.0,
+            0.0,
+            0.3039836
+          ],
+          "size_blender_m": [
+            0.85,
+            0.6911058,
+            0.6079673
+          ],
+          "center_unity_m": [
+            0.0,
+            0.3039836,
+            -0.0
+          ],
+          "size_unity_m": [
+            0.85,
+            0.6079673,
+            0.6911058
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_03_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 262,
+        "faces_before": 180,
+        "faces_after": 180,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 177,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [],
+      "fbx_sha256": "5167205b4c2dfe59dd0317b471d6c35474cd73aa063708efb3dc9ab4e8fd099e",
+      "fbx_bytes": 27468,
+      "master_lineup_location_m": [
+        -7.1443949,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_04",
+      "type": "rock",
+      "source_object": "rock1",
+      "fbx": "fbx/ROCK_04_v01.fbx",
+      "triangles": 734,
+      "vertices": 369,
+      "bounding_box_m": {
+        "min": [
+          -0.55,
+          -0.4963011,
+          -0.0
+        ],
+        "max": [
+          0.55,
+          0.4963011,
+          0.902213
+        ],
+        "size": [
+          1.1,
+          0.9926022,
+          0.902213
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -29.6284504,
+          -0.6778642,
+          -0.0289432
+        ],
+        "max": [
+          -28.2415218,
+          0.5736524,
+          1.1086068
+        ],
+        "size": [
+          1.3869286,
+          1.2515166,
+          1.13755
+        ]
+      },
+      "original_object_scale": [
+        0.6558851,
+        0.6558851,
+        0.6558851
+      ],
+      "original_scene_location": [
+        -29.0,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.7931194150874097,
+      "target_dimension_m": 1.1,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -28.9349861,
+        -0.0521059,
+        -0.0289432
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_04_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            0.0,
+            0.0,
+            0.4511065
+          ],
+          "size_blender_m": [
+            1.1,
+            0.9926022,
+            0.902213
+          ],
+          "center_unity_m": [
+            0.0,
+            0.4511065,
+            -0.0
+          ],
+          "size_unity_m": [
+            1.1,
+            0.902213,
+            0.9926022
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_04_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 1305,
+        "faces_before": 734,
+        "faces_after": 734,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 794,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [],
+      "fbx_sha256": "0fac4738c3a4f8c07c6e53c0ef96d9b4fb86267384fc9fa68e620649ef0d0c7e",
+      "fbx_bytes": 48092,
+      "master_lineup_location_m": [
+        -5.7893949,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_05",
+      "type": "rock",
+      "source_object": "Rock.003",
+      "fbx": "fbx/ROCK_05_v01.fbx",
+      "triangles": 383,
+      "vertices": 192,
+      "bounding_box_m": {
+        "min": [
+          -0.6749998,
+          -0.5061234,
+          0.0
+        ],
+        "max": [
+          0.6750003,
+          0.5061234,
+          0.5637482
+        ],
+        "size": [
+          1.3500001,
+          1.0122467,
+          0.5637482
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -19.3433266,
+          -1.9185146,
+          -0.5042443
+        ],
+        "max": [
+          -14.6280155,
+          1.617084,
+          1.4648283
+        ],
+        "size": [
+          4.7153111,
+          3.5355988,
+          1.9690726
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -17.3779411,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.2863013640817888,
+      "target_dimension_m": 1.35,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -16.985672,
+        -0.1507153,
+        -0.5042443
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_05_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            2e-07,
+            0.0,
+            0.2818741
+          ],
+          "size_blender_m": [
+            1.3500001,
+            1.0122467,
+            0.5637482
+          ],
+          "center_unity_m": [
+            2e-07,
+            0.2818741,
+            -0.0
+          ],
+          "size_unity_m": [
+            1.3500001,
+            0.5637482,
+            1.0122467
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_05_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 567,
+        "faces_before": 383,
+        "faces_after": 383,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 376,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 1,
+        "non_manifold_edges": 4,
+        "surface_status": "SOURCE_TOPOLOGY_WARNING"
+      },
+      "notes": [
+        "Source contains non-manifold/intersecting junctions after welding. Silhouette preserved; do not use this render mesh as a collision mesh."
+      ],
+      "fbx_sha256": "f2295ba23aeec8c227d48b8e91f82fa6d43542fc7a88d1afa9d65da54e5d896f",
+      "fbx_bytes": 37068,
+      "master_lineup_location_m": [
+        -4.1843948,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_06",
+      "type": "rock",
+      "source_object": "rock",
+      "fbx": "fbx/ROCK_06_v01.fbx",
+      "triangles": 288,
+      "vertices": 145,
+      "bounding_box_m": {
+        "min": [
+          -0.8,
+          -0.3531245,
+          -0.0
+        ],
+        "max": [
+          0.8,
+          0.3531245,
+          0.5928589
+        ],
+        "size": [
+          1.5999999,
+          0.706249,
+          0.5928589
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -23.9467163,
+          -0.9489114,
+          -0.6591111
+        ],
+        "max": [
+          -19.5851746,
+          0.9762976,
+          0.9570006
+        ],
+        "size": [
+          4.3615417,
+          1.925209,
+          1.6161118
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -21.7659454,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.3668427611273326,
+      "target_dimension_m": 1.6,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -21.7659454,
+        0.0136931,
+        -0.6591111
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_06_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            0.0,
+            0.0,
+            0.2964294
+          ],
+          "size_blender_m": [
+            1.5999999,
+            0.706249,
+            0.5928589
+          ],
+          "center_unity_m": [
+            0.0,
+            0.2964294,
+            -0.0
+          ],
+          "size_unity_m": [
+            1.5999999,
+            0.5928589,
+            0.706249
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_06_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 431,
+        "faces_before": 288,
+        "faces_after": 288,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 283,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 1,
+        "surface_status": "SOURCE_TOPOLOGY_WARNING"
+      },
+      "notes": [
+        "Source contains non-manifold/intersecting junctions after welding. Silhouette preserved; do not use this render mesh as a collision mesh."
+      ],
+      "fbx_sha256": "e49fde3247539530ba215952594d31658073170af7d56ca81b8c0648d01817bc",
+      "fbx_bytes": 31644,
+      "master_lineup_location_m": [
+        -2.3293951,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_07",
+      "type": "rock",
+      "source_object": "rock.001",
+      "fbx": "fbx/ROCK_07_v01.fbx",
+      "triangles": 286,
+      "vertices": 144,
+      "bounding_box_m": {
+        "min": [
+          -0.3330605,
+          -0.3972652,
+          0.0
+        ],
+        "max": [
+          0.3330605,
+          0.3972651,
+          1.8
+        ],
+        "size": [
+          0.6661211,
+          0.7945303,
+          1.8
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -26.1209049,
+          -0.9489112,
+          -1.1507746
+        ],
+        "max": [
+          -24.5068417,
+          0.9762977,
+          3.2107658
+        ],
+        "size": [
+          1.6140633,
+          1.9252089,
+          4.3615403
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -25.2349701,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.4126982387391904,
+      "target_dimension_m": 1.8,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -25.3138733,
+        0.0136932,
+        -1.1507746
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_07_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            0.0,
+            -1e-07,
+            0.9
+          ],
+          "size_blender_m": [
+            0.6661211,
+            0.7945303,
+            1.8
+          ],
+          "center_unity_m": [
+            0.0,
+            0.9,
+            1e-07
+          ],
+          "size_unity_m": [
+            0.6661211,
+            1.8,
+            0.7945303
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_07_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 410,
+        "faces_before": 286,
+        "faces_after": 286,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 273,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 1,
+        "surface_status": "SOURCE_TOPOLOGY_WARNING"
+      },
+      "notes": [
+        "Source contains non-manifold/intersecting junctions after welding. Silhouette preserved; do not use this render mesh as a collision mesh."
+      ],
+      "fbx_sha256": "41ebf55d84df25ae3a3a43471335fd8e754f8da55b4b3b6662c4a354a2c7f4be",
+      "fbx_bytes": 31836,
+      "master_lineup_location_m": [
+        -0.8163345,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_08",
+      "type": "rock",
+      "source_object": "rock3",
+      "fbx": "fbx/ROCK_08_v01.fbx",
+      "triangles": 984,
+      "vertices": 494,
+      "bounding_box_m": {
+        "min": [
+          -0.8169027,
+          -0.8145163,
+          -0.0
+        ],
+        "max": [
+          0.8169063,
+          0.8145165,
+          1.9999999
+        ],
+        "size": [
+          1.6338091,
+          1.6290329,
+          1.9999999
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -34.8414841,
+          -3.1984599,
+          -0.2237504
+        ],
+        "max": [
+          -33.1484642,
+          -1.5103893,
+          1.8487314
+        ],
+        "size": [
+          1.6930199,
+          1.6880705,
+          2.0724819
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.7190742
+      ],
+      "original_scene_location": [
+        -34.0,
+        -2.3419938,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.9650265220651625,
+      "target_dimension_m": 2,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -33.994976,
+        -2.3544247,
+        -0.2237504
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_08_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            1.8e-06,
+            1e-07,
+            0.9999999
+          ],
+          "size_blender_m": [
+            1.6338091,
+            1.6290329,
+            1.9999999
+          ],
+          "center_unity_m": [
+            1.8e-06,
+            0.9999999,
+            -1e-07
+          ],
+          "size_unity_m": [
+            1.6338091,
+            1.9999999,
+            1.6290329
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_08_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 14,
+        "faces_before": 984,
+        "faces_after": 984,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 24,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [],
+      "fbx_sha256": "bd31c6246a8f54b89d11f308e8158797af35e338dbb6ac02ad2116f26ac45cd9",
+      "fbx_bytes": 51532,
+      "master_lineup_location_m": [
+        0.7136306,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_09",
+      "type": "rock",
+      "source_object": "Rock.002",
+      "fbx": "fbx/ROCK_09_v01.fbx",
+      "triangles": 753,
+      "vertices": 377,
+      "bounding_box_m": {
+        "min": [
+          -1.010359,
+          -0.8382108,
+          0.0
+        ],
+        "max": [
+          1.0103586,
+          0.8382108,
+          2.0999999
+        ],
+        "size": [
+          2.0207176,
+          1.6764215,
+          2.0999999
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -13.5246925,
+          -1.9617846,
+          -1.1364613
+        ],
+        "max": [
+          -9.3048639,
+          1.5390568,
+          3.2489314
+        ],
+        "size": [
+          4.2198286,
+          3.5008414,
+          4.3853927
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -11.6878443,
+        -0.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.4788624745054189,
+      "target_dimension_m": 2.1,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -11.4147778,
+        -0.2113639,
+        -1.1364613
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_09_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            -2e-07,
+            0.0,
+            1.0499999
+          ],
+          "size_blender_m": [
+            2.0207176,
+            1.6764215,
+            2.0999999
+          ],
+          "center_unity_m": [
+            -2e-07,
+            1.0499999,
+            -0.0
+          ],
+          "size_unity_m": [
+            2.0207176,
+            2.0999999,
+            1.6764215
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_09_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 1309,
+        "faces_before": 756,
+        "faces_after": 753,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 723,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 6,
+        "non_manifold_edges": 14,
+        "surface_status": "SOURCE_TOPOLOGY_WARNING"
+      },
+      "notes": [
+        "Source contains non-manifold/intersecting junctions after welding. Silhouette preserved; do not use this render mesh as a collision mesh."
+      ],
+      "fbx_sha256": "60fb9c15b451b5c1e32a73e8ff64a0cfd3ca1291f1875ee5d2eee8ef96e4b965",
+      "fbx_bytes": 54428,
+      "master_lineup_location_m": [
+        2.9208939,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_10",
+      "type": "rock",
+      "source_object": "rock4",
+      "fbx": "fbx/ROCK_10_v01.fbx",
+      "triangles": 2746,
+      "vertices": 1375,
+      "bounding_box_m": {
+        "min": [
+          -1.1750003,
+          -0.3691024,
+          0.0
+        ],
+        "max": [
+          1.1749996,
+          0.3691025,
+          0.6887493
+        ],
+        "size": [
+          2.3499999,
+          0.738205,
+          0.6887493
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -32.9874878,
+          -4.961338,
+          -0.5396028
+        ],
+        "max": [
+          -27.1426525,
+          -3.1253011,
+          1.1734296
+        ],
+        "size": [
+          5.8448353,
+          1.8360369,
+          1.7130324
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -30.3113632,
+        -3.9999998,
+        -0.0477051
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.40206436612508145,
+      "target_dimension_m": 2.35,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -30.0650692,
+        -4.0433197,
+        -0.5396028
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_10_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            -3e-07,
+            1e-07,
+            0.3443747
+          ],
+          "size_blender_m": [
+            2.3499999,
+            0.738205,
+            0.6887493
+          ],
+          "center_unity_m": [
+            -3e-07,
+            0.3443747,
+            -1e-07
+          ],
+          "size_unity_m": [
+            2.3499999,
+            0.6887493,
+            0.738205
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_10_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 9,
+        "faces_before": 2746,
+        "faces_after": 2746,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 0,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [
+        "Relatively dense for this pack; avoid large numbers of close copies until map performance is checked. No LODs supplied."
+      ],
+      "fbx_sha256": "b2501563f2c23e392b70e34f38825d2add50f3466a747294eec893871eaccc52",
+      "fbx_bytes": 111020,
+      "master_lineup_location_m": [
+        5.4862528,
+        -4.3000002,
+        0.0
+      ]
+    },
+    {
+      "id": "ROCK_11",
+      "type": "rock",
+      "source_object": "rock_d",
+      "fbx": "fbx/ROCK_11_v01.fbx",
+      "triangles": 5642,
+      "vertices": 2823,
+      "bounding_box_m": {
+        "min": [
+          -1.0224018,
+          -1.25,
+          0.0
+        ],
+        "max": [
+          1.0224018,
+          1.2499999,
+          1.6679248
+        ],
+        "size": [
+          2.0448036,
+          2.5,
+          1.6679248
+        ]
+      },
+      "original_bounding_box_source_units": {
+        "min": [
+          -37.9928741,
+          0.125731,
+          -0.3121467
+        ],
+        "max": [
+          -29.7017517,
+          10.2625504,
+          6.4508343
+        ],
+        "size": [
+          8.2911224,
+          10.1368198,
+          6.7629809
+        ]
+      },
+      "original_object_scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_scene_location": [
+        -33.0,
+        7.0,
+        0.0
+      ],
+      "source_unit_interpretation": "glTF metres; authoring scale is uncalibrated (original trees ~10-25 m). World transforms baked before normalisation.",
+      "uniform_scale_factor": 0.24662567248161993,
+      "target_dimension_m": 2.5,
+      "target_dimension": "maximum extent",
+      "pivot_source_world": [
+        -33.8473129,
+        5.1941409,
+        -0.3121467
+      ],
+      "pivot": "XY bounds centre on ground",
+      "materials": [
+        {
+          "name": "MAT_HK_SourcePalette",
+          "role": "rock",
+          "texture": "fbx/Gradient_Palette_v01.png",
+          "uv": "UVMap (source palette atlas UVs)",
+          "rough_district_preview_material": "MAT_HK_RoughDistrict_Rock_v07"
+        }
+      ],
+      "collider_proxies": [
+        {
+          "id": "ROCK_11_BOX",
+          "shape": "box",
+          "role": "rock",
+          "center_blender_m": [
+            0.0,
+            -1e-07,
+            0.8339624
+          ],
+          "size_blender_m": [
+            2.0448036,
+            2.5,
+            1.6679248
+          ],
+          "center_unity_m": [
+            0.0,
+            0.8339624,
+            1e-07
+          ],
+          "size_unity_m": [
+            2.0448036,
+            1.6679248,
+            2.5
+          ],
+          "rotation_euler_blender_deg": [
+            0,
+            0,
+            0
+          ],
+          "note": "One conservative bounds box; no render-mesh collision. Inspect clearance after terrain placement.",
+          "blend_debug_object": "COL_ROCK_11_BOX"
+        }
+      ],
+      "decorative_no_collision": false,
+      "suggested_use": [
+        "ravine banks",
+        "field edges",
+        "Forest edge"
+      ],
+      "cleanup": {
+        "merge_distance_m": 1e-06,
+        "vertices_merged": 4,
+        "faces_before": 5642,
+        "faces_after": 5642,
+        "loose_vertices_removed": 0,
+        "normals_recomputed": true,
+        "source_hard_edges_recovered": 0,
+        "empty_objects_exported": 0
+      },
+      "geometry_validation": {
+        "finite_coordinates": true,
+        "ground_min_z_zero": true,
+        "identity_object_transform": true,
+        "zero_area_triangles": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "surface_status": "PASS_CLOSED_MANIFOLD"
+      },
+      "notes": [
+        "Relatively dense for this pack; avoid large numbers of close copies until map performance is checked. No LODs supplied."
+      ],
+      "fbx_sha256": "83af401001decbf9da5895d980f46ed2a9c00b6ccd92721c1e0fedd917c1c927",
+      "fbx_bytes": 211036,
+      "master_lineup_location_m": [
+        8.0636549,
+        -4.3000002,
+        0.0
+      ]
+    }
+  ],
+  "totals": {
+    "trees": 3,
+    "rocks": 11,
+    "triangles": 15788,
+    "capsules": 5,
+    "boxes": 10
+  },
+  "engine_validation": "NOT RUN - Unity deliberately not opened or controlled; round-trip FBX validation is separate."
+}

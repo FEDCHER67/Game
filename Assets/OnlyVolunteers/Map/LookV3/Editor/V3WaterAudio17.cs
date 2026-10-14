@@ -18,7 +18,7 @@ namespace OnlyVolunteers.Map.Look.V3
     // for Map_Look_<rev>_Play; WaterBaker leaves v17+ to this.
     public static class V3WaterAudio17
     {
-        public static string AssetPath(string revision) => "Assets/OnlyVolunteers/Audio/Resources/Water_" + revision + ".asset";
+        public static string AssetPath(string revision) => "Assets/OnlyVolunteers/Audio/Resources/Water_" + revision + (revision=="v19" ? "_build_v07" : "") + ".asset";
 
         public static void Bake(Transform waterRoot, string revision, List<string> log)
         {

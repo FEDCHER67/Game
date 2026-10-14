@@ -12,6 +12,8 @@ namespace OnlyVolunteers.Audio
         private const float HalfPi = 1.57079632679f;
 
         [SerializeField, Range(0f, 1f)] private float masterVolume = 0.8f;
+        // Optional scene-owned revision, used by G18 to preserve the approved checkpoint asset.
+        public AmbienceData SceneData;
 
         public static bool Muted;
 
@@ -26,6 +28,8 @@ namespace OnlyVolunteers.Audio
         private AudioSource _sea;
         private AudioSource _office;
         private AudioSource[] _fountains;
+        private AudioSource[] _districtBeds, _spots;
+        private float[] _spatialWeights, _spatialLevels;
         private WaterData _water;
         private AudioSource[] _waterSources;
         private bool[] _waterSelected;
@@ -95,6 +99,7 @@ namespace OnlyVolunteers.Audio
             AmbiencePlayer existing = Object.FindFirstObjectByType<AmbiencePlayer>();
             if (existing != null)
             {
+                if (existing.SceneData != null) data = existing.SceneData;
                 _instance = existing;
                 existing.Initialize(data, listener.transform);
                 return;
@@ -113,6 +118,31 @@ namespace OnlyVolunteers.Audio
             _listener = listener;
             _listenerActive = true;
             _library = Sfx.Library;
+
+            if (_data.PlanRevision == "v19" && _data.DistrictBlendMetres > 0 &&
+                _data.BlendBounds.Length == _data.Districts.Length)
+            {
+                int n = _data.Districts.Length;
+                _districtBeds = new AudioSource[n]; _spatialWeights = new float[n]; _spatialLevels = new float[n];
+                for (int i = 0; i < n; i++)
+                {
+                    var mapping = _data.MappingFor(_data.Districts[i].Id);
+                    var entry = mapping != null ? Entry(mapping.AmbienceId) : null;
+                    if (entry == null || entry.Clips == null || entry.Clips.Length == 0) continue;
+                    _districtBeds[i] = CreateSource("Spatial district " + _data.Districts[i].Id, entry, false);
+                    StartLoop(_districtBeds[i], entry);
+                }
+            }
+            _spots = new AudioSource[_data.Spots != null ? _data.Spots.Length : 0];
+            for (int i = 0; i < _spots.Length; i++)
+            {
+                var spot = _data.Spots[i]; var entry = Entry(spot.SoundId);
+                if (entry == null || entry.Clips == null || entry.Clips.Length == 0) continue;
+                _spots[i] = CreateSource("Life " + spot.Name, entry, true);
+                _spots[i].transform.position = spot.Position; _spots[i].minDistance = 2;
+                _spots[i].maxDistance = spot.Range; _spots[i].rolloffMode = AudioRolloffMode.Linear;
+                StartLoop(_spots[i], entry);
+            }
 
             _bedA = CreateSource("District A", null, false);
             _bedB = CreateSource("District B", null, false);
@@ -176,6 +206,9 @@ namespace OnlyVolunteers.Audio
             }
 
             AdvanceFade(delta);
+            if (_spatialLevels != null)
+                for (int i = 0; i < _spatialLevels.Length; i++)
+                    _spatialLevels[i] = Mathf.Lerp(_spatialLevels[i], _spatialWeights[i], 1-Mathf.Exp(-delta*5));
             _seaLevel = Mathf.MoveTowards(_seaLevel, _seaTarget, delta * 2f);
             _officeLevel = Mathf.MoveTowards(_officeLevel, _officeTarget, delta * 2f);
             ApplyVolumes();
@@ -252,6 +285,13 @@ namespace OnlyVolunteers.Audio
                 if (_water.Emitters[i].SoundId == SfxIds.AmbWaterfall &&
                     (_water.Emitters[i].Position - position).sqrMagnitude < 3600f) _waterSelected[i] = true;
             Vector2 point = new Vector2(position.x, position.z);
+            if (_districtBeds != null)
+            {
+                OnlyVolunteers.Map.Look.V3.DistrictBlend19.Weights(_data.BlendBounds, point, _data.DistrictBlendMetres, _spatialWeights);
+                _seaTarget = SmoothProximity(NearestCoastDistance(point), 15f, 80f);
+                _officeTarget = SmoothProximity(NearestOfficeDistance(point), 12f, 65f);
+                return;
+            }
             int hit = FindDistrict(point);
             if (_activeDistrict == int.MinValue)
             {
@@ -340,6 +380,15 @@ namespace OnlyVolunteers.Audio
             _bedB.volume = master * _weightB;
             _sea.volume = master * 0.6f * _seaLevel;
             _office.volume = master * 0.35f * _officeLevel;
+            if (_districtBeds != null)
+                for (int i = 0; i < _districtBeds.Length; i++)
+                {
+                    if (_districtBeds[i] == null) continue;
+                    var mapping = _data.MappingFor(_data.Districts[i].Id);
+                    _districtBeds[i].volume = master * _spatialLevels[i] * (mapping != null ? mapping.Volume : 0);
+                }
+            for (int i = 0; i < _spots.Length; i++)
+                if (_spots[i] != null) _spots[i].volume = master * _data.Spots[i].Volume;
             for (int i = 0; i < _fountains.Length; i++)
                 _fountains[i].volume = master * 0.4f;
             for (int i = 0; i < _waterSources.Length; i++)

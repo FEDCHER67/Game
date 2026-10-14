@@ -31,6 +31,41 @@ namespace OnlyVolunteers.Map.Look.V3
         public static string Start(string scenePath, string label)
         {
             if (EditorApplication.isPlaying) return "already playing";
+            SessionState.EraseString(Key + "spots");
+            SessionState.EraseString(Key + "dir");
+            SessionState.EraseBool(Key + "norib");
+            return Begin(scenePath, label);
+        }
+
+        // The map pilots (v19 stage 1): the same probe at the given spots ("name,x,z,yaw;..."), written to `outDir`
+        // (project-relative) as perf_<label>.txt; Application.runInBackground is left alone (the editor keeps playing
+        // unfocused, and the project's setting must not change).
+        public static string StartSpots(string scenePath, string label, string spots, string outDir)
+        {
+            if (EditorApplication.isPlaying) return "already playing";
+            SessionState.SetString(Key + "spots", spots);
+            SessionState.SetString(Key + "dir", outDir);
+            SessionState.SetBool(Key + "norib", true);
+            return Begin(scenePath, label);
+        }
+
+        private static (string Name, float X, float Z, float Yaw)[] CurrentSpots()
+        {
+            string text = SessionState.GetString(Key + "spots", "");
+            if (string.IsNullOrEmpty(text)) return Spots;
+            var list = new List<(string, float, float, float)>();
+            foreach (string item in text.Split(';'))
+            {
+                string[] f = item.Split(',');
+                if (f.Length < 4) continue;
+                var ci = System.Globalization.CultureInfo.InvariantCulture;
+                list.Add((f[0].Trim(), float.Parse(f[1], ci), float.Parse(f[2], ci), float.Parse(f[3], ci)));
+            }
+            return list.Count > 0 ? list.ToArray() : Spots;
+        }
+
+        private static string Begin(string scenePath, string label)
+        {
             EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             SessionState.SetBool(Key + "active", true);
             SessionState.SetString(Key + "label", label);
@@ -56,10 +91,12 @@ namespace OnlyVolunteers.Map.Look.V3
                 return;
             }
             if (!EditorApplication.isPlaying) return;
+            bool touchRib = !SessionState.GetBool(Key + "norib", false);
+            var spots = CurrentSpots();
             if (!SessionState.GetBool(Key + "rib_set", false))
             {
                 SessionState.SetBool(Key + "rib_old", Application.runInBackground);
-                Application.runInBackground = true;
+                if (touchRib) Application.runInBackground = true;
                 SessionState.SetBool(Key + "rib_set", true);
                 SessionState.SetFloat(Key + "t", (float)EditorApplication.timeSinceStartup + 5f);
                 return;
@@ -90,7 +127,7 @@ namespace OnlyVolunteers.Map.Look.V3
             int phase = SessionState.GetInt(Key + "phase", 0);
             if (spot >= 0 && phase == 1)
             {
-                string line = probe.Report($"{label} {Spots[spot].Name}");
+                string line = probe.Report($"{label} {spots[spot].Name}");
                 SessionState.SetString(Key + "out", SessionState.GetString(Key + "out", "") + line + "\n");
             }
             if (phase == 0 && spot >= 0)
@@ -101,14 +138,15 @@ namespace OnlyVolunteers.Map.Look.V3
                 return;
             }
             spot++;
-            if (spot >= Spots.Length)
+            if (spot >= spots.Length)
             {
                 string text = SessionState.GetString(Key + "out", "");
-                string dir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", V3Sightlines.Dir));
+                string outDir = SessionState.GetString(Key + "dir", "");
+                string dir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", string.IsNullOrEmpty(outDir) ? V3Sightlines.Dir : outDir));
                 Directory.CreateDirectory(dir);
                 File.WriteAllText(Path.Combine(dir, $"perf_{label}.txt"), text);
                 Debug.Log("[V3PerfRun]\n" + text);
-                Application.runInBackground = SessionState.GetBool(Key + "rib_old", false);
+                if (touchRib) Application.runInBackground = SessionState.GetBool(Key + "rib_old", false);
                 SessionState.SetBool(Key + "active", false);
                 SessionState.SetInt(Key + "phase", 0);
                 probeCam = null;
@@ -116,7 +154,7 @@ namespace OnlyVolunteers.Map.Look.V3
                 EditorApplication.isPlaying = false;
                 return;
             }
-            var s = Spots[spot];
+            var s = spots[spot];
             var sampler = Object.FindAnyObjectByType<MapHeightSampler>();
             float y = sampler != null ? sampler.Height(s.X, s.Z) : 0f;
             probeCam.transform.SetPositionAndRotation(new Vector3(s.X, y + 1.7f, s.Z), Quaternion.Euler(4f, s.Yaw, 0f));

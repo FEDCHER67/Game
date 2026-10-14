@@ -263,7 +263,7 @@ namespace OnlyVolunteers.Map
         }
 
         internal static string PlanPath(string revision) =>
-            Path.Combine(Application.dataPath, "..", "ArtSource", "References", "Map", "Greybox", $"greybox_{revision}_flat.json");
+            Path.Combine(Application.dataPath, "..", "ArtSource", "References", "Map", "Greybox", revision=="v19" ? "greybox_v19_build_v07_flat.json" : $"greybox_{revision}_flat.json");
 
         internal static Plan LoadPlan(string revision) => JsonUtility.FromJson<Plan>(File.ReadAllText(PlanPath(revision)));
 
@@ -1000,7 +1000,9 @@ namespace OnlyVolunteers.Map
 
         private static Material Mat(string name, Color color)
         {
-            string path = $"{MaterialDir}/{name}.mat";
+            string directory = Revision == "v19" ? MaterialDir + "/v19" : MaterialDir;
+            if (Revision == "v19") Directory.CreateDirectory(directory);
+            string path = $"{directory}/{name}.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (mat == null)
             {

@@ -1,0 +1,4291 @@
+{
+  "task": "G18",
+  "revision": "v02",
+  "family": "PILOT_KIT",
+  "blender": "5.2.1 LTS",
+  "units": "metres",
+  "source_axes": "X right, Y back, Z up; front -Y",
+  "collider_schema": {
+    "version": 1,
+    "space": "Blender mesh local, metres; ignore master display translations",
+    "shape": "box",
+    "size": "full extents, not half extents",
+    "quaternion": "[x,y,z,w], local box to module",
+    "classification": "solid and walkable both block all faces; walkable identifies intended traversal surfaces; never use as trigger",
+    "supports_standing": "solid fence/rail tops also support standing when marked",
+    "union": "All proxies combine by union; never replace by a module AABB",
+    "consumer_import": "Apply the identical axis/unit conversion used by the imported render mesh to proxy centres and orientation matrices. These values remain Blender mesh-local; Unity axis conversion has not been engine-tested. Never reorder quaternion components as an axis conversion."
+  },
+  "material_roles": [
+    "plaster",
+    "brick",
+    "concrete",
+    "metal_painted",
+    "metal_dark",
+    "wood",
+    "glass",
+    "roof"
+  ],
+  "palette_source": "ArtSource\\Textures\\StyleKit_v3\\candidate_v07\\grade_v07.json",
+  "palette_sha256": "b3282ef21536423f4d285804ca15a303865436993468f33626ee6c537f1577ab",
+  "assets": {
+    "LAUNDRY_CLOTHES": {
+      "group": "A",
+      "triangles": 312,
+      "budget": 1000,
+      "size_m": [
+        3.94,
+        0.85,
+        2.05
+      ],
+      "bounds_min": [
+        -1.9700000286102295,
+        -0.42500001192092896,
+        0.0
+      ],
+      "bounds_max": [
+        1.9700000286102295,
+        0.42500001192092896,
+        2.049999952316284
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "plaster",
+        "wood"
+      ],
+      "swatches": [
+        "dark",
+        "paint",
+        "plaster",
+        "rust",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "grounded_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.899999976158142,
+            0.0,
+            1.024999976158142
+          ],
+          "size_m": [
+            0.14,
+            0.14,
+            2.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "crossbar",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.899999976158142,
+            0.0,
+            1.9800000190734863
+          ],
+          "size_m": [
+            0.1,
+            0.85,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "grounded_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.899999976158142,
+            0.0,
+            1.024999976158142
+          ],
+          "size_m": [
+            0.14,
+            0.14,
+            2.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "crossbar",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.899999976158142,
+            0.0,
+            1.9800000190734863
+          ],
+          "size_m": [
+            0.1,
+            0.85,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 3,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 26,
+      "geometry_sha1": "68929b0a18c777adffc4f52b1e7071f9d04c78db",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "LAUNDRY_CLOTHES_v02.fbx",
+      "master_display_translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "FLOWER_BED": {
+      "group": "A",
+      "triangles": 820,
+      "budget": 1500,
+      "size_m": [
+        1.81,
+        0.9,
+        0.633
+      ],
+      "bounds_min": [
+        -0.9050000309944153,
+        -0.44999998807907104,
+        0.0
+      ],
+      "bounds_max": [
+        0.9050000309944153,
+        0.44999998807907104,
+        0.6330000162124634
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "plaster",
+        "wood"
+      ],
+      "swatches": [
+        "coat",
+        "earth",
+        "hay",
+        "rust",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "bed_end",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.8600000143051147,
+            0.0,
+            0.10000000149011612
+          ],
+          "size_m": [
+            0.09,
+            0.84,
+            0.2
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "bed_end",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.8600000143051147,
+            0.0,
+            0.10000000149011612
+          ],
+          "size_m": [
+            0.09,
+            0.84,
+            0.2
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "bed_side",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            -0.4050000011920929,
+            0.10000000149011612
+          ],
+          "size_m": [
+            1.65,
+            0.09,
+            0.2
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 3,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "bed_side",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.4050000011920929,
+            0.10000000149011612
+          ],
+          "size_m": [
+            1.65,
+            0.09,
+            0.2
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 45,
+      "geometry_sha1": "1c7137a8d7ebb6320bc7add824c8fd19cfa4a09a",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "decorative_collision_policy": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "FLOWER_BED_v02.fbx",
+      "master_display_translation_m": [
+        7.0,
+        0.0,
+        0.0
+      ]
+    },
+    "DOGHOUSE": {
+      "group": "A",
+      "triangles": 108,
+      "budget": 500,
+      "size_m": [
+        1.293273,
+        1.38,
+        1.195076
+      ],
+      "bounds_min": [
+        -0.6466365456581116,
+        -0.6899999976158142,
+        0.0
+      ],
+      "bounds_max": [
+        0.6466365456581116,
+        0.6899999976158142,
+        1.1950761079788208
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "roof",
+        "wood"
+      ],
+      "swatches": [
+        "rust",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "floor",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.03999999910593033
+          ],
+          "size_m": [
+            1.05,
+            1.18,
+            0.08
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "side_wall",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.47999998927116394,
+            0.0,
+            0.47999998927116394
+          ],
+          "size_m": [
+            0.09,
+            1.18,
+            0.8
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "side_wall",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.47999998927116394,
+            0.0,
+            0.47999998927116394
+          ],
+          "size_m": [
+            0.09,
+            1.18,
+            0.8
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "back_wall",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.550000011920929,
+            0.47999998927116394
+          ],
+          "size_m": [
+            0.96,
+            0.08,
+            0.8
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 3,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "open_front_jamb",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.36000001430511475,
+            -0.550000011920929,
+            0.47999998927116394
+          ],
+          "size_m": [
+            0.25,
+            0.09,
+            0.8
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "open_front_jamb",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.36000001430511475,
+            -0.550000011920929,
+            0.47999998927116394
+          ],
+          "size_m": [
+            0.25,
+            0.09,
+            0.8
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 5,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "door_lintel",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            -0.550000011920929,
+            0.7799999713897705
+          ],
+          "size_m": [
+            0.5,
+            0.09,
+            0.2
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 6,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "pitched_roof_panel",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.3125,
+            0.0,
+            1.0
+          ],
+          "size_m": [
+            0.6932712311931024,
+            1.38,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.2218974530696869,
+            0.0,
+            0.9750699996948242
+          ],
+          "source_shell": 7,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "pitched_roof_panel",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.3125,
+            0.0,
+            1.0
+          ],
+          "size_m": [
+            0.6932712311931024,
+            1.38,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.2218974530696869,
+            0.0,
+            0.9750699996948242
+          ],
+          "source_shell": 8,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 9,
+      "geometry_sha1": "c7587e44e541f90fcabd63c631d47517726d31b8",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "DOGHOUSE_v02.fbx",
+      "master_display_translation_m": [
+        14.0,
+        0.0,
+        0.0
+      ]
+    },
+    "HEN_COOP_RUN": {
+      "group": "A",
+      "triangles": 540,
+      "budget": 1500,
+      "size_m": [
+        2.19,
+        3.2,
+        1.955309
+      ],
+      "bounds_min": [
+        -1.09499990940094,
+        -1.6999999284744263,
+        0.0
+      ],
+      "bounds_max": [
+        1.09499990940094,
+        1.5,
+        1.9553091526031494
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "roof",
+        "wood"
+      ],
+      "swatches": [
+        "metal",
+        "roof",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "coop_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.6000000238418579,
+            0.25,
+            0.44999998807907104
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "coop_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.6000000238418579,
+            1.2999999523162842,
+            0.44999998807907104
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "coop_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            0.25,
+            0.44999998807907104
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "coop_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            1.2999999523162842,
+            0.44999998807907104
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 3,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "coop_floor",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.7749999761581421,
+            0.7799999713897705
+          ],
+          "size_m": [
+            1.3,
+            1.18,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "coop_side",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.6000000238418579,
+            0.7749999761581421,
+            1.190000057220459
+          ],
+          "size_m": [
+            0.09,
+            1.18,
+            0.72
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 5,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "coop_side",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            0.7749999761581421,
+            1.190000057220459
+          ],
+          "size_m": [
+            0.09,
+            1.18,
+            0.72
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 6,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "coop_back",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            1.3250000476837158,
+            1.190000057220459
+          ],
+          "size_m": [
+            1.28,
+            0.08,
+            0.72
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 7,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "hatch_jamb",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.4300000071525574,
+            0.22499999403953552,
+            1.190000057220459
+          ],
+          "size_m": [
+            0.38,
+            0.08,
+            0.72
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 8,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_009",
+          "name": "hatch_jamb",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.4300000071525574,
+            0.22499999403953552,
+            1.190000057220459
+          ],
+          "size_m": [
+            0.38,
+            0.08,
+            0.72
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 9,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_010",
+          "name": "hatch_lintel",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.22499999403953552,
+            1.440000057220459
+          ],
+          "size_m": [
+            0.5,
+            0.08,
+            0.22
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 10,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_011",
+          "name": "pitched_roof_panel",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.375,
+            0.7749999761581421,
+            1.7350000143051147
+          ],
+          "size_m": [
+            0.8276472678623424,
+            1.45,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.21658354997634888,
+            0.0,
+            0.9762641191482544
+          ],
+          "source_shell": 11,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_012",
+          "name": "pitched_roof_panel",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.375,
+            0.7749999761581421,
+            1.7350000143051147
+          ],
+          "size_m": [
+            0.8276472678623424,
+            1.45,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.21658354997634888,
+            0.0,
+            0.9762641191482544
+          ],
+          "source_shell": 12,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_013",
+          "name": "run_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.0499999523162842,
+            -1.649999976158142,
+            0.42500001192092896
+          ],
+          "size_m": [
+            0.09,
+            0.09,
+            0.85
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 13,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_014",
+          "name": "run_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.0499999523162842,
+            -0.6499999761581421,
+            0.42500001192092896
+          ],
+          "size_m": [
+            0.09,
+            0.09,
+            0.85
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 14,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_015",
+          "name": "run_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.0499999523162842,
+            0.3499999940395355,
+            0.42500001192092896
+          ],
+          "size_m": [
+            0.09,
+            0.09,
+            0.85
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 15,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_016",
+          "name": "run_rail",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.0499999523162842,
+            -0.6499999761581421,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.065,
+            2.1,
+            0.075
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 16,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_017",
+          "name": "run_rail",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.0499999523162842,
+            -0.6499999761581421,
+            0.699999988079071
+          ],
+          "size_m": [
+            0.065,
+            2.1,
+            0.075
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 17,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_018",
+          "name": "run_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.0499999523162842,
+            -1.649999976158142,
+            0.42500001192092896
+          ],
+          "size_m": [
+            0.09,
+            0.09,
+            0.85
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 27,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_019",
+          "name": "run_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.0499999523162842,
+            -0.6499999761581421,
+            0.42500001192092896
+          ],
+          "size_m": [
+            0.09,
+            0.09,
+            0.85
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 28,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_020",
+          "name": "run_post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.0499999523162842,
+            0.3499999940395355,
+            0.42500001192092896
+          ],
+          "size_m": [
+            0.09,
+            0.09,
+            0.85
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 29,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_021",
+          "name": "run_rail",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.0499999523162842,
+            -0.6499999761581421,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.065,
+            2.1,
+            0.075
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 30,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_022",
+          "name": "run_rail",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.0499999523162842,
+            -0.6499999761581421,
+            0.699999988079071
+          ],
+          "size_m": [
+            0.065,
+            2.1,
+            0.075
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 31,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_023",
+          "name": "gate_side",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.7699999809265137,
+            -1.649999976158142,
+            0.4000000059604645
+          ],
+          "size_m": [
+            0.57,
+            0.08,
+            0.65
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 41,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_024",
+          "name": "gate_side",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.7699999809265137,
+            -1.649999976158142,
+            0.4000000059604645
+          ],
+          "size_m": [
+            0.57,
+            0.08,
+            0.65
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 42,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_025",
+          "name": "open_gate_leaf",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.46000000834465027,
+            -1.3700000047683716,
+            0.4000000059604645
+          ],
+          "size_m": [
+            0.07,
+            0.58,
+            0.65
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 43,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_026",
+          "name": "hen_ramp",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            -0.25,
+            0.44999998807907104
+          ],
+          "size_m": [
+            0.42,
+            1.03,
+            0.06
+          ],
+          "rotation_quaternion_xyzw": [
+            0.3173046410083771,
+            0.0,
+            0.0,
+            0.948323667049408
+          ],
+          "source_shell": 44,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 3.725290298461914e-09,
+        "errors": []
+      },
+      "shell_count": 45,
+      "geometry_sha1": "86e1b5b38d5bf0af7e4d636802e932df9dff4002",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "HEN_COOP_RUN_v02.fbx",
+      "master_display_translation_m": [
+        21.0,
+        0.0,
+        0.0
+      ]
+    },
+    "AXE_STUMP_LOGS": {
+      "group": "A",
+      "triangles": 200,
+      "budget": 1200,
+      "size_m": [
+        1.451563,
+        0.66,
+        1.061702
+      ],
+      "bounds_min": [
+        -0.28531694412231445,
+        -0.30000001192092896,
+        0.0
+      ],
+      "bounds_max": [
+        1.1662460565567017,
+        0.36000001430511475,
+        1.0617018938064575
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "wood"
+      ],
+      "swatches": [
+        "metal",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "stump",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.570633909777092,
+            0.18541019662496844,
+            0.46
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "stump",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.570633909777092,
+            0.18541019662496844,
+            0.46
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.30901700258255005,
+            0.9510564804077148
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "stump",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.570633909777092,
+            0.18541019662496844,
+            0.46
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.5877851843833923,
+            0.8090170621871948
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "stump",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.570633909777092,
+            0.18541019662496844,
+            0.46
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.80901700258255,
+            0.5877853035926819
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "stump",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.23000000417232513
+          ],
+          "size_m": [
+            0.570633909777092,
+            0.18541019662496844,
+            0.46
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.9510565400123596,
+            0.3090168535709381
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "axe_handle",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.029999999329447746,
+            0.0,
+            0.7300000190734863
+          ],
+          "size_m": [
+            0.055,
+            0.08,
+            0.67
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.12186937034130096,
+            0.0,
+            0.9925461411476135
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "axe_head",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.10000000149011612,
+            0.0,
+            0.550000011920929
+          ],
+          "size_m": [
+            0.25,
+            0.065,
+            0.16
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.7071067690849304,
+            -0.0,
+            -0.0,
+            0.7071067690849304
+          ],
+          "source_shell": 3,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.6532814502716064,
+            0.2705981135368347,
+            0.27059808373451233,
+            0.6532815098762512
+          ],
+          "source_shell": 3,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_009",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.5,
+            0.5,
+            0.5,
+            0.5000000596046448
+          ],
+          "source_shell": 3,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_010",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6000000238418579,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.27059799432754517,
+            0.6532815098762512,
+            0.6532815098762512,
+            0.2705979645252228
+          ],
+          "source_shell": 3,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_011",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.8299999833106995,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.7071067690849304,
+            -0.0,
+            -0.0,
+            0.7071067690849304
+          ],
+          "source_shell": 4,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_012",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.8299999833106995,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.6532814502716064,
+            0.2705981135368347,
+            0.27059808373451233,
+            0.6532815098762512
+          ],
+          "source_shell": 4,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_013",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.8299999833106995,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.5,
+            0.5,
+            0.5,
+            0.5000000596046448
+          ],
+          "source_shell": 4,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_014",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.8299999833106995,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.27059799432754517,
+            0.6532815098762512,
+            0.6532815098762512,
+            0.2705979645252228
+          ],
+          "source_shell": 4,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_015",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.059999942779541,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.7071067690849304,
+            -0.0,
+            -0.0,
+            0.7071067690849304
+          ],
+          "source_shell": 5,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_016",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.059999942779541,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.6532814502716064,
+            0.2705981135368347,
+            0.27059808373451233,
+            0.6532815098762512
+          ],
+          "source_shell": 5,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_017",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.059999942779541,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.5,
+            0.5,
+            0.5,
+            0.5000000596046448
+          ],
+          "source_shell": 5,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_018",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.059999942779541,
+            0.030000001192092896,
+            0.10999998450279236
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.27059799432754517,
+            0.6532815098762512,
+            0.6532815098762512,
+            0.2705979645252228
+          ],
+          "source_shell": 5,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_019",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.7149999737739563,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.7071067690849304,
+            -0.0,
+            -0.0,
+            0.7071067690849304
+          ],
+          "source_shell": 6,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_020",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.7149999737739563,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.6532814502716064,
+            0.2705981135368347,
+            0.27059808373451233,
+            0.6532815098762512
+          ],
+          "source_shell": 6,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_021",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.7149999737739563,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.5,
+            0.5,
+            0.5,
+            0.5000000596046448
+          ],
+          "source_shell": 6,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_022",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.7149999737739563,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.27059799432754517,
+            0.6532815098762512,
+            0.6532815098762512,
+            0.2705979645252228
+          ],
+          "source_shell": 6,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_023",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.9449999928474426,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.7071067690849304,
+            -0.0,
+            -0.0,
+            0.7071067690849304
+          ],
+          "source_shell": 7,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_024",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.9449999928474426,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.6532814502716064,
+            0.2705981135368347,
+            0.27059808373451233,
+            0.6532815098762512
+          ],
+          "source_shell": 7,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_025",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.9449999928474426,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.5,
+            0.5,
+            0.5,
+            0.5000000596046448
+          ],
+          "source_shell": 7,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_026",
+          "name": "firewood",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.9449999928474426,
+            0.030000001192092896,
+            0.3100000023841858
+          ],
+          "size_m": [
+            0.21249229247759596,
+            0.08801718944397065,
+            0.66
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.27059799432754517,
+            0.6532815098762512,
+            0.6532815098762512,
+            0.2705979645252228
+          ],
+          "source_shell": 7,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 8,
+      "geometry_sha1": "11484d67f665b57724af786525145ffc72adc9ac",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "AXE_STUMP_LOGS_v02.fbx",
+      "master_display_translation_m": [
+        28.0,
+        0.0,
+        0.0
+      ]
+    },
+    "BUCKET_WATERING": {
+      "group": "A",
+      "triangles": 404,
+      "budget": 1000,
+      "size_m": [
+        1.142753,
+        0.36,
+        0.5225
+      ],
+      "bounds_min": [
+        -0.3700000047683716,
+        -0.18000000715255737,
+        0.0
+      ],
+      "bounds_max": [
+        0.7727525234222412,
+        0.18000000715255737,
+        0.5224999785423279
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "metal_painted"
+      ],
+      "swatches": [
+        "dark",
+        "metal"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "lower_can_proxy_body",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.30000001192092896,
+            0.0,
+            0.10000000149011612
+          ],
+          "size_m": [
+            0.27,
+            0.23,
+            0.2
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 12,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 13,
+      "geometry_sha1": "f5f63e8077d9ae61cdbacb5835055693b831d05c",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "BUCKET_WATERING_v02.fbx",
+      "master_display_translation_m": [
+        35.0,
+        0.0,
+        0.0
+      ]
+    },
+    "BICYCLE": {
+      "group": "A",
+      "triangles": 824,
+      "budget": 2000,
+      "size_m": [
+        1.846165,
+        0.52,
+        1.12
+      ],
+      "bounds_min": [
+        -0.923082709312439,
+        -0.25999999046325684,
+        0.0
+      ],
+      "bounds_max": [
+        0.923082709312439,
+        0.25999999046325684,
+        1.1200000047683716
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "metal_painted"
+      ],
+      "swatches": [
+        "dark",
+        "metal",
+        "paint"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "tyre_contact",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5699999928474426,
+            0.0,
+            0.017500000074505806
+          ],
+          "size_m": [
+            0.12,
+            0.045,
+            0.035
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 28,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "tyre_contact",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5699999928474426,
+            0.0,
+            0.017500000074505806
+          ],
+          "size_m": [
+            0.12,
+            0.045,
+            0.035
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 29,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 30,
+      "geometry_sha1": "43589ddd117b6418853699a7806841bd4860fcd8",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "BICYCLE_v02.fbx",
+      "master_display_translation_m": [
+        0.0,
+        7.0,
+        0.0
+      ]
+    },
+    "TREE_SWING": {
+      "group": "A",
+      "triangles": 36,
+      "budget": 500,
+      "size_m": [
+        0.62,
+        0.3,
+        2.1
+      ],
+      "bounds_min": [
+        -0.3100000023841858,
+        -0.15000000596046448,
+        0.0
+      ],
+      "bounds_max": [
+        0.3100000023841858,
+        0.15000000596046448,
+        2.0999999046325684
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "wood"
+      ],
+      "swatches": [
+        "hay",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "seat",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.03500000014901161
+          ],
+          "size_m": [
+            0.62,
+            0.3,
+            0.07
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 3,
+      "geometry_sha1": "dd47e9e79fdc0ee28b830df708936325d165fcf1",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "decorative_collision_policy": true
+      },
+      "all_checks_passed": true,
+      "fbx": "TREE_SWING_v02.fbx",
+      "master_display_translation_m": [
+        7.0,
+        7.0,
+        0.0
+      ]
+    },
+    "APPLE_BASKET": {
+      "group": "A",
+      "triangles": 428,
+      "budget": 1000,
+      "size_m": [
+        0.535,
+        0.535,
+        0.375
+      ],
+      "bounds_min": [
+        -0.26750001311302185,
+        -0.26749998331069946,
+        0.0
+      ],
+      "bounds_max": [
+        0.26749998331069946,
+        0.26749998331069946,
+        0.375
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "plaster",
+        "wood"
+      ],
+      "swatches": [
+        "hay",
+        "rust",
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "base",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.02500000037252903
+          ],
+          "size_m": [
+            0.5022814296703155,
+            0.13458590345331078,
+            0.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "base",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.02500000037252903
+          ],
+          "size_m": [
+            0.5022814296703155,
+            0.13458590345331078,
+            0.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.2588191032409668,
+            0.9659258127212524
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "base",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.02500000037252903
+          ],
+          "size_m": [
+            0.5022814296703155,
+            0.13458590345331078,
+            0.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.5,
+            0.8660253882408142
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "base",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.02500000037252903
+          ],
+          "size_m": [
+            0.5022814296703155,
+            0.13458590345331078,
+            0.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.7071067094802856,
+            0.7071068286895752
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "base",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.02500000037252903
+          ],
+          "size_m": [
+            0.5022814296703155,
+            0.13458590345331078,
+            0.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.8660253882408142,
+            0.5000000596046448
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "base",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.02500000037252903
+          ],
+          "size_m": [
+            0.5022814296703155,
+            0.13458590345331078,
+            0.05
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.9659257531166077,
+            0.25881919264793396
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 25,
+      "geometry_sha1": "2f7c8915602af44ed894583b9cd7c03944434ac7",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "APPLE_BASKET_v02.fbx",
+      "master_display_translation_m": [
+        14.0,
+        7.0,
+        0.0
+      ]
+    },
+    "CURTAIN_PAIR": {
+      "group": "A",
+      "triangles": 84,
+      "budget": 300,
+      "size_m": [
+        1.03,
+        0.07,
+        1.02
+      ],
+      "bounds_min": [
+        -0.5149999856948853,
+        -0.019999999552965164,
+        0.0
+      ],
+      "bounds_max": [
+        0.5149999856948853,
+        0.04999999701976776,
+        1.0199999809265137
+      ],
+      "pivot": "Wall plane Y=0, bottom-centre X=Z=0; outward -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "plaster"
+      ],
+      "swatches": [
+        "hay",
+        "plaster"
+      ],
+      "colliders": [],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 7,
+      "geometry_sha1": "e5cebdabccbb94dd711afe65257318dacbddbe7e",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "decorative_collision_policy": true
+      },
+      "all_checks_passed": true,
+      "fbx": "CURTAIN_PAIR_v02.fbx",
+      "master_display_translation_m": [
+        21.0,
+        7.0,
+        0.0
+      ]
+    },
+    "CROOKED_FENCE": {
+      "group": "A",
+      "triangles": 156,
+      "budget": 500,
+      "size_m": [
+        2.12,
+        0.145,
+        1.1
+      ],
+      "bounds_min": [
+        -1.059999942779541,
+        -0.05999999865889549,
+        0.0
+      ],
+      "bounds_max": [
+        1.059999942779541,
+        0.08500000089406967,
+        1.100000023841858
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "wood"
+      ],
+      "swatches": [
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -1.0,
+            0.0,
+            0.550000011920929
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            1.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "post",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            1.0,
+            0.0,
+            0.550000011920929
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            1.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "rail",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.03999999910593033,
+            0.3400000035762787
+          ],
+          "size_m": [
+            2,
+            0.09,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "rail",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.03999999910593033,
+            0.7599999904632568
+          ],
+          "size_m": [
+            2,
+            0.09,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 3,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.8399999737739563,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.06104855239391327,
+            0.0,
+            0.9981347918510437
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.6299999952316284,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.026176918298006058,
+            0.0,
+            0.9996573328971863
+          ],
+          "source_shell": 5,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.41999998688697815,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.07845912873744965,
+            0.0,
+            0.9969173669815063
+          ],
+          "source_shell": 6,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.20999999344348907,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.017452426254749298,
+            0.0,
+            0.9998477101325989
+          ],
+          "source_shell": 7,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.06104855239391327,
+            0.0,
+            0.9981347918510437
+          ],
+          "source_shell": 8,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_009",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.20999999344348907,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.026176918298006058,
+            0.0,
+            0.9996573328971863
+          ],
+          "source_shell": 9,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_010",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.41999998688697815,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.07845912873744965,
+            0.0,
+            0.9969173669815063
+          ],
+          "source_shell": 10,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_011",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.6299999952316284,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.017452426254749298,
+            0.0,
+            0.9998477101325989
+          ],
+          "source_shell": 11,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_012",
+          "name": "crooked_picket",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.8399999737739563,
+            0.0,
+            0.5299999713897705
+          ],
+          "size_m": [
+            0.14,
+            0.07,
+            0.88
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.06104855239391327,
+            0.0,
+            0.9981347918510437
+          ],
+          "source_shell": 12,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 5.960464477539063e-08,
+        "errors": []
+      },
+      "shell_count": 13,
+      "geometry_sha1": "64e24cb68e78f60f602ec63e1d4b3e684b90b881",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "CROOKED_FENCE_v02.fbx",
+      "master_display_translation_m": [
+        28.0,
+        7.0,
+        0.0
+      ]
+    },
+    "PICNIC_TABLE": {
+      "group": "A",
+      "triangles": 192,
+      "budget": 600,
+      "size_m": [
+        1.7,
+        1.5,
+        0.78
+      ],
+      "bounds_min": [
+        -0.8500000238418579,
+        -0.75,
+        0.0
+      ],
+      "bounds_max": [
+        0.8500000238418579,
+        0.75,
+        0.7800000309944153
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "wood"
+      ],
+      "swatches": [
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "splayed_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5600000023841858,
+            -0.2849999964237213,
+            0.39500001072883606
+          ],
+          "size_m": [
+            0.7021395904238317,
+            0.1,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.4186030328273773,
+            -0.4186030924320221,
+            0.5698872208595276,
+            0.5698872804641724
+          ],
+          "source_shell": 0,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "splayed_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5600000023841858,
+            0.2849999964237213,
+            0.39500001072883606
+          ],
+          "size_m": [
+            0.7021395904238317,
+            0.1,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.4186030328273773,
+            -0.4186030924320221,
+            -0.5698872208595276,
+            0.5698872804641724
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "bench_support",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5600000023841858,
+            0.0,
+            0.36000001430511475
+          ],
+          "size_m": [
+            0.1,
+            1.4,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 2,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "splayed_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5600000023841858,
+            -0.2849999964237213,
+            0.39500001072883606
+          ],
+          "size_m": [
+            0.7021395904238317,
+            0.1,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.4186030328273773,
+            -0.4186030924320221,
+            0.5698872208595276,
+            0.5698872804641724
+          ],
+          "source_shell": 3,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "splayed_leg",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5600000023841858,
+            0.2849999964237213,
+            0.39500001072883606
+          ],
+          "size_m": [
+            0.7021395904238317,
+            0.1,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.4186030328273773,
+            -0.4186030924320221,
+            -0.5698872208595276,
+            0.5698872804641724
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "bench_support",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5600000023841858,
+            0.0,
+            0.36000001430511475
+          ],
+          "size_m": [
+            0.1,
+            1.4,
+            0.1
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 5,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "table_plank",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            -0.2849999964237213,
+            0.7450000047683716
+          ],
+          "size_m": [
+            1.6,
+            0.18,
+            0.07
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 6,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "table_plank",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            -0.0949999988079071,
+            0.7450000047683716
+          ],
+          "size_m": [
+            1.6,
+            0.18,
+            0.07
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 7,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "table_plank",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0949999988079071,
+            0.7450000047683716
+          ],
+          "size_m": [
+            1.6,
+            0.18,
+            0.07
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 8,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_009",
+          "name": "table_plank",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.2849999964237213,
+            0.7450000047683716
+          ],
+          "size_m": [
+            1.6,
+            0.18,
+            0.07
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 9,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_010",
+          "name": "bench_seat",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            -0.6100000143051147,
+            0.4399999976158142
+          ],
+          "size_m": [
+            1.7,
+            0.28,
+            0.08
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 10,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_011",
+          "name": "bench_seat",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.6100000143051147,
+            0.4399999976158142
+          ],
+          "size_m": [
+            1.7,
+            0.28,
+            0.08
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 11,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_012",
+          "name": "leg_foot",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5600000023841858,
+            -0.38999998569488525,
+            0.05999999865889549
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.12
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 12,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_013",
+          "name": "leg_foot",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5600000023841858,
+            0.38999998569488525,
+            0.05999999865889549
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.12
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 13,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_014",
+          "name": "leg_foot",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5600000023841858,
+            -0.38999998569488525,
+            0.05999999865889549
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.12
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 14,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_015",
+          "name": "leg_foot",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5600000023841858,
+            0.38999998569488525,
+            0.05999999865889549
+          ],
+          "size_m": [
+            0.12,
+            0.12,
+            0.12
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 15,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 8.429369702178807e-08,
+        "errors": []
+      },
+      "shell_count": 16,
+      "geometry_sha1": "3979eaa78aadf538bd2ac49e14f2df930abd4828",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "PICNIC_TABLE_v02.fbx",
+      "master_display_translation_m": [
+        35.0,
+        7.0,
+        0.0
+      ]
+    },
+    "LEAFLESS_TREE": {
+      "group": "B",
+      "triangles": 280,
+      "budget": 1200,
+      "size_m": [
+        2.94704,
+        2.65398,
+        4.820411
+      ],
+      "bounds_min": [
+        -1.5221538543701172,
+        -1.1878905296325684,
+        0.0
+      ],
+      "bounds_max": [
+        1.4248865842819214,
+        1.4660890102386475,
+        4.82041072845459
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "wood"
+      ],
+      "swatches": [
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.2999999523162842
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            2.6
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.2999999523162842
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            2.6
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.3826834559440613,
+            0.9238795042037964
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.2999999523162842
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            2.6
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.7071067094802856,
+            0.7071068286895752
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.2999999523162842
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            2.6
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.9238795638084412,
+            0.38268333673477173
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.42500001192092896,
+            0.0,
+            1.75
+          ],
+          "size_m": [
+            1.3124404848319957,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.4197330176830292,
+            0.0,
+            0.9076476097106934
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.34288808703422546,
+            0.314090371131897,
+            2.0899999141693115
+          ],
+          "size_m": [
+            1.3656133254051934,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.37222525477409363,
+            -0.14471356570720673,
+            0.8544853329658508,
+            0.33220645785331726
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.04418698698282242,
+            -0.5030631422996521,
+            2.430000066757202
+          ],
+          "size_m": [
+            1.4213023316294857,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.2569354176521301,
+            -0.2804928123950958,
+            -0.624687671661377,
+            0.6819628477096558
+          ],
+          "source_shell": 7,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.3315514624118805,
+            0.43254899978637695,
+            2.7699999809265137
+          ],
+          "size_m": [
+            1.4792227823958615,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.16050949692726135,
+            -0.32526910305023193,
+            0.41238462924957275,
+            0.8356887102127075
+          ],
+          "source_shell": 10,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5760424137115479,
+            -0.10198117047548294,
+            3.109999895095825
+          ],
+          "size_m": [
+            1.5391231636252347,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.3449570834636688,
+            -0.030299602076411247,
+            -0.9345312118530273,
+            0.08208536356687546
+          ],
+          "source_shell": 13,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_009",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5274087190628052,
+            -0.3353580832481384,
+            3.450000047683716
+          ],
+          "size_m": [
+            1.6007810500495305,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.09248848259449005,
+            -0.31782302260398865,
+            -0.2636643946170807,
+            0.9060438275337219
+          ],
+          "source_shell": 16,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_010",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.17277854681015015,
+            0.6421624422073364,
+            3.7899999618530273
+          ],
+          "size_m": [
+            1.664001219700145,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.25143224000930786,
+            -0.19272437691688538,
+            0.7527884840965271,
+            0.5770170092582703
+          ],
+          "source_shell": 19,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 2.5288109106536417e-07,
+        "errors": []
+      },
+      "shell_count": 22,
+      "geometry_sha1": "f5da1f33b54a8b0638e203b1b94013f2759de545",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "LEAFLESS_TREE_v02.fbx",
+      "master_display_translation_m": [
+        0.0,
+        14.0,
+        0.0
+      ]
+    },
+    "CROW": {
+      "group": "C",
+      "triangles": 152,
+      "budget": 300,
+      "size_m": [
+        0.275,
+        0.531463,
+        0.385
+      ],
+      "bounds_min": [
+        -0.13750000298023224,
+        -0.2199999988079071,
+        0.0
+      ],
+      "bounds_max": [
+        0.13750000298023224,
+        0.3114626705646515,
+        0.38499999046325684
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark"
+      ],
+      "swatches": [
+        "dark"
+      ],
+      "colliders": [],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 10,
+      "geometry_sha1": "c19ac3553393292d3bd62548746afc55f0643111",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "decorative_collision_policy": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "CROW_v02.fbx",
+      "master_display_translation_m": [
+        7.0,
+        14.0,
+        0.0
+      ]
+    },
+    "BUTTERFLY": {
+      "group": "C",
+      "triangles": 60,
+      "budget": 150,
+      "size_m": [
+        0.167623,
+        0.124,
+        0.053133
+      ],
+      "bounds_min": [
+        -0.08381157368421555,
+        -0.060499999672174454,
+        0.0
+      ],
+      "bounds_max": [
+        0.08381157368421555,
+        0.06350000202655792,
+        0.05313317850232124
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "metal_dark",
+        "plaster"
+      ],
+      "swatches": [
+        "dark",
+        "hay",
+        "rust"
+      ],
+      "colliders": [],
+      "collision_measurements": {
+        "max_box_corner_error_m": 0,
+        "errors": []
+      },
+      "shell_count": 5,
+      "geometry_sha1": "0bf368b00555d4d018e53b90777022a4311f63b5",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "decorative_collision_policy": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "BUTTERFLY_v02.fbx",
+      "master_display_translation_m": [
+        14.0,
+        14.0,
+        0.0
+      ]
+    }
+  },
+  "total_assets": 15,
+  "total_triangles": 4596,
+  "all_checks_passed": true,
+  "unity_test": "PENDING checkpoint P import check",
+  "master_layout": "Six-column review grid; mesh local coordinates unchanged. Reset display translation to zero before re-export.",
+  "export_settings": {
+    "use_selection": true,
+    "object_types": [
+      "MESH"
+    ],
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "apply_unit_scale": true,
+    "global_scale": 1,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "FACE",
+    "add_leaf_bones": false,
+    "bake_anim": false,
+    "path_mode": "STRIP",
+    "use_custom_props": false
+  }
+}

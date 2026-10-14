@@ -1,0 +1,9 @@
+{
+ "revision": "v19 finish v03",
+ "base": "MAP_PLAN_R01_v19_build_v02.json",
+ "hill": {"id":"V19_north_bank_screen","x":438,"z":638,"radius_m":22,"height_m":11.8},
+ "hill_rule": "Add a finite cosine rise after calm-plot fitting. Centre has 35.57 m building, 31.55 m road, 25.07 m water and 32.25 m fence clearance. Refit terrain tree heights. No roads, plots or buildings lie inside its support.",
+ "gate": {"fence_id":"02_v18_plotfence_02_ground_02_1_1","near_x":196.26,"near_z":506.57,"width_m":8.6},
+ "gate_rule": "Widen the orchard cart entrance using the same visible fence builder and matching collider bays. The previous foot route passes; the van catches the entrance.",
+ "tree_collision": "Instantiate the approved happykeys analytic capsule proxies explicitly at every Rough/fade terrain-tree transform. This ensures trunk collision independently of Unity terrain-prefab child-collider handling. Source render meshes and colliders remain unchanged."
+}

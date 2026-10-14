@@ -63,7 +63,7 @@ namespace OnlyVolunteers.Map.Look
 
         public static LookData Load(string revision)
         {
-            string path = Path.Combine(Application.dataPath, "..", LookJsonDir, $"look_{revision}_flat.json");
+            string path = Path.Combine(Application.dataPath, "..", LookJsonDir, revision=="v19" ? "look_v19_build_v07_flat.json" : $"look_{revision}_flat.json");
             LookData d = JsonUtility.FromJson<LookData>(File.ReadAllText(path));
             d.Normalise();
             return d;

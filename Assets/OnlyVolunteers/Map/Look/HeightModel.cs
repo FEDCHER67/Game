@@ -43,6 +43,8 @@ namespace OnlyVolunteers.Map.Look
         public float BuildingMargin = 1.5f, BuildingBlend = 5f, BuildingBlendMax = 8f, WallDrop = 1.2f, WallOffset = 1.2f;
         public float YardBlend = 4f, YardBlendMax = 12f, YardTerrace = 0.6f;
         public float SideSlopeDeg = 20f;
+        // Opt-in for G18 only: the stronger relief must remain outside inhabited plots and calm yards.
+        public bool CalmV19Pilots;
 
         private float[] smooth;
         private bool[] insideBoundary;
@@ -88,7 +90,7 @@ namespace OnlyVolunteers.Map.Look
             var field = (float[])baseField.Clone();
             ApplyYards(baseField, field);
             var core = new bool[n];
-            ApplyBuildings(baseField, field, core);
+            ApplyBuildings(CalmV19Pilots ? (float[])field.Clone() : baseField, field, core);
             // Pad cores (footprint + margin, or inside a retaining wall) stay flat at the pad: the road blend is already
             // in the pad height, so applying it again would tilt floors and bury doors near roads.
             for (int k = 0; k < n; k++)
@@ -607,18 +609,20 @@ namespace OnlyVolunteers.Map.Look
                 if (LookGeom.Count(yard.pts) < 3) continue;
                 float pad = YardPads[yard.id];
                 LookGeom.Bounds(yard.pts, out float x0, out float y0, out float x1, out float y1);
-                Grid.Range(x0 - YardBlendMax, y0 - YardBlendMax, x1 + YardBlendMax, y1 + YardBlendMax, out int i0, out int j0, out int i1, out int j1);
+                bool calm=CalmV19Pilots && yard.kind=="calm_activity";
+                float blendMax=calm?32f:YardBlendMax;
+                Grid.Range(x0 - blendMax, y0 - blendMax, x1 + blendMax, y1 + blendMax, out int i0, out int j0, out int i1, out int j1);
                 for (int j = j0; j <= j1; j++)
                     for (int i = i0; i <= i1; i++)
                     {
                         float x = Grid.X(i), y = Grid.Y(j);
                         int k = j * Grid.Nx + i;
-                        float target = under[k] - Math.Clamp(under[k] - pad, -YardTerrace, YardTerrace);
+                        float target = calm ? pad : under[k] - Math.Clamp(under[k] - pad, -YardTerrace, YardTerrace);
                         float w = 1f;
                         if (!LookGeom.Inside(yard.pts, x, y))
                         {
                             float d = LookGeom.DistToPolyline(yard.pts, x, y, true, out _, out _);
-                            float bw = Math.Clamp(MathF.Abs(target - under[k]) * slopeK, YardBlend, YardBlendMax);
+                            float bw = Math.Clamp(MathF.Abs(target - under[k]) * slopeK, YardBlend, blendMax);
                             if (d >= bw) continue;
                             w = 1f - LookGeom.Smooth01(d / bw);
                         }

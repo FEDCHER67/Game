@@ -1,0 +1,409 @@
+{
+  "task": "G18",
+  "revision": "v03",
+  "family": "PILOT_KIT",
+  "blender": "5.2.1 LTS",
+  "units": "metres",
+  "source_axes": "X right, Y back, Z up; front -Y",
+  "collider_schema": {
+    "version": 1,
+    "space": "Blender mesh local, metres; ignore master display translations",
+    "shape": "box",
+    "size": "full extents, not half extents",
+    "quaternion": "[x,y,z,w], local box to module",
+    "classification": "solid and walkable both block all faces; walkable identifies intended traversal surfaces; never use as trigger",
+    "supports_standing": "solid fence/rail tops also support standing when marked",
+    "union": "All proxies combine by union; never replace by a module AABB",
+    "consumer_import": "Apply the identical axis/unit conversion used by the imported render mesh to proxy centres and orientation matrices. These values remain Blender mesh-local; Unity axis conversion has not been engine-tested. Never reorder quaternion components as an axis conversion."
+  },
+  "material_roles": [
+    "plaster",
+    "brick",
+    "concrete",
+    "metal_painted",
+    "metal_dark",
+    "wood",
+    "glass",
+    "roof"
+  ],
+  "palette_source": "ArtSource\\Textures\\StyleKit_v3\\candidate_v07\\grade_v07.json",
+  "palette_sha256": "b3282ef21536423f4d285804ca15a303865436993468f33626ee6c537f1577ab",
+  "assets": {
+    "LEAFLESS_TREE": {
+      "group": "B",
+      "triangles": 280,
+      "budget": 1200,
+      "size_m": [
+        2.94704,
+        2.65398,
+        4.820411
+      ],
+      "bounds_min": [
+        -1.5221538543701172,
+        -1.1878905296325684,
+        0.0
+      ],
+      "bounds_max": [
+        1.4248865842819214,
+        1.4660890102386475,
+        4.82041072845459
+      ],
+      "pivot": "Ground Z=0, footprint centre X=Y=0; front -Y",
+      "pivot_local_m": [
+        0,
+        0,
+        0
+      ],
+      "pivot_check": true,
+      "snapping": "Metres; front -Y; place by support surface.",
+      "contracts": {},
+      "material_slots": [
+        "plaster",
+        "brick",
+        "concrete",
+        "metal_painted",
+        "metal_dark",
+        "wood",
+        "glass",
+        "roof"
+      ],
+      "used_slots": [
+        "wood"
+      ],
+      "swatches": [
+        "wood"
+      ],
+      "colliders": [
+        {
+          "id": "COL_000",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.7000000476837158
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            3.4
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_001",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.7000000476837158
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            3.4
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.3826834559440613,
+            0.9238795042037964
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_002",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.7000000476837158
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            3.4
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.7071067094802856,
+            0.7071068286895752
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_003",
+          "name": "trunk",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.0,
+            0.0,
+            1.7000000476837158
+          ],
+          "size_m": [
+            0.31411904105383753,
+            0.13011236700413054,
+            3.4
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.9238795638084412,
+            0.38268333673477173
+          ],
+          "source_shell": 0,
+          "match": "exact_union_regular_prism",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_004",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.42500001192092896,
+            0.0,
+            1.75
+          ],
+          "size_m": [
+            1.3124404848319957,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            -0.4197330176830292,
+            0.0,
+            0.9076476097106934
+          ],
+          "source_shell": 1,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_005",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.34288808703422546,
+            0.314090371131897,
+            2.0899999141693115
+          ],
+          "size_m": [
+            1.3656133254051934,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.37222525477409363,
+            -0.14471356570720673,
+            0.8544853329658508,
+            0.33220645785331726
+          ],
+          "source_shell": 4,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_006",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.04418698698282242,
+            -0.5030631422996521,
+            2.430000066757202
+          ],
+          "size_m": [
+            1.4213023316294857,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.2569354176521301,
+            -0.2804928123950958,
+            -0.624687671661377,
+            0.6819628477096558
+          ],
+          "source_shell": 7,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_007",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.3315514624118805,
+            0.43254899978637695,
+            2.7699999809265137
+          ],
+          "size_m": [
+            1.4792227823958615,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.16050949692726135,
+            -0.32526910305023193,
+            0.41238462924957275,
+            0.8356887102127075
+          ],
+          "source_shell": 10,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_008",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.5760424137115479,
+            -0.10198117047548294,
+            3.109999895095825
+          ],
+          "size_m": [
+            1.5391231636252347,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.3449570834636688,
+            -0.030299602076411247,
+            -0.9345312118530273,
+            0.08208536356687546
+          ],
+          "source_shell": 13,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_009",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            0.5274087190628052,
+            -0.3353580832481384,
+            3.450000047683716
+          ],
+          "size_m": [
+            1.6007810500495305,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            -0.09248848259449005,
+            -0.31782302260398865,
+            -0.2636643946170807,
+            0.9060438275337219
+          ],
+          "source_shell": 16,
+          "match": "visible_box",
+          "supports_standing": false
+        },
+        {
+          "id": "COL_010",
+          "name": "branch",
+          "shape": "box",
+          "classification": "solid",
+          "center_m": [
+            -0.17277854681015015,
+            0.6421624422073364,
+            3.7899999618530273
+          ],
+          "size_m": [
+            1.664001219700145,
+            0.085,
+            0.085
+          ],
+          "rotation_quaternion_xyzw": [
+            0.25143224000930786,
+            -0.19272437691688538,
+            0.7527884840965271,
+            0.5770170092582703
+          ],
+          "source_shell": 19,
+          "match": "visible_box",
+          "supports_standing": false
+        }
+      ],
+      "collision_measurements": {
+        "max_box_corner_error_m": 2.5288109106536417e-07,
+        "errors": []
+      },
+      "shell_count": 22,
+      "geometry_sha1": "c6f4ee3340948ab9f33e6990be118623c9138589",
+      "checks": {
+        "triangle_budget": true,
+        "closed_shells": true,
+        "outward_shells": true,
+        "no_degenerate_triangles": true,
+        "custom_normals": true,
+        "ordered_roles": true,
+        "origin_zero": true,
+        "unit_scale": true,
+        "zero_rotation": true,
+        "deterministic_geometry": true,
+        "deterministic_colliders": true,
+        "no_rig_or_animation": true,
+        "nonempty_colliders": true,
+        "collider_matches_source_geometry": true,
+        "gate_opening_unobstructed": true,
+        "standable_contract_covered": true,
+        "ground_contact_zero": true
+      },
+      "all_checks_passed": true,
+      "fbx": "LEAFLESS_TREE_v03.fbx",
+      "master_display_translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "total_assets": 1,
+  "total_triangles": 280,
+  "all_checks_passed": true,
+  "unity_test": "NOT RUN: expressly prohibited by brief",
+  "note": "Tree contact repair: trunk reaches every primary branch root; v02 files retained.",
+  "master_layout": "Six-column review grid; mesh local coordinates unchanged. Reset display translation to zero before re-export.",
+  "export_settings": {
+    "use_selection": true,
+    "object_types": [
+      "MESH"
+    ],
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "apply_unit_scale": true,
+    "global_scale": 1,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "FACE",
+    "add_leaf_bones": false,
+    "bake_anim": false,
+    "path_mode": "STRIP",
+    "use_custom_props": false
+  }
+}

@@ -117,7 +117,7 @@ namespace OnlyVolunteers.Map
         private static TextAsset EnsureRevision(string revision)
         {
             string project = Path.GetDirectoryName(Application.dataPath);
-            string file = $"crowd_{revision}.json";
+            string file = revision=="v19" ? "crowd_v19_build_v07.json" : $"crowd_{revision}.json";
             string assetPath = $"{DataDir}/{file}";
             string full = Path.Combine(project, assetPath), source = Path.Combine(project, SourceDir, file);
             if (!File.Exists(full))

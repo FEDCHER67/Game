@@ -1,0 +1,64 @@
+{
+  "task": "G17",
+  "status": "PASS",
+  "command": "python ArtSource/Textures/StyleKit_v3/decals_v01/tools/make_decals_v01.py --check-only",
+  "observed_result": "PASS: all texture checks; two independent builds identical (11 files); 11 existing files byte-identical. No writes.",
+  "all_output_hashes_match": true,
+  "reference_hashes_still_match": 15,
+  "generator_hash_matches": true,
+  "png_decode_and_tags": {
+    "CONCRETE_CRACKS_STAINS_v01.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 55881
+    },
+    "GROUND_WEAR_PATCHES_v01.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 113748
+    },
+    "LITTER_ATLAS_v01.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 147509
+    },
+    "WHEEL_TRACKS_DIRT_v01_albedo.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 104103
+    },
+    "WHEEL_TRACKS_DIRT_v01_normal.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 87469
+    },
+    "WORN_PATH_v01_albedo.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 94604
+    },
+    "WORN_PATH_v01_normal.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 83933
+    },
+    "previews/decals_v01_on_surfaces.png": {
+      "decode": "PASS",
+      "color_space_tag": "PASS",
+      "file_bytes": 633320
+    }
+  },
+  "overwrite_refusal": {
+    "status": "PASS",
+    "expected_exit_code": 1,
+    "all_existing_output_bytes_preserved": true
+  },
+  "visual_review": {
+    "status": "PASS",
+    "path": "previews/decals_v01_on_surfaces.png",
+    "method": "Viewed final 1600x1600 PNG after export; inspected all 16 litter cells, 8 wear cells, strips on grass/dirt, and normal seam crops.",
+    "notes": "Earlier review_01.png retained as work-in-progress; oil halo removed in final output."
+  },
+  "unity": "NOT RUN (user explicitly prohibited Unity)",
+  "open": "In-engine lighting, mip/compression behaviour, nearby player-camera readability and artistic acceptance remain for pilot integration."
+}

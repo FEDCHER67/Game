@@ -1,0 +1,275 @@
+{
+  "alpha": "Straight / unassociated; albedo sRGB, normals linear data; no baked lighting/AO",
+  "concrete_wear": {
+    "cells": [
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "branching_crack",
+        "index": 0,
+        "label": "Hairline crack",
+        "pixel_rect_top_left": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "preview_base": "3c_concrete_panels",
+        "uv_rect": [
+          0.0,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "rust_drip",
+        "index": 1,
+        "label": "Rust drip stain",
+        "pixel_rect_top_left": [
+          512,
+          0,
+          512,
+          512
+        ],
+        "preview_base": "3c_concrete_panels",
+        "uv_rect": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "wall_foot_water_stain",
+        "index": 2,
+        "label": "Wall-foot water stain",
+        "pixel_rect_top_left": [
+          0,
+          512,
+          512,
+          512
+        ],
+        "preview_base": "3c_concrete_panels",
+        "uv_rect": [
+          0.0,
+          0.0,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "patched_pothole",
+        "index": 3,
+        "label": "Patched pothole",
+        "pixel_rect_top_left": [
+          512,
+          512,
+          512,
+          512
+        ],
+        "preview_base": "2a_asphalt",
+        "uv_rect": [
+          0.5,
+          0.0,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "grid": [
+      2,
+      2
+    ],
+    "texture": "CONCRETE_CRACKS_STAINS_v01.png"
+  },
+  "generator": "tools/make_decals_v01.py",
+  "ground_wear": {
+    "cells": [
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "trampled_grass",
+        "index": 0,
+        "label": "Trampled grass",
+        "pixel_rect_top_left": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "preview_base": "1a_grass",
+        "uv_rect": [
+          0.0,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "muddy_puddle_edge",
+        "index": 1,
+        "label": "Muddy puddle edge",
+        "pixel_rect_top_left": [
+          512,
+          0,
+          512,
+          512
+        ],
+        "preview_base": "1b_dirt_road",
+        "uv_rect": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "gravel_spill",
+        "index": 2,
+        "label": "Gravel spill",
+        "pixel_rect_top_left": [
+          0,
+          512,
+          512,
+          512
+        ],
+        "preview_base": "1b_dirt_road",
+        "uv_rect": [
+          0.0,
+          0.0,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "cell_world_size_m": [
+          1.5,
+          1.5
+        ],
+        "id": "bare_earth_patch",
+        "index": 3,
+        "label": "Bare-earth patch",
+        "pixel_rect_top_left": [
+          512,
+          512,
+          512,
+          512
+        ],
+        "preview_base": "1a_grass",
+        "uv_rect": [
+          0.5,
+          0.0,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "grid": [
+      2,
+      2
+    ],
+    "texture": "GROUND_WEAR_PATCHES_v01.png"
+  },
+  "litter_metadata": "LITTER_ATLAS_v01.json",
+  "palette_means_srgb": {
+    "1a_grass": [
+      111.0218,
+      127.5001,
+      76.6028
+    ],
+    "1b_dirt_road": [
+      145.2859,
+      119.1068,
+      94.1734
+    ],
+    "1d_gravel": [
+      155.6703,
+      158.367,
+      161.4969
+    ],
+    "1e_mud": [
+      109.5909,
+      83.0092,
+      68.014
+    ],
+    "2a_asphalt": [
+      95.0037,
+      102.0035,
+      108.0032
+    ],
+    "2b_sidewalk_tiles": [
+      188.8343,
+      181.1605,
+      167.8553
+    ],
+    "3c_concrete_panels": [
+      173.4234,
+      170.7314,
+      165.5951
+    ],
+    "6a_painted_metal_panels": [
+      141.9948,
+      147.0111,
+      150.0242
+    ]
+  },
+  "revision": 1,
+  "schema": "OnlyVolunteers.Decals/1",
+  "seed": 170013,
+  "source_policy": "All decal marks procedurally painted. Existing v07 textures used only for previews; no downloads.",
+  "strips": {
+    "WHEEL_TRACKS_DIRT_v01": {
+      "max_normal_tilt_degrees": 4.50352,
+      "normal_convention": "Tangent-space +Y (green points up image / increasing V); linear data",
+      "relief_depth_m": 0.0075,
+      "repeat_axis": "V",
+      "wheel_gauge_m": 2.4,
+      "world_size_m": [
+        3.0,
+        6.0
+      ],
+      "wrap_u": "Clamp",
+      "wrap_v": "Repeat"
+    },
+    "WORN_PATH_v01": {
+      "max_normal_tilt_degrees": 2.08314,
+      "normal_convention": "Tangent-space +Y (green points up image / increasing V); linear data",
+      "relief_depth_m": 0.0045,
+      "repeat_axis": "V",
+      "wheel_gauge_m": null,
+      "world_size_m": [
+        1.2,
+        4.0
+      ],
+      "wrap_u": "Clamp",
+      "wrap_v": "Repeat"
+    }
+  },
+  "task": "G17",
+  "uv_convention": "[u_min, v_min, width, height]; normalized UV, origin bottom-left; PNG rows count from top"
+}

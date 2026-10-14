@@ -1,0 +1,36 @@
+// Adapted from approach 3/Visibility.compute, MangoButtermilch, MIT (LICENSE.txt).
+// One group per chunk; conservative AABB planes, exact count bounds, compact IDs.
+#pragma kernel ChunkRender
+struct Blade { float4 positionHeight; float4 shape; };
+struct Chunk { float3 centre; uint start; float3 extents; uint count; };
+StructuredBuffer<Blade> _Blades;
+StructuredBuffer<Chunk> _Chunks;
+AppendStructuredBuffer<uint> _Visible;
+float4 _Frustum[6];
+float3 _CameraPosition;
+float _ViewDistance;
+uint _ChunkCount;
+bool ChunkInFrustum(Chunk chunk)
+{
+    for(uint p=0;p<6;p++)
+        if(dot(_Frustum[p].xyz,chunk.centre)+_Frustum[p].w+dot(abs(_Frustum[p].xyz),chunk.extents)<0) return false;
+    float3 delta=max(abs(chunk.centre-_CameraPosition)-chunk.extents,0);
+    return dot(delta,delta)<=_ViewDistance*_ViewDistance;
+}
+[numthreads(64,1,1)]
+void ChunkRender(uint3 group:SV_GroupID,uint thread:SV_GroupIndex)
+{
+    if(group.x>=_ChunkCount) return;
+    Chunk chunk=_Chunks[group.x];
+    if(!ChunkInFrustum(chunk)) return;
+    for(uint i=thread;i<chunk.count;i+=64)
+    {
+        uint index=chunk.start+i;
+        Blade blade=_Blades[index];
+        float3 centre=blade.positionHeight.xyz+float3(0,blade.positionHeight.w*.5,0);
+        float radius=blade.positionHeight.w*.75+.4;
+        bool visible=distance(centre,_CameraPosition)<_ViewDistance+radius;
+        for(uint p=0;p<6;p++) visible=visible && dot(_Frustum[p].xyz,centre)+_Frustum[p].w>=-radius;
+        if(visible) _Visible.Append(index);
+    }
+}

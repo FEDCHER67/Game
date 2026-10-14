@@ -50,7 +50,7 @@ namespace OnlyVolunteers.Map.Look.V3
             Structures = new List<(string, string, float[], Vector2, float)>();
             Props = new List<Prop>();
             PylonLine = new List<Vector2>();
-            string path = Path.Combine(Application.dataPath, "..", MapLookBuilder.LookJsonDir, $"look_{revision}_flat.json");
+            string path = Path.Combine(Application.dataPath, "..", MapLookBuilder.LookJsonDir, revision=="v19" ? "look_v19_build_v07_flat.json" : $"look_{revision}_flat.json");
             if (!File.Exists(path)) return;
             if (!(V3Json.Parse(File.ReadAllText(path)) is Dictionary<string, object> root)) return;
             if (root.TryGetValue("water", out object water) && water is List<object> waters)
