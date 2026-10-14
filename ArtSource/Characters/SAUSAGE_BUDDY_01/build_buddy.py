@@ -65,9 +65,14 @@ skin = G.mat('Buddy_Skin', LOOK.get('skin', (236, 152, 106)), 0.5, sss=0.12)
 nose = G.mat('Buddy_Skin_Nose', LOOK.get('nose', (226, 128, 94)), 0.45, sss=0.12)
 inner = G.mat('Buddy_Skin_Inner', (204, 112, 80), 0.6)
 body = B.build_body(skin, nose, inner)
+EYES = T.eyes(TYPE) if TYPE else {}                            # TASK-000529: optional per-type iris / lashes / pupils
+EYE_EXTRAS = {k: (G.mat('Buddy_Eye_Iris', v, 0.3) if k == 'iris' else G.mat('Buddy_Eye_Lash', v, 0.6) if k == 'lash' else v)
+              for k, v in EYES.items()}
 face = B.build_face([G.mat('Buddy_Eye_White', (247, 247, 243), 0.2), G.mat('Buddy_Eye_Rim', LOOK.get('rim', (150, 92, 70)), 0.5),
                      G.mat('Buddy_Pupil', (16, 14, 14), 0.12), G.mat('Buddy_Eye_Shine', (255, 255, 255), 0.1),
-                     G.mat('Buddy_Brow', LOOK.get('brow', (86, 54, 40)), 0.7), G.mat('Buddy_Mouth', LOOK.get('mouth', (74, 36, 30)), 0.6)])
+                     G.mat('Buddy_Brow', LOOK.get('brow', (86, 54, 40)), 0.7), G.mat('Buddy_Mouth', LOOK.get('mouth', (74, 36, 30)), 0.6)], EYE_EXTRAS or None)
+if TYPE:
+    T.bake_face(face, TYPE)          # TASK-000519: BASE eyes, the type's mouth and brows baked in (not for own_eyes types)
 if TYPE and T.arm_down(TYPE):       # every clip starts from idle_joints(): fat types keep the arms off the belly
     A.idle_joints.__defaults__ = (0.0, T.arm_down(TYPE))
 src, imported = RG.import_source(MOTION)
@@ -197,6 +202,29 @@ face_act = A.face_keys(face)
 gag_face_acts = [GG.face_action(face, name + '_Face', g['face']) for name, g in gags.items()]
 phone = GG.build_phone(col)
 phone_act = GG.phone_track(phone, rest, gags['PoliceCall'], shifts['PoliceCall'])
+# A shape-only revision can explicitly reuse its previous clips byte-for-byte at the keyframe level.
+# The normal builder grounds clips using the mesh; a larger silhouette must not silently change animation.
+animation_revision = T.TYPES[TYPE].get('preserve_animation_revision') if TYPE else None
+if animation_revision is not None:
+    animation_source = BASE_DIR / f'SAUSAGE_BUDDY_{TYPE}_v{animation_revision:02d}.blend'
+    animation_report = BASE_DIR / f'validation_{TYPE}_v{animation_revision:02d}.json'
+    if not animation_source.is_file() or not animation_report.is_file():
+        raise FileNotFoundError(f'Animation preservation requires {animation_source} and {animation_report}')
+    previous_actions = {a.name: a for a in bpy.data.actions}
+    with bpy.data.libraries.load(str(animation_source), link=False) as (source, loaded):
+        action_names = tuple(source.actions)
+        loaded.actions = list(action_names)
+    for name, action in zip(action_names, loaded.actions):
+        current = previous_actions.get(name)
+        if current is not None:
+            current.user_remap(action)
+            bpy.data.actions.remove(current)
+        action.name = name
+    face_act = bpy.data.actions['Panic_TurnFlee_Face']
+    gag_face_acts = [bpy.data.actions[name + '_Face'] for name in gags]
+    phone_act = bpy.data.actions['PoliceCall_Phone']
+    grounding = json.loads(animation_report.read_text(encoding='utf-8'))['grounding_offset_m']
+
 rig.animation_data.action = bpy.data.actions['Panic_TurnFlee']
 scene.frame_start, scene.frame_end = 1, 150
 scene.frame_set(1)
@@ -215,6 +243,9 @@ if TYPE:
     report['npc_type'] = T.manifest(TYPE)
     report['fbx_actions'] = ['Idle']
     report['clips_note'] = 'Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend'
+if animation_revision is not None:
+    report['animation_preserved_from'] = animation_source.name
+    report['grounding_note'] = 'Original v03 animation offsets preserved; mesh contact is checked separately.'
 total = 0
 for o in export_meshes:
     me = o.data

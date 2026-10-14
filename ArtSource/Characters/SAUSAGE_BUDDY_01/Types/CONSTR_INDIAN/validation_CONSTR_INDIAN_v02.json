@@ -1,0 +1,398 @@
+{
+  "asset": "SAUSAGE_BUDDY_CONSTR_INDIAN_v02",
+  "variant": "CONSTR_INDIAN",
+  "height_m": 1.934,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 12948,
+      "vertices": 7879,
+      "materials": [
+        "CONSTR_INDIAN_Shirt",
+        "CONSTR_INDIAN_Shirt_Roll",
+        "CONSTR_INDIAN_Paisley",
+        "CONSTR_INDIAN_Paisley_2",
+        "CONSTR_INDIAN_Paisley_Dot",
+        "CONSTR_INDIAN_Cement",
+        "CONSTR_INDIAN_ChestHair",
+        "CONSTR_INDIAN_Trousers",
+        "CONSTR_INDIAN_Trousers_Roll",
+        "CONSTR_INDIAN_Gamcha",
+        "CONSTR_INDIAN_Gamcha_Check",
+        "Buddy_Skin",
+        "CONSTR_INDIAN_Sole_Dirt",
+        "CONSTR_INDIAN_Hat",
+        "CONSTR_INDIAN_Hair",
+        "CONSTR_INDIAN_Hair_Part",
+        "CONSTR_INDIAN_Mustache",
+        "CONSTR_INDIAN_Sweat",
+        "CONSTR_INDIAN_Tilak",
+        "CONSTR_INDIAN_Marigold",
+        "CONSTR_INDIAN_Marigold_2"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_RightHand": {
+      "triangles": 154,
+      "vertices": 87,
+      "materials": [
+        "CONSTR_INDIAN_Glass",
+        "CONSTR_INDIAN_Chai"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.1017
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0915,
+      "max": 0.1017
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.1017
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Индус",
+    "group": "Интернациональная стройка",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 74.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {
+      "Happy": 1.0,
+      "Surprised": 0.35
+    },
+    "slots": {
+      "CONSTR_INDIAN_Shirt": {
+        "default": "#EC3496",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Shirt_Roll": {
+        "default": "#D62884",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Paisley": {
+        "default": "#FC961E",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Paisley_2": {
+        "default": "#FFDE3C",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Paisley_Dot": {
+        "default": "#28BEC8",
+        "metal": false
+      },
+      "CONSTR_INDIAN_ChestHair": {
+        "default": "#161210",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Cement": {
+        "default": "#A8A49C",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Sweat": {
+        "default": "#D6ECF6",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Trousers": {
+        "default": "#968C74",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Trousers_Roll": {
+        "default": "#A69C84",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Sole_Dirt": {
+        "default": "#5C4634",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Gamcha": {
+        "default": "#C82832",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Gamcha_Check": {
+        "default": "#F0ECE2",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Marigold": {
+        "default": "#FA8C14",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Marigold_2": {
+        "default": "#FFC828",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Hat": {
+        "default": "#FAC828",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Hair": {
+        "default": "#121012",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Hair_Part": {
+        "default": "#3C383A",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Mustache": {
+        "default": "#161416",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Tilak": {
+        "default": "#E23824",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Glass": {
+        "default": "#DEECF0",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Chai": {
+        "default": "#C48C5A",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "CONSTR_INDIAN_Shirt": "#FA8C14",
+        "CONSTR_INDIAN_Shirt_Roll": "#E27810",
+        "CONSTR_INDIAN_Paisley": "#C41E46",
+        "CONSTR_INDIAN_Paisley_2": "#FAE678",
+        "CONSTR_INDIAN_Trousers": "#60646E",
+        "CONSTR_INDIAN_Trousers_Roll": "#6E727C",
+        "CONSTR_INDIAN_Gamcha": "#287846"
+      },
+      {
+        "CONSTR_INDIAN_Shirt": "#28AABE",
+        "CONSTR_INDIAN_Shirt_Roll": "#1E92A6",
+        "CONSTR_INDIAN_Paisley": "#FAD232",
+        "CONSTR_INDIAN_Paisley_2": "#EC3496",
+        "CONSTR_INDIAN_Trousers": "#786046",
+        "CONSTR_INDIAN_Trousers_Roll": "#887056",
+        "CONSTR_INDIAN_Hat": "#F6F6F2"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 20654,
+  "part_triangles": {
+    "CONSTR_INDIAN_Shirt": 1328,
+    "CONSTR_INDIAN_ChestHair": 1260,
+    "Skin_Head": 1088,
+    "CONSTR_INDIAN_Hair": 1024,
+    "CONSTR_INDIAN_Garland": 1024,
+    "CONSTR_INDIAN_Foot_Upper": 1000,
+    "CONSTR_INDIAN_Toe": 1000,
+    "CONSTR_INDIAN_Trousers": 688,
+    "CONSTR_INDIAN_Foot_Sole": 672,
+    "CONSTR_INDIAN_Sash": 640,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "CONSTR_INDIAN_Mustache": 440,
+    "CONSTR_INDIAN_Hat_Dome": 416,
+    "CONSTR_INDIAN_Paisley": 396,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "CONSTR_INDIAN_Quiff": 360,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "CONSTR_INDIAN_Collar": 296,
+    "Skin_Nose": 288,
+    "CONSTR_INDIAN_Hat_Rim": 256,
+    "CONSTR_INDIAN_PaisleyIn": 246,
+    "CONSTR_INDIAN_Sweat": 240,
+    "CONSTR_INDIAN_ShirtEdge": 216,
+    "CONSTR_INDIAN_Hat_Peak": 216,
+    "CONSTR_INDIAN_KnotEnd": 200,
+    "Brow": 168,
+    "CONSTR_INDIAN_Knot": 168,
+    "CONSTR_INDIAN_SashKnot": 168,
+    "CONSTR_INDIAN_Hat_Ridge": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "CONSTR_INDIAN_PantsCement": 100,
+    "CONSTR_INDIAN_Glass": 98,
+    "CONSTR_INDIAN_SashEnd": 88,
+    "CONSTR_INDIAN_FootDust": 82,
+    "CONSTR_INDIAN_PaisleyEye": 78,
+    "CONSTR_INDIAN_ShinCement": 68,
+    "CONSTR_INDIAN_Chai": 56,
+    "CONSTR_INDIAN_ShirtCement": 54,
+    "CONSTR_INDIAN_ArmCement": 42,
+    "CONSTR_INDIAN_Tilak": 12,
+    "CONSTR_INDIAN_HairPart": 2
+  }
+}

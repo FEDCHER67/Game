@@ -1,0 +1,402 @@
+{
+  "asset": "SAUSAGE_BUDDY_OLD_KAREN_v06",
+  "variant": "OLD_KAREN",
+  "height_m": 1.78,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 13559,
+      "vertices": 7185,
+      "materials": [
+        "OLD_KAREN_Tee",
+        "OLD_KAREN_Print",
+        "OLD_KAREN_Cardigan",
+        "OLD_KAREN_Cardigan_Rib",
+        "OLD_KAREN_Pearl",
+        "OLD_KAREN_Leggings",
+        "OLD_KAREN_Shoe_Upper",
+        "OLD_KAREN_Shoe_Sole",
+        "OLD_KAREN_Shoe_Lace",
+        "OLD_KAREN_Shoe_Accent",
+        "OLD_KAREN_Hair",
+        "OLD_KAREN_Hair_Streak",
+        "OLD_KAREN_Brows"
+      ],
+      "max_influences": 5,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_LeftHand": {
+      "triangles": 2144,
+      "vertices": 1112,
+      "materials": [
+        "OLD_KAREN_Bag",
+        "OLD_KAREN_Bag_Trim",
+        "OLD_KAREN_Gold",
+        "OLD_KAREN_Dog",
+        "OLD_KAREN_Dog_Nose",
+        "OLD_KAREN_Dog_Eye",
+        "OLD_KAREN_Pearl",
+        "OLD_KAREN_Dog_Ear",
+        "OLD_KAREN_Dog_Collar"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Props_RightHand": {
+      "triangles": 120,
+      "vertices": 64,
+      "materials": [
+        "OLD_KAREN_Phone",
+        "OLD_KAREN_Screen"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0016,
+    "Panic_Run_Loop": 0.0723,
+    "Panic_TurnFlee": 0.0771,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0495,
+      "max": 0.0771
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": 0.0002,
+      "max": 0.0868
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.07,
+      "max": 0.0868
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": 0.0005,
+      "max": 0.0868
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0256,
+      "max": 0.1089
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2719,
+      "max": 0.0016
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0283,
+      "max": 0.0796
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0256,
+      "max": 0.09
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.09,
+      "max": 0.09
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.1837,
+      "max": 0.0771
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Карен",
+    "group": "Даунтаун",
+    "body": {
+      "belly": 1.3
+    },
+    "idle_arm_down_deg": 62.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {},
+    "face_baked": {
+      "Blink_R": 0.4,
+      "Worried": 0.5,
+      "Surprised": 0.25
+    },
+    "slots": {
+      "OLD_KAREN_Tee": {
+        "default": "#F8F6F0",
+        "metal": false
+      },
+      "OLD_KAREN_Print": {
+        "default": "#221E20",
+        "metal": false
+      },
+      "OLD_KAREN_Cardigan": {
+        "default": "#2C9698",
+        "metal": false
+      },
+      "OLD_KAREN_Cardigan_Rib": {
+        "default": "#227E80",
+        "metal": false
+      },
+      "OLD_KAREN_Leggings": {
+        "default": "#202024",
+        "metal": false
+      },
+      "OLD_KAREN_Shoe_Upper": {
+        "default": "#F4F4F0",
+        "metal": false
+      },
+      "OLD_KAREN_Shoe_Sole": {
+        "default": "#ECEAE4",
+        "metal": false
+      },
+      "OLD_KAREN_Shoe_Accent": {
+        "default": "#CEA8C8",
+        "metal": false
+      },
+      "OLD_KAREN_Shoe_Lace": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "OLD_KAREN_Hair": {
+        "default": "#ECD696",
+        "metal": false
+      },
+      "OLD_KAREN_Hair_Streak": {
+        "default": "#C4A05A",
+        "metal": false
+      },
+      "OLD_KAREN_Brows": {
+        "default": "#785634",
+        "metal": false
+      },
+      "OLD_KAREN_Pearl": {
+        "default": "#F8F6F0",
+        "metal": false
+      },
+      "OLD_KAREN_Bag": {
+        "default": "#D6BA8C",
+        "metal": false
+      },
+      "OLD_KAREN_Bag_Trim": {
+        "default": "#96643C",
+        "metal": false
+      },
+      "OLD_KAREN_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "OLD_KAREN_Phone": {
+        "default": "#F0C8D2",
+        "metal": false
+      },
+      "OLD_KAREN_Screen": {
+        "default": "#263858",
+        "metal": false
+      },
+      "OLD_KAREN_Dog": {
+        "default": "#D8AA70",
+        "metal": false
+      },
+      "OLD_KAREN_Dog_Ear": {
+        "default": "#EEAAA6",
+        "metal": false
+      },
+      "OLD_KAREN_Dog_Eye": {
+        "default": "#121012",
+        "metal": false
+      },
+      "OLD_KAREN_Dog_Nose": {
+        "default": "#221A1A",
+        "metal": false
+      },
+      "OLD_KAREN_Dog_Collar": {
+        "default": "#EC3C96",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "OLD_KAREN_Cardigan": "#9664A8",
+        "OLD_KAREN_Cardigan_Rib": "#805492",
+        "OLD_KAREN_Leggings": "#3C425A"
+      },
+      {
+        "OLD_KAREN_Cardigan": "#E27E78",
+        "OLD_KAREN_Cardigan_Rib": "#CC6A64",
+        "OLD_KAREN_Hair": "#FAECBE",
+        "OLD_KAREN_Bag": "#282424"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 22799,
+  "part_triangles": {
+    "OLD_KAREN_Pearl": 3072,
+    "OLD_KAREN_Cardigan": 2068,
+    "OLD_KAREN_Tee": 1696,
+    "OLD_KAREN_Hair_Bob": 1120,
+    "Skin_Head": 1088,
+    "OLD_KAREN_Shoe_Upper": 1000,
+    "OLD_KAREN_Leggings": 688,
+    "OLD_KAREN_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "OLD_KAREN_Heel": 560,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "OLD_KAREN_Pocket": 344,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "OLD_KAREN_Lace": 256,
+    "OLD_KAREN_Handbag_Dog_Head": 252,
+    "OLD_KAREN_Handbag_Dog_Eye": 240,
+    "OLD_KAREN_Handbag_Dog_Ear": 240,
+    "OLD_KAREN_Handbag_Dog_Collar": 216,
+    "OLD_KAREN_Hair_Spike": 216,
+    "OLD_KAREN_Handbag_Dog_EarIn": 200,
+    "Brow": 168,
+    "OLD_KAREN_Handbag_Dog_Neck": 168,
+    "Shine": 160,
+    "OLD_KAREN_Print": 139,
+    "OLD_KAREN_Handbag_Dog_Paw": 128,
+    "OLD_KAREN_Brow": 128,
+    "OLD_KAREN_Handbag_Handle": 120,
+    "OLD_KAREN_Handbag_Dog_Snout": 120,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "OLD_KAREN_Handbag_Bag": 108,
+    "OLD_KAREN_Handbag_Trim": 108,
+    "OLD_KAREN_Handbag_Clasp": 108,
+    "OLD_KAREN_Phone_Phone": 108,
+    "Prop_Phone": 108,
+    "OLD_KAREN_Handbag_Dog_Shine": 72,
+    "OLD_KAREN_Handbag_Dog_Nose": 64,
+    "OLD_KAREN_Phone_Screen": 12
+  }
+}

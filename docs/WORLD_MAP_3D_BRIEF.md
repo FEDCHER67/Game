@@ -92,12 +92,14 @@ Your process rules still apply:
 - fences and gates, bases, piers.
 
 **Yours to design:**
-- Nature: trees, bushes, grass, flowers, stones, fallen trunks, micro-relief.
-  > Vadim: «не нужно recreate каждое дерево с плана — это просто план по зданиям, дорогам, холмам и т. д., за природу ты отвечаешь сам».
+- **Nature — entirely yours, and it must be really beautiful,** not just filled in: forests, groves, meadows, wildflowers, bushes, grass, stones and rocks, river banks, coast, micro-relief, transitions between districts.
+  > Vadim: «не нужно recreate каждое дерево с плана — это просто план по зданиям, дорогам, холмам и т. д., за природу ты отвечаешь сам»; «пиздатую природу делай».
 
-  The circles on the 2D map are symbols. Use the JSON forest zones (dense/light), groves, clearings and meadows for character and density, then place nature yourself.
+  The circles on the 2D map are symbols. Use the JSON forest zones (dense/light), groves, clearings and meadows for character and density, then design and place nature yourself.
 - Facade design, roof details, materials and textures, small street and yard props, lighting, water shading.
 - Small geometric adjustments for driving: slopes, curve radii, curb ramps. Keep the topology and connections of the plan.
+
+**Assets — ask Fedya.** Before you pick, generate, download or import any asset — models, textures, kits, store packs, Tripo or other AI generations — ask Fedya and use what he approves. That covers vegetation and nature assets too. You decide the design and placement of nature; Fedya decides which assets go in.
 
 ## 4. Global look — the quality bar
 
@@ -517,6 +519,7 @@ Log every working prompt as a TASK in WORK_SYNC.md, per docs/TEAM_WORKFLOW.md. S
 ## 12. Do not
 
 - recreate trees one by one from the 2D circles;
+- pick, generate, download or import assets without asking Fedya;
 - put 2D facade pictures on plain boxes, or stretch, blur or smear textures; avoid z-fighting and neon or oversaturated colours;
 - put fences around the Hamlet houses;
 - add buildings, bases, KPPs or roads that the plan does not have; small props are fine;

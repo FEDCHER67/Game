@@ -1,6 +1,6 @@
-"""District pool 'Старый город' (TASK-000270) on the base Sausage Buddy: the streamer, the student, the office worker;
-TASK-000272: the vaper moved here from 'Переход' with his first design kept (OLD_VAPER builds
-from buddy_pool_transit2's TRANSIT_VAPER builder and slots).
+"""District pool 'Старый город' (TASK-000270) on the base Sausage Buddy - the American Downtown since TASK-000514:
+the IRL streamer (v08, after Ivan Zolo), the college kid (the old student, v07 = the v03 design), the office worker; the vaper moved here
+from 'Переход' in TASK-000272 and on to the rough district in TASK-000511 (OLD_VAPER stays buildable, out of the pool).
 Same format as buddy_types.TYPES / BUILDERS; every garment and prop has its own material slot <TYPE>_<Slot>.
 Carried props are modelled in the idle pose (world space, arms hanging) and baked back to the hand's T-pose frame,
 so they sit in the hand exactly where the idle renders show them."""
@@ -15,33 +15,32 @@ import buddy_anim as A
 import buddy_types as T
 
 P = 'mixamorig:'
-GROUP = 'Старый город'
+GROUP = 'Даунтаун'                 # was 'Старый город' until TASK-000514
 METAL = 'metal'
 
 TYPES = {
     'OLD_STREAMER': dict(
-        label='Стример (редко)', group=GROUP, no_ears=True, hand_props=True,
-        look=dict(skin=(242, 212, 192), nose=(236, 178, 160), rim=(196, 132, 136), brow=(70, 54, 46)),
-        face=dict(Surprised=0.4, Happy=0.25),
-        slots={'Hoodie': ((40, 42, 52), 0.9), 'Hoodie_Rib': ((30, 32, 40), 0.9), 'Print': ((250, 66, 150), 0.7),
-               'Pants': ((126, 130, 140), 0.95), 'Pants_Rib': ((104, 108, 118), 0.95), 'Socks': ((244, 242, 236), 0.9),
-               'Slides': ((34, 36, 42), 0.55), 'Hair': ((66, 50, 42), 0.8), 'EyeBags': ((168, 126, 156), 0.8),
-               'Headset': ((28, 28, 32), 0.45), 'Headset_Pad': ((52, 52, 58), 0.9), 'Headset_Glow': ((70, 240, 130), 0.3),
-               'Mic': ((22, 22, 24), 0.6), 'Stick': ((30, 30, 34), 0.4), 'RingLight': ((252, 250, 240), 0.3),
-               'Phone': ((22, 22, 26), 0.25), 'Screen': ((120, 200, 255), 0.15)},
-        colourways=[{'Hoodie': (232, 232, 228), 'Hoodie_Rib': (210, 210, 206), 'Print': (40, 170, 240), 'Pants': (40, 42, 50),
-                     'Pants_Rib': (30, 32, 40), 'Headset': (238, 238, 236), 'Headset_Glow': (40, 170, 240), 'Slides': (232, 64, 60)},
-                    {'Hoodie': (96, 62, 176), 'Hoodie_Rib': (80, 50, 150), 'Print': (250, 222, 60), 'Pants': (54, 58, 66),
-                     'Pants_Rib': (42, 46, 54), 'Headset_Glow': (250, 70, 160), 'Socks': (250, 222, 60), 'Hair': (232, 92, 140)}]),
+        label='IRL-стример', group=GROUP, hand_props=True, body=dict(thin=0.2), face=dict(Happy=0.4, Blink=0.15),
+        look=dict(skin=(248, 214, 196), nose=(242, 170, 150), brow=(70, 52, 40)),
+        slots={'Blazer': ((200, 32, 44), 0.6), 'Lapel': ((160, 22, 34), 0.5), 'Button': ((214, 174, 76), 0.3, METAL),
+               'Tee': ((244, 244, 240), 0.85), 'Print_Skin': ((250, 222, 206), 0.8), 'Print_Hair': ((26, 24, 30), 0.8),
+               'Print_Hair_2': ((240, 70, 150), 0.8), 'Print_Ink': ((24, 24, 26), 0.6), 'Print_Blush': ((240, 130, 160), 0.8),
+               'Print_Lips': ((96, 20, 64), 0.5), 'Print_Shine': ((255, 255, 255), 0.6), 'Print_Bg': ((204, 172, 236), 0.8),
+               'Print_Metal': ((206, 208, 216), 0.4), 'Sweats': ((150, 150, 158), 0.9), 'Sweats_Rib': ((132, 132, 140), 0.9),
+               'Socks': ((250, 250, 246), 0.9), 'Slides': ((130, 210, 60), 0.5), 'Scalp': ((24, 26, 84), 0.9),
+               'Dread': ((44, 42, 200), 0.9), 'Dread_Mid': ((140, 40, 180), 0.9), 'Dread_Tip': ((242, 52, 132), 0.9),
+               'Stick': ((30, 30, 34), 0.4), 'Stick_Grip': ((20, 20, 22), 0.8), 'Phone': ((30, 30, 34), 0.4),
+               'Screen': ((120, 200, 255), 0.1)},
+        colourways=[{'Blazer': (40, 90, 200), 'Lapel': (30, 66, 160), 'Scalp': (90, 20, 16), 'Dread': (226, 70, 30),
+                     'Dread_Mid': (240, 120, 40), 'Dread_Tip': (250, 170, 60)},
+                    {'Blazer': (236, 196, 40), 'Lapel': (200, 160, 30), 'Slides': (236, 60, 140), 'Scalp': (20, 60, 30),
+                     'Dread': (40, 160, 70), 'Dread_Mid': (150, 120, 60), 'Dread_Tip': (220, 40, 40)}]),
     'OLD_STUDENT': dict(
-        label='Студент', group=GROUP, face=dict(Surprised=0.3),
+        label='College kid', group=GROUP, face=dict(Surprised=0.3),
         slots=dict(T.TYPES['CITY_STUDENT']['slots'],
-                   **{'Phones': ((236, 66, 58), 0.4), 'Phones_Pad': ((40, 40, 44), 0.9), 'Phones_Plate': ((240, 238, 232), 0.35),
-                      'Can': ((132, 222, 52), 0.3), 'Can_Band': ((26, 26, 30), 0.35), 'Can_Metal': ((206, 208, 214), 0.25, METAL)}),
-        colourways=[dict(T.TYPES['CITY_STUDENT']['colourways'][0], Phones=(240, 240, 236), Phones_Plate=(40, 40, 44),
-                         Can=(60, 140, 240)),
-                    dict(T.TYPES['CITY_STUDENT']['colourways'][1], Phones=(40, 40, 44), Phones_Plate=(236, 66, 58),
-                         Can=(250, 120, 30), Can_Band=(250, 246, 236))]),
+                   **{'Phones': ((236, 66, 58), 0.4), 'Phones_Pad': ((40, 40, 44), 0.9), 'Phones_Plate': ((240, 238, 232), 0.35)}),
+        colourways=[dict(T.TYPES['CITY_STUDENT']['colourways'][0], Phones=(240, 240, 236), Phones_Plate=(40, 40, 44)),
+                    dict(T.TYPES['CITY_STUDENT']['colourways'][1], Phones=(40, 40, 44), Phones_Plate=(236, 66, 58))]),
     'OLD_OFFICE': dict(
         label='Работник офиса', group=GROUP, face=dict(Worried=0.35, Blink=0.3),
         slots=dict(T.TYPES['CITY_CLERK']['slots'],
@@ -103,23 +102,6 @@ def _lathe(name, base, axis, rows, mats, seg=16, cap_start=True, cap_end=True):
                   extra=list(mats[1:]))
 
 
-def _torus(name, center, normal, R, r, material, seg=28, tseg=8):
-    F = _frame(normal)
-    u, v, n = F.col[0], F.col[1], F.col[2]
-    vs, fs = [], []
-    for i in range(seg):
-        a = 2 * math.pi * i / seg
-        d = u * math.cos(a) + v * math.sin(a)
-        for j in range(tseg):
-            b = 2 * math.pi * j / tseg
-            vs.append(Vector(center) + d * (R + r * math.cos(b)) + n * (r * math.sin(b)))
-    for i in range(seg):
-        for j in range(tseg):
-            a0, a1 = i * tseg, ((i + 1) % seg) * tseg
-            fs.append((a0 + j, a1 + j, a1 + (j + 1) % tseg, a0 + (j + 1) % tseg))
-    return G.from_data(name, vs, fs, material, True)
-
-
 def _rename(objs, old, new):
     for o in objs:
         if o.name.startswith(old):
@@ -129,84 +111,153 @@ def _rename(objs, old, new):
     return objs
 
 
-def _ear_cup(prefix, center, axis, M, shell, pad, plate, r=0.050, depth=0.040):
-    """Headphone cup: soft pad on the inner side (toward -axis), hard shell, a coloured plate on the outer face."""
-    rows = [(0.0, r * 0.70, 1), (0.004, r * 0.92, 1), (0.012, r * 0.98, 1), (0.014, r * 0.96, 0), (0.018, r * 1.0, 0),
-            (depth - 0.006, r * 0.98, 0), (depth, r * 0.82, 0)]
-    cup = _lathe(prefix + '_Cup', Vector(center) - Vector(axis).normalized() * (depth / 2), axis, rows, [M[shell], M[pad]], seg=18)
-    a = Vector(axis).normalized()
-    pl = G.ellipsoid(prefix + '_Plate', Vector(center) + a * (depth / 2 + 0.001), (r * 0.62, r * 0.62, 0.005), M[plate],
-                     rot=_frame(a), seg=16, rings=6)
-    return [cup, pl]
-
-# ------------------------------------------------------------------ OLD_STREAMER
-# 8-bit heart as one stepped outline in grid units (x right, y down), 7 x 6 cells
-PIXEL_HEART = [(1, 0), (3, 0), (3, 1), (4, 1), (4, 0), (6, 0), (6, 1), (7, 1), (7, 3), (6, 3), (6, 4), (5, 4), (5, 5), (4, 5), (4, 6),
-               (3, 6), (3, 5), (2, 5), (2, 4), (1, 4), (1, 3), (0, 3), (0, 1), (1, 1)]
-
-
-def _pixel_heart(prefix, target, material, cz=1.108, px=0.018):
-    pts = [(px * (x - 3.5), cz + px * (3 - y)) for x, y in PIXEL_HEART]
-    return [W.front_decal(prefix, pts[::-1], target, material, 0.0028, step=0.006)]
+def _dread(name, pts, r, M):
+    """One thick dreadlock along a polyline: blue from the root, a purple band, a hot-pink rounded tip."""
+    P = [Vector(p) for p in pts]
+    secs = []
+    for i, p in enumerate(P):
+        t = (P[min(i + 1, len(P) - 1)] - P[max(i - 1, 0)]).normalized()
+        up = Vector((0, 0, 1)) if abs(t.z) < 0.95 else Vector((1, 0, 0))
+        a = up.cross(t).normalized()
+        rr = r * (0.85 if i == 0 else 1.0)
+        secs.append((p, a, t.cross(a).normalized(), rr, rr))
+    n = len(P) - 1
+    rows = [0] * (n - 2) + [1, 2]
+    ob = G.loft(name, secs, M['Dread'], seg=6, mat_rows=rows, extra=[M['Dread_Mid'], M['Dread_Tip']])
+    tip = G.ellipsoid(name + '_Tip', P[-1], (r, r, r), M['Dread_Tip'], seg=6, rings=4)
+    return [ob, tip]
 
 
-def _headset(prefix, M):
-    """Gaming headset: padded band over the head, big cups over the ears with glowing plates, boom mic to the mouth."""
-    out = []
-    ez = B.EAR_C[2] + 0.004
-    for s in (1, -1):
-        out += _ear_cup(f'{prefix}_Cup_{s}', (s * (B.HEAD_R + 0.020), 0.006, ez), (s, 0, 0), M, 'Headset', 'Headset_Pad', 'Headset_Glow',
-                        r=0.054, depth=0.044)
-    # band: from one cup up over the head and down to the other, a flat strap riding on the hair
-    h0 = W.h_of(ez + 0.045)
-    hs = [h0 + (W.H_POLE - 0.004 - h0) * k / 12 for k in range(13)]
-    pts = [W.head_at(math.radians(90), h, 0.030)[0] for h in hs] + [W.head_at(math.radians(-90), h, 0.030)[0] for h in reversed(hs)]
-    band = C.strap(prefix + '_Band', pts, M['Headset'], width=0.034, thick=0.012,
-                   normal_fn=lambda p: Vector((p.x, 0.0, max(0.0, p.z - B.HEAD_CYL_TOP))).normalized())
-    out.append(band)
-    # boom mic from the left cup round the cheek to the mouth corner
-    path = [Vector((0.176, -0.020, ez - 0.012)), Vector((0.172, -0.070, 1.440)), Vector((0.140, -0.128, 1.414)),
-            Vector((0.092, -0.165, 1.404)), Vector((0.060, -0.178, 1.402))]
-    out.append(G.tube(prefix + '_Boom', path, 0.0052, M['Mic'], seg=8))
-    out.append(G.ellipsoid(prefix + '_MicTip', path[-1] + Vector((-0.006, -0.002, 0)), (0.016, 0.013, 0.013), M['Mic'], seg=12, rings=8))
+def _zolo_dreads(prefix, M):
+    """The Ivan Zolo hair of Vadim's reference photo: short thick dreadlocks springing from the crown in every
+    direction - blue with hot-pink tips - over a dark-navy braided base; the front ones arc over the forehead and end
+    above the eyes, the sides of the head stay bare."""
+    import random
+    rnd = random.Random(23)
+    base = W.zprofile([(0, 1.684), (40, 1.672), (90, 1.650), (140, 1.640), (180, 1.640)])
+    scalp, _ = W.shell(prefix + '_Base', M['Scalp'], base, None, off=0.004, thick=0.004, seg=32, rows=5)
+    out = [scalp]
+    specs = []
+    for ring, (count, z_lo, z_hi) in enumerate(((22, 1.672, 1.690), (14, 1.708, 1.722))):     # lower and upper ring of roots
+        for k in range(count):
+            deg = -180 + 360 * (k + 0.5 * ring + rnd.uniform(-0.3, 0.3)) / count
+            a = abs(deg)
+            z = rnd.uniform(z_lo, z_hi)
+            if a < 35:      # front: arcs over the forehead, ends at the brows
+                specs.append((deg, rnd.uniform(16, 24), rnd.uniform(24, 28), rnd.uniform(0.100, 0.118) - 0.012 * ring, max(z, 1.696)))
+            elif a < 130:   # sides: stick far out and droop a little
+                specs.append((deg, rnd.uniform(22, 38) - 10 * ring, rnd.uniform(6, 10), rnd.uniform(0.160, 0.190), z))
+            else:           # back
+                specs.append((deg, rnd.uniform(30, 44) - 10 * ring, rnd.uniform(6, 10), rnd.uniform(0.150, 0.180), z))
+    for k in range(5):      # a few from the very top stand up and out
+        specs.append((-180 + 72 * k + rnd.uniform(-20, 20), rnd.uniform(-30, -12), 14.0, rnd.uniform(0.110, 0.130), 1.738))
+    up = Vector((0, 0, 1))
+    n = 6
+    for k, (deg, tilt, droop, length, z) in enumerate(specs):
+        phi = math.radians(deg)
+        root, nrm = W.head_at(phi, W.h_of(z), 0.002)
+        out_dir = Vector((math.sin(phi), -math.cos(phi), 0.0))
+        pts, p = [root], root.copy()
+        for i in range(n):
+            th = math.radians(tilt + 2 * droop * i / (n - 1))          # bends down more and more
+            d = (out_dir * math.cos(th) - up * math.sin(th)).normalized()
+            if i == 0:
+                d = (d + nrm * 0.6).normalized()                         # leave the scalp first
+            p = p + d * (length / n)
+            pts.append(p.copy())
+        out += _dread(f'{prefix}_Dread_{k}', pts, rnd.uniform(0.0115, 0.0135), M)
     return [C.rigid(o, 'Head') for o in out]
 
 
-def _ring_light_rig(prefix, M):
-    """Phone in a mini ring light on a selfie/gimbal stick, held in the right hand in front of his face."""
-    c, down, palm, fwd = _hand_frame('Right')
-    ring_c = Vector((-0.125, -0.470, 1.290))
-    face_pt = Vector((0.0, -0.140, 1.500))
-    n = (face_pt - ring_c).normalized()                   # the light and the phone screen look at his face
-    grip = c + palm * 0.012
-    d = (ring_c - grip).normalized()
-    out = [G.tube(prefix + '_Handle', [grip - d * 0.060, grip + d * 0.070], 0.0175, M['Stick'], seg=12)]
-    R_ring = 0.115
-    up = (Vector((0, 0, 1)) - n * n.z).normalized()
-    bottom = ring_c - up * R_ring
-    out.append(G.tube(prefix + '_Rod', [grip + d * 0.070, bottom - up * 0.030], 0.0085, M['Stick'], seg=8))
-    out.append(G.ellipsoid(prefix + '_Gimbal', bottom - up * 0.030, (0.020, 0.020, 0.020), M['Stick'], seg=12, rings=8))
-    out.append(_torus(prefix + '_Ring', ring_c, n, R_ring, 0.016, M['RingLight'], seg=28, tseg=8))
-    out.append(G.tube(prefix + '_Arm', [bottom - up * 0.030, ring_c - up * 0.060], 0.0060, M['Stick'], seg=8))
-    # phone flat in the ring plane: half extents (across, along `up`, thickness along n)
-    F = Matrix((up.cross(n).normalized(), up, n)).transposed()
-    out.append(W.box(prefix + '_Phone', ring_c, (0.040, 0.080, 0.0045), M['Phone'], rot=F))
-    out.append(W.box(prefix + '_Screen', ring_c + n * 0.0040, (0.036, 0.074, 0.0012), M['Screen'], rot=F))
-    return _held(out, 'Right')
+BLAZER = [(z, rx * 1.07, ry * 1.08, dy) for z, rx, ry, dy in W.JACKET]                  # oversized, arm row 7
+BIG_SLEEVE = [(x, r * 1.08) for x, r in W.JACKET_SLEEVE[:7]] + [(.600, .061), (.626, .060), (.633, .055), (.629, .050)]   # past the wrists
+LEGS_SHORT_SWEAT = [(.70, .094), (.60, .092), (.50, .088), (.43, .085), (.34, .080), (.31, .078)]
+SHORT_SWEAT_CUFF = [(.296, .060), (.272, .056), (.270, .052)]
+
+
+def _ccw(pts):
+    """Outline turned counter-clockwise (the winding the decals expect)."""
+    area = sum(x0 * z1 - x1 * z0 for (x0, z0), (x1, z1) in zip(pts, pts[1:] + pts[:1]))
+    return pts if area > 0 else pts[::-1]
+
+
+def _altushka_print(prefix, tee, M):
+    """Print on the tee (Vadim: an 'altushka' like in his song, big and expressive): a lilac sticker disc with a
+    cartoon alt girl - split-dyed hair, black and hot pink, a blunt fringe, a cat-ear headband, big eyes with heavy
+    winged eyeliner, a little heart under one eye, blush, dark lips with a lip ring, a choker with a ring."""
+    cx, cz = -0.002, 1.000
+    out = []
+
+    def dec(name, pts, slot, off, step=0.006):
+        out.append(W.front_decal(f'{prefix}_{name}', _ccw([(cx + x, cz + z) for x, z in pts]), tee, M[slot], off, step=step))
+
+    def heart(x0, z0, k):
+        return [(x0 + k * 16 * math.sin(t) ** 3, z0 + k * (13 * math.cos(t) - 5 * math.cos(2 * t) - 2 * math.cos(3 * t) - math.cos(4 * t)))
+                for t in [2 * math.pi * q / 24 for q in range(24)]]
+    dec('Disc', C.ellipse(0.0, 0.018, 0.098, 0.106, 32), 'Print_Bg', 0.0026, step=0.010)
+    arc = [(-0.072 * math.sin(math.pi / 2 * k / 8), 0.018 + 0.085 * math.cos(math.pi / 2 * k / 8)) for k in range(9)]
+    dec('HairL', [(0.0, -0.080)] + arc + [(-0.070, -0.080)], 'Print_Hair', 0.0034)
+    dec('HairR', [(-x, z) for x, z in [(0.0, -0.080)] + arc + [(-0.070, -0.080)]], 'Print_Hair_2', 0.0034)
+    for s in (1, -1):
+        dec(f'Ear_{s}', [(s * 0.024, 0.090), (s * 0.064, 0.064), (s * 0.060, 0.132)], 'Print_Hair', 0.0034)
+        dec(f'EarIn_{s}', [(s * 0.034, 0.088), (s * 0.056, 0.074), (s * 0.055, 0.115)], 'Print_Hair_2', 0.0042, step=0.004)
+    dec('Neck', [(-0.016, -0.080), (0.016, -0.080), (0.016, -0.050), (-0.016, -0.050)], 'Print_Skin', 0.0042)
+    dec('Face', C.ellipse(0.0, 0.004, 0.050, 0.060, 24), 'Print_Skin', 0.0046)
+    fringe = [(-0.056, 0.034), (0.0, 0.034), (0.0, 0.100), (-0.044, 0.090), (-0.062, 0.062)]
+    dec('FringeL', fringe, 'Print_Hair', 0.0058)
+    dec('FringeR', [(-x, z) for x, z in fringe], 'Print_Hair_2', 0.0058)
+    for s in (1, -1):
+        ex, ez = s * 0.021, 0.006
+        dec(f'Liner_{s}', C.ellipse(ex, ez, 0.0115, 0.0145, 16), 'Print_Ink', 0.0066, step=0.004)
+        dec(f'Wing_{s}', [(ex + s * 0.008, ez + 0.006), (ex + s * 0.024, ez + 0.017), (ex + s * 0.009, ez + 0.012)], 'Print_Ink', 0.0066, step=0.003)
+        dec(f'White_{s}', C.ellipse(ex, ez - 0.001, 0.0085, 0.0112, 16), 'Print_Shine', 0.0072, step=0.003)
+        dec(f'Pupil_{s}', C.ellipse(ex - s * 0.001, ez - 0.002, 0.0058, 0.0080, 14), 'Print_Ink', 0.0078, step=0.003)
+        dec(f'Shine_{s}', C.ellipse(ex - s * 0.003, ez + 0.002, 0.0022, 0.0022, 8), 'Print_Shine', 0.0084, step=0.002)
+        dec(f'Blush_{s}', C.ellipse(s * 0.033, -0.020, 0.010, 0.0055, 12), 'Print_Blush', 0.0066, step=0.004)
+    dec('EyeHeart', heart(0.037, -0.027, 0.00040), 'Print_Ink', 0.0074, step=0.002)
+    dec('Lips', C.ellipse(0.0, -0.036, 0.0095, 0.0042, 12), 'Print_Lips', 0.0066, step=0.003)
+    dec('LipRing', C.ellipse(0.008, -0.041, 0.0026, 0.0026, 8), 'Print_Metal', 0.0074, step=0.002)
+    dec('Choker', [(-0.020, -0.068), (0.020, -0.068), (0.020, -0.058), (-0.020, -0.058)], 'Print_Ink', 0.0058, step=0.004)
+    dec('ChokerRing', C.ellipse(0.0, -0.073, 0.0045, 0.0045, 10), 'Print_Metal', 0.0066, step=0.003)
+    return out
+
+
+def _blazer_front(prefix, blazer, M):
+    """Wide notched lapels beside the open front, two gold buttons on the left panel, pocket flaps."""
+    out = []
+    for s in (1, -1):
+        lap = [(0.122, 1.000), (0.150, 1.100), (0.172, 1.160), (0.152, 1.176), (0.160, 1.196), (0.128, 1.214), (0.120, 1.150), (0.120, 1.060)]
+        lap = [(s * x, z) for x, z in lap]
+        out.append(W.front_decal(f'{prefix}_Lapel_{s}', lap if s > 0 else lap[::-1], blazer, M['Lapel'], 0.0035, step=0.008))
+        flap = [(0.135, 0.800), (0.205, 0.800), (0.205, 0.824), (0.135, 0.824)]
+        flap = [(s * x, z) for x, z in flap]
+        out.append(W.front_decal(f'{prefix}_Flap_{s}', flap if s > 0 else flap[::-1], blazer, M['Lapel'], 0.0035, thickness=0.003))
+    out += W.buttons(prefix + '_Btn', blazer, M['Button'], [(0.132, 0.930), (0.132, 0.860)], r=0.011)
+    return out
 
 
 def old_streamer(body, face, M, skin):
+    """v08 (TASK-000516/517, Vadim: like the streamer Ivan Zolo, with a selfie stick, the hair as on Vadim's reference
+    photo; the clothes more ridiculous; an 'altushka' on the tee, then bigger and more expressive - v08): short thick blue dreadlocks with hot-pink tips over
+    a dark braided base, bare sides; a pale face with a goofy half-smile; an oversized red blazer (one of his photos)
+    worn open, the sleeves past the wrists, over a white tee with a cartoon alt-girl print; grey sweatpants cut at
+    mid-shin, white socks pulled up, lime slides; the phone on a long selfie stick in the right hand (dropped at the
+    slightest danger). The face stays the common Sausage Buddy one. v06 had a cartoon cat on the tee, v05 a black tee
+    with a grey-white print and black baggy jeans; v04 was the generic 2026 streamer (hoodie, IRL backpack, gimbal)."""
+    import buddy_pool_oldtown2 as O2
+    pre = 'OLD_STREAMER'
     src = C.weight_source([body])
-    hoodie, pocket, out = T._hoodie('OLD_STREAMER', M, src)
-    out.append(T._hood_down('OLD_STREAMER', M['Hoodie']))
-    out += T._decal_t(_pixel_heart('OLD_STREAMER_Heart', hoodie, M['Print']), hoodie)
-    out.append(T._trousers('OLD_STREAMER', M, 'Pants', src, legs=W.LEGS_SWEAT, cuff=W.SWEAT_CUFF, cuff_slot='Pants_Rib'))
-    out.append(T._t(W.plain_socks('OLD_STREAMER_Socks', M['Socks'], top=0.24), src))
-    out += W.slides('OLD_STREAMER', M['Socks'], M['Slides'])
-    out.append(W.hair('OLD_STREAMER_Hair', M['Hair'], 'slick'))
-    out += _headset('OLD_STREAMER_Headset', M)
-    out += T._face(skin, lambda head: W.eye_bags('OLD_STREAMER_EyeBag', M['EyeBags'], head))
-    out += _ring_light_rig('OLD_STREAMER_Prop', M)
+    tee = T._t(W.top(pre + '_Tee', W.TEE, 6, W.SLEEVE_SHORT, (.806, .184, .124, -.004), [M['Tee']]), src, C.no_head)
+    out = [tee] + T._decal_t(_altushka_print(pre + '_Alt', tee, M), tee)
+    blazer = W.top(pre + '_Blazer', BLAZER, 7, BIG_SLEEVE, (.716, .214, .146, -.012), [M['Blazer']],
+                   cut=lambda c: c.y < 0 and abs(c.x) < 0.095)
+    T._t(blazer, src, C.no_head)
+    out += [blazer] + T._decal_t(_blazer_front(pre + '_Blazer', blazer, M), blazer)
+    out.append(T._t(W.bottoms(pre + '_Sweats', LEGS_SHORT_SWEAT, [M['Sweats'], M['Sweats_Rib']], cuff=SHORT_SWEAT_CUFF), src))
+    out.append(T._t(W.plain_socks(pre + '_Socks', M['Socks'], top=0.300), src))
+    out += W.slides(pre, M['Socks'], M['Slides'])
+    out += _zolo_dreads(pre + '_Hair', M)
+    out += O2._selfie_stick(pre + '_Selfie', M, TYPES[pre].get('arm_down', 74.0))
     return out
 
 # ------------------------------------------------------------------ OLD_VAPER (TASK-000272)
@@ -227,6 +278,16 @@ def old_vaper(body, face, M, skin):
 TYPES['OLD_VAPER'] = _vaper_spec()
 
 # ------------------------------------------------------------------ OLD_STUDENT
+def _ear_cup(prefix, center, axis, M, shell, pad, plate, r=0.050, depth=0.040):
+    """Headphone cup: soft pad on the inner side (toward -axis), hard shell, a coloured plate on the outer face."""
+    rows = [(0.0, r * 0.70, 1), (0.004, r * 0.92, 1), (0.012, r * 0.98, 1), (0.014, r * 0.96, 0), (0.018, r * 1.0, 0),
+            (depth - 0.006, r * 0.98, 0), (depth, r * 0.82, 0)]
+    cup = _lathe(prefix + '_Cup', Vector(center) - Vector(axis).normalized() * (depth / 2), axis, rows, [M[shell], M[pad]], seg=18)
+    a = Vector(axis).normalized()
+    pl = G.ellipsoid(prefix + '_Plate', Vector(center) + a * (depth / 2 + 0.001), (r * 0.62, r * 0.62, 0.005), M[plate],
+                     rot=_frame(a), seg=16, rings=6)
+    return [cup, pl]
+
 def _neck_headphones(prefix, M, targets):
     """Big headphones resting round the neck: band over the hood roll at the back, cups on the collarbones."""
     bvh = G.bvh_of(targets)
@@ -250,18 +311,11 @@ def _neck_headphones(prefix, M, targets):
     return [C.rigid(o, 'Spine2') for o in out]
 
 
-def _energy_can(prefix, M):
-    c, down, palm, fwd = _hand_frame('Right')
-    base = c + palm * 0.048 + fwd * 0.016 + Vector((0, 0, -0.095))
-    H, r = 0.185, 0.038
-    rows = [(0.0, r * 0.80, 2), (0.004, r * 0.96, 2), (0.012, r, 0), (0.070, r, 1), (0.112, r, 0), (H - 0.016, r, 2), (H - 0.006, r * 0.86, 2),
-            (H, r * 0.84, 2)]
-    can = _lathe(prefix + '_Can', base, (0, 0, 1), rows, [M['Can'], M['Can_Band'], M['Can_Metal']], seg=16)
-    tab = G.ellipsoid(prefix + '_Tab', base + Vector((0, -0.010, H + 0.001)), (0.008, 0.012, 0.0018), M['Can_Metal'], seg=10, rings=4)
-    return _held([can, tab], 'Right')
-
-
 def old_student(body, face, M, skin):
+    """v07 (TASK-000516, Vadim: keep the student as he was long ago): the old-town student v03 again - the yellow
+    hoodie with the hood down, red headphones round the neck, a backpack, rolled jeans, white sneakers, bald
+    (TASK-000281) - now in the Downtown group. v04-v06 (varsity jacket; basketball shorts; the plain schoolkid with
+    books) are not used."""
     M = dict(M, Beanie=M['Hoodie'])        # city_student still makes the beanie; it is removed right below
     out = _rename(T.city_student(body, face, M, skin), 'STUDENT', 'OLD_STUDENT')
     for o in [o for o in out if o.name.startswith('OLD_STUDENT_Beanie')]:      # TASK-000281: bald, no beanie
@@ -273,7 +327,6 @@ def old_student(body, face, M, skin):
     hood = [o for o in out if o.name.startswith('OLD_STUDENT_Hood') and 'Pouch' not in o.name]
     hoodie = [o for o in out if o.name == 'OLD_STUDENT_Hoodie']
     out += _neck_headphones('OLD_STUDENT_Phones', M, hood + hoodie)
-    out += _energy_can('OLD_STUDENT_Prop', M)
     return out
 
 # ------------------------------------------------------------------ OLD_OFFICE

@@ -1,0 +1,338 @@
+{
+  "asset": "SAUSAGE_BUDDY_CONSTR_UZBEK_v02",
+  "variant": "CONSTR_UZBEK",
+  "height_m": 1.777,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8538,
+      "vertices": 4959,
+      "materials": [
+        "CONSTR_UZBEK_Jacket",
+        "CONSTR_UZBEK_Insert",
+        "CONSTR_UZBEK_Reflect",
+        "CONSTR_UZBEK_Zip",
+        "CONSTR_UZBEK_Trousers",
+        "CONSTR_UZBEK_Knee",
+        "CONSTR_UZBEK_Dust",
+        "CONSTR_UZBEK_Boots",
+        "CONSTR_UZBEK_Boots_Sole",
+        "CONSTR_UZBEK_Boot_Lace",
+        "CONSTR_UZBEK_Cap",
+        "CONSTR_UZBEK_Cap_Peak",
+        "CONSTR_UZBEK_Hair",
+        "CONSTR_UZBEK_Mustache",
+        "CONSTR_UZBEK_Stubble"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0899
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0899,
+      "max": 0.0899
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0899
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Узбек",
+    "group": "Интернациональная стройка",
+    "body": {
+      "belly": 0.5,
+      "muscle": 0.6
+    },
+    "idle_arm_down_deg": 68.0,
+    "game_scale": 1.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {},
+    "face_baked": {
+      "Happy": 0.45
+    },
+    "slots": {
+      "CONSTR_UZBEK_Jacket": {
+        "default": "#28365C",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Insert": {
+        "default": "#F0781E",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Reflect": {
+        "default": "#CED2D8",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Zip": {
+        "default": "#C4C6CC",
+        "metal": true
+      },
+      "CONSTR_UZBEK_Trousers": {
+        "default": "#28365C",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Knee": {
+        "default": "#F0781E",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Dust": {
+        "default": "#B0A692",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Boots": {
+        "default": "#242220",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Boots_Sole": {
+        "default": "#181818",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Boot_Lace": {
+        "default": "#464038",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Cap": {
+        "default": "#1C1C20",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Cap_Peak": {
+        "default": "#1C1C20",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Hair": {
+        "default": "#181614",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Mustache": {
+        "default": "#181614",
+        "metal": false
+      },
+      "CONSTR_UZBEK_Stubble": {
+        "default": "#28221E",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "CONSTR_UZBEK_Jacket": "#40444A",
+        "CONSTR_UZBEK_Trousers": "#40444A",
+        "CONSTR_UZBEK_Insert": "#FAC828",
+        "CONSTR_UZBEK_Knee": "#FAC828",
+        "CONSTR_UZBEK_Cap": "#E6E4DE",
+        "CONSTR_UZBEK_Cap_Peak": "#40444A"
+      },
+      {
+        "CONSTR_UZBEK_Jacket": "#344A34",
+        "CONSTR_UZBEK_Trousers": "#344A34",
+        "CONSTR_UZBEK_Insert": "#E64632",
+        "CONSTR_UZBEK_Knee": "#E64632",
+        "CONSTR_UZBEK_Cap": "#283460",
+        "CONSTR_UZBEK_Cap_Peak": "#283460"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16090,
+  "part_triangles": {
+    "CONSTR_UZBEK_Jacket": 1872,
+    "CONSTR_UZBEK_Hair": 1152,
+    "Skin_Head": 1088,
+    "CONSTR_UZBEK_Boot_Shoe_Upper": 1000,
+    "CONSTR_UZBEK_Trousers": 816,
+    "CONSTR_UZBEK_Boot_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "CONSTR_UZBEK_Stubble_Dot": 450,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "CONSTR_UZBEK_Knee": 360,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "CONSTR_UZBEK_Collar": 296,
+    "Skin_Nose": 288,
+    "CONSTR_UZBEK_Cap_Crown": 288,
+    "CONSTR_UZBEK_YokeB": 262,
+    "CONSTR_UZBEK_Boot_Lace": 256,
+    "CONSTR_UZBEK_Mustache": 240,
+    "CONSTR_UZBEK_Cap_Peak": 216,
+    "CONSTR_UZBEK_YokeF": 210,
+    "Brow": 168,
+    "Shine": 160,
+    "CONSTR_UZBEK_Flap": 136,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "CONSTR_UZBEK_Cap_Button": 100,
+    "CONSTR_UZBEK_Dust": 78,
+    "CONSTR_UZBEK_BandF": 66,
+    "CONSTR_UZBEK_BandB": 66,
+    "CONSTR_UZBEK_Zip": 2
+  }
+}

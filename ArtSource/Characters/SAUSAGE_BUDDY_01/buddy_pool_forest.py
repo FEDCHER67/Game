@@ -18,7 +18,7 @@ STASH = 'FOREST_STASHER'
 TYPES = {
     OD: dict(
         label='Передознутый торчок', group=GROUP, body=dict(thin=1.0), no_ears=True,
-        face=dict(Blink=0.65, Worried=0.3),
+        face=dict(Blink=0.65, Worried=0.3), own_eyes=True,
         look=dict(skin=(198, 206, 172), nose=(184, 192, 158), brow=(78, 72, 62), rim=(196, 92, 96)),
         slots={'Hoodie': ((104, 112, 92), 0.95), 'Hoodie_Rib': ((88, 95, 78), 0.95), 'Cords': ((214, 210, 196), 0.85),
                'Pants': ((128, 128, 134), 0.95), 'Pants_Rib': ((108, 108, 114), 0.95), 'Socks': ((198, 192, 176), 0.9),

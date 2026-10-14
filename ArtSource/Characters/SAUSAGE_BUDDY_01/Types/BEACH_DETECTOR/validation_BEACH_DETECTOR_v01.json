@@ -1,0 +1,388 @@
+{
+  "asset": "SAUSAGE_BUDDY_BEACH_DETECTOR_v01",
+  "variant": "BEACH_DETECTOR",
+  "height_m": 1.785,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8008,
+      "vertices": 4158,
+      "materials": [
+        "BEACH_DETECTOR_Tank",
+        "BEACH_DETECTOR_Stain",
+        "BEACH_DETECTOR_Shorts",
+        "BEACH_DETECTOR_Pocket",
+        "BEACH_DETECTOR_Pack_Strap",
+        "BEACH_DETECTOR_Buckle",
+        "BEACH_DETECTOR_Pack",
+        "BEACH_DETECTOR_Socks",
+        "BEACH_DETECTOR_Sandal",
+        "BEACH_DETECTOR_Hair",
+        "BEACH_DETECTOR_Phones",
+        "BEACH_DETECTOR_Phones_Pad",
+        "BEACH_DETECTOR_Phones_Plate",
+        "BEACH_DETECTOR_Frame",
+        "BEACH_DETECTOR_Tooth"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_RightHand": {
+      "triangles": 816,
+      "vertices": 430,
+      "materials": [
+        "BEACH_DETECTOR_Det_Grip",
+        "BEACH_DETECTOR_Det_Shaft",
+        "BEACH_DETECTOR_Det_Box",
+        "BEACH_DETECTOR_Det_Screen",
+        "BEACH_DETECTOR_Det_Coil",
+        "BEACH_DETECTOR_Det_Coil_Rim"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0536
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0536,
+      "max": 0.0536
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0536
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0689
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Кладоискатель с металлоискателем",
+    "group": "Городской пляж",
+    "body": {
+      "thin": 0.3,
+      "belly": 0.7
+    },
+    "idle_arm_down_deg": 68.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {},
+    "face_baked": {
+      "Surprised": 0.55,
+      "Happy": 0.45
+    },
+    "slots": {
+      "BEACH_DETECTOR_Tank": {
+        "default": "#ECEAE2",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Stain": {
+        "default": "#C8B88C",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Shorts": {
+        "default": "#968C60",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Pocket": {
+        "default": "#847A52",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Socks": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Sandal": {
+        "default": "#60422A",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Pack": {
+        "default": "#2878AA",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Pack_Strap": {
+        "default": "#1E1E22",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Buckle": {
+        "default": "#CED0D4",
+        "metal": true
+      },
+      "BEACH_DETECTOR_Hair": {
+        "default": "#CEC8BE",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Phones": {
+        "default": "#FAC428",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Phones_Pad": {
+        "default": "#1E1E20",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Phones_Plate": {
+        "default": "#DC2828",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Frame": {
+        "default": "#1E1C1C",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Lens": {
+        "default": "#C8E2F0",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Det_Shaft": {
+        "default": "#B0B4BA",
+        "metal": true
+      },
+      "BEACH_DETECTOR_Det_Box": {
+        "default": "#282C32",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Det_Screen": {
+        "default": "#78E66E",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Det_Grip": {
+        "default": "#18181A",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Det_Coil": {
+        "default": "#FAC828",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Det_Coil_Rim": {
+        "default": "#1E1E20",
+        "metal": false
+      },
+      "BEACH_DETECTOR_Tooth": {
+        "default": "#FAF8EC",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "BEACH_DETECTOR_Tank": "#F0C8D2",
+        "BEACH_DETECTOR_Shorts": "#5A6E8C",
+        "BEACH_DETECTOR_Pocket": "#4C5E7A",
+        "BEACH_DETECTOR_Phones": "#3CA0DC"
+      },
+      {
+        "BEACH_DETECTOR_Tank": "#BEDCA0",
+        "BEACH_DETECTOR_Shorts": "#785A46",
+        "BEACH_DETECTOR_Pocket": "#684C3A",
+        "BEACH_DETECTOR_Pack": "#E65A28"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 15800,
+  "part_triangles": {
+    "Skin_Head": 1088,
+    "BEACH_DETECTOR_Sandal_Foot_Upper": 1000,
+    "BEACH_DETECTOR_Sandal_Foot_Sole": 672,
+    "BEACH_DETECTOR_Glasses_Rim": 624,
+    "BEACH_DETECTOR_Hair": 588,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "BEACH_DETECTOR_Shorts": 560,
+    "BEACH_DETECTOR_Phones_Cup_Cup": 504,
+    "Skin_Arm": 480,
+    "BEACH_DETECTOR_Sandal_Strap": 408,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "BEACH_DETECTOR_Detector_CoilRim": 384,
+    "BEACH_DETECTOR_Phones_Band": 380,
+    "BEACH_DETECTOR_Tank": 368,
+    "BEACH_DETECTOR_Pocket": 360,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "BEACH_DETECTOR_Phones_Cup_Plate": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "BEACH_DETECTOR_Pack_Pouch": 288,
+    "BEACH_DETECTOR_Socks": 288,
+    "BEACH_DETECTOR_Pack_Belt": 260,
+    "BEACH_DETECTOR_Detector_Coil": 240,
+    "BEACH_DETECTOR_Tooth": 200,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "BEACH_DETECTOR_Tank_Strap": 104,
+    "BEACH_DETECTOR_Glasses_Temple": 96,
+    "BEACH_DETECTOR_Stain": 54,
+    "BEACH_DETECTOR_Detector_Grip": 40,
+    "BEACH_DETECTOR_Glasses_Bridge": 36,
+    "BEACH_DETECTOR_Detector_Shaft": 32,
+    "BEACH_DETECTOR_Detector_ShaftLow": 32,
+    "BEACH_DETECTOR_Detector_Lock": 32,
+    "BEACH_DETECTOR_Detector_Yoke": 32,
+    "BEACH_DETECTOR_Pack_Zip": 30,
+    "BEACH_DETECTOR_Detector_Box": 12,
+    "BEACH_DETECTOR_Detector_Screen": 12,
+    "BEACH_DETECTOR_Pack_Buckle": 12
+  }
+}

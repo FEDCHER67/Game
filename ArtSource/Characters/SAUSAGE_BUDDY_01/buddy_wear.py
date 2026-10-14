@@ -221,13 +221,162 @@ def remove_ears(body):
     return len(kill)
 
 
-def reshape(objs, belly=0.0, thin=0.0, muscle=0.0):
+def _densify_belly(ob, z0=0.72, z1=1.20, min_dz=0.03):
+    """Two extra horizontal loops on every steep edge through the belly zone (TASK-000519, Vadim: angular bellies).
+    The crowd LOD builds the clothes from sparse rings without subdivision, and a big belly displaced on rings 6-8 cm
+    apart reads faceted; the hidden body keeps its rings."""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    edges = []
+    for e in bm.edges:
+        a, b = e.verts[0].co, e.verts[1].co
+        dz = abs(a.z - b.z)
+        if dz >= min_dz and min(a.z, b.z) < z1 and max(a.z, b.z) > z0 and dz > 0.7 * (a - b).length:
+            edges.append(e)
+    if edges:
+        bmesh.ops.subdivide_edges(bm, edges=edges, cuts=2, use_grid_fill=True)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+
+
+def _densify_bust(ob, z0=0.97, z1=1.19, y1=-0.03):
+    """One extra loop each way over the front of the chest (TASK-000529): the crowd LOD's sparse rings and columns would
+    facet the bust; the hidden body keeps its own."""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    edges = [e for e in bm.edges if all(z0 < v.co.z < z1 and v.co.y < y1 for v in e.verts)]
+    if edges:
+        bmesh.ops.subdivide_edges(bm, edges=edges, cuts=1, use_grid_fill=True)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+
+
+def _bust_lobes(x, z):
+    """Two soft lobes at x = +-0.065 round z 1.065, (1 - u^2)^2 over 10 cm across, 7.5 cm below and 10 cm above; they
+    overlap in the middle, so a closed garment bridges the gap (0.67 of the peak at the centre line)."""
+    out = 0.0
+    for cx in (0.065, -0.065):
+        u2 = ((x - cx) / 0.10) ** 2 + ((z - 1.065) / (0.075 if z < 1.065 else 0.10)) ** 2
+        if u2 < 1.0:
+            out += (1.0 - u2) ** 2
+    return min(1.0, out)
+
+
+def _pelvis_materials(ob):
+    if ob.name == 'Body':
+        return set(range(len(ob.data.materials)))
+    return {i for i, mat in enumerate(ob.data.materials)
+            if mat and mat.name.endswith(('_Leggings', '_Jacket', '_Band'))}
+
+
+def _densify_glutes(ob):
+    """Real posterior support rings on both layers; preserve/interpolate deform weights."""
+    materials = _pelvis_materials(ob)
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    def local(e):
+        return (e.link_faces and all(f.material_index in materials for f in e.link_faces)
+                and all(0.43 <= v.co.z <= 0.94 and abs(v.co.x) < 0.245 for v in e.verts))
+    edges = [e for e in bm.edges if local(e)]
+    if edges:
+        bmesh.ops.subdivide_edges(bm, edges=edges, cuts=3, use_grid_fill=True)
+    edges = [e for e in bm.edges if local(e) and abs(e.verts[0].co.z-e.verts[1].co.z) > 0.016]
+    if edges:
+        bmesh.ops.subdivide_edges(bm, edges=edges, cuts=1, use_grid_fill=True)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+
+
+def _round_lobes(x, z, centre_z, below, above, width, separation):
+    """Broad elliptical volumes with a smooth boundary, instead of a narrow pointed bump."""
+    u = (z - centre_z) / (below if z < centre_z else above)
+    q = max(1.0 - u * u - ((x - cx) / width) ** 2 for cx in (-separation, separation))
+    return math.sqrt(max(0.0, q)) * smoothstep(0.0, 0.28, q)
+
+
+def _pelvis_ease(a, b, value):
+    """Quintic boundary falloff: zero first and second derivatives at either end."""
+    t = max(0.0, min(1.0, (value - a) / (b - a)))
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0)
+
+
+def _seat_profile(z):
+    """C2 cubic B-spline of the actual posterior surface, in metres.
+
+    Uniform 3 cm stations run from lower-thigh support into the lumbar region.
+    A broad oval maximum and a filled lower quadrant replace the old diagonal wedge.
+    This is a surface depth, not an additive bump on top of the angular old pelvis.
+    """
+    depths = (0.050, 0.050, 0.050, 0.053, 0.070, 0.130, 0.190, 0.220, 0.235,
+              0.240, 0.235, 0.217, 0.180, 0.135, 0.112, 0.110, 0.110, 0.110)
+    u = (z - 0.450) / 0.030
+    k = math.floor(u)
+    t = u - k
+    v = [depths[max(0, min(len(depths)-1, k+j))] for j in (-1, 0, 1, 2)]
+    return ((1-t)**3*v[0] + (3*t**3-6*t*t+4)*v[1]
+            + (-3*t**3+3*t*t+3*t+1)*v[2] + t**3*v[3]) / 6.0
+
+
+def _reshape_glutes(objs, amount):
+    """Fit both layers to one smooth pelvis cage, keeping the existing garment clearance.
+
+    The original outer surface is sampled before moving anything, so its sloping
+    crotch-to-leg bridge is replaced instead of being magnified by another bump.
+    The same monotone depth map is applied to skin and clothing; hair is excluded.
+    """
+    from mathutils.bvhtree import BVHTree
+    garment = next((ob for ob in objs if ob.name == 'Outfit'), None)
+    if garment is None:
+        return
+    mats = _pelvis_materials(garment)
+    faces = [list(p.vertices) for p in garment.data.polygons if p.material_index in mats]
+    source = BVHTree.FromPolygons([v.co.copy() for v in garment.data.vertices], faces, all_triangles=False)
+    for ob in objs:
+        mats = _pelvis_materials(ob)
+        selected = {i for p in ob.data.polygons if p.material_index in mats for i in p.vertices}
+        for i in selected:
+            v = ob.data.vertices[i]
+            x, y, z = v.co
+            if y <= -0.018 or not 0.480 < z < 0.940 or abs(x) >= 0.245:
+                continue
+            hit = source.ray_cast(Vector((x, 0.8, z)), Vector((0, -1, 0)), 1.0)[0]
+            reference = max(y, hit.y if hit is not None else y + (0.005 if ob.name == 'Body' else 0.0))
+            rear = _pelvis_ease(0.0, 0.90, (y + 0.018) / (reference + 0.018))
+            rear *= _pelvis_ease(0.0, 0.035, y)
+            ends = _pelvis_ease(0.480, 0.560, z) * (1.0 - _pelvis_ease(0.865, 0.940, z))
+            cheeks = sum(math.exp(-((x-c)/0.100)**2) for c in (-0.100, 0.100)) / 1.018
+            across = 0.55 * math.exp(-(x/0.200)**4) + 0.45 * cheeks
+            target = _seat_profile(z) * across
+            strength = ends * rear * amount
+            delta = max(0.0, target - reference)
+            delta *= _pelvis_ease(0.0, 0.008, delta)
+            v.co.y += delta * strength
+            v.co.x += 0.12 * delta * math.tanh(x/0.055) * strength
+        ob.data.update()
+
+
+def reshape(objs, belly=0.0, thin=0.0, muscle=0.0, bust=0.0, glutes=0.0):
     """Fat belly / thin waist as one smooth displacement applied to the body and every garment alike (so layers keep
     their gaps). Only spine/hips-weighted vertices move; arms, legs and the head stay as built.
     muscle (TASK-000270, bodybuilder / fitness coach): broader chest and lats, a slight waist taper, and bulging
-    shoulders, upper arms, forearms and thighs (those move radially round their T-pose bone axis)."""
-    if not belly and not thin and not muscle:
+    shoulders, upper arms, forearms and thighs (those move radially round their T-pose bone axis).
+    bust (TASK-000529): clothed chest volume, up to ~2.7 cm forward per unit (_bust_lobes).
+    bust above 1 retains the established closed-garment chest sculpt.
+    glutes uses a shared continuous pelvis deformation on skin and garments, with local support rings."""
+    if not belly and not thin and not muscle and not bust and not glutes:
         return
+    if belly or bust or glutes:
+        for ob in objs:
+            if ob.name != 'Body':
+                if belly:
+                    _densify_belly(ob)
+                if bust:
+                    _densify_bust(ob)
+            if glutes:
+                _densify_glutes(ob)
     for ob in objs:
         names = {g.index: g.name for g in ob.vertex_groups}
         for v in ob.data.vertices:
@@ -245,8 +394,11 @@ def reshape(objs, belly=0.0, thin=0.0, muscle=0.0):
             d = Vector((x / r, yy / r, 0.0))
             amt, sag = 0.0, 0.0
             if belly:
-                bz = math.exp(-((z - 0.935) / (0.105 if z < 0.935 else 0.125)) ** 2)
-                front = max(0.0, c) ** 1.2
+                # TASK-000525: a round belly - broad and flat-topped, (1 - u^2)^2 over 19 cm below / 25 cm above the
+                # navel line (was a narrow Gaussian whose tip read as a cone in profile on the fat types)
+                u = (z - 0.935) / (0.19 if z < 0.935 else 0.25)
+                bz = (1.0 - u * u) ** 2 if abs(u) < 1.0 else 0.0
+                front = max(0.0, c) ** 0.8
                 amt += belly * bz * (0.030 + 0.100 * front - 0.012 * max(0.0, -c))
                 sag = belly * bz * front * 0.018
             if thin:
@@ -258,7 +410,15 @@ def reshape(objs, belly=0.0, thin=0.0, muscle=0.0):
                 lats = math.exp(-((z - 1.010) / 0.060) ** 2)
                 amt += muscle * (chest * (0.034 * max(0.0, c) ** 1.5 + 0.030 * side ** 2) + lats * 0.018 * side ** 2)
                 amt -= muscle * 0.010 * math.exp(-((z - 0.900) / 0.050) ** 2)
-            v.co += (d * amt + Vector((0, 0, -sag))) * ws
+            fwd = Vector((0.0, 0.0, 0.0))
+            if bust:
+                volume = min(bust, 1.0) * _bust_lobes(x, z) * max(0.0, c)
+                if bust > 1.0 and ob.name != 'Body':
+                    volume += (bust - 1.0) * _round_lobes(x, z, 1.065, 0.125, 0.130, 0.125, 0.065) * smoothstep(0.0, 0.07, -y)
+                fwd = Vector((0.35 * d.x, -1.0, 0.0)).normalized() * (0.030 * volume)
+            v.co += (d * amt + Vector((0, 0, -sag)) + fwd) * ws
+    if glutes:
+        _reshape_glutes(objs, glutes)
 
 
 
@@ -373,7 +533,10 @@ def top(name, rows, arm_row, sleeve, hem_inner, mats, row_mat=None, sleeve_mat=N
             a = j * 2 * math.pi / n
             inner.append(len(vs)); vs.append((rx * math.cos(a), dy + ry * math.sin(a), z))
         for j in range(n):
-            fs.append((inner[j], inner[(j + 1) % n], rings[0][(j + 1) % n], rings[0][j]))
+            q = (inner[j], inner[(j + 1) % n], rings[0][(j + 1) % n], rings[0][j])
+            if cut is not None and cut(sum((Vector(vs[i]) for i in q), Vector()) / 4):
+                continue                     # an open front stays open at the hem (TASK-000516: no band across it)
+            fs.append(q)
             idx.append(hem_mat)
     return G.from_data(name, vs, fs, mats[0], True, idx, list(mats[1:]), subdiv=subdiv)
 

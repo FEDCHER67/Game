@@ -1,6 +1,6 @@
-"""Hamlet ('Хутор') NPC pool (TASK-000270): the overloaded granny with a bucket and a live hen, the lazy shepherd
-with a straw in his teeth and a crook, the kolkhoz bodybuilder in bib overalls with a milk churn as a dumbbell;
-TASK-000278: the grandpa in family boxers, a vest top and felt boots with galoshes, a lopsided ushanka.
+"""Hamlet ('Хутор') NPC pool (TASK-000270): the granny (TASK-000510: the village fashionista, v03), the kolkhoz bodybuilder in
+bib overalls with a milk churn as a dumbbell; TASK-000509: the shepherd remade as the village fool (v03) and the grandpa
+in family boxers and a vest top as the accordion player (v02, kartuz and garmon); the simpleton (plain BASE) left the pool.
 Same format as buddy_types.TYPES / BUILDERS; registered through buddy_types.POOLS. No bpy calls at import time.
 
 Hand props are modelled where they hang in the idle pose (world frame, gravity -Z) and mapped back to the hand bone's
@@ -20,33 +20,39 @@ ALU = ((196, 200, 206), 0.32, 'metal')
 
 TYPES = {
     'HAMLET_GRANNY': dict(
-        label='Бабка с хозяйством', group=GROUP, no_ears=True, arm_down=62.0, look=dict(brow=(192, 188, 182)),
-        face=dict(Worried=0.35, Happy=0.15),
-        slots={'Scarf': ((192, 56, 52), 0.9), 'Scarf_Dots': ((246, 242, 234), 0.9), 'Cardigan': ((122, 86, 66), 1.0),
-               'Cardigan_Rib': ((104, 72, 54), 1.0), 'Blouse': ((234, 228, 212), 0.85), 'Buttons': ((238, 230, 214), 0.5),
-               'Skirt': ((56, 74, 100), 0.95), 'Apron': ((232, 216, 160), 0.9), 'Apron_Trim': ((196, 74, 64), 0.9),
-               'Tights': ((122, 94, 74), 0.85), 'Shoes': ((38, 38, 42), 0.3), 'Blush': ((236, 132, 122), 0.6),
+        label='Бабка-модница', group=GROUP, no_ears=True, hand_props=True, body=dict(belly=0.8), arm_down=66.0,
+        look=dict(brow=(192, 188, 182), mouth=(196, 30, 60)), face=dict(Happy=0.75, Blink=0.2),
+        slots={'Scarf': ((206, 30, 44), 0.9), 'Scarf_Rose': ((250, 236, 214), 0.9), 'Scarf_Rose_2': ((252, 200, 50), 0.9),
+               'Scarf_Rose_Heart': ((150, 20, 40), 0.9), 'Scarf_Leaf': ((40, 120, 60), 0.9),
+               'Dress': ((50, 176, 186), 0.8), 'Dress_Flower': ((250, 120, 170), 0.8), 'Dress_Flower_2': ((255, 226, 80), 0.8),
+               'Dress_Flower_Heart': ((246, 246, 240), 0.8), 'Coat': ((52, 70, 58), 0.95), 'Stitch': ((36, 50, 42), 0.95),
+               'Track': ((36, 52, 120), 0.8), 'Stripes': ((246, 246, 240), 0.8), 'Socks': ((150, 146, 140), 1.0),
+               'Galosh': ((30, 64, 44), 0.18), 'Glasses': ((214, 26, 50), 0.2), 'Gem': ((236, 242, 252), 0.05),
+               'Mole': ((120, 78, 56), 0.6), 'Mole_Hair': ((40, 34, 30), 0.9), 'Blush': ((236, 120, 120), 0.6),
                'Bucket': ((244, 244, 240), 0.22), 'Bucket_Rim': ((44, 76, 156), 0.25), 'Bucket_Handle': ALU,
                'Potato': ((178, 134, 86), 0.9), 'Hen': ((246, 242, 232), 0.9), 'Hen_Wing': ((176, 112, 64), 0.9),
-               'Comb': ((222, 40, 40), 0.6), 'Beak': ((242, 184, 42), 0.6), 'Hen_Eye': ((16, 14, 14), 0.2)},
-        colourways=[{'Scarf': (56, 94, 162), 'Cardigan': (98, 106, 86), 'Cardigan_Rib': (82, 90, 72), 'Skirt': (92, 42, 48),
-                     'Apron': (222, 222, 216), 'Apron_Trim': (56, 94, 162), 'Tights': (92, 86, 82), 'Shoes': (62, 42, 32),
-                     'Bucket_Rim': (182, 46, 42), 'Hen': (170, 98, 52), 'Hen_Wing': (112, 60, 34)},
-                    {'Scarf': (230, 188, 62), 'Scarf_Dots': (192, 62, 52), 'Cardigan': (152, 62, 68), 'Cardigan_Rib': (130, 52, 58),
-                     'Skirt': (42, 42, 46), 'Apron': (198, 222, 198), 'Apron_Trim': (152, 62, 68), 'Tights': (142, 110, 86),
-                     'Bucket': (232, 236, 214), 'Bucket_Rim': (52, 112, 72), 'Hen': (60, 58, 62), 'Hen_Wing': (32, 30, 34)}]),
+               'Comb': ((222, 40, 40), 0.6), 'Beak': ((242, 184, 42), 0.6), 'Hen_Eye': ((16, 14, 14), 0.2),
+               'Net': ((232, 112, 36), 0.9), 'Milk': ((246, 246, 242), 0.25), 'Milk_Cap': ((40, 140, 70), 0.3),
+               'Loaf': ((200, 140, 74), 0.8), 'Loaf_Cut': ((236, 196, 130), 0.85), 'Onion': ((206, 146, 70), 0.6)},
+        colourways=[{'Scarf': (40, 80, 160), 'Dress': (236, 120, 60), 'Coat': (60, 60, 66), 'Stitch': (44, 44, 50), 'Track': (120, 30, 40),
+                     'Glasses': (120, 40, 160)},
+                    {'Scarf': (240, 196, 40), 'Scarf_Rose': (206, 30, 44), 'Dress': (150, 80, 170), 'Coat': (90, 70, 50), 'Stitch': (70, 54, 38),
+                     'Track': (30, 30, 34), 'Glasses': (40, 40, 44)}]),
     'HAMLET_SHEPHERD': dict(
-        label='Пастух со соломинкой в зубах', group=GROUP, body=dict(thin=1.0), look=dict(skin=(232, 150, 104), brow=(120, 92, 58)),
-        face=dict(Blink=0.4, Happy=0.3),
-        slots={'Shirt': ((150, 176, 196), 0.9), 'Shirt_Roll': ((132, 158, 180), 0.9), 'Vest': ((136, 92, 56), 0.95),
-               'Fur': ((236, 226, 202), 1.0), 'Trousers': ((96, 92, 74), 0.95), 'Patch': ((150, 118, 74), 0.95),
-               'Boots': ((40, 44, 40), 0.42), 'Boots_Sole': ((28, 30, 28), 0.6), 'Hat': ((226, 196, 118), 0.9),
-               'HatBand': ((150, 52, 44), 0.8), 'Hair': ((150, 112, 66), 0.9), 'Straw': ((240, 214, 104), 0.7),
-               'Crook': ((132, 92, 54), 0.75)},
-        colourways=[{'Shirt': (198, 92, 78), 'Shirt_Roll': (176, 78, 66), 'Vest': (82, 66, 52), 'Trousers': (62, 70, 88),
-                     'Patch': (126, 146, 92), 'Boots': (52, 82, 52), 'HatBand': (44, 62, 112)},
-                    {'Shirt': (226, 222, 202), 'Shirt_Roll': (206, 200, 180), 'Vest': (170, 128, 82), 'Fur': (92, 84, 76),
-                     'Trousers': (72, 92, 66), 'Patch': (176, 82, 62), 'Hat': (206, 170, 96), 'HatBand': (60, 92, 58)}]),
+        label='Пастух-дурачок', group=GROUP, body=dict(thin=0.8, belly=0.45), look=dict(skin=(236, 160, 116), brow=(196, 150, 80)),
+        face=dict(Blink_L=0.55, Surprised=0.4, Happy=0.35), own_eyes=True,
+        slots={'Shirt': ((204, 96, 72), 0.9), 'Shirt_Roll': ((184, 84, 62), 0.9), 'Buttons': ((236, 226, 200), 0.5),
+               'Trousers': ((96, 112, 146), 0.95), 'Patch': ((222, 196, 90), 0.95), 'Patch_2': ((120, 160, 90), 0.95),
+               'Suspenders': ((122, 82, 50), 0.6), 'Clip': ALU, 'Boots': ((40, 44, 40), 0.42), 'Boots_Sole': ((28, 30, 28), 0.6),
+               'Sock': ((196, 190, 176), 1.0), 'Sock_Rim': ((150, 142, 128), 1.0), 'Hat': ((206, 172, 100), 0.95),
+               'HatBand': ((150, 120, 70), 0.95), 'Hair': ((218, 176, 92), 0.9), 'Tongue': ((226, 112, 120), 0.4),
+               'Tongue_Groove': ((176, 74, 84), 0.5), 'Freckles': ((196, 112, 70), 0.8), 'Snot': ((214, 236, 226), 0.05),
+               'Daisy': ((248, 248, 244), 0.7), 'Daisy_Eye': ((250, 204, 40), 0.6), 'Daisy_Stem': ((90, 150, 60), 0.7),
+               'Straw': ((240, 214, 104), 0.7), 'Crook': ((132, 92, 54), 0.75)},
+        colourways=[{'Shirt': (120, 150, 190), 'Shirt_Roll': (104, 132, 172), 'Trousers': (110, 96, 74), 'Patch': (200, 70, 60),
+                     'Suspenders': (40, 40, 44), 'Hair': (120, 84, 50)},
+                    {'Shirt': (226, 210, 120), 'Shirt_Roll': (206, 190, 104), 'Trousers': (70, 80, 64), 'Patch': (90, 130, 190),
+                     'Patch_2': (220, 120, 60), 'Hair': (238, 214, 150)}]),
     'HAMLET_BODYBUILDER': dict(
         label='Колхозный бодибилдер', group=GROUP, body=dict(muscle=1.7), arm_down=64.0,
         look=dict(skin=(222, 136, 90), nose=(208, 116, 80), brow=(70, 50, 38)),
@@ -58,14 +64,19 @@ TYPES = {
                     {'Denim': (176, 70, 52), 'Denim_Dark': (146, 56, 42), 'Stitch': (240, 230, 210), 'Boots': (196, 152, 42),
                      'Boots_Sole': (60, 48, 30)}]),
     'HAMLET_BOXERS_GRANDPA': dict(
-        label='Дед в семейниках', group=GROUP, body=dict(belly=1.0), arm_down=66.0, no_ears=True, face=dict(Happy=0.6, Blink=0.25),
+        label='Дед-гармонист', group=GROUP, body=dict(belly=1.0), arm_down=66.0, face=dict(Happy=0.7, Surprised=0.25, Blink=0.2),
         look=dict(skin=(238, 160, 120), nose=(232, 120, 96), brow=(220, 216, 208)),
         slots={'Tank': ((240, 238, 230), 0.85), 'Stain': ((196, 180, 140), 0.9), 'Shorts': ((110, 160, 225), 0.8),
                'Print': ((250, 226, 110), 0.7), 'Print2': ((246, 246, 240), 0.7), 'Valenki': ((128, 122, 114), 1.0),
-               'Galosh': ((24, 24, 26), 0.3), 'Hat': ((70, 60, 52), 0.95), 'Fur': ((120, 100, 78), 1.0),
-               'Mustache': ((226, 222, 214), 0.95), 'Stubble': ((200, 196, 188), 0.95), 'Blush': ((236, 110, 100), 0.6)},
-        colourways=[{'Shorts': (200, 50, 50), 'Print': (250, 250, 246), 'Print2': (250, 210, 60)},
-                    {'Shorts': (70, 140, 90), 'Print': (250, 200, 210), 'Print2': (250, 250, 246), 'Valenki': (60, 58, 56)}]),
+               'Galosh': ((24, 24, 26), 0.3), 'Cap': ((52, 56, 66), 0.85), 'CapBand': ((40, 42, 50), 0.85),
+               'Visor': ((16, 16, 18), 0.15), 'Flower': ((220, 30, 40), 0.6), 'Leaf': ((60, 130, 60), 0.7),
+               'Hair': ((226, 222, 214), 0.95), 'Mustache': ((226, 222, 214), 0.95), 'Stubble': ((200, 196, 188), 0.95),
+               'Blush': ((236, 110, 100), 0.6), 'Garmon_Wood': ((34, 28, 28), 0.3), 'Garmon_Bellows': ((196, 36, 44), 0.7),
+               'Garmon_Fold': ((30, 26, 26), 0.6), 'Garmon_Metal': ((206, 208, 214), 0.25, 'metal'),
+               'Garmon_Button': ((242, 236, 220), 0.35), 'Garmon_Strap': ((110, 70, 40), 0.6)},
+        colourways=[{'Shorts': (200, 50, 50), 'Print': (250, 250, 246), 'Print2': (250, 210, 60), 'Garmon_Bellows': (40, 90, 170)},
+                    {'Shorts': (70, 140, 90), 'Print': (250, 200, 210), 'Print2': (250, 250, 246), 'Valenki': (60, 58, 56),
+                     'Cap': (120, 100, 70), 'Garmon_Wood': (120, 40, 30)}]),
 }
 
 
@@ -230,50 +241,184 @@ def churn(prefix, M, top_c):
     return out
 
 
-def straw(prefix, material, start, end, seed_head=True):
-    """Grass stalk held in the mouth corner (rigid on the head)."""
-    a, b = Vector(start), Vector(end)
-    mid = a.lerp(b, 0.55) + Vector((0, 0, 0.012))
-    out = [G.tube(prefix + '_Straw', [a, mid, b], lambda i, n: (0.0042, 0.0036, 0.0028)[i], material, seg=6)]
-    if seed_head:
-        d = (b - mid).normalized()
-        rot = Vector((0, 0, 1)).rotation_difference(d).to_matrix()
-        out.append(G.ellipsoid(prefix + '_StrawHead', b + d * 0.018, (0.0065, 0.0065, 0.024), material, rot=rot, seg=8, rings=6))
-    return [W.prop(o, 'Head') for o in out]
-
 # ------------------------------------------------------------------ granny
+COAT = [(.660, .246, .176, -.012), (.676, .248, .178, -.012), (.74, .240, .172, -.013), (.80, .230, .164, -.013),
+        (.86, .220, .156, -.013), (.94, .214, .150, -.012)] + [r for r in W.JACKET if r[0] >= 1.02]   # long flared telogreika
+
+
+DRESS_KNEE = [(0.892, 0.186, 0.127, -0.004), (0.86, 0.193, 0.132, -0.006), (0.80, 0.207, 0.143, -0.008), (0.70, 0.224, 0.158, -0.010),
+              (0.60, 0.236, 0.168, -0.010), (0.50, 0.244, 0.176, -0.010), (0.445, 0.247, 0.179, -0.010), (0.452, 0.239, 0.171, -0.010)]
+TRACK_INTO_SOCKS = [(.70, .084), (.60, .082), (.50, .078), (.43, .075), (.36, .071), (.31, .066), (.27, .058), (.26, .052)]
+
+
+def _coat_gap(z):
+    return 0.052 + 0.040 * G.smoothstep(0.75, 1.25, z)
+
+
+def _flower_decals(prefix, target, M, spots, petal_slots, centre_slot, leaf_slot=None):
+    """Big flowers (and leaves) printed on a garment: spots = [(axes, cx, cz, r, rot)]."""
+    import buddy_pool_oldtown2 as O2
+    out = []
+    for k, (axes, cx, cz, r, rot) in enumerate(spots):
+        if leaf_slot:
+            ang = rot * 2.0 + 2.3
+            lx, lz = cx + math.cos(ang) * r * 0.95, cz + math.sin(ang) * r * 0.95
+            out.append(G.decal(f'{prefix}_Leaf_{k}', O2._leaf_outline(lx, lz, r * 1.4, r * 0.7, ang), axes, [target], 0.0022, M[leaf_slot],
+                               step=0.020))
+        out.append(G.decal(f'{prefix}_Petals_{k}', O2._flower_outline(cx, cz, r, rot), axes, [target], 0.0034,
+                           M[petal_slots[k % len(petal_slots)]], step=0.016))
+        out.append(G.decal(f'{prefix}_Centre_{k}', C.ellipse(cx, cz, r * 0.30, r * 0.30, 8), axes, [target], 0.0046, M[centre_slot], step=0.05))
+    return out
+
+
+def rose_headscarf(prefix, M):
+    """The babushka headscarf in Pavlovo Posad style: red with big cream and yellow roses and green leaves instead of the
+    polka dots of W.headscarf."""
+    parts = W.headscarf(prefix, M['Scarf'], M['Scarf_Rose'])
+    scarf, keep = parts[0], []
+    for o in parts:
+        if '_Dot' in o.name:
+            bpy.data.objects.remove(o)
+        else:
+            keep.append(o)
+    spots = [(G.SIDE(s), u * s, v, r, rot) for s in (1, -1) for (u, v, r, rot) in ((-0.050, 1.420, 0.030, 0.2), (0.010, 1.560, 0.026, 0.9),
+                                                                                 (-0.085, 1.600, 0.022, 0.5))]
+    spots += [(G.BACK(), u, v, r, rot) for (u, v, r, rot) in ((0.0, 1.420, 0.034, 0.4), (-0.085, 1.560, 0.026, 1.1), (0.085, 1.560, 0.026, 0.7),
+                                                            (0.0, 1.680, 0.024, 0.3))]
+    spots.append((W.TOP(), 0.0, 0.0, 0.028, 0.6))
+    roses = _flower_decals(prefix + '_Rose', scarf, M, spots, ['Scarf_Rose', 'Scarf_Rose_2'], 'Scarf_Rose_Heart', leaf_slot='Scarf_Leaf')
+    return keep + [C.rigid(o, 'Head') for o in roses]
+
+
+def cat_eye_glasses(prefix, M):
+    """Big red cat-eye glasses with rhinestones on the swept-up outer corners (frames only, the eyes stay readable);
+    the temples go back under the headscarf."""
+    out = []
+    for s in (1, -1):
+        c = Vector((s * 0.062, -0.166, 1.560))
+        ring = []
+        for k in range(28):
+            a = 2 * math.pi * k / 28
+            ex, ez = math.cos(a), math.sin(a)
+            out_side = ex * s > 0
+            wing = max(0.0, ex * s) ** 2 * max(0.0, ez) ** 0.6             # the outer upper corner sweeps up and out
+            wrap = 0.012 * max(0.0, ex * s) ** 2
+            ring.append(c + Vector(((0.066 if out_side else 0.052) * ex + s * 0.034 * wing, wrap, 0.054 * ez + 0.040 * wing)))
+        tip = max(ring, key=lambda p: (p.x - c.x) * s + (p.z - c.z))
+        ring += ring[:2]
+        out.append(G.tube(f'{prefix}_Rim_{s}', ring, 0.0062, M['Glasses'], seg=6))
+        for k, (dx, dz) in enumerate(((0.0, 0.0), (-0.013, -0.006), (-0.006, -0.016))):
+            out.append(G.ellipsoid(f'{prefix}_Gem_{s}_{k}', tip + Vector((s * dx, -0.007, dz)), (0.0055, 0.0040, 0.0055), M['Gem'], seg=4, rings=2))
+        hinge = c + Vector((s * 0.068, 0.014, 0.012))
+        temple = [hinge, hinge + Vector((s * 0.022, 0.040, -0.002)), Vector((s * 0.150, -0.030, 1.556)), Vector((s * 0.153, 0.010, 1.536))]
+        out.append(G.tube(f'{prefix}_Temple_{s}', temple, 0.0040, M['Glasses'], seg=6))
+    out.append(G.tube(prefix + '_Bridge', [Vector((0.010, -0.170, 1.574)), Vector((0, -0.176, 1.582)), Vector((-0.010, -0.170, 1.574))],
+                      0.0048, M['Glasses'], seg=6))
+    return [C.rigid(o, 'Head') for o in out]
+
+
 def hamlet_granny(body, face, M, skin):
-    """T.village_grandma's outfit (headscarf, cardigan, blouse, skirt, apron, tights, galoshes, blush) with a lighter
-    apron decal, plus the farm load: enamel bucket of potatoes in the left hand, a live hen by the feet in the right."""
+    """v03 (TASK-000510, Vadim: funnier clothes, a better face, funny glasses): the village fashionista - a red Pavlovo
+    Posad headscarf with roses, a long quilted telogreika worn open over a turquoise floral housedress, track pants with
+    stripes tucked into thick wool socks, shiny galoshes; red cat-eye glasses with rhinestones, red lipstick, rosy cheeks,
+    a hairy mole on the chin, a squinting grin; plump. The bucket of potatoes and the live hen stay hand props
+    (dropped: the granny is not a hand_props type)."""
     pre = 'HAMLET_GRANNY'
     src = C.weight_source([body])
-    out = W.headscarf(pre, M['Scarf'], M['Scarf_Dots'])
-    cardigan = W.top(pre + '_Cardigan', T.CARDIGAN, 7, T.CARDIGAN_SLEEVE, (.776, .206, .142, -.012), [M['Cardigan'], M['Cardigan_Rib']],
-                     row_mat=[1] + [0] * (len(T.CARDIGAN) - 2), sleeve_mat=[0] * 7 + [1] * 3, hem_mat=1)
-    _t(cardigan, src, C.no_head)
-    csrc = C.weight_source([cardigan])
-    deco = [W.front_decal(pre + '_Blouse', [(-0.062, 1.258), (0.062, 1.258), (0.0, 1.110)], cardigan, M['Blouse'], 0.0025, step=0.008)]
-    deco += W.buttons(pre + '_Btn', cardigan, M['Buttons'], [(0.0, z) for z in (1.075, 1.000, 0.925, 0.850)], r=0.010)
-    for s in (1, -1):
-        deco.append(W.front_decal(f'{pre}_Pocket_{s}', [(s * 0.075, 0.790), (s * 0.165, 0.790), (s * 0.165, 0.880), (s * 0.075, 0.880)][::s],
-                                  cardigan, M['Cardigan_Rib'], 0.003, thickness=0.004))
-    out += [cardigan] + [_t(o, csrc) for o in deco]
-    sk = W.skirt(pre + '_Skirt', M['Skirt'])
-    apron = W.front_decal(pre + '_Apron', [(-0.150, 0.880), (0.150, 0.880), (0.168, 0.520), (0.150, 0.470), (0.100, 0.455), (-0.100, 0.455),
-                                           (-0.150, 0.470), (-0.168, 0.520)], sk, M['Apron'], 0.004, thickness=0.004, step=0.026)
-    apk = G.decal(pre + '_ApronPocket', [(-0.070, 0.580), (0.070, 0.580), (0.070, 0.650), (-0.070, 0.650)], W.FRONT(), [apron], 0.0025,
-                  M['Apron_Trim'], thickness=0.003, step=0.020)
+    out = rose_headscarf(pre + '_Scarf', M)
+    bodice = _t(W.top(pre + '_Bodice', W.TEE, 6, None, (.806, .184, .124, -.004), [M['Dress']]), src, C.no_head)
+    sk = W.skirt(pre + '_Skirt', M['Dress'], rows=DRESS_KNEE)          # housedress to the knee: the track pants show under it
+    dress_spots = [(G.FRONT(), x, z, r, rot) for (x, z, r, rot) in ((-0.120, 0.520, 0.038, 0.3), (0.110, 0.580, 0.034, 1.1), (0.020, 0.500, 0.030, 0.7),
+                                                                    (-0.040, 0.615, 0.026, 0.2), (0.160, 0.500, 0.030, 0.9))]
+    dress_spots += [(G.BACK(), x, z, r, rot) for (x, z, r, rot) in ((-0.100, 0.520, 0.038, 0.5), (0.120, 0.590, 0.034, 0.1), (0.030, 0.500, 0.030, 0.8))]
+    dress_spots += [(G.SIDE(s), -0.020 * s, 0.540, 0.032, 0.4 + s) for s in (1, -1)]
+    sflowers = _flower_decals(pre + '_DressFlower', sk, M, dress_spots, ['Dress_Flower', 'Dress_Flower_2'], 'Dress_Flower_Heart')
+    bflowers = _flower_decals(pre + '_BodiceFlower', bodice, M, [(G.FRONT(), 0.0, 1.000, 0.026, 0.3), (G.FRONT(), -0.010, 1.120, 0.022, 0.8)],
+                              ['Dress_Flower_2', 'Dress_Flower'], 'Dress_Flower_Heart')
     ssrc = C.weight_source([sk])
-    out += [sk, _t(apron, ssrc), _t(apk, ssrc)]
-    out.append(_t(W.bottoms(pre + '_Tights', W.LEGS_TIGHTS, [M['Tights']]), src))
-    out += W.shoes(pre + '_Galosh', M['Shoes'], M['Shoes'])
+    out += [bodice, sk] + [_t(o, ssrc) for o in sflowers] + [_t(o, C.weight_source([bodice])) for o in bflowers]
+    # the long quilted telogreika worn open
+    rows, row_mat, arm = W.quilt(COAT, 1.10)
+    sleeve, sleeve_mat = W.quilt_sleeve(W.JACKET_SLEEVE, 0.555)
+    coat = W.top(pre + '_Coat', rows, arm, sleeve, (.676, .236, .168, -.012), [M['Coat'], M['Stitch']], row_mat=row_mat, sleeve_mat=sleeve_mat,
+                 cut=lambda c: c.y < 0 and abs(c.x) < _coat_gap(c.z))
+    _t(coat, src, C.no_head)
+    csrc = C.weight_source([coat])
+    collar = W.collar(pre + '_Collar', M['Coat'], z0=1.258, r0=(0.157, 0.153), z1=1.288, r1=(0.164, 0.159), z2=1.246,
+                      r2=(0.196, 0.189), open_deg=40, tip=0.030, thick=0.007)
+    pockets = [W.front_decal(f'{pre}_CoatPocket_{s}', [(s * 0.100, 0.720), (s * 0.185, 0.720), (s * 0.185, 0.800), (s * 0.100, 0.800)][::s],
+                             coat, M['Stitch'], 0.004, thickness=0.004) for s in (1, -1)]
+    out += [coat, _t(collar, csrc, C.no_head)] + [_t(o, csrc) for o in pockets]
+    # track pants with stripes tucked into thick wool socks, galoshes
+    pants = _t(W.bottoms(pre + '_Track', TRACK_INTO_SOCKS, [M['Track']]), src)
+    out += [pants] + T._decal_t(W.leg_stripes(pre + '_Lampas', pants, M['Stripes'], z0=0.26, z1=0.70), pants)
+    out += W.boot_shafts(pre + '_Sock', M['Socks'], top=0.30) + W.shoes(pre + '_Galosh', M['Galosh'], M['Galosh'])
+    # face: glasses, lipstick (look mouth), blush, a hairy mole on the chin
+    out += cat_eye_glasses(pre + '_Glasses', M)
+    mole_c = Vector((0.050, B.head_surface_y(0.050, 1.362, 0.004), 1.362))
+    mole = G.ellipsoid(pre + '_Mole', mole_c, (0.0085, 0.006, 0.0085), M['Mole'], seg=10, rings=6)
+    hair = G.tube(pre + '_MoleHair', [mole_c + Vector((0.0, -0.005, 0.0)), mole_c + Vector((0.006, -0.012, 0.006)), mole_c + Vector((0.002, -0.018, 0.014))],
+                  0.0012, M['Mole_Hair'], seg=4)
+    out += [C.rigid(mole, 'Head'), C.rigid(hair, 'Head')]
     out += T._face(skin, lambda head: W.blush(pre + '_Blush', M['Blush'], head))
-    # the farm load
+    # v07 (TASK-000539, Vadim: give her a string bag): the avoska in the left hand is her only hand prop; since v07 the
+    # granny is a hand_props type, so it stays in the game and drops at the slightest danger. The old bucket and hen
+    # (never in the game: she was not a hand_props type) are no longer added.
     ad = TYPES['HAMLET_GRANNY']['arm_down']
     gl, _, _ = grip('Left', ad)
-    out += hold(bucket(pre, M, gl), 'Left', ad)
-    gr, _, _ = grip('Right', ad)
-    out += hold(hen_upside_down(pre, M, gr, facing=Vector((-0.5, -1, 0))), 'Right', ad)
+    out += hold(avoska(pre, M, gl), 'Left', ad)
+    return out
+
+
+def avoska(prefix, M, fist):
+    """Soviet string bag (avoska) hanging from the left fist: an orange diamond-mesh net bulging round its load - potatoes
+    and onions at the bottom, a glass milk bottle with a green foil cap and a long loaf poking out of the top - two
+    string handles gathered in the fist. Long side front to back so it clears the leg."""
+    c = fist + Vector((0.030, 0.0, -0.250))
+    zb, zt = c.z - 0.120, c.z + 0.105                            # net bottom and the top ring
+    rx, ry = 0.088, 0.112
+
+    def prof(v):                                                 # radius factor along the height (0 bottom, 1 top)
+        return 0.18 + 0.82 * math.sin(0.5 * math.pi * v / 0.55) ** 0.6 if v < 0.55 else 1.0 - 0.30 * ((v - 0.55) / 0.45) ** 1.4
+
+    def net_pt(a, v, grow=1.0):
+        k = prof(v) * grow
+        return Vector((c.x + rx * k * math.cos(a), c.y + ry * k * math.sin(a), zb + (zt - zb) * v))
+    out = []
+    n, rows = 10, 12
+    for s in (1, -1):                                            # two families of helical strings = diamond mesh
+        for k in range(n):
+            pts = [net_pt(2 * math.pi * k / n + s * 0.62 * math.pi * (j / rows), j / rows) for j in range(rows + 1)]
+            out.append(G.tube(f'{prefix}_Net_{"ab"[s < 0]}{k}', pts, 0.0022, M['Net'], seg=4, caps=False))
+    out.append(G.tube(prefix + '_NetTop', [net_pt(2 * math.pi * q / 24, 1.0, 1.04) for q in range(25)], 0.0034, M['Net'], seg=5, caps=False))
+    out.append(G.ellipsoid(prefix + '_NetKnot', Vector((c.x, c.y, zb + 0.004)), (0.014, 0.014, 0.008), M['Net'], seg=8, rings=5))
+    # two string handles from the top ring up into the fist (front pair and back pair)
+    top = zt + 0.004
+    for s in (1, -1):
+        a = net_pt(math.radians(90 + s * 30) if s > 0 else math.radians(-90 + 30), 1.0, 1.04)
+        b = net_pt(math.radians(90 - s * 30) if s > 0 else math.radians(-90 - 30), 1.0, 1.04)
+        out.append(G.tube(f'{prefix}_NetHandle_{s}', [a, a.lerp(fist, 0.55) + Vector((0.0, 0.0, 0.010)), fist + Vector((0.0, s * 0.008, -0.004)),
+                                                      b.lerp(fist, 0.55) + Vector((0.0, 0.0, 0.010)), b], 0.0040, M['Net'], seg=5))
+    # the load: potatoes and onions low in the bag, the milk bottle and the loaf standing up out of the top
+    for k, (dx, dy, dz, r, slot) in enumerate(((0.0, 0.0, 0.030, 0.040, 'Potato'), (0.034, 0.046, 0.044, 0.036, 'Potato'),
+                                               (-0.030, -0.048, 0.046, 0.037, 'Onion'), (0.030, -0.040, 0.090, 0.034, 'Potato'),
+                                               (-0.034, 0.040, 0.092, 0.035, 'Onion'), (0.006, 0.006, 0.110, 0.033, 'Potato'))):
+        out.append(G.ellipsoid(f'{prefix}_Veg_{k}', Vector((c.x + dx, c.y + dy, zb + dz)), (r * 1.12, r, r * 0.9), M[slot],
+                               rot=Matrix.Rotation(k * 1.1, 3, 'Z'), seg=9, rings=6))
+    bot = Vector((c.x - 0.022, c.y - 0.020, zb + 0.120))
+    axis = Vector((0.04, -0.08, 1.0)).normalized()
+    out.append(G.tube(prefix + '_Milk', [bot, bot + axis * 0.120, bot + axis * 0.150, bot + axis * 0.185, bot + axis * 0.200],
+                      lambda i, n: (0.030, 0.030, 0.021, 0.014, 0.014)[i], M['Milk'], seg=12))
+    out.append(G.tube(prefix + '_MilkCap', [bot + axis * 0.198, bot + axis * 0.212], 0.0160, M['Milk_Cap'], seg=12))
+    lc = Vector((c.x + 0.022, c.y + 0.025, zb + 0.200))
+    lax = Vector((0.06, 0.15, 1.0)).normalized()
+    rot = Vector((0.0, 0.0, 1.0)).rotation_difference(lax).to_matrix()
+    out.append(G.ellipsoid(prefix + '_Loaf', lc, (0.036, 0.032, 0.125), M['Loaf'], rot=rot, seg=12, rings=10))
+    side = lax.cross(Vector((1.0, 0.0, 0.0))).normalized()
+    for k in range(3):                                           # the diagonal cuts on the crust
+        p = lc + lax * (0.040 * (k - 1) + 0.030) - side * 0.031
+        out.append(G.tube(f'{prefix}_LoafCut_{k}', [p - lax * 0.016 + Vector((0.012, 0, 0)), p + lax * 0.016 - Vector((0.012, 0, 0))],
+                          0.0040, M['Loaf_Cut'], seg=5))
     return out
 
 # ------------------------------------------------------------------ shepherd
@@ -303,15 +448,6 @@ def straw_hat(prefix, hat_m, band_m, brim_w=0.175):
     return [C.rigid(o, 'Head') for o in (crown, brim)]
 
 
-def shaggy_hair(prefix, material):
-    """Straw-coloured hair sticking out under the hat at the back and over the ears, ragged ends."""
-    lo = lambda phi: W.h_of(1.505 + 0.050 * max(0.0, math.cos(phi)) ** 2) - 0.010 * abs(2 * ((math.degrees(phi) / 10.0) % 1.0) - 1)
-    hi = lambda phi: HAT_BASE(phi) + 0.004
-    ob, _ = W.shell(prefix + '_Hair', material, lo, hi, off=lambda phi, u: 0.006 + 0.010 * (1 - u), thick=0.007, seg=30, rows=3,
-                    arc=(math.radians(62), math.radians(298)))
-    return [C.rigid(ob, 'Head')]
-
-
 SHIRT_SLEEVE = [(.212, .074), (.25, .069), (.30, .064), (.36, .060), (.42, .057), (.455, .056), (.462, .062), (.480, .064),
                 (.496, .062), (.500, .052)]
 VEST = [(.770, .214, .150, -.012), (.784, .216, .152, -.012), (.86, .214, .150, -.013), (.94, .214, .150, -.012),
@@ -324,48 +460,128 @@ def _vest_gap(z):
     return 0.030 + 0.070 * W.smoothstep(0.95, 1.24, z)
 
 
+FOOL_WAIST = [(1.010, .206, .148), (0.980, .210, .150), (0.930, .212, .150), (0.880, .206, .144), (0.830, .200, .136),
+              (0.784, .192, .128)]                     # trousers hitched up to the chest (z, rx, ry)
+BOWL_CUT = W.zprofile([(0, 1.632), (45, 1.622), (80, 1.586), (120, 1.572), (180, 1.560)])
+
+
+def fool_hat(prefix, M):
+    """The straw hat a size too small, perched on the bowl cut and tipped to one side, a bite torn out of the brim with
+    straws sticking out of the tear."""
+    import bmesh
+    crown, brim = straw_hat(prefix, M['Hat'], M['HatBand'], brim_w=0.150)
+    bm = bmesh.new(); bm.from_mesh(brim.data)
+    kill = [f for f in bm.faces if 95 < math.degrees(math.atan2(f.calc_center_median().x, -f.calc_center_median().y)) < 140
+            and math.hypot(f.calc_center_median().x, f.calc_center_median().y) > 0.20]
+    bmesh.ops.delete(bm, geom=kill, context='FACES')
+    bm.to_mesh(brim.data); bm.free(); brim.data.update()
+    parts = [crown, brim]
+    for k, (a, ln) in enumerate(((100, 0.050), (112, 0.040), (124, 0.055), (134, 0.035))):
+        r = math.radians(a)
+        p0 = Vector((0.20 * math.sin(r), -0.20 * math.cos(r), 1.670))
+        d = Vector((math.sin(r), -math.cos(r), -0.25)).normalized()
+        parts.append(C.rigid(G.tube(f'{prefix}_TornStraw_{k}', [p0, p0 + d * ln], lambda i, n: (0.0022, 0.0012)[i], M['Hat'], seg=5), 'Head'))
+    m = (Matrix.Translation((0.010, 0.0, 1.762)) @ Matrix.Rotation(math.radians(-14), 4, 'Y') @ Matrix.Scale(0.80, 4)
+         @ Matrix.Translation((0.0, 0.0, -1.750)))
+    for o in parts:
+        o.data.transform(m); o.data.update()
+    return parts
+
+
+def straw(prefix, material, start, end, seed_head=True):
+    """Grass stalk held in the mouth corner (a head prop, rigid on the head)."""
+    a, b = Vector(start), Vector(end)
+    mid = a.lerp(b, 0.55) + Vector((0, 0, 0.012))
+    out = [G.tube(prefix + '_Straw', [a, mid, b], lambda i, n: (0.0042, 0.0036, 0.0028)[i], material, seg=6)]
+    if seed_head:
+        d = (b - mid).normalized()
+        rot = Vector((0, 0, 1)).rotation_difference(d).to_matrix()
+        out.append(G.ellipsoid(prefix + '_StrawHead', b + d * 0.018, (0.0065, 0.0065, 0.024), material, rot=rot, seg=8, rings=6))
+    return [W.prop(o, 'Head') for o in out]
+
+
+def flower(prefix, c, n_dir, petal_m, eye_m, petals=10, r=0.017, petal=(0.011, 0.0045, 0.002), eye=(0.010, 0.010, 0.005)):
+    """Flat flower facing n_dir: petals round an eye (daisy behind the ear, the accordion player's carnation)."""
+    rot = Vector((0, 0, 1)).rotation_difference(Vector(n_dir).normalized()).to_matrix()
+    parts = [G.ellipsoid(prefix + '_Eye', c, eye, eye_m, rot=rot, seg=10, rings=6)]
+    for k in range(petals):
+        a = 2 * math.pi * k / petals
+        parts.append(G.ellipsoid(f'{prefix}_Petal_{k}', c + rot @ Vector((math.cos(a), math.sin(a), 0.0)) * r, petal, petal_m,
+                                 rot=rot @ Matrix.Rotation(a, 3, 'Z'), seg=6, rings=4))
+    return parts
+
+
+def suspenders(prefix, M, shirt, collar, pants):
+    """Braces on the hitched-up trousers: the left one over the shoulder and across the back, the right one slipped off
+    and hanging in a loop by the hip; metal clips on the waistband."""
+    import buddy_pool_construction as CN
+    raw = [(0.085, -0.152, 0.995), (0.100, -0.146, 1.060), (0.120, -0.120, 1.140), (0.140, -0.060, 1.195), (0.146, 0.010, 1.212),
+           (0.130, 0.080, 1.190), (0.090, 0.128, 1.130), (0.030, 0.146, 1.060), (-0.050, 0.152, 0.995)]
+    ps, ns = CN.on_surface([shirt, collar], raw, 0.007, step=0.014)
+    left = _t(CN.ribbon(prefix + '_Brace_L', ps, ns, 0.030, [M['Suspenders']], lambda i, j: 0, cols=1, thick=0.005), C.weight_source([shirt]),
+              C.no_head)
+    loop = CN._resample([(-0.090, -0.154, 0.998), (-0.150, -0.142, 0.930), (-0.207, -0.090, 0.850), (-0.228, -0.020, 0.800),
+                         (-0.226, 0.050, 0.800), (-0.202, 0.110, 0.860), (-0.142, 0.152, 0.940), (-0.060, 0.158, 0.998)], 0.014)
+    right = C.rigid(CN.ribbon(prefix + '_Brace_R', loop, [Vector((p.x, p.y, 0.0)).normalized() for p in loop], 0.030, [M['Suspenders']],
+                              lambda i, j: 0, cols=1, thick=0.005), 'Hips')
+    clips = [W.box(f'{prefix}_Clip_{k}', Vector(c), (0.016, 0.004, 0.013), M['Clip'])
+             for k, c in enumerate(((0.085, -0.160, 1.004), (-0.050, 0.160, 1.004), (-0.090, -0.162, 1.004), (-0.060, 0.166, 1.004)))]
+    return [left, right] + [_t(o, C.weight_source([pants])) for o in clips]
+
+
 def hamlet_shepherd(body, face, M, skin):
+    """v03 (TASK-000509, Vadim: 'a dumber fool, now he looks too prestigious'): the village fool - a straw hat too small
+    and torn, bowl cut, freckles, one eye drooping, mouth open, tongue out, a snot bubble, a daisy behind the ear; a red
+    shirt buttoned wrong, tucked into trousers hitched up to the chest on braces (one slipped off), a pot belly, one
+    rubber boot and one holey sock with the big toe out. The crook stays a hand prop (dropped: not a hand_props type).
+    v04 (TASK-000510): the straw in the teeth again, in the left mouth corner (the tongue hangs out of the right one)."""
+    import buddy_pool_forest as F
     pre = 'HAMLET_SHEPHERD'
     src = C.weight_source([body])
-    shirt = W.top(pre + '_Shirt', C.BASE_TEE_ROWS, 6, SHIRT_SLEEVE, (.806, .184, .124, -.004), [M['Shirt'], M['Shirt_Roll']],
+    shirt = W.top(pre + '_Shirt', W.TUCKED, 6, SHIRT_SLEEVE, (.844, .166, .110, -.006), [M['Shirt'], M['Shirt_Roll']],
                   sleeve_mat=[0] * 5 + [1] * 5)
     _t(shirt, src, C.no_head)
     ssrc = C.weight_source([shirt])
-    out = [shirt, _t(W.collar(pre + '_Collar', M['Shirt'], open_deg=34, tip=0.030), ssrc, C.no_head)]
-    out += [_t(o, ssrc) for o in W.buttons(pre + '_Btn', shirt, M['Shirt_Roll'], [(0.0, z) for z in (1.150, 1.060, 0.970, 0.880)], r=0.008)]
-    # sheepskin vest, open at the front, fur trim on the opening and a fur collar
-    cut = lambda p: p.y < 0 and abs(p.x) < _vest_gap(p.z)
-    vest = W.top(pre + '_Vest', VEST, 5, None, (.784, .206, .144, -.012), [M['Vest'], M['Fur']], hem_mat=1, cut=cut)
-    G.solidify(vest, 0.005, offset=1.0)
-    _t(vest, src, C.no_head)
-    vsrc = C.weight_source([vest])
-    trims = []
-    for s in (1, -1):
-        pts = []
-        for z in (0.778, 0.82, 0.88, 0.94, 1.00, 1.06, 1.12, 1.17, 1.21, 1.240):
-            r = W.lerp_row(VEST, z)
-            x = _vest_gap(z) + 0.004
-            a = math.asin(max(-1.0, min(1.0, x / r[1])))
-            pts.append(Vector((s * x, r[3] - r[2] * math.cos(a) - 0.004, z)))
-        trims.append(G.tube(f'{pre}_FurTrim_{s}', pts, 0.013, M['Fur'], seg=8))
-    collar = W.collar(pre + '_FurCollar', M['Fur'], z0=1.262, r0=(0.168, 0.165), z1=1.292, r1=(0.176, 0.172), z2=1.240,
-                      r2=(0.206, 0.198), open_deg=36, tip=0.020, thick=0.014)
-    out += [vest, _t(collar, vsrc, C.no_head)] + [_t(o, vsrc, C.no_head) for o in trims]
-    # patched trousers tucked into rubber boots
-    pants = _t(W.bottoms(pre + '_Trousers', W.LEGS_TUCKED, [M['Trousers']]), src)
-    patches = [W.front_decal(pre + '_Patch_0', [(0.060, 0.470), (0.134, 0.462), (0.140, 0.540), (0.066, 0.548)], pants, M['Patch'], 0.003,
+    collar = W.collar(pre + '_Collar', M['Shirt'], open_deg=30, tip=0.034, thick=0.005)
+    btns = W.buttons(pre + '_Btn', shirt, M['Buttons'], [(0.016, 1.150), (-0.008, 1.072), (0.013, 0.998)], r=0.009)   # buttoned wrong
+    out = [shirt, _t(collar, ssrc, C.no_head)] + [_t(o, ssrc) for o in btns]
+    pants = _t(C.legwear(pre + '_Trousers', FOOL_WAIST, .742, W.LEGS_ANKLE, [M['Trousers']], **G.res('bottoms', n=16, subdiv=1)), src)
+    patches = [W.front_decal(pre + '_Patch_0', [(0.056, 0.470), (0.134, 0.462), (0.140, 0.540), (0.062, 0.548)], pants, M['Patch'], 0.003,
                              thickness=0.003, step=0.012),
-               W.front_decal(pre + '_Patch_1', [(-0.140, 0.640), (-0.080, 0.646), (-0.084, 0.700), (-0.142, 0.694)], pants, M['Patch'], 0.003,
-                             thickness=0.003, step=0.012),
-               G.decal(pre + '_Patch_2', [(-0.120, 0.700), (-0.030, 0.706), (-0.034, 0.780), (-0.118, 0.774)], W.BACK(), [pants], 0.003,
+               W.front_decal(pre + '_Patch_1', [(-0.146, 0.640), (-0.080, 0.646), (-0.084, 0.710), (-0.148, 0.704)], pants, M['Patch_2'],
+                             0.003, thickness=0.003, step=0.012),
+               G.decal(pre + '_Patch_2', [(-0.120, 0.700), (-0.030, 0.706), (-0.034, 0.790), (-0.118, 0.784)], W.BACK(), [pants], 0.003,
                        M['Patch'], thickness=0.003, step=0.014)]
-    psrc = C.weight_source([pants])
-    out += [pants] + [_t(o, psrc) for o in patches]
-    out += W.shoes(pre + '_Boot', M['Boots'], M['Boots_Sole']) + W.boot_shafts(pre + '_Boot', M['Boots'])
-    out += straw_hat(pre, M['Hat'], M['HatBand'])
-    out += shaggy_hair(pre, M['Hair'])
-    # props: straw in the right mouth corner, crook in the right hand
-    out += straw(pre, M['Straw'], (-0.026, -0.118, 1.412), (-0.190, -0.236, 1.452))
+    out += [pants] + [_t(o, C.weight_source([pants])) for o in patches]
+    out += suspenders(pre, M, shirt, out[1], pants)
+    # one rubber boot (left), one holey sock (right)
+    up, so, _, _ = C.sneaker(pre + '_Boot_1', 1, M['Boots'], M['Boots_Sole'])
+    wf = C.shoe_weights(1)
+    for o in (up, so):
+        C.set_weights(o, [wf(o.matrix_world @ v.co) for v in o.data.vertices])
+    shaft_l, shaft_r = W.boot_shafts(pre + '_Boot', M['Boots'])
+    bpy.data.objects.remove(shaft_r)
+    out += [up, so, shaft_l] + F._bare_sock_foot(pre, -1, M['Sock'], M['Sock_Rim'], skin)
+    out.append(_t(W.plain_socks(pre + '_Socks', M['Sock'], top=0.270), src))
+    # head: hat, bowl cut, tongue, snot bubble, daisy, freckles
+    out += fool_hat(pre + '_Hat', M)
+    hair, edge = W.shell(pre + '_Hair', M['Hair'], BOWL_CUT, None, off=0.006, thick=0.008, seg=32, rows=6)
+    out += [C.rigid(hair, 'Head'), C.rigid(G.tube(pre + '_HairEdge', edge + [edge[0]], 0.0065, M['Hair'], seg=6, caps=False), 'Head')]
+    tongue = G.ellipsoid(pre + '_Tongue', (-0.031, B.head_surface_y(-0.031, 1.388, 0.014), 1.382), (0.0175, 0.0075, 0.025), M['Tongue'],
+                         rot=Matrix.Rotation(math.radians(-58), 3, 'X') @ Matrix.Rotation(math.radians(16), 3, 'Y'), seg=16, rings=10)
+    groove = G.tube(pre + '_TongueGroove', [(-0.031, B.head_surface_y(-0.031, 1.383, 0.024), 1.383),
+                                            (-0.032, B.head_surface_y(-0.032, 1.370, 0.026), 1.369)], 0.0016, M['Tongue_Groove'], seg=6)
+    snot = G.ellipsoid(pre + '_Snot', (0.020, -0.192, 1.428), (0.013, 0.012, 0.013), M['Snot'], seg=12, rings=8)
+    daisy = flower(pre + '_Daisy', Vector((-0.168, 0.030, 1.535)), (-0.8, -0.4, 0.45), M['Daisy'], M['Daisy_Eye'])
+    stem = G.tube(pre + '_DaisyStem', [(-0.160, 0.034, 1.530), (-0.152, 0.060, 1.500), (-0.146, 0.074, 1.470)], 0.0018, M['Daisy_Stem'], seg=5)
+    out += [C.rigid(o, 'Head') for o in [tongue, groove, snot, stem] + daisy]
+    out += straw(pre, M['Straw'], (0.026, -0.118, 1.412), (0.190, -0.236, 1.452))     # v04: the straw back, in the left corner
+
+    def freckles(head):
+        spots = ((0.0, 0.0), (0.016, 0.008), (-0.014, 0.010), (0.008, -0.012), (-0.010, -0.010), (0.022, -0.004), (-0.022, 0.0))
+        return [C.rigid(G.decal(f'{pre}_Freckle_{s}_{k}', C.ellipse(s * (0.096 + dx), 1.452 + dz, 0.0036, 0.0036, 6), G.FRONT(), [head], 0.0014,
+                                M['Freckles']), 'Head') for s in (1, -1) for k, (dx, dz) in enumerate(spots)]
+    out += T._face(skin, freckles)
     ad = TYPES['HAMLET_SHEPHERD'].get('arm_down', 74.0)
     gr, _, _ = grip('Right', ad)
     out += hold(crook(pre, M['Crook'], gr, out_dir=Vector((-0.6, -0.8, 0))), 'Right', ad)
@@ -437,23 +653,67 @@ TYPES['HAMLET_MUSHROOMER'] = _mushroomer_spec()
 LEGS_BOXERS = [(.70, .100), (.65, .110), (.60, .117), (.565, .120), (.552, .114)]     # wide 'family' boxers to mid-thigh
 
 
-def lopsided_ushanka(prefix, M):
-    """Fur hat with one ear flap hanging down over the left ear and the right one sticking out sideways like a wing."""
-    crown = W.beanie(prefix + '_Crown', M['Hat'])
-    h = W.h_of(1.668)
-    band = [W.head_at(2 * math.pi * k / 32, h, 0.026)[0] for k in range(33)]
-    out = crown + [C.rigid(G.tube(prefix + '_Band', band, 0.026, M['Fur'], seg=10, caps=False), 'Head')]
-    down = Matrix.Rotation(math.radians(8), 3, 'Y')
-    out.append(C.rigid(G.ellipsoid(prefix + '_FlapDown', (0.158, 0.010, 1.560), (0.022, 0.070, 0.088), M['Fur'], rot=down,
-                                   seg=14, rings=8), 'Head'))
-    wing = Matrix.Rotation(math.radians(-24), 3, 'Y')
-    out.append(C.rigid(G.ellipsoid(prefix + '_FlapUp', (-0.205, 0.010, 1.668), (0.078, 0.062, 0.018), M['Fur'], rot=wing,
-                                   seg=14, rings=8), 'Head'))
-    out.append(C.rigid(G.ellipsoid(prefix + '_FrontFlap', (0.0, -0.152, 1.708), (0.118, 0.020, 0.050), M['Fur'], seg=16, rings=8), 'Head'))
-    return out
+def kartuz(prefix, M):
+    """Peaked cloth cap (kartuz) with a red carnation tucked into the band on the left: the village accordion player's."""
+    base = W.zprofile([(0, 1.667), (90, 1.656), (180, 1.642)])
+    rows = [('fit', base, 0.004), (1.700, 0.152, 0.148, 0.0, 0.010), (1.716, 0.170, 0.176, -0.008, 0.014),
+            (1.736, 0.180, 0.188, -0.012, 0.018), (1.754, 0.168, 0.176, -0.012, 0.020), (1.766, 0.112, 0.118, -0.010, 0.020),
+            (1.771, 0.040, 0.042, -0.008, 0.020)]
+    crown = W.ring_loft(prefix + '_Crown', rows, [M['Cap'], M['CapBand']], row_mat=[1, 0, 0, 0, 0, 0], seg=32)
+    visor = W.peak(prefix + '_Visor', M['Visor'], base, length=0.060, droop=0.022, curve=0.016, span=62, off=0.006, thick=0.007)
+    p, nrm = W.head_at(math.radians(48), W.h_of(1.692), 0.034)
+    n_dir = (nrm + Vector((0.0, -0.6, 0.3))).normalized()
+    bloom = flower(prefix + '_Carnation', p, n_dir, M['Flower'], M['Flower'], petals=9, r=0.022, petal=(0.019, 0.012, 0.008),
+                   eye=(0.021, 0.021, 0.017))
+    leaf = G.ellipsoid(prefix + '_Leaf', p + Vector((0.010, 0.030, -0.014)), (0.008, 0.032, 0.004), M['Leaf'],
+                       rot=Matrix.Rotation(math.radians(-20), 3, 'X') @ Matrix.Rotation(math.radians(-30), 3, 'Z'), seg=8, rings=4)
+    return [C.rigid(o, 'Head') for o in [crown, visor, leaf] + bloom]
+
+
+def garmon(prefix, M, targets, c=Vector((0.0, -0.352, 0.968))):
+    """Garmon (button accordion) resting on the fat belly: black lacquered ends with metal corners, red bellows folded
+    black at every pleat, a double column of melody buttons on the right end, bass buttons on the left end; two leather
+    straps over the shoulders, crossed on the back. A Spine2 prop, so it is not reshaped with the belly: placed in front
+    of the reshaped (belly 1.0) tank top."""
+    import buddy_pool_bad as BD
+    import buddy_pool_construction as CN
+    hy, hz = 0.064, 0.118
+    parts = []
+    for s in (1, -1):
+        parts.append(BD.rbox(f'{prefix}_End_{s}', c + Vector((s * 0.160, 0.0, 0.0)), (0.024, hy, hz), M['Garmon_Wood'], bevel=0.010))
+        for zz in (1, -1):
+            parts.append(BD.rbox(f'{prefix}_Corner_{s}_{zz}', c + Vector((s * 0.1855, 0.0, zz * (hz - 0.018))), (0.002, hy - 0.008, 0.015),
+                                 M['Garmon_Metal'], bevel=0.0015))
+    secs = []
+    for k in range(15):
+        x = -0.136 + 0.272 * k / 14
+        A, Bz = (hy - 0.004, hz - 0.006) if k % 2 == 0 else (hy - 0.013, hz - 0.017)
+        L = math.hypot(A, Bz)
+        secs.append((c + Vector((x, 0.0, 0.0)), Vector((0.0, A, Bz)) / L, Vector((0.0, -A, Bz)) / L, L, L))   # rectangular pleat
+    parts.append(G.loft(prefix + '_Bellows', secs, M['Garmon_Bellows'], seg=4, cap_start=False, cap_end=False, smooth=False,
+                        mat_rows=[k % 2 for k in range(14)], extra=[M['Garmon_Fold']]))
+    front = c.y - hy - 0.002
+    for col, (x, n, z0) in enumerate(((-0.169, 8, -0.091), (-0.151, 7, -0.078))):
+        for k in range(n):
+            parts.append(G.ellipsoid(f'{prefix}_Key_{col}_{k}', (x, front, c.z + z0 + 0.026 * k), (0.0065, 0.0035, 0.0065),
+                                     M['Garmon_Button'], seg=8, rings=4))
+    for k, (dy, dz) in enumerate(((dy, dz) for dy in (-0.030, 0.0, 0.030) for dz in (-0.040, 0.0, 0.040))):
+        parts.append(G.ellipsoid(f'{prefix}_Bass_{k}', (c.x + 0.1855 + 0.003, c.y + dy, c.z + dz), (0.003, 0.0065, 0.0065), M['Garmon_Button'],
+                                 seg=8, rings=4))
+    for s in (1, -1):        # straps from the top back corners over the shoulders, crossing on the back
+        corner = c + Vector((s * 0.118, hy - 0.010, hz - 0.004))
+        raw = [(s * 0.122, -0.128, 1.160), (s * 0.140, -0.060, 1.200), (s * 0.148, 0.010, 1.214), (s * 0.130, 0.080, 1.195),
+               (s * 0.090, 0.125, 1.140), (0.0, 0.140, 1.060), (-s * 0.080, 0.138, 0.990)]
+        ps, ns = CN.on_surface(targets, raw, 0.008, step=0.014)
+        path = [corner, corner.lerp(ps[0], 0.5)] + ps
+        parts.append(CN.ribbon(f'{prefix}_Strap_{s}', path, [ns[0], ns[0]] + ns, 0.036, [M['Garmon_Strap']], lambda i, j: 0, cols=1,
+                               thick=0.005))
+    return [W.prop(o, 'Spine2') for o in parts]
 
 
 def hamlet_boxers_grandpa(body, face, M, skin):
+    """v02 (TASK-000509): the accordion player - family boxers and the vest top kept (Vadim), a kartuz with a red
+    carnation instead of the ushanka, white hair round the back, the garmon on the belly."""
     import buddy_pool_oldtown2 as O2
     pre = 'HAMLET_BOXERS_GRANDPA'
     src = C.weight_source([body])
@@ -471,11 +731,12 @@ def hamlet_boxers_grandpa(body, face, M, skin):
                                M[slot], step=0.008))
     out += [shorts] + T._decal_t(flowers, shorts)
     out += W.shoes(pre + '_Valenok', M['Valenki'], M['Galosh']) + W.boot_shafts(pre + '_Valenok', M['Valenki'], top=0.42)
-    out += lopsided_ushanka(pre + '_Ushanka', M)
+    out += kartuz(pre + '_Kartuz', M)
+    out.append(W.hair_ring(pre + '_Hair', M['Hair']))
     out += W.mustache(pre + '_Mustache', M['Mustache'], droop=0.016, size=1.6)
     out += T._face(skin, lambda head: W.blush(pre + '_Blush', M['Blush'], head) + W.stubble(pre + '_Stubble', M['Stubble'], head))
+    out += garmon(pre + '_Garmon', M, tank + [body])
     return out
-
 
 
 def _drop_slots(type_id, *slots):

@@ -1,6 +1,7 @@
-"""District pool 'Неблагополучный район' (TASK-000270): the courtyard gopnik, the drunk and the 90s hustler on the base
-Sausage Buddy. Same format as buddy_types.TYPES / BUILDERS; every garment and prop has its own <TYPE>_<Slot> material.
-Carried props (seed cone, bottle, man-bag, phone) are rigid on a hand bone and exported as the separate 'Props' mesh."""
+"""District pool 'Неблагополучный район' (TASK-000270): the courtyard gopnik, the drunk and the hustler on the base Sausage
+Buddy. TASK-000511: the gopnik in a blue tracksuit with three white stripes, the hustler (v03) back in his dark leather jacket
+with new accessories, so the two no longer look alike. Same format as buddy_types.TYPES / BUILDERS; every garment and prop has its own
+<TYPE>_<Slot> material. Carried props (seed cone, bottle) are rigid on a hand bone and exported as the separate 'Props' mesh."""
 import math
 import bpy, bmesh
 from mathutils import Vector, Matrix
@@ -17,18 +18,18 @@ GOLD = ((214, 174, 76), 0.28, 'metal')
 
 TYPES = {
     'BAD_GOPNIK': dict(
-        label='Дворовый чемпион / гопник', group=GROUP, hand_props=True, body=dict(thin=0.5), face=dict(Blink=0.25, Happy=0.15),
-        slots={'Jacket': ((30, 32, 44), 0.75), 'Jacket_Rib': ((22, 24, 32), 0.85), 'Stripes': ((242, 242, 238), 0.7),
-               'Zip': ((196, 196, 202), 0.3, 'metal'), 'Pants': ((30, 32, 44), 0.75), 'Pants_Rib': ((22, 24, 32), 0.85),
+        label='Гопник', group=GROUP, hand_props=True, body=dict(thin=0.5), face=dict(Blink=0.25, Happy=0.15),
+        slots={'Jacket': ((36, 66, 168), 0.7), 'Jacket_Rib': ((26, 48, 128), 0.8), 'Stripes': ((242, 242, 238), 0.7),
+               'Zip': ((196, 196, 202), 0.3, 'metal'), 'Pants': ((36, 66, 168), 0.7), 'Pants_Rib': ((26, 48, 128), 0.8),
                'Socks': ((246, 246, 242), 0.9), 'Shoes': ((18, 18, 20), 0.14), 'Shoe_Sole': ((34, 30, 28), 0.6),
-               'Cap': ((72, 72, 76), 0.95), 'Hair': ((54, 44, 38), 0.9), 'Husk': ((34, 32, 32), 0.6),
+               'Cap': ((112, 100, 84), 0.95), 'Hair': ((54, 44, 38), 0.9), 'Husk': ((34, 32, 32), 0.6),
                'Bag': ((198, 162, 110), 0.95), 'Seeds': ((38, 36, 34), 0.55)},
-        colourways=[{'Jacket': (38, 70, 162), 'Jacket_Rib': (28, 52, 124), 'Pants': (38, 70, 162), 'Pants_Rib': (28, 52, 124),
-                     'Cap': (118, 102, 84)},
+        colourways=[{'Jacket': (30, 32, 40), 'Jacket_Rib': (22, 24, 30), 'Pants': (30, 32, 40), 'Pants_Rib': (22, 24, 30),
+                     'Cap': (72, 72, 76)},
                     {'Jacket': (168, 34, 42), 'Jacket_Rib': (128, 26, 32), 'Pants': (30, 32, 36), 'Pants_Rib': (22, 24, 28),
                      'Cap': (40, 40, 44), 'Shoes': (232, 232, 228)}]),
     'BAD_DRUNK': dict(
-        label='Алкаш', group=GROUP, hand_props=True, body=dict(belly=0.6), arm_down=70.0, face=dict(Blink=0.4, Happy=0.2),
+        label='Алкаш', group=GROUP, hand_props=True, body=dict(belly=0.6), arm_down=70.0, face=dict(Blink=0.4, Happy=0.2), own_eyes=True,
         look=dict(skin=(238, 160, 124), nose=(222, 52, 58), rim=(196, 92, 92), brow=(120, 108, 100)),
         slots={'Tank': ((240, 238, 230), 0.85), 'Stains': ((198, 168, 92), 0.9), 'Pants': ((92, 104, 134), 0.95),
                'Pants_Rib': ((78, 90, 118), 0.95), 'Socks': ((96, 88, 82), 0.95), 'Slides': ((46, 46, 50), 0.55),
@@ -39,17 +40,16 @@ TYPES = {
                     {'Pants': (104, 110, 86), 'Pants_Rib': (88, 94, 72), 'Socks': (190, 184, 172), 'Slides': (150, 54, 44),
                      'Bottle': (122, 74, 34)}]),
     'BAD_HUSTLER': dict(
-        label='Темщик', group=GROUP, face=dict(Blink=0.3, Happy=0.25),
+        label='Темщик', group=GROUP, face=dict(Blink=0.3, Happy=0.35),
         slots={'Leather': ((30, 28, 28), 0.32), 'Leather_Rib': ((22, 20, 20), 0.6), 'Lapel': ((40, 36, 36), 0.28),
                'Button': ((18, 18, 20), 0.4), 'Turtleneck': ((44, 44, 52), 0.9), 'Jeans': ((112, 138, 178), 0.9),
                'Socks': ((30, 30, 34), 0.9), 'Shoes': ((16, 16, 18), 0.14), 'Shoe_Sole': ((30, 26, 24), 0.6),
-               'Hair': ((34, 30, 28), 0.22), 'HairComb': ((18, 16, 16), 0.3), 'Gold': GOLD,
-               'Bag': ((64, 42, 30), 0.35), 'Bag_Strap': ((40, 28, 22), 0.45), 'Phone': ((40, 42, 46), 0.45),
-               'Phone_Screen': ((122, 160, 112), 0.2), 'Phone_Keys': ((176, 176, 168), 0.5)},
+               'Hair': ((34, 30, 28), 0.22), 'HairComb': ((18, 16, 16), 0.3), 'Gold': GOLD, 'WatchFace': ((24, 24, 28), 0.2),
+               'Shades_Frame': GOLD, 'Shades_Lens': ((20, 22, 30), 0.06), 'Pack': ((64, 42, 30), 0.35), 'Pack_Strap': ((40, 28, 22), 0.45)},
         colourways=[{'Leather': (90, 54, 34), 'Leather_Rib': (70, 42, 26), 'Lapel': (102, 62, 40), 'Turtleneck': (20, 20, 24),
                      'Jeans': (30, 30, 34)},
                     {'Leather': (44, 44, 48), 'Leather_Rib': (34, 34, 38), 'Lapel': (54, 54, 58), 'Turtleneck': (122, 32, 42),
-                     'Jeans': (66, 84, 124), 'Bag': (24, 22, 22)}]),
+                     'Jeans': (66, 84, 124), 'Pack': (24, 22, 22)}]),
 }
 
 # ------------------------------------------------------------------ helpers
@@ -163,6 +163,34 @@ def seed_cone(prefix, M):
     return [W.prop(o, 'RightHand') for o in out]
 
 
+def stripe_outline(u0, u1, v0, v1, step=0.02):
+    """Thin rectangle [u0, u1] x [v0, v1] with points every `step` along its long sides: G.decal adds no interior points
+    to a stripe narrower than two steps, so a plain 4-corner stripe was a flat chord cutting through the leg or sleeve and
+    only its ends showed (TASK-000511)."""
+    if u1 - u0 >= v1 - v0:
+        n = max(2, int(round((u1 - u0) / step)))
+        a = [(u0 + (u1 - u0) * k / n, v0) for k in range(n + 1)]
+        b = [(u0 + (u1 - u0) * k / n, v1) for k in range(n + 1)]
+    else:
+        n = max(2, int(round((v1 - v0) / step)))
+        a = [(u1, v0 + (v1 - v0) * k / n) for k in range(n + 1)]
+        b = [(u0, v0 + (v1 - v0) * k / n) for k in range(n + 1)]
+    return a + b[::-1]
+
+
+def tracksuit_stripes(prefix, jacket, pants, material, offsets=(-0.018, 0.0, 0.018), width=0.009):
+    """Three bold stripes down the outer side of each sleeve (T-pose top) and each trouser leg."""
+    out = []
+    for s in (1, -1):
+        x0, x1 = sorted((s * 0.165, s * 0.568))
+        for k, c in enumerate(offsets):
+            out.append(G.decal(f'{prefix}_Sleeve_{s}_{k}', stripe_outline(x0, x1, c - width / 2, c + width / 2), W.TOP(1.6), [jacket], 0.0025,
+                               material, step=0.02))
+            out.append(G.decal(f'{prefix}_Leg_{s}_{k}', stripe_outline(c - width / 2, c + width / 2, 0.25, 0.80), G.SIDE(s), [pants], 0.0025,
+                               material, step=0.02))
+    return out
+
+
 def gopnik(body, face, M, skin):
     src = C.weight_source([body])
     jacket = W.top('GOP_Jacket', W.HOODIE, 7, W.HOODIE_SLEEVE, (.750, .174, .118, -.010), [M['Jacket'], M['Jacket_Rib']],
@@ -170,14 +198,15 @@ def gopnik(body, face, M, skin):
     _t(jacket, src, C.no_head)
     collar = _t(_stand_collar('GOP_Collar', M['Jacket']), src, C.no_head)
     out = [jacket, collar]
-    deco = _sleeve_stripes('GOP_SleeveStripe', jacket, M['Stripes'])
+    deco = []
     deco.append(W.front_decal('GOP_Zip', [(-0.0045, 0.752), (0.0045, 0.752), (0.0045, 1.250), (-0.0045, 1.250)], jacket, M['Zip'], 0.003))
     out += _decal_t(deco, jacket)
     czip = W.front_decal('GOP_CollarZip', [(-0.0045, 1.250), (0.0045, 1.250), (0.0045, 1.318), (-0.0045, 1.318)], collar, M['Zip'], 0.0025)
     pull = W.box('GOP_ZipPull', Vector((0.0, -0.160, 1.296)), (0.0065, 0.003, 0.013), M['Zip'])
     out += [C.rigid(czip, 'Spine2'), C.rigid(pull, 'Spine2')]
     pants = _t(W.bottoms('GOP_Pants', GOP_LEGS, [M['Pants'], M['Pants_Rib']], cuff=GOP_CUFF), src)
-    out += [pants] + _decal_t(W.leg_stripes('GOP_LegStripe', pants, M['Stripes'], offsets=(-0.013, 0.013), width=0.009, z0=0.25, z1=0.80), pants)
+    stripes = tracksuit_stripes('GOP_Stripe', jacket, pants, M['Stripes'])
+    out += [pants] + _decal_t([o for o in stripes if '_Sleeve_' in o.name], jacket) + _decal_t([o for o in stripes if '_Leg_' in o.name], pants)
     out.append(_t(W.plain_socks('GOP_Socks', M['Socks'], top=0.27), src))
     out += pointy_shoes('GOP', M)
     out += W.flat_cap('GOP_Cap', M['Cap'])
@@ -300,23 +329,9 @@ def thin_chain(prefix, material, targets, seg=56, radius=0.0042):
     return [G.tube(prefix, pts, lambda i, n: radius + 0.0018 * (i % 2), material, seg=6)]
 
 
-def phone_90s(prefix, M):
-    """Brick mobile phone with a stub antenna in the right hand (screen faces away from the palm)."""
-    c = Vector((-0.742, -0.026, 1.106))
-    rot = Matrix(((0, -1, 0), (1, 0, 0), (0, 0, 1)))                 # local y (phone length) along world -x
-    out = [rbox(prefix + '_Body', c, (0.027, 0.070, 0.013), M['Phone'], bevel=0.008, rot=rot)]
-    out.append(rbox(prefix + '_Screen', c + Vector((-0.030, 0.0, -0.0125)), (0.019, 0.017, 0.002), M['Phone_Screen'], bevel=0.002, rot=rot))
-    for k in range(3):
-        for j in range(2):
-            out.append(rbox(f'{prefix}_Key_{k}_{j}', c + Vector((0.004 + 0.016 * k, -0.010 + 0.020 * j, -0.0125)), (0.008, 0.006, 0.0018),
-                            M['Phone_Keys'], bevel=0.0015, rot=rot))
-    ant_base = c + Vector((-0.070, 0.016, 0.0))
-    out.append(G.tube(prefix + '_Antenna', [ant_base, ant_base + Vector((-0.040, 0, 0))], 0.0055, M['Phone'], seg=8))
-    return [W.prop(o, 'RightHand') for o in out]
-
-
 def man_bag(prefix, M):
-    """Barsetka: small leather pouch clutched in the left hand, a wrist strap looped round the wrist."""
+    """Barsetka: small leather pouch clutched in the left hand, a wrist strap looped round the wrist (the out-of-pool
+    TRANSIT_FLIPPER carries it; the v03 hustler wears a cross-body bag instead)."""
     c = Vector((0.780, -0.010, 1.110))
     out = [rbox(prefix + '_Pouch', c, (0.085, 0.050, 0.024), M['Bag'], bevel=0.016)]
     out.append(rbox(prefix + '_Flap', c + Vector((-0.037, 0.0, -0.024)), (0.050, 0.052, 0.003), M['Bag_Strap'], bevel=0.003))
@@ -330,7 +345,32 @@ def man_bag(prefix, M):
     return [W.prop(o, 'LeftHand') for o in out] + [W.prop(ring, 'LeftForeArm')]
 
 
+def crossbody_bag(prefix, M, jacket, src):
+    """Small leather bag on a strap from the right shoulder across the chest to the left hip, a gold clasp."""
+    import buddy_pool_construction as CN
+    raw = [(-0.140, 0.000, 1.222), (-0.110, -0.110, 1.180), (-0.040, -0.170, 1.080), (0.060, -0.180, 0.980), (0.150, -0.150, 0.905),
+           (0.205, -0.060, 0.870), (0.210, 0.040, 0.878), (0.160, 0.130, 0.935), (0.060, 0.170, 1.030), (-0.060, 0.160, 1.130),
+           (-0.130, 0.090, 1.200)]
+    ps, ns = CN.on_surface([jacket], raw, 0.007, step=0.016, smooth=3, closed=True)
+    strap = CN.ribbon(prefix + '_Strap', ps, ns, 0.024, [M['Pack_Strap']], lambda i, j: 0, cols=1, thick=0.005, closed=True)
+    bvh = G.bvh_of([jacket])
+    loc, nrm, _, _ = bvh.find_nearest(Vector((0.175, -0.25, 0.880)))
+    nrm = nrm if nrm.y < 0 else -nrm
+    flat = Vector((nrm.x, nrm.y, 0.0)).normalized()
+    rot = Vector((0.0, -1.0, 0.0)).rotation_difference(flat).to_matrix()
+    c = loc + flat * 0.034
+    bag = rbox(prefix + '_Pouch', c, (0.072, 0.026, 0.052), M['Pack'], bevel=0.012, rot=rot)
+    flap = rbox(prefix + '_Flap', c + rot @ Vector((0.0, -0.024, 0.022)), (0.070, 0.004, 0.028), M['Pack_Strap'], bevel=0.004, rot=rot)
+    clasp = rbox(prefix + '_Clasp', c + rot @ Vector((0.0, -0.030, 0.000)), (0.012, 0.003, 0.008), M['Gold'], bevel=0.002, rot=rot)
+    return [_t(o, src, lambda p, w: {P + 'Hips': 0.5, P + 'Spine': 0.5}) for o in (bag, flap, clasp)] + [_t(strap, src, C.no_head)]
+
+
 def hustler(body, face, M, skin):
+    """v03 (TASK-000511): Vadim wanted the darker clothes back - the v02 black leather jacket with lapels over a dark
+    turtleneck, jeans, black pointy shoes, the thin gold chain, glossy combed-back hair and the thin moustache; new:
+    sunglasses pushed up onto the head, a leather cross-body bag and a big gold watch. Nothing in the hands.
+    (TASK-000512 tried a 2000s look with gelled spikes and a long leather coat; Vadim kept this one.)"""
+    import buddy_pool_bad2 as BD2
     src = C.weight_source([body])
     jacket = W.top('HUSTLER_Jacket', SHORT_JACKET, 6, W.JACKET_SLEEVE, (.818, .198, .134, -.012), [M['Leather'], M['Leather_Rib']],
                    row_mat=[1] + [0] * (len(SHORT_JACKET) - 2), hem_mat=1)
@@ -343,6 +383,8 @@ def hustler(body, face, M, skin):
     front = W.suit_front('HUSTLER', jacket, mm, tie_slot=None, v_tip=1.060)
     out = [jacket, tn, _t(collar, jsrc, C.no_head)] + [_t(o, jsrc) for o in front]
     out += [C.transfer(o, jsrc) for o in thin_chain('HUSTLER_Chain', M['Gold'], [jacket])]
+    out += BD2._big_watch('HUSTLER_Watch', M, x=0.600, side=1)
+    out += crossbody_bag('HUSTLER_Bag', M, jacket, jsrc)
     out.append(_t(W.bottoms('HUSTLER_Jeans', W.LEGS_LONG, [M['Jeans']]), src))
     out.append(_t(W.plain_socks('HUSTLER_Socks', M['Socks']), src))
     out += pointy_shoes('HUSTLER', M)
@@ -351,9 +393,8 @@ def hustler(body, face, M, skin):
     for k, x in enumerate((-0.060, -0.030, 0.0, 0.030, 0.060)):
         pts = [(x - 0.0022, 0.112), (x + 0.0022, 0.112), (x + 0.0022 + x * 0.25, -0.070), (x - 0.0022 + x * 0.25, -0.070)]
         out.append(C.rigid(G.decal(f'HUSTLER_Comb_{k}', pts, W.TOP(), [hair], 0.0015, M['HairComb'], step=0.010), 'Head'))
+    out += W.sunglasses_on_head('HUSTLER_Shades', M['Shades_Frame'], M['Shades_Lens'])
     out += W.mustache('HUSTLER_Mustache', M['Hair'], droop=0.0, size=0.62)
-    out += phone_90s('HUSTLER_Phone', M)
-    out += man_bag('HUSTLER_Bag', M)
     return out
 
 

@@ -1,0 +1,391 @@
+{
+  "asset": "SAUSAGE_BUDDY_CONSTR_ARAB_v02",
+  "variant": "CONSTR_ARAB",
+  "height_m": 1.771,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 14108,
+      "vertices": 7298,
+      "materials": [
+        "CONSTR_ARAB_Thobe",
+        "CONSTR_ARAB_Thobe_Cuff",
+        "CONSTR_ARAB_Buttons",
+        "CONSTR_ARAB_Dust",
+        "CONSTR_ARAB_Vest",
+        "CONSTR_ARAB_Reflect",
+        "CONSTR_ARAB_Vest_Trim",
+        "CONSTR_ARAB_Socks",
+        "CONSTR_ARAB_Sandal_Sole",
+        "CONSTR_ARAB_Sandal_Strap",
+        "CONSTR_ARAB_Gold",
+        "CONSTR_ARAB_WatchFace",
+        "CONSTR_ARAB_Keffiyeh",
+        "CONSTR_ARAB_Keffiyeh_Check",
+        "CONSTR_ARAB_Agal",
+        "CONSTR_ARAB_Beard",
+        "CONSTR_ARAB_Mustache"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_RightHand": {
+      "triangles": 604,
+      "vertices": 332,
+      "materials": [
+        "CONSTR_ARAB_Lavash",
+        "CONSTR_ARAB_Foil",
+        "CONSTR_ARAB_Meat",
+        "CONSTR_ARAB_Greens",
+        "CONSTR_ARAB_Tomato",
+        "CONSTR_ARAB_Sauce"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0977
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0977,
+      "max": 0.0977
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0977
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0914
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2375,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2209,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Араб",
+    "group": "Интернациональная стройка",
+    "body": {
+      "belly": 0.4
+    },
+    "idle_arm_down_deg": 70.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {
+      "Happy": 0.55
+    },
+    "slots": {
+      "CONSTR_ARAB_Keffiyeh": {
+        "default": "#F6F4EE",
+        "metal": false
+      },
+      "CONSTR_ARAB_Keffiyeh_Check": {
+        "default": "#C41E28",
+        "metal": false
+      },
+      "CONSTR_ARAB_Agal": {
+        "default": "#141416",
+        "metal": false
+      },
+      "CONSTR_ARAB_Thobe": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "CONSTR_ARAB_Thobe_Cuff": {
+        "default": "#E8E8E2",
+        "metal": false
+      },
+      "CONSTR_ARAB_Buttons": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "CONSTR_ARAB_Dust": {
+        "default": "#B0A692",
+        "metal": false
+      },
+      "CONSTR_ARAB_Vest": {
+        "default": "#FA781E",
+        "metal": false
+      },
+      "CONSTR_ARAB_Vest_Trim": {
+        "default": "#D66018",
+        "metal": false
+      },
+      "CONSTR_ARAB_Reflect": {
+        "default": "#D2D6DC",
+        "metal": false
+      },
+      "CONSTR_ARAB_Socks": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "CONSTR_ARAB_Sandal_Strap": {
+        "default": "#784E2C",
+        "metal": false
+      },
+      "CONSTR_ARAB_Sandal_Sole": {
+        "default": "#46301E",
+        "metal": false
+      },
+      "CONSTR_ARAB_Beard": {
+        "default": "#161210",
+        "metal": false
+      },
+      "CONSTR_ARAB_Mustache": {
+        "default": "#161210",
+        "metal": false
+      },
+      "CONSTR_ARAB_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "CONSTR_ARAB_WatchFace": {
+        "default": "#18181C",
+        "metal": false
+      },
+      "CONSTR_ARAB_Lavash": {
+        "default": "#E2C088",
+        "metal": false
+      },
+      "CONSTR_ARAB_Foil": {
+        "default": "#CED0D6",
+        "metal": true
+      },
+      "CONSTR_ARAB_Meat": {
+        "default": "#8C522E",
+        "metal": false
+      },
+      "CONSTR_ARAB_Greens": {
+        "default": "#46963C",
+        "metal": false
+      },
+      "CONSTR_ARAB_Tomato": {
+        "default": "#D23228",
+        "metal": false
+      },
+      "CONSTR_ARAB_Sauce": {
+        "default": "#F6F4EC",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "CONSTR_ARAB_Keffiyeh_Check": "#141416",
+        "CONSTR_ARAB_Thobe": "#DCCEB0",
+        "CONSTR_ARAB_Thobe_Cuff": "#CCBEA0",
+        "CONSTR_ARAB_Vest": "#DCF03C",
+        "CONSTR_ARAB_Vest_Trim": "#BED232"
+      },
+      {
+        "CONSTR_ARAB_Keffiyeh": "#E2D6B4",
+        "CONSTR_ARAB_Thobe": "#C4CAD0",
+        "CONSTR_ARAB_Thobe_Cuff": "#B4BAC0"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 21688,
+  "part_triangles": {
+    "CONSTR_ARAB_Keffiyeh": 3072,
+    "CONSTR_ARAB_Thobe": 1824,
+    "CONSTR_ARAB_Beard": 1800,
+    "CONSTR_ARAB_Agal": 1280,
+    "Skin_Head": 1088,
+    "CONSTR_ARAB_Sandal_Foot_Upper": 1000,
+    "CONSTR_ARAB_Vest": 780,
+    "CONSTR_ARAB_Sandal_Foot_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "CONSTR_ARAB_HemDust": 534,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "CONSTR_ARAB_Collar": 320,
+    "Mouth": 312,
+    "CONSTR_ARAB_Sandal_Heel": 312,
+    "CONSTR_ARAB_Sandal_ToeStrap": 304,
+    "CONSTR_ARAB_Sandal_Instep": 304,
+    "Skin_Nose": 288,
+    "CONSTR_ARAB_Socks": 288,
+    "CONSTR_ARAB_HemDustB": 250,
+    "CONSTR_ARAB_Mustache": 240,
+    "CONSTR_ARAB_Binding": 224,
+    "CONSTR_ARAB_Shawarma_Bit": 192,
+    "CONSTR_ARAB_BandB": 180,
+    "Brow": 168,
+    "Shine": 160,
+    "CONSTR_ARAB_Watch_Case": 160,
+    "CONSTR_ARAB_Watch_Dial": 160,
+    "CONSTR_ARAB_Shawarma_Meat": 120,
+    "CONSTR_ARAB_BandF": 120,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "CONSTR_ARAB_VestStrap": 104,
+    "CONSTR_ARAB_Placket": 100,
+    "CONSTR_ARAB_Shawarma_Lavash": 98,
+    "CONSTR_ARAB_Shawarma_Foil": 98,
+    "CONSTR_ARAB_Shawarma_SauceDrop": 64,
+    "CONSTR_ARAB_Watch_Band": 56,
+    "CONSTR_ARAB_Shawarma_Sauce": 32,
+    "CONSTR_ARAB_Btn": 24
+  }
+}

@@ -188,9 +188,12 @@ def head_surface_y(x, z, extra=0.0):
     return -ry * math.sqrt(q) - extra
 
 
-def face_parts(expr, mats):
-    """Same topology for every expression; only positions change."""
+def face_parts(expr, mats, extras=None):
+    """Same topology for every expression; only positions change. `extras` (TASK-000529, per type, optional): 'iris'
+    and 'lash' materials, 'pupil_in' (how far the pupils sit toward the nose, BASE 0.011)."""
     white, rim, pupil, shine, brow_m, mouth_m = mats
+    pupil_in = (extras or {}).get('pupil_in', 0.011)
+    eyes = []
     eye_scale = {'Surprised': 1.12, 'Happy': 1.0}.get(expr, 1.0)
     pupil_scale = {'Surprised': 0.72, 'Worried': 0.88}.get(expr, 1.0)
     pupil_dz = {'Worried': 0.006, 'Surprised': 0.0}.get(expr, -0.002)
@@ -209,7 +212,8 @@ def face_parts(expr, mats):
         parts.append(G.ellipsoid(f'EyeRim_{s}', center + Vector((0, 0.0065, 0)), (rx * 1.035, ry * 0.92, rz_eff * 1.03 + 0.0012), rim, rot=yaw,
                                  **G.res('eye', seg=20, rings=12)))
         fwd = yaw @ Vector((0, -1, 0))
-        pc = center + fwd * (ry - 0.0045) + Vector((-s * 0.011, 0, pupil_dz * squash))
+        pc = center + fwd * (ry - 0.0045) + Vector((-s * pupil_in, 0, pupil_dz * squash))
+        eyes.append((s, center, yaw, rx, ry, rz_eff, pc, squash))
         pr = 0.0245 * pupil_scale
         parts.append(G.ellipsoid(f'Pupil_{s}', pc, (pr, 0.0075, pr * 1.12 * max(squash, 0.12)), pupil, rot=yaw, **G.res('pupil', seg=16, rings=10)))
         sc = pc + fwd * 0.0055 + Vector((s * 0.006 * pupil_scale, 0, 0.008 * pupil_scale * squash))
@@ -247,13 +251,53 @@ def face_parts(expr, mats):
         x, z = at(2 * math.pi * k / n)
         pts.append(Vector((x, head_surface_y(x, z, 0.0025), z)))
     parts.append(G.tube('Mouth', pts, 0.0032, mouth_m, **G.res('mouth', seg=8), frame_up=(0, -1, 0)))
+    if extras:
+        parts += eye_extras(eyes, extras)
     return parts
 
 
-def build_face(mats):
+def eye_extras(eyes, ex):
+    """Per-type eye extras (TASK-000529), the same topology in every expression, so they close with the lid: a coloured
+    iris hugging the eye white round the pupil, three lashes flaring from the upper outer rim."""
+    out = []
+    for s, center, yaw, rx, ry, rz_eff, pc, squash in eyes:
+        if ex.get('iris') is not None:
+            lp = yaw.inverted() @ (pc - center)                 # the pupil in the eye's own frame (front = -y)
+            R, NR, NS = ex.get('iris_r', 0.034), 4, 24
+            vs, fs = [], []
+            for i in range(NR + 1):
+                for j in range(NS if i else 1):
+                    a = 2 * math.pi * j / NS
+                    x = lp.x + R * i / NR * math.cos(a)
+                    z = lp.z + R * i / NR * math.sin(a) * 1.12 * max(squash, 0.12)
+                    q = (x / rx) ** 2 + (z / rz_eff) ** 2
+                    if q > 0.90:                                # stays inside the white's outline
+                        k = math.sqrt(0.90 / q)
+                        x, z, q = x * k, z * k, 0.90
+                    vs.append(center + yaw @ Vector((x, -ry * math.sqrt(1.0 - q) - 0.0007, z)))
+            fs = [(0, 1 + j, 1 + (j + 1) % NS) for j in range(NS)]
+            for i in range(1, NR):
+                a0, b0 = 1 + (i - 1) * NS, 1 + i * NS
+                fs += [(a0 + j, b0 + j, b0 + (j + 1) % NS, a0 + (j + 1) % NS) for j in range(NS)]
+            out.append(G.from_data(f'Iris_{s}', vs, fs, ex['iris'], True, fix_normals=False))     # wound to face the front
+        if ex.get('lash') is not None:
+            rimx, rimz = rx * 1.035, rz_eff * 1.03 + 0.0012
+            for k, (deg, ln) in enumerate(((22, 0.015), (42, 0.014), (62, 0.012))):
+                a = math.radians(deg)
+                b = Vector((s * 0.93 * rimx * math.cos(a), 0.0, 0.93 * rimz * math.sin(a)))
+                b.y = -ry * math.sqrt(1.0 - min(0.98, (b.x / rx) ** 2 + (b.z / rz_eff) ** 2)) * 0.6
+                d = Vector((s * math.cos(a + 0.30), -0.25, math.sin(a + 0.30))).normalized()
+                up = Vector((0.0, -0.35, 1.0)).normalized()
+                pts = [b, b + d * ln * 0.4 + up * 0.0012, b + d * ln * 0.75 + up * 0.0030, b + d * ln + up * 0.0055]
+                out.append(G.tube(f'Lash_{s}_{k}', [center + yaw @ p for p in pts], lambda i, n: 0.0021 * (1 - i / (n - 1)) + 0.0005,
+                                  ex['lash'], seg=6))
+    return out
+
+
+def build_face(mats, extras=None):
     shapes = {}
     for expr in EXPRESSIONS:
-        parts = face_parts(expr, mats)
+        parts = face_parts(expr, mats, extras)
         f = parts[0]; G.join(f, parts[1:])
         shapes[expr] = f
     face = shapes['Basis']; face.name = 'Face'; face.data.name = 'Face'

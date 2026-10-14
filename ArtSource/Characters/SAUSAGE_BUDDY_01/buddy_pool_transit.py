@@ -58,7 +58,7 @@ TYPES = {
                      'Cap': (236, 236, 232), 'Cap_Peak': (40, 52, 96)}]),
     'TRANSIT_GARAGE_DRUNK': dict(
         label='Гаражный алкаш', group='Переход', hand_props=True, body=dict(belly=0.7), arm_down=70.0, no_ears=True,
-        face=dict(Blink=0.45, Happy=0.3),
+        face=dict(Blink=0.45, Happy=0.3), own_eyes=True,
         look=dict(skin=(232, 150, 120), nose=(222, 60, 60), brow=(92, 80, 70)),
         slots={'Jacket': ((54, 62, 72), 0.95), 'Stitch': ((38, 44, 52), 0.95), 'Collar': ((44, 50, 58), 0.95),
                'Buttons': ((20, 20, 20), 0.5), 'Oil': ((26, 24, 22), 0.35), 'Trousers': ((40, 46, 64), 0.9),

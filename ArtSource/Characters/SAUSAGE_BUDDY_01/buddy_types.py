@@ -17,6 +17,7 @@ GOLD = ((214, 174, 76), 0.28, 'metal')
 TYPES = {
     'JUNKIE': dict(
         label='Наркоман (первая жертва)', group='Старт', body=dict(thin=1.0), no_ears=True, face=dict(Blink=0.5, Worried=0.45),
+        own_eyes=True,
         look=dict(skin=(226, 178, 152), nose=(214, 150, 130), brow=(88, 72, 62), rim=(184, 98, 98)),
         slots={'Hoodie': ((112, 117, 99), 0.95), 'Hoodie_Rib': ((95, 100, 84), 0.95), 'Pants': ((132, 132, 138), 0.95),
                'Pants_Rib': ((112, 112, 118), 0.95), 'Socks': ((206, 202, 190), 0.9), 'Slides': ((40, 42, 46), 0.55),
@@ -478,9 +479,54 @@ def look(name):
     return TYPES[name].get('look', {})
 
 
+def eyes(name):
+    """Optional eye extras of a type (TASK-000529): iris / lash colours, pupil_in (see buddy_body.face_parts)."""
+    return TYPES[name].get('eyes', {})
+
+
+def bakes_face(name):
+    """TASK-000519 (Vadim): every type wears the plain round eyes of the BASE NPC; only the special ones (own_eyes:
+    the junkies, the drunks, the homeless man, the village fool) keep their resting expression on the eyes."""
+    return bool(TYPES[name].get('face')) and not TYPES[name].get('own_eyes')
+
+
+def bake_face(face_ob, name):
+    """Bake the type's resting expression into the face basis for the mouth and the brows only (faces in the brow and
+    mouth materials); the eyes stay the BASE ones. The same offset goes into every shape key, so blinking does not
+    move the mouth and the game's reaction keys (Surprised, Worried) still play on top of the baked face."""
+    if not bakes_face(name):
+        return
+    me = face_ob.data
+    keys = me.shape_keys.key_blocks
+    basis = keys[0]
+    movable = set()
+    for p in me.polygons:
+        mname = me.materials[p.material_index].name if p.material_index < len(me.materials) else ''
+        if mname.startswith('Buddy_Brow') or mname.startswith('Buddy_Mouth'):
+            movable.update(p.vertices)
+    assert movable, 'face: no brow / mouth faces found'
+    weights = TYPES[name]['face']
+    delta = {}
+    for vi in movable:
+        b = basis.data[vi].co.copy()
+        d = b * 0.0
+        for kname, w in weights.items():
+            kb = keys.get(kname)
+            if kb is not None:
+                d += (kb.data[vi].co - b) * w
+        delta[vi] = d
+    for kb in keys:
+        for vi, d in delta.items():
+            kb.data[vi].co += d
+    for vi, d in delta.items():
+        me.vertices[vi].co += d
+    me.update()
+
+
 def face_defaults(name):
-    """Resting expression weights for this type (the game's face script holds them between reactions)."""
-    return TYPES[name].get('face', {})
+    """Resting expression weights the game's face script holds between reactions: none for the types whose mouth and
+    brows are baked into the face (TASK-000519), the type's own weights for the special ones."""
+    return {} if bakes_face(name) else TYPES[name].get('face', {})
 
 
 def set_face(face_ob, name):
@@ -511,10 +557,14 @@ def apply_colourway(name, k):
 def manifest(name):
     spec = TYPES[name]
     return {'label': spec['label'], 'group': spec['group'], 'body': spec.get('body', {}), 'idle_arm_down_deg': spec.get('arm_down', 74.0),
+            # TASK-000508: the skeleton is shared with BASE, so a taller type is scaled as a whole when the game spawns it
+            'game_scale': spec.get('game_scale', 1.0),
             'hand_props': bool(spec.get('hand_props')),
             'hand_props_note': 'Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)'
             if spec.get('hand_props') else 'carries nothing in the hands',
-            'face_defaults': spec.get('face', {}),
+            'face_defaults': face_defaults(name),
+            # TASK-000519: this resting expression is baked into the face basis for the mouth and the brows (eyes as BASE)
+            'face_baked': spec.get('face', {}) if bakes_face(name) else {},
             'slots': {f'{name}_{s}': {'default': '#%02X%02X%02X' % v[0], 'metal': len(v) > 2 and v[2] == 'metal'}
                       for s, v in spec['slots'].items()},
             'colourways': [{f'{name}_{s}': '#%02X%02X%02X' % rgb for s, rgb in cw.items()} for cw in spec['colourways']]}
@@ -523,7 +573,8 @@ def manifest(name):
 # ------------------------------------------------------------------ district pools (TASK-000270)
 # The approved NPC pool by district lives in buddy_pool_*.py; each module adds its own TYPES and BUILDERS here.
 POOLS = ('buddy_pool_forest', 'buddy_pool_hamlet', 'buddy_pool_transit', 'buddy_pool_transit2', 'buddy_pool_bad',
-         'buddy_pool_bad2', 'buddy_pool_oldtown', 'buddy_pool_oldtown2', 'buddy_pool_prom')
+         'buddy_pool_bad2', 'buddy_pool_oldtown', 'buddy_pool_oldtown2', 'buddy_pool_prom', 'buddy_pool_construction',
+         'buddy_pool_bad3', 'buddy_pool_oldtown3', 'buddy_pool_beach')
 for _name in POOLS:
     try:
         _pool = importlib.import_module(_name)

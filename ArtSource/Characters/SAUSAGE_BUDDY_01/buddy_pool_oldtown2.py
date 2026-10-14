@@ -11,7 +11,7 @@ import buddy_wear as W
 import buddy_types as T          # noqa: F401  (registry; helpers are used at build time only)
 
 P = 'mixamorig:'
-GROUP = 'Старый город'
+GROUP = 'Даунтаун'                 # was 'Старый город' until TASK-000514
 WHITE = (248, 248, 244)
 
 TYPES = {
@@ -31,11 +31,13 @@ TYPES = {
                      'Shaker_Lid': (250, 206, 40)}]),
     'OLD_COURIER': dict(
         label='Курьер', group=GROUP, face=dict(Worried=0.3, Surprised=0.1),
+        look=dict(skin=(172, 112, 72), nose=(160, 96, 60), brow=(26, 22, 20), rim=(110, 70, 46)),     # v05: a bit like a migrant
         slots={'Jacket': ((40, 44, 56), 0.7), 'Jacket_Panel': ((250, 196, 30), 0.7), 'Jacket_Rib': ((26, 28, 34), 0.85),
                'Pants': ((44, 48, 56), 0.9), 'Pants_Rib': ((30, 32, 38), 0.9), 'Pocket': ((56, 60, 70), 0.9),
                'Socks': ((40, 40, 44), 0.9), 'Shoe_Upper': ((240, 240, 236), 0.7), 'Shoe_Sole': ((58, 58, 62), 0.6),
                'Shoe_Lace': ((240, 240, 236), 0.7), 'Cap': ((250, 196, 30), 0.85), 'Cap_Peak': ((40, 44, 56), 0.8),
-               'Hair': ((62, 46, 36), 0.85), 'Box': ((250, 196, 30), 0.6), 'Box_Trim': ((40, 44, 56), 0.6),
+               'Hair': ((24, 22, 20), 0.85), 'Mustache': ((24, 22, 20), 0.9), 'Stubble': ((40, 34, 30), 0.95),
+               'Box': ((250, 196, 30), 0.6), 'Box_Trim': ((40, 44, 56), 0.6),
                'Reflect': ((206, 210, 216), 0.25), 'Straps': ((30, 32, 38), 0.8), 'Sweat': ((150, 210, 250), 0.08),
                'Phone': ((24, 24, 28), 0.35), 'Screen': ((86, 196, 150), 0.15)},
         colourways=[{'Jacket_Panel': (60, 186, 90), 'Box': (60, 186, 90), 'Cap': (60, 186, 90), 'Pants': (60, 64, 58)},
@@ -328,6 +330,9 @@ def old_courier(body, face, M, skin):
     cap, base = baseball_cap('COURIER_Cap', M['Cap'], M['Cap_Peak'])
     out += cap
     out.append(_head_band_hair('COURIER_Hair', M['Hair'], lambda phi: base(phi) + 0.012, arc=(48, 312)))
+    # v05 (TASK-000535, Vadim: a bit like a migrant): tan skin, black hair, a moustache and stubble
+    out += W.mustache('COURIER_Mustache', M['Mustache'], droop=0.006, size=1.0)
+    out += T._face(skin, lambda head: W.stubble('COURIER_Stubble', M['Stubble'], head, dots=130, seed=31))
     out += _sweat_drop('COURIER', M['Sweat'])
     out += _phone_in_hand('COURIER', M)
     return out

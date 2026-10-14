@@ -1,0 +1,326 @@
+{
+  "asset": "SAUSAGE_BUDDY_BEACH_CASTLE_v01",
+  "variant": "BEACH_CASTLE",
+  "height_m": 1.756,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 5240,
+      "vertices": 2697,
+      "materials": [
+        "BEACH_CASTLE_Trunks",
+        "BEACH_CASTLE_Foot",
+        "BEACH_CASTLE_Sole",
+        "BEACH_CASTLE_Thong",
+        "BEACH_CASTLE_Hair",
+        "BEACH_CASTLE_Tooth",
+        "BEACH_CASTLE_Sand"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_LeftHand": {
+      "triangles": 828,
+      "vertices": 424,
+      "materials": [
+        "BEACH_CASTLE_Bucket",
+        "BEACH_CASTLE_Bucket_Rim",
+        "BEACH_CASTLE_Bucket_Handle",
+        "BEACH_CASTLE_Sand"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Props_RightHand": {
+      "triangles": 356,
+      "vertices": 184,
+      "materials": [
+        "BEACH_CASTLE_Spade"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.039
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0361,
+      "max": 0.0451
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.039
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Строитель куличиков",
+    "group": "Городской пляж",
+    "body": {
+      "belly": 0.8
+    },
+    "idle_arm_down_deg": 66.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {},
+    "face_baked": {
+      "Happy": 0.55,
+      "Surprised": 0.4
+    },
+    "slots": {
+      "BEACH_CASTLE_Trunks": {
+        "default": "#46AA3C",
+        "metal": false
+      },
+      "BEACH_CASTLE_Foot": {
+        "default": "#F2B48C",
+        "metal": false
+      },
+      "BEACH_CASTLE_Sole": {
+        "default": "#F6781C",
+        "metal": false
+      },
+      "BEACH_CASTLE_Thong": {
+        "default": "#F6781C",
+        "metal": false
+      },
+      "BEACH_CASTLE_Sand": {
+        "default": "#CEAC70",
+        "metal": false
+      },
+      "BEACH_CASTLE_Tooth": {
+        "default": "#FAF8EC",
+        "metal": false
+      },
+      "BEACH_CASTLE_Hair": {
+        "default": "#967042",
+        "metal": false
+      },
+      "BEACH_CASTLE_Bucket": {
+        "default": "#2878DC",
+        "metal": false
+      },
+      "BEACH_CASTLE_Bucket_Rim": {
+        "default": "#FAC828",
+        "metal": false
+      },
+      "BEACH_CASTLE_Bucket_Handle": {
+        "default": "#FAC828",
+        "metal": false
+      },
+      "BEACH_CASTLE_Spade": {
+        "default": "#E63228",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "BEACH_CASTLE_Trunks": "#C82832",
+        "BEACH_CASTLE_Bucket": "#FA78A0"
+      },
+      {
+        "BEACH_CASTLE_Trunks": "#283C8C",
+        "BEACH_CASTLE_Bucket": "#FAC828",
+        "BEACH_CASTLE_Bucket_Rim": "#2878DC",
+        "BEACH_CASTLE_Bucket_Handle": "#2878DC"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 13976,
+  "part_triangles": {
+    "Skin_Head": 1088,
+    "BEACH_CASTLE_Hair": 1024,
+    "BEACH_CASTLE_Feet_Foot_Upper": 1000,
+    "BEACH_CASTLE_Feet_Toe": 1000,
+    "BEACH_CASTLE_Feet_Foot_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "BEACH_CASTLE_Trunks": 432,
+    "BEACH_CASTLE_Feet_Thong": 408,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "BEACH_CASTLE_Bucket_Bucket": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "BEACH_CASTLE_Bucket_Sand": 224,
+    "BEACH_CASTLE_Bucket_SpadeBlade": 224,
+    "BEACH_CASTLE_Tooth": 200,
+    "Brow": 168,
+    "Shine": 160,
+    "BEACH_CASTLE_Bucket_BucketHandle": 156,
+    "BEACH_CASTLE_SandKnee": 144,
+    "BEACH_CASTLE_Bucket_BucketEar": 128,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "BEACH_CASTLE_Bucket_SpadeGrip": 100,
+    "BEACH_CASTLE_Bucket_SpadeHandle": 32
+  }
+}

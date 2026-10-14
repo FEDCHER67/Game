@@ -1,0 +1,408 @@
+{
+  "asset": "SAUSAGE_BUDDY_HAMLET_GRANNY_v04",
+  "variant": "HAMLET_GRANNY",
+  "height_m": 1.774,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 4848,
+      "vertices": 2458,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 12018,
+      "vertices": 6867,
+      "materials": [
+        "HAMLET_GRANNY_Scarf",
+        "HAMLET_GRANNY_Scarf_Leaf",
+        "HAMLET_GRANNY_Scarf_Rose",
+        "HAMLET_GRANNY_Scarf_Rose_Heart",
+        "HAMLET_GRANNY_Scarf_Rose_2",
+        "HAMLET_GRANNY_Dress",
+        "HAMLET_GRANNY_Dress_Flower",
+        "HAMLET_GRANNY_Dress_Flower_Heart",
+        "HAMLET_GRANNY_Dress_Flower_2",
+        "HAMLET_GRANNY_Coat",
+        "HAMLET_GRANNY_Stitch",
+        "HAMLET_GRANNY_Track",
+        "HAMLET_GRANNY_Stripes",
+        "HAMLET_GRANNY_Socks",
+        "HAMLET_GRANNY_Galosh",
+        "HAMLET_GRANNY_Glasses",
+        "HAMLET_GRANNY_Gem",
+        "HAMLET_GRANNY_Mole",
+        "HAMLET_GRANNY_Mole_Hair",
+        "HAMLET_GRANNY_Blush"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0919
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0919,
+      "max": 0.0919
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0919
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Бабка-модница",
+    "group": "Хутор",
+    "body": {
+      "belly": 0.8
+    },
+    "idle_arm_down_deg": 66.0,
+    "game_scale": 1.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {},
+    "face_baked": {
+      "Happy": 0.75,
+      "Blink": 0.2
+    },
+    "slots": {
+      "HAMLET_GRANNY_Scarf": {
+        "default": "#CE1E2C",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Scarf_Rose": {
+        "default": "#FAECD6",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Scarf_Rose_2": {
+        "default": "#FCC832",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Scarf_Rose_Heart": {
+        "default": "#961428",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Scarf_Leaf": {
+        "default": "#28783C",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Dress": {
+        "default": "#32B0BA",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Dress_Flower": {
+        "default": "#FA78AA",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Dress_Flower_2": {
+        "default": "#FFE250",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Dress_Flower_Heart": {
+        "default": "#F6F6F0",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Coat": {
+        "default": "#34463A",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Stitch": {
+        "default": "#24322A",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Track": {
+        "default": "#243478",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Stripes": {
+        "default": "#F6F6F0",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Socks": {
+        "default": "#96928C",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Galosh": {
+        "default": "#1E402C",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Glasses": {
+        "default": "#D61A32",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Gem": {
+        "default": "#ECF2FC",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Mole": {
+        "default": "#784E38",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Mole_Hair": {
+        "default": "#28221E",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Blush": {
+        "default": "#EC7878",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Bucket": {
+        "default": "#F4F4F0",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Bucket_Rim": {
+        "default": "#2C4C9C",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Bucket_Handle": {
+        "default": "#C4C8CE",
+        "metal": true
+      },
+      "HAMLET_GRANNY_Potato": {
+        "default": "#B28656",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Hen": {
+        "default": "#F6F2E8",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Hen_Wing": {
+        "default": "#B07040",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Comb": {
+        "default": "#DE2828",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Beak": {
+        "default": "#F2B82A",
+        "metal": false
+      },
+      "HAMLET_GRANNY_Hen_Eye": {
+        "default": "#100E0E",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "HAMLET_GRANNY_Scarf": "#2850A0",
+        "HAMLET_GRANNY_Dress": "#EC783C",
+        "HAMLET_GRANNY_Coat": "#3C3C42",
+        "HAMLET_GRANNY_Stitch": "#2C2C32",
+        "HAMLET_GRANNY_Track": "#781E28",
+        "HAMLET_GRANNY_Glasses": "#7828A0"
+      },
+      {
+        "HAMLET_GRANNY_Scarf": "#F0C428",
+        "HAMLET_GRANNY_Scarf_Rose": "#CE1E2C",
+        "HAMLET_GRANNY_Dress": "#9650AA",
+        "HAMLET_GRANNY_Coat": "#5A4632",
+        "HAMLET_GRANNY_Stitch": "#463626",
+        "HAMLET_GRANNY_Track": "#1E1E22",
+        "HAMLET_GRANNY_Glasses": "#28282C"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 18994,
+  "part_triangles": {
+    "HAMLET_GRANNY_Coat": 3340,
+    "HAMLET_GRANNY_Scarf_Scarf": 1296,
+    "Skin_Head": 1088,
+    "HAMLET_GRANNY_Galosh_Shoe_Upper": 1000,
+    "HAMLET_GRANNY_Bodice": 768,
+    "HAMLET_GRANNY_Track": 752,
+    "HAMLET_GRANNY_Glasses_Rim": 720,
+    "HAMLET_GRANNY_Galosh_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "HAMLET_GRANNY_Skirt": 448,
+    "HAMLET_GRANNY_Sock_Shaft": 448,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "HAMLET_GRANNY_CoatPocket": 360,
+    "Pupil": 336,
+    "HAMLET_GRANNY_Scarf_Rose_Petals": 334,
+    "HAMLET_GRANNY_DressFlower_Petals": 334,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "HAMLET_GRANNY_Collar": 296,
+    "Skin_Nose": 288,
+    "HAMLET_GRANNY_Scarf_KnotTail": 200,
+    "HAMLET_GRANNY_Scarf_ChinBand": 196,
+    "HAMLET_GRANNY_Scarf_Knot": 196,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "HAMLET_GRANNY_Scarf_Rose_Leaf": 110,
+    "Prop_Phone": 108,
+    "HAMLET_GRANNY_Mole": 100,
+    "HAMLET_GRANNY_Glasses_Temple": 96,
+    "HAMLET_GRANNY_Scarf_Rose_Centre": 66,
+    "HAMLET_GRANNY_BodiceFlower_Petals": 62,
+    "HAMLET_GRANNY_DressFlower_Centre": 60,
+    "HAMLET_GRANNY_Glasses_Gem": 48,
+    "HAMLET_GRANNY_Glasses_Bridge": 36,
+    "HAMLET_GRANNY_Blush": 36,
+    "HAMLET_GRANNY_MoleHair": 24,
+    "HAMLET_GRANNY_BodiceFlower_Centre": 12,
+    "HAMLET_GRANNY_Lampas": 8
+  }
+}
