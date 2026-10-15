@@ -1,0 +1,89 @@
+static Vector2 Dimensions(GameObject prefab) {
+    var mf=prefab.GetComponent<LODGroup>().GetLODs()[0].renderers[0].GetComponent<MeshFilter>();
+    var matrix=prefab.transform.worldToLocalMatrix*mf.transform.localToWorldMatrix;
+    var verts=mf.sharedMesh.vertices.Select(matrix.MultiplyPoint3x4).ToArray();
+    var mats=mf.GetComponent<Renderer>().sharedMaterials;var leaves=new List<Vector3>();
+    for(int s=0;s<mf.sharedMesh.subMeshCount;s++)if(mats[s].name.IndexOf("Leaf",StringComparison.OrdinalIgnoreCase)>=0)
+        leaves.AddRange(mf.sharedMesh.GetTriangles(s).Distinct().Select(i=>verts[i]));
+    if(leaves.Count==0)throw new Exception("No leaf geometry: "+prefab.name);
+    return new Vector2(verts.Max(p=>p.y)-verts.Min(p=>p.y),Mathf.Max(leaves.Max(p=>p.x)-leaves.Min(p=>p.x),leaves.Max(p=>p.z)-leaves.Min(p=>p.z)));
+}
+public static string Integrate() {
+    var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+    if(EditorApplication.isPlaying||scene.isDirty||scene.path!=Base)throw new Exception("Requires clean i08 Edit scene");
+    Fresh(Scene);Fresh(Data);var terrain=Terrain.activeTerrain;var old=terrain.terrainData;
+    if(AssetDatabase.GetAssetPath(old)!=G23MassI08.Data)throw new Exception("Unexpected source TerrainData");
+    var protos=old.treePrototypes.ToList();var dims=protos.Select((p,i)=>Kind(i)==null?Vector2.zero:Dimensions(p.prefab)).ToList();
+    foreach(var f in Families)for(int v=0;v<3;v++){var p=AssetDatabase.LoadAssetAtPath<GameObject>(Prefab(f,v));protos.Add(new TreePrototype{prefab=p,bendFactor=0});dims.Add(Dimensions(p));}
+    if(!EditorSceneManager.SaveScene(scene,Scene)||!AssetDatabase.CopyAsset(G23MassI08.Data,Data))throw new Exception("Save/copy failed");
+    var data=AssetDatabase.LoadAssetAtPath<TerrainData>(Data);data.treePrototypes=protos.ToArray();var instances=old.treeInstances;
+    var rng=new System.Random(230409);var rows=new List<object>();
+    for(int i=0;i<instances.Length;i++){
+        var t=instances[i];var f=Kind(t.prototypeIndex);if(f==null)continue;
+        int v=rng.Next(3),slot=36+Array.IndexOf(Families,f)*3+v;float jitter=.9f+.2f*(float)rng.NextDouble(),yaw=(float)rng.NextDouble()*Mathf.PI*2;
+        var a=dims[t.prototypeIndex];var b=dims[slot];float h=a.x*t.heightScale/b.x*jitter,w=a.y*t.widthScale/b.y*jitter,ratio=w/h;
+        float newH=w/Mathf.Clamp(ratio,.8f,1.25f);
+        rows.Add(new{index=i,family=f,variant=((char)('A'+v)).ToString(),oldPrototype=t.prototypeIndex,newPrototype=slot,jitter,yaw,
+            oldNativeHeight=a.x,oldNativeWidth=a.y,newNativeHeight=b.x,newNativeWidth=b.y,
+            i08Height=a.x*t.heightScale,i08Width=a.y*t.widthScale,i09Height=b.x*newH,i09Width=b.y*w,
+            widthScale=w,heightScale=newH,requestedRatio=ratio,clamped=ratio<.8f||ratio>1.25f,position=XYZ(Vector3.Scale(t.position,data.size)+terrain.transform.position)});
+        t.prototypeIndex=slot;t.rotation=yaw;t.widthScale=w;t.heightScale=newH;instances[i]=t;
+    }
+    if(rows.Count!=2778)throw new Exception("Expected 2778 replacements, found "+rows.Count);
+    data.SetTreeInstances(instances,false);EditorUtility.SetDirty(data);AssetDatabase.SaveAssetIfDirty(data);
+    terrain.terrainData=data;terrain.GetComponent<TerrainCollider>().terrainData=data;terrain.Flush();
+    Write("replacements.json",rows);Write("native_dimensions.json",dims.Select((p,i)=>new{slot=i,height=p.x,width=p.y}).ToArray());
+    EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);return Validate();
+}
+public static string Validate() {
+    var old=AssetDatabase.LoadAssetAtPath<TerrainData>(G23MassI08.Data);var terrain=Terrain.activeTerrain;var data=terrain.terrainData;
+    var a=old.treeInstances;var b=data.treeInstances;var plan=JArray.Parse(File.ReadAllText(Evidence+"/replacements.json")).ToDictionary(p=>(int)p["index"]);
+    if(a.Length!=b.Length||b.Length!=8525||data.treePrototypes.Length!=42)throw new Exception("Tree count mismatch");
+    float ground=0;int kept=0;var actual=new List<object>();
+    for(int i=0;i<a.Length;i++){
+        if(a[i].position!=b[i].position||!a[i].color.Equals(b[i].color)||!a[i].lightmapColor.Equals(b[i].lightmapColor))throw new Exception("Pivot/color changed "+i);
+        if(!plan.ContainsKey(i)){kept++;if(a[i].prototypeIndex!=b[i].prototypeIndex||a[i].heightScale!=b[i].heightScale||a[i].widthScale!=b[i].widthScale||a[i].rotation!=b[i].rotation)throw new Exception("Protected tree changed "+i);continue;}
+        var p=plan[i];if(b[i].prototypeIndex!=(int)p["newPrototype"]||Mathf.Abs(b[i].heightScale-(float)p["heightScale"])>1e-6f||Mathf.Abs(b[i].widthScale-(float)p["widthScale"])>1e-6f||Mathf.Abs(b[i].rotation-(float)p["yaw"])>1e-6f)throw new Exception("Plan mismatch "+i);
+        float ratio=b[i].widthScale/b[i].heightScale;if(ratio<.79999f||ratio>1.25001f)throw new Exception("Shape clamp failed");
+        var pos=Vector3.Scale(b[i].position,data.size)+terrain.transform.position;ground=Mathf.Max(ground,Mathf.Abs(pos.y-terrain.SampleHeight(pos)-terrain.transform.position.y));
+        actual.Add(new{index=i,prototype=b[i].prototypeIndex,widthScale=b[i].widthScale,heightScale=b[i].heightScale,rotation=b[i].rotation,position=XYZ(pos)});
+    }
+    for(int i=0;i<36;i++)if(old.treePrototypes[i].prefab!=data.treePrototypes[i].prefab)throw new Exception("Original prototype modified");
+    foreach(var f in Families)for(int v=0;v<3;v++){
+        var p=AssetDatabase.LoadAssetAtPath<GameObject>(Prefab(f,v));
+        if(p.GetComponent<LODGroup>().lodCount!=3||p.GetComponentsInChildren<CapsuleCollider>().Length!=2)throw new Exception("LOD/capsule invalid");
+        foreach(var ren in p.GetComponentsInChildren<Renderer>(true)){
+            if(ren.shadowCastingMode!=ShadowCastingMode.On||!ren.receiveShadows)throw new Exception("Shadows disabled");
+            foreach(var m in ren.sharedMaterials)if(!m||!m.enableInstancing||m.shader.name!="OnlyVolunteers/Wind/v03/GenericFoliageScaled"||m.FindPass("ShadowCaster")<0||m.FindPass("DepthOnly")<0||ShaderUtil.ShaderHasError(m.shader))throw new Exception("Material invalid");
+        }
+    }
+    var roots=UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+    int scripts=roots.SelectMany(r=>r.GetComponentsInChildren<Transform>(true)).Sum(t=>GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject));
+    int meshes=roots.SelectMany(r=>r.GetComponentsInChildren<MeshFilter>(true)).Count(m=>!m.sharedMesh);
+    int materials=roots.SelectMany(r=>r.GetComponentsInChildren<Renderer>(true)).Sum(m=>m.sharedMaterials.Count(v=>!v));
+    if(scripts+meshes+materials>0||ground>.01f)throw new Exception("Missing references or ground mismatch");
+    var result=new{status="PASS",total=b.Length,replaced=plan.Count,retained=kept,maxGroundError=ground,missingScripts=scripts,missingMeshes=meshes,missingMaterials=materials,
+        counts=plan.Values.GroupBy(p=>(string)p["family"]).ToDictionary(g=>g.Key,g=>g.Count()),windOwners=Object.FindObjectsByType<V19Wind>().Length,
+        terrainPath=AssetDatabase.GetAssetPath(data),terrainGuid=AssetDatabase.AssetPathToGUID(Data),
+        layers=data.terrainLayers.Select((v,i)=>new{slot=i,path=AssetDatabase.GetAssetPath(v),guid=AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(v)),missing=!v}).ToArray(),
+        trees=data.treePrototypes.Select((v,i)=>new{slot=i,path=AssetDatabase.GetAssetPath(v.prefab),guid=AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(v.prefab)),missing=!v.prefab}).ToArray(),
+        details=data.detailPrototypes.Select((v,i)=>new{slot=i,path=AssetDatabase.GetAssetPath(v.usePrototypeMesh?(Object)v.prototype:v.prototypeTexture),missing=v.usePrototypeMesh?!v.prototype:!v.prototypeTexture}).ToArray()};
+    Write("integration_validation.json",result);Write("instances_readback.json",actual);return "PASS 2778 replaced, "+kept+" retained; max ground error "+ground;
+}
+public static string Benchmark(string label){
+    if(!EditorApplication.isPlaying||EditorApplication.isPaused||Time.captureDeltaTime!=0)throw new Exception("Normal Play required");
+    var motor=Object.FindAnyObjectByType<KinematicCharacterController.KinematicCharacterMotor>();if(motor.CharacterController==null)throw new Exception("KCC not initialized");
+    string path=Path.GetFullPath(Evidence+"/performance_"+label+".json");Fresh(path);
+    var ground=Object.FindAnyObjectByType<OnlyVolunteers.Map.Look.MapHeightSampler>();
+    var points=G23MassBenchmarkI08.Poses.Select(p=>new Vector3(p.x,ground.Height(p.x,p.y)+1.65f,p.y)).ToArray();
+    new GameObject("G23_TemporaryI09Benchmark").AddComponent<G23MassBenchmarkI08>().Begin(points,path);return "Started matched benchmark "+label;
+}
+public static string Capture(string label){
+    if(!EditorApplication.isPlaying)throw new Exception("Play required");
+    var clock=Object.FindAnyObjectByType<OnlyVolunteers.Sky22V04.SkyClock22>();bool run=clock.Running;float hour=clock.Hour;
+    try{clock.Running=false;clock.SetHour(8);var cameras=JArray.Parse(File.ReadAllText(Evidence+"/cameras.json"));
+        foreach(var p in cameras)OnlyVolunteers.Map.Wind.Editor.WindReview24.Shot("../Trees/i09/"+label+"_"+(string)p["id"],(float)p["x"],(float)p["z"],(float)p["yaw"],(float)p["pitch"],12,true,(float)p["eye"],1600,900);
+        return "Four matched Play shots "+label;
+    }finally{clock.SetHour(hour);clock.Running=run;}
+}
+}}

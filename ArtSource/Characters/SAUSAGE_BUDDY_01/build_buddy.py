@@ -26,7 +26,7 @@ import buddy_gags as GG        # noqa: E402
 import buddy_types as T        # noqa: E402
 import buddy_wear as W         # noqa: E402
 
-MOTION = HERE.parent / 'NPC_BASE_01' / 'Sources' / 'Run Look Back.fbx'   # original Mixamo clip (read only)
+MOTION = HERE / 'Sources' / 'Run Look Back.fbx'   # original Mixamo clip (read only)
 ap = argparse.ArgumentParser()
 ap.add_argument('--variant', choices=['A', 'B', 'C', 'BASE'] + list(T.TYPES), default='A')
 ap.add_argument('--revision', type=int, required=True)

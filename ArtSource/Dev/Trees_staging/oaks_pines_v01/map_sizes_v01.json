@@ -1,0 +1,100 @@
+{
+  "source": "Assets\\OnlyVolunteers\\Art\\Trees\\Leafy_v04_i08\\SceneData\\Terrain_v19_i08_leafy_mass.asset",
+  "sha256": "2d3efecd08959970f5b720d551c6f0f8db94dacb114e1f6e3aa7b47b1deb6f68",
+  "recordCount": 8525,
+  "recordOffset": 12469552,
+  "recordStride": 36,
+  "native": {
+    "tree_oak_a": {
+      "name": "tree_oak_a",
+      "path": "Assets\\OnlyVolunteers\\Art\\Map\\Prefabs\\Meshes\\tree_oak_a.asset",
+      "sha256": "ce2e4f4a64e7b2499ea7ed172d97e7e5571fe6f493c65741f65a7179cdaacf63",
+      "materials": [
+        "Bark",
+        "Leaf",
+        "LeafDark"
+      ],
+      "height": 11.922967039779472,
+      "width": 8.68528127670288,
+      "triangles": 720
+    },
+    "tree_oak_b": {
+      "name": "tree_oak_b",
+      "path": "Assets\\OnlyVolunteers\\Art\\Map\\Prefabs\\Meshes\\tree_oak_b.asset",
+      "sha256": "c5e33e929a86cfc5d9b128644c5f7cfc237f66b663fbb4b8e17c3258c8eac039",
+      "materials": [
+        "Bark",
+        "Leaf",
+        "LeafDark"
+      ],
+      "height": 7.888662399656759,
+      "width": 7.101788759231567,
+      "triangles": 620
+    },
+    "tree_pine_a": {
+      "name": "tree_pine_a",
+      "path": "Assets\\OnlyVolunteers\\Art\\Map\\Prefabs\\Meshes\\tree_pine_a.asset",
+      "sha256": "9fe07e049eb954194e14b582d19ad5ae72c17eb87061e880fd4a0d0e2877e2de",
+      "materials": [
+        "Bark",
+        "LeafDark",
+        "LeafPine"
+      ],
+      "height": 15.15185266351287,
+      "width": 8.006316900253296,
+      "triangles": 748
+    },
+    "tree_pine_b": {
+      "name": "tree_pine_b",
+      "path": "Assets\\OnlyVolunteers\\Art\\Map\\Prefabs\\Meshes\\tree_pine_b.asset",
+      "sha256": "80493a47d02362f89ee1eea20afcea057357edaab432caf8d5cbf754ee1e1239",
+      "materials": [
+        "Bark",
+        "LeafDark",
+        "LeafPine"
+      ],
+      "height": 10.147128147002938,
+      "width": 5.420174837112427,
+      "triangles": 556
+    }
+  },
+  "summary": {
+    "Oak": {
+      "count": 769,
+      "prototypeCounts": {
+        "0": 445,
+        "1": 139,
+        "2": 185
+      },
+      "heightMedian": 8.871892020430781,
+      "heightRange": [
+        4.053403757562281,
+        20.117804035920468
+      ],
+      "widthMedian": 7.6962859510099975,
+      "widthRange": [
+        2.6913151383545397,
+        20.26183626059634
+      ]
+    },
+    "Pine": {
+      "count": 2009,
+      "prototypeCounts": {
+        "12": 860,
+        "13": 1042,
+        "15": 107
+      },
+      "heightMedian": 12.986095842645236,
+      "heightRange": [
+        7.28189548805953,
+        20.095840367316622
+      ],
+      "widthMedian": 6.860722524668034,
+      "widthRange": [
+        3.4177687864902637,
+        11.930638696875832
+      ]
+    }
+  },
+  "method": "Read saved i08 TerrainData bytes using anchored, validated TreeInstance layout; compare every oak/pine record with the i06 snapshot preserved by i07/i08. Source mesh positions decoded from YAML. Height = full local Y extent; crown width = max local X/Z leaf-submesh span. World dimensions = native geometry * actual per-instance scales. No Unity interaction."
+}

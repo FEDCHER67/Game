@@ -1,0 +1,27 @@
+if(!EditorApplication.isPlaying)throw new Exception("Play required");
+var scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().path;
+string label=scene.Contains("_i09_")?"i09":"i08",path="Working/Reviews/Trees/i09/render_performance_"+label+".json";
+if(System.IO.File.Exists(path))throw new Exception("Evidence exists");
+var clock=UnityEngine.Object.FindAnyObjectByType<OnlyVolunteers.Sky22V04.SkyClock22>();bool run=clock.Running;float hour=clock.Hour;
+var wind=UnityEngine.Object.FindAnyObjectByType<OnlyVolunteers.Map.Wind.V19Wind>();float wt=wind.reviewTime;
+var go=new GameObject("G23_TransientSynchronizedRenderBenchmark");var cam=go.AddComponent<Camera>();
+cam.fieldOfView=65;cam.nearClipPlane=.07f;cam.farClipPlane=650;cam.enabled=false;
+var cd=go.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();cd.renderPostProcessing=true;cd.requiresDepthOption=UnityEngine.Rendering.Universal.CameraOverrideOption.On;cd.requiresColorOption=UnityEngine.Rendering.Universal.CameraOverrideOption.On;
+var rt=new RenderTexture(1280,720,24,RenderTextureFormat.DefaultHDR);rt.Create();cam.targetTexture=rt;
+var tex=new Texture2D(1,1,TextureFormat.RGB24,false);var previous=RenderTexture.active;
+var rows=new System.Collections.Generic.List<object>();
+try{
+ clock.Running=false;clock.SetHour(8);wind.reviewTime=12;wind.Publish();
+ var ground=UnityEngine.Object.FindAnyObjectByType<OnlyVolunteers.Map.Look.MapHeightSampler>();
+ for(int n=0;n<4;n++){
+  var p=OnlyVolunteers.Trees.G23MassBenchmarkI08.Poses[n];go.transform.SetPositionAndRotation(new Vector3(p.x,ground.Height(p.x,p.y)+1.65f,p.y),Quaternion.Euler(p.w,p.z,0));
+  var times=new System.Collections.Generic.List<double>();
+  for(int i=-12;i<60;i++){
+   var sw=System.Diagnostics.Stopwatch.StartNew();cam.Render();RenderTexture.active=rt;tex.ReadPixels(new Rect(640,360,1,1),0,0,false);tex.Apply(false);sw.Stop();
+   if(i>=0)times.Add(sw.Elapsed.TotalMilliseconds);
+  }
+  times.Sort();rows.Add(new{view=OnlyVolunteers.Trees.G23MassBenchmarkI08.Views[n],samples=60,medianRenderMs=times[30],p95RenderMs=times[57]});
+ }
+ var result=new{scene,gpu=SystemInfo.graphicsDeviceName,width=1280,height=720,method="Play Camera.Render + synchronous one-pixel GPU readback; 12 warm-up and 60 samples per view, 08:00, fixed shared wind time 12. CPU submission + GPU completion + readback overhead. This is NOT normal-loop FPS or isolated GPU time; background focus prevented a valid normal-frame run.",rows};
+ System.IO.File.WriteAllText(path,Newtonsoft.Json.JsonConvert.SerializeObject(result,Newtonsoft.Json.Formatting.Indented));return result;
+}finally{clock.SetHour(hour);clock.Running=run;wind.reviewTime=wt;wind.Publish();RenderTexture.active=previous;cam.targetTexture=null;rt.Release();UnityEngine.Object.DestroyImmediate(rt);UnityEngine.Object.DestroyImmediate(tex);UnityEngine.Object.DestroyImmediate(go);}

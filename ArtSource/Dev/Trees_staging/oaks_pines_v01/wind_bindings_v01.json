@@ -1,0 +1,39 @@
+{
+  "shader": "OnlyVolunteers/Wind/v02/GenericFoliage",
+  "shader_guid": "aac623136e1cfca4ab5963b42075b32d",
+  "shared_include": "Assets/OnlyVolunteers/Map/Wind/v01/Shaders/V19Wind.hlsl",
+  "profiles": {
+    "Oak": {
+      "_WindResponse": 0.055,
+      "_FlexibleHeight": 9.049329860839396,
+      "_UseVertexMask": 0,
+      "_UseVertexTint": 0,
+      "_Cutoff": 0,
+      "_Cull": 2,
+      "_TipFlash": 0.025
+    },
+    "Pine": {
+      "_WindResponse": 0.028,
+      "_FlexibleHeight": 17.53122938757107,
+      "_UseVertexMask": 0,
+      "_UseVertexTint": 0,
+      "_Cutoff": 0,
+      "_Cull": 2,
+      "_TipFlash": 0.025
+    }
+  },
+  "material_remaps": {
+    "Oak": {
+      "MAT_Bark_oaks_pines_v01": "WindMaterials\\Oak_Bark_Wind_v01.mat",
+      "MAT_LeafDark_oaks_pines_v01": "WindMaterials\\Oak_LeafDark_Wind_v01.mat",
+      "MAT_Leaf_oaks_pines_v01": "WindMaterials\\Oak_Leaf_Wind_v01.mat",
+      "MAT_LeafLight_oaks_pines_v01": "WindMaterials\\Oak_LeafLight_Wind_v01.mat"
+    },
+    "Pine": {
+      "MAT_Bark_oaks_pines_v01": "WindMaterials\\Pine_Bark_Wind_v01.mat",
+      "MAT_LeafDark_oaks_pines_v01": "WindMaterials\\Pine_LeafDark_Wind_v01.mat",
+      "MAT_LeafPine_oaks_pines_v01": "WindMaterials\\Pine_LeafPine_Wind_v01.mat"
+    }
+  },
+  "status": "Staged only, not imported or tested in Unity. Lower response and high stiffness preserve the heavy trunk. Pine is stiffer than oak. At integration, stiffness must scale with world height as in i08; preserve the global gust field and use generic settings only."
+}

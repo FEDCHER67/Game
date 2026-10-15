@@ -1,6 +1,6 @@
 ---
 name: worker-max
-description: General worker for the VOLUNTEERS ONLY project at MAX reasoning effort. Use for the hardest tasks: architecture, big documents, hard models, anything expensive to get wrong. Pass the Agent tool's model parameter (fable, sonnet, opus, haiku) to pick the model; default inherits the lead's model.
+description: "General worker for the VOLUNTEERS ONLY project at MAX reasoning effort. Use for the hardest tasks: architecture, big documents, hard models, anything expensive to get wrong. Pass the Agent tool's model parameter (fable, sonnet, opus, haiku) to pick the model; default inherits the lead's model."
 model: inherit
 effort: max
 ---

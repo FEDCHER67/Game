@@ -1,0 +1,202 @@
+{
+  "status": "STAGED ONLY, approval gate before Unity integration",
+  "sourceRevision": "v03",
+  "import": {
+    "globalScale": 1,
+    "useFileUnits": true,
+    "bakeAxisConversion": true,
+    "importAnimation": false,
+    "meshCompression": "Off"
+  },
+  "lodScreenHeights": [
+    0.23,
+    0.085,
+    0.008
+  ],
+  "cullBelow": 0.008,
+  "windBounds": "Apply conservative bounds padding on new imported meshes and compensate LOD thresholds as in i09. Do not modify the Blender render geometry.",
+  "shader": "OnlyVolunteers/Wind/v03/GenericFoliageScaled",
+  "materials": {
+    "PineTall": {
+      "MAT_Bark_pine_tall_v01": "../pine_tall_v01/WindMaterials/PineTall_Bark_Wind_v01.mat",
+      "MAT_LeafDark_pine_tall_v01": "../pine_tall_v01/WindMaterials/PineTall_LeafDark_Wind_v01.mat",
+      "MAT_LeafPine_pine_tall_v01": "../pine_tall_v01/WindMaterials/PineTall_LeafPine_Wind_v01.mat"
+    }
+  },
+  "variants": [
+    {
+      "id": "PineTall_A",
+      "height": 18.5,
+      "width": 4.5,
+      "colliders": [
+        {
+          "type": "Capsule",
+          "radius_m": 0.3089899736028428,
+          "height_m": 6.877523076417067,
+          "center_Blender": [
+            0.06835395097732544,
+            -0.010943468660116196,
+            3.1346211433410645
+          ],
+          "axis_Blender": [
+            0.021839918568730354,
+            -0.003496571211144328,
+            0.9997554421424866
+          ],
+          "center_Unity": [
+            0.06835395097732544,
+            3.1346211433410645,
+            -0.010943468660116196
+          ],
+          "axis_Unity": [
+            0.021839918568730354,
+            0.9997554421424866,
+            -0.003496571211144328
+          ]
+        },
+        {
+          "type": "Capsule",
+          "radius_m": 0.20806806855558332,
+          "height_m": 8.147901579236963,
+          "center_Blender": [
+            0.18219679594039917,
+            -0.075492724776268,
+            10.128870010375977
+          ],
+          "axis_Blender": [
+            0.011766756884753704,
+            -0.013866377994418144,
+            0.9998345971107483
+          ],
+          "center_Unity": [
+            0.18219679594039917,
+            10.128870010375977,
+            -0.075492724776268
+          ],
+          "axis_Unity": [
+            0.011766756884753704,
+            0.9998345971107483,
+            -0.013866377994418144
+          ]
+        }
+      ],
+      "fbx": "Models/PineTall_A_v03.fbx"
+    },
+    {
+      "id": "PineTall_B",
+      "height": 20,
+      "width": 4.9,
+      "colliders": [
+        {
+          "type": "Capsule",
+          "radius_m": 0.35464875892137887,
+          "height_m": 7.47800349539309,
+          "center_Blender": [
+            -0.05055077001452446,
+            0.04738717898726463,
+            3.389564037322998
+          ],
+          "axis_Blender": [
+            -0.014936612918972969,
+            0.014001842588186264,
+            0.999790370464325
+          ],
+          "center_Unity": [
+            -0.05055077001452446,
+            3.389564037322998,
+            0.04738717898726463
+          ],
+          "axis_Unity": [
+            -0.014936612918972969,
+            0.999790370464325,
+            0.014001842588186264
+          ]
+        },
+        {
+          "type": "Capsule",
+          "radius_m": 0.24042422358046722,
+          "height_m": 8.843034767873599,
+          "center_Blender": [
+            -0.20389601588249207,
+            0.1117820292711258,
+            10.9530029296875
+          ],
+          "axis_Blender": [
+            -0.024585546925663948,
+            0.00406775763258338,
+            0.9996894001960754
+          ],
+          "center_Unity": [
+            -0.20389601588249207,
+            10.9530029296875,
+            0.1117820292711258
+          ],
+          "axis_Unity": [
+            -0.024585546925663948,
+            0.9996894001960754,
+            0.00406775763258338
+          ]
+        }
+      ],
+      "fbx": "Models/PineTall_B_v03.fbx"
+    },
+    {
+      "id": "PineTall_C",
+      "height": 17,
+      "width": 4.2,
+      "colliders": [
+        {
+          "type": "Capsule",
+          "radius_m": 0.28088745578080515,
+          "height_m": 6.314247237224386,
+          "center_Blender": [
+            0.08020611852407455,
+            0.05484684929251671,
+            2.8834221363067627
+          ],
+          "axis_Blender": [
+            0.027885790914297104,
+            0.019068965688347816,
+            0.9994292259216309
+          ],
+          "center_Unity": [
+            0.08020611852407455,
+            2.8834221363067627,
+            0.05484684929251671
+          ],
+          "axis_Unity": [
+            0.027885790914297104,
+            0.9994292259216309,
+            0.019068965688347816
+          ]
+        },
+        {
+          "type": "Capsule",
+          "radius_m": 0.18839751786971112,
+          "height_m": 7.480045297838192,
+          "center_Blender": [
+            0.2220650017261505,
+            0.13892582058906555,
+            9.30898666381836
+          ],
+          "axis_Blender": [
+            0.01735903136432171,
+            0.008230632171034813,
+            0.9998154640197754
+          ],
+          "center_Unity": [
+            0.2220650017261505,
+            9.30898666381836,
+            0.13892582058906555
+          ],
+          "axis_Unity": [
+            0.01735903136432171,
+            0.9998154640197754,
+            0.008230632171034813
+          ]
+        }
+      ],
+      "fbx": "Models/PineTall_C_v03.fbx"
+    }
+  ]
+}

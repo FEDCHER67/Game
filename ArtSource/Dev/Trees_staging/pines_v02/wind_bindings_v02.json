@@ -1,0 +1,24 @@
+{
+  "shader": "OnlyVolunteers/Wind/v02/GenericFoliage",
+  "shader_guid": "aac623136e1cfca4ab5963b42075b32d",
+  "shared_include": "Assets/OnlyVolunteers/Map/Wind/v01/Shaders/V19Wind.hlsl",
+  "profiles": {
+    "Pine": {
+      "_WindResponse": 0.028,
+      "_FlexibleHeight": 17.53122938757107,
+      "_UseVertexMask": 0,
+      "_UseVertexTint": 0,
+      "_Cutoff": 0,
+      "_Cull": 2,
+      "_TipFlash": 0.025
+    }
+  },
+  "material_remaps": {
+    "Pine": {
+      "MAT_Bark_oaks_pines_v01": "../oaks_pines_v01/WindMaterials/Pine_Bark_Wind_v01.mat",
+      "MAT_LeafDark_oaks_pines_v01": "../oaks_pines_v01/WindMaterials/Pine_LeafDark_Wind_v01.mat",
+      "MAT_LeafPine_oaks_pines_v01": "../oaks_pines_v01/WindMaterials/Pine_LeafPine_Wind_v01.mat"
+    }
+  },
+  "status": "Reuse the unchanged stiff Pine v01 shared V19Wind materials; no new shader or Unity import. World-height stiffness must scale at eventual integration."
+}

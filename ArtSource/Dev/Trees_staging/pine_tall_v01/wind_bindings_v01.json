@@ -1,0 +1,24 @@
+{
+  "shader": "OnlyVolunteers/Wind/v03/GenericFoliageScaled",
+  "shader_guid": "d070cb97f2f2059439110be1b6916c09",
+  "shared_include": "Assets/OnlyVolunteers/Map/Wind/v01/Shaders/V19Wind.hlsl",
+  "profiles": {
+    "PineTall": {
+      "_WindResponse": 0.028,
+      "_FlexibleHeight": 24.3,
+      "_UseVertexMask": 0,
+      "_UseVertexTint": 0,
+      "_Cutoff": 0,
+      "_Cull": 2,
+      "_TipFlash": 0.025
+    }
+  },
+  "material_remaps": {
+    "PineTall": {
+      "MAT_Bark_pine_tall_v01": "WindMaterials/PineTall_Bark_Wind_v01.mat",
+      "MAT_LeafDark_pine_tall_v01": "WindMaterials/PineTall_LeafDark_Wind_v01.mat",
+      "MAT_LeafPine_pine_tall_v01": "WindMaterials/PineTall_LeafPine_Wind_v01.mat"
+    }
+  },
+  "status": "STAGED ONLY. No Unity import or scene placement. Uses existing shared gust field, stiff material profile and instance-height scaling."
+}

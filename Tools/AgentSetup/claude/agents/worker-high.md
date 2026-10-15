@@ -1,6 +1,6 @@
 ---
 name: worker-high
-description: General worker for the VOLUNTEERS ONLY project at HIGH reasoning effort. Use for ordinary tasks that need care: mid-size scripts, Blender/Unity changes from a clear brief, reviews, fixes from a defect list. Pass the Agent tool's model parameter (fable, sonnet, opus, haiku) to pick the model; default inherits the lead's model.
+description: "General worker for the VOLUNTEERS ONLY project at HIGH reasoning effort. Use for ordinary tasks that need care: mid-size scripts, Blender/Unity changes from a clear brief, reviews, fixes from a defect list. Pass the Agent tool's model parameter (fable, sonnet, opus, haiku) to pick the model; default inherits the lead's model."
 model: inherit
 effort: high
 ---

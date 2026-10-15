@@ -1,6 +1,6 @@
 ---
 name: worker-low
-description: General worker for the VOLUNTEERS ONLY project at LOW reasoning effort. Use for trivial mechanical work: file sweeps, greps, renames, format conversion, short factual answers. Pass the Agent tool's model parameter (fable, sonnet, opus, haiku) to pick the model; default inherits the lead's model.
+description: "General worker for the VOLUNTEERS ONLY project at LOW reasoning effort. Use for trivial mechanical work: file sweeps, greps, renames, format conversion, short factual answers. Pass the Agent tool's model parameter (fable, sonnet, opus, haiku) to pick the model; default inherits the lead's model."
 model: inherit
 effort: low
 ---

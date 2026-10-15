@@ -1,0 +1,107 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Rendering;
+using OnlyVolunteers.Map.Wind;
+using Object=UnityEngine.Object;
+namespace OnlyVolunteers.Trees.Editor {
+public static class G23OaksPinesI09 {
+public const string Root="Assets/OnlyVolunteers/Art/Trees/OaksPines_i09";
+public const string Base=G23MassI08.Scene;
+public const string Scene="Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i09_oaks_pines.unity";
+public const string Data=Root+"/SceneData/Terrain_v19_i09_oaks_pines.asset";
+public const string Evidence="Working/Reviews/Trees/i09";
+const string Staging="ArtSource/Dev/Trees_staging/i09_v01";
+static readonly string[] Families={"Oak","Pine"};
+static string Revision(string f)=>f=="Oak"?"v01_02":"v04";
+static string Prefab(string f,int v)=>Root+"/Prefabs/"+f+"_"+(char)('A'+v)+"_"+Revision(f)+".prefab";
+static string Kind(int i)=>i==0||i==1||i==2?"Oak":i==12||i==13||i==15?"Pine":null;
+static void Fresh(string p){if(File.Exists(p))throw new Exception("Preserve existing: "+p);}
+static void Folder(string p){if(AssetDatabase.IsValidFolder(p))return;var a=Path.GetDirectoryName(p).Replace('\\','/');Folder(a);AssetDatabase.CreateFolder(a,Path.GetFileName(p));}
+static float[] XYZ(Vector3 p)=>new[]{p.x,p.y,p.z};
+static void Write(string p,object o)=>File.WriteAllText(Evidence+"/"+p,JsonConvert.SerializeObject(o,Formatting.Indented));
+        public static string BuildAssets()
+        {
+            if(EditorApplication.isPlaying)throw new Exception("Edit mode required");
+            foreach(var folder in new[]{"Meshes","Prefabs","SceneData"})Folder(Root+"/"+folder);
+            var shader=Shader.Find("OnlyVolunteers/Wind/v03/GenericFoliageScaled");
+            foreach(var guid in AssetDatabase.FindAssets("t:Material",new[]{Root+"/Materials"})){
+                var mat=AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));mat.shader=shader;mat.enableInstancing=true;EditorUtility.SetDirty(mat);
+            }
+            AssetDatabase.SaveAssets();
+            var specs=JArray.Parse(File.ReadAllText(Staging+"/approved_specs.json"));
+            var remaps=JObject.Parse(File.ReadAllText("ArtSource/Dev/Trees_staging/oaks_pines_v01/wind_bindings_v01.json"))["material_remaps"];
+            var records=new List<object>();
+            foreach(var family in Families)for(int variant=0;variant<3;variant++)
+            {
+                string id=family+"_"+(char)('A'+variant), revision=Revision(family), path=Root+"/Models/"+id+"_"+revision+".fbx";
+                Fresh(Prefab(family,variant));
+                var spec=specs.Single(s=>(string)s["id"]==id);float height=(float)spec["height"];
+                var importer=(ModelImporter)AssetImporter.GetAtPath(path);
+                importer.globalScale=1;importer.useFileUnits=true;importer.bakeAxisConversion=true;
+                importer.isReadable=true;importer.importAnimation=false;importer.importCameras=false;importer.importLights=false;
+                importer.meshCompression=ModelImporterMeshCompression.Off;importer.importNormals=ModelImporterNormals.Import;
+                importer.SaveAndReimport();
+                var source=AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                var root=new GameObject(id+"_"+revision);
+                try
+                {
+                    var lods=new LOD[3];Bounds geometry=new Bounds();
+                    for(int lod=0;lod<3;lod++)
+                    {
+                        var mf=source.GetComponentsInChildren<MeshFilter>(true).Single(m=>m.name.EndsWith("_LOD"+lod));
+                        var mesh=Object.Instantiate(mf.sharedMesh);mesh.name=id+"_"+revision+"_LOD"+lod;
+                        var transform=source.transform.worldToLocalMatrix*mf.transform.localToWorldMatrix;
+                        mesh.vertices=mesh.vertices.Select(transform.MultiplyPoint3x4).ToArray();
+                        var normals=transform.inverse.transpose;
+                        mesh.normals=mesh.normals.Select(n=>normals.MultiplyVector(n).normalized).ToArray();
+                        mesh.RecalculateTangents();mesh.RecalculateBounds();
+                        if(Mathf.Abs(mesh.bounds.size.y-height)>.012f||Mathf.Abs(mesh.bounds.min.y)>.012f)throw new Exception("Import axes/units/base mismatch: "+mesh.name+mesh.bounds);
+                        var trueBounds=mesh.bounds;if(lod==0)geometry=trueBounds;
+                        // Generic wind bend bounds, baked into only the new derived mesh assets.
+                        float response=family=="Oak"?.055f:.028f;
+                        float maximumAngle=Mathf.Min(.7854f,.69814f*response*1.2f);
+                        float pad=2*Mathf.Sin(maximumAngle/2)*(height+trueBounds.extents.magnitude)+.06f;
+                        var padded=trueBounds;padded.Expand(Vector3.one*2*pad);mesh.bounds=padded;
+                        string meshPath=Root+"/Meshes/"+mesh.name+".asset";Fresh(meshPath);AssetDatabase.CreateAsset(mesh,meshPath);
+                        var child=new GameObject("LOD"+lod);child.transform.SetParent(root.transform,false);
+                        child.AddComponent<MeshFilter>().sharedMesh=mesh;var renderer=child.AddComponent<MeshRenderer>();
+                        renderer.sharedMaterials=mf.GetComponent<Renderer>().sharedMaterials.Select(m=>
+                        {
+                            string mapping=(string)remaps[family][m.name];if(mapping==null)throw new Exception("Missing material mapping "+m.name);
+                            return AssetDatabase.LoadAssetAtPath<Material>(Root+"/Materials/"+Path.GetFileName(mapping.Replace('\\','/')));
+                        }).ToArray();
+                        if(renderer.sharedMaterials.Any(m=>!m||!m.enableInstancing||m.shader.name!="OnlyVolunteers/Wind/v03/GenericFoliageScaled"||ShaderUtil.ShaderHasError(m.shader)))throw new Exception("Shared wind binding invalid");
+                        renderer.shadowCastingMode=ShadowCastingMode.On;renderer.receiveShadows=true;
+                        lods[lod]=new LOD(new[]{.23f,.085f,.008f}[lod],new Renderer[]{renderer});
+                        long tris=Enumerable.Range(0,mesh.subMeshCount).Sum(i=>(long)mesh.GetIndexCount(i)/3);
+                        records.Add(new{id,lod,triangles=tris,height=height,geometryCenter=XYZ(trueBounds.center),geometrySize=XYZ(trueBounds.size),windPadding=pad,materials=renderer.sharedMaterials.Select(AssetDatabase.GetAssetPath).ToArray()});
+                    }
+                    var group=root.AddComponent<LODGroup>();group.fadeMode=LODFadeMode.None;group.SetLODs(lods);group.RecalculateBounds();
+                    // Bounds padding must not inflate draw distances and delay the three LOD transitions.
+                    float ratio=group.size/Mathf.Max(geometry.size.x,geometry.size.y,geometry.size.z);
+                    for(int i=0;i<lods.Length;i++)lods[i].screenRelativeTransitionHeight*=ratio;
+                    group.SetLODs(lods);
+                    if(family!="Bush")foreach(var cap in spec["colliders"])
+                    {
+                        var holder=new GameObject("TrunkCapsule");holder.transform.SetParent(root.transform,false);
+                        var center=cap["center_Unity"].Select(v=>(float)v).ToArray();var axis=cap["axis_Unity"].Select(v=>(float)v).ToArray();
+                        // These approved capsule recipes already use Blender Y -> Unity +Z.
+                        holder.transform.localPosition=new Vector3(center[0],center[1],center[2]);
+                        holder.transform.localRotation=Quaternion.FromToRotation(Vector3.up,new Vector3(axis[0],axis[1],axis[2]));
+                        var collider=holder.AddComponent<CapsuleCollider>();collider.direction=1;collider.radius=(float)cap["radius_m"];collider.height=(float)cap["height_m"];
+                    }
+                    PrefabUtility.SaveAsPrefabAsset(root,Prefab(family,variant));
+                }
+                finally{Object.DestroyImmediate(root);}
+                importer.isReadable=false;importer.SaveAndReimport();
+            }
+            Write("asset_validation.json",records);return "Built 6 approved prefabs and 18 LODs; shared scaled wind; 12 trunk capsules.";
+        }
+
