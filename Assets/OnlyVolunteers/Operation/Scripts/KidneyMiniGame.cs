@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 namespace OnlyVolunteers.Operation
 {
     /// <summary>
-    /// Kidney removal in three short steps on the strapped patient, driven by OperationSession:
+    /// Legacy kidney removal in two short steps on the strapped patient, driven by OperationSession:
     /// 1) Cut: hold LMB at the start of the dotted line and drag the scalpel along it.
     /// 2) Pull: grab the kidney and drag the mouse up until it pops; a sudden yank tears it (one grade lower).
-    /// 3) Tape: three strips of duct tape across the slit.
     /// Forgiving by design (canon 42): drifting off the line only pauses the cut; only a mostly sloppy cut or a yank
     /// lowers the grade, by one step each. The kidney uses the item model; guides remain cartoon primitives.
     /// </summary>
@@ -18,7 +17,6 @@ namespace OnlyVolunteers.Operation
         {
             Cut,
             Pull,
-            Tape,
             Done,
         }
 
@@ -28,7 +26,6 @@ namespace OnlyVolunteers.Operation
         private const float SlipDistance = 0.13f;
         private const float PopHeight = 0.16f;
         private const float YankSeconds = 0.08f;
-        private const int TapeNeeded = 3;
 
         private readonly OperationPatient patient;
         private readonly Camera camera;
@@ -41,17 +38,14 @@ namespace OnlyVolunteers.Operation
         private readonly Vector3 direction;
         private readonly Vector3 normal = Vector3.up;
         private readonly List<GameObject> spawned = new List<GameObject>();
-        private readonly List<float> tapeAlong = new List<float>();
         private readonly Material skinCut;
         private readonly Material organ;
         private readonly Material steel;
-        private readonly Material tape;
         private readonly GameObject kidneyModel;
         private readonly bool mirrored;
         private Vector3 kidneyRestScale;
 
         private Transform scalpel;
-        private Transform tapeRoll;
         private Transform cutVisual;
         private Transform kidney;
         private Transform vessel;
@@ -88,17 +82,14 @@ namespace OnlyVolunteers.Operation
             skinCut = MakeMaterial(new Color(0.55f, 0.08f, 0.16f));
             organ = MakeMaterial(new Color(0.78f, 0.25f, 0.33f));
             steel = MakeMaterial(new Color(0.82f, 0.85f, 0.9f));
-            tape = MakeMaterial(new Color(0.62f, 0.63f, 0.6f));
             BuildGuide();
             scalpel = BuildScalpel();
-            tapeRoll = BuildTapeRoll();
         }
 
         public Step Current { get; private set; } = Step.Cut;
         public float CutProgress => progress;
         public float Neatness => progress > 0f ? neatLength / (progress * length) : 1f;
         public float Tension => raise / PopHeight;
-        public int TapeCount => tapeAlong.Count;
         public int Slips { get; private set; }
         public bool Yanked { get; private set; }
 
@@ -121,13 +112,11 @@ namespace OnlyVolunteers.Operation
                         if (cutting) return $"Режь по пунктиру…  {Mathf.RoundToInt(progress * 100f)}%";
                         return progress > 0f
                             ? "Зажми ЛКМ там, где закончил, и веди дальше"
-                            : "1/3  РАЗРЕЗ: зажми ЛКМ у начала пунктира и веди скальпель. [Пробел] — прижать пациента";
+                            : "1/2  РАЗРЕЗ: зажми ЛКМ у начала пунктира и веди скальпель. [Пробел] — прижать пациента";
                     case Step.Pull:
                         return pulling
                             ? "Тяни вверх… плавно!"
-                            : "2/3  ДОСТАТЬ: схвати почку ЛКМ и тяни мышь вверх, пока не выскочит. Не дёргай!";
-                    case Step.Tape:
-                        return $"3/3  ЗАКЛЕИТЬ: кликай по разрезу скотчем ({TapeCount}/{TapeNeeded})";
+                            : "2/2  ДОСТАТЬ: схвати почку ЛКМ и тяни мышь вверх, пока не выскочит. Не дёргай!";
                     default:
                         return "Готово!";
                 }
@@ -147,14 +136,11 @@ namespace OnlyVolunteers.Operation
                 case Step.Pull:
                     TickPull(mouse, onBody, local);
                     break;
-                case Step.Tape:
-                    TickTape(mouse, onBody, local);
-                    break;
             }
             return Current == Step.Done;
         }
 
-        /// <summary>Removes everything this mini-game spawned except the popped kidney (owned by OrganPop) and the tape.</summary>
+        /// <summary>Removes everything this mini-game spawned except the popped kidney (owned by OrganPop) .</summary>
         public void Cleanup(bool keepScar)
         {
             foreach (GameObject go in spawned)
@@ -290,35 +276,6 @@ namespace OnlyVolunteers.Operation
                 comic("ПЛОП!", world, new Color(0.6f, 1f, 0.6f));
             }
             patient.Jolt();
-            Begin(Step.Tape);
-        }
-
-        private void TickTape(Mouse mouse, bool onBody, Vector3 local)
-        {
-            patient.Scream = Mathf.MoveTowards(patient.Scream, 0.2f, Time.deltaTime);
-            tapeRoll.gameObject.SetActive(onBody);
-            if (onBody) tapeRoll.localPosition = local + normal * 0.04f;
-            if (!onBody || !mouse.leftButton.wasPressedThisFrame) return;
-
-            Vector3 offset = Flat(local - start);
-            float along = Vector3.Dot(offset, direction) / length;
-            float off = (offset - direction * (along * length)).magnitude;
-            if (along < -0.05f || along > 1.05f || off > 0.08f) return;
-            along = Mathf.Clamp01(along);
-            foreach (float placed in tapeAlong)
-                if (Mathf.Abs(placed - along) * length < 0.05f)
-                    return;
-
-            tapeAlong.Add(along);
-            Vector3 at = start + direction * (along * length) + normal * 0.004f;
-            GameObject strip = Primitive(PrimitiveType.Cube, "Scar_Tape", tape);
-            strip.transform.localPosition = at;
-            strip.transform.localRotation = Quaternion.LookRotation(direction, normal) * Quaternion.Euler(0f, Random.Range(-12f, 12f), 0f);
-            strip.transform.localScale = new Vector3(0.11f, 0.006f, 0.035f);
-            OperationSfx.Play(sfx, OperationCue.Tape);
-            comic("ШРРК!", space.TransformPoint(at), new Color(0.85f, 0.85f, 0.85f));
-            if (tapeAlong.Count < TapeNeeded) return;
-            tapeRoll.gameObject.SetActive(false);
             Begin(Step.Done);
         }
 
@@ -397,15 +354,6 @@ namespace OnlyVolunteers.Operation
             handle.transform.localScale = new Vector3(0.018f, 0.018f, 0.11f);
             root.gameObject.SetActive(false);
             return root;
-        }
-
-        private Transform BuildTapeRoll()
-        {
-            GameObject roll = Primitive(PrimitiveType.Cylinder, "TapeRoll", tape);
-            roll.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            roll.transform.localScale = new Vector3(0.08f, 0.02f, 0.08f);
-            roll.SetActive(false);
-            return roll.transform;
         }
 
         private Transform BuildKidney()

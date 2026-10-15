@@ -11,6 +11,12 @@ namespace OnlyVolunteers.Inventory
     /// A prefab with its own definition shows its own renderers; a generic prefab (no definition, see
     /// ItemDatabase.GenericWorldPrefab) gets the item id from the server and shows the item's world model.
     /// </summary>
+    public interface IPhysicalInventoryItem
+    {
+        bool ServerTryHold(NetworkInventory inventory);
+        void ServerRelease(Vector3 position, Vector3 velocity);
+    }
+
     [RequireComponent(typeof(NetworkObject))]
     public sealed class WorldItem : NetworkBehaviour
     {

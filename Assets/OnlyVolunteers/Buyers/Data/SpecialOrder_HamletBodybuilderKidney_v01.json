@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "SO_HAMLET_BODYBUILDER_KIDNEY",
+  "displayNameRu": "почка колхозного качка",
+  "displayNameEn": "Farm Bodybuilder's Kidney",
+  "offeringBuyerId": "ORGANS_01",
+  "availableInFirstVersion": true,
+  "targetNpcTypeId": "HAMLET_BODYBUILDER",
+  "requiresClueTargetIdentity": true,
+  "organItemId": 102,
+  "minimumTier": 3,
+  "packaging": "sealed_individual_organ_bag",
+  "deadlineGameHours": 48,
+  "premium": 0.25,
+  "clueTextIds": [
+    "c02.special.hamlet_bodybuilder.pitch",
+    "c02.special.hamlet_bodybuilder.clue_card"
+  ],
+  "cluePhotoId": "PLACEHOLDER.PHOTO.HAMLET_BODYBUILDER",
+  "stashId": "PLACEHOLDER.STASH.HAMLET_BODYBUILDER_KIDNEY",
+  "unlockCondition": {
+    "all": [
+      {
+        "kind": "respect_at_least",
+        "subjectId": "ORGANS_01",
+        "minimumValue": 40
+      }
+    ]
+  },
+  "authoringNotes": [
+    "Confirmed clue: Hamlet square pull-up bar, mornings 06:00–10:00; no exact NPC marker. Offer: Клиенту нужна почка на парном молоке. Только от того качка с хутора. Говорит, натуральная.",
+    "Target type is static content; the accepted order instance must bind the specific NPC identity supplied by the clue.",
+    "Sealed individual organ bag is a packaging descriptor, not a new Inventory item ID; cooling is separate.",
+    "Deadline is active-world game time after haggling and explicit acceptance; already extracted matching merchandise is allowed.",
+    "First organ fence is the initial-order integration role; canonical C02/C03 identity remains unresolved.",
+    "Uses the new G28 pitch and combined clue card text IDs; runtime fills the photo, search area, stash and other named text tokens."
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "id": "ORGANS_01",
+  "displayNameRu": "Первый скупщик органов",
+  "displayNameEn": "First Organ Fence",
+  "acceptedMerchandise": [
+    {
+      "merchandiseId": "heart",
+      "itemId": 101,
+      "itemIdUnresolved": false,
+      "hasQuality": true,
+      "packaging": "none",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": false,
+      "fixedBasePriceDollars": 0.0
+    },
+    {
+      "merchandiseId": "kidney",
+      "itemId": 102,
+      "itemIdUnresolved": false,
+      "hasQuality": true,
+      "packaging": "none",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": false,
+      "fixedBasePriceDollars": 0.0
+    },
+    {
+      "merchandiseId": "liver",
+      "itemId": 103,
+      "itemIdUnresolved": false,
+      "hasQuality": true,
+      "packaging": "none",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": false,
+      "fixedBasePriceDollars": 0.0
+    },
+    {
+      "merchandiseId": "lungs",
+      "itemId": 104,
+      "itemIdUnresolved": false,
+      "hasQuality": true,
+      "packaging": "none",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": false,
+      "fixedBasePriceDollars": 0.0
+    },
+    {
+      "merchandiseId": "brain",
+      "itemId": 105,
+      "itemIdUnresolved": false,
+      "hasQuality": true,
+      "packaging": "none",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": false,
+      "fixedBasePriceDollars": 0.0
+    },
+    {
+      "merchandiseId": "eye",
+      "itemId": 106,
+      "itemIdUnresolved": false,
+      "hasQuality": true,
+      "packaging": "none",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": false,
+      "fixedBasePriceDollars": 0.0
+    }
+  ],
+  "minimumTier": 1,
+  "workingHours": {
+    "allDay": true,
+    "startHour": 0,
+    "endHour": 24
+  },
+  "meetingType": "point",
+  "saturationEnabled": true,
+  "voiceId": "PLACEHOLDER.VOICE.FIRST_ORGAN_FENCE",
+  "unlockCondition": {
+    "all": [
+      {
+        "kind": "first_successful_blood_sale",
+        "subjectId": "C01",
+        "minimumValue": 0
+      }
+    ]
+  },
+  "textIds": [
+    "c02.first.01",
+    "c02.first.02",
+    "c02.offer.01",
+    "c02.meeting.arrived_01",
+    "c02.meeting.waiting_01",
+    "c02.meeting.finish_group"
+  ],
+  "authoringNotes": [
+    "ORGANS_01 matches G27 BuyerCatalog.OrganBuyer and is a provisional integration key; BUYERS_SPEC v02 leaves canonical mapping to C02/C03 open.",
+    "All six existing organ item types are accepted; two kidneys, two eyes and paired lungs yield eight physical items per NPC, not eight item type IDs.",
+    "Ordinary sales do not require packaging; none means no requirement, not rejection of packaged goods.",
+    "Inventory baseValue fields are not copied as authoritative buyer prices; economy/rules integration remains in G27.",
+    "Meeting locations are authored elsewhere and selected per meeting; no map scene or point is created here.",
+    "G28 uses c02.* text IDs for the first fence role; content id ORGANS_01 matches G27 without resolving the open canonical C02/C03 mapping."
+  ]
+}

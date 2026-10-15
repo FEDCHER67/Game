@@ -28,6 +28,7 @@ namespace OnlyVolunteers.Clinic
         public float Condition = 100f;
         /// <summary>Grade the organ starts from (from Condition at the hand-over); the operation can only lower it.</summary>
         public OrganQuality Quality = OrganQuality.Good;
+        public OnlyVolunteers.Operation.Stage1.OperationState Operation;
         public bool Rewarded;
         public int Reward;
 

@@ -1,6 +1,130 @@
+## Все новые ID / All new IDs — G28
+
+- `c01.syringe.offer`
+- `c01.syringe.player_accept`
+- `c01.syringe.player_decline`
+- `c01.syringe.handover`
+- `c01.syringe.paid`
+- `c01.syringe.already_used`
+- `c01.base.confirm`
+- `c01.base.arrived_01`
+- `c01.base.arrived_02`
+- `c01.base.waiting`
+- `c01.base.handover_01`
+- `c01.base.handover_02`
+- `c01.contact.first_sale`
+- `c02.call.player_stock`
+- `c02.call.player_terms`
+- `c02.call.player_later`
+- `c02.call.terms`
+- `c02.call.player_book`
+- `c02.call.meeting_point_01`
+- `c02.call.meeting_point_02`
+- `c02.call.player_confirm`
+- `c02.call.player_cancel`
+- `c02.call.cancel_before_arrival`
+- `c02.call.already_booked`
+- `c02.meeting.arrived_01`
+- `c02.meeting.arrived_02`
+- `c02.meeting.waiting_01`
+- `c02.meeting.waiting_02`
+- `c02.meeting.time_over`
+- `c02.meeting.finish_group`
+- `c02.case.open_01`
+- `c02.case.open_02`
+- `c02.case.inspect_01`
+- `c02.case.inspect_02`
+- `c02.trade.quote`
+- `c02.haggle.ask_5`
+- `c02.haggle.ask_10`
+- `c02.haggle.ask_20`
+- `c02.haggle.player_accept`
+- `c02.haggle.player_refuse`
+- `c02.haggle.accept_01`
+- `c02.haggle.accept_02`
+- `c02.haggle.refuse_first_01`
+- `c02.haggle.refuse_first_02`
+- `c02.haggle.counter`
+- `c02.haggle.refuse_five`
+- `c02.haggle.retry_five`
+- `c02.haggle.retry_ten`
+- `c02.haggle.second_refusal_01`
+- `c02.haggle.second_refusal_02`
+- `c02.haggle.breakdown_card`
+- `c02.haggle.player_walkaway`
+- `c02.trade.confirm`
+- `c02.trade.paid_01`
+- `c02.trade.paid_02`
+- `c02.trade.unsuitable_01`
+- `c02.trade.unsuitable_02`
+- `c02.trade.unsuitable_card`
+- `c02.quality.damaged_01`
+- `c02.quality.acceptable_01`
+- `c02.quality.good_01`
+- `c02.quality.perfect_01`
+- `c02.quality.perfect_plus_01`
+- `c02.quality.damaged_02`
+- `c02.quality.acceptable_02`
+- `c02.quality.good_02`
+- `c02.quality.perfect_02`
+- `c02.quality.perfect_plus_02`
+- `c02.cooler.missing_01`
+- `c02.cooler.missing_02`
+- `c02.cooler.inspection_ok`
+- `c02.respect.level_1`
+- `c02.respect.up_1`
+- `c02.respect.down_1`
+- `c02.respect.level_2`
+- `c02.respect.up_2`
+- `c02.respect.down_2`
+- `c02.respect.level_3`
+- `c02.respect.up_3`
+- `c02.respect.down_3`
+- `c02.respect.level_4`
+- `c02.respect.up_4`
+- `c02.respect.down_4`
+- `c02.respect.level_5`
+- `c02.respect.up_5`
+- `c02.respect.down_5`
+- `catalog.new.header`
+- `catalog.new.card`
+- `c02.special.hamlet_bodybuilder.pitch`
+- `c02.special.hamlet_bodybuilder.clue_card`
+- `c02.special.hamlet_bodybuilder.player_accept`
+- `c02.special.hamlet_bodybuilder.accepted`
+- `c02.special.hamlet_bodybuilder.player_decline`
+- `c02.special.hamlet_bodybuilder.reminder_01`
+- `c02.special.hamlet_bodybuilder.reminder_02`
+- `c02.special.hamlet_bodybuilder.done`
+- `c02.special.hamlet_bodybuilder.late`
+- `c02.special.hamlet_bodybuilder.failed`
+- `c02.special.hamlet_bodybuilder.wrong_target`
+- `c02.special.hamlet_bodybuilder.wrong_quality`
+- `c02.special.hamlet_bodybuilder.missing_packaging`
+- `special.old_streamer.pitch`
+- `special.old_streamer.clue_card`
+- `special.old_streamer.player_accept`
+- `special.old_streamer.accepted`
+- `special.old_streamer.player_decline`
+- `special.old_streamer.reminder_01`
+- `special.old_streamer.reminder_02`
+- `special.old_streamer.done`
+- `special.old_streamer.late`
+- `special.old_streamer.failed`
+- `special.old_streamer.wrong_target`
+- `special.old_streamer.wrong_quality`
+- `special.old_streamer.missing_packaging`
+- `special.shared.cancel_before_deadline`
+- `special.shared.cancel_after_deadline`
+- `special.shared.haggle_breakdown`
+- `special.shared.handover_card`
+- `special.shared.unsuitable_card`
+
 # Тексты телефона покупателей — черновик / Buyer phone messages — draft
 
 **Статус / Status:** черновик, не утверждён Федей и Вадимом. Ничего из этого файла не является требованием геймплея. / Draft, not approved. Nothing here is a gameplay requirement.
+
+**Приоритет v02 / v02 priority:** `C:\Dev\Game\docs\specs\BUYERS_SPEC_2026-10-15_v02.md` — правила покупателей; `C:\Dev\Game\docs\VOLUNTEERS_ONLY_GAME_SPEC_AND_LORE_CURRENT_CANON.md` — тон и лор. При расхождении старых реплик с v02 используются новые строки ниже. / Buyer rules follow v02; tone and lore follow the canon. Use the new v02 lines where legacy wording conflicts.
 
 **Источники / Sources:** `docs/CITY_MAP_REFERENCE_SPEC.md` §6 (пролог, дед), §7 (сюжетная лестница), §8 (C01–C03, встречи, скрытое доверие), §13 (P01, P09), §20 (C-P02); `docs/VOLUNTEERS_ONLY_GAME_SPEC_AND_LORE_CURRENT_CANON.md` §50–56 (чёрный рынок, перекупщик, спецзаказы, цены, передача товара), §72 (heat).
 
@@ -10,7 +134,7 @@
 
 - Тон: мультяшная чёрная комедия, короткие реплики в стиле переписки. Без крови на экране, без описаний тел и реальных медицинских процедур. Органы — только `{organ}` и игровые предметы.
 - Покупатели получают только кровь (C01) или органы по своей специализации (C02, C03). Живых NPC и тела не принимают — C02 говорит это прямо (`c02.first.03`).
-- Доверие скрыто: нет шкалы и чисел. Оно видно только через тон (`trust_tone`, уровни t0→t3) и новые предложения (`trust_new_offer`, `intro_next_buyer`). Пороги — баланс, не задаются здесь.
+- Респект по v02: пять видимых названий, без числовой шкалы; старт — «новобранец». Старые `trust.*` — тональные варианты, не отдельная система доверия. / v02 respect uses five visible names without a numeric meter; starts at rookie. Legacy `trust.*` lines are tone variants, not a separate trust system.
 - Heat без цифр: покупатели реагируют на «мигалки», «шум», «вопросы про фургон».
 - Язык по умолчанию — английский; русский — полный параллельный перевод.
 
@@ -19,12 +143,12 @@
 | Плейсхолдер | Значение |
 | --- | --- |
 | `{organ}` | Название органа как игрового предмета (локализуется отдельно). |
-| `{quality}` | Состояние: Normal / Good / Perfect / Perfect+ (шкала канона ещё не финальная). |
+| `{quality}` | Убитое / Сойдёт / Хорошее / Отличное / Идеальное; EN: Damaged / Acceptable / Good / Perfect / Perfect+ (v02). |
 | `{price}` | Сумма с валютой, форматирует игра. |
-| `{deadline}` | Срок в игровом формате («до утра», «2 игровых дня»). Канон §55: срок не должен душить. |
+| `{deadline}` | Абсолютный срок в игровом времени; спецзаказ — 48 игровых часов после согласования и явного принятия. |
 | `{place}` | Название места встречи C03 (P09: основное или запасное) или иного места сделки. |
 
-Других плейсхолдеров нет. Строка `c03.special.card` содержит переносы строк (`\n`) — это карточка «PRIVATE REQUEST» из канона §53.
+Дополнительные плейсхолдеры v02 перечислены ниже. Строка `c03.special.card` содержит переносы строк (`\n`) — это карточка «PRIVATE REQUEST» из канона §53.
 
 ## Что намеренно не написано / Deliberately left out
 
@@ -64,7 +188,7 @@
 | `c01.first.02` | Вагон в лесу? Романтично. Еду. | A train car in the woods? Romantic. On my way. |
 | `c01.first.03` | Я у вагона. Не машите руками, я вас и так вижу. | I'm at the train car. Stop waving, I can see you. |
 | `c01.first.syringes_01` | Это что, шприцы? Ребята, это не бизнес, это кружок юных натуралистов. | Syringes? Guys, this isn't a business, it's a science-fair project. |
-| `c01.first.syringes_02` | Ладно. Один раз заплачу. Из уважения к вашему энтузиазму. | Fine. I'll pay once. Out of respect for your enthusiasm. |
+| `c01.first.syringes_02` | Ладно. Один шприц за $10, один раз, без торга. | Fine. One syringe for $10. Once, no haggling. |
 | `c01.first.bags_rule` | Дальше — только в пакетах. Нормальных. Аптека в деревне, дойдёте пешком. | From now on, bags only. Proper ones. The village pharmacy has them, it's walking distance. |
 | `c01.first.bags_rule_02` | Без пакетов не звоните. С пакетами — хоть ночью. | No bags, no calls. With bags, call me even at night. |
 | `c01.first.save_contact` | Сохраните номер. Подпишите как-нибудь прилично. «Сантехник», например. | Save my number. Name it something respectable. "Plumber", maybe. |
@@ -83,7 +207,7 @@
 | ID | RU | EN |
 | --- | --- | --- |
 | `c01.offer.player_has_stock` | Есть пакеты. | Got bags. |
-| `c01.offer.01` | Беру. Даю {price}. Буду через пару минут. | I'll take them. {price}. Be there in a couple of minutes. |
+| `c01.offer.01` | Беру. Предварительно {price}. К базе подъеду через час. | I’ll take it. Estimated {price}. At your base in an hour. |
 | `c01.offer.02` | {price} за всё. Ставьте чайник. Шучу, не ставьте, я быстро. | {price} for the lot. Put the kettle on. Kidding, don't, I'll be quick. |
 | `c01.offer.03` | Еду. Пакеты не трясите, они не погремушки. | On my way. Don't shake the bags, they're not maracas. |
 | `c01.offer.arrived` | Я на месте. Выходите с пакетами и с хорошим настроением. Пакеты важнее. | I'm here. Come out with the bags and a good mood. Bags first. |
@@ -136,8 +260,8 @@
 
 | ID | RU | EN |
 | --- | --- | --- |
-| `c01.intro_c02.01` | О, у вас колёса! Теперь вы серьёзные люди. Почти. | Oh, you've got wheels! You're serious people now. Almost. |
-| `c01.intro_c02.02` | Есть знакомые, которые берут не только кровь. Здание между деревней и спальником. | I know people who take more than blood. A building between the village and the bedroom district. |
+| `c01.intro_c02.01` | Первая кровь продана. Пора расширять знакомства. | First blood sale done. Time to expand your contacts. |
+| `c01.intro_c02.02` | Есть знакомый, берёт органы. Номер скину; точку встречи сообщит сам. | Know someone who buys organs. I’ll send the number; he’ll tell you where to meet. |
 | `c01.intro_c02.03` | Скажете, что от меня. Только не говорите, что я хороший. Мне там репутацию держать. | Say I sent you. Just don't tell them I'm nice. I have a reputation to keep. |
 | `c01.intro_c02.04` | А кровь всё равно мне несите. Я ревнивый. | But keep bringing the blood to me. I get jealous. |
 
@@ -186,7 +310,7 @@
 
 | ID | RU | EN |
 | --- | --- | --- |
-| `c02.first.01` | Вы от этого, с пакетами? Заходите. Обувь не снимайте. | You're from the bag guy? Come in. Keep your shoes on. |
+| `c02.first.01` | Вы от этого, с пакетами? Номер сохранил. Точку встречи сообщу. | You’re from the blood-bag fellow? Saved your number. I’ll send the meeting point. |
 | `c02.first.02` | Кровь — это для романтиков. Я работаю с запчастями. | Blood is for romantics. I deal in spare parts. |
 | `c02.first.03` | Правило одно: только товар. Людей не привозить. Целиком — тоже. | One rule: goods only. No people. Not in one piece, not at all. |
 | `c02.first.04` | Хотите работы — езжайте в спальник. Там половина людей спит даже днём. | Want work? Go to the bedroom district. Half the people there sleep even in daytime. |
@@ -207,9 +331,9 @@
 | ID | RU | EN |
 | --- | --- | --- |
 | `c02.offer.player_has_stock` | Есть товар. Приеду? | Got stock. Can I come by? |
-| `c02.offer.01` | Приезжайте. Дверь сбоку. Звонок не работает, стучите три раза. | Come over. Side door. The bell's broken, knock three times. |
+| `c02.offer.01` | Назначим встречу. Точку пришлю, буду через час. | Let’s book a meeting. I’ll send the spot. Be there in an hour. |
 | `c02.offer.02` | За {organ} ({quality}) дам {price}. | For the {organ} ({quality}), I'll give {price}. |
-| `c02.offer.03` | {organ}? Беру. {price}. Кладите на стол. Нет, не на этот. На чистый. | {organ}? I'll take it. {price}. Put it on the table. No, not that one. The clean one. |
+| `c02.offer.03` | {organ}? Беру. Пока {price}. Загружайте в багажник. | {organ}? Buying. Current offer: {price}. Load it into the boot. |
 | `c02.offer.low_quality` | Это {quality}? Видел я такое в банке с огурцами. Могу дать {price}. Из жалости. | That's {quality}? I've seen better in a pickle jar. I can do {price}. Out of pity. |
 | `c02.offer.not_my_line` | Кровь? Это к вашему другу с пакетами. Я сентиментальный, но не настолько. | Blood? Take that to your bag friend. I'm sentimental, but not that much. |
 
@@ -219,7 +343,7 @@
 | --- | --- | --- |
 | `c02.accept.player` | Идёт. | Deal. |
 | `c02.accept.01` | Деньги в конверте. Конверт не возвращать, он у меня последний. | Money's in the envelope. Keep the envelope, I'm out anyway. |
-| `c02.accept.02` | Хорошая работа. Дверь закрывайте мягко, она нервная. | Good work. Close the door gently, it's nervous. |
+| `c02.accept.02` | Хорошая работа. Багажник закрывайте мягко, он нервный. | Good work. Close the boot gently. It’s nervous. |
 
 ### Отказ / Decline
 
@@ -236,7 +360,7 @@
 | `c02.haggle.player` | Можно побольше? | Can you do better? |
 | `c02.haggle.success` | {price}. Не потому, что вы убедили. Потому что у меня хорошее настроение. | {price}. Not because you convinced me. Because I'm in a good mood. |
 | `c02.haggle.fail` | Нет. Здесь не рынок. Здесь приёмка. Это хуже. | No. This isn't a market. It's an intake. That's worse. |
-| `c02.haggle.repeat` | Ещё раз спросите — цена начнёт падать. Проверим? | Ask again and the price starts going down. Want to test it? |
+| `c02.haggle.repeat` | Второй отказ — и этот вид три часа не беру. Решайте. | A second refusal means I won’t buy this organ type for three hours. Your call. |
 
 ### Доверие: тон / Trust: tone
 
@@ -272,8 +396,8 @@
 | ID | RU | EN |
 | --- | --- | --- |
 | `c02.late.player_01` | Обещали час назад. Я уже начал волноваться. За товар, не за вас. | You said an hour ago. I'm getting worried. About the goods, not you. |
-| `c02.late.player_02` | Я закрываюсь на обед. Обед у меня длинный. Приезжайте позже. | I'm closing for lunch. My lunches are long. Come back later. |
-| `c02.late.order_expired` | Заказ на {organ} сгорел. Ничего. Будет другой. Я не злопамятный. Почти. | The {organ} order has expired. That's fine. There'll be another. I don't hold grudges. Mostly. |
+| `c02.late.player_02` | Три часа прождал. Уезжаю. Позвоните — назначим новую встречу. | Waited three hours. I’m leaving. Call to book another meeting. |
+| `c02.late.order_expired` | Срок заказа на {organ} вышел. +25% сняты, выторгованный процент остаётся. Сдать ещё можно. | Deadline for {organ} passed. The +25% bonus is gone; your agreed haggle bonus stays. You can still deliver. |
 
 ### Внимание полиции / Police heat
 
@@ -488,4 +612,168 @@
 
 ---
 
-Всего строк / Total lines: 191.
+Всего строк / Total lines: 310.
+
+
+## Дополнение G28 — v02 / G28 extension — v02
+
+C02 используется как редакционный слот первого скупщика; окончательное соответствие канонному C02 остаётся открытым в v02. Новые строки задают мобильную встречу по v02 и заменяют старые реплики о приёмке. Отправитель позднего заказа `special.old_streamer.*` — `UNASSIGNED`: v02 не назначает его C03. / C02 is the draft slot for the first fence; final canon mapping remains open. New v02 mobile-meeting lines supersede legacy premises dialogue. The later streamer order has no assigned buyer yet.
+
+Первый заказ — только `HAMLET_BODYBUILDER`, Хутор, от третьего уровня респекта. Стример — поздний заказ, после доступа в Даунтаун и получения пилы. Оба используют общий торг +5/+10/+20 при принятии, затем условия фиксируются. `special.shared.haggle_breakdown` заменяет обычный срыв продажи для предложения заказа. Первый отказ на +5% даёт только исходную цену или выход; на второй попытке показывается лишь меньшая надбавка. Точную встречную цену подставляет игра: формула в v02 открыта. / First order: Hamlet bodybuilder, respect level 3+. Streamer: later, with Downtown access and a saw. Both use the shared +5/+10/+20 acceptance negotiation, then lock their terms. The special breakdown line applies to an order offer. After a +5% refusal, only the original offer or leaving is available; retry choices must be lower than the first ask. Counteroffer calculation remains open in v02.
+
+`respect.up_1` и `respect.down_5` — запасные локализационные строки для полного набора пяти уровней. На обычном переходе вверх в уровень 1 и вниз в уровень 5 они не вызываются. Падение ниже уровня 3 не отменяет уже принятый заказ. / `respect.up_1` and `respect.down_5` are completeness fallbacks, not ordinary transition triggers. Falling below level 3 does not cancel an accepted order.
+
+`late` — просрочка, а не провал: −4 респекта один раз, без +25%, согласованный торг сохраняется, слот занят. `failed` — закрытие без сдачи; системная строка отмены выбирается по сроку (−2 до срока, без нового штрафа после). Выполнение вовремя даёт +5 респекта и +150 XP сверх продажи; новый контакт выдаётся только после первого своевременного спецзаказа. / Late is not failed: one −4 respect penalty, no +25%, agreed haggling retained, slot occupied. Failed means closed without delivery; cancellation uses the appropriate before/after-deadline system line. On-time completion awards +5 respect and +150 XP on top of the sale; the next contact unlocks only on the first on-time special-order completion.
+
+Часы и конкретное место стримера не заданы источником: `{appearance_hours}`, `{clue_place}` заполняются только после утверждения. Фото, тайники и области поиска — ссылки/локализованные данные, не выдуманные адреса. / Streamer hours and exact location are unspecified; fill them only after approval. Photos, stashes and search areas reference authored data.
+
+Дополнительные плейсхолдеры / Additional placeholders: `{arrival_time}` — прибытие / arrival; `{wait_until}` — конец ожидания / wait end; `{time_left}` — оставшееся игровое время / remaining game time; `{markup}` — согласованный процент без знака % / agreed percentage without %; `{reason}` — локализованный результат проверки / localised check result; `{xp_bonus}` — бонус новинки одному участнику, без обычных 20 XP / first-sale bonus per player excluding the usual 20 XP; `{photo}` — фото цели / target photo; `{search_area}` — область поиска / search area; `{stash}` — тайник / stash; `{clue_place}` — место появления / location; `{appearance_hours}` — часы появления / appearance hours. `{price}` всегда включает валюту / always includes currency. `catalog.new.card` относится к органам: почка/печень/глаз +100, лёгкие +150, сердце +200, мозг +250 XP каждому присутствующему; кровь использует отдельный бонус +50 сверх 5 XP. / The organ catalogue card uses kidney/liver/eye +100, lungs +150, heart +200, brain +250 XP per player in the session; blood has its separate +50 bonus on top of 5 XP.
+
+### C01 — кровь и база / Blood and base
+
+| ID | RU | EN |
+| --- | --- | --- |
+| `c01.syringe.offer` | Один шприц крови возьму за $10. Один раз, без торга. Дальше — пакеты. | I’ll take one syringe of blood for $10. Once, no haggling. Blood bags after that. |
+| `c01.syringe.player_accept` | За $10 договорились. | Deal. $10. |
+| `c01.syringe.player_decline` | Пока оставим себе. | We’ll keep it for now. |
+| `c01.syringe.handover` | Давай шприц в руки. Багажник тут ни при чём. | Hand me the syringe. No need for the boot. |
+| `c01.syringe.paid` | Шприц забрал. $10 ваши. Пробный период окончен. | Got the syringe. Your $10. Free trial’s over. |
+| `c01.syringe.already_used` | Шприц я уже покупал. Акция была разовая. Теперь только пакеты. | Already bought a syringe from you. One-time offer. Blood bags now. |
+| `c01.base.confirm` | Подъеду к вашей базе через час. Время прибытия — {arrival_time}. | I’ll be at your base in an hour. Arrival: {arrival_time}. |
+| `c01.base.arrived_01` | Я у базы. Жду три часа, до {wait_until}. Выходите с товаром. | At your base. I’ll wait three hours, until {wait_until}. Bring the goods out. |
+| `c01.base.arrived_02` | Подъехал к базе. До {wait_until} я ваш. Потом я занят собой. | At the base. Yours until {wait_until}. Then I’ve got plans with myself. |
+| `c01.base.waiting` | Я ещё у базы. Осталось {time_left}. Кровь сама до меня не дойдёт. | Still at the base. {time_left} left. The blood won’t walk over here. |
+| `c01.base.handover_01` | Передавайте пакеты прямо мне в руки. По одному, я не жонглёр. | Hand the bags straight to me. One at a time. I don’t juggle. |
+| `c01.base.handover_02` | Пакеты сюда. Руки у меня заняты только бизнесом. | Bags over here. My hands are free for business. |
+| `c01.contact.first_sale` | Первая кровь продана. Скидываю номер скупщика органов. Кровь по-прежнему мне. | First blood sale done. Sending you an organ buyer’s number. Blood still comes to me. |
+
+### Первый скупщик / First fence
+
+| ID | RU | EN |
+| --- | --- | --- |
+| `c02.call.player_stock` | Есть органы. Назначим встречу? | Got organs. Shall we meet? |
+| `c02.call.player_terms` | Что берёшь и как встречаемся? | What do you buy? How do we meet? |
+| `c02.call.player_later` | Позже наберём. | We’ll call back later. |
+| `c02.call.terms` | Беру все виды органов, даже «Убитое». Кровь — C01. Звонить можно круглосуточно. | I buy every organ type, even Damaged. Blood goes to C01. Call any time, day or night. |
+| `c02.call.player_book` | Назначай. Будем с товаром. | Set it up. We’ll bring the goods. |
+| `c02.call.meeting_point_01` | Встречаемся: {place}. Буду через час, в {arrival_time}. Точка закреплена. | Meet at {place}. I’ll be there in an hour, at {arrival_time}. That’s our spot for this meeting. |
+| `c02.call.meeting_point_02` | Сегодня — {place}. Приеду в {arrival_time}, через час. Багажник узнаете. | Today’s spot: {place}. Arrival: {arrival_time}, one hour from now. You’ll know the boot when you see it. |
+| `c02.call.player_confirm` | Принято. Едем к {place}. | Got it. Heading to {place}. |
+| `c02.call.player_cancel` | Отменяем встречу. | Cancel the meeting. |
+| `c02.call.cancel_before_arrival` | Ещё не приехал, так что без обид. Новую встречу назначим, когда будете готовы. | I’m not there yet, so no hard feelings. Call when you’re ready to book again. |
+| `c02.call.already_booked` | Уже договорились: {place}, {arrival_time}. Второй я туда не приедет. | Already booked: {place}, {arrival_time}. There isn’t a second me to send. |
+| `c02.meeting.arrived_01` | Я на {place}. Жду три часа, до {wait_until}. Товар — в багажник. | At {place}. Waiting three hours, until {wait_until}. Goods go in the boot. |
+| `c02.meeting.arrived_02` | На месте: {place}. До {wait_until} принимаю. Потом багажник закрывается вместе со мной. | Here at {place}. Open until {wait_until}. Then both the boot and I close for business. |
+| `c02.meeting.waiting_01` | Осталось {time_left}. Я тут уже все трещины в асфальте выучил. | {time_left} left. I’ve memorised every crack in the tarmac. |
+| `c02.meeting.waiting_02` | Ещё {time_left} жду на {place}. Парковка хорошая. Компания пока так себе. | Waiting another {time_left} at {place}. Nice parking spot. Company could be better. |
+| `c02.meeting.time_over` | Время вышло. Уезжаю. Респекта поубавилось, но звонить можно сразу. | Time’s up. I’m off. Lost a little respect for you. You can call to book again now. |
+| `c02.meeting.finish_group` | Этот вид закончим — начали вовремя. Следующий уже на новой встрече. | We’ll finish this organ type; we started in time. Next type needs another meeting. |
+| `c02.case.open_01` | Открываю кейс. Посмотрим, что у вас за комплектация. | Opening the case. Let’s see what’s in this model. |
+| `c02.case.open_02` | Так, крышку сюда. Я люблю, когда товар видно. | Lid over here. I like to see what I’m buying. |
+| `c02.case.inspect_01` | Сейчас осмотрю. Гарантийный талон не ищите. | Let me inspect it. Don’t bother looking for the warranty. |
+| `c02.case.inspect_02` | Вижу. Проверю состояние и назову цену. | Right. I’ll check the condition and give you a price. |
+| `c02.trade.quote` | За эту группу {organ} сейчас {price}. Перед продажей сверим сумму ещё раз. | Current offer for this batch of {organ}: {price}. We’ll check the total again before the sale. |
+| `c02.haggle.ask_5` | Накинь 5%. На бензин. | Add 5%. Petrol money. |
+| `c02.haggle.ask_10` | Давай на 10% больше. Мы довезли. | Make it 10% more. We got it here. |
+| `c02.haggle.ask_20` | Плюс 20% — и по рукам. | Add 20% and we’ve got a deal. |
+| `c02.haggle.player_accept` | Согласны на {price}. | We’ll take {price}. |
+| `c02.haggle.player_refuse` | Не продаём. Забираем товар. | No sale. We’re taking it back. |
+| `c02.haggle.accept_01` | Ладно, надбавка {markup}%. Убедили. Не привыкайте. | Fine. {markup}% extra. You convinced me. Don’t get used to it. |
+| `c02.haggle.accept_02` | Согласен на {markup}% сверху. Считайте, у меня сегодня доброе лицо. | Agreed. {markup}% extra. Must be my friendly face today. |
+| `c02.haggle.refuse_first_01` | Такую надбавку не дам. Можете взять встречную цену или попросить меньше. | Not adding that much. Take my counteroffer or ask for a smaller increase. |
+| `c02.haggle.refuse_first_02` | Размах хороший. Цена — нет. Берите встречную или снижайте запрос. | Nice ambition. Wrong price. Take my counteroffer or lower your ask. |
+| `c02.haggle.counter` | Моя встречная — {price}. Согласны? | My counteroffer: {price}. Deal? |
+| `c02.haggle.refuse_five` | Даже 5% не добавлю. Исходные {price} — или забирайте товар. | Not even 5% extra. Original offer: {price}. Take it or take the goods back. |
+| `c02.haggle.retry_five` | Тогда просим только +5%. | Then we’re asking for just +5%. |
+| `c02.haggle.retry_ten` | Тогда просим только +10%. | Then we’re asking for just +10%. |
+| `c02.haggle.second_refusal_01` | Второй раз — нет. Этот вид три часа не беру. Остальное показывайте. | Second no. I won’t buy this organ type for three hours. Show me the rest. |
+| `c02.haggle.second_refusal_02` | Не сошлись. Этот вид забирайте, вернёмся к нему через три часа. | No deal. Take this organ type back. We can try again in three hours. |
+| `c02.haggle.breakdown_card` | Сделка сорвана. Респект −1. Товар остаётся у команды. Этот вид органов недоступен для продажи покупателю 3 игровых часа. | Deal fell through. Respect −1. The team keeps the goods. This buyer won’t buy this organ type for 3 game hours. |
+| `c02.haggle.player_walkaway` | Забирайте. До холодильника лучше без экскурсии. | Take it back. Best skip the scenic route to the cooler. |
+| `c02.trade.confirm` | Итого сейчас: {price}. Подтверждаете продажу? | Current total: {price}. Confirm the sale? |
+| `c02.trade.paid_01` | Товар мой, {price} ваши. Удобная система. | Goods for me, {price} for you. Handy system. |
+| `c02.trade.paid_02` | Принято. {price} в общий фонд. Можете считать, я не тороплю. | Accepted. {price} into the team fund. Count it if you like. Take your time. |
+| `c02.trade.unsuitable_01` | Это я не принимаю. Забирайте. Мы же про органы договаривались. | I don’t buy this. Take it back. We agreed on organs. |
+| `c02.trade.unsuitable_02` | Товар не подходит. Остаётся у вас. И давайте без сюрпризов. | Wrong item. You keep it. Let’s stick to what we agreed. |
+| `c02.trade.unsuitable_card` | Продажи нет: {reason}. Товар остаётся у команды. Респект −1 за подтверждённую попытку; повторная проверка того же экземпляра на этой встрече без нового штрафа. | No sale: {reason}. The team keeps the item. Respect −1 for the confirmed attempt; checking the same item again at this meeting adds no penalty. |
+| `c02.quality.damaged_01` | Убитое. Видало жизнь. Возьму по состоянию. | Damaged. Seen better days. I’ll pay for what’s left. |
+| `c02.quality.acceptable_01` | Сойдёт. Без восторга, но в дело пойдёт. | Acceptable. No applause, but it’ll do. |
+| `c02.quality.good_01` | Хорошее. Вот это уже товар. | Good. Now that’s stock. |
+| `c02.quality.perfect_01` | Отличное. Приятно открыть кейс. | Perfect. A pleasure to open the case. |
+| `c02.quality.perfect_plus_01` | Идеальное. Хоть на витрину. Если бы у меня была витрина. | Perfect+. Display-window material. If I had a display window. |
+| `c02.quality.damaged_02` | Убитое. Не музейный экспонат. Но куплю. | Damaged. No collector’s piece. Still buying. |
+| `c02.quality.acceptable_02` | Сойдёт. Скромно. По цене тоже. | Acceptable. Modest. So’s the price. |
+| `c02.quality.good_02` | Хорошее. Можно работать. | Good. We can work with that. |
+| `c02.quality.perfect_02` | Отличное. Умеете, когда хотите. | Perfect. You can do it when you try. |
+| `c02.quality.perfect_plus_02` | Идеальное. Крышку открывал зря. И так любовался бы. | Perfect+. Almost a shame to close the lid. |
+| `c02.cooler.missing_01` | Без мини-холодильника? Минус 10% к оплате. Багажник у вас не зима. | No mini-cooler? Payment’s 10% lower. Your boot isn’t winter. |
+| `c02.cooler.missing_02` | На охлаждении сэкономили. На оплате тоже сэкономим: минус 10%. | Saved on cooling? We’ll save on payment too. Minus 10%. |
+| `c02.cooler.inspection_ok` | Для осмотра достали — нормально. Довезли в холоде, штрафа нет. | Taking it out for inspection is fine. Delivered chilled, so no penalty. |
+| `c02.respect.level_1` | ууу хиляк | weakling |
+| `c02.respect.up_1` | Респект вырос. Теперь вы — «ууу хиляк». Продажами поправите дело. | Respect up. You’re now “weakling”. A few sales will help. |
+| `c02.respect.down_1` | Респект упал до «ууу хиляк». Торговать можно. Уважение вернём делом. | Respect down to “weakling”. We can still trade. Earn the respect back with sales. |
+| `c02.respect.level_2` | новобранец | rookie |
+| `c02.respect.up_2` | Респект вырос. Теперь вы — «новобранец». Уже узнаю номер. | Respect up. You’re now “rookie”. I recognise the number now. |
+| `c02.respect.down_2` | Респект упал до «новобранец». Номер сохраню. Доверие придётся вернуть. | Respect down to “rookie”. Keeping your number. You’ll have to earn the trust back. |
+| `c02.respect.level_3` | бывалый | old hand |
+| `c02.respect.up_3` | Респект вырос. Теперь вы — «бывалый». Можно обсуждать спецзаказы. | Respect up. You’re now “old hand”. We can talk special orders. |
+| `c02.respect.down_3` | Респект упал до «бывалый». Номер сохраню. Доверие придётся вернуть. | Respect down to “old hand”. Keeping your number. You’ll have to earn the trust back. |
+| `c02.respect.level_4` | проверенный | trusted |
+| `c02.respect.up_4` | Респект вырос. Теперь вы — «проверенный». С вами можно планировать. | Respect up. You’re now “trusted”. I can make plans with you. |
+| `c02.respect.down_4` | Респект упал до «проверенный». Номер сохраню. Доверие придётся вернуть. | Respect down to “trusted”. Keeping your number. You’ll have to earn the trust back. |
+| `c02.respect.level_5` | своячок | one of us |
+| `c02.respect.up_5` | Респект вырос. Теперь вы — «своячок». Своих узнаю без подписи. | Respect up. You’re now “one of us”. I know my people without caller ID. |
+| `c02.respect.down_5` | Респект упал до «своячок». Номер сохраню. Доверие придётся вернуть. | Respect down to “one of us”. Keeping your number. You’ll have to earn the trust back. |
+
+### Каталог / Catalogue
+
+| ID | RU | EN |
+| --- | --- | --- |
+| `catalog.new.header` | Новинка в каталоге | New in the catalogue |
+| `catalog.new.card` | Новинка в каталоге: {organ}, +{xp_bonus} XP<br>Бонус первой продажи каждому участнику сессии. Обычные 20 XP за орган начислены отдельно. | New in the catalogue: {organ}, +{xp_bonus} XP<br>First-sale bonus for each player in the session. The usual 20 XP for the organ are awarded separately. |
+
+### Первый спецзаказ / First special order
+
+| ID | RU | EN |
+| --- | --- | --- |
+| `c02.special.hamlet_bodybuilder.pitch` | Нужна почка колхозного качка из Хутора. Клиент говорит: «На парном молоке, натуральная». Плачу на 25% больше. | Need the Hamlet bodybuilder’s kidney. Client says it’s “farm-fresh, all natural”. Paying 25% extra. |
+| `c02.special.hamlet_bodybuilder.clue_card` | Почка колхозного качка<br>Цель: HAMLET_BODYBUILDER<br>Фото: {photo}<br>Наводка: по утрам 06:00–10:00 качается на турнике на площади Хутора.<br>Область поиска: {search_area}. Точного маркера над целью нет.<br>Нужна почка именно этого NPC. При сдаче: не ниже «Хорошее» (60%), обязательная упаковка.<br>Оплата: {price}, с надбавкой заказа +25% и согласованным торгом. После принятия — 48 игровых часов. Сдача через тайник: {stash}. | Hamlet bodybuilder’s kidney<br>Target: HAMLET_BODYBUILDER<br>Photo: {photo}<br>Clue: works out on the pull-up bar in Hamlet square in the mornings, 06:00–10:00.<br>Search area: {search_area}. No exact marker above the target.<br>Must be this NPC’s kidney. On delivery: Good (60%) or better, required packaging.<br>Payment: {price}, including the +25% order bonus and agreed haggle bonus. 48 game hours after acceptance. Deliver through the stash: {stash}. |
+| `c02.special.hamlet_bodybuilder.player_accept` | Условия согласованы. Берём заказ на 48 игровых часов. | Terms agreed. We accept the order with a 48-game-hour deadline. |
+| `c02.special.hamlet_bodybuilder.accepted` | Принято. Срок — {deadline}. Тайник — {stash}. Теперь часы пошли. | Accepted. Deadline: {deadline}. Stash: {stash}. Clock starts now. |
+| `c02.special.hamlet_bodybuilder.player_decline` | Пока пропустим. Заказ не принимаем. | We’ll pass for now. Not accepting the order. |
+| `c02.special.hamlet_bodybuilder.reminder_01` | Как там натуральная почка? Качок утром на турнике: 06:00–10:00, площадь Хутора. Срок — {deadline}. | How’s the all-natural kidney? Bodybuilder’s on the pull-up bar, 06:00–10:00, Hamlet square. Deadline: {deadline}. |
+| `c02.special.hamlet_bodybuilder.reminder_02` | До срока {time_left}. Нужны «Хорошее» или выше и упаковка. Тайник — {stash}. | {time_left} until the deadline. Good or better, packaged. Stash: {stash}. |
+| `c02.special.hamlet_bodybuilder.done` | Почка принята вовремя. {price} в общий фонд. Клиент доволен сельским хозяйством. Скидываю следующий контакт. | Kidney delivered on time. {price} into the team fund. Client’s pleased with local farming. Sending the next contact. |
+| `c02.special.hamlet_bodybuilder.late` | Срок вышел. Надбавки заказа +25% больше нет, выторгованный процент остаётся. Штраф респекта уже учтён. Сдать ещё можно; слот занят до сдачи или отказа. | Deadline passed. The +25% order bonus is gone; your agreed haggle bonus stays. Respect penalty applied. You can still deliver; the slot stays occupied until delivery or cancellation. |
+| `c02.special.hamlet_bodybuilder.failed` | Заказ закрыт без сдачи. Почку больше не жду. Слот свободен. | Order closed without delivery. No longer waiting for the kidney. Order slot’s free. |
+| `c02.special.hamlet_bodybuilder.wrong_target` | Почка есть. Качок не тот. Нужен именно HAMLET_BODYBUILDER из Хутора. | It’s a kidney. Wrong bodybuilder. Must be HAMLET_BODYBUILDER from Hamlet. |
+| `c02.special.hamlet_bodybuilder.wrong_quality` | Нужно не ниже «Хорошее» (60%) при сдаче. Эту почку по заказу не приму. | Needs to be Good (60%) or better on delivery. Can’t take this kidney for the order. |
+| `c02.special.hamlet_bodybuilder.missing_packaging` | Качок тот. Упаковки нет. Без неё заказ не приму. | Right bodybuilder. No packaging. Can’t accept the order without it. |
+
+### Поздний заказ Даунтауна / Later Downtown order
+
+| ID | RU | EN |
+| --- | --- | --- |
+| `special.old_streamer.pitch` | Поздний заказ из Даунтауна: мозг IRL-стримера с разноцветными волосами. Клиент хочет мысли без рекламы. Надбавка +25%. | Later Downtown order: the rainbow-haired IRL streamer’s brain. Client wants thoughts without ads. Pays 25% extra. |
+| `special.old_streamer.clue_card` | Мозг IRL-стримера<br>Цель: OLD_STREAMER, разноцветные волосы. Район: Даунтаун.<br>Фото: {photo}<br>Место: {clue_place}. Часы появления: {appearance_hours}. Область поиска: {search_area}. Точного маркера над целью нет.<br>Нужен мозг именно этого NPC. При сдаче: не ниже «Отличное» (80%), обязательная упаковка.<br>Доступ: Даунтаун и пила для зоны головы.<br>Оплата: {price}, с надбавкой заказа +25% и согласованным торгом. После принятия — 48 игровых часов. Сдача через тайник: {stash}. | IRL streamer’s brain<br>Target: OLD_STREAMER, rainbow hair. District: Downtown.<br>Photo: {photo}<br>Location: {clue_place}. Appearance hours: {appearance_hours}. Search area: {search_area}. No exact marker above the target.<br>Must be this NPC’s brain. On delivery: Perfect (80%) or better, required packaging.<br>Requires Downtown access and the saw for the head zone.<br>Payment: {price}, including the +25% order bonus and agreed haggle bonus. 48 game hours after acceptance. Deliver through the stash: {stash}. |
+| `special.old_streamer.player_accept` | Условия согласованы. Берём заказ на 48 игровых часов. | Terms agreed. We accept the order with a 48-game-hour deadline. |
+| `special.old_streamer.accepted` | Заказ принят. Срок — {deadline}. Тайник — {stash}. Пошёл отсчёт, без заставки. | Order accepted. Deadline: {deadline}. Stash: {stash}. Countdown starts now. No intro. |
+| `special.old_streamer.player_decline` | Этот заказ пока пропустим. | We’ll pass on this order for now. |
+| `special.old_streamer.reminder_01` | Напомню: OLD_STREAMER, разноцветные волосы, Даунтаун. Смотрите фото и область поиска. Срок — {deadline}. | Reminder: OLD_STREAMER, rainbow hair, Downtown. Check the photo and search area. Deadline: {deadline}. |
+| `special.old_streamer.reminder_02` | Осталось {time_left}. Мозг — «Отличное» или выше, в упаковке. Тайник — {stash}. Чат ждать не будет. | {time_left} left. Brain: Perfect or better, packaged. Stash: {stash}. Chat won’t wait. |
+| `special.old_streamer.done` | Мозг принят вовремя. {price} в общий фонд. Клиент просил без подписки. Всё получилось. | Brain delivered on time. {price} into the team fund. Client wanted no subscription. Delivered. |
+| `special.old_streamer.late` | Срок вышел. +25% за заказ снимаются, согласованный торг сохраняется. Штраф респекта уже учтён. Сдача ещё доступна; слот занят до сдачи или отказа. | Deadline passed. The +25% order bonus is removed; the agreed haggle bonus stays. Respect penalty applied. Delivery remains available; the slot stays occupied until delivery or cancellation. |
+| `special.old_streamer.failed` | Заказ закрыт без сдачи. Эфир окончен. Слот свободен. | Order closed without delivery. Stream’s over. Order slot’s free. |
+| `special.old_streamer.wrong_target` | Другой мозг не подойдёт. Нужен OLD_STREAMER из Даунтауна, тот, что с разноцветными волосами. | Another brain won’t do. Need OLD_STREAMER from Downtown. The one with rainbow hair. |
+| `special.old_streamer.wrong_quality` | Для этого заказа нужно не ниже «Отличное» (80%) при сдаче. Пока не подходит. | This order needs Perfect (80%) or better on delivery. This doesn’t qualify. |
+| `special.old_streamer.missing_packaging` | Мозг нужный, упаковки нет. Заказ пока не приму. | Right brain, no packaging. Can’t accept the order yet. |
+
+### Общие строки спецзаказов / Shared special-order lines
+
+| ID | RU | EN |
+| --- | --- | --- |
+| `special.shared.cancel_before_deadline` | Заказ отменён до срока. Респект −2. Слот свободен. | Order cancelled before the deadline. Respect −2. Order slot’s free. |
+| `special.shared.cancel_after_deadline` | Просроченный заказ отменён. Дополнительного штрафа нет. Слот свободен. | Overdue order cancelled. No additional penalty. Order slot’s free. |
+| `special.shared.haggle_breakdown` | Второй отказ. Респект −1. Предложение недоступно 3 игровых часа. Заказ не принят, отсчёт 48 часов не начат. | Second refusal. Respect −1. Offer unavailable for 3 game hours. Order not accepted; the 48-hour clock hasn’t started. |
+| `special.shared.handover_card` | Положите товар в тайник {stash} и подтвердите сдачу отдельно. До подтверждения можно забрать товар. Причина несоответствия: {reason}. | Put the item in stash {stash}, then confirm delivery separately. You can retrieve it before confirmation. Requirement check: {reason}. |
+| `special.shared.unsuitable_card` | Неподходящий товар остаётся у команды. Подтверждённая попытка: респект −1 один раз за экземпляр в этом заказе. Повторное нажатие не добавляет штраф. | The team keeps unsuitable goods. Confirmed attempt: respect −1 once per item for this order. Repeated confirmation adds no penalty. |

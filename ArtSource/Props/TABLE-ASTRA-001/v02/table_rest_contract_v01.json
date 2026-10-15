@@ -1,0 +1,560 @@
+{
+  "version": "table_rest_contract_v01",
+  "date": "2026-10-16",
+  "frames": {
+    "blender_table_local": "RIG_Table_Root at the origin, +Z up, head end (pillow) -Y, foot end/push handle +Y, patient's left = -X",
+    "unity_prefab_local": "OperatingTableAstra_v02 root (same frame as NetworkTableAstra root): position = (-x, z, -y) of Blender table-local; head end +Z, patient's left = +X"
+  },
+  "patient_root": {
+    "object": "PatientRest (parent of the SAUSAGE_BUDDY_PATIENT_v01 model instance at identity)",
+    "blender_table_local": {
+      "location": [
+        0.0,
+        0.0,
+        0.66
+      ],
+      "rotation_euler_deg": [
+        0,
+        0,
+        180
+      ]
+    },
+    "unity_prefab_local": {
+      "localPosition": [
+        -0.0,
+        0.66,
+        -0.0
+      ],
+      "localEulerAngles": [
+        0.0,
+        180.0,
+        0.0
+      ],
+      "localRotation_xyzw": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "clip": "Patient_TableRest_v01.fbx take 'Buddy_Rig_Mixamo65|Patient_TableRest' (1 frame, all 65 bones; Hips carry the lying pose relative to the rig root; do not add root motion)",
+    "hips_world_blender_table_local": [
+      0.0,
+      0.0,
+      0.7712
+    ]
+  },
+  "pad_surface": {
+    "lying_surface_z_blender": [
+      0.646,
+      0.664
+    ],
+    "centre_line_z": 0.6634,
+    "edge_flat_z_at_abs_x_0_27": 0.6534,
+    "pillow_wedge": "rises from y=-0.62 (z 0.663) to y=-0.93 (z 0.789), ~24 deg; head end only",
+    "unity_y": 0.6634
+  },
+  "inc_markers_in_table_rest": {
+    "INC_KIDNEY_L": {
+      "blender_table_local": {
+        "position": [
+          -0.075,
+          -0.115,
+          0.8768
+        ],
+        "x_axis": [
+          -0.9532,
+          -0.0,
+          -0.3025
+        ],
+        "y_axis": [
+          -0.0112,
+          -0.9993,
+          0.0354
+        ],
+        "z_axis_normal": [
+          -0.3023,
+          0.0372,
+          0.9525
+        ]
+      },
+      "unity_prefab_local": {
+        "position": [
+          0.075,
+          0.8768,
+          0.115
+        ],
+        "rotation_quat_xyzw": [
+          -0.15302,
+          -0.98805,
+          0.01838,
+          0.00285
+        ],
+        "euler_deg": [
+          2.0314,
+          180.645,
+          17.6187
+        ]
+      }
+    },
+    "INC_KIDNEY_R": {
+      "blender_table_local": {
+        "position": [
+          0.075,
+          -0.115,
+          0.8772
+        ],
+        "x_axis": [
+          -0.9388,
+          -0.0,
+          0.3445
+        ],
+        "y_axis": [
+          0.0116,
+          -0.9994,
+          0.0317
+        ],
+        "z_axis_normal": [
+          0.3443,
+          0.0337,
+          0.9382
+        ]
+      },
+      "unity_prefab_local": {
+        "position": [
+          -0.075,
+          0.8772,
+          0.115
+        ],
+        "rotation_quat_xyzw": [
+          -0.17493,
+          0.98444,
+          -0.0166,
+          0.00295
+        ],
+        "euler_deg": [
+          1.8143,
+          179.3339,
+          339.837
+        ]
+      }
+    },
+    "INC_LIVER": {
+      "blender_table_local": {
+        "position": [
+          0.06,
+          -0.215,
+          0.8766
+        ],
+        "x_axis": [
+          -0.9714,
+          -0.0,
+          0.2375
+        ],
+        "y_axis": [
+          -0.0246,
+          -0.9946,
+          -0.1006
+        ],
+        "z_axis_normal": [
+          0.2362,
+          -0.1036,
+          0.9662
+        ]
+      },
+      "unity_prefab_local": {
+        "position": [
+          -0.06,
+          0.8766,
+          0.215
+        ],
+        "rotation_quat_xyzw": [
+          0.11944,
+          -0.99149,
+          -0.05148,
+          0.0062
+        ],
+        "euler_deg": [
+          354.2258,
+          181.4166,
+          346.1906
+        ]
+      }
+    }
+  },
+  "straps": {
+    "STRAP_ARM_L": {
+      "hinge_axis": "local +X",
+      "open_angle_deg": 120.0,
+      "open_direction": "positive rotation about local +X lifts the inner end up and flips it outward",
+      "blender_table_local": {
+        "pivot": [
+          -0.2984,
+          -0.045,
+          0.6596
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "rotation_euler_deg": [
+          0.0,
+          -0.0,
+          -90.0
+        ]
+      },
+      "unity_prefab_local": {
+        "pivot": [
+          0.2984,
+          0.6596,
+          0.045
+        ],
+        "local_rotation_quat_xyzw": [
+          0.0,
+          0.70711,
+          0.0,
+          0.70711
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -0.0,
+          -1.0
+        ],
+        "note": "Unity local +X of the imported strap = -(C*X_blender); rotation about local +X keeps the Blender angle sign"
+      }
+    },
+    "STRAP_ARM_R": {
+      "hinge_axis": "local +X",
+      "open_angle_deg": 120.0,
+      "open_direction": "positive rotation about local +X lifts the inner end up and flips it outward",
+      "blender_table_local": {
+        "pivot": [
+          0.3017,
+          -0.045,
+          0.6599
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_euler_deg": [
+          0.0,
+          -0.0,
+          90.0
+        ]
+      },
+      "unity_prefab_local": {
+        "pivot": [
+          -0.3017,
+          0.6599,
+          0.045
+        ],
+        "local_rotation_quat_xyzw": [
+          0.0,
+          -0.70711,
+          0.0,
+          0.70711
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "note": "Unity local +X of the imported strap = -(C*X_blender); rotation about local +X keeps the Blender angle sign"
+      }
+    },
+    "STRAP_LEG_L": {
+      "hinge_axis": "local +X",
+      "open_angle_deg": 120.0,
+      "open_direction": "positive rotation about local +X lifts the inner end up and flips it outward",
+      "blender_table_local": {
+        "pivot": [
+          -0.2973,
+          0.62,
+          0.6623
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "rotation_euler_deg": [
+          0.0,
+          -0.0,
+          -90.0
+        ]
+      },
+      "unity_prefab_local": {
+        "pivot": [
+          0.2973,
+          0.6623,
+          -0.62
+        ],
+        "local_rotation_quat_xyzw": [
+          0.0,
+          0.70711,
+          0.0,
+          0.70711
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -0.0,
+          -1.0
+        ],
+        "note": "Unity local +X of the imported strap = -(C*X_blender); rotation about local +X keeps the Blender angle sign"
+      }
+    },
+    "STRAP_LEG_R": {
+      "hinge_axis": "local +X",
+      "open_angle_deg": 120.0,
+      "open_direction": "positive rotation about local +X lifts the inner end up and flips it outward",
+      "blender_table_local": {
+        "pivot": [
+          0.2992,
+          0.62,
+          0.6629
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_euler_deg": [
+          0.0,
+          -0.0,
+          90.0
+        ]
+      },
+      "unity_prefab_local": {
+        "pivot": [
+          -0.2992,
+          0.6629,
+          -0.62
+        ],
+        "local_rotation_quat_xyzw": [
+          0.0,
+          -0.70711,
+          0.0,
+          0.70711
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "note": "Unity local +X of the imported strap = -(C*X_blender); rotation about local +X keeps the Blender angle sign"
+      }
+    },
+    "STRAP_TORSO": {
+      "hinge_axis": "local +X",
+      "open_angle_deg": 120.0,
+      "open_direction": "positive rotation about local +X lifts the inner end up and flips it outward",
+      "blender_table_local": {
+        "pivot": [
+          -0.2982,
+          0.055,
+          0.6598
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "rotation_euler_deg": [
+          0.0,
+          -0.0,
+          -90.0
+        ]
+      },
+      "unity_prefab_local": {
+        "pivot": [
+          0.2982,
+          0.6598,
+          -0.055
+        ],
+        "local_rotation_quat_xyzw": [
+          0.0,
+          0.70711,
+          0.0,
+          0.70711
+        ],
+        "hinge_axis_dir": [
+          0.0,
+          -0.0,
+          -1.0
+        ],
+        "note": "Unity local +X of the imported strap = -(C*X_blender); rotation about local +X keeps the Blender angle sign"
+      }
+    }
+  },
+  "strap_order_for_OperatingTableStraps": [
+    "STRAP_ARM_L",
+    "STRAP_ARM_R",
+    "STRAP_LEG_L",
+    "STRAP_LEG_R",
+    "STRAP_TORSO"
+  ],
+  "pose_contact_gaps_mm": {
+    "calf": 36.6,
+    "face": 243.3,
+    "foot": 1.4,
+    "forearm": 1.5,
+    "hand": 2.2,
+    "head_back": 3.3,
+    "head_cap": 3.4,
+    "mid_back": 6.1,
+    "pelvis": 13.3,
+    "shorts": 1.0,
+    "thigh": 40.7,
+    "upper_arm": 3.6,
+    "upper_back": 0.5
+  },
+  "anchors_unity_prefab_local": {
+    "PatientRest": {
+      "localPosition": [
+        0,
+        0.66,
+        0
+      ],
+      "localEulerAngles": [
+        0,
+        180,
+        0
+      ]
+    },
+    "CameraAnchor": {
+      "localPosition": [
+        -1.6,
+        1.7,
+        0.02
+      ],
+      "lookAt": [
+        -0.05,
+        0.78,
+        0.1
+      ],
+      "localRotation_xyzw": [
+        0.19169,
+        0.66414,
+        -0.18205,
+        0.69931
+      ],
+      "localEulerAngles": [
+        30.658,
+        87.045,
+        0.0
+      ],
+      "fov_deg": 50,
+      "note": "patient's right side (Unity -X), frames the whole patient and the tray at 16:10/16:9"
+    },
+    "TrayAnchor": {
+      "localPosition": [
+        -0.57,
+        0.0,
+        -0.29
+      ],
+      "localEulerAngles": [
+        0,
+        0,
+        0
+      ],
+      "child": "InstrumentStand_v01 prefab instance (SLOT_* found deep under the table)"
+    },
+    "InstrumentStand_slots_stand_local_unity": {
+      "SLOT_SYRINGE_ANESTHESIA": [
+        0.135,
+        0.692,
+        0.165
+      ],
+      "SLOT_SYRINGE_BLOOD": [
+        0.135,
+        0.692,
+        0.0
+      ],
+      "SLOT_SCALPEL": [
+        0.135,
+        0.692,
+        -0.165
+      ],
+      "SLOT_BLOODBAG_1": [
+        0.0,
+        0.692,
+        0.165
+      ],
+      "SLOT_BLOODBAG_2": [
+        0.0,
+        0.692,
+        0.0
+      ],
+      "SLOT_BLOODBAG_3": [
+        0.0,
+        0.692,
+        -0.165
+      ],
+      "SLOT_ORGAN_1": [
+        -0.135,
+        0.692,
+        0.165
+      ],
+      "SLOT_ORGAN_2": [
+        -0.135,
+        0.692,
+        0.0
+      ],
+      "SLOT_ORGAN_3": [
+        -0.135,
+        0.692,
+        -0.165
+      ],
+      "orientation": "slot rotation = stand rotation (identity); +Y up"
+    }
+  },
+  "unity_verification_2026-10-16": {
+    "hips_table_local": [
+      0,
+      0.7712,
+      0
+    ],
+    "head_table_local": [
+      0,
+      0.8133,
+      0.4159
+    ],
+    "incision_pieces_vs_INC_markers": "OperationIncisions_v01.fbx instanced at the table root: every piece 0.00 mm / 0.000 deg from its INC_* marker of the sampled patient",
+    "INC_marker_lossyScale": [
+      100,
+      100,
+      100
+    ],
+    "strap_hinge_axis_prefab_local": {
+      "STRAP_ARM_L": [
+        0,
+        0,
+        -1
+      ],
+      "STRAP_ARM_R": [
+        0,
+        0,
+        1
+      ],
+      "STRAP_LEG_L": [
+        0,
+        0,
+        -1
+      ],
+      "STRAP_LEG_R": [
+        0,
+        0,
+        1
+      ],
+      "STRAP_TORSO": [
+        0,
+        0,
+        -1
+      ]
+    },
+    "strap_open_check": "rotation +120 deg about local +X moves every strap outward beyond the pad edge (Unity), same sign as Blender"
+  }
+}

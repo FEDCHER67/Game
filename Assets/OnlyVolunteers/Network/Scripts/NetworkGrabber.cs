@@ -38,6 +38,15 @@ namespace OnlyVolunteers.Network
         public Collider PlayerCollider => player != null ? player.PlayerCollider : null;
         public Vector3 MotorPosition => player != null ? player.MotorPosition : Vector3.positiveInfinity;
         public bool IsValidHolder => IsServerStarted && Owner != null && Owner.IsActive;
+        /// <summary>Local hand interaction is temporarily owned by an operation tool/view.</summary>
+        public bool InputSuppressed { get; set; }
+
+        // Legacy Input OR the Input System mouse the operation table reads (the same physical button in play; the
+        // dev scenario driver's virtual mouse in automated runs). Grab tuning is unchanged.
+        private static UnityEngine.InputSystem.Mouse SystemMouse => OnlyVolunteers.Operation.Stage1.OpsInput.Mouse;
+        private static bool LmbHeld => Input.GetMouseButton(0) || (SystemMouse != null && SystemMouse.leftButton.isPressed);
+        private static bool LmbDown => Input.GetMouseButtonDown(0) || (SystemMouse != null && SystemMouse.leftButton.wasPressedThisFrame);
+        private static bool LmbUp => Input.GetMouseButtonUp(0) || (SystemMouse != null && SystemMouse.leftButton.wasReleasedThisFrame);
 
         private void Awake()
         {
@@ -95,20 +104,20 @@ namespace OnlyVolunteers.Network
         private void Update()
         {
             if (!IsOwner || player == null || player.ViewCamera == null || profile == null) return;
-            if ((Cursor.lockState != CursorLockMode.Locked || player.HandsBusy) && !smokeHolding)
+            if ((InputSuppressed || !OnlyVolunteers.Operation.Stage1.OpsInput.CursorLocked || player.HandsBusy) && !smokeHolding)
             {
                 if (clientHeld != null || pending) ReleaseClient();
                 return;
             }
 
-            if (Input.GetMouseButtonUp(0) ||
-                (clientHeld != null && !Input.GetMouseButton(0) && !smokeHolding))
+            if (LmbUp ||
+                (clientHeld != null && !LmbHeld && !smokeHolding))
             {
                 ReleaseClient();
                 return;
             }
 
-            if (Input.GetMouseButtonDown(0) && clientHeld == null && !pending)
+            if (LmbDown && clientHeld == null && !pending)
                 TryGrabRay(new Ray(player.ViewCamera.transform.position, player.ViewCamera.transform.forward));
 
             if (clientHeld != null && Time.unscaledTime >= nextSend)
@@ -250,7 +259,7 @@ namespace OnlyVolunteers.Network
             pendingId = 0;
             Debug.Log($"[OV Grab] client result: granted={body != null}, owner={OwnerId}");
             if (body != null && IsOwner && (smokeHolding ||
-                (Input.GetMouseButton(0) && Cursor.lockState == CursorLockMode.Locked)))
+                (LmbHeld && OnlyVolunteers.Operation.Stage1.OpsInput.CursorLocked)))
             {
                 clientHeld = body;
                 clientHoldId = requestId;

@@ -11,18 +11,8 @@ using UnityEngine.InputSystem;
 
 namespace OnlyVolunteers.Clinic
 {
-    // The operation on the map (Field Clinic loop): the existing three-step cartoon kidney mini-game (Operation/
-    // KidneyMiniGame: cut along the dotted line, pull it out, three strips of duct tape) on the table's stand-in, run with
-    // the map's first-person KCC player instead of the OperationTest walker. Gameplay abstraction only, no medicine.
-    // - Begin: AtBase -> InOperation. The player stands still with a free cursor (KccFirstPersonInput.MovementLocked /
-    //   LookSuspended, like the phone); the hands (grab, E/Q, inventory) and the phone are off. The view camera blends to
-    //   the table's overhead anchor; this runs after the KCC's LateUpdate (execution order), so its pose wins each frame.
-    // - Esc before the kidney is out: cancelled, InOperation -> AtBase, the patient stays strapped on the table, E retries.
-    //   Once it is out the tape step finishes the job (Esc only reminds).
-    // - Done: grade = the patient's starting grade lowered by the mini-game's penalty (OrganGrading), money =
-    //   OrganGrading.UnitValue(kidney base value, grade). PatientRegistry.TryResolve pays exactly once per PatientId; then
-    //   the camera blends back, controls return, and the stand-in leaves the table.
-    // The organ is paid for at once (a buyer is not in the loop yet); it does not go into the inventory.
+    // Legacy offline runner remains compatible. Detachment creates merchandise; completion never credits cash.
+    // New network operations are hosted only in Operation_Net_Stage1.
     [DefaultExecutionOrder(10000)]
     public sealed class ClinicOperationRunner : MonoBehaviour
     {
@@ -101,10 +91,10 @@ namespace OnlyVolunteers.Clinic
                     Cancel();
                     return;
                 }
-                Comic("Сначала заклей скотчем!", _station.Patient.transform.position + Vector3.up * 0.5f, new Color(1f, 0.85f, 0.3f));
             }
-            if (_game.Current == KidneyMiniGame.Step.Tape && _game.PoppedKidney != null) LaunchKidney();
-            if (_game.Tick(mouse, keyboard)) Finish();
+            bool done = _game.Tick(mouse, keyboard);
+            if (_game.PoppedKidney != null) LaunchKidney();
+            if (done) Finish();
         }
 
         // After KccFirstPersonInput.LateUpdate (execution order 10000): the view camera's pose is ours while operating.
@@ -142,7 +132,7 @@ namespace OnlyVolunteers.Clinic
             return _blend >= 1f;
         }
 
-        // The kidney leaves the body as soon as it pops (the tape step goes on meanwhile), as in OperationSession.
+        // The legacy cosmetic pop occurs on extraction, as in OperationSession.
         private void LaunchKidney()
         {
             Transform organ = _game.PoppedKidney;
@@ -156,12 +146,14 @@ namespace OnlyVolunteers.Clinic
             _game.Cleanup(true);
             OrganQuality grade = OrganGrading.Lower(_record.Quality, _game.Penalty);
             int value = RewardFor(grade);
-            bool paid = _registry.TryResolve(_record, value);
+            bool resolved = _registry.TryResolve(_record, 0);
+            if (resolved && _kidneyItem != null)
+                OfflineWorldItem.Spawn(_kidneyItem, 1, value, _station.Patient.transform.position + Vector3.up * 0.5f);
             string verdict = _game.Penalty == 0 ? "Чистая работа!" : _game.Yanked ? "Рывок помял почку" : "Разрез вышел кривым";
             Status = $"Почка [{OrganGrading.Label(grade)}] за {Time.time - _startedAt:0} с. {verdict}";
             _finished = true;
             _game = null;
-            Finished?.Invoke(_record, paid ? value : 0, grade, Status);
+            Finished?.Invoke(_record, 0, grade, Status);
             StartOut();
         }
 
@@ -243,7 +235,7 @@ namespace OnlyVolunteers.Clinic
                         Texture2D.whiteTexture);
                     GUI.color = old;
                 }
-                string esc = _game.Current == KidneyMiniGame.Step.Tape ? "" : "[Esc] — отменить операцию (пациент останется на столе)";
+                string esc = "[Esc] — отменить операцию (пациент останется на столе)";
                 OperationGui.Shadowed(new Rect(0f, Screen.height - 46f, Screen.width, 30f), esc, OperationGui.Center(16), new Color(1f, 1f, 1f, 0.85f));
             }
             if (_camera == null) return;

@@ -22,6 +22,18 @@ namespace OnlyVolunteers.Clinic
 
         public PatientRecord Get(string id) => id != null && _records.TryGetValue(id, out PatientRecord r) ? r : null;
 
+        /// <summary>The network operation uses the same stable registry without creating a crowd-controller copy.</summary>
+        public PatientRecord EnsureOperationPatient(string id, OnlyVolunteers.Operation.Stage1.OperationState state)
+        {
+            if (!_records.TryGetValue(id, out var record))
+            {
+                record = new PatientRecord(id, state.onTable ? PatientStage.AtBase : PatientStage.Captured);
+                _records.Add(id, record);
+            }
+            record.Operation ??= state;
+            return record;
+        }
+
         public bool IsCompleted(string id) => id != null && _completed.Contains(id);
 
         /// <summary>Save/load: ids of patients that were already paid for.</summary>

@@ -35,6 +35,23 @@ namespace OnlyVolunteers.Inventory
         private readonly SyncVar<int> cash = new SyncVar<int>(new SyncTypeSettings(ReadPermission.OwnerOnly));
         private readonly SyncVar<int> selected = new SyncVar<int>();
 
+        private readonly SyncVar<WorldItem> physicalItem = new();
+        public WorldItem PhysicalItem => physicalItem.Value;
+        public bool ServerHoldPhysical(WorldItem item)
+        {
+            if (!IsServerInitialized || item == null || physicalItem.Value != null ||
+                !item.TryGetComponent<IPhysicalInventoryItem>(out var physical) || !physical.ServerTryHold(this)) return false;
+            physicalItem.Value = item;
+            return true;
+        }
+        public void ServerReleasePhysical(Vector3 position, Vector3 velocity)
+        {
+            if (!IsServerInitialized || physicalItem.Value == null) return;
+            var item = physicalItem.Value;
+            physicalItem.Value = null;
+            if (item.TryGetComponent<IPhysicalInventoryItem>(out var physical)) physical.ServerRelease(position, velocity);
+        }
+
         private InventoryModel model;
         private int predictedSelection = -1;
         private readonly RaycastHit[] hits = new RaycastHit[16];
@@ -97,7 +114,8 @@ namespace OnlyVolunteers.Inventory
 
         public override void OnStopServer()
         {
-            // Carried items disappear with the player for now; dropping them is an open design decision.
+            if (physicalItem.Value != null) ServerReleasePhysical(physicalItem.Value.transform.position, Vector3.zero);
+            // Legacy pocket contents retain their existing lifecycle; physical operation goods remain in the world.
             model = null;
             base.OnStopServer();
         }
@@ -123,7 +141,9 @@ namespace OnlyVolunteers.Inventory
         /// <summary>Owner: drop one item from the selected slot in front of the view.</summary>
         public bool RequestDropSelected(Ray view)
         {
-            if (!IsOwner || !IsClientInitialized || GetSlot(SelectedIndex).IsEmpty) return false;
+            if (!IsOwner || !IsClientInitialized) return false;
+            if (PhysicalItem != null) { ServerDropPhysical(); return true; }
+            if (GetSlot(SelectedIndex).IsEmpty) return false;
             ServerDrop(SelectedIndex, view.origin, view.direction);
             return true;
         }
@@ -173,15 +193,22 @@ namespace OnlyVolunteers.Inventory
                 target == null || !target.IsSpawned)
                 return;
             WorldItem item = target.GetComponent<WorldItem>();
-            if (item == null || item.Definition == null || database.Get(item.Definition.Id) != item.Definition ||
+            if (item == null || item.Definition == null || (database.Get(item.Definition.Id) != item.Definition && !item.TryGetComponent<IPhysicalInventoryItem>(out _)) ||
                 Vector3.Distance(item.transform.position, ReachOrigin.position) > reach + ServerReachTolerance)
                 return;
+            if (item.TryGetComponent<IPhysicalInventoryItem>(out _)) { ServerHoldPhysical(item); return; }
             int itemId = item.Definition.Id;
             int unitValue = item.UnitValue;
             int added = model.TryAdd(itemId, item.Count, unitValue);
             if (added <= 0) return;
             item.ServerTake(added);
             ServerPickedUp?.Invoke(new ItemStack(itemId, added, unitValue));
+        }
+
+        [ServerRpc]
+        private void ServerDropPhysical()
+        {
+            if (physicalItem.Value != null) ServerReleasePhysical(physicalItem.Value.transform.position, Vector3.zero);
         }
 
         [ServerRpc]

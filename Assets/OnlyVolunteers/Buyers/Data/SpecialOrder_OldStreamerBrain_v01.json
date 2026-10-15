@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "SO_OLD_STREAMER_BRAIN",
+  "displayNameRu": "Мозг IRL-стримера с разноцветными волосами",
+  "displayNameEn": "Multicoloured-Hair IRL Streamer's Brain",
+  "offeringBuyerId": "PLACEHOLDER.BUYER.LATE_ORDER_PROVIDER",
+  "availableInFirstVersion": false,
+  "targetNpcTypeId": "OLD_STREAMER",
+  "requiresClueTargetIdentity": true,
+  "organItemId": 105,
+  "minimumTier": 4,
+  "packaging": "sealed_individual_organ_bag",
+  "deadlineGameHours": 48,
+  "premium": 0.25,
+  "clueTextIds": [
+    "special.old_streamer.pitch",
+    "special.old_streamer.clue_card"
+  ],
+  "cluePhotoId": "PLACEHOLDER.PHOTO.OLD_STREAMER",
+  "stashId": "PLACEHOLDER.STASH.OLD_STREAMER_BRAIN",
+  "unlockCondition": {
+    "all": [
+      {
+        "kind": "respect_at_least",
+        "subjectId": "PLACEHOLDER.BUYER.LATE_ORDER_PROVIDER",
+        "minimumValue": 40
+      },
+      {
+        "kind": "owns_tool",
+        "subjectId": "PLACEHOLDER.TOOL.SAW",
+        "minimumValue": 0
+      },
+      {
+        "kind": "district_access",
+        "subjectId": "PLACEHOLDER.DISTRICT.DOWNTOWN",
+        "minimumValue": 0
+      }
+    ]
+  },
+  "authoringNotes": [
+    "Late Downtown content, excluded from the first-version offer pool; the provider is explicitly undecided in BUYERS_SPEC v02.",
+    "Offer requires a saw and Downtown access, in addition to the provider's respect threshold; unresolved keys must not silently satisfy conditions.",
+    "Exact location, appearance hours, search area, photo and stash have not been authored; do not invent them or reuse Hamlet clues.",
+    "Sealed packaging is required; refrigeration is independent. Target instance is bound by the order's clue, not just NPC type.",
+    "Uses the new G28 pitch and combined clue card text IDs; runtime fills the photo, search area, stash and other named text tokens."
+  ]
+}

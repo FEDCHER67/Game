@@ -219,6 +219,12 @@ namespace OnlyVolunteers.Network
             Debug.Log($"[OV Network] player spawned id={connection.ClientId}, slot={slot}, participants={players.Count}");
         }
 
+        /// <summary>Scene-owned server spawners register their physical bodies with the existing grab allow-list.</summary>
+        public void RegisterBody(NetworkPhysicsBody body)
+        {
+            if (manager != null && manager.ServerManager.Started && body != null && body.IsSpawned && !bodies.Contains(body)) bodies.Add(body);
+        }
+
         private void SpawnBodies()
         {
             if (bodyPrefab == null || bodies.Count != 0) return;

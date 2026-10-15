@@ -28,6 +28,6 @@ namespace OnlyVolunteers.Operation
             return (OrganQuality)(value < 0 ? 0 : value);
         }
 
-        public static string Label(OrganQuality quality) => quality == OrganQuality.PerfectPlus ? "Perfect+" : quality.ToString();
+        public static string Label(OrganQuality quality) => quality == OrganQuality.PerfectPlus ? "Perfect+" : quality == OrganQuality.Normal ? "Acceptable" : quality.ToString();
     }
 }

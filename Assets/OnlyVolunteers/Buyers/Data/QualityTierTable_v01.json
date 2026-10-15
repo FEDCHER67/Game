@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "QUALITY_TIERS_V01",
+  "tiers": [
+    { "tier": 1, "displayNameEn": "Damaged", "displayNameRu": "Убитое", "percentLabel": "20%", "multiplier": 0.3, "colour": { "r": 0.549019608, "g": 0.482352941, "b": 0.419607843, "a": 1.0 } },
+    { "tier": 2, "displayNameEn": "Acceptable", "displayNameRu": "Сойдёт", "percentLabel": "40%", "multiplier": 1.0, "colour": { "r": 0.760784314, "g": 0.698039216, "b": 0.227450980, "a": 1.0 } },
+    { "tier": 3, "displayNameEn": "Good", "displayNameRu": "Хорошее", "percentLabel": "60%", "multiplier": 1.6, "colour": { "r": 0.301960784, "g": 0.760784314, "b": 0.352941176, "a": 1.0 } },
+    { "tier": 4, "displayNameEn": "Perfect", "displayNameRu": "Отличное", "percentLabel": "80%", "multiplier": 2.6, "colour": { "r": 0.243137255, "g": 0.552941176, "b": 1.0, "a": 1.0 } },
+    { "tier": 5, "displayNameEn": "Perfect+", "displayNameRu": "Идеальное", "percentLabel": "100%", "multiplier": 4.2, "colour": { "r": 0.654901961, "g": 0.360784314, "b": 1.0, "a": 1.0 } }
+  ],
+  "authoringNotes": [ "Color families are confirmed; exact RGBA values match the G27 BuyerCatalog palette and are a proposed presentation preset because the specs do not supply an exact palette. Percent labels are discrete tier captions, not a continuous quality scale." ]
+}

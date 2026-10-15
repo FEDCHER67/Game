@@ -33,14 +33,13 @@ namespace OnlyVolunteers.Operation
             }
         }
 
-        // Unlock reasons follow docs/drafts/ECONOMY_PROGRESSION_DRAFT.md (tool levels), not approved.
         private static readonly OrganEntry[] LockedOrgans =
         {
-            new OrganEntry("Печень", "в прототипе нет мини-игры"),
-            new OrganEntry("Лёгкие", "нужен полевой скальпель (ур. 1)"),
-            new OrganEntry("Сердце", "нужен скальпель ур. 2 и анестезия"),
-            new OrganEntry("Глаза", "нужен профессиональный скальпель (ур. 3)"),
-            new OrganEntry("Мозг", "нужен лазерный резак (ур. 5)"),
+            new OrganEntry("Печень", "доступна в Operation_Net_Stage1"),
+            new OrganEntry("Лёгкие", "вне этапа 1"),
+            new OrganEntry("Сердце", "вне этапа 1"),
+            new OrganEntry("Глаза", "вне этапа 1"),
+            new OrganEntry("Мозг", "вне этапа 1"),
         };
 
         [SerializeField] private ItemDefinition kidneyItem;
@@ -65,7 +64,7 @@ namespace OnlyVolunteers.Operation
         private float operationStarted;
         private string toast = "";
         private string lastItem = "";
-        // Set when the tape step finishes before the kidney's flight lands: the arrival toast adds it under the item line.
+        // Set when extraction finishes before the kidney's flight lands: the arrival toast adds it under the item line.
         private string pendingSummary;
         private float toastUntil;
 
@@ -116,8 +115,9 @@ namespace OnlyVolunteers.Operation
                     break;
                 case Phase.MiniGame:
                     if (mouse == null || keyboard == null) break;
-                    if (game.Current == KidneyMiniGame.Step.Tape && game.PoppedKidney != null) LaunchKidney();
-                    if (game.Tick(mouse, keyboard)) FinishKidney();
+                    bool done = game.Tick(mouse, keyboard);
+                    if (game.PoppedKidney != null) LaunchKidney();
+                    if (done) FinishKidney();
                     break;
                 case Phase.CameraOut:
                     if (Blend(camParent.TransformPoint(camLocalPosition), camParent.rotation * camLocalRotation)) End();
@@ -156,8 +156,8 @@ namespace OnlyVolunteers.Operation
             phase = Phase.MiniGame;
         }
 
-        // The kidney leaves the body as soon as it pops (while the player tapes the slit), so the flight and the
-        // inventory toast overlap the tape step instead of making the player wait.
+        // The kidney leaves the body as soon as it pops (on completion), so the flight and the
+        // inventory toast overlap completion instead of making the player wait.
         private void LaunchKidney()
         {
             Transform organ = game.PoppedKidney;

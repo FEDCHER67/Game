@@ -319,6 +319,8 @@ GameObject:
   - component: {fileID: 1877953044398204244}
   - component: {fileID: 8254515860488304688}
   - component: {fileID: 5485471258969622542}
+  - component: {fileID: 4450173735883414426}
+  - component: {fileID: 44898070520995934}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -460,6 +462,237 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 1877953044398204244}
   _networkObjectCache: {fileID: 0}
   profile: {fileID: 11400000, guid: 43495f597be7371469ba190df3da899b, type: 2}
+--- !u!114 &4450173735883414426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170281216164304377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296fb29a9caa42c88900d7bd2ba57b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OnlyVolunteers.Inventory::OnlyVolunteers.Inventory.NetworkInventory
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1877953044398204244}
+  _networkObjectCache: {fileID: 0}
+  database: {fileID: 11400000, guid: 05b1d838a96b4f6eb14a4dfc2d0c4405, type: 2}
+  slotCount: 6
+  capacity: 12
+  reach: 2.5
+  reachOrigin: {fileID: 5194990910517442487}
+  dropDistance: 0.8
+  pickupLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &44898070520995934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170281216164304377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c312961369c437a876524b0ab7daa55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OnlyVolunteers.Inventory::OnlyVolunteers.Inventory.InventoryInput
+  inventorySource: {fileID: 4450173735883414426}
+  viewCamera: {fileID: 7744432392972568707}
+  requireLockedCursor: 1
+  externalPickup: 0
+  pickup:
+    m_Name: Pickup
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: c9b32377-a51d-4fdb-8d11-25f85b452680
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 35a36327-59f5-4949-9d2b-002afcfcaf7a
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pickup
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  drop:
+    m_Name: Drop
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 16ea5ff5-795d-46f1-88ba-00fe3141b28c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: c65eef69-7b70-45fc-afe8-662c92a8b78c
+      m_Path: <Keyboard>/g
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Drop
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  cycle:
+    m_Name: CycleSlot
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 6435239e-547e-4699-a2ca-ceffbd8db02b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: c5c93bc8-9f02-4c2e-95f5-681975681508
+      m_Path: <Mouse>/scroll/y
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: CycleSlot
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  selectSlot:
+  - m_Name: Slot1
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: aea3fed2-1757-4ffc-92ca-ac7a57a2dc61
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0ce81d5e-d12b-4a7d-a2e7-a7310f34c605
+      m_Path: <Keyboard>/1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot1
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot2
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: a5e3babb-5dd6-4976-b4a4-b4c597be161e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 5cb918e9-ece1-474e-8633-368f57c51433
+      m_Path: <Keyboard>/2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot2
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot3
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 5eac1889-23e6-45c1-8cc8-23240c0f0515
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: dfd3c585-3b3d-424d-a3d2-f4890e3b7670
+      m_Path: <Keyboard>/3
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot3
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot4
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 7491e760-96db-47de-b6e2-ce7df74bcfed
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: d1837d2d-5eda-4a3a-b798-da8d23414510
+      m_Path: <Keyboard>/4
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot4
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot5
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 47c2dadf-c505-48f9-ab71-367b58556e0e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1d87455c-ceff-4648-a3e0-87b3ce93c4b6
+      m_Path: <Keyboard>/5
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot5
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot6
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 72503092-4d1a-4f67-9750-7be66a80e628
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ab06d5c0-4628-4087-abd3-a39e9e3e5a36
+      m_Path: <Keyboard>/6
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot6
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot7
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 73f1039c-e161-402e-a7cf-199848bb4a55
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 388b4c75-203f-4f35-a520-933f1bdfc12e
+      m_Path: <Keyboard>/7
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot7
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  - m_Name: Slot8
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 377db510-b30e-4cfc-b312-7841ac01a0d4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 43be1dfd-f213-4bdb-8e15-022df0286a93
+      m_Path: <Keyboard>/8
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Slot8
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
 --- !u!1001 &5190741494823393535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -562,7 +795,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: FishNet.Runtime::FishNet.Component.Transforming.NetworkTransform
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 1877953044398204244}

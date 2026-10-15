@@ -1,0 +1,221 @@
+{
+  "straps": {
+    "STRAP_ARM_L": {
+      "kind": "arm",
+      "hinge_side_table_x_sign": -1,
+      "centre_y": -0.045,
+      "z_axis": 0.6596,
+      "pad_face_abs_x": 0.2919,
+      "samples": 2352,
+      "outward_shift_mm": 1.49,
+      "profile_points": 14,
+      "limb_max_radius": 0.1146,
+      "limb_apex_u": 0.0594,
+      "tris": 130
+    },
+    "STRAP_ARM_R": {
+      "kind": "arm",
+      "hinge_side_table_x_sign": 1,
+      "centre_y": -0.045,
+      "z_axis": 0.6599,
+      "pad_face_abs_x": 0.2952,
+      "samples": 3677,
+      "outward_shift_mm": 1.36,
+      "profile_points": 14,
+      "limb_max_radius": 0.1202,
+      "limb_apex_u": 0.0678,
+      "tris": 136
+    },
+    "STRAP_LEG_L": {
+      "kind": "leg",
+      "hinge_side_table_x_sign": -1,
+      "centre_y": 0.62,
+      "z_axis": 0.6623,
+      "pad_face_abs_x": 0.2908,
+      "samples": 3728,
+      "outward_shift_mm": 1.0,
+      "profile_points": 15,
+      "limb_max_radius": 0.2501,
+      "limb_apex_u": 0.204,
+      "tris": 138
+    },
+    "STRAP_LEG_R": {
+      "kind": "leg",
+      "hinge_side_table_x_sign": 1,
+      "centre_y": 0.62,
+      "z_axis": 0.6629,
+      "pad_face_abs_x": 0.2927,
+      "samples": 4227,
+      "outward_shift_mm": 0.99,
+      "profile_points": 17,
+      "limb_max_radius": 0.252,
+      "limb_apex_u": 0.1947,
+      "tris": 154
+    },
+    "STRAP_TORSO": {
+      "kind": "torso",
+      "hinge_side_table_x_sign": -1,
+      "centre_y": 0.055,
+      "z_axis": 0.6598,
+      "pad_face_abs_x": 0.2917,
+      "samples": 50973,
+      "outward_shift_mm": 0.94,
+      "profile_points": 17,
+      "tris": 162
+    }
+  },
+  "validation": {
+    "STRAP_ARM_L": {
+      "closed_overlaps": {
+        "body": 0,
+        "pad": 0,
+        "frame": 0,
+        "GEO_Push_Handle_Foot": 0,
+        "GEO_Lower_Longitudinal_Brace_Left": 0,
+        "GEO_Lower_Longitudinal_Brace_Right": 0,
+        "anchors": 8
+      },
+      "closed_min_gap_to_body_mm": 7.58,
+      "closed_min_gap_point": [
+        -0.243,
+        -0.007,
+        0.741
+      ],
+      "sweep_collisions_deg": {},
+      "open_bounds_min": [
+        -0.433,
+        -0.083,
+        0.638
+      ],
+      "open_bounds_max": [
+        -0.295,
+        -0.007,
+        0.774
+      ],
+      "tris": 130
+    },
+    "STRAP_ARM_R": {
+      "closed_overlaps": {
+        "body": 0,
+        "pad": 0,
+        "frame": 0,
+        "GEO_Push_Handle_Foot": 0,
+        "GEO_Lower_Longitudinal_Brace_Left": 0,
+        "GEO_Lower_Longitudinal_Brace_Right": 0,
+        "anchors": 8
+      },
+      "closed_min_gap_to_body_mm": 8.03,
+      "closed_min_gap_point": [
+        0.212,
+        -0.007,
+        0.743
+      ],
+      "sweep_collisions_deg": {},
+      "open_bounds_min": [
+        0.298,
+        -0.083,
+        0.639
+      ],
+      "open_bounds_max": [
+        0.442,
+        -0.007,
+        0.779
+      ],
+      "tris": 136
+    },
+    "STRAP_LEG_L": {
+      "closed_overlaps": {
+        "body": 0,
+        "pad": 0,
+        "frame": 0,
+        "GEO_Push_Handle_Foot": 0,
+        "GEO_Lower_Longitudinal_Brace_Left": 0,
+        "GEO_Lower_Longitudinal_Brace_Right": 0,
+        "anchors": 8
+      },
+      "closed_min_gap_to_body_mm": 7.34,
+      "closed_min_gap_point": [
+        -0.146,
+        0.582,
+        0.738
+      ],
+      "sweep_collisions_deg": {},
+      "open_bounds_min": [
+        -0.522,
+        0.582,
+        0.659
+      ],
+      "open_bounds_max": [
+        -0.294,
+        0.658,
+        0.895
+      ],
+      "tris": 138
+    },
+    "STRAP_LEG_R": {
+      "closed_overlaps": {
+        "body": 0,
+        "pad": 0,
+        "frame": 0,
+        "GEO_Push_Handle_Foot": 0,
+        "GEO_Lower_Longitudinal_Brace_Left": 0,
+        "GEO_Lower_Longitudinal_Brace_Right": 0,
+        "anchors": 14
+      },
+      "closed_min_gap_to_body_mm": 7.85,
+      "closed_min_gap_point": [
+        0.088,
+        0.582,
+        0.784
+      ],
+      "sweep_collisions_deg": {},
+      "open_bounds_min": [
+        0.296,
+        0.582,
+        0.66
+      ],
+      "open_bounds_max": [
+        0.521,
+        0.658,
+        0.897
+      ],
+      "tris": 154
+    },
+    "STRAP_TORSO": {
+      "closed_overlaps": {
+        "body": 0,
+        "pad": 0,
+        "frame": 0,
+        "GEO_Push_Handle_Foot": 0,
+        "GEO_Lower_Longitudinal_Brace_Left": 0,
+        "GEO_Lower_Longitudinal_Brace_Right": 0,
+        "anchors": 17
+      },
+      "closed_min_gap_to_body_mm": 7.19,
+      "closed_min_gap_point": [
+        0.067,
+        0.03,
+        0.876
+      ],
+      "sweep_collisions_deg": {},
+      "open_bounds_min": [
+        -0.686,
+        0.017,
+        0.631
+      ],
+      "open_bounds_max": [
+        -0.292,
+        0.093,
+        1.213
+      ],
+      "tris": 162
+    },
+    "GEO_Strap_Anchors": {
+      "tris": 212,
+      "overlap_body": 0,
+      "overlap_frame": 0,
+      "overlap_pad": 0
+    },
+    "caster_rig_unchanged": false
+  }
+}

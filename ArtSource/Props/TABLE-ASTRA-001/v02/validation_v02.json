@@ -1,0 +1,195 @@
+{
+  "checks": {
+    "rig_and_table_nodes_identical_to_v01": true,
+    "v01_straps_retired": true,
+    "exactly_five_straps": true,
+    "straps_parent_is_table_root": true,
+    "blend_rig_names_props_transforms_identical_to_v01": true,
+    "closed_straps_no_penetration": true,
+    "closed_straps_gap_between_0_and_15mm": true,
+    "open_sweep_clear_of_body_pad_frame": true,
+    "open_sweep_above_floor": true,
+    "strap_custom_properties": true,
+    "anchors_no_penetration": true,
+    "incisions_six_pieces": true,
+    "incisions_on_markers": true,
+    "incisions_not_below_skin_over_1mm": true,
+    "clip_single_take": true,
+    "clip_65_bones": true,
+    "clip_single_frame": true,
+    "clip_armature_only": true,
+    "stand_slots": true,
+    "tri_budgets": true
+  },
+  "details": {
+    "rig_node_count": 35,
+    "rig_diffs": [],
+    "v02_extra_nodes": [
+      "GEO_Strap_Anchors",
+      "STRAP_ARM_L",
+      "STRAP_ARM_R",
+      "STRAP_LEG_L",
+      "STRAP_LEG_R",
+      "STRAP_TORSO"
+    ],
+    "straps": {
+      "STRAP_ARM_L": {
+        "closed_overlaps": {},
+        "closed_min_gap_mm": 7.46,
+        "hinge_axis": "local +X",
+        "open_angle_deg": 120.0,
+        "sweep_hits_deg": {},
+        "sweep_min_z_m": 0.6379,
+        "tris": 130
+      },
+      "STRAP_ARM_R": {
+        "closed_overlaps": {},
+        "closed_min_gap_mm": 8.01,
+        "hinge_axis": "local +X",
+        "open_angle_deg": 120.0,
+        "sweep_hits_deg": {},
+        "sweep_min_z_m": 0.6387,
+        "tris": 136
+      },
+      "STRAP_LEG_L": {
+        "closed_overlaps": {},
+        "closed_min_gap_mm": 7.34,
+        "hinge_axis": "local +X",
+        "open_angle_deg": 120.0,
+        "sweep_hits_deg": {},
+        "sweep_min_z_m": 0.6583,
+        "tris": 138
+      },
+      "STRAP_LEG_R": {
+        "closed_overlaps": {},
+        "closed_min_gap_mm": 7.85,
+        "hinge_axis": "local +X",
+        "open_angle_deg": 120.0,
+        "sweep_hits_deg": {},
+        "sweep_min_z_m": 0.6589,
+        "tris": 154
+      },
+      "STRAP_TORSO": {
+        "closed_overlaps": {},
+        "closed_min_gap_mm": 7.09,
+        "hinge_axis": "local +X",
+        "open_angle_deg": 120.0,
+        "sweep_hits_deg": {},
+        "sweep_min_z_m": 0.626,
+        "tris": 162
+      }
+    },
+    "anchors": {
+      "overlaps": {},
+      "tris": 212
+    },
+    "incisions": {
+      "INCISION_KIDNEY_L_COVER": {
+        "marker": "INC_KIDNEY_L",
+        "origin_err_mm": 0.0,
+        "axis_err": 0.0,
+        "tris": 140,
+        "min_height_above_skin_mm": -0.8
+      },
+      "INCISION_KIDNEY_L_OPEN": {
+        "marker": "INC_KIDNEY_L",
+        "origin_err_mm": 0.0,
+        "axis_err": 0.0,
+        "tris": 162,
+        "min_height_above_skin_mm": -0.8
+      },
+      "INCISION_KIDNEY_R_COVER": {
+        "marker": "INC_KIDNEY_R",
+        "origin_err_mm": 0.0,
+        "axis_err": 0.0,
+        "tris": 140,
+        "min_height_above_skin_mm": -0.8
+      },
+      "INCISION_KIDNEY_R_OPEN": {
+        "marker": "INC_KIDNEY_R",
+        "origin_err_mm": 0.0,
+        "axis_err": 0.0,
+        "tris": 162,
+        "min_height_above_skin_mm": -0.8
+      },
+      "INCISION_LIVER_COVER": {
+        "marker": "INC_LIVER",
+        "origin_err_mm": 0.0,
+        "axis_err": 0.0,
+        "tris": 140,
+        "min_height_above_skin_mm": -0.8
+      },
+      "INCISION_LIVER_OPEN": {
+        "marker": "INC_LIVER",
+        "origin_err_mm": 0.0,
+        "axis_err": 0.0,
+        "tris": 162,
+        "min_height_above_skin_mm": -0.8
+      }
+    },
+    "clip_takes": [
+      [
+        "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Patient_TableRest",
+        [
+          1.0,
+          1.0
+        ]
+      ]
+    ],
+    "stand": {
+      "tris": 480,
+      "slots": [
+        "SLOT_BLOODBAG_1",
+        "SLOT_BLOODBAG_2",
+        "SLOT_BLOODBAG_3",
+        "SLOT_ORGAN_1",
+        "SLOT_ORGAN_2",
+        "SLOT_ORGAN_3",
+        "SLOT_SCALPEL",
+        "SLOT_SYRINGE_ANESTHESIA",
+        "SLOT_SYRINGE_BLOOD"
+      ]
+    },
+    "tri_budget_limits": {
+      "STRAP": 175,
+      "GEO_Strap_Anchors": 260,
+      "INCISION": 200,
+      "STAND_TOTAL": 600
+    },
+    "rig_custom_props_sample": {
+      "RIG_CasterSteer_Foot_Left": {
+        "trail_m": 0.035,
+        "steering_axis": "local Z"
+      },
+      "RIG_CasterSteer_Foot_Right": {
+        "trail_m": 0.035,
+        "steering_axis": "local Z"
+      },
+      "RIG_CasterSteer_Head_Left": {
+        "trail_m": 0.035,
+        "steering_axis": "local Z"
+      },
+      "RIG_CasterSteer_Head_Right": {
+        "trail_m": 0.035,
+        "steering_axis": "local Z"
+      },
+      "RIG_WheelRoll_Foot_Left": {
+        "radius_m": 0.105,
+        "roll_axis": "local X; negative rotation travels local +Y"
+      },
+      "RIG_WheelRoll_Foot_Right": {
+        "radius_m": 0.105,
+        "roll_axis": "local X; negative rotation travels local +Y"
+      },
+      "RIG_WheelRoll_Head_Left": {
+        "radius_m": 0.105,
+        "roll_axis": "local X; negative rotation travels local +Y"
+      },
+      "RIG_WheelRoll_Head_Right": {
+        "radius_m": 0.105,
+        "roll_axis": "local X; negative rotation travels local +Y"
+      }
+    }
+  },
+  "all_passed": true
+}

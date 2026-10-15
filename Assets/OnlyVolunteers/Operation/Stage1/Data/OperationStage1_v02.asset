@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c34c52910fb4aa5b172ee5fd3579e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OnlyVolunteers.Operation.Core::OnlyVolunteers.Operation.Stage1.OperationTuning
+  patientMass: 12
+  bloodBagCount: 3
+  alignmentSeconds: 0.6
+  placementRadius: 1.2
+  padTop: 0.6634
+  padHalfExtents: {x: 0.42, y: 0.5, z: 1.05}
+  tableReach: 3.2
+  enterDistance: 2.2
+  toolReach: 2.5
+  dazedSeconds: 4
+  escapeSeconds: 7
+  rescueSeconds: 8
+  dosePerSecond: 0.5
+  suitableMinimum: 0.8
+  suitableMaximum: 1.25
+  overdoseAbove: 2.25
+  sleepSeconds: 90
+  residualPerSecond: 0.011111111
+  syringeCapacity: 3
+  anesthesiaStock: 9
+  syringeStock: 10
+  bloodSeconds: 4.5
+  unsealedBloodSeconds: 120
+  sealSeconds: 1
+  bloodValue: 50
+  weakenedPortion: 2
+  fatalPortion: 3
+  firstKidneyChance: 0.1
+  secondKidneyChance: 0.2
+  liverChance: 0.3
+  bloodChancePerPortion: 0.1
+  corpseGraceSeconds: 45
+  corpseGradeSeconds: 40
+  earlyOverdoseLoss: 2
+  neatTolerance: 0.02
+  cutTolerance: 0.05
+  cutStartSlack: 0.2
+  cutResumeWindow: 0.3
+  cutSpeed: 0.7
+  sloppyFraction: 0.5
+  offLineWeight: 0.5
+  incisionLengths:
+  - 0.075
+  - 0.075
+  - 0.075
+  guideAcross: 000000
+  openingHalfSize:
+  - {x: 0.027, y: 0.0455}
+  - {x: 0.027, y: 0.0455}
+  - {x: 0.029, y: 0.0455}
+  organHalfSize:
+  - {x: 0.018, y: 0.031}
+  - {x: 0.018, y: 0.031}
+  - {x: 0.021, y: 0.032}
+  organLift: 0.01
+  cordOverhang: 0.026
+  cordPhase:
+  - 40
+  - -40
+  - 90
+  connectionSeconds: 0.3
+  cordHitRadius: 0.045
+  organHitRadius: 0.08
+  contactRadius: 0.07
+  pullDistance: 0.2
+  pullResponse: 6
+  springSpeed: 0.4
+  abruptSpeed: 0.9
+  pullScreenFraction: 0.22
+  impactSpeed: 2.4
+  impactCooldown: 0.6
+  organItemScale: 0.5
+  sloppyLoss: 1
+  directCutLoss: 2
+  abruptLoss: 1
+  impactLoss: 1
+  toolReturnSeconds: 2
+  toolFlySeconds: 0.35
+  toolHover: 0.025
+  inputInterval: 0.05
+  inputTimeout: 0.5
+  snapshotInterval: 0.066
+  saveInterval: 5
+  cameraFieldOfView: 50
+  cameraBlendSeconds: 0.35
+  maxZoom: 0.62
+  magnifierSize: 220
+  magnifierZoom: 2.2
+  overrideCameraAnchor: 1
+  cameraPosition: {x: -1.2, y: 2.45, z: 0.1}
+  cameraLookAt: {x: -0.08, y: 0.55, z: -0.12}
+  patientRest: {x: 0, y: 0.66, z: 0}
+  workSurface: {x: 0, y: 0.655, z: 0}
+  trayPosition: {x: 0.66, y: 0, z: 0.05}
+  floorSpawn: {x: -1.15, y: 0.05, z: -0.1}
+  toolRackOffset: {x: 0.2, y: 0.12, z: 0}
+  toolRackSpacing: 0.3
+  outputRackOffset: {x: -0.2, y: 0.12, z: -0.35}
+  outputRackSpacing: {x: 0.23, y: 0, z: 0.35}
+  incisionLength: 0.12
+  connectionRadius: 0.045
+  incisionSurfaceTolerance: 0.06
+  strapGirth:
+  - 0.25
+  - 0.25
+  - 0.35
+  - 0.35
+  - 0.9
+  connections: 020000000200000003000000
+  intrinsicGrades: 040000000300000002000000
+  restraintPositions:
+  - {x: -0.38, y: 0, z: 0.35}
+  - {x: 0.38, y: 0, z: 0.35}
+  - {x: -0.16, y: 0, z: -0.65}
+  - {x: 0.16, y: 0, z: -0.65}
+  - {x: 0, y: 0, z: 0.03}

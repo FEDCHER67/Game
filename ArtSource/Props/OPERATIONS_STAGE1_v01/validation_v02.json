@@ -1,0 +1,1243 @@
+{
+  "file": "C:\\Dev\\Game\\ArtSource\\Props\\OPERATIONS_STAGE1_v01\\Operations_stage1_v02.blend",
+  "checks": {
+    "Exact independent object names": {
+      "status": "PASS",
+      "detail": [
+        "STRAP_L_ARM",
+        "STRAP_R_ARM",
+        "STRAP_L_LEG",
+        "STRAP_R_LEG",
+        "STRAP_TORSO",
+        "TRAY_INSTRUMENT",
+        "INCISION_KIDNEY_L",
+        "INCISION_KIDNEY_R",
+        "INCISION_LIVER"
+      ]
+    },
+    "Metres": {
+      "status": "PASS",
+      "detail": "1.0"
+    },
+    "Closed solid geometry": {
+      "status": "PASS",
+      "detail": {
+        "meshes": 66,
+        "bad": []
+      }
+    },
+    "Applied scale for new mesh parts": {
+      "status": "PASS",
+      "detail": "Evaluated new prop meshes only"
+    },
+    "Low triangle budgets": {
+      "status": "PASS",
+      "detail": {
+        "STRAP_L_ARM": 328,
+        "STRAP_R_ARM": 328,
+        "STRAP_L_LEG": 328,
+        "STRAP_R_LEG": 328,
+        "STRAP_TORSO": 332,
+        "TRAY_INSTRUMENT": 628,
+        "INCISION_KIDNEY_L": 220,
+        "INCISION_KIDNEY_R": 220,
+        "INCISION_LIVER": 220
+      }
+    },
+    "Five independent fixed hinges": {
+      "status": "PASS",
+      "detail": [
+        {
+          "name": "STRAP_L_ARM",
+          "open_degrees": -115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_R_ARM",
+          "open_degrees": 115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_L_LEG",
+          "open_degrees": -115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_R_LEG",
+          "open_degrees": 115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_TORSO",
+          "open_degrees": -115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        }
+      ]
+    },
+    "Tray pivot at underside": {
+      "status": "PASS",
+      "detail": {
+        "bottom_z": 0.7749999761581421,
+        "root_z": 0.7749999761581421
+      }
+    },
+    "Four tray placement markers": {
+      "status": "PASS",
+      "detail": "All four at slot surfaces"
+    },
+    "Prepared openings and closed covers": {
+      "status": "PASS",
+      "detail": "Three individual rim/recess/floor meshes, three separate covers and three live cutters"
+    },
+    "Band vertices clear patient throughout five sampled states": {
+      "status": "PASS",
+      "detail": {
+        "STRAP_L_ARM": [
+          {
+            "open": 0,
+            "minimum_vertex_clearance_m": 4.1425228118896484e-05
+          },
+          {
+            "open": 0.25,
+            "minimum_vertex_clearance_m": 0.03618735074996948
+          },
+          {
+            "open": 0.5,
+            "minimum_vertex_clearance_m": 0.059598445892333984
+          },
+          {
+            "open": 0.75,
+            "minimum_vertex_clearance_m": null
+          },
+          {
+            "open": 1,
+            "minimum_vertex_clearance_m": null
+          }
+        ],
+        "STRAP_R_ARM": [
+          {
+            "open": 0,
+            "minimum_vertex_clearance_m": 4.1425228118896484e-05
+          },
+          {
+            "open": 0.25,
+            "minimum_vertex_clearance_m": 0.03618723154067993
+          },
+          {
+            "open": 0.5,
+            "minimum_vertex_clearance_m": 0.059598445892333984
+          },
+          {
+            "open": 0.75,
+            "minimum_vertex_clearance_m": null
+          },
+          {
+            "open": 1,
+            "minimum_vertex_clearance_m": null
+          }
+        ],
+        "STRAP_L_LEG": [
+          {
+            "open": 0,
+            "minimum_vertex_clearance_m": 0.010244131088256836
+          },
+          {
+            "open": 0.25,
+            "minimum_vertex_clearance_m": 0.036731064319610596
+          },
+          {
+            "open": 0.5,
+            "minimum_vertex_clearance_m": 0.06726187467575073
+          },
+          {
+            "open": 0.75,
+            "minimum_vertex_clearance_m": null
+          },
+          {
+            "open": 1,
+            "minimum_vertex_clearance_m": null
+          }
+        ],
+        "STRAP_R_LEG": [
+          {
+            "open": 0,
+            "minimum_vertex_clearance_m": 0.010244131088256836
+          },
+          {
+            "open": 0.25,
+            "minimum_vertex_clearance_m": 0.0367313027381897
+          },
+          {
+            "open": 0.5,
+            "minimum_vertex_clearance_m": 0.06726187467575073
+          },
+          {
+            "open": 0.75,
+            "minimum_vertex_clearance_m": null
+          },
+          {
+            "open": 1,
+            "minimum_vertex_clearance_m": null
+          }
+        ],
+        "STRAP_TORSO": [
+          {
+            "open": 0,
+            "minimum_vertex_clearance_m": 0.005131065845489502
+          },
+          {
+            "open": 0.25,
+            "minimum_vertex_clearance_m": 0.14111441373825073
+          },
+          {
+            "open": 0.5,
+            "minimum_vertex_clearance_m": 0.33376169204711914
+          },
+          {
+            "open": 0.75,
+            "minimum_vertex_clearance_m": null
+          },
+          {
+            "open": 1,
+            "minimum_vertex_clearance_m": null
+          }
+        ]
+      }
+    },
+    "Table geometry preserved": {
+      "status": "PASS",
+      "detail": [
+        {
+          "mesh": "GEO_Wheel_Head_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Wheel_Head_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Wheel_Foot_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Wheel_Foot_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Push_Handle_Foot",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Padded_Top",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Lower_Longitudinal_Brace_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Lower_Longitudinal_Brace_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Frame_And_Legs",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Head_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Head_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Foot_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Foot_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Head_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Head_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Foot_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Foot_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        }
+      ]
+    },
+    "No legacy extra straps": {
+      "status": "PASS",
+      "detail": "The assembled review contains exactly the five replacement restraints"
+    },
+    "Texture portability": {
+      "status": "PASS",
+      "detail": [
+        "Knife0_BaseColor"
+      ]
+    }
+  },
+  "mesh_statistics": {
+    "STRAP_L_ARM_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_BAND": {
+      "triangles": 52,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_BAND": {
+      "triangles": 52,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_BAND": {
+      "triangles": 52,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_BAND": {
+      "triangles": 52,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_BAND": {
+      "triangles": 100,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_INSTRUMENT_SHELL": {
+      "triangles": 96,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_DIVIDER_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_DIVIDER_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_DIVIDER_2": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_0_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_0_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_1_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_1_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_2_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_2_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_GRIP_HEAD": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_GRIP_FOOT": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_1": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_2": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_3": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_4": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_L_OPENING": {
+      "triangles": 156,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_L_CLOSED_COVER": {
+      "triangles": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_R_OPENING": {
+      "triangles": 156,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_R_CLOSED_COVER": {
+      "triangles": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_LIVER_OPENING": {
+      "triangles": 156,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_LIVER_CLOSED_COVER": {
+      "triangles": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "group_triangles": {
+    "STRAP_L_ARM": 328,
+    "STRAP_R_ARM": 328,
+    "STRAP_L_LEG": 328,
+    "STRAP_R_LEG": 328,
+    "STRAP_TORSO": 332,
+    "TRAY_INSTRUMENT": 628,
+    "INCISION_KIDNEY_L": 220,
+    "INCISION_KIDNEY_R": 220,
+    "INCISION_LIVER": 220
+  },
+  "limits": {
+    "each_limb_strap_with_mounts": 450,
+    "torso_strap_with_mounts": 500,
+    "tray": 700,
+    "each_opening_with_closed_cover": 300
+  },
+  "band_clearance_samples": {
+    "STRAP_L_ARM": [
+      {
+        "open": 0,
+        "minimum_vertex_clearance_m": 4.1425228118896484e-05
+      },
+      {
+        "open": 0.25,
+        "minimum_vertex_clearance_m": 0.03618735074996948
+      },
+      {
+        "open": 0.5,
+        "minimum_vertex_clearance_m": 0.059598445892333984
+      },
+      {
+        "open": 0.75,
+        "minimum_vertex_clearance_m": null
+      },
+      {
+        "open": 1,
+        "minimum_vertex_clearance_m": null
+      }
+    ],
+    "STRAP_R_ARM": [
+      {
+        "open": 0,
+        "minimum_vertex_clearance_m": 4.1425228118896484e-05
+      },
+      {
+        "open": 0.25,
+        "minimum_vertex_clearance_m": 0.03618723154067993
+      },
+      {
+        "open": 0.5,
+        "minimum_vertex_clearance_m": 0.059598445892333984
+      },
+      {
+        "open": 0.75,
+        "minimum_vertex_clearance_m": null
+      },
+      {
+        "open": 1,
+        "minimum_vertex_clearance_m": null
+      }
+    ],
+    "STRAP_L_LEG": [
+      {
+        "open": 0,
+        "minimum_vertex_clearance_m": 0.010244131088256836
+      },
+      {
+        "open": 0.25,
+        "minimum_vertex_clearance_m": 0.036731064319610596
+      },
+      {
+        "open": 0.5,
+        "minimum_vertex_clearance_m": 0.06726187467575073
+      },
+      {
+        "open": 0.75,
+        "minimum_vertex_clearance_m": null
+      },
+      {
+        "open": 1,
+        "minimum_vertex_clearance_m": null
+      }
+    ],
+    "STRAP_R_LEG": [
+      {
+        "open": 0,
+        "minimum_vertex_clearance_m": 0.010244131088256836
+      },
+      {
+        "open": 0.25,
+        "minimum_vertex_clearance_m": 0.0367313027381897
+      },
+      {
+        "open": 0.5,
+        "minimum_vertex_clearance_m": 0.06726187467575073
+      },
+      {
+        "open": 0.75,
+        "minimum_vertex_clearance_m": null
+      },
+      {
+        "open": 1,
+        "minimum_vertex_clearance_m": null
+      }
+    ],
+    "STRAP_TORSO": [
+      {
+        "open": 0,
+        "minimum_vertex_clearance_m": 0.005131065845489502
+      },
+      {
+        "open": 0.25,
+        "minimum_vertex_clearance_m": 0.14111441373825073
+      },
+      {
+        "open": 0.5,
+        "minimum_vertex_clearance_m": 0.33376169204711914
+      },
+      {
+        "open": 0.75,
+        "minimum_vertex_clearance_m": null
+      },
+      {
+        "open": 1,
+        "minimum_vertex_clearance_m": null
+      }
+    ]
+  },
+  "new_geometry_triangles": 2932,
+  "result": "PASS"
+}

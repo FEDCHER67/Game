@@ -1,0 +1,432 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace OnlyVolunteers.Operation.Stage1
+{
+    // Append only: the numeric values travel over the network and into saves.
+    public enum PatientCue
+    {
+        Placed, Aligning, Aligned, StrapChanged, LimbAdjusted, Struggling, Sleeping, Waking, Weakened, Panic, Rescue,
+        ShockDeath, EscapeAttempt, FailedEscapeFall, Death, ConnectionReleased, Extracted,
+        Escaped, KnockedOut, IncisionOpened, SloppyCut, DirectCut, Yank, BloodPortion, Overdosing, Dazed, BagSealed
+    }
+    public enum DeathCause { None, Blood, Extraction, Overdose, Shock, FailedEscape }
+    public enum CutStep { None, Advanced, OffLine, Completed }
+
+    [Serializable]
+    public sealed class OrganState
+    {
+        public int intrinsicGrade;
+        public int damage;
+        public float cut;
+        public float neatCut;
+        public float sloppyCut;
+        public float offLine;
+        public bool sloppyApplied;
+        public float[] connections;
+        public float pull;
+        public bool removed;
+        public bool rollCompleted;
+        public float rolled = -1f;
+        public float deathChance;
+        public bool fatal;
+        public int directCuts;
+        public int yanks;
+        public string outputId = "";
+        public int Grade => Mathf.Max(0, intrinsicGrade - damage);
+        public bool Opened => cut >= 1f;
+        public bool Released { get { foreach (float p in connections) if (p < 1f) return false; return true; } }
+        public int CordsLeft { get { int n = 0; foreach (float p in connections) if (p < 1f) n++; return n; } }
+    }
+
+    [Serializable]
+    public sealed class OperationState
+    {
+        public string patientId;
+        public bool alive = true;
+        public bool onTable;
+        public bool aligned;
+        public float alignment;
+        /// <summary>Lying out cold off the table (fresh capture or after falling off). No escape, no interaction.</summary>
+        public bool knockedOut = true;
+        /// <summary>Groggy seconds right after being put on the table; the patient does not try to escape yet.</summary>
+        public float dazedRemaining;
+        public bool[] restraints = new bool[5];
+        public float[] limbs = new float[4];
+        public int bloodPortions;
+        public float bloodProgress;
+        public float residual;
+        public float sleepRemaining;
+        public float panicRemaining = -1f;
+        public float escapeProgress;
+        public int escapes;
+        public float deathAge;
+        public int corpseLoss;
+        public DeathCause deathCause;
+        public int extracted;
+        public int kidneysExtracted;
+        public OrganState[] organs;
+        public int cueSequence;
+        public PatientCue lastCue;
+        public bool Sleeping => alive && sleepRemaining > 0f;
+        public bool Dazed => alive && onTable && dazedRemaining > 0f;
+        public bool Torso => restraints[4];
+        public bool Panicking => alive && panicRemaining >= 0f;
+    }
+
+    [Serializable]
+    public sealed class OperationItemState
+    {
+        public string id;
+        public int kind; // 0 kidney, 1 liver, 2 sealed blood, 3 filled syringe (legacy v01).
+        public int grade;
+        public int organIndex = -1;
+        public Vector3 position;
+        public Quaternion rotation = Quaternion.identity;
+        public float freshness;
+        public bool sealedBlood;
+        public bool expired;
+    }
+
+    [Serializable]
+    public sealed class OperationWorldState
+    {
+        public OperationState patient;
+        public Vector3 patientPosition;
+        public Quaternion patientRotation = Quaternion.identity;
+        public List<OperationItemState> items = new();
+        public float[] syringeStocks = { 10f, 10f }; // v01 field, kept so old saves load.
+        public Vector3[] toolPositions;               // v01 field, unused in v02 (tools always load docked).
+        public bool v02;
+        public float anesthesiaStock;
+        public float anesthesiaBarrel;
+        public float bloodFill;
+        public int bagsUsedMask;
+        public int bloodBagged;
+    }
+
+    /// <summary>Server-owned rules. No input, network, physics or file IO; the registered PatientRecord owns State.</summary>
+    public sealed class OperationRules
+    {
+        public OperationState State { get; }
+        private readonly OperationTuning tuning;
+        private bool struggling;
+        private bool overdosing;
+        public event Action<PatientCue> Cue;
+        public OperationRules(OperationState state, OperationTuning config) { State = state; tuning = config; }
+        public OperationTuning Tuning => tuning;
+        public static OperationState Create(string id, OperationTuning config)
+        {
+            var state = new OperationState { patientId = id, organs = new OrganState[3] };
+            for (int i = 0; i < 3; i++) state.organs[i] = new OrganState
+            { intrinsicGrade = config.intrinsicGrades[i], connections = new float[config.connections[i]] };
+            return state;
+        }
+        private void Emit(PatientCue cue) { State.lastCue = cue; State.cueSequence++; Cue?.Invoke(cue); }
+
+        // ---------- placement / restraints ----------
+        public bool BeginAlignment(float distance)
+        {
+            if (State.onTable || distance > tuning.placementRadius || !Finite(distance)) return false;
+            State.onTable = true; State.aligned = false; State.alignment = tuning.alignmentSeconds;
+            Emit(PatientCue.Placed); Emit(PatientCue.Aligning); return true;
+        }
+        /// <summary>Dev shortcut: the patient lies aligned on the table at once.</summary>
+        public void ForcePlace()
+        {
+            bool was = State.onTable && State.aligned;
+            State.onTable = true; State.alignment = 0f;
+            if (!was) FinishAlignment();
+        }
+        private void FinishAlignment()
+        {
+            State.aligned = true; State.knockedOut = false; State.escapeProgress = 0f;
+            if (State.alive) { State.dazedRemaining = tuning.dazedSeconds; Emit(PatientCue.Dazed); }
+            Emit(PatientCue.Aligned);
+        }
+        public bool ToggleRestraint(int index)
+        {
+            if (!State.aligned || index < 0 || index >= 5) return false;
+            State.restraints[index] = !State.restraints[index]; Emit(PatientCue.StrapChanged); return true;
+        }
+        public void AdjustLimb(int index, float position)
+        {
+            if (!State.aligned || index < 0 || index >= 4 || State.restraints[index] || !Finite(position)) return;
+            State.limbs[index] = Mathf.Clamp(position, -1, 1); Emit(PatientCue.LimbAdjusted);
+        }
+        public bool CanOperate(bool held) => State.onTable && State.aligned && (!State.alive || State.Sleeping || State.Torso || held);
+        public bool CanInject => State.alive && State.onTable && State.aligned;
+
+        // ---------- time ----------
+        public void Tick(float seconds, float administered, bool held)
+        {
+            if (seconds <= 0 || !Finite(seconds)) return;
+            if (State.dazedRemaining > 0f) State.dazedRemaining = Mathf.Max(0f, State.dazedRemaining - seconds);
+            if (State.onTable && !State.aligned)
+            {
+                State.alignment = Mathf.Max(0, State.alignment - seconds);
+                if (State.alignment == 0) FinishAlignment();
+            }
+            if (!State.alive) { Decay(seconds); return; }
+            State.residual = Mathf.Max(0, State.residual - seconds * tuning.residualPerSecond);
+            bool wasSleeping = State.Sleeping;
+            State.sleepRemaining = Mathf.Max(0, State.sleepRemaining - seconds);
+            if (administered > 0 && Finite(administered))
+            {
+                State.residual += administered;
+                if (State.residual > tuning.overdoseAbove) { Die(DeathCause.Overdose); return; }
+                float ratio = Mathf.Clamp01(State.residual / tuning.suitableMinimum);
+                State.sleepRemaining = Mathf.Max(State.sleepRemaining, tuning.sleepSeconds * ratio * ratio);
+                if (State.panicRemaining >= 0 && State.residual >= tuning.suitableMinimum)
+                { State.panicRemaining = -1; State.escapeProgress = 0; Emit(PatientCue.Rescue); }
+            }
+            bool nowOverdosing = State.residual > tuning.suitableMaximum;
+            if (nowOverdosing && !overdosing) Emit(PatientCue.Overdosing);
+            overdosing = nowOverdosing;
+            if (!wasSleeping && State.Sleeping && State.panicRemaining < 0) Emit(PatientCue.Sleeping);
+            if (wasSleeping && !State.Sleeping)
+            {
+                Emit(PatientCue.Waking);
+                if (State.extracted > 0 && State.panicRemaining < 0)
+                { State.panicRemaining = tuning.rescueSeconds; Emit(PatientCue.Panic); }
+            }
+            bool nowStruggling = State.onTable && State.aligned && !State.Sleeping && !State.Dazed && (State.Torso || held);
+            if (nowStruggling && !struggling) Emit(PatientCue.Struggling);
+            struggling = nowStruggling;
+            if (State.panicRemaining >= 0)
+            {
+                if (!State.Torso && !held && State.escapeProgress == 0) Emit(PatientCue.EscapeAttempt);
+                if (!State.Torso && !held) State.escapeProgress += seconds;
+                State.panicRemaining = Mathf.Max(0, State.panicRemaining - seconds);
+                if (State.panicRemaining <= 0) Die(!State.Torso && !held ? DeathCause.FailedEscape : DeathCause.Shock);
+            }
+            else if (State.onTable && State.aligned && !State.Sleeping && !State.Dazed && !State.Torso && !held)
+            {
+                if (State.escapeProgress == 0) Emit(PatientCue.EscapeAttempt);
+                State.escapeProgress += seconds;
+                if (State.escapeProgress >= tuning.escapeSeconds) Escape();
+            }
+            else State.escapeProgress = 0;
+        }
+        private void Escape()
+        {
+            State.onTable = State.aligned = false; State.knockedOut = true; State.escapeProgress = 0f; State.escapes++;
+            Array.Clear(State.restraints, 0, 5);
+            Emit(PatientCue.FailedEscapeFall); Emit(PatientCue.Escaped);
+        }
+        public void Die(DeathCause cause)
+        {
+            if (!State.alive) return;
+            State.alive = false; State.deathCause = cause; State.deathAge = 0;
+            State.sleepRemaining = 0; State.panicRemaining = -1; State.dazedRemaining = 0;
+            if (cause == DeathCause.Overdose && State.extracted == 0)
+                foreach (var organ in State.organs) if (!organ.removed) organ.damage += tuning.earlyOverdoseLoss;
+            if (cause == DeathCause.FailedEscape) Emit(PatientCue.FailedEscapeFall);
+            if (cause == DeathCause.Shock) Emit(PatientCue.ShockDeath);
+            Emit(PatientCue.Death);
+        }
+        private void Decay(float seconds)
+        {
+            State.deathAge += seconds;
+            int loss = Mathf.Max(0, Mathf.FloorToInt((State.deathAge - tuning.corpseGraceSeconds) / tuning.corpseGradeSeconds));
+            int delta = loss - State.corpseLoss;
+            if (delta <= 0) return;
+            foreach (var organ in State.organs) if (!organ.removed) organ.damage += delta;
+            State.corpseLoss = loss;
+        }
+
+        // ---------- blood ----------
+        /// <summary>Asleep, torso or that arm strapped, or dead; and the body still has a portion to give.</summary>
+        public bool CanDrawBlood(int arm) => State.onTable && State.aligned && State.bloodPortions < tuning.fatalPortion &&
+            (!State.alive || State.Sleeping || State.Torso || (arm >= 0 && arm < 2 && State.restraints[arm]));
+        /// <summary>Fills one syringe; when it is full one portion counts (2nd weakens, 3rd kills a living patient).</summary>
+        public bool FillBlood(ref float fill, float seconds)
+        {
+            if (fill >= 1f || seconds <= 0f || !Finite(seconds) || State.bloodPortions >= tuning.fatalPortion) return false;
+            fill = Mathf.Min(1f, fill + seconds / tuning.bloodSeconds);
+            if (fill < 1f - 0.00001f) return false;
+            fill = 1f; State.bloodPortions++;
+            Emit(PatientCue.BloodPortion);
+            if (State.alive)
+            {
+                if (State.bloodPortions == tuning.weakenedPortion) Emit(PatientCue.Weakened);
+                if (State.bloodPortions >= tuning.fatalPortion) Die(DeathCause.Blood);
+            }
+            return true;
+        }
+        /// <summary>v01 API: progress stored on the patient.</summary>
+        public bool CollectBlood(float seconds)
+        {
+            if (!State.alive || State.bloodPortions >= tuning.fatalPortion || seconds <= 0) return false;
+            float fill = State.bloodProgress;
+            bool done = FillBlood(ref fill, seconds);
+            State.bloodProgress = done ? 0f : fill;
+            return done;
+        }
+
+        // ---------- incisions ----------
+        /// <summary>A stroke starts near the line, from the start point up to a little past the current progress.</summary>
+        public bool CanBeginCut(int index, float along, float offset)
+        {
+            if (index < 0 || index >= State.organs.Length || !Finite(along) || !Finite(offset)) return false;
+            var organ = State.organs[index];
+            if (organ.removed || organ.cut >= 1f) return false;
+            return Mathf.Abs(offset) <= tuning.cutTolerance && along >= -tuning.cutStartSlack && along <= organ.cut + tuning.cutResumeWindow;
+        }
+        /// <summary>Progress follows the cursor's projection on the guide, limited only by a generous speed cap.</summary>
+        public CutStep CutTowards(int index, float along, float offset, float seconds)
+        {
+            if (index < 0 || index >= State.organs.Length || !Finite(along) || !Finite(offset) || !Finite(seconds) || seconds <= 0) return CutStep.None;
+            var organ = State.organs[index];
+            if (organ.removed || organ.cut >= 1f) return CutStep.None;
+            float distance = Mathf.Abs(offset);
+            if (distance > tuning.cutTolerance) return CutStep.OffLine;
+            float target = Mathf.Clamp01(along);
+            if (target <= organ.cut) return CutStep.None;
+            float delta = Mathf.Min(target - organ.cut, seconds * tuning.cutSpeed / tuning.IncisionLength(index));
+            organ.cut += delta;
+            if (distance <= tuning.neatTolerance) organ.neatCut += delta; else organ.sloppyCut += delta;
+            if (organ.cut < 0.995f) return CutStep.Advanced;
+            organ.cut = 1f;
+            if (!organ.sloppyApplied && organ.sloppyCut + organ.offLine * tuning.offLineWeight > tuning.sloppyFraction)
+            { organ.damage += tuning.sloppyLoss; organ.sloppyApplied = true; Emit(PatientCue.SloppyCut); }
+            Emit(PatientCue.IncisionOpened);
+            return CutStep.Completed;
+        }
+        /// <summary>Cursor travel off the line during a stroke, in incision lengths.</summary>
+        public void AddOffLine(int index, float lengths)
+        {
+            if (index < 0 || index >= State.organs.Length || !Finite(lengths) || lengths <= 0) return;
+            var organ = State.organs[index];
+            if (organ.removed || organ.cut >= 1f) return;
+            organ.offLine = Mathf.Min(2f, organ.offLine + lengths);
+        }
+        /// <summary>v01 API kept for the rule tests.</summary>
+        public bool Cut(int index, float along, float distance, float seconds)
+        {
+            var step = CutTowards(index, along, distance, seconds);
+            return step == CutStep.Advanced || step == CutStep.Completed;
+        }
+        public void DirectCut(int index)
+        {
+            var organ = State.organs[index];
+            if (organ.removed) return;
+            organ.damage += tuning.directCutLoss; organ.directCuts++;
+            Emit(PatientCue.DirectCut);
+        }
+
+        // ---------- cords ----------
+        public bool SnipCord(int organIndex, int cord, float seconds)
+        {
+            if (organIndex < 0 || organIndex >= State.organs.Length || !Finite(seconds) || seconds <= 0) return false;
+            var organ = State.organs[organIndex];
+            if (organ.removed || organ.cut < 1 || cord < 0 || cord >= organ.connections.Length || organ.connections[cord] >= 1) return false;
+            organ.connections[cord] = Mathf.Min(1, organ.connections[cord] + seconds / tuning.connectionSeconds);
+            if (organ.connections[cord] < 1) return false;
+            Emit(PatientCue.ConnectionReleased);
+            return true;
+        }
+        public void ReleaseConnection(int organIndex, int connection, float seconds) => SnipCord(organIndex, connection, seconds);
+
+        // ---------- pull / extraction ----------
+        public bool Pull(int index, float sharedTarget, int holders, float seconds, ref bool damageLatched)
+        {
+            var organ = State.organs[index];
+            if (organ.removed || !organ.Released || organ.cut < 1 || seconds <= 0 || !Finite(sharedTarget)) return false;
+            if (holders == 0) { organ.pull = Mathf.MoveTowards(organ.pull, 0, seconds * tuning.springSpeed); damageLatched = false; return false; }
+            float next = Mathf.MoveTowards(organ.pull, Mathf.Clamp(sharedTarget, 0, tuning.pullDistance * 1.5f),
+                seconds * tuning.pullResponse * Mathf.Abs(sharedTarget - organ.pull) * Mathf.Sqrt(holders));
+            if (!damageLatched && (next - organ.pull) / seconds > tuning.abruptSpeed)
+            { organ.damage += tuning.abruptLoss; organ.yanks++; damageLatched = true; Emit(PatientCue.Yank); }
+            organ.pull = next;
+            return organ.pull >= tuning.pullDistance;
+        }
+        public bool Extract(int index, float random)
+        {
+            var organ = State.organs[index];
+            if (organ.removed || organ.cut < 1 || !organ.Released || organ.pull < tuning.pullDistance) return false;
+            organ.removed = true; organ.outputId = State.patientId + "/organ/" + index;
+            State.extracted++;
+            if (index < 2) State.kidneysExtracted++;
+            if (State.alive)
+            {
+                organ.deathChance = Mathf.Clamp01((index == 2 ? tuning.liverChance : State.kidneysExtracted == 1 ? tuning.firstKidneyChance : tuning.secondKidneyChance)
+                    + State.bloodPortions * tuning.bloodChancePerPortion);
+                organ.rolled = Mathf.Clamp01(random); organ.rollCompleted = true;
+                organ.fatal = organ.rolled < organ.deathChance;
+                if (organ.fatal) Die(DeathCause.Extraction);
+                else if (!State.Sleeping && State.panicRemaining < 0)
+                { State.panicRemaining = tuning.rescueSeconds; Emit(PatientCue.Panic); }
+            }
+            Emit(PatientCue.Extracted); return true;
+        }
+        public static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
+    }
+
+    /// <summary>Pure table-local geometry shared by the server and the tests.</summary>
+    public static class OperationGeometry
+    {
+        /// <summary>A released patient whose centre is above the pad (table-local) gets aligned onto the table.</summary>
+        public static bool OverPad(Vector3 tableLocal, OperationTuning tuning) =>
+            Mathf.Abs(tableLocal.x) <= tuning.padHalfExtents.x && Mathf.Abs(tableLocal.z) <= tuning.padHalfExtents.z &&
+            tableLocal.y >= tuning.padTop - 0.15f && tableLocal.y <= tuning.padTop + 1.2f;
+        /// <summary>Client points are accepted only inside the table's working volume.</summary>
+        public static bool InWorkVolume(Vector3 tableLocal) =>
+            OperationRules.Finite(tableLocal.x) && OperationRules.Finite(tableLocal.y) && OperationRules.Finite(tableLocal.z) &&
+            Mathf.Abs(tableLocal.x) <= 1.8f && tableLocal.y >= -0.5f && tableLocal.y <= 2.4f && Mathf.Abs(tableLocal.z) <= 1.8f;
+        /// <summary>Guide point in marker-local metres; along 0 is the start (pulsing dot), 1 the end.</summary>
+        public static Vector3 GuidePoint(OperationTuning tuning, int organ, float along)
+        {
+            float l = tuning.IncisionLength(organ);
+            float s = (0.5f - along) * l;
+            return tuning.guideAcross[organ] ? new Vector3(-s, 0f, 0f) : new Vector3(0f, s, 0f);
+        }
+        /// <summary>Marker-local metres to (along, signed offset from the line).</summary>
+        public static Vector2 GuideCoordinates(OperationTuning tuning, int organ, Vector3 markerLocal)
+        {
+            float l = tuning.IncisionLength(organ);
+            if (tuning.guideAcross[organ]) return new Vector2(markerLocal.x / l + 0.5f, markerLocal.y);
+            return new Vector2(0.5f - markerLocal.y / l, markerLocal.x);
+        }
+        /// <summary>Cord c of an organ: from its attachment on the organ to the rim of the opening (marker-local metres).</summary>
+        public static void Cord(OperationTuning tuning, int organ, int cord, out Vector3 attach, out Vector3 rim)
+        {
+            int count = Mathf.Max(1, tuning.connections[organ]);
+            float angle = (cord + 0.5f) / count * Mathf.PI * 2f + tuning.cordPhase[organ] * Mathf.Deg2Rad;
+            var dir = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f);
+            Vector2 organHalf = tuning.organHalfSize[organ], hole = tuning.openingHalfSize[organ];
+            attach = new Vector3(dir.x * organHalf.x * 0.85f, dir.y * organHalf.y * 0.85f, tuning.organLift * 0.6f);
+            rim = new Vector3(dir.x * (hole.x + tuning.cordOverhang), dir.y * (hole.y + tuning.cordOverhang), -0.003f);
+        }
+        public static float DistanceToSegment(Vector3 p, Vector3 a, Vector3 b)
+        {
+            Vector3 ab = b - a; float t = ab.sqrMagnitude > 1e-8f ? Mathf.Clamp01(Vector3.Dot(p - a, ab) / ab.sqrMagnitude) : 0f;
+            return Vector3.Distance(p, a + ab * t);
+        }
+    }
+
+    /// <summary>Russian display names and tier colours (BUYERS_SPEC v02 labels).</summary>
+    public static class OperationText
+    {
+        public static readonly string[] Tiers = { "Убитое", "Сойдёт", "Хорошее", "Отличное", "Идеальное" };
+        public static readonly string[] TierHex = { "#8C7B6B", "#C2B23A", "#4DC25A", "#3E8DFF", "#A75CFF" };
+        public static readonly string[] Straps = { "левая рука", "правая рука", "левая нога", "правая нога", "торс" };
+        public static readonly string[] Organs = { "Почка (левая)", "Почка (правая)", "Печень" };
+        public static readonly string[] OrganShort = { "Л. почка", "П. почка", "Печень" };
+        public static string Tier(int grade) => Tiers[Mathf.Clamp(grade, 0, Tiers.Length - 1)];
+        public static Color TierColor(int grade)
+        {
+            ColorUtility.TryParseHtmlString(TierHex[Mathf.Clamp(grade, 0, TierHex.Length - 1)], out var c); return c;
+        }
+        public static string Death(DeathCause cause) => cause switch
+        {
+            DeathCause.Blood => "кровь кончилась",
+            DeathCause.Extraction => "не пережил изъятия",
+            DeathCause.Overdose => "передоз наркоза",
+            DeathCause.Shock => "болевой шок",
+            DeathCause.FailedEscape => "неудачный побег",
+            _ => ""
+        };
+    }
+}

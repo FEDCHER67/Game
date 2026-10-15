@@ -35,6 +35,17 @@ namespace OnlyVolunteers.Network
             ? character.Motor.transform.position : transform.position;
         public Collider PlayerCollider => character != null && character.Motor != null
             ? character.Motor.Capsule : null;
+        /// <summary>Horizontal facing of the moving body (replicated with the motor), for carried objects.</summary>
+        public Vector3 MotorForward => character != null && character.Motor != null
+            ? character.Motor.transform.forward : transform.forward;
+
+        /// <summary>Owner only: hides the first-person crosshair and the physics HUD (e.g. while the operation table
+        /// view owns the screen) and shows them again.</summary>
+        public void SetLocalHudVisible(bool visible)
+        {
+            if (localHud != null) localHud.SetActive(visible);
+            if (localCrosshair != null) localCrosshair.SetActive(visible && (phone == null || !phone.IsOpen));
+        }
 
         private void Awake()
         {

@@ -13,6 +13,7 @@ namespace OnlyVolunteers.Clinic
         public const int CurrentVersion = 1;
 
         public int version = CurrentVersion;
+        public OnlyVolunteers.Operation.Stage1.OperationWorldState operation;
         public int money;
         public List<string> completedPatients = new();
         public int engineLevel;
@@ -33,7 +34,26 @@ namespace OnlyVolunteers.Clinic
         private static string BackupPath => FilePath + ".bak";
         private static string TempPath => FilePath + ".tmp";
 
-        public static bool Write(ClinicSaveData data, out string error)
+        public static bool Write(ClinicSaveData data, out string error) => WriteAt(FilePath, data, out error);
+
+        // A separate dev-world slot uses the existing envelope/atomic writer, preserving the offline map save.
+        // Automated runs (v01 -g25-probe, v02 -ops-test or a test hook) use their own slot and never touch the player's.
+        public static string OperationFilePath => Path.Combine(Folder,
+            !string.IsNullOrEmpty(OnlyVolunteers.Operation.Stage1.OperationTestHooks.SaveSlot) ? OnlyVolunteers.Operation.Stage1.OperationTestHooks.SaveSlot :
+            System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-ops-test") >= 0 ? "operations_stage1_test_v02.json" :
+            System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-g25-probe") >= 0 ? "operations_stage1_test_v01.json" : "operations_stage1_v01.json");
+        public static bool WriteOperation(OnlyVolunteers.Operation.Stage1.OperationWorldState world, out string error) =>
+            WriteAt(OperationFilePath, new ClinicSaveData { operation = world }, out error);
+        public static bool TryReadOperation(out OnlyVolunteers.Operation.Stage1.OperationWorldState world, out string note)
+        {
+            world = null;
+            if (!TryReadFile(OperationFilePath, out var data, out note) &&
+                !TryReadFile(OperationFilePath + ".bak", out data, out note)) return false;
+            world = data.operation;
+            return world != null && world.patient != null && world.patient.organs != null && world.patient.organs.Length == 3;
+        }
+
+        private static bool WriteAt(string path, ClinicSaveData data, out string error)
         {
             error = null;
             try
@@ -41,9 +61,10 @@ namespace OnlyVolunteers.Clinic
                 Directory.CreateDirectory(Folder);
                 data.version = ClinicSaveData.CurrentVersion;
                 data.savedUtc = DateTime.UtcNow.ToString("o");
-                File.WriteAllText(TempPath, JsonUtility.ToJson(data, true));
-                if (File.Exists(FilePath)) File.Replace(TempPath, FilePath, BackupPath);
-                else File.Move(TempPath, FilePath);
+                string temporary = path + ".tmp";
+                File.WriteAllText(temporary, JsonUtility.ToJson(data, true));
+                if (File.Exists(path)) File.Replace(temporary, path, path + ".bak");
+                else File.Move(temporary, path);
                 return true;
             }
             catch (Exception e)

@@ -1,0 +1,1915 @@
+{
+  "file": "C:\\Dev\\Game\\ArtSource\\Props\\OPERATIONS_STAGE1_v02\\Operations_PATIENT_draft08.blend",
+  "checks": {
+    "Exact independent object names": {
+      "status": "PASS",
+      "detail": [
+        "STRAP_L_ARM",
+        "STRAP_R_ARM",
+        "STRAP_L_LEG",
+        "STRAP_R_LEG",
+        "STRAP_TORSO",
+        "TRAY_INSTRUMENT",
+        "INCISION_KIDNEY_L",
+        "INCISION_KIDNEY_R",
+        "INCISION_LIVER"
+      ]
+    },
+    "Metres": {
+      "status": "PASS",
+      "detail": "1.0"
+    },
+    "Closed solid geometry": {
+      "status": "PASS",
+      "detail": {
+        "meshes": 66,
+        "bad": []
+      }
+    },
+    "Applied scale for new mesh parts": {
+      "status": "PASS",
+      "detail": "Evaluated new prop meshes only"
+    },
+    "Low triangle budgets": {
+      "status": "PASS",
+      "detail": {
+        "STRAP_L_ARM": 440,
+        "STRAP_R_ARM": 440,
+        "STRAP_L_LEG": 440,
+        "STRAP_R_LEG": 440,
+        "STRAP_TORSO": 444,
+        "TRAY_INSTRUMENT": 628,
+        "INCISION_KIDNEY_L": 220,
+        "INCISION_KIDNEY_R": 220,
+        "INCISION_LIVER": 220
+      }
+    },
+    "Five independent fixed hinges": {
+      "status": "PASS",
+      "detail": [
+        {
+          "name": "STRAP_L_ARM",
+          "open_degrees": -115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_R_ARM",
+          "open_degrees": 115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_L_LEG",
+          "open_degrees": -115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_R_LEG",
+          "open_degrees": 115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        },
+        {
+          "name": "STRAP_TORSO",
+          "open_degrees": -115.00000433853141,
+          "independent": true,
+          "pivot_fixed": true,
+          "target_angle_reached": true
+        }
+      ]
+    },
+    "Tray pivot at underside": {
+      "status": "PASS",
+      "detail": {
+        "bottom_z": 0.7749999761581421,
+        "root_z": 0.7749999761581421
+      }
+    },
+    "Four tray placement markers": {
+      "status": "PASS",
+      "detail": "All four at slot surfaces"
+    },
+    "Prepared openings and closed covers": {
+      "status": "PASS",
+      "detail": "Three individual rim/recess/floor meshes, three separate covers and three live cutters"
+    },
+    "Band surface hinge sweep": {
+      "status": "FAIL",
+      "detail": {
+        "NORMAL": {
+          "0": -20.605845376849174,
+          "0.25": -13.66328913718462,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "THIN": {
+          "0": -29.61420826613903,
+          "0.25": -13.66328913718462,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "FAT": {
+          "0": -0.13434422726277262,
+          "0.25": -13.66328913718462,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "MUSCLE": {
+          "0": -49.61685836315155,
+          "0.25": -36.301061511039734,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "SCALE105": {
+          "0": -28.31210568547249,
+          "0.25": -2.8552331496030092,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "THIN105": {
+          "0": -26.577968150377274,
+          "0.25": -2.8552331496030092,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "FAT105": {
+          "0": -22.769849747419357,
+          "0.25": -2.8552331496030092,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "MUSCLE105": {
+          "0": -45.93900591135025,
+          "0.25": -28.11948023736477,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "MID_THIN": {
+          "0": -29.373953118920326,
+          "0.25": -6.641063839197159,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "MID_FAT": {
+          "0": -16.747931018471718,
+          "0.25": -6.641063839197159,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        },
+        "MID_MUSCLE": {
+          "0": -38.00437971949577,
+          "0.25": -20.174598321318626,
+          "0.5": 0,
+          "0.75": 0,
+          "1": 0
+        }
+      }
+    },
+    "Girth contact clearance": {
+      "status": "PASS",
+      "detail": {
+        "NORMAL": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.4079577522352338,
+            "max_mm": 4.5015825890004635,
+            "central_max_mm": 4.5015825890004635
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.415774390101433,
+            "max_mm": 4.0289247408509254,
+            "central_max_mm": 4.0289247408509254
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.2971355356276035,
+            "max_mm": 4.263473674654961,
+            "central_max_mm": 4.203464835882187
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.3231334052979946,
+            "max_mm": 4.313809797167778,
+            "central_max_mm": 4.246500786393881
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.203583786264062,
+            "max_mm": 4.081503953784704,
+            "central_max_mm": 4.081503953784704
+          }
+        },
+        "THIN": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.4079577522352338,
+            "max_mm": 4.5015825890004635,
+            "central_max_mm": 4.5015825890004635
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.415774390101433,
+            "max_mm": 4.0289247408509254,
+            "central_max_mm": 4.0289247408509254
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.2971355356276035,
+            "max_mm": 4.263473674654961,
+            "central_max_mm": 4.203464835882187
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.3231334052979946,
+            "max_mm": 4.313809797167778,
+            "central_max_mm": 4.246500786393881
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.004828605800867,
+            "max_mm": 4.5385342091321945,
+            "central_max_mm": 4.5385342091321945
+          }
+        },
+        "FAT": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.4079577522352338,
+            "max_mm": 4.5015825890004635,
+            "central_max_mm": 4.5015825890004635
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.415774390101433,
+            "max_mm": 4.0289247408509254,
+            "central_max_mm": 4.0289247408509254
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.2971355356276035,
+            "max_mm": 4.263473674654961,
+            "central_max_mm": 4.203464835882187
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.3231334052979946,
+            "max_mm": 4.313809797167778,
+            "central_max_mm": 4.246500786393881
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.099768211133778,
+            "max_mm": 4.397205077111721,
+            "central_max_mm": 4.397205077111721
+          }
+        },
+        "MUSCLE": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 0.5936955567449331,
+            "max_mm": 7.243302185088396,
+            "central_max_mm": 7.243302185088396
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 1.8115752609446645,
+            "max_mm": 5.999864544719458,
+            "central_max_mm": 5.999864544719458
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.2965967655181885,
+            "max_mm": 4.266837611794472,
+            "central_max_mm": 4.2073833756148815
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.321666106581688,
+            "max_mm": 4.292397294193506,
+            "central_max_mm": 4.247675649821758
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.2304791016504169,
+            "max_mm": 4.106491804122925,
+            "central_max_mm": 4.106491804122925
+          }
+        },
+        "SCALE105": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.4653258258476853,
+            "max_mm": 4.9463901668787,
+            "central_max_mm": 4.728948697447777
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.4318108335137367,
+            "max_mm": 4.136849194765091,
+            "central_max_mm": 4.123464692384005
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.37477570772171,
+            "max_mm": 4.26420196890831,
+            "central_max_mm": 4.26420196890831
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.217218978330493,
+            "max_mm": 4.207488615065813,
+            "central_max_mm": 4.207488615065813
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.0694597149267793,
+            "max_mm": 4.358174744993448,
+            "central_max_mm": 4.276192747056484
+          }
+        },
+        "THIN105": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.4653258258476853,
+            "max_mm": 4.946375265717506,
+            "central_max_mm": 4.72895847633481
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.4318252690136433,
+            "max_mm": 4.136849194765091,
+            "central_max_mm": 4.123464692384005
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.37477570772171,
+            "max_mm": 4.26420196890831,
+            "central_max_mm": 4.26420196890831
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.217218978330493,
+            "max_mm": 4.207488615065813,
+            "central_max_mm": 4.207488615065813
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.1914371279999614,
+            "max_mm": 4.499954171478748,
+            "central_max_mm": 4.290679004043341
+          }
+        },
+        "FAT105": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.4653258258476853,
+            "max_mm": 4.946375265717506,
+            "central_max_mm": 4.72895847633481
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.4318252690136433,
+            "max_mm": 4.136849194765091,
+            "central_max_mm": 4.123464692384005
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.37477570772171,
+            "max_mm": 4.26420196890831,
+            "central_max_mm": 4.26420196890831
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.217218978330493,
+            "max_mm": 4.207488615065813,
+            "central_max_mm": 4.207488615065813
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.69097981415689,
+            "max_mm": 4.648144822567701,
+            "central_max_mm": 4.4023096561431885
+          }
+        },
+        "MUSCLE105": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 0.5953345098532736,
+            "max_mm": 7.238235324621201,
+            "central_max_mm": 7.238235324621201
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.5586069095879793,
+            "max_mm": 6.222478114068508,
+            "central_max_mm": 6.150917615741491
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.3756923619657755,
+            "max_mm": 4.271348472684622,
+            "central_max_mm": 4.271348472684622
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.216961234807968,
+            "max_mm": 4.20167064294219,
+            "central_max_mm": 4.20167064294219
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.084301620721817,
+            "max_mm": 4.308859352022409,
+            "central_max_mm": 4.308859352022409
+          }
+        },
+        "MID_THIN": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.3660202967002988,
+            "max_mm": 5.352839827537537,
+            "central_max_mm": 5.352839827537537
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.3713819682598114,
+            "max_mm": 4.12329426035285,
+            "central_max_mm": 4.046876449137926
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.388807712122798,
+            "max_mm": 4.219475667923689,
+            "central_max_mm": 4.219475667923689
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.366576809436083,
+            "max_mm": 4.241655580699444,
+            "central_max_mm": 4.241655580699444
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 1.7399992793798447,
+            "max_mm": 5.583616439253092,
+            "central_max_mm": 4.824835807085037
+          }
+        },
+        "MID_FAT": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": 1.3660202967002988,
+            "max_mm": 5.352839827537537,
+            "central_max_mm": 5.352839827537537
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 2.3713819682598114,
+            "max_mm": 4.12329426035285,
+            "central_max_mm": 4.046876449137926
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.388807712122798,
+            "max_mm": 4.219475667923689,
+            "central_max_mm": 4.219475667923689
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.366576809436083,
+            "max_mm": 4.241655580699444,
+            "central_max_mm": 4.241655580699444
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 2.7063218876719475,
+            "max_mm": 6.620751228183508,
+            "central_max_mm": 6.620751228183508
+          }
+        },
+        "MID_MUSCLE": {
+          "STRAP_L_ARM": {
+            "samples": 600,
+            "min_mm": -0.077734628575854,
+            "max_mm": 6.579609587788582,
+            "central_max_mm": 6.579609587788582
+          },
+          "STRAP_R_ARM": {
+            "samples": 600,
+            "min_mm": 1.2493006652221084,
+            "max_mm": 4.967404063791037,
+            "central_max_mm": 4.967404063791037
+          },
+          "STRAP_L_LEG": {
+            "samples": 600,
+            "min_mm": 2.3950168397277594,
+            "max_mm": 4.2238738387823105,
+            "central_max_mm": 4.2238738387823105
+          },
+          "STRAP_R_LEG": {
+            "samples": 600,
+            "min_mm": 2.3793831933289766,
+            "max_mm": 4.247387871146202,
+            "central_max_mm": 4.247387871146202
+          },
+          "STRAP_TORSO": {
+            "samples": 840,
+            "min_mm": 0.6813413929194212,
+            "max_mm": 4.491032101213932,
+            "central_max_mm": 4.008093383163214
+          }
+        }
+      }
+    },
+    "Exact source marker positions and normals": {
+      "status": "PASS",
+      "detail": [
+        {
+          "name": "INCISION_KIDNEY_L",
+          "position_error_m": 0.0,
+          "matrix_error": 2.9802322387695312e-08
+        },
+        {
+          "name": "INCISION_KIDNEY_R",
+          "position_error_m": 0.0,
+          "matrix_error": 5.960464477539063e-08
+        },
+        {
+          "name": "INCISION_LIVER",
+          "position_error_m": 0.0,
+          "matrix_error": 5.960464477539063e-08
+        }
+      ]
+    },
+    "Approved patient and table sources unchanged": {
+      "status": "PASS",
+      "detail": [
+        "C:\\Dev\\Game\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Patient_v01\\SAUSAGE_BUDDY_PATIENT_v01.blend",
+        "C:\\Dev\\Game\\ArtSource\\Props\\TABLE-ASTRA-001\\TABLE-ASTRA-001.blend"
+      ]
+    },
+    "Table geometry preserved": {
+      "status": "PASS",
+      "detail": [
+        {
+          "mesh": "GEO_Wheel_Head_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Wheel_Head_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Wheel_Foot_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Wheel_Foot_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Push_Handle_Foot",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Padded_Top",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Lower_Longitudinal_Brace_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Lower_Longitudinal_Brace_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Frame_And_Legs",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Head_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Head_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Foot_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Socket_Foot_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Head_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Head_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Foot_Right",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        },
+        {
+          "mesh": "GEO_Caster_Fork_Foot_Left",
+          "geometry_identical": true,
+          "world_transform_identical": true
+        }
+      ]
+    },
+    "No legacy extra straps": {
+      "status": "PASS",
+      "detail": "The assembled review contains exactly the five replacement restraints"
+    },
+    "Texture portability": {
+      "status": "PASS",
+      "detail": [
+        "Knife0_BaseColor"
+      ]
+    }
+  },
+  "mesh_statistics": {
+    "TRAY_TOOL_REST_2_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_2_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_1_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_1_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_0_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_TOOL_REST_0_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_INSTRUMENT_SHELL": {
+      "triangles": 96,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_GRIP_HEAD": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_GRIP_FOOT": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_DIVIDER_2": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_DIVIDER_1": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_DIVIDER_0": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_4": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_3": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_2": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "TRAY_BAY_MARK_1": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_BAND": {
+      "triangles": 164,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_ARM_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_BAND": {
+      "triangles": 164,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_ARM_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_BAND": {
+      "triangles": 164,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_L_LEG_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_BAND": {
+      "triangles": 164,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_R_LEG_MOUNT_SADDLE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_MOUNT_HINGE": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_PIN_HINGE": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_MOUNT_LATCH": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_PIN_LATCH": {
+      "triangles": 28,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_BAND": {
+      "triangles": 212,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_BUCKLE_FRAME": {
+      "triangles": 32,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_BUCKLE_TONGUE": {
+      "triangles": 12,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "STRAP_TORSO_RELEASE_TAB": {
+      "triangles": 44,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_L_OPENING": {
+      "triangles": 156,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_L_CLOSED_COVER": {
+      "triangles": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_R_OPENING": {
+      "triangles": 156,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_KIDNEY_R_CLOSED_COVER": {
+      "triangles": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_LIVER_OPENING": {
+      "triangles": 156,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "INCISION_LIVER_CLOSED_COVER": {
+      "triangles": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "zero_area_faces": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "group_triangles": {
+    "STRAP_L_ARM": 440,
+    "STRAP_R_ARM": 440,
+    "STRAP_L_LEG": 440,
+    "STRAP_R_LEG": 440,
+    "STRAP_TORSO": 444,
+    "TRAY_INSTRUMENT": 628,
+    "INCISION_KIDNEY_L": 220,
+    "INCISION_KIDNEY_R": 220,
+    "INCISION_LIVER": 220
+  },
+  "limits": {
+    "each_limb_strap_with_mounts": 450,
+    "torso_strap_with_mounts": 500,
+    "tray": 700,
+    "each_opening_with_closed_cover": 300
+  },
+  "hinge_sweep_minimum_signed_clearance_mm": {
+    "NORMAL": {
+      "0": -20.605845376849174,
+      "0.25": -13.66328913718462,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "THIN": {
+      "0": -29.61420826613903,
+      "0.25": -13.66328913718462,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "FAT": {
+      "0": -0.13434422726277262,
+      "0.25": -13.66328913718462,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "MUSCLE": {
+      "0": -49.61685836315155,
+      "0.25": -36.301061511039734,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "SCALE105": {
+      "0": -28.31210568547249,
+      "0.25": -2.8552331496030092,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "THIN105": {
+      "0": -26.577968150377274,
+      "0.25": -2.8552331496030092,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "FAT105": {
+      "0": -22.769849747419357,
+      "0.25": -2.8552331496030092,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "MUSCLE105": {
+      "0": -45.93900591135025,
+      "0.25": -28.11948023736477,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "MID_THIN": {
+      "0": -29.373953118920326,
+      "0.25": -6.641063839197159,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "MID_FAT": {
+      "0": -16.747931018471718,
+      "0.25": -6.641063839197159,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    },
+    "MID_MUSCLE": {
+      "0": -38.00437971949577,
+      "0.25": -20.174598321318626,
+      "0.5": 0,
+      "0.75": 0,
+      "1": 0
+    }
+  },
+  "girth_fit": {
+    "NORMAL": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.4079577522352338,
+        "max_mm": 4.5015825890004635,
+        "central_max_mm": 4.5015825890004635
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.415774390101433,
+        "max_mm": 4.0289247408509254,
+        "central_max_mm": 4.0289247408509254
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.2971355356276035,
+        "max_mm": 4.263473674654961,
+        "central_max_mm": 4.203464835882187
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.3231334052979946,
+        "max_mm": 4.313809797167778,
+        "central_max_mm": 4.246500786393881
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.203583786264062,
+        "max_mm": 4.081503953784704,
+        "central_max_mm": 4.081503953784704
+      }
+    },
+    "THIN": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.4079577522352338,
+        "max_mm": 4.5015825890004635,
+        "central_max_mm": 4.5015825890004635
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.415774390101433,
+        "max_mm": 4.0289247408509254,
+        "central_max_mm": 4.0289247408509254
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.2971355356276035,
+        "max_mm": 4.263473674654961,
+        "central_max_mm": 4.203464835882187
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.3231334052979946,
+        "max_mm": 4.313809797167778,
+        "central_max_mm": 4.246500786393881
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.004828605800867,
+        "max_mm": 4.5385342091321945,
+        "central_max_mm": 4.5385342091321945
+      }
+    },
+    "FAT": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.4079577522352338,
+        "max_mm": 4.5015825890004635,
+        "central_max_mm": 4.5015825890004635
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.415774390101433,
+        "max_mm": 4.0289247408509254,
+        "central_max_mm": 4.0289247408509254
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.2971355356276035,
+        "max_mm": 4.263473674654961,
+        "central_max_mm": 4.203464835882187
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.3231334052979946,
+        "max_mm": 4.313809797167778,
+        "central_max_mm": 4.246500786393881
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.099768211133778,
+        "max_mm": 4.397205077111721,
+        "central_max_mm": 4.397205077111721
+      }
+    },
+    "MUSCLE": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 0.5936955567449331,
+        "max_mm": 7.243302185088396,
+        "central_max_mm": 7.243302185088396
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 1.8115752609446645,
+        "max_mm": 5.999864544719458,
+        "central_max_mm": 5.999864544719458
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.2965967655181885,
+        "max_mm": 4.266837611794472,
+        "central_max_mm": 4.2073833756148815
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.321666106581688,
+        "max_mm": 4.292397294193506,
+        "central_max_mm": 4.247675649821758
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.2304791016504169,
+        "max_mm": 4.106491804122925,
+        "central_max_mm": 4.106491804122925
+      }
+    },
+    "SCALE105": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.4653258258476853,
+        "max_mm": 4.9463901668787,
+        "central_max_mm": 4.728948697447777
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.4318108335137367,
+        "max_mm": 4.136849194765091,
+        "central_max_mm": 4.123464692384005
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.37477570772171,
+        "max_mm": 4.26420196890831,
+        "central_max_mm": 4.26420196890831
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.217218978330493,
+        "max_mm": 4.207488615065813,
+        "central_max_mm": 4.207488615065813
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.0694597149267793,
+        "max_mm": 4.358174744993448,
+        "central_max_mm": 4.276192747056484
+      }
+    },
+    "THIN105": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.4653258258476853,
+        "max_mm": 4.946375265717506,
+        "central_max_mm": 4.72895847633481
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.4318252690136433,
+        "max_mm": 4.136849194765091,
+        "central_max_mm": 4.123464692384005
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.37477570772171,
+        "max_mm": 4.26420196890831,
+        "central_max_mm": 4.26420196890831
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.217218978330493,
+        "max_mm": 4.207488615065813,
+        "central_max_mm": 4.207488615065813
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.1914371279999614,
+        "max_mm": 4.499954171478748,
+        "central_max_mm": 4.290679004043341
+      }
+    },
+    "FAT105": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.4653258258476853,
+        "max_mm": 4.946375265717506,
+        "central_max_mm": 4.72895847633481
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.4318252690136433,
+        "max_mm": 4.136849194765091,
+        "central_max_mm": 4.123464692384005
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.37477570772171,
+        "max_mm": 4.26420196890831,
+        "central_max_mm": 4.26420196890831
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.217218978330493,
+        "max_mm": 4.207488615065813,
+        "central_max_mm": 4.207488615065813
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.69097981415689,
+        "max_mm": 4.648144822567701,
+        "central_max_mm": 4.4023096561431885
+      }
+    },
+    "MUSCLE105": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 0.5953345098532736,
+        "max_mm": 7.238235324621201,
+        "central_max_mm": 7.238235324621201
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.5586069095879793,
+        "max_mm": 6.222478114068508,
+        "central_max_mm": 6.150917615741491
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.3756923619657755,
+        "max_mm": 4.271348472684622,
+        "central_max_mm": 4.271348472684622
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.216961234807968,
+        "max_mm": 4.20167064294219,
+        "central_max_mm": 4.20167064294219
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.084301620721817,
+        "max_mm": 4.308859352022409,
+        "central_max_mm": 4.308859352022409
+      }
+    },
+    "MID_THIN": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.3660202967002988,
+        "max_mm": 5.352839827537537,
+        "central_max_mm": 5.352839827537537
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.3713819682598114,
+        "max_mm": 4.12329426035285,
+        "central_max_mm": 4.046876449137926
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.388807712122798,
+        "max_mm": 4.219475667923689,
+        "central_max_mm": 4.219475667923689
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.366576809436083,
+        "max_mm": 4.241655580699444,
+        "central_max_mm": 4.241655580699444
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 1.7399992793798447,
+        "max_mm": 5.583616439253092,
+        "central_max_mm": 4.824835807085037
+      }
+    },
+    "MID_FAT": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": 1.3660202967002988,
+        "max_mm": 5.352839827537537,
+        "central_max_mm": 5.352839827537537
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 2.3713819682598114,
+        "max_mm": 4.12329426035285,
+        "central_max_mm": 4.046876449137926
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.388807712122798,
+        "max_mm": 4.219475667923689,
+        "central_max_mm": 4.219475667923689
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.366576809436083,
+        "max_mm": 4.241655580699444,
+        "central_max_mm": 4.241655580699444
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 2.7063218876719475,
+        "max_mm": 6.620751228183508,
+        "central_max_mm": 6.620751228183508
+      }
+    },
+    "MID_MUSCLE": {
+      "STRAP_L_ARM": {
+        "samples": 600,
+        "min_mm": -0.077734628575854,
+        "max_mm": 6.579609587788582,
+        "central_max_mm": 6.579609587788582
+      },
+      "STRAP_R_ARM": {
+        "samples": 600,
+        "min_mm": 1.2493006652221084,
+        "max_mm": 4.967404063791037,
+        "central_max_mm": 4.967404063791037
+      },
+      "STRAP_L_LEG": {
+        "samples": 600,
+        "min_mm": 2.3950168397277594,
+        "max_mm": 4.2238738387823105,
+        "central_max_mm": 4.2238738387823105
+      },
+      "STRAP_R_LEG": {
+        "samples": 600,
+        "min_mm": 2.3793831933289766,
+        "max_mm": 4.247387871146202,
+        "central_max_mm": 4.247387871146202
+      },
+      "STRAP_TORSO": {
+        "samples": 840,
+        "min_mm": 0.6813413929194212,
+        "max_mm": 4.491032101213932,
+        "central_max_mm": 4.008093383163214
+      }
+    }
+  },
+  "new_geometry_triangles": 3492,
+  "result": "FAIL"
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "C01",
+  "displayNameRu": "C01 — покупатель крови",
+  "displayNameEn": "C01 — Blood Buyer",
+  "acceptedMerchandise": [
+    {
+      "merchandiseId": "blood_bag",
+      "itemId": 0,
+      "itemIdUnresolved": true,
+      "hasQuality": false,
+      "packaging": "sealed_blood_bag",
+      "introductoryOnly": false,
+      "hagglingAllowed": true,
+      "hasFixedBasePrice": true,
+      "fixedBasePriceDollars": 50.0
+    },
+    {
+      "merchandiseId": "blood_syringe",
+      "itemId": 0,
+      "itemIdUnresolved": true,
+      "hasQuality": false,
+      "packaging": "filled_syringe",
+      "introductoryOnly": true,
+      "hagglingAllowed": false,
+      "hasFixedBasePrice": true,
+      "fixedBasePriceDollars": 10.0
+    }
+  ],
+  "minimumTier": 0,
+  "workingHours": {
+    "allDay": true,
+    "startHour": 0,
+    "endHour": 24
+  },
+  "meetingType": "base",
+  "saturationEnabled": false,
+  "voiceId": "PLACEHOLDER.VOICE.C01",
+  "unlockCondition": {
+    "all": [
+      {
+        "kind": "contact_available",
+        "subjectId": "PLACEHOLDER.CONTACT.C01_INITIAL",
+        "minimumValue": 0
+      }
+    ]
+  },
+  "textIds": [
+    "c01.first.01",
+    "c01.first.02",
+    "c01.first.03",
+    "c01.first.syringes_01",
+    "c01.first.syringes_02",
+    "c01.first.bags_rule",
+    "c01.offer.01",
+    "c01.intro_c02.01",
+    "c01.intro_c02.02"
+  ],
+  "authoringNotes": [
+    "No blood ItemDefinition exists in Inventory/Items/Item_*.asset at authoring time; itemId 0 is unresolved and must never be allocated as a new inventory ID.",
+    "Merchandise keys distinguish the sealed bag and one-time filled-syringe introduction; they are not Inventory IDs.",
+    "minimumTier 0 means quality does not apply to blood, not a sixth organ quality tier.",
+    "Initial contact integration and voice remain unresolved; display names are descriptive authoring labels, not approved character names.",
+    "G28 updated c01.intro_c02 IDs now describe the first successful blood sale; the text prefix does not assign a canonical C02 identity to ORGANS_01."
+  ]
+}
