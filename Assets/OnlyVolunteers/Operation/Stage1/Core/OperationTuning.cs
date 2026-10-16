@@ -20,6 +20,12 @@ namespace OnlyVolunteers.Operation.Stage1
         public float toolReach = 2.5f;
         public float dazedSeconds = 4f;
         public float escapeSeconds = 7f;
+        [Tooltip("Length of Op_EscapeFall_v01: the root stays on PatientRest while it plays.")]
+        public float escapeFallSeconds = 3f;
+        [Tooltip("PatientRest-local root of the KnockedOut clip after the EscapeFall clip: the floor point under the landed hips. " +
+                 "v03 uses the mirrored clips (Op_*_Mirror_v01, escape over the patient's RIGHT = the table camera's side), so this is " +
+                 "the mirror of validation_op_v01.json cross_contracts (-1.5, -0.66, 0.36).")]
+        public Vector3 escapeLandingOffset = new Vector3(1.5f, -0.66f, 0.36f);
         public float rescueSeconds = 8f;
         [Header("Anesthesia (units: 1.0 = the centre of the suitable range)")]
         public float dosePerSecond = 0.5f;

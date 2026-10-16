@@ -45,7 +45,8 @@ namespace OnlyVolunteers.Buyers
                 if (item.Sold) return Error(r, SaleError.AlreadySold, id);
                 if (order != null ? item.StashOrderId != order.Id || item.MeetingId != "" : item.MeetingId != m.Id || item.StashOrderId != "")
                     return Error(r, SaleError.NotReserved, id);
-                SaleError mismatch = order == null ? (!Accepts(buyer.Id, item.Kind) || item.Kind != n.Kind ? SaleError.WrongKind : SaleError.None) : OrderMismatch(order, item);
+                SaleError mismatch = order == null ? (!Accepts(buyer.Id, item.Kind) ? SaleError.WrongKind :
+                    item.Kind != n.Kind ? SaleError.InvalidRequest : SaleError.None) : OrderMismatch(order, item);
                 if (mismatch != SaleError.None) return Error(r, mismatch, id);
                 if (item.Kind == ProductKind.IntroSyringe && (s.IntroSyringeSold || r.ItemIds.Length != 1)) return Error(r, SaleError.Unavailable, id);
                 goods.Add(item);

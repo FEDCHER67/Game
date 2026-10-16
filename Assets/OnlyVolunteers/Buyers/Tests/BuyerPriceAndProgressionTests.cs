@@ -28,6 +28,17 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(next.XpEach, Is.EqualTo(5)); Assert.That(B(Blood).Respect, Is.EqualTo(33));
         }
         [Test]
+        public void BUY44_IntroSyringeAfterBloodBagHasNoSecondFirstBloodBonus()
+        {
+            Meeting(Blood); var bag = Sell(ProductKind.BloodBag, Blood);
+            Assert.That(bag.XpEach, Is.EqualTo(55)); Assert.That(B(Blood).Respect, Is.EqualTo(32));
+            var syringe = Sell(ProductKind.IntroSyringe, Blood);
+            Assert.That(syringe.Total, Is.EqualTo(10)); Assert.That(syringe.XpEach, Is.EqualTo(5)); Assert.That(syringe.TeamXp, Is.EqualTo(10));
+            Assert.That(B(Blood).Respect, Is.EqualTo(33)); Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(120));
+            Assert.That(rules.Snapshot.FreeXp, Is.EqualTo(120)); Assert.That(rules.Snapshot.SharedFunds, Is.EqualTo(60));
+            Assert.That(rules.Snapshot.IntroSyringeSold, Is.True); Assert.That(rules.Snapshot.FirstBloodSold, Is.True);
+        }
+        [Test]
         public void BUY03_BUY04_BloodHasFixedBaseAndNoQualityCoolingOrSaturation()
         {
             Meeting(Blood); var sale = Sell(ProductKind.BloodBag, Blood, 10);
@@ -72,6 +83,19 @@ namespace OnlyVolunteers.Buyers.Tests
             request = Request(new[] { id }); Assert.That(rules.ConfirmSale(request).Total, Is.EqualTo(400));
         }
         [Test]
+        public void BUY14_UpdateQualityOnlyDegradesAndRejectsImprovement()
+        {
+            string id = Add(tier: QualityTier.Perfect);
+            Assert.That(rules.UpdateQuality(id, QualityTier.PerfectPlus), Is.False); Assert.That(I(id).Quality, Is.EqualTo(QualityTier.Perfect));
+            Assert.That(rules.UpdateQuality(id, QualityTier.Perfect), Is.True);
+            Assert.That(rules.UpdateQuality(id, QualityTier.Good), Is.True); Assert.That(I(id).Quality, Is.EqualTo(QualityTier.Good));
+            Assert.That(rules.UpdateQuality(id, QualityTier.Perfect), Is.False); Assert.That(I(id).Quality, Is.EqualTo(QualityTier.Good));
+            Assert.That(rules.UpdateQuality(id, QualityTier.Damaged), Is.True);
+            Assert.That(rules.UpdateQuality(id, QualityTier.Acceptable), Is.False); Assert.That(I(id).Quality, Is.EqualTo(QualityTier.Damaged));
+            Assert.That(rules.UpdateQuality(Add(ProductKind.BloodBag), QualityTier.Damaged), Is.False);
+            Assert.That(rules.UpdateQuality("missing", QualityTier.Damaged), Is.False);
+        }
+        [Test]
         public void BUY15_BUY16_PerUnitSaturationStopsAtSeventyAndResetsAtMidnight()
         {
             decimal[] expected = {1m,.95m,.90m,.85m,.80m,.75m,.70m,.70m};
@@ -95,7 +119,15 @@ namespace OnlyVolunteers.Buyers.Tests
             Meeting(); Group(); Assert.That(rules.BeginGroup(Organ, ProductKind.Liver, "p1"), Is.False);
             SellAfterGroup(); Assert.That(Sell(ProductKind.Liver).Total, Is.EqualTo(350));
             Assert.That(B().Meeting.Negotiations.Count, Is.EqualTo(2));
-            Assert.That(BuyerCatalog.UnitPrice(ProductKind.Kidney, QualityTier.Acceptable, 0, false, true, 0, false), Is.EqualTo(250));
+            foreach (int respect in new[] {0,19,20,39,40,59,60,79,80,100})
+            {
+                rules = new BuyerRules(clock, rng, Seed(respect)); Meeting(); Group();
+                string id = Add(); rules.LoadItem(Organ, id, "p1");
+                Assert.That(B().Respect, Is.EqualTo(respect));
+                var request = Request(new[] { id });
+                Assert.That(rules.Quote(request).Total, Is.EqualTo(250), "Quote at respect " + respect);
+                Assert.That(rules.ConfirmSale(request).Total, Is.EqualTo(250), "Sale at respect " + respect);
+            }
         }
         private void SellAfterGroup() { string id = Add(); rules.LoadItem(Organ, id, "p1"); Assert.That(rules.ConfirmSale(Request(new[] { id })).Success, Is.True); }
         [Test]

@@ -47,6 +47,10 @@ namespace OnlyVolunteers.Buyers
         {
             foreach (var item in s.Items) if (item.MeetingId == meetingId) item.MeetingId = "";
         }
+        private static void ReleaseMeetingType(BuyerWorldState s, string meetingId, ProductKind kind)
+        {
+            foreach (var item in s.Items) if (item.MeetingId == meetingId && item.Kind == kind) item.MeetingId = "";
+        }
         private void Synchronize(BuyerWorldState s)
         {
             long now = clock.GameSeconds;
@@ -63,12 +67,14 @@ namespace OnlyVolunteers.Buyers
                 }
                 var m = buyer.Meeting;
                 if (m == null || m.Phase == MeetingPhase.Cancelled || m.Phase == MeetingPhase.Completed) continue;
+                // Older snapshots lack HadInteraction, but their negotiations/reservations prove attendance.
+                m.HadInteraction |= m.HadSale || m.Negotiations.Count > 0 || s.Items.Exists(i => i.MeetingId == m.Id);
                 if (now >= m.ExpiresAt)
                 {
                     m.Phase = MeetingPhase.Expired;
                     if (!m.ActiveGroup.HasValue)
                     {
-                        if (!m.HadSale && !m.PenaltyApplied) { Respect(buyer, -1); m.PenaltyApplied = true; }
+                        if (!m.HadInteraction && !m.PenaltyApplied) { Respect(buyer, -1); m.PenaltyApplied = true; }
                         ReleaseMeetingItems(s, m.Id);
                     }
                 }
@@ -178,8 +184,9 @@ namespace OnlyVolunteers.Buyers
             {
                 Synchronize(state);
                 var buyer = Buyer(state, buyerId); var m = buyer.Meeting;
+                if (EndSuccessfulMeeting(state, m)) return true;
                 if (m == null || m.Phase == MeetingPhase.Cancelled || m.Phase == MeetingPhase.Completed || m.Phase == MeetingPhase.Expired && !m.ActiveGroup.HasValue) return false;
-                if (state.LastGameSeconds >= m.ArrivalAt && !m.PenaltyApplied) { Respect(buyer, -1); m.PenaltyApplied = true; }
+                if (state.LastGameSeconds >= m.ArrivalAt && !m.HadInteraction && !m.PenaltyApplied) { Respect(buyer, -1); m.PenaltyApplied = true; }
                 m.Phase = MeetingPhase.Cancelled; m.ActiveGroup = null;
                 ReleaseMeetingItems(state, m.Id); return true;
             }
@@ -190,9 +197,23 @@ namespace OnlyVolunteers.Buyers
             lock (gate)
             {
                 Synchronize(state); var m = Buyer(state, buyerId).Meeting;
-                if (m == null || !m.HadSale || m.ActiveGroup.HasValue ||
-                    m.Phase != MeetingPhase.Waiting && m.Phase != MeetingPhase.Expired) return false;
-                m.Phase = MeetingPhase.Completed; ReleaseMeetingItems(state, m.Id); return true;
+                return EndSuccessfulMeeting(state, m);
+            }
+        }
+        private static bool EndSuccessfulMeeting(BuyerWorldState s, MeetingState m)
+        {
+            if (m == null || !m.HadSale || m.Phase != MeetingPhase.Waiting && m.Phase != MeetingPhase.Expired) return false;
+            m.Phase = MeetingPhase.Completed; m.ActiveGroup = null; ReleaseMeetingItems(s, m.Id); return true;
+        }
+        /// <summary>The host reports a present participant reaching the buyer before the wait expires.
+        /// Starting a group or loading accepted goods also records interaction automatically.</summary>
+        public bool RecordMeetingAttendance(string buyerId, string playerId)
+        {
+            lock (gate)
+            {
+                Synchronize(state); var m = Buyer(state, buyerId).Meeting;
+                if (m == null || m.Phase != MeetingPhase.Waiting || !Present(state, playerId)) return false;
+                m.HadInteraction = true; return true;
             }
         }
         public bool BeginGroup(string buyerId, ProductKind kind, string negotiatorId)
@@ -213,7 +234,7 @@ namespace OnlyVolunteers.Buyers
                     if (kind == ProductKind.IntroSyringe) n.Phase = NegotiationPhase.Agreed;
                     m.Negotiations.Add(n);
                 }
-                n.NegotiatorId = negotiatorId; m.ActiveGroup = kind; return true;
+                n.NegotiatorId = negotiatorId; m.ActiveGroup = kind; m.HadInteraction = true; return true;
             }
         }
         public bool FinishGroup(string buyerId)
@@ -236,14 +257,17 @@ namespace OnlyVolunteers.Buyers
                 return true;
             }
         }
-        public bool LoadItem(string buyerId, string itemId, string holderId)
+        public bool LoadItem(string buyerId, string itemId, string holderId) => LoadItem(buyerId, itemId, holderId, out _);
+        /// <summary>Compatibility overload reports the request error without charging respect.</summary>
+        public bool LoadItem(string buyerId, string itemId, string holderId, out SaleError error)
         {
             lock (gate)
             {
                 Synchronize(state); var m = Buyer(state, buyerId).Meeting; var item = Item(state, itemId);
+                error = SaleError.InvalidRequest;
                 if (!Active(m) || item == null || item.Sold || item.HolderId != holderId || !Present(state, holderId) ||
-                    item.StashOrderId != "" || item.MeetingId != "" && item.MeetingId != m.Id) return false;
-                item.MeetingId = m.Id; return true;
+                    !Accepts(buyerId, item.Kind) || item.StashOrderId != "" || item.MeetingId != "" && item.MeetingId != m.Id) return false;
+                item.MeetingId = m.Id; m.HadInteraction = true; error = SaleError.None; return true;
             }
         }
 
@@ -279,7 +303,11 @@ namespace OnlyVolunteers.Buyers
                 Synchronize(state); var b = Buyer(state, buyerId); var m = b.Meeting;
                 if (m == null || !m.ActiveGroup.HasValue) return false;
                 return Ask(b, m.Negotiations.Find(n => n.Kind == m.ActiveGroup.Value), playerId, ask,
-                    () => { Counter(b, m.ActiveGroup.Value).BannedUntil = state.LastGameSeconds + 3 * BuyerCatalog.Hour; m.ActiveGroup = null; });
+                    () => {
+                        ProductKind kind = m.ActiveGroup.Value;
+                        Counter(b, kind).BannedUntil = state.LastGameSeconds + 3 * BuyerCatalog.Hour;
+                        ReleaseMeetingType(state, m.Id, kind); m.ActiveGroup = null;
+                    });
             }
         }
         public bool AcceptMeetingPrice(string buyerId, string playerId)

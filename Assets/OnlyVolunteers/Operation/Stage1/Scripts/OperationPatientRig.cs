@@ -23,6 +23,17 @@ namespace OnlyVolunteers.Operation.Stage1
         private float tBlink, tBlinkL, tBlinkR, tWorried, tSurprised, tHappy;
         private int opState = -1;
         private bool built;
+        private BoxCollider physicsBox;
+        private Vector3 tableBoxCenter, tableBoxSize;
+        private bool floorPose;
+        /// <summary>Physics box for the KnockedOut clip (prone along the root's X axis, hips over the root; sampled
+        /// from Op_KnockedOut_Mirror_v01: x -0.84..0.89, y 0..0.43, z -0.32..0.48 with the arms).</summary>
+        private static readonly Vector3 FloorBoxCenter = new(0.025f, 0.19f, 0.07f), FloorBoxSize = new(1.68f, 0.38f, 0.56f);
+        private static readonly int[] StateHashes =
+        {
+            Animator.StringToHash("TableAwake"), Animator.StringToHash("TableAsleep"), Animator.StringToHash("Struggle"), Animator.StringToHash("Panic"),
+            Animator.StringToHash("Dead"), Animator.StringToHash("EscapeFall"), Animator.StringToHash("KnockedOut"),
+        };
 
         /// <summary>0..1 flailing of unrestrained limbs (index: L arm, R arm, L leg, R leg, torso).</summary>
         public readonly float[] LimbMotion = new float[5];
@@ -31,6 +42,7 @@ namespace OnlyVolunteers.Operation.Stage1
         public Transform Head => head;
         public Transform HeadTop => headTop != null ? headTop : head;
         public Animator Animator => animator;
+        public int OpState => opState;
 
         private void Awake() => Build();
 
@@ -73,6 +85,9 @@ namespace OnlyVolunteers.Operation.Stage1
             if (upLegR != null && legR != null) Capsule(BodyPart.LegR, upLegR, upLegR.position, legR.position, 0.08f);
             if (legR != null && footR != null) Capsule(BodyPart.LegR, legR, legR.position, footR.position, 0.065f);
             if (animator != null) { animator.cullingMode = AnimatorCullingMode.AlwaysAnimate; animator.applyRootMotion = false; }
+            physicsBox = physicsCollider as BoxCollider;
+            if (physicsBox == null) physicsBox = GetComponent<BoxCollider>();
+            if (physicsBox != null) { tableBoxCenter = physicsBox.center; tableBoxSize = physicsBox.size; }
         }
 
         private GameObject PartObject(BodyPart part, Transform bone, Vector3 center, Quaternion rotation)
@@ -141,6 +156,28 @@ namespace OnlyVolunteers.Operation.Stage1
             animator.SetInteger(OpStateId, state);
         }
         public void ShockDeath() { if (animator != null && animator.runtimeAnimatorController != null) animator.SetTrigger(ShockDeathId); }
+
+        /// <summary>Jumps to a state with no crossfade and re-evaluates the pose now (used when the root itself jumps,
+        /// e.g. EscapeFall -> KnockedOut, whose poses only match across that root offset).</summary>
+        public void SnapState(int state)
+        {
+            if (animator == null || animator.runtimeAnimatorController == null || state < 0 || state >= StateHashes.Length) return;
+            opState = state;
+            animator.SetInteger(OpStateId, state);
+            animator.Play(StateHashes[state], 0, 0f);
+            animator.Update(0f);
+        }
+        /// <summary>Holds the current pose still (a dead body on the floor does not breathe).</summary>
+        public void SetFrozen(bool frozen) { if (animator != null) animator.speed = frozen ? 0f : 1f; }
+
+        /// <summary>Physics box along the lying body on the table (prefab box) or along the KnockedOut pose on the floor.</summary>
+        public void SetFloorPose(bool floor)
+        {
+            if (physicsBox == null || floor == floorPose) return;
+            floorPose = floor;
+            physicsBox.center = floor ? FloorBoxCenter : tableBoxCenter;
+            physicsBox.size = floor ? FloorBoxSize : tableBoxSize;
+        }
 
         /// <summary>Target face weights 0..100; blended smoothly each frame.</summary>
         public void Face(float blinkBoth, float worriedW, float surprisedW, float happyW, float blinkLeft = 0f, float blinkRight = 0f)

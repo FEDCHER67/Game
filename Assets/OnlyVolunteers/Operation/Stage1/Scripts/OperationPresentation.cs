@@ -65,12 +65,14 @@ namespace OnlyVolunteers.Operation.Stage1
         private bool[] bagShown;
         private float nextTick;
         private float escapedAt = -10f;
+        private float thudAt = -1f;
+        private const float EscapeImpactSeconds = 2.0f;
         private bool wasAsleep;
         private float flashAt = -10f;
         private bool built;
 
-        private void OnEnable() { if (table != null) table.CueReceived += OnCue; }
-        private void OnDisable() { if (table != null) table.CueReceived -= OnCue; }
+        private void OnEnable() { if (table != null) table.CueReceived += OnCue; Application.onBeforeRender += OnBeforeRender; }
+        private void OnDisable() { if (table != null) table.CueReceived -= OnCue; Application.onBeforeRender -= OnBeforeRender; }
 
         private void Awake()
         {
@@ -415,6 +417,11 @@ namespace OnlyVolunteers.Operation.Stage1
             UpdateBags(view);
             if (sites[0] != null) for (int i = 0; i < 3; i++) UpdateSite(i, state, view);
             UpdatePatient(state, view);
+            if (thudAt > 0f && Time.time >= thudAt)
+            {
+                thudAt = -1f;
+                if (rig != null && rig.Head != null) Sfx.PlayAt(SfxIds.ThudGround, rig.Head.position, 0.8f);
+            }
             if (view != null && view.injecting && state.alive && Time.time >= nextTick)
             {
                 nextTick = Time.time + 0.28f;
@@ -519,6 +526,28 @@ namespace OnlyVolunteers.Operation.Stage1
             s.wasRemoved = organ.removed;
         }
 
+        /// <summary>The escape clip is playing: the server keeps the root on PatientRest until the clip has landed him.</summary>
+        private bool EscapeFalling(OperationState s, OperationView view)
+        {
+            if (s.onTable || table.PatientObject == null) return false;
+            bool nearRest = Vector3.Distance(table.PatientObject.transform.position, table.RestPose.position) < 0.35f;
+            return nearRest && ((view != null && view.falling) || Time.time - escapedAt < table.Tuning.escapeFallSeconds + 1.5f);
+        }
+        /// <summary>The root has jumped to the KnockedOut root under the landed body: switch clips in the same frame
+        /// (the KnockedOut first frame equals the EscapeFall last frame after that root offset), so nothing pops.</summary>
+        private void CheckLanding()
+        {
+            var s = table.State;
+            if (rig == null || s == null || rig.OpState != OperationPatientRig.StateEscapeFall || EscapeFalling(s, table.View)) return;
+            rig.SnapState(OperationPatientRig.StateKnockedOut);
+            rig.SetFrozen(!s.alive);
+        }
+        private void OnBeforeRender() => CheckLanding();
+
+        // v03: the real clips (Op_*_v01) carry the body motion. The procedural layer of OperationPatientRig is now only
+        // a small extra on limbs that are NOT strapped (a free arm or leg flails a little more while he struggles or
+        // panics) and a faint twitch during an overdose; head shake and torso sway are off. Face blend shapes stay.
+        private const float FreeLimbStruggle = 0.25f, FreeLimbPanic = 0.3f;
         private void UpdatePatient(OperationState s, OperationView view)
         {
             if (rig == null) { rig = table.PatientRig; if (rig == null) return; }
@@ -526,16 +555,28 @@ namespace OnlyVolunteers.Operation.Stage1
             for (int i = 0; i < 5; i++) rig.LimbMotion[i] = 0f;
             rig.Twitch = 0f; rig.HeadShake = 0f;
             float t = Time.time;
+            bool falling = EscapeFalling(s, view);
+            // The physics box follows the pose: along the body on the table, along the KnockedOut clip on the floor.
+            rig.SetFloorPose(!s.onTable && !falling);
+            if (!falling && rig.OpState == OperationPatientRig.StateEscapeFall) CheckLanding();
             if (!s.alive)
             {
-                rig.SetOpState(OperationPatientRig.StateDead);
+                if (falling) { rig.SetFrozen(false); rig.SetOpState(OperationPatientRig.StateEscapeFall); }
+                else if (!s.onTable)
+                {
+                    // Dead on the floor (failed escape): the landed pose, held still (no breathing).
+                    if (rig.OpState != OperationPatientRig.StateKnockedOut) rig.SnapState(OperationPatientRig.StateKnockedOut);
+                    rig.SetFrozen(true);
+                }
+                else { rig.SetFrozen(false); rig.SetOpState(OperationPatientRig.StateDead); }
                 rig.Face(100f, 35f, 0f, 0f);
                 return;
             }
+            rig.SetFrozen(false);
             if (!s.onTable || s.knockedOut)
             {
-                rig.SetOpState(Time.time - escapedAt < 1.6f ? OperationPatientRig.StateEscapeFall : OperationPatientRig.StateKnockedOut);
-                rig.Face(100f, 15f, 0f, 0f);
+                rig.SetOpState(falling ? OperationPatientRig.StateEscapeFall : OperationPatientRig.StateKnockedOut);
+                rig.Face(falling ? 10f : 100f, falling ? 90f : 15f, falling ? 70f : 0f, 0f);
                 return;
             }
             float r = s.residual;
@@ -549,18 +590,17 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 rig.SetOpState(OperationPatientRig.StatePanic);
                 rig.Face(0f, 100f, 100f, 0f);
-                for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0.12f : 1f;
-                rig.LimbMotion[4] = s.Torso ? 0.25f : 1f; rig.HeadShake = 1f;
+                for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0f : FreeLimbPanic;
                 return;
             }
             if (r > tuning.suitableMaximum)
             {
-                // Too much: eyes roll, the body twitches. Readable, not a meter.
+                // Too much: eyes roll, a faint twitch on top of the sleeping clip. Readable, not a meter.
                 float over = Mathf.Clamp01((r - tuning.suitableMaximum) / (tuning.overdoseAbove - tuning.suitableMaximum));
                 rig.SetOpState(OperationPatientRig.StateTableAsleep);
                 float roll = Mathf.Sin(t * (5f + over * 8f));
                 rig.Face(35f + over * 30f, 40f * over, 45f + 50f * over, 0f, 55f + roll * 40f, 50f - roll * 40f);
-                rig.Twitch = 0.25f + over; rig.HeadShake = over * 0.3f;
+                rig.Twitch = 0.1f + 0.3f * over;
                 return;
             }
             if (s.Sleeping && !(injecting && r < tuning.suitableMinimum))
@@ -582,16 +622,14 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 rig.SetOpState(OperationPatientRig.StateTableAwake);
                 rig.Face(45f + Mathf.Sin(t * 3f) * 35f, 20f, 0f, 0f);
-                for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0f : 0.08f;
                 return;
             }
-            // Awake on the table: scared, squirming; free limbs flail, strapped ones only tremble.
+            // Awake on the table: scared. Strapped (torso) he fights the straps; unstrapped he first lies there, then
+            // wriggles towards the edge (the Struggle clip) until the escape clip takes over.
             float escape = Mathf.Clamp01(s.escapeProgress / Mathf.Max(0.1f, tuning.escapeSeconds));
-            rig.SetOpState(s.Torso ? OperationPatientRig.StateStruggle : OperationPatientRig.StateTableAwake);
+            rig.SetOpState(s.Torso || escape > 0.25f ? OperationPatientRig.StateStruggle : OperationPatientRig.StateTableAwake);
             rig.Face(10f + weak * 30f, 80f + weak * 20f, 30f + 40f * Mathf.Max(0f, Mathf.Sin(t * 2.3f)), 0f);
-            for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0.1f : 0.45f + escape * 0.55f;
-            rig.LimbMotion[4] = s.Torso ? 0.15f : 0.3f + escape * 0.7f;
-            rig.HeadShake = 0.15f + escape * 0.4f;
+            for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0f : FreeLimbStruggle * escape;
         }
 
         // ---------- cues ----------
@@ -669,9 +707,12 @@ namespace OnlyVolunteers.Operation.Stage1
                 case PatientCue.EscapeAttempt:
                     hud?.Toast("Он слезает со стола! Пристегни торс", HintTone.Warn);
                     break;
+                case PatientCue.FailedEscapeFall:
+                    escapedAt = Time.time;
+                    break;
                 case PatientCue.Escaped:
                     escapedAt = Time.time;
-                    Sfx.PlayAt(SfxIds.ThudGround, at, 0.8f);
+                    thudAt = Time.time + EscapeImpactSeconds; // the splat in Op_EscapeFall_v01
                     hud?.Toast("Сбежал… и шлёпнулся. Тащи обратно", HintTone.Bad);
                     break;
                 case PatientCue.ShockDeath:

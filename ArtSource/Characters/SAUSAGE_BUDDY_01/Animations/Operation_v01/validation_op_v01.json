@@ -1,0 +1,1334 @@
+{
+  "fps": 30,
+  "sample_rate_hz": 120,
+  "thresholds": {
+    "key_step_deg": 25.0,
+    "pad_gap_m": 0.0,
+    "floor_m": 0.0,
+    "seam": 0.0,
+    "contract": 1e-05,
+    "strap_point_m": 0.04,
+    "strap_pen_m": 0.008,
+    "fbx_bind": 0.0001,
+    "fbx_anim": 0.005,
+    "fbx_seam": 1e-05,
+    "fbx_anim_note": "FBX stores Euler curves in float32; the clavicles sit at the Euler gimbal (local Y = 90 deg) in TABLE_REST, so shoulder roll loses ~0.1 deg on single frames (<= 3 mm at the hands)"
+  },
+  "bind_reference": "SAUSAGE_BUDDY_PATIENT_v01.fbx",
+  "stage": "TABLE-ASTRA-001_v02.blend geometry + InstrumentStand_v01 at TrayAnchor table (0.57, 0.29, 0)",
+  "clips": {
+    "Op_Lie_Awake_v01": {
+      "action": "Op_Lie_Awake_v01",
+      "frames": [
+        1,
+        121
+      ],
+      "fps": 30,
+      "duration_s": 4.0,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_Lie_Awake_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 18.481346819510094,
+      "max_key_step_at": [
+        "mixamorig:RightHandRing2",
+        87.0
+      ],
+      "pad_min_region": "chest:mixamorig:Spine2",
+      "pad_min_gap_m": 0.0005143284797668457,
+      "pad_min_gap_at_s": 1.3333333333333333,
+      "floor_min_z_m": 0.6561639904975891,
+      "floor_min_at_s": 0.575,
+      "overlaps": {},
+      "overlap_times_s": {},
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 0.0,
+        "STRAP_TORSO": 0.0
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.020374279944239203,
+        "forearm_R": 0.020788548596481996,
+        "shin_L": 9.911507340084384e-05,
+        "shin_R": 9.911507340084384e-05,
+        "pelvis": 9.901076527219189e-05,
+        "wrist_L": 0.02037429607020264,
+        "wrist_R": 0.02078857981742474
+      },
+      "seam_matrix_error": 0.0,
+      "start_tablerest_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.11119985580444336
+      ],
+      "end_hips_table_m": [
+        0.0,
+        0.0,
+        0.7711998820304871
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 0.0023144036531448364,
+        "seam_error": 0.0,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_Lie_Awake_v01": [
+            1.0,
+            121.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "seam_exact": true,
+        "start_tablerest": true,
+        "closed_strap_penetration": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 22,
+      "checks_total": 22,
+      "pass": true,
+      "validate_seconds": 7.1
+    },
+    "Op_Lie_Asleep_v01": {
+      "action": "Op_Lie_Asleep_v01",
+      "frames": [
+        1,
+        151
+      ],
+      "fps": 30,
+      "duration_s": 5.0,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_Lie_Asleep_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 8.676036488881968,
+      "max_key_step_at": [
+        "mixamorig:LeftHandIndex2",
+        37.5
+      ],
+      "pad_min_region": "chest:mixamorig:Spine2",
+      "pad_min_gap_m": 0.0008323788642883301,
+      "pad_min_gap_at_s": 0.0,
+      "floor_min_z_m": 0.6564530730247498,
+      "floor_min_at_s": 0.30833333333333335,
+      "overlaps": {},
+      "overlap_times_s": {},
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 0.0,
+        "STRAP_TORSO": 0.0
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.011261218983792976,
+        "forearm_R": 0.011261186743047578,
+        "shin_L": 0.000286743047563498,
+        "shin_R": 0.00028675049378831834,
+        "pelvis": 0.000286646191856399,
+        "wrist_L": 0.011261214502052534,
+        "wrist_R": 0.011261170759402367
+      },
+      "seam_matrix_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.11148649454116821
+      ],
+      "end_hips_table_m": [
+        0.0,
+        0.0,
+        0.7714865207672119
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 1.4543533325195312e-05,
+        "seam_error": 0.0,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_Lie_Asleep_v01": [
+            1.0,
+            151.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "seam_exact": true,
+        "closed_strap_penetration": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true,
+      "validate_seconds": 8.7
+    },
+    "Op_Struggle_v01": {
+      "action": "Op_Struggle_v01",
+      "frames": [
+        1,
+        76
+      ],
+      "fps": 30,
+      "duration_s": 2.5,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_Struggle_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 15.566674222060977,
+      "max_key_step_at": [
+        "mixamorig:LeftHandIndex2",
+        42.0
+      ],
+      "pad_min_region": "arm_Right:mixamorig:RightForeArm",
+      "strap_pen_where": {
+        "STRAP_LEG_R": [
+          "leg_Right",
+          "mixamorig:RightLeg",
+          1.683
+        ]
+      },
+      "pad_min_gap_m": 0.0005450844764709473,
+      "pad_min_gap_at_s": 1.5,
+      "floor_min_z_m": 0.6561176180839539,
+      "floor_min_at_s": 1.4083333333333334,
+      "overlaps": {
+        "STRAP_LEG_L": 56,
+        "STRAP_LEG_R": 104,
+        "STRAP_TORSO": 180
+      },
+      "overlap_times_s": {
+        "STRAP_TORSO": [
+          0.3,
+          1.825
+        ],
+        "STRAP_LEG_L": [
+          0.858,
+          1.217
+        ],
+        "STRAP_LEG_R": [
+          1.017,
+          1.717
+        ]
+      },
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 2.0571262211888097e-05,
+        "STRAP_TORSO": 0.0
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.03097044987394404,
+        "forearm_R": 0.03053951538901571,
+        "shin_L": 0.01590102150082328,
+        "shin_R": 0.01590102150082328,
+        "pelvis": 0.015534494702898522,
+        "wrist_L": 0.03097045251231459,
+        "wrist_R": 0.03053948809480613
+      },
+      "seam_matrix_error": 0.0,
+      "start_tablerest_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.11119985580444336
+      ],
+      "end_hips_table_m": [
+        0.0,
+        0.0,
+        0.7711998820304871
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 0.002942929044365883,
+        "seam_error": 0.0,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_Struggle_v01": [
+            1.0,
+            76.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "seam_exact": true,
+        "start_tablerest": true,
+        "strap_points_held": true,
+        "closed_strap_penetration": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 23,
+      "checks_total": 23,
+      "pass": true,
+      "validate_seconds": 4.5
+    },
+    "Op_Panic_v01": {
+      "action": "Op_Panic_v01",
+      "frames": [
+        1,
+        61
+      ],
+      "fps": 30,
+      "duration_s": 2.0,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_Panic_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 22.58898026479306,
+      "max_key_step_at": [
+        "mixamorig:RightHandIndex2",
+        2.5
+      ],
+      "pad_min_region": "arm_Right:mixamorig:RightForeArm",
+      "strap_pen_where": {
+        "STRAP_LEG_L": [
+          "leg_Left",
+          "mixamorig:LeftLeg",
+          0.4
+        ],
+        "STRAP_LEG_R": [
+          "leg_Right",
+          "mixamorig:RightLeg",
+          0.4
+        ],
+        "STRAP_TORSO": [
+          "arm_Right",
+          "mixamorig:RightHand",
+          0.917
+        ]
+      },
+      "pad_min_gap_m": 0.0004571080207824707,
+      "pad_min_gap_at_s": 0.875,
+      "floor_min_z_m": 0.6560550332069397,
+      "floor_min_at_s": 0.8416666666666667,
+      "overlaps": {
+        "STRAP_LEG_L": 1490,
+        "STRAP_LEG_R": 1568,
+        "STRAP_TORSO": 390
+      },
+      "overlap_times_s": {
+        "STRAP_LEG_L": [
+          0.092,
+          1.683
+        ],
+        "STRAP_LEG_R": [
+          0.242,
+          1.875
+        ],
+        "STRAP_TORSO": [
+          0.308,
+          1.592
+        ]
+      },
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0030408708844333887,
+        "STRAP_LEG_R": 0.004733322653919458,
+        "STRAP_TORSO": 0.001666640629991889
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.037205380849204175,
+        "forearm_R": 0.03955250396378653,
+        "shin_L": 0.020058895353836866,
+        "shin_R": 0.020020838965906312,
+        "pelvis": 0.019655370520887422,
+        "wrist_L": 0.037205328132970616,
+        "wrist_R": 0.039552451340573475
+      },
+      "seam_matrix_error": 0.0,
+      "start_tablerest_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.11119985580444336
+      ],
+      "end_hips_table_m": [
+        0.0,
+        0.0,
+        0.7711998820304871
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 0.00020791590213775635,
+        "seam_error": 0.0,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_Panic_v01": [
+            1.0,
+            61.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "seam_exact": true,
+        "start_tablerest": true,
+        "strap_points_held": true,
+        "closed_strap_penetration": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 23,
+      "checks_total": 23,
+      "pass": true,
+      "validate_seconds": 3.7
+    },
+    "Op_ShockDeath_v01": {
+      "action": "Op_ShockDeath_v01",
+      "frames": [
+        1,
+        61
+      ],
+      "fps": 30,
+      "duration_s": 2.0,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_ShockDeath_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 17.871513051619058,
+      "max_key_step_at": [
+        "mixamorig:LeftHandIndex2",
+        31.5
+      ],
+      "pad_min_region": "arm_Right:mixamorig:RightForeArm",
+      "strap_pen_where": {
+        "STRAP_TORSO": [
+          "arm_Right",
+          "mixamorig:RightHand",
+          0.242
+        ]
+      },
+      "pad_min_gap_m": 0.00040799379348754883,
+      "pad_min_gap_at_s": 0.09166666666666666,
+      "floor_min_z_m": 0.6559851765632629,
+      "floor_min_at_s": 0.09166666666666666,
+      "overlaps": {
+        "STRAP_LEG_R": 24,
+        "STRAP_TORSO": 664
+      },
+      "overlap_times_s": {
+        "STRAP_TORSO": [
+          0.1,
+          0.492
+        ],
+        "STRAP_LEG_R": [
+          0.8,
+          0.842
+        ]
+      },
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 0.0,
+        "STRAP_TORSO": 0.0017090851906687021
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.032240728824326104,
+        "forearm_R": 0.03624271906637149,
+        "shin_L": 0.01701784122607211,
+        "shin_R": 0.01701784122607211,
+        "pelvis": 0.01690888977856159,
+        "wrist_L": 0.03224073893747694,
+        "wrist_R": 0.03624270300587014
+      },
+      "seam_matrix_error": null,
+      "start_tablerest_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.1118934154510498
+      ],
+      "end_hips_table_m": [
+        0.0,
+        0.0,
+        0.7718934416770935
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 0.0005817227065563202,
+        "seam_error": null,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_ShockDeath_v01": [
+            1.0,
+            61.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "start_tablerest": true,
+        "closed_strap_penetration": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true,
+      "validate_seconds": 3.7
+    },
+    "Op_Dead_v01": {
+      "action": "Op_Dead_v01",
+      "frames": [
+        1,
+        61
+      ],
+      "fps": 30,
+      "duration_s": 2.0,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_Dead_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 0.0,
+      "pad_min_region": "pelvis:mixamorig:Hips",
+      "pad_min_gap_m": 0.0009714961051940918,
+      "pad_min_gap_at_s": 0.0,
+      "floor_min_z_m": 0.6569661498069763,
+      "floor_min_at_s": 0.0,
+      "overlaps": {},
+      "overlap_times_s": {},
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 0.0,
+        "STRAP_TORSO": 0.0
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.001110758656703529,
+        "forearm_R": 0.0011107701750866824,
+        "shin_L": 0.0006936639751014188,
+        "shin_R": 0.0006936713911909619,
+        "pelvis": 0.0006935671048305924,
+        "wrist_L": 0.0011107620894420817,
+        "wrist_R": 0.0011107960368400378
+      },
+      "seam_matrix_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.1118934154510498
+      ],
+      "end_hips_table_m": [
+        0.0,
+        0.0,
+        0.7718934416770935
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 1.4320015907287598e-05,
+        "seam_error": 0.0,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_Dead_v01": [
+            1.0,
+            61.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "seam_exact": true,
+        "closed_strap_penetration": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true,
+      "validate_seconds": 3.7
+    },
+    "Op_EscapeFall_v01": {
+      "action": "Op_EscapeFall_v01",
+      "frames": [
+        1,
+        91
+      ],
+      "fps": 30,
+      "duration_s": 3.0,
+      "loop": false,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_EscapeFall_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600000262260437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 22.379015534256318,
+      "max_key_step_at": [
+        "mixamorig:RightHand",
+        40.0
+      ],
+      "pad_min_region": "chest:mixamorig:Spine2",
+      "pad_min_gap_m": 0.0005454421043395996,
+      "pad_min_gap_at_s": 0.0,
+      "floor_min_z_m": 0.00040012598037719727,
+      "floor_min_at_s": 1.9583333333333333,
+      "overlaps": {},
+      "overlap_times_s": {},
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 0.0,
+        "STRAP_TORSO": 0.0
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 1.9775130244295152,
+        "forearm_R": 2.1271607899239315,
+        "shin_L": 1.1787937770453047,
+        "shin_R": 1.1959334940805246,
+        "pelvis": 1.6146002865998506,
+        "wrist_L": 1.995815942696148,
+        "wrist_R": 2.1973731527508975
+      },
+      "seam_matrix_error": null,
+      "start_tablerest_error": 0.0,
+      "end_hips_armature_m": [
+        1.5,
+        -0.36000001430511475,
+        -0.5413982272148132
+      ],
+      "end_hips_table_m": [
+        -1.5,
+        0.36000025272369385,
+        0.11860179901123047
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 1.7642974853515625e-05,
+        "seam_error": null,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_EscapeFall_v01": [
+            1.0,
+            91.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "end_lowest_z_m": null,
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "start_tablerest": true,
+        "open_straps_no_overlap": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true
+      },
+      "checks_passed": 20,
+      "checks_total": 20,
+      "pass": true,
+      "validate_seconds": 4.5
+    },
+    "Op_KnockedOut_v01": {
+      "action": "Op_KnockedOut_v01",
+      "frames": [
+        1,
+        121
+      ],
+      "fps": 30,
+      "duration_s": 4.0,
+      "loop": true,
+      "bone_count": 65,
+      "bone_order_matches_patient": true,
+      "rig_mesh_data_unchanged": true,
+      "actions_in_file": [
+        "Op_KnockedOut_v01"
+      ],
+      "rig_object_matrix": [
+        [
+          -1.0,
+          -1.5099580252808664e-07,
+          0.0,
+          -1.5
+        ],
+        [
+          1.5099580252808664e-07,
+          -1.0,
+          0.0,
+          0.3600001335144043
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "nonfinite": 0,
+      "reflected": 0,
+      "quat_sign_flips": 0,
+      "max_key_step_deg": 8.676397674097034,
+      "max_key_step_at": [
+        "mixamorig:LeftHandMiddle2",
+        76.5
+      ],
+      "pad_min_gap_m": 1.0,
+      "pad_min_gap_at_s": null,
+      "floor_min_z_m": 0.0009998679161071777,
+      "floor_min_at_s": 0.85,
+      "overlaps": {},
+      "overlap_times_s": {},
+      "strap_penetration_depth_m": {
+        "STRAP_ARM_L": 0.0,
+        "STRAP_ARM_R": 0.0,
+        "STRAP_LEG_L": 0.0,
+        "STRAP_LEG_R": 0.0,
+        "STRAP_TORSO": 0.0
+      },
+      "strap_point_max_displacement_m": {
+        "forearm_L": 0.35713685147869645,
+        "forearm_R": 0.473529634347142,
+        "shin_L": 1.0505756308888567,
+        "shin_R": 0.6749829591273949,
+        "pelvis": 0.07813316729535227,
+        "wrist_L": 0.42665530045337824,
+        "wrist_R": 0.37725966255350774
+      },
+      "seam_matrix_error": 0.0,
+      "end_hips_armature_m": [
+        0.0,
+        0.0,
+        0.11860185861587524
+      ],
+      "end_hips_table_m": [
+        -1.5,
+        0.3600001335144043,
+        0.11860185861587524
+      ],
+      "fbx": {
+        "bone_count": 65,
+        "bone_order_matches": true,
+        "hierarchy_matches": true,
+        "max_bind_error": 1.6137957572937012e-05,
+        "max_animated_matrix_error": 1.5437602996826172e-05,
+        "seam_error": 0.0,
+        "takes": {
+          "Buddy_Rig_Mixamo65|Buddy_Rig_Mixamo65|Op_KnockedOut_v01": [
+            1.0,
+            121.0
+          ]
+        },
+        "armature_object_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.6292067073209182e-07,
+            0.0
+          ],
+          [
+            0.0,
+            -1.6292067073209182e-07,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "only_armature": true
+      },
+      "end_lowest_z_m": null,
+      "checks": {
+        "fps30": true,
+        "bones65": true,
+        "bone_order": true,
+        "rig_mesh_unchanged": true,
+        "one_action": true,
+        "finite": true,
+        "no_reflection": true,
+        "no_sign_flip": true,
+        "key_step": true,
+        "pad_no_penetration": true,
+        "table_parts_no_overlap": true,
+        "floor": true,
+        "seam_exact": true,
+        "open_straps_no_overlap": true,
+        "fbx_bone_order": true,
+        "fbx_hierarchy": true,
+        "fbx_bind": true,
+        "fbx_anim": true,
+        "fbx_one_take": true,
+        "fbx_armature_only": true,
+        "fbx_seam": true
+      },
+      "checks_passed": 21,
+      "checks_total": 21,
+      "pass": true,
+      "validate_seconds": 5.8
+    }
+  },
+  "cross_contracts": {
+    "shockdeath_end_vs_dead_start": 0.0,
+    "escapefall_end_vs_knockedout_start_after_root_offset": 2.384185791015625e-07,
+    "knockedout_root_offset_armature_m": [
+      1.5,
+      -0.36000001430511475,
+      -0.6600000858306885
+    ],
+    "knockedout_root_offset_unity_patientrest_local": [
+      -1.5,
+      -0.6600000858306885,
+      0.36000001430511475
+    ]
+  },
+  "pass": true
+}

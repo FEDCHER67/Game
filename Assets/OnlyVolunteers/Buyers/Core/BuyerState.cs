@@ -12,7 +12,7 @@ namespace OnlyVolunteers.Buyers
     public enum SaleError { None, InvalidRequest, NotPresent, NotNegotiator, Unavailable, NotReserved,
         MissingItem, AlreadySold, WrongKind, WrongNpc, LowQuality, PackagingRequired, PriceChanged }
 
-    /// <summary>Saved active-world seconds. Never supply wall-clock or offline elapsed time.</summary>
+    /// <summary>Saved active-world seconds, with time 0 = 00:00. Never supply wall-clock or offline elapsed time.</summary>
     public interface IBuyerClock { long GameSeconds { get; } }
     /// <summary>Each call returns an integer in [0,100). No random calls for invalid asks.</summary>
     public interface IBuyerRandom { int NextPercent(); }
@@ -41,6 +41,7 @@ namespace OnlyVolunteers.Buyers
         public MeetingPhase Phase;
         public bool PenaltyApplied;
         public bool HadSale;
+        public bool HadInteraction;
         public ProductKind? ActiveGroup;
         public List<NegotiationState> Negotiations = new List<NegotiationState>();
         public MeetingState Copy()

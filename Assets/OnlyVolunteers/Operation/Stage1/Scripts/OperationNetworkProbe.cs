@@ -225,7 +225,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             started = Time.time;
             output = Argument("-ops-evidence");
-            if (string.IsNullOrEmpty(output)) output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Working", "Reviews", "Operations", "stage1_v2", "run_" + name));
+            if (string.IsNullOrEmpty(output)) output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Working", "Reviews", "Operations", "stage1_v3", "run_" + name));
             Directory.CreateDirectory(output);
             if (File.Exists(Path.Combine(output, "run-log.txt"))) File.Delete(Path.Combine(output, "run-log.txt"));
             OperationTestHooks.SaveSlot = "operations_stage1_test_v02.json";
@@ -256,6 +256,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 "edges" => Edges(),
                 "rotated" => Rotated(),
                 "hud720" => Hud720(),
+                "evidence" => Evidence(),
                 "net-host" => NetHost(),
                 "net-client" => NetClient(),
                 _ => null
@@ -647,8 +648,24 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return EnterTable();
             Shot("e01_dazed");
             yield return WaitFor(() => S.escapes == 1 && !S.onTable, table.Tuning.dazedSeconds + table.Tuning.escapeSeconds + 2f, "awake unrestrained patient escapes");
-            yield return new WaitForSeconds(1.2f);
-            Check(S.alive && table.PatientBody.transform.position.y < table.transform.position.y + 0.45f, "escaped patient fell to the floor alive");
+            // v03: the escape clip plays with the root kept on PatientRest, then the root lands under the body.
+            yield return new WaitForSeconds(1.0f);
+            Check(Vector3.Distance(table.PatientBody.transform.position, table.RestPose.position) < 0.05f && !S.onTable, "escape clip plays with the root on PatientRest");
+            Shot("e02a_escaping");
+            yield return new WaitForSeconds(table.Tuning.escapeFallSeconds - 1.0f + 0.6f);
+            var landedRoot = table.PatientBody.transform.position;
+            Vector3 landedLocal = table.transform.InverseTransformPoint(landedRoot);
+            Check(S.alive && landedRoot.y < table.transform.position.y + 0.45f, "escaped patient fell to the floor alive");
+            Check(landedLocal.x < -1.2f, $"he left over his right side, away from the stand (table-local x={landedLocal.x:F2})");
+            Transform hipsT = null;
+            foreach (var t in table.PatientBody.GetComponentsInChildren<Transform>()) if (t.name == "mixamorig:Hips") hipsT = t;
+            if (hipsT != null)
+            {
+                Vector3 h = table.PatientBody.transform.InverseTransformPoint(hipsT.position);
+                Check(new Vector2(h.x, h.z).magnitude < 0.1f && h.y < 0.3f, $"landed pose lies on its root, no pop (hips root-local {h})");
+            }
+            yield return new WaitForSeconds(1.0f);
+            Check(!S.onTable && Vector3.Distance(table.PatientBody.transform.position, landedRoot) < 0.05f, "no snapping back onto the table, no sliding");
             Shot("e02_escaped");
             yield return Tap(Key.Escape);
             yield return new WaitForSeconds(0.4f);
@@ -767,6 +784,109 @@ namespace OnlyVolunteers.Operation.Stage1
             tb.position = moved; table.transform.position = moved;
             yield return new WaitForSeconds(0.3f);
             Check(Vector3.Distance(table.PatientBody.transform.position, table.RestPose.position) < 0.01f, "the patient rides along when the gurney moves");
+        }
+
+        // ---------- v03 animation evidence (patient states through the real table camera) ----------
+        /// <summary>Extra camera, no HUD, table-local placement: layout overviews and the escape seen from aside.</summary>
+        private void Overview(string name, Vector3 local, Vector3 lookLocal)
+        {
+            if (output == null) return;
+            var go = new GameObject("OpsOverviewCam");
+            var cam = go.AddComponent<Camera>();
+            cam.fieldOfView = 50f; cam.nearClipPlane = 0.05f;
+            Vector3 p = table.transform.TransformPoint(local);
+            go.transform.SetPositionAndRotation(p, Quaternion.LookRotation(table.transform.TransformPoint(lookLocal) - p));
+            var target = RenderTexture.GetTemporary(captureWidth, captureHeight, 24, RenderTextureFormat.ARGB32);
+            cam.targetTexture = target; cam.Render();
+            var prev = RenderTexture.active; RenderTexture.active = target;
+            var tex = new Texture2D(captureWidth, captureHeight, TextureFormat.RGB24, false);
+            tex.ReadPixels(new Rect(0, 0, captureWidth, captureHeight), 0, 0); tex.Apply();
+            RenderTexture.active = prev; cam.targetTexture = null; RenderTexture.ReleaseTemporary(target);
+            File.WriteAllBytes(Path.Combine(output, name + ".png"), tex.EncodeToPNG()); Destroy(tex); Destroy(go);
+            Line("OVERVIEW " + name);
+        }
+        private string AnimState()
+        {
+            var rig = table.PatientRig; if (rig == null || rig.Animator == null) return "?";
+            var info = rig.Animator.GetCurrentAnimatorStateInfo(0);
+            foreach (var n in new[] { "TableAwake", "TableAsleep", "Struggle", "Panic", "Dead", "EscapeFall", "KnockedOut", "ShockDeath" })
+                if (info.IsName(n)) return n;
+            return "?";
+        }
+        private IEnumerator Evidence()
+        {
+            var side = new Vector3(2.3f, 1.55f, -1.1f); var sideLook = new Vector3(-0.2f, 0.65f, 0.05f);
+            var far = new Vector3(-3.4f, 2.0f, 1.4f); var farLook = new Vector3(-1.1f, 0.35f, -0.35f);
+            yield return Tap(Key.F10); yield return new WaitForSeconds(0.8f);
+            Overview("v00_knocked_out_floor", new Vector3(-2.4f, 1.5f, 1.2f), new Vector3(-1.15f, 0.1f, -0.1f));
+            Check(AnimState() == "KnockedOut", "fresh patient on the floor plays KnockedOut (" + AnimState() + ")");
+            yield return Tap(Key.F9);
+            yield return WaitFor(() => S.onTable && S.aligned, 1.5f, "F9 places the patient");
+            yield return new WaitForSeconds(0.5f);
+            Overview("v01_stand_overview", new Vector3(-1.9f, 2.1f, -2.0f), new Vector3(0.15f, 0.62f, 0.15f));
+            Overview("v01b_stand_far_side", side, sideLook);
+            yield return EnterTable();
+            frameIndex = 0; recording = true; StartCoroutine(Record());
+            yield return new WaitForSeconds(0.6f);
+            Check(AnimState() == "TableAwake", "awake (dazed) on the table plays TableAwake (" + AnimState() + ")");
+            Shot("v02_awake_straps_open");
+            Overview("v02b_straps_open_side", side, sideLook);
+            yield return Straps(true);
+            yield return WaitFor(() => !S.Dazed, table.Tuning.dazedSeconds + 1f, "daze over, strapped");
+            yield return new WaitForSeconds(1.0f);
+            Check(AnimState() == "Struggle", "strapped and awake plays Struggle (" + AnimState() + ")");
+            Shot("v03_struggle");
+            yield return new WaitForSeconds(0.45f);
+            Shot("v03b_struggle");
+            yield return Inject(2.0f, "evidence");
+            yield return WaitFor(() => S.Sleeping, 1.5f, "asleep after a 2 s hold");
+            yield return new WaitForSeconds(1.2f);
+            Check(AnimState() == "TableAsleep", "asleep plays TableAsleep (" + AnimState() + ")");
+            Shot("v04_asleep");
+            // Panic: he wakes up after an organ came out (evidence shortcut: the server state is set directly).
+            S.extracted = 1; S.sleepRemaining = 0.05f;
+            yield return WaitFor(() => S.Panicking, 2f, "wakes up mid-operation -> panic");
+            yield return new WaitForSeconds(0.7f);
+            Check(AnimState() == "Panic", "panic plays Panic (" + AnimState() + ")");
+            Shot("v05_panic");
+            yield return new WaitForSeconds(0.5f);
+            Shot("v05b_panic");
+            yield return Inject(1.8f, "rescue");
+            yield return WaitFor(() => !S.Panicking && S.Sleeping, 2f, "rescue injection -> asleep again");
+            yield return new WaitForSeconds(1.0f);
+            Shot("v06_rescued");
+            yield return new WaitForSeconds(0.5f);
+            recording = false;
+            // Shock death: panic with the torso strapped runs out.
+            S.sleepRemaining = 0.05f;
+            yield return WaitFor(() => S.Panicking, 2f, "panic again");
+            yield return WaitFor(() => !S.alive, table.Tuning.rescueSeconds + 2f, "no rescue -> death");
+            Check(S.deathCause == DeathCause.Shock, "death cause Shock (" + S.deathCause + ")");
+            yield return new WaitForSeconds(0.3f);
+            Check(AnimState() == "ShockDeath", "shock death plays ShockDeath (" + AnimState() + ")");
+            Shot("v07_shockdeath_a");
+            yield return new WaitForSeconds(0.45f);
+            Shot("v07_shockdeath_b");
+            yield return new WaitForSeconds(2.2f);
+            Check(AnimState() == "Dead", "after ShockDeath the patient plays Dead (" + AnimState() + ")");
+            Shot("v08_dead");
+            // Escape of an awake, unstrapped patient.
+            yield return Tap(Key.Escape); yield return new WaitForSeconds(0.4f);
+            yield return Tap(Key.F10); yield return new WaitForSeconds(0.8f);
+            yield return Tap(Key.F9); yield return new WaitForSeconds(0.5f);
+            yield return EnterTable();
+            frameIndex = 100000; recording = true; StartCoroutine(Record());
+            yield return WaitFor(() => S.escapes == 1, table.Tuning.dazedSeconds + table.Tuning.escapeSeconds + 2f, "awake unrestrained patient escapes");
+            float t0 = Time.time;
+            foreach (float at in new[] { 0.35f, 0.9f, 1.45f, 2.0f, 2.6f, 3.6f })
+            {
+                while (Time.time - t0 < at) yield return null;
+                string tag = "v09_escape_" + ((int)(at * 100)).ToString("D3");
+                Overview(tag + "_side", far, farLook);
+                Shot(tag + "_table_cam");
+            }
+            recording = false;
+            Check(AnimState() == "KnockedOut" && !S.onTable, "landed: KnockedOut on the floor (" + AnimState() + ")");
         }
 
         private IEnumerator Hud720()

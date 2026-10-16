@@ -31,7 +31,7 @@ foreach ($projectName in 'Buyers.Core.csproj','Buyers.Rules.Tests.csproj') {
 }
 [xml]$trxDoc = Get-Content -Raw -LiteralPath (Join-Path $stagePath 'TestResults\buyers-results.trx')
 $counters = $trxDoc.TestRun.ResultSummary.Counters
-if ($counters.failed -ne '0' -or $counters.notExecuted -ne '0' -or $counters.passed -ne $counters.total -or $counters.total -ne '93') { throw 'NUnit result check failed.' }
+if ($counters.failed -ne '0' -or $counters.notExecuted -ne '0' -or $counters.passed -ne $counters.total -or $counters.total -ne '130') { throw 'NUnit result check failed.' }
 $assetFiles = @(Get-ChildItem -LiteralPath $corePath,$testPath -File | Select-Object -ExpandProperty FullName)
 $assetFiles += @(($corePath + '.meta'), ($testPath + '.meta'))
 foreach ($source in @($coreSources) + @($testSources)) { if (!(Test-Path -LiteralPath ($source.FullName + '.meta') -PathType Leaf)) { throw ('Missing meta: ' + $source.FullName) } }
@@ -53,7 +53,7 @@ foreach ($outputPath in $allOutputs) {
 Set-Content -LiteralPath $inventoryPath -Value $allOutputs -Encoding utf8NoBOM
 $summaryLines = @(
     'G27 buyer rules verification: PASS'
-    'NUnit: total 93; passed 93; failed 0; skipped 0.'
+    'NUnit: total 130; passed 130; failed 0; skipped 0.'
     'Core: .NET Standard 2.1; five original linked C# files; no Unity references.'
     'Tests: four original linked C# files; Editor-only asmdef; no Unity execution.'
     'BUY coverage: 53 rule IDs. Non-rule IDs: BUY-27, BUY-39, BUY-40.'

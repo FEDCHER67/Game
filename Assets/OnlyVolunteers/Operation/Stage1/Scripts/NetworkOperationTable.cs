@@ -23,6 +23,8 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool injecting;
         public int drawing = -1;
         public int[] pullers = new int[3];
+        /// <summary>The escape clip (Op_EscapeFall) is playing: the root stays on PatientRest until it lands.</summary>
+        public bool falling;
     }
 
     /// <summary>One authoritative operating table (a pushable gurney). Clients only send intents: the selected tool,
@@ -69,6 +71,8 @@ namespace OnlyVolunteers.Operation.Stage1
         private int ctxOrgan = -1, ctxClient = -1;
         private int fellFrame = -1;
         private float noAlignUntil;
+        private bool falling;
+        private float fallEndsAt;
 
         public OperationTuning Tuning => tuning;
         public OperationState State => IsServerInitialized ? rules?.State : mirror?.patient;
@@ -284,7 +288,9 @@ namespace OnlyVolunteers.Operation.Stage1
             if (Physics.Raycast(spawn + Vector3.up * 1.5f, Vector3.down, out var hit, 4f, ~0, QueryTriggerInteraction.Ignore) && hit.rigidbody == null)
                 spawn.y = hit.point.y + 0.02f;
             w.patientPosition = spawn;
-            w.patientRotation = transform.rotation * Quaternion.Euler(0, 180, 0);
+            // The KnockedOut clip lies prone along its root's X axis (head toward +X): yaw -90 lays him alongside the gurney,
+            // head toward the head end.
+            w.patientRotation = transform.rotation * Quaternion.Euler(0, -90, 0);
             return w;
         }
         private void MigrateLoaded(OperationWorldState w)
@@ -304,6 +310,7 @@ namespace OnlyVolunteers.Operation.Stage1
             world.patient = rules.State;
             rules.Cue += Hook;
             alignStartSet = false;
+            falling = false; serverView.falling = false;
             SpawnPatient();
             if (tools.Count == 0)
             {
@@ -332,6 +339,8 @@ namespace OnlyVolunteers.Operation.Stage1
             patient.Body.constraints = RigidbodyConstraints.FreezeRotation;
             NetworkSession.Active?.RegisterBody(patient);
             patientObject.Value = patient.NetworkObject;
+            var rig = patient.GetComponent<OperationPatientRig>();
+            if (rig != null) rig.SetFloorPose(!rules.State.onTable); // KnockedOut lies along the root's X axis
             ApplyPatientPhysics();
         }
         public override void OnStartClient() { base.OnStartClient(); Changed("", snapshot.Value, false); }
@@ -379,12 +388,44 @@ namespace OnlyVolunteers.Operation.Stage1
             var s = rules.State;
             s.onTable = false; s.aligned = false; s.knockedOut = true;
             alignStartSet = false;
-            // Out beside the gurney (clear of its collider) so he drops to the floor; no re-catch for a moment.
-            // Slides off the foot end (away from the people at the sides and the stand), lying across.
-            patient.transform.SetPositionAndRotation(transform.TransformPoint(new Vector3(0f, tuning.padTop + 0.05f, -1.42f)), RestPose.rotation * Quaternion.Euler(0f, 90f, 0f));
+            // The EscapeFall clip (Op_EscapeFall_Mirror_v01) carries the whole escape (sit up, swing the legs off the
+            // patient's right side = the camera side, away from the stand, stumble, splat) relative to PatientRest, so the root stays there, kinematic, while the clip plays on every peer.
+            // When it ends the root jumps under the landed body (Land) and the KnockedOut clip continues from there.
+            falling = true;
+            fallEndsAt = Time.time + tuning.escapeFallSeconds;
+            ReleaseGrabs();
+            var rest = RestPose;
+            patient.transform.SetPositionAndRotation(rest.position, rest.rotation);
             ApplyPatientPhysics();
-            patient.Body.linearVelocity = -transform.forward * 1.0f + Vector3.up * 0.4f;
-            noAlignUntil = Time.time + 2f;
+            noAlignUntil = fallEndsAt + 1f;
+            serverView.falling = true; nextSnapshot = 0f;
+        }
+        /// <summary>End of the escape clip: the root goes to the KnockedOut root under the landed hips (same yaw as
+        /// PatientRest, on the floor) and the body turns dynamic at rest, so nothing slides or snaps.</summary>
+        private void Land()
+        {
+            falling = false; serverView.falling = false; nextSnapshot = 0f;
+            if (patient == null) return;
+            var rest = RestPose;
+            Vector3 p = rest.position + rest.rotation * tuning.escapeLandingOffset;
+            float floorY = transform.position.y;
+            foreach (var hit in Physics.RaycastAll(p + transform.up * 1.2f, -transform.up, 2.5f, ~0, QueryTriggerInteraction.Ignore))
+            {
+                if (hit.rigidbody != null || hit.collider.transform.IsChildOf(patient.transform)) continue;
+                if (hit.point.y > floorY - 0.6f && hit.point.y < floorY + 0.3f) { floorY = hit.point.y; break; }
+            }
+            p.y = floorY + 0.003f;
+            patient.transform.SetPositionAndRotation(p, rest.rotation);
+            var rig = patient.GetComponent<OperationPatientRig>();
+            if (rig != null) rig.SetFloorPose(true); // before the body turns dynamic: the box must lie along the landed pose
+            ApplyPatientPhysics();
+            patient.Body.linearVelocity = Vector3.zero; patient.Body.angularVelocity = Vector3.zero;
+            noAlignUntil = Time.time + 1f;
+            string overlaps = "";
+            if (patient.TryGetComponent(out BoxCollider box))
+                foreach (var c in Physics.OverlapBox(patient.transform.TransformPoint(box.center), box.size * 0.5f, patient.transform.rotation, ~0, QueryTriggerInteraction.Ignore))
+                    if (!c.transform.IsChildOf(patient.transform)) overlaps += " " + c.name;
+            Debug.Log($"[OPS] LANDED patient={State.patientId} at table-local {transform.InverseTransformPoint(p)} overlaps:{(overlaps.Length > 0 ? overlaps : " none")}");
         }
         private float RestLocalZ() => transform.InverseTransformPoint(RestPose.position).z;
 
@@ -677,7 +718,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private void ApplyPatientPhysics()
         {
             if (patient == null) return;
-            bool kinematic = rules.State.onTable;
+            bool kinematic = rules.State.onTable || falling;
             if (!kinematic) { patient.Body.position = patient.transform.position; patient.Body.rotation = patient.transform.rotation; }
             patient.Body.isKinematic = kinematic; patient.Body.useGravity = !kinematic;
             var rig = patient.GetComponent<OperationPatientRig>();
@@ -701,7 +742,7 @@ namespace OnlyVolunteers.Operation.Stage1
             }
 
             var s = rules.State;
-            if (patient != null && !s.onTable && !patient.HasHolder && Time.time >= noAlignUntil)
+            if (patient != null && !s.onTable && !falling && !patient.HasHolder && Time.time >= noAlignUntil)
             {
                 Vector3 local = transform.InverseTransformPoint(patient.transform.position + transform.up * 0.1f);
                 if (OperationGeometry.OverPad(local, tuning) && patient.Body.linearVelocity.magnitude < 4f &&
@@ -751,7 +792,14 @@ namespace OnlyVolunteers.Operation.Stage1
                         Quaternion.Slerp(fromRot, rest.rotation, t));
                 }
                 else patient.transform.SetPositionAndRotation(rest.position, rest.rotation);
+                if (falling) { falling = false; serverView.falling = false; }
                 if (!patient.Body.isKinematic) ApplyPatientPhysics();
+            }
+            else if (patient != null && falling)
+            {
+                var rest = RestPose;
+                patient.transform.SetPositionAndRotation(rest.position, rest.rotation);
+                if (Time.time >= fallEndsAt) Land();
             }
             else if (patient != null && patient.Body.isKinematic) ApplyPatientPhysics();
 

@@ -29,13 +29,12 @@ namespace OnlyVolunteers.Buyers.Tests
             string id = Deposit(cooled: false); var result = rules.ConfirmSale(StashRequest(id));
             Assert.That(result.Total, Is.EqualTo(540)); // 250 * 1.6 * 1.20 * 1.25 * .90
             Assert.That(B().Counters.Single(c => c.Kind == ProductKind.Kidney).Units, Is.EqualTo(6));
-            Assert.That(100m * 1.25m * 1.20m, Is.EqualTo(150m));
         }
         [Test]
         public void BUY30_FailedOrderNegotiationNoSlotOrDeadlineAndThreeHourOfferBan()
         {
-            Respect40(); Offer(); rng.Value = 99; rules.AskOrder("order", "p1", 20); rules.AskOrder("order", "p1", 10);
-            Assert.That(B().Respect, Is.EqualTo(39)); Assert.That(rules.Snapshot.ActiveOrder, Is.Null);
+            rules = new BuyerRules(clock, rng, Seed(41)); Offer(); rng.Value = 99; rules.AskOrder("order", "p1", 20); rules.AskOrder("order", "p1", 10);
+            Assert.That(B().Respect, Is.EqualTo(40)); Assert.That(rules.Snapshot.ActiveOrder, Is.Null);
             Assert.That(rules.Snapshot.OpenStashes, Is.Empty);
             Assert.That(rules.ChangeOrderNegotiator("order", "p2"), Is.False);
             Assert.That(rules.CreateOrderOffer("bypass", Organ, OrderTemplate.HamletKidney, "target", "stash", "p1"), Is.False);
@@ -43,6 +42,50 @@ namespace OnlyVolunteers.Buyers.Tests
             clock.Now = 10800; Assert.That(rules.ChangeOrderNegotiator("order", "p2"), Is.True);
             Assert.That(rules.Snapshot.Offers[0].Negotiation.AttemptsUsed, Is.Zero);
             Assert.That(rules.AcceptOrder("order", "p2"), Is.False);
+            Assert.That(rules.AcceptOrderPrice("order", "p2"), Is.True);
+            Assert.That(rules.AcceptOrder("order", "p2"), Is.True);
+        }
+        [Test]
+        public void BUY25_BUY28_RespectIsRecheckedAtOrderAcceptance()
+        {
+            Respect40(); Offer(); Assert.That(rules.AcceptOrderPrice("order", "p1"), Is.True);
+            Meeting(); rules.CancelMeeting(Organ); Assert.That(B().Respect, Is.EqualTo(39));
+            Assert.That(rules.AcceptOrder("order", "p1"), Is.False);
+            Assert.That(rules.Snapshot.ActiveOrder, Is.Null); Assert.That(rules.Snapshot.OpenStashes, Is.Empty);
+            Assert.That(rules.Snapshot.Offers.Single().Accepted, Is.False);
+            Assert.That(rules.IntroduceBuyer(Organ), Is.True);
+            Assert.That(rules.AcceptOrder("order", "p1"), Is.True);
+        }
+        [Test]
+        public void BUY26_AcceptingSecondNegotiatedOfferWhileOrderActiveFails()
+        {
+            Respect40(); rules.SetProgression(true, true);
+            Offer(id: "first"); Offer(OrderTemplate.StreamerBrain, "second");
+            rules.AcceptOrderPrice("first", "p1"); rules.AcceptOrderPrice("second", "p1");
+            Assert.That(rules.AcceptOrder("first", "p1"), Is.True); long deadline = rules.Snapshot.ActiveOrder.Deadline;
+            Assert.That(rules.AcceptOrder("second", "p1"), Is.False);
+            Assert.That(rules.Snapshot.ActiveOrder.Id, Is.EqualTo("first")); Assert.That(rules.Snapshot.ActiveOrder.Deadline, Is.EqualTo(deadline));
+            Assert.That(rules.Snapshot.Offers.Single(o => o.Id == "second").Accepted, Is.False);
+            rules.RefuseOrder("first"); rules.IntroduceBuyer(Organ); Assert.That(B().Respect, Is.EqualTo(40));
+            Assert.That(rules.AcceptOrder("second", "p1"), Is.True);
+        }
+        [Test]
+        public void BUY28_OnlyCurrentNegotiatorMayAcceptOrderUntilHandoff()
+        {
+            Respect40(); Offer(); Assert.That(rules.AcceptOrderPrice("order", "p2"), Is.False);
+            Assert.That(rules.AcceptOrderPrice("order", "p1"), Is.True);
+            Assert.That(rules.AcceptOrder("order", "p2"), Is.False); Assert.That(rules.Snapshot.ActiveOrder, Is.Null);
+            Assert.That(rules.ChangeOrderNegotiator("order", "p2"), Is.True);
+            Assert.That(rules.AcceptOrder("order", "p1"), Is.False);
+            Assert.That(rules.AcceptOrder("order", "p2"), Is.True);
+        }
+        [TestCase("p2")] [TestCase("unknown")]
+        public void BUY22_BUY41_AbsentParticipantCannotTakeOverOrder(string player)
+        {
+            Respect40(); Offer(); rng.Value = 99; rules.AskOrder("order", "p1", 20); rules.SetPresentParticipants("p1");
+            Assert.That(rules.ChangeOrderNegotiator("order", player), Is.False);
+            var n = rules.Snapshot.Offers.Single().Negotiation;
+            Assert.That(n.NegotiatorId, Is.EqualTo("p1")); Assert.That(n.AttemptsUsed, Is.EqualTo(1)); Assert.That(n.CounterPercent, Is.EqualTo(10));
         }
         [Test]
         public void BUY22_BUY41_OrderHandoffPreservesTermsAttemptsAndUsesReplacementSkill()
@@ -123,12 +166,31 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY48_PenaltyIsPerItemAndScopedToEachMeeting()
         {
-            Meeting(); Group(); string a = Add(ProductKind.Liver), b = Add(ProductKind.Liver);
+            Meeting(); Group(); string a = Add(ProductKind.Liver), b = Add(ProductKind.Liver), valid = Add();
             rules.LoadItem(Organ, a, "p1"); rules.LoadItem(Organ, b, "p1");
-            rules.ConfirmSale(Request(new[] { a })); rules.ConfirmSale(Request(new[] { a })); rules.ConfirmSale(Request(new[] { b }));
-            Assert.That(B().Respect, Is.EqualTo(28));
+            rules.LoadItem(Organ, valid, "p1");
+            Assert.That(rules.Quote(Request(new[] { a })).Error, Is.EqualTo(SaleError.InvalidRequest));
+            var repeated = Request(new[] { a }); Assert.That(rules.ConfirmSale(repeated).Error, Is.EqualTo(SaleError.InvalidRequest));
+            Assert.That(rules.ConfirmSale(repeated).Error, Is.EqualTo(SaleError.InvalidRequest));
+            Assert.That(rules.ConfirmSale(Request(new[] { b })).Error, Is.EqualTo(SaleError.InvalidRequest));
+            Assert.That(rules.ConfirmSale(Request(new[] { valid, a })).Error, Is.EqualTo(SaleError.InvalidRequest));
+            Assert.That(B().Respect, Is.EqualTo(30)); Assert.That(rules.Snapshot.WrongItemAttempts, Is.Empty);
+            Assert.That(I(valid).Sold, Is.False); Assert.That(I(a).Sold, Is.False); Assert.That(I(b).Sold, Is.False);
+            Assert.That(rules.Snapshot.SharedFunds, Is.Zero); Assert.That(rules.Snapshot.LifetimeXp, Is.Zero);
             rules.CancelMeeting(Organ); Meeting(); Group(); rules.LoadItem(Organ, a, "p1");
-            rules.ConfirmSale(Request(new[] { a })); Assert.That(B().Respect, Is.EqualTo(26));
+            Assert.That(rules.ConfirmSale(Request(new[] { a })).Error, Is.EqualTo(SaleError.InvalidRequest));
+            Assert.That(B().Respect, Is.EqualTo(30)); Assert.That(rules.Snapshot.WrongItemAttempts, Is.Empty);
+        }
+        [TestCase(false)] [TestCase(true)]
+        public void BUY37_BUY48_NotReservedCostsNoRespect(bool order)
+        {
+            if (order) { Respect40(); Order(); } else { Meeting(); Group(); }
+            string id = Add(tier: QualityTier.Good, packaged: true); int before = B().Respect;
+            var request = order ? StashRequest(id) : Request(new[] { id });
+            Assert.That(rules.ConfirmSale(request).Error, Is.EqualTo(SaleError.NotReserved));
+            Assert.That(rules.ConfirmSale(request).Error, Is.EqualTo(SaleError.NotReserved));
+            Assert.That(B().Respect, Is.EqualTo(before)); Assert.That(rules.Snapshot.WrongItemAttempts, Is.Empty);
+            Assert.That(I(id).Sold, Is.False); Assert.That(rules.Snapshot.SharedFunds, Is.Zero); Assert.That(rules.Snapshot.FreeXp, Is.Zero);
         }
         [Test]
         public void BUY49_RespectDropDoesNotInvalidateAcceptedOrder()
@@ -203,6 +265,7 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY38_SavedBansNegotiationAttemptsAndWrongItemPenaltiesCannotReset()
         {
+            rules = new BuyerRules(clock, rng, Seed(42));
             Meeting(); rules.BeginGroup(Organ, ProductKind.Kidney, "p1"); rng.Value = 99;
             rules.AskMeeting(Organ, "p1", 20); rules.AskMeeting(Organ, "p1", 10);
             rules.BeginGroup(Organ, ProductKind.Liver, "p1"); rules.AskMeeting(Organ, "p1", 20);
@@ -210,10 +273,12 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(B().Counters.Single(c => c.Kind == ProductKind.Kidney).BannedUntil, Is.EqualTo(14400));
             Assert.That(B().Meeting.Negotiations.Single(n => n.Kind == ProductKind.Liver).AttemptsUsed, Is.EqualTo(1));
             Assert.That(rules.AskMeeting(Organ, "p1", 20), Is.False);
-            rules.AcceptMeetingPrice(Organ, "p1"); string wrong = Add(); rules.LoadItem(Organ, wrong, "p1");
-            rules.ConfirmSale(Request(new[] { wrong })); int respect = B().Respect;
-            rules = new BuyerRules(clock, rng, rules.Snapshot); rules.ConfirmSale(Request(new[] { wrong }));
-            Assert.That(B().Respect, Is.EqualTo(respect));
+            rules.AcceptMeetingPrice(Organ, "p1"); Order(); string wrong = Deposit(npc: "impostor");
+            Assert.That(rules.ConfirmSale(StashRequest(wrong)).Error, Is.EqualTo(SaleError.WrongNpc)); int respect = B().Respect;
+            Assert.That(respect, Is.EqualTo(40)); Assert.That(rules.Snapshot.WrongItemAttempts.Count, Is.EqualTo(1));
+            rules = new BuyerRules(clock, rng, rules.Snapshot);
+            Assert.That(rules.ConfirmSale(StashRequest(wrong)).Error, Is.EqualTo(SaleError.WrongNpc));
+            Assert.That(B().Respect, Is.EqualTo(respect)); Assert.That(rules.Snapshot.WrongItemAttempts.Count, Is.EqualTo(1));
         }
         [Test]
         public void BUY38_SaveRoundTripRetainsRelationsContactsXpTimersSaturationOrdersAndReceipts()
