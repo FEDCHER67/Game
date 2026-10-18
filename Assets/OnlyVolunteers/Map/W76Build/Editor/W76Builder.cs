@@ -84,6 +84,7 @@ namespace OnlyVolunteers.Map.W76
                 Step("district " + Path.GetFileNameWithoutExtension(f), () => BuildDistrict(root, f));
             Step("light", () => BuildLight(root));
             Step("validate", () => Validate(root));
+            Step("i10 look", () => Note(W76LookV01.Apply(root, Ter)));
             Note($"materials: {reused} reused, {created} created");
             EditorSceneManager.SaveScene(scene, ScenePath);
             AssetDatabase.SaveAssets();
@@ -313,13 +314,14 @@ namespace OnlyVolunteers.Map.W76
         static readonly Dictionary<string, string[]> TreeKit = new()
         {
             ["pine"] = new[] { "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Pine_A_v04.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Pine_B_v04.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Pine_C_v04.prefab" },
-            ["spruce"] = new[] { "Assets/OnlyVolunteers/Art/Trees/v03/Prefabs/Forest_Spruce_A_v03_04.prefab", "Assets/OnlyVolunteers/Art/Trees/v03/Prefabs/Forest_Spruce_B_v03_04.prefab", "Assets/OnlyVolunteers/Art/Trees/v03/Prefabs/Forest_Fir_v03_04.prefab" },
+            // i10 set: forest conifers and bare Rough trees = the V19Wind versions (Map/Wind/Trees_v01), the rest = COZY kit (Leafy_v04_i08, OaksPines_i09)
+            ["spruce"] = new[] { "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Spruce_A_v03_04_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Spruce_B_v03_04_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Fir_v03_04_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Young_v03_04_Wind_v01.prefab" },
             ["birch"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_A_v04_04.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_B_v04_04.prefab" },
             ["oak"] = new[] { "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_A_v01_02.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_B_v01_02.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_C_v01_02.prefab" },
             ["leafy"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Apple_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Apple_B_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_C_v04_04.prefab" },
             ["palm"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Palm_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Palm_B_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Palm_C_v04_03.prefab" },
             ["bush"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Bush_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Bush_B_v04_03.prefab" },
-            ["bare"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_C_v04_04.prefab" },
+            ["bare"] = new[] { "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/TREE_BARE_01_v19_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/TREE_BARE_02_v19_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/TREE_BARE_03_v19_Wind_v01.prefab" },
         };
 
         // Tree-like prop kinds by whole word ("street_lamp" contains "tree" as a substring: v01 turned the 59 Rough lamps into trees).

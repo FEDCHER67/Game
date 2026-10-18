@@ -33,6 +33,8 @@ namespace OnlyVolunteers.Map.W76
         public float TunnelHalfWidth = 5f;
         public float GlareEv = 2.6f, GlareSeconds = 1.6f;
         public Transform Viewer;                           // defaults to Camera.main
+        [Tooltip("The i10 look stack owns fog / grading (W76LookV01): only the tunnel glare is applied here.")]
+        public bool GlareOnly;
 
         ColorAdjustments grade;
         bool inTunnel;
@@ -49,6 +51,7 @@ namespace OnlyVolunteers.Map.W76
                 grade.saturation.overrideState = true;
                 grade.colorFilter.overrideState = true;
             }
+            if (GlareOnly) return;
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.Linear;
         }
@@ -58,6 +61,11 @@ namespace OnlyVolunteers.Map.W76
             Transform v = Viewer ? Viewer : (Camera.main ? Camera.main.transform : null);
             if (!v) return;
             Vector2 p = new(v.position.x, v.position.z);
+            if (GlareOnly)
+            {
+                if (grade) { grade.postExposure.value = Glare(p, v.position.y); grade.saturation.overrideState = false; grade.colorFilter.overrideState = false; }
+                return;
+            }
             // weighted blend of zones
             float wSum = 1e-4f;
             Color fog = Default.FogColor * 1e-4f, filter = Default.Filter * 1e-4f;
