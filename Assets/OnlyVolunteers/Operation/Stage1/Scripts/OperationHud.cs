@@ -679,7 +679,8 @@ namespace OnlyVolunteers.Operation.Stage1
                 case OpHint.Refilled: tone = HintTone.Good; return "Шприц заправлен";
                 case OpHint.BagReady: tone = HintTone.Good; return "Пакет готов!";
                 case OpHint.SutureFirst: tone = HintTone.Warn; return "Живого не отпускают с открытым животом — сначала зашей разрез [5]";
-                case OpHint.NothingToSuture: tone = HintTone.Warn; return table.State != null && table.State.sutured ? "Уже зашито" : "Шить нечего — разреза нет";
+                case OpHint.NothingToSuture: tone = HintTone.Warn; return table.State != null && table.State.sutured ? "Уже зашито" :
+                    table.State != null && table.State.skinPatched ? "Заплатка — сначала вскрой скальпелем [4]" : "Шить нечего — разреза нет";
                 case OpHint.StitchFromTop: tone = HintTone.Warn; return "Шей от верхнего края разреза, по линии";
             }
             return null;
@@ -735,7 +736,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 {
                     if (slot == ToolSlot.Suture)
                     {
-                        if (!s.zoneOpened || s.sutured) { tone = HintTone.Warn; return s.sutured ? "Уже зашито" : "Шить нечего — разреза нет"; }
+                        if (!s.zoneOpened || s.sutured || s.skinPatched) { tone = HintTone.Warn; return s.sutured ? "Уже зашито" : s.skinPatched ? "Заплатка — сначала вскрой скальпелем [4]" : "Шить нечего — разреза нет"; }
                         if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
                         if (view.Stroking) { tone = HintTone.Good; return "Шьём… стежок " + Mathf.FloorToInt(s.zoneSuture * tuning.sutureStitches) + "/" + tuning.sutureStitches; }
                         tone = HintTone.Good; return s.zoneSuture > 0.01f ? "Зажми ЛКМ у точки и шей дальше по линии" : "Зажми ЛКМ у верхнего края и шей по линии вниз";
@@ -744,6 +745,11 @@ namespace OnlyVolunteers.Operation.Stage1
                     if (slot != ToolSlot.Scalpel) { tone = HintTone.Warn; return "Разрез · возьми скальпель [4]"; }
                     if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
                     bool loop = tuning.sharedAbdomen && t.index == 2;
+                    if (!loop && s.BellyClosed)
+                    {
+                        tone = HintTone.Good;
+                        return view.Stroking ? "Вскрываем шов… " + Mathf.RoundToInt(progress * 100f) + "%" : "Зажми ЛКМ у зелёной точки и проведи по шву — вскроешь снова";
+                    }
                     if (view.Stroking) { tone = HintTone.Good; return (loop ? "Обводи по кругу… " : "Веди по пунктиру… ") + Mathf.RoundToInt(progress * 100f) + "%"; }
                     tone = HintTone.Good; return progress > 0.01f ? "Зажми ЛКМ у зелёной точки и веди дальше" :
                         loop ? "Зажми ЛКМ у зелёной точки и обведи печень по кругу" : "Зажми ЛКМ у зелёной точки и веди по пунктиру";

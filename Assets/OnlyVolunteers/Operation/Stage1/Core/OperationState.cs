@@ -11,7 +11,10 @@ namespace OnlyVolunteers.Operation.Stage1
         ShockDeath, EscapeAttempt, FailedEscapeFall, Death, ConnectionReleased, Extracted,
         Escaped, KnockedOut, IncisionOpened, SloppyCut, DirectCut, Yank, BloodPortion, Overdosing, Dazed, BagSealed,
         // Round 3 (Claude): one stitch of the seam, the seam finished, a strap unbuckled by a free hand.
-        Stitch, Sutured, Unbuckled
+        Stitch, Sutured, Unbuckled,
+        // Round 4 (Claude): a closed belly cut open again; an escape clip step started; an escape interrupted (slump);
+        // the patient ran off the table on his feet (HopRun hand-off, no fall).
+        Reopened, EscapeStep, EscapeSlump, RanOff
     }
     public enum DeathCause { None, Blood, Extraction, Overdose, Shock, FailedEscape }
     public enum CutStep { None, Advanced, OffLine, Completed }
@@ -91,12 +94,26 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool sutured;
         /// <summary>Round 3: a free hand working on the next strap (0..1 of unbuckleSeconds).</summary>
         public float unbuckleProgress;
+        /// <summary>Round 4 (decision 4): a dead body that left the table opened but unsewn wears the plain skin patch.</summary>
+        public bool skinPatched;
+        /// <summary>Round 4: progress (0..1) of the one scalpel stroke that reopens a sutured / patched / partly sewn belly.</summary>
+        public float zoneReopen;
+        /// <summary>Round 4: escape choreography (Escape_v01 clips): the clip playing (EscapeClip id, -1 none), its authored
+        /// seconds, the pose stage (0 lying, 1 sitting, 2 on the edge) and the exit side (+1 his right, -1 his left, 0 not yet).</summary>
+        public int escapeClip = -1;
+        public float escapeClipTime;
+        public int escapeStage;
+        public int escapeSide;
+        /// <summary>Round 4: he left the table running (HopRun), not falling: the field NPC starts on his feet.</summary>
+        public bool ranOff;
+        /// <summary>Opened belly closed again (seam finished, seam begun, or the dead-body patch): the scalpel reopens it.</summary>
+        public bool BellyClosed => zoneOpened && (sutured || skinPatched || zoneSuture > 0f);
         public bool Sleeping => alive && sleepRemaining > 0f;
         public bool Dazed => alive && onTable && dazedRemaining > 0f;
         public bool Torso => restraints.Length > 4 && restraints[4];
         public bool LimbsStrapped => restraints[0] && restraints[1] && restraints[2] && restraints[3];
         /// <summary>The belly is open and not sewn up yet: organs reachable, a living patient may not leave.</summary>
-        public bool CavityOpen => zoneOpened && !sutured;
+        public bool CavityOpen => zoneOpened && !sutured && !skinPatched;
         public bool Panicking => alive && panicRemaining >= 0f;
     }
 
@@ -177,6 +194,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private void FinishAlignment()
         {
             State.aligned = true; State.knockedOut = false; State.escapeProgress = 0f;
+            State.ranOff = false; StopEscapeClips(); // round 4: a fresh lie on the pad
             if (State.alive) { State.dazedRemaining = tuning.dazedSeconds; Emit(PatientCue.Dazed); }
             Emit(PatientCue.Aligned);
         }
@@ -237,8 +255,17 @@ namespace OnlyVolunteers.Operation.Stage1
             if (nowStruggling && !struggling) Emit(PatientCue.Struggling);
             struggling = nowStruggling;
             bool awakeOnTable = State.onTable && State.aligned && !State.Sleeping && !State.Dazed && !held;
+            // Round 4: the Escape_v01 clip chain (OperationEscape.cs) replaces the procedural unbuckle and the 'escapeSeconds' slide.
+            bool clips = tuning.escapeClips && !tuning.torsoStrap;
+            if (clips)
+            {
+                bool wasOnTable = State.onTable;
+                if (State.panicRemaining < 0f) TickEscapeClips(seconds, awakeOnTable && !MustSutureBeforeRelease);
+                else if (OperationEscape.Valid(State.escapeClip)) StopEscapeClips();
+                if (wasOnTable && !State.onTable) return; // ran off this tick
+            }
             // Round 3: a free hand unbuckles the other straps one by one (the per-strap escape steps; clips hook Unbuckled).
-            if (awakeOnTable && !tuning.torsoStrap && !MustSutureBeforeRelease && NextUnbuckle(out int strap, out int hand))
+            else if (awakeOnTable && !tuning.torsoStrap && !MustSutureBeforeRelease && NextUnbuckle(out int strap, out int hand))
             {
                 State.unbuckleProgress += seconds / Mathf.Max(0.1f, tuning.unbuckleSeconds);
                 if (State.unbuckleProgress >= 1f)
@@ -256,7 +283,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 State.panicRemaining = Mathf.Max(0, State.panicRemaining - seconds);
                 if (State.panicRemaining <= 0) Die(!Held && !held ? DeathCause.FailedEscape : DeathCause.Shock);
             }
-            else if (awakeOnTable && CanEscape)
+            else if (!clips && awakeOnTable && CanEscape)
             {
                 if (State.escapeProgress == 0) Emit(PatientCue.EscapeAttempt);
                 State.escapeProgress += seconds;

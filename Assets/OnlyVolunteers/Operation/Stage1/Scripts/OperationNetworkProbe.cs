@@ -735,7 +735,7 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return new WaitForSeconds(1.0f);
             Check(Vector3.Distance(table.PatientBody.transform.position, table.RestPose.position) < 0.05f && !S.onTable, "escape clip plays with the root on PatientRest");
             Shot("e02a_escaping");
-            yield return new WaitForSeconds(table.Tuning.escapeFallSeconds - 1.0f + 0.6f);
+            yield return new WaitForSeconds(table.Tuning.EscapeFallDuration - 1.0f + 0.6f);
             var landedRoot = table.PatientBody.transform.position;
             Vector3 landedLocal = table.transform.InverseTransformPoint(landedRoot);
             Check(S.alive && landedRoot.y < table.transform.position.y + 0.45f, "escaped patient fell to the floor alive");
