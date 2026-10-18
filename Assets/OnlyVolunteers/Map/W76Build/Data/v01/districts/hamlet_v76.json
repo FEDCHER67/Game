@@ -1,0 +1,9726 @@
+{
+ "district": "hamlet",
+ "sources": [
+  "Working/Reviews/Hamlet_2026-10-14/HAMLET_LAYOUT_v04.json",
+  "ArtSource/References/Map/World_v75/build_hutor_v05.py",
+  "docs/specs/HAMLET_SPEC_2026-10-18_v01.md"
+ ],
+ "transform": "v11 m -> warp_m (build_world_v76.py) -> post_shift_v76.shift_m (net +70, 0)",
+ "pad_height_m": null,
+ "buildings": [
+  {
+   "id": "02-A-CHURCH",
+   "kind": "church",
+   "footprint": [
+    [
+     204.4,
+     582.0
+    ],
+    [
+     222.8,
+     582.0
+    ],
+    [
+     222.8,
+     602.6
+    ],
+    [
+     204.4,
+     602.6
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 7.0,
+   "height_m": 7.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_tile_SK4a",
+    "ridge_axis_deg": 0,
+    "ridge_h_m": 5.0,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "ridge_cap": "tile"
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Preserve existing outline exactly; north edge 602.6 m is 2.8 m outside supplied district bbox. Do not shrink or move it. | height not in source, default by kind"
+  },
+  {
+   "id": "02-A-BASE",
+   "kind": "hut_base2",
+   "footprint": [
+    [
+     231.0,
+     516.25
+    ],
+    [
+     241.0,
+     516.25
+    ],
+    [
+     241.0,
+     523.75
+    ],
+    [
+     231.0,
+     523.75
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.0,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_wavy_slate",
+    "ridge_axis_deg": 0,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.3
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "ridge_cap": "slate"
+   },
+   "collider": "full_roof",
+   "base": "2",
+   "notes": "Existing base marker only. Owner will design all base furnishing/interior separately; keep location and access. | height not in source, default by kind"
+  },
+  {
+   "id": "02-A-HAY",
+   "kind": "hay_shelter",
+   "footprint": [
+    [
+     360.0,
+     551.0
+    ],
+    [
+     366.0,
+     551.0
+    ],
+    [
+     366.0,
+     561.0
+    ],
+    [
+     360.0,
+     561.0
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 4.0,
+   "height_m": 4.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 0,
+    "ridge_h_m": 1.5,
+    "overhang_m": 0.3
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Preserve anchor; broad roof with usable open sides. | height not in source, default by kind"
+  },
+  {
+   "id": "02-A-TOWER",
+   "kind": "water_tower",
+   "footprint": [
+    [
+     406.5,
+     515.9
+    ],
+    [
+     410.3,
+     515.9
+    ],
+    [
+     410.3,
+     519.7
+    ],
+    [
+     406.5,
+     519.7
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 12,
+   "height_m": 12,
+   "roof": {
+    "type": "pyramid",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 0,
+    "ridge_h_m": 1.5,
+    "overhang_m": 0.3
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Rozhnovsky tower; about 12 m tall; circular base inside stated footprint."
+  },
+  {
+   "id": "02-U-STOP",
+   "kind": "bus_stop",
+   "footprint": [
+    [
+     434.14,
+     480.94
+    ],
+    [
+     437.3,
+     479.67
+    ],
+    [
+     437.86,
+     481.06
+    ],
+    [
+     434.7,
+     482.33
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -22,
+    "ridge_h_m": 0.2,
+    "overhang_m": 0.3
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Within district beside lower approach; no abandoned kiosk. | height not in source, default by kind"
+  },
+  {
+   "id": "02-H01",
+   "kind": "house",
+   "footprint": [
+    [
+     226.46,
+     558.47
+    ],
+    [
+     234.38,
+     559.59
+    ],
+    [
+     233.54,
+     565.53
+    ],
+    [
+     225.62,
+     564.41
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 8,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      230.42,
+      559.03
+     ],
+     "facing_deg": 278,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: old couple; flowers, firewood"
+  },
+  {
+   "id": "02-H02",
+   "kind": "house",
+   "footprint": [
+    [
+     247.05,
+     557.89
+    ],
+    [
+     254.01,
+     557.16
+    ],
+    [
+     254.95,
+     566.11
+    ],
+    [
+     247.99,
+     566.84
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -6,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      250.53,
+      557.52
+     ],
+     "facing_deg": 264,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_board",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: vegetable grower; working beds"
+  },
+  {
+   "id": "02-H03",
+   "kind": "house",
+   "footprint": [
+    [
+     265.32,
+     556.16
+    ],
+    [
+     273.29,
+     556.86
+    ],
+    [
+     272.68,
+     563.84
+    ],
+    [
+     264.71,
+     563.14
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 5,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      269.31,
+      556.51
+     ],
+     "facing_deg": 275,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "tin_timber",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: poultry keeper; chickens"
+  },
+  {
+   "id": "02-H04",
+   "kind": "house",
+   "footprint": [
+    [
+     260.96,
+     536.34
+    ],
+    [
+     269.82,
+     534.77
+    ],
+    [
+     271.04,
+     541.66
+    ],
+    [
+     262.18,
+     543.23
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -10,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      266.61,
+      542.45
+     ],
+     "facing_deg": 80,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: frugal household; stored timber"
+  },
+  {
+   "id": "02-H05",
+   "kind": "house",
+   "footprint": [
+    [
+     277.71,
+     519.23
+    ],
+    [
+     285.54,
+     520.9
+    ],
+    [
+     284.29,
+     526.77
+    ],
+    [
+     276.46,
+     525.1
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 12,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      284.91,
+      523.83
+     ],
+     "facing_deg": 12,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_board",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: pig keeper; trough and small shelter"
+  },
+  {
+   "id": "02-H06",
+   "kind": "house",
+   "footprint": [
+    [
+     310.27,
+     553.82
+    ],
+    [
+     319.25,
+     553.2
+    ],
+    [
+     319.73,
+     560.18
+    ],
+    [
+     310.75,
+     560.8
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -4,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      314.76,
+      553.51
+     ],
+     "facing_deg": 266,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: retired field worker; practical shed"
+  },
+  {
+   "id": "02-H07",
+   "kind": "house",
+   "footprint": [
+    [
+     318.17,
+     572.5
+    ],
+    [
+     325.08,
+     573.6
+    ],
+    [
+     323.83,
+     581.5
+    ],
+    [
+     316.92,
+     580.4
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 9,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      321.63,
+      573.05
+     ],
+     "facing_deg": 279,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "tin_timber",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: fruit grower; crates and sparse flower bed"
+  },
+  {
+   "id": "02-H08",
+   "kind": "house",
+   "footprint": [
+    [
+     373.25,
+     555.23
+    ],
+    [
+     381.23,
+     555.79
+    ],
+    [
+     380.75,
+     562.77
+    ],
+    [
+     372.77,
+     562.21
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 4,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      377.24,
+      555.51
+     ],
+     "facing_deg": 274,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_board",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: tractor driver; normal yard, no workshop"
+  },
+  {
+   "id": "02-H09",
+   "kind": "house",
+   "footprint": [
+    [
+     381.6,
+     520.01
+    ],
+    [
+     389.54,
+     519.04
+    ],
+    [
+     390.4,
+     525.99
+    ],
+    [
+     382.46,
+     526.96
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_tile_SK4a",
+    "ridge_axis_deg": -7,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      386.43,
+      526.47
+     ],
+     "facing_deg": 83,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "tile"
+   },
+   "collider": "full_roof",
+   "house_type": "brick",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: muted weathered tile; owner: slightly better-kept household; vegetable beds"
+  },
+  {
+   "id": "02-H10",
+   "kind": "house",
+   "footprint": [
+    [
+     349.62,
+     512.35
+    ],
+    [
+     358.62,
+     512.66
+    ],
+    [
+     358.38,
+     519.65
+    ],
+    [
+     349.38,
+     519.34
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 2,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      353.88,
+      519.5
+     ],
+     "facing_deg": 92,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: older villager; shaded outdoor table"
+  },
+  {
+   "id": "02-H11",
+   "kind": "house",
+   "footprint": [
+    [
+     346.58,
+     472.35
+    ],
+    [
+     354.46,
+     473.74
+    ],
+    [
+     353.42,
+     479.65
+    ],
+    [
+     345.54,
+     478.26
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 10,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      349.48,
+      478.95
+     ],
+     "facing_deg": 100,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_board",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: poultry household by main street"
+  },
+  {
+   "id": "02-H12",
+   "kind": "house",
+   "footprint": [
+    [
+     376.7,
+     467.79
+    ],
+    [
+     384.68,
+     467.23
+    ],
+    [
+     385.3,
+     476.21
+    ],
+    [
+     377.32,
+     476.77
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -4,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      381.31,
+      476.49
+     ],
+     "facing_deg": 86,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "tin_timber",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: pig-keeping household; muddy corner"
+  },
+  {
+   "id": "02-H13",
+   "kind": "house",
+   "footprint": [
+    [
+     417.55,
+     459.09
+    ],
+    [
+     425.47,
+     457.98
+    ],
+    [
+     426.45,
+     464.91
+    ],
+    [
+     418.53,
+     466.02
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -8,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      422.49,
+      465.47
+     ],
+     "facing_deg": 82,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: fishing household; drying gear"
+  },
+  {
+   "id": "02-H14",
+   "kind": "house",
+   "footprint": [
+    [
+     327.07,
+     451.11
+    ],
+    [
+     334.02,
+     451.96
+    ],
+    [
+     332.93,
+     460.89
+    ],
+    [
+     325.98,
+     460.04
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 7,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      326.53,
+      455.57
+     ],
+     "facing_deg": 187,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_board",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: busy vegetable grower; linen line"
+  },
+  {
+   "id": "02-H15",
+   "kind": "house",
+   "footprint": [
+    [
+     337.41,
+     432.33
+    ],
+    [
+     345.26,
+     430.8
+    ],
+    [
+     346.59,
+     437.67
+    ],
+    [
+     338.74,
+     439.2
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -11,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      338.07,
+      435.76
+     ],
+     "facing_deg": 169,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: wood-fired household; woodpile"
+  },
+  {
+   "id": "02-H16",
+   "kind": "house",
+   "footprint": [
+    [
+     352.52,
+     408.41
+    ],
+    [
+     360.42,
+     409.66
+    ],
+    [
+     359.48,
+     415.59
+    ],
+    [
+     351.58,
+     414.34
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 9,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      356.47,
+      409.04
+     ],
+     "facing_deg": 279,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "tin_timber",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: weathered corrugated metal; owner: poultry household; patchy maintenance"
+  },
+  {
+   "id": "02-H17",
+   "kind": "house",
+   "footprint": [
+    [
+     376.5,
+     415.17
+    ],
+    [
+     384.4,
+     413.92
+    ],
+    [
+     385.5,
+     420.83
+    ],
+    [
+     377.6,
+     422.08
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_tile_SK4a",
+    "ridge_axis_deg": -9,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      384.95,
+      417.37
+     ],
+     "facing_deg": 351,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "tile"
+   },
+   "collider": "full_roof",
+   "house_type": "brick",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: muted weathered tile; owner: small pig-keeping household"
+  },
+  {
+   "id": "02-H18",
+   "kind": "house",
+   "footprint": [
+    [
+     416.46,
+     407.47
+    ],
+    [
+     424.38,
+     408.59
+    ],
+    [
+     423.54,
+     414.53
+    ],
+    [
+     415.62,
+     413.41
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 8,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "logs_SK5b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      416.04,
+      410.44
+     ],
+     "facing_deg": 188,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "old_log",
+   "abandoned": false,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: field worker; tools and vegetables"
+  },
+  {
+   "id": "02-H19",
+   "kind": "house",
+   "footprint": [
+    [
+     280.46,
+     429.9
+    ],
+    [
+     288.29,
+     428.23
+    ],
+    [
+     289.54,
+     434.1
+    ],
+    [
+     281.71,
+     435.77
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 3.0,
+   "roof": {
+    "type": "gable",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -12,
+    "ridge_h_m": 2.4,
+    "overhang_m": 0.4
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      288.91,
+      431.17
+     ],
+     "facing_deg": 348,
+     "kind": "door",
+     "w_m": 1.0
+    }
+   ],
+   "facade_kit": "hamlet",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "shutters": true,
+    "porch_roof": true,
+    "chimney": true,
+    "gutter": true,
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": "metal"
+   },
+   "collider": "full_roof",
+   "house_type": "abandoned_board",
+   "abandoned": true,
+   "notes": "Owner activity determines yard; never duplicate a whole yard kit.; roof: faded sheet metal with local repairs; owner: unoccupied; roof damage and rusted small car"
+  },
+  {
+   "id": "02-H01-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     223.33,
+     567.58
+    ],
+    [
+     226.25,
+     568.25
+    ],
+    [
+     225.69,
+     570.68
+    ],
+    [
+     222.77,
+     570.01
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 13,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H01; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H02-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     240.66,
+     562.59
+    ],
+    [
+     243.66,
+     562.53
+    ],
+    [
+     243.7,
+     565.03
+    ],
+    [
+     240.7,
+     565.09
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -1,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H02; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H03-Y1",
+   "kind": "coop",
+   "footprint": [
+    [
+     265.91,
+     567.68
+    ],
+    [
+     268.4,
+     567.9
+    ],
+    [
+     268.23,
+     569.89
+    ],
+    [
+     265.74,
+     569.68
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.8,
+   "height_m": 1.8,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 5,
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H03; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H04-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     259.57,
+     530.16
+    ],
+    [
+     263.05,
+     529.85
+    ],
+    [
+     263.27,
+     532.34
+    ],
+    [
+     259.79,
+     532.65
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -5,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H04; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H05-Y1",
+   "kind": "pig_shelter",
+   "footprint": [
+    [
+     271.37,
+     518.28
+    ],
+    [
+     274.31,
+     518.91
+    ],
+    [
+     273.79,
+     521.36
+    ],
+    [
+     270.85,
+     520.73
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.6,
+   "height_m": 1.6,
+   "roof": {
+    "type": "shed",
+    "material": "roof_wavy_slate",
+    "ridge_axis_deg": 12,
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H05; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H06-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     309.47,
+     563.76
+    ],
+    [
+     312.47,
+     563.82
+    ],
+    [
+     312.43,
+     566.32
+    ],
+    [
+     309.43,
+     566.26
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 1,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H06; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H07-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     312.59,
+     580.74
+    ],
+    [
+     315.5,
+     581.47
+    ],
+    [
+     314.89,
+     583.9
+    ],
+    [
+     311.98,
+     583.17
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 14,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H07; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H08-Y1",
+   "kind": "shed",
+   "footprint": [
+    [
+     379.41,
+     565.66
+    ],
+    [
+     382.9,
+     565.9
+    ],
+    [
+     382.73,
+     568.4
+    ],
+    [
+     379.24,
+     568.15
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 4,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H08; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H09-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     376.83,
+     517.02
+    ],
+    [
+     379.82,
+     516.92
+    ],
+    [
+     379.91,
+     519.42
+    ],
+    [
+     376.92,
+     519.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -2,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H09; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H10-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     347.5,
+     507.21
+    ],
+    [
+     350.48,
+     507.57
+    ],
+    [
+     350.18,
+     510.05
+    ],
+    [
+     347.2,
+     509.69
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 7,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H10; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H11-Y1",
+   "kind": "coop",
+   "footprint": [
+    [
+     348.82,
+     465.8
+    ],
+    [
+     351.29,
+     466.23
+    ],
+    [
+     350.94,
+     468.2
+    ],
+    [
+     348.48,
+     467.77
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.8,
+   "height_m": 1.8,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 10,
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H11; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H12-Y1",
+   "kind": "pig_shelter",
+   "footprint": [
+    [
+     380.1,
+     461.89
+    ],
+    [
+     383.09,
+     461.68
+    ],
+    [
+     383.26,
+     464.17
+    ],
+    [
+     380.27,
+     464.38
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.6,
+   "height_m": 1.6,
+   "roof": {
+    "type": "shed",
+    "material": "roof_wavy_slate",
+    "ridge_axis_deg": -4,
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H12; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H13-Y1",
+   "kind": "shed",
+   "footprint": [
+    [
+     416.93,
+     452.64
+    ],
+    [
+     419.9,
+     452.22
+    ],
+    [
+     420.25,
+     454.7
+    ],
+    [
+     417.28,
+     455.12
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -8,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H13; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H14-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     334.93,
+     447.88
+    ],
+    [
+     337.87,
+     448.51
+    ],
+    [
+     337.35,
+     450.95
+    ],
+    [
+     334.41,
+     450.33
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 12,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H14; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H15-Y2",
+   "kind": "shed",
+   "footprint": [
+    [
+     346.81,
+     427.91
+    ],
+    [
+     350.29,
+     427.54
+    ],
+    [
+     350.55,
+     430.03
+    ],
+    [
+     347.07,
+     430.4
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": -6,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H15; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H16-Y1",
+   "kind": "coop",
+   "footprint": [
+    [
+     356.45,
+     419.69
+    ],
+    [
+     358.92,
+     420.08
+    ],
+    [
+     358.61,
+     422.05
+    ],
+    [
+     356.14,
+     421.66
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.8,
+   "height_m": 1.8,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 9,
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H16; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H17-Y1",
+   "kind": "pig_shelter",
+   "footprint": [
+    [
+     370.38,
+     418.06
+    ],
+    [
+     373.35,
+     417.59
+    ],
+    [
+     373.74,
+     420.06
+    ],
+    [
+     370.77,
+     420.53
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.6,
+   "height_m": 1.6,
+   "roof": {
+    "type": "shed",
+    "material": "roof_wavy_slate",
+    "ridge_axis_deg": -9,
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H17; unfenced, keep routes through yard.  | height not in source, default by kind"
+  },
+  {
+   "id": "02-H18-Y1",
+   "kind": "shed",
+   "footprint": [
+    [
+     427.43,
+     409.08
+    ],
+    [
+     430.9,
+     409.57
+    ],
+    [
+     430.55,
+     412.04
+    ],
+    [
+     427.08,
+     411.55
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.4,
+   "height_m": 2.4,
+   "roof": {
+    "type": "shed",
+    "material": "roof_profsheet_SK4c",
+    "ridge_axis_deg": 8,
+    "ridge_h_m": 0.6,
+    "overhang_m": 0.3
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": "Belongs to 02-H18; unfenced, keep routes through yard.  | height not in source, default by kind"
+  }
+ ],
+ "props": [
+  {
+   "id": "02-A-WELL",
+   "kind": "old_well",
+   "pos": [
+    287.9,
+    472.7
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.75,
+    0.75,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-00",
+   "kind": "grave",
+   "pos": [
+    235.4,
+    583.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-01",
+   "kind": "grave",
+   "pos": [
+    239.9,
+    583.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-02",
+   "kind": "grave",
+   "pos": [
+    244.4,
+    583.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-03",
+   "kind": "grave",
+   "pos": [
+    248.9,
+    583.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-04",
+   "kind": "grave",
+   "pos": [
+    235.4,
+    586.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-05",
+   "kind": "grave",
+   "pos": [
+    239.9,
+    586.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-06",
+   "kind": "grave",
+   "pos": [
+    244.4,
+    586.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-07",
+   "kind": "grave",
+   "pos": [
+    248.9,
+    586.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-08",
+   "kind": "grave",
+   "pos": [
+    235.4,
+    589.8
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-09",
+   "kind": "grave",
+   "pos": [
+    239.9,
+    589.8
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-10",
+   "kind": "grave",
+   "pos": [
+    244.4,
+    589.8
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-GRAVE-11",
+   "kind": "grave",
+   "pos": [
+    248.9,
+    589.8
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    1.9,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-TRACTOR1",
+   "kind": "parked_tractor",
+   "pos": [
+    356.0,
+    570.0
+   ],
+   "rot_deg": -10,
+   "size": [
+    4,
+    2.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-TRACTOR2",
+   "kind": "parked_tractor",
+   "pos": [
+    389.0,
+    558.0
+   ],
+   "rot_deg": 12,
+   "size": [
+    4,
+    2.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-TRAILER",
+   "kind": "farm_trailer",
+   "pos": [
+    389.0,
+    564.0
+   ],
+   "rot_deg": 12,
+   "size": [
+    4,
+    2.1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-WATER1",
+   "kind": "standpipe",
+   "pos": [
+    309.0,
+    508.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.4,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-WATER2",
+   "kind": "standpipe",
+   "pos": [
+    391.0,
+    477.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.4,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-WASTE1",
+   "kind": "shared_bin",
+   "pos": [
+    292.0,
+    520.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-U-WASTE2",
+   "kind": "shared_bin",
+   "pos": [
+    408.0,
+    430.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    1,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-FISH-BOAT",
+   "kind": "upturned_boat",
+   "pos": [
+    474.0,
+    456.0
+   ],
+   "rot_deg": -18,
+   "size": [
+    3.8,
+    1.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-FISH-NETS",
+   "kind": "fishing_nets",
+   "pos": [
+    475.0,
+    449.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    2.2,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-HAY-ROLL-01",
+   "kind": "round_hay_bale",
+   "pos": [
+    373.0,
+    568.0
+   ],
+   "rot_deg": 12,
+   "size": [
+    1.6,
+    1.3,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-HAY-ROLL-02",
+   "kind": "round_hay_bale",
+   "pos": [
+    376.0,
+    571.0
+   ],
+   "rot_deg": -8,
+   "size": [
+    1.6,
+    1.3,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-HAY-ROLL-03",
+   "kind": "round_hay_bale",
+   "pos": [
+    394.0,
+    582.0
+   ],
+   "rot_deg": 19,
+   "size": [
+    1.6,
+    1.3,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-HAY-ROLL-04",
+   "kind": "round_hay_bale",
+   "pos": [
+    277.0,
+    415.0
+   ],
+   "rot_deg": -12,
+   "size": [
+    1.6,
+    1.3,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-HAY-ROLL-05",
+   "kind": "round_hay_bale",
+   "pos": [
+    277.0,
+    422.0
+   ],
+   "rot_deg": 7,
+   "size": [
+    1.6,
+    1.3,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H01-Y3",
+   "kind": "woodpile",
+   "pos": [
+    234.82,
+    569.6
+   ],
+   "rot_deg": 8,
+   "size": [
+    2.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H01-Y4",
+   "kind": "outdoor_table",
+   "pos": [
+    221.41,
+    564.69
+   ],
+   "rot_deg": 13,
+   "size": [
+    1.5,
+    0.8,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-H02-Y3",
+   "kind": "clothesline",
+   "pos": [
+    258.92,
+    566.28
+   ],
+   "rot_deg": -6,
+   "size": [
+    3.5,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H02-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    244.82,
+    568.54
+   ],
+   "rot_deg": -1,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H03-Y3",
+   "kind": "feed_bin",
+   "pos": [
+    262.38,
+    566.09
+   ],
+   "rot_deg": 5,
+   "size": [
+    0.8,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H03-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    272.46,
+    568.31
+   ],
+   "rot_deg": 10,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H04-Y1",
+   "kind": "woodpile",
+   "pos": [
+    266.69,
+    530.03
+   ],
+   "rot_deg": -10,
+   "size": [
+    4,
+    1.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H04-Y4",
+   "kind": "outdoor_table",
+   "pos": [
+    271.71,
+    532.05
+   ],
+   "rot_deg": -5,
+   "size": [
+    1.5,
+    0.8,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-H05-Y2",
+   "kind": "feed_trough",
+   "pos": [
+    272.28,
+    525.22
+   ],
+   "rot_deg": 17,
+   "size": [
+    1.8,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H05-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    275.13,
+    529.82
+   ],
+   "rot_deg": 17,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H06-Y3",
+   "kind": "woodpile",
+   "pos": [
+    321.17,
+    563.55
+   ],
+   "rot_deg": -4,
+   "size": [
+    2.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H06-Y4",
+   "kind": "outdoor_table",
+   "pos": [
+    307.07,
+    561.26
+   ],
+   "rot_deg": 1,
+   "size": [
+    1.5,
+    0.8,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-H07-Y3",
+   "kind": "clothesline",
+   "pos": [
+    328.02,
+    582.63
+   ],
+   "rot_deg": 9,
+   "size": [
+    3.5,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H07-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    318.11,
+    585.52
+   ],
+   "rot_deg": 14,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H08-Y3",
+   "kind": "wheelbarrow",
+   "pos": [
+    375.73,
+    567.91
+   ],
+   "rot_deg": 4,
+   "size": [
+    1.4,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H08-Y4",
+   "kind": "woodpile",
+   "pos": [
+    370.85,
+    565.57
+   ],
+   "rot_deg": 9,
+   "size": [
+    2.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H09-Y3",
+   "kind": "clothesline",
+   "pos": [
+    392.59,
+    516.87
+   ],
+   "rot_deg": -7,
+   "size": [
+    3.5,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H09-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    382.5,
+    514.71
+   ],
+   "rot_deg": -2,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H10-Y3",
+   "kind": "woodpile",
+   "pos": [
+    359.16,
+    508.63
+   ],
+   "rot_deg": 2,
+   "size": [
+    2.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H10-Y4",
+   "kind": "outdoor_table",
+   "pos": [
+    345.54,
+    512.92
+   ],
+   "rot_deg": 7,
+   "size": [
+    1.5,
+    0.8,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-H11-Y3",
+   "kind": "feed_bin",
+   "pos": [
+    355.06,
+    468.56
+   ],
+   "rot_deg": 10,
+   "size": [
+    0.8,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H11-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    341.5,
+    473.03
+   ],
+   "rot_deg": 15,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H12-Y2",
+   "kind": "feed_trough",
+   "pos": [
+    376.41,
+    464.26
+   ],
+   "rot_deg": 1,
+   "size": [
+    1.8,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H12-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    386.7,
+    465.04
+   ],
+   "rot_deg": 1,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H13-Y2",
+   "kind": "net_drying_rack",
+   "pos": [
+    414.43,
+    457.13
+   ],
+   "rot_deg": -3,
+   "size": [
+    2.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H13-Y4",
+   "kind": "outdoor_table",
+   "pos": [
+    414.43,
+    457.13
+   ],
+   "rot_deg": -3,
+   "size": [
+    1.5,
+    0.8,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-H14-Y3",
+   "kind": "clothesline",
+   "pos": [
+    338.28,
+    459.52
+   ],
+   "rot_deg": 7,
+   "size": [
+    3.5,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H14-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    338.28,
+    459.52
+   ],
+   "rot_deg": 12,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H15-Y1",
+   "kind": "woodpile",
+   "pos": [
+    350.93,
+    433.89
+   ],
+   "rot_deg": -11,
+   "size": [
+    4,
+    1.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H15-Y4",
+   "kind": "outdoor_table",
+   "pos": [
+    349.95,
+    439.22
+   ],
+   "rot_deg": -6,
+   "size": [
+    1.5,
+    0.8,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-H16-Y3",
+   "kind": "feed_bin",
+   "pos": [
+    352.17,
+    420.14
+   ],
+   "rot_deg": 9,
+   "size": [
+    0.8,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H16-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    362.34,
+    418.39
+   ],
+   "rot_deg": 14,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H17-Y2",
+   "kind": "feed_trough",
+   "pos": [
+    373.07,
+    413.74
+   ],
+   "rot_deg": -4,
+   "size": [
+    1.8,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H17-Y4",
+   "kind": "water_barrel",
+   "pos": [
+    376.94,
+    409.97
+   ],
+   "rot_deg": -4,
+   "size": [
+    0.7,
+    0.7,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H18-Y3",
+   "kind": "wheelbarrow",
+   "pos": [
+    427.11,
+    405.49
+   ],
+   "rot_deg": 8,
+   "size": [
+    1.4,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H18-Y4",
+   "kind": "woodpile",
+   "pos": [
+    427.61,
+    415.8
+   ],
+   "rot_deg": 13,
+   "size": [
+    2.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H19-Y1",
+   "kind": "rusted_car",
+   "pos": [
+    276.24,
+    434.08
+   ],
+   "rot_deg": -12,
+   "size": [
+    3.8,
+    1.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H19-Y2",
+   "kind": "broken_timber",
+   "pos": [
+    276.63,
+    428.69
+   ],
+   "rot_deg": -7,
+   "size": [
+    2,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-P-01",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    428.85,
+    473.41
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-02",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    401.25,
+    481.21
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-03",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    368.44,
+    484.17
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-04",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    335.97,
+    487.77
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-05",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    306.08,
+    500.72
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-06",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    289.4,
+    530.66
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-07",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    279.04,
+    546.61
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-08",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    248.78,
+    545.34
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-09",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    216.58,
+    545.42
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-10",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    295.29,
+    552.42
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-11",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    320.75,
+    545.48
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-12",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    348.09,
+    544.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-13",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    375.31,
+    544.85
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-14",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    402.59,
+    546.93
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-15",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    323.39,
+    502.22
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-16",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    321.29,
+    465.78
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-17",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    312.99,
+    435.55
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-18",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    307.24,
+    407.03
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-19",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    308.59,
+    374.76
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-20",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    400.27,
+    491.35
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-21",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    403.29,
+    460.41
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-22",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    409.27,
+    431.63
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-23",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    406.03,
+    403.08
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-24",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    388.15,
+    377.86
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-25",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    359.84,
+    380.88
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-26",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    332.25,
+    385.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-P-27",
+   "kind": "wooden_utility_pole",
+   "pos": [
+    300.41,
+    389.99
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    7
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-T-001",
+   "kind": "tree",
+   "pos": [
+    227.83,
+    455.32
+   ],
+   "rot_deg": 76,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-002",
+   "kind": "tree",
+   "pos": [
+    230.22,
+    479.87
+   ],
+   "rot_deg": 169,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-003",
+   "kind": "tree",
+   "pos": [
+    224.99,
+    463.85
+   ],
+   "rot_deg": 181,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-004",
+   "kind": "tree",
+   "pos": [
+    219.08,
+    463.32
+   ],
+   "rot_deg": 226,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-005",
+   "kind": "tree",
+   "pos": [
+    218.97,
+    458.95
+   ],
+   "rot_deg": 358,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-006",
+   "kind": "tree",
+   "pos": [
+    231.22,
+    486.6
+   ],
+   "rot_deg": 338,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-007",
+   "kind": "tree",
+   "pos": [
+    221.1,
+    481.88
+   ],
+   "rot_deg": 320,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-008",
+   "kind": "tree",
+   "pos": [
+    218.09,
+    491.36
+   ],
+   "rot_deg": 216,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-009",
+   "kind": "tree",
+   "pos": [
+    217.45,
+    445.71
+   ],
+   "rot_deg": 24,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-010",
+   "kind": "tree",
+   "pos": [
+    217.1,
+    468.12
+   ],
+   "rot_deg": 61,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-011",
+   "kind": "tree",
+   "pos": [
+    208.7,
+    501.26
+   ],
+   "rot_deg": 73,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-012",
+   "kind": "tree",
+   "pos": [
+    214.17,
+    448.36
+   ],
+   "rot_deg": 353,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-013",
+   "kind": "tree",
+   "pos": [
+    206.26,
+    462.49
+   ],
+   "rot_deg": 284,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-014",
+   "kind": "tree",
+   "pos": [
+    220.72,
+    450.78
+   ],
+   "rot_deg": 183,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-015",
+   "kind": "tree",
+   "pos": [
+    206.2,
+    445.01
+   ],
+   "rot_deg": 294,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-016",
+   "kind": "tree",
+   "pos": [
+    212.41,
+    494.2
+   ],
+   "rot_deg": 85,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-017",
+   "kind": "tree",
+   "pos": [
+    212.43,
+    463.64
+   ],
+   "rot_deg": 116,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-018",
+   "kind": "tree",
+   "pos": [
+    230.46,
+    467.04
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-019",
+   "kind": "tree",
+   "pos": [
+    213.22,
+    487.12
+   ],
+   "rot_deg": 186,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-020",
+   "kind": "tree",
+   "pos": [
+    224.1,
+    453.31
+   ],
+   "rot_deg": 11,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-021",
+   "kind": "tree",
+   "pos": [
+    225.97,
+    486.37
+   ],
+   "rot_deg": 4,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-022",
+   "kind": "tree",
+   "pos": [
+    218.76,
+    474.12
+   ],
+   "rot_deg": 251,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-023",
+   "kind": "tree",
+   "pos": [
+    213.03,
+    502.04
+   ],
+   "rot_deg": 158,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-024",
+   "kind": "tree",
+   "pos": [
+    230.74,
+    471.82
+   ],
+   "rot_deg": 342,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-025",
+   "kind": "tree",
+   "pos": [
+    295.58,
+    382.76
+   ],
+   "rot_deg": 106,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-026",
+   "kind": "tree",
+   "pos": [
+    284.07,
+    419.85
+   ],
+   "rot_deg": 180,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-027",
+   "kind": "tree",
+   "pos": [
+    282.37,
+    387.46
+   ],
+   "rot_deg": 120,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-028",
+   "kind": "tree",
+   "pos": [
+    293.39,
+    392.08
+   ],
+   "rot_deg": 171,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-029",
+   "kind": "tree",
+   "pos": [
+    288.36,
+    392.39
+   ],
+   "rot_deg": 26,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-030",
+   "kind": "tree",
+   "pos": [
+    296.41,
+    388.89
+   ],
+   "rot_deg": 154,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-031",
+   "kind": "tree",
+   "pos": [
+    292.69,
+    405.39
+   ],
+   "rot_deg": 229,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-032",
+   "kind": "tree",
+   "pos": [
+    289.16,
+    383.9
+   ],
+   "rot_deg": 57,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-033",
+   "kind": "tree",
+   "pos": [
+    287.71,
+    410.7
+   ],
+   "rot_deg": 14,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-034",
+   "kind": "tree",
+   "pos": [
+    278.51,
+    389.49
+   ],
+   "rot_deg": 322,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-035",
+   "kind": "tree",
+   "pos": [
+    346.16,
+    464.51
+   ],
+   "rot_deg": 130,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-036",
+   "kind": "tree",
+   "pos": [
+    340.91,
+    459.29
+   ],
+   "rot_deg": 51,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-037",
+   "kind": "tree",
+   "pos": [
+    347.03,
+    449.93
+   ],
+   "rot_deg": 48,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-038",
+   "kind": "tree",
+   "pos": [
+    360.41,
+    463.41
+   ],
+   "rot_deg": 284,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-039",
+   "kind": "tree",
+   "pos": [
+    369.77,
+    464.42
+   ],
+   "rot_deg": 187,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-040",
+   "kind": "tree",
+   "pos": [
+    351.41,
+    456.65
+   ],
+   "rot_deg": 315,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-041",
+   "kind": "tree",
+   "pos": [
+    373.15,
+    452.28
+   ],
+   "rot_deg": 117,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-042",
+   "kind": "tree",
+   "pos": [
+    328.8,
+    467.59
+   ],
+   "rot_deg": 300,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-043",
+   "kind": "tree",
+   "pos": [
+    335.87,
+    461.92
+   ],
+   "rot_deg": 178,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-044",
+   "kind": "tree",
+   "pos": [
+    374.63,
+    456.64
+   ],
+   "rot_deg": 169,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-045",
+   "kind": "tree",
+   "pos": [
+    357.96,
+    452.46
+   ],
+   "rot_deg": 169,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-046",
+   "kind": "tree",
+   "pos": [
+    374.87,
+    466.84
+   ],
+   "rot_deg": 14,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-047",
+   "kind": "tree",
+   "pos": [
+    421.28,
+    416.34
+   ],
+   "rot_deg": 149,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-048",
+   "kind": "tree",
+   "pos": [
+    414.26,
+    420.21
+   ],
+   "rot_deg": 84,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-049",
+   "kind": "tree",
+   "pos": [
+    416.08,
+    429.77
+   ],
+   "rot_deg": 297,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-050",
+   "kind": "tree",
+   "pos": [
+    421.46,
+    424.61
+   ],
+   "rot_deg": 92,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-051",
+   "kind": "tree",
+   "pos": [
+    415.44,
+    399.74
+   ],
+   "rot_deg": 234,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-052",
+   "kind": "tree",
+   "pos": [
+    437.43,
+    392.38
+   ],
+   "rot_deg": 195,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-053",
+   "kind": "tree",
+   "pos": [
+    432.21,
+    433.54
+   ],
+   "rot_deg": 196,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-054",
+   "kind": "tree",
+   "pos": [
+    414.69,
+    443.26
+   ],
+   "rot_deg": 297,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-055",
+   "kind": "tree",
+   "pos": [
+    424.85,
+    394.3
+   ],
+   "rot_deg": 30,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-056",
+   "kind": "tree",
+   "pos": [
+    427.16,
+    432.13
+   ],
+   "rot_deg": 226,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-057",
+   "kind": "tree",
+   "pos": [
+    411.01,
+    407.45
+   ],
+   "rot_deg": 345,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-058",
+   "kind": "tree",
+   "pos": [
+    432.62,
+    412.09
+   ],
+   "rot_deg": 23,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-059",
+   "kind": "tree",
+   "pos": [
+    420.05,
+    405.13
+   ],
+   "rot_deg": 53,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-060",
+   "kind": "tree",
+   "pos": [
+    410.21,
+    442.94
+   ],
+   "rot_deg": 65,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-061",
+   "kind": "tree",
+   "pos": [
+    419.6,
+    435.76
+   ],
+   "rot_deg": 9,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-062",
+   "kind": "tree",
+   "pos": [
+    415.54,
+    438.04
+   ],
+   "rot_deg": 233,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-063",
+   "kind": "tree",
+   "pos": [
+    391.85,
+    578.66
+   ],
+   "rot_deg": 8,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-064",
+   "kind": "tree",
+   "pos": [
+    386.52,
+    594.05
+   ],
+   "rot_deg": 221,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-065",
+   "kind": "tree",
+   "pos": [
+    344.67,
+    579.24
+   ],
+   "rot_deg": 9,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-066",
+   "kind": "tree",
+   "pos": [
+    386.95,
+    585.81
+   ],
+   "rot_deg": 192,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-067",
+   "kind": "tree",
+   "pos": [
+    359.54,
+    579.56
+   ],
+   "rot_deg": 165,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-068",
+   "kind": "tree",
+   "pos": [
+    330.14,
+    595.12
+   ],
+   "rot_deg": 64,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-069",
+   "kind": "tree",
+   "pos": [
+    380.42,
+    593.43
+   ],
+   "rot_deg": 202,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-070",
+   "kind": "tree",
+   "pos": [
+    340.21,
+    579.27
+   ],
+   "rot_deg": 186,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-071",
+   "kind": "tree",
+   "pos": [
+    355.56,
+    590.29
+   ],
+   "rot_deg": 213,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-072",
+   "kind": "tree",
+   "pos": [
+    374.81,
+    585.94
+   ],
+   "rot_deg": 47,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-073",
+   "kind": "tree",
+   "pos": [
+    372.62,
+    580.62
+   ],
+   "rot_deg": 98,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-074",
+   "kind": "tree",
+   "pos": [
+    355.08,
+    580.03
+   ],
+   "rot_deg": 343,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-T-075",
+   "kind": "tree",
+   "pos": [
+    302.46,
+    588.02
+   ],
+   "rot_deg": 104,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-076",
+   "kind": "tree",
+   "pos": [
+    279.3,
+    577.44
+   ],
+   "rot_deg": 287,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-077",
+   "kind": "tree",
+   "pos": [
+    275.26,
+    575.95
+   ],
+   "rot_deg": 242,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-078",
+   "kind": "tree",
+   "pos": [
+    292.83,
+    589.56
+   ],
+   "rot_deg": 96,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-079",
+   "kind": "tree",
+   "pos": [
+    281.3,
+    594.57
+   ],
+   "rot_deg": 294,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-080",
+   "kind": "tree",
+   "pos": [
+    283.69,
+    573.41
+   ],
+   "rot_deg": 358,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-081",
+   "kind": "tree",
+   "pos": [
+    297.37,
+    589.92
+   ],
+   "rot_deg": 63,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-082",
+   "kind": "tree",
+   "pos": [
+    271.14,
+    590.0
+   ],
+   "rot_deg": 326,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-083",
+   "kind": "tree",
+   "pos": [
+    278.62,
+    584.12
+   ],
+   "rot_deg": 138,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-084",
+   "kind": "tree",
+   "pos": [
+    289.64,
+    582.08
+   ],
+   "rot_deg": 325,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-085",
+   "kind": "tree",
+   "pos": [
+    270.87,
+    578.47
+   ],
+   "rot_deg": 213,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-086",
+   "kind": "tree",
+   "pos": [
+    306.66,
+    591.83
+   ],
+   "rot_deg": 175,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-087",
+   "kind": "tree",
+   "pos": [
+    302.99,
+    594.69
+   ],
+   "rot_deg": 313,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-088",
+   "kind": "tree",
+   "pos": [
+    311.22,
+    588.13
+   ],
+   "rot_deg": 168,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-089",
+   "kind": "tree",
+   "pos": [
+    286.33,
+    578.71
+   ],
+   "rot_deg": 61,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-090",
+   "kind": "tree",
+   "pos": [
+    301.09,
+    573.53
+   ],
+   "rot_deg": 250,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-091",
+   "kind": "tree",
+   "pos": [
+    295.0,
+    573.4
+   ],
+   "rot_deg": 151,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-092",
+   "kind": "tree",
+   "pos": [
+    279.14,
+    590.34
+   ],
+   "rot_deg": 197,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-093",
+   "kind": "tree",
+   "pos": [
+    342.18,
+    513.47
+   ],
+   "rot_deg": 232,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-094",
+   "kind": "tree",
+   "pos": [
+    386.86,
+    507.61
+   ],
+   "rot_deg": 61,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-095",
+   "kind": "tree",
+   "pos": [
+    394.98,
+    536.97
+   ],
+   "rot_deg": 158,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-096",
+   "kind": "tree",
+   "pos": [
+    372.9,
+    518.69
+   ],
+   "rot_deg": 48,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-097",
+   "kind": "tree",
+   "pos": [
+    399.38,
+    515.55
+   ],
+   "rot_deg": 230,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-098",
+   "kind": "tree",
+   "pos": [
+    379.56,
+    573.73
+   ],
+   "rot_deg": 130,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-099",
+   "kind": "tree",
+   "pos": [
+    365.11,
+    513.81
+   ],
+   "rot_deg": 333,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-100",
+   "kind": "tree",
+   "pos": [
+    285.17,
+    515.5
+   ],
+   "rot_deg": 102,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-101",
+   "kind": "tree",
+   "pos": [
+    369.41,
+    562.63
+   ],
+   "rot_deg": 180,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-102",
+   "kind": "tree",
+   "pos": [
+    284.92,
+    535.5
+   ],
+   "rot_deg": 274,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-103",
+   "kind": "tree",
+   "pos": [
+    347.02,
+    527.6
+   ],
+   "rot_deg": 193,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-104",
+   "kind": "tree",
+   "pos": [
+    279.15,
+    529.5
+   ],
+   "rot_deg": 325,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-105",
+   "kind": "tree",
+   "pos": [
+    257.63,
+    563.93
+   ],
+   "rot_deg": 141,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-106",
+   "kind": "tree",
+   "pos": [
+    390.89,
+    532.39
+   ],
+   "rot_deg": 2,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-107",
+   "kind": "tree",
+   "pos": [
+    307.99,
+    553.92
+   ],
+   "rot_deg": 100,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-108",
+   "kind": "tree",
+   "pos": [
+    261.32,
+    569.31
+   ],
+   "rot_deg": 141,
+   "size": [
+    0.55,
+    0.55,
+    5
+   ],
+   "grip_anchor": false,
+   "tree_type": "fruit"
+  },
+  {
+   "id": "02-T-109",
+   "kind": "tree",
+   "pos": [
+    283.42,
+    448.01
+   ],
+   "rot_deg": 142,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "willow"
+  },
+  {
+   "id": "02-T-110",
+   "kind": "tree",
+   "pos": [
+    239.36,
+    468.58
+   ],
+   "rot_deg": 268,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "willow"
+  },
+  {
+   "id": "02-T-111",
+   "kind": "tree",
+   "pos": [
+    292.56,
+    471.28
+   ],
+   "rot_deg": 183,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "willow"
+  },
+  {
+   "id": "02-T-112",
+   "kind": "tree",
+   "pos": [
+    286.16,
+    453.47
+   ],
+   "rot_deg": 92,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "willow"
+  },
+  {
+   "id": "02-T-113",
+   "kind": "tree",
+   "pos": [
+    282.72,
+    482.24
+   ],
+   "rot_deg": 212,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "willow"
+  },
+  {
+   "id": "02-T-114",
+   "kind": "tree",
+   "pos": [
+    291.95,
+    459.54
+   ],
+   "rot_deg": 320,
+   "size": [
+    0.55,
+    0.55,
+    9
+   ],
+   "grip_anchor": false,
+   "tree_type": "willow"
+  },
+  {
+   "id": "02-S-01",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    237.0,
+    562.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-02",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    245.88,
+    566.77
+   ],
+   "rot_deg": 137,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-03",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    281.31,
+    561.51
+   ],
+   "rot_deg": 7,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-04",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    270.41,
+    544.44
+   ],
+   "rot_deg": 51,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-05",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    283.37,
+    510.83
+   ],
+   "rot_deg": 281,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-06",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    323.78,
+    556.39
+   ],
+   "rot_deg": 356,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-07",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    310.81,
+    579.92
+   ],
+   "rot_deg": 164,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-08",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    373.39,
+    553.0
+   ],
+   "rot_deg": 239,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-09",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    392.73,
+    524.93
+   ],
+   "rot_deg": 16,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-10",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    347.76,
+    519.18
+   ],
+   "rot_deg": 153,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-11",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    352.39,
+    469.42
+   ],
+   "rot_deg": 290,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-12",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    374.33,
+    480.24
+   ],
+   "rot_deg": 129,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-13",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    415.61,
+    459.15
+   ],
+   "rot_deg": 204,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-14",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    338.61,
+    457.83
+   ],
+   "rot_deg": 12,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-15",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    338.71,
+    441.18
+   ],
+   "rot_deg": 118,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-16",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    358.43,
+    403.54
+   ],
+   "rot_deg": 286,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-17",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    385.0,
+    425.84
+   ],
+   "rot_deg": 63,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-18",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    413.33,
+    402.76
+   ],
+   "rot_deg": 231,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-19",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    289.11,
+    426.34
+   ],
+   "rot_deg": 306,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-20",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    230.85,
+    568.95
+   ],
+   "rot_deg": 83,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-21",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    266.45,
+    566.14
+   ],
+   "rot_deg": 15,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-22",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    275.99,
+    559.63
+   ],
+   "rot_deg": 357,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-23",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    257.5,
+    541.28
+   ],
+   "rot_deg": 165,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-24",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    281.12,
+    516.0
+   ],
+   "rot_deg": 271,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-25",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    305.36,
+    564.8
+   ],
+   "rot_deg": 141,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-26",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    314.03,
+    576.39
+   ],
+   "rot_deg": 185,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-27",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    369.74,
+    573.26
+   ],
+   "rot_deg": 117,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-28",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    380.34,
+    529.74
+   ],
+   "rot_deg": 130,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-29",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    358.98,
+    506.64
+   ],
+   "rot_deg": 298,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-30",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    356.82,
+    477.57
+   ],
+   "rot_deg": 13,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-31",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    374.94,
+    475.5
+   ],
+   "rot_deg": 150,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-32",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    424.05,
+    455.31
+   ],
+   "rot_deg": 287,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-33",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    333.07,
+    462.29
+   ],
+   "rot_deg": 64,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-34",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    335.46,
+    432.49
+   ],
+   "rot_deg": 201,
+   "size": [
+    1.8,
+    1.4,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-35",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    362.49,
+    409.38
+   ],
+   "rot_deg": 338,
+   "size": [
+    2.2,
+    1.4,
+    1.25
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-S-36",
+   "kind": "soft_shrub_cluster",
+   "pos": [
+    370.05,
+    412.18
+   ],
+   "rot_deg": 208,
+   "size": [
+    2.6,
+    1.4,
+    1.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-001",
+   "kind": "stump",
+   "pos": [
+    237.02,
+    569.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-002",
+   "kind": "stump",
+   "pos": [
+    267.07,
+    532.2
+   ],
+   "rot_deg": 80,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-003",
+   "kind": "stump",
+   "pos": [
+    319.1,
+    564.3
+   ],
+   "rot_deg": 160,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-004",
+   "kind": "watering_can",
+   "pos": [
+    250.38,
+    574.43
+   ],
+   "rot_deg": 79,
+   "size": [
+    0.35,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-005",
+   "kind": "watering_can",
+   "pos": [
+    274.07,
+    517.79
+   ],
+   "rot_deg": 130,
+   "size": [
+    0.35,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-006",
+   "kind": "watering_can",
+   "pos": [
+    325.79,
+    581.18
+   ],
+   "rot_deg": 297,
+   "size": [
+    0.35,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-007",
+   "kind": "watering_can",
+   "pos": [
+    392.09,
+    513.31
+   ],
+   "rot_deg": 348,
+   "size": [
+    0.35,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-008",
+   "kind": "watering_can",
+   "pos": [
+    344.13,
+    473.66
+   ],
+   "rot_deg": 97,
+   "size": [
+    0.35,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-009",
+   "kind": "wheelbarrow",
+   "pos": [
+    233.91,
+    567.8
+   ],
+   "rot_deg": 56,
+   "size": [
+    1.4,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-010",
+   "kind": "wooden_crate",
+   "pos": [
+    292.5,
+    585.46
+   ],
+   "rot_deg": 63,
+   "size": [
+    0.6,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-011",
+   "kind": "wooden_crate",
+   "pos": [
+    289.74,
+    584.82
+   ],
+   "rot_deg": 143,
+   "size": [
+    0.6,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-012",
+   "kind": "wooden_crate",
+   "pos": [
+    290.6,
+    580.74
+   ],
+   "rot_deg": 252,
+   "size": [
+    0.6,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-013",
+   "kind": "wooden_crate",
+   "pos": [
+    292.7,
+    581.65
+   ],
+   "rot_deg": 303,
+   "size": [
+    0.6,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-014",
+   "kind": "wooden_crate",
+   "pos": [
+    293.53,
+    584.36
+   ],
+   "rot_deg": 23,
+   "size": [
+    0.6,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-015",
+   "kind": "wooden_crate",
+   "pos": [
+    291.01,
+    585.64
+   ],
+   "rot_deg": 103,
+   "size": [
+    0.6,
+    0.4,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-016",
+   "kind": "feed_sack",
+   "pos": [
+    272.01,
+    521.95
+   ],
+   "rot_deg": 105,
+   "size": [
+    0.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-017",
+   "kind": "feed_sack",
+   "pos": [
+    379.49,
+    462.84
+   ],
+   "rot_deg": 185,
+   "size": [
+    0.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-018",
+   "kind": "feed_sack",
+   "pos": [
+    371.87,
+    416.87
+   ],
+   "rot_deg": 265,
+   "size": [
+    0.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-019",
+   "kind": "feed_sack",
+   "pos": [
+    275.39,
+    520.52
+   ],
+   "rot_deg": 14,
+   "size": [
+    0.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-020",
+   "kind": "feed_sack",
+   "pos": [
+    382.61,
+    465.02
+   ],
+   "rot_deg": 65,
+   "size": [
+    0.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-021",
+   "kind": "chicken_feeder",
+   "pos": [
+    264.22,
+    569.34
+   ],
+   "rot_deg": 169,
+   "size": [
+    0.45,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-022",
+   "kind": "chicken_feeder",
+   "pos": [
+    348.84,
+    464.29
+   ],
+   "rot_deg": 249,
+   "size": [
+    0.45,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-023",
+   "kind": "chicken_feeder",
+   "pos": [
+    358.63,
+    418.96
+   ],
+   "rot_deg": 300,
+   "size": [
+    0.45,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-024",
+   "kind": "egg_basket",
+   "pos": [
+    264.99,
+    569.51
+   ],
+   "rot_deg": 161,
+   "size": [
+    0.4,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-025",
+   "kind": "egg_basket",
+   "pos": [
+    348.81,
+    465.08
+   ],
+   "rot_deg": 241,
+   "size": [
+    0.4,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-026",
+   "kind": "egg_basket",
+   "pos": [
+    359.24,
+    419.49
+   ],
+   "rot_deg": 321,
+   "size": [
+    0.4,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-027",
+   "kind": "wash_basin",
+   "pos": [
+    256.72,
+    566.2
+   ],
+   "rot_deg": 182,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-028",
+   "kind": "wash_basin",
+   "pos": [
+    327.71,
+    580.45
+   ],
+   "rot_deg": 262,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-029",
+   "kind": "wash_basin",
+   "pos": [
+    394.68,
+    516.19
+   ],
+   "rot_deg": 342,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-030",
+   "kind": "chair",
+   "pos": [
+    219.38,
+    563.83
+   ],
+   "rot_deg": 203,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-031",
+   "kind": "chair",
+   "pos": [
+    272.2,
+    529.91
+   ],
+   "rot_deg": 283,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-032",
+   "kind": "chair",
+   "pos": [
+    309.27,
+    561.38
+   ],
+   "rot_deg": 3,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-033",
+   "kind": "chair",
+   "pos": [
+    345.81,
+    515.1
+   ],
+   "rot_deg": 83,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-034",
+   "kind": "chair",
+   "pos": [
+    412.33,
+    457.77
+   ],
+   "rot_deg": 163,
+   "size": [
+    0.5,
+    0.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-035",
+   "kind": "bench",
+   "pos": [
+    226.29,
+    556.06
+   ],
+   "rot_deg": 238,
+   "size": [
+    1.8,
+    0.5,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-D-036",
+   "kind": "bench",
+   "pos": [
+    256.2,
+    557.32
+   ],
+   "rot_deg": 318,
+   "size": [
+    1.8,
+    0.5,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-D-039",
+   "kind": "flower_pot",
+   "pos": [
+    229.44,
+    568.8
+   ],
+   "rot_deg": 266,
+   "size": [
+    0.35,
+    0.35,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-040",
+   "kind": "flower_pot",
+   "pos": [
+    319.09,
+    566.66
+   ],
+   "rot_deg": 15,
+   "size": [
+    0.35,
+    0.35,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-041",
+   "kind": "flower_pot",
+   "pos": [
+    354.89,
+    509.01
+   ],
+   "rot_deg": 66,
+   "size": [
+    0.35,
+    0.35,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-042",
+   "kind": "flower_pot",
+   "pos": [
+    224.95,
+    555.59
+   ],
+   "rot_deg": 175,
+   "size": [
+    0.35,
+    0.35,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-043",
+   "kind": "flower_pot",
+   "pos": [
+    256.43,
+    555.91
+   ],
+   "rot_deg": 255,
+   "size": [
+    0.35,
+    0.35,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-044",
+   "kind": "compost_heap",
+   "pos": [
+    252.41,
+    575.09
+   ],
+   "rot_deg": 57,
+   "size": [
+    1.8,
+    1.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-045",
+   "kind": "compost_heap",
+   "pos": [
+    270.4,
+    516.95
+   ],
+   "rot_deg": 166,
+   "size": [
+    1.8,
+    1.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-046",
+   "kind": "compost_heap",
+   "pos": [
+    327.49,
+    579.75
+   ],
+   "rot_deg": 304,
+   "size": [
+    1.8,
+    1.5,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-047",
+   "kind": "wooden_pallet",
+   "pos": [
+    235.52,
+    557.69
+   ],
+   "rot_deg": 322,
+   "size": [
+    1.2,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-048",
+   "kind": "wooden_pallet",
+   "pos": [
+    256.2,
+    566.68
+   ],
+   "rot_deg": 42,
+   "size": [
+    1.2,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-049",
+   "kind": "wooden_pallet",
+   "pos": [
+    265.29,
+    565.94
+   ],
+   "rot_deg": 122,
+   "size": [
+    1.2,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-050",
+   "kind": "bucket",
+   "pos": [
+    311.1,
+    507.36
+   ],
+   "rot_deg": 343,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-051",
+   "kind": "bucket",
+   "pos": [
+    392.0,
+    478.96
+   ],
+   "rot_deg": 63,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-052",
+   "kind": "bucket",
+   "pos": [
+    315.11,
+    513.9
+   ],
+   "rot_deg": 44,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-053",
+   "kind": "bucket",
+   "pos": [
+    389.39,
+    475.5
+   ],
+   "rot_deg": 223,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-054",
+   "kind": "bucket",
+   "pos": [
+    312.6,
+    508.06
+   ],
+   "rot_deg": 1,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-055",
+   "kind": "rusted_wheel",
+   "pos": [
+    357.98,
+    572.12
+   ],
+   "rot_deg": 47,
+   "size": [
+    0.6,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-056",
+   "kind": "rusted_wheel",
+   "pos": [
+    388.69,
+    560.18
+   ],
+   "rot_deg": 98,
+   "size": [
+    0.6,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-057",
+   "kind": "tyre",
+   "pos": [
+    357.41,
+    572.54
+   ],
+   "rot_deg": 61,
+   "size": [
+    0.7,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-058",
+   "kind": "tyre",
+   "pos": [
+    388.18,
+    560.04
+   ],
+   "rot_deg": 112,
+   "size": [
+    0.7,
+    0.25,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-059",
+   "kind": "handcart",
+   "pos": [
+    234.86,
+    567.04
+   ],
+   "rot_deg": 46,
+   "size": [
+    1.4,
+    0.75,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-060",
+   "kind": "handcart",
+   "pos": [
+    241.02,
+    561.3
+   ],
+   "rot_deg": 184,
+   "size": [
+    1.4,
+    0.75,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-061",
+   "kind": "haystack",
+   "pos": [
+    367.6,
+    546.06
+   ],
+   "rot_deg": 234,
+   "size": [
+    2.8,
+    2.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-062",
+   "kind": "haystack",
+   "pos": [
+    369.16,
+    550.59
+   ],
+   "rot_deg": 227,
+   "size": [
+    2.8,
+    2.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-063",
+   "kind": "haystack",
+   "pos": [
+    373.95,
+    551.06
+   ],
+   "rot_deg": 249,
+   "size": [
+    2.8,
+    2.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-064",
+   "kind": "net_drying_rack",
+   "pos": [
+    419.09,
+    469.99
+   ],
+   "rot_deg": 110,
+   "size": [
+    2.5,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-065",
+   "kind": "fishing_bucket",
+   "pos": [
+    414.51,
+    459.33
+   ],
+   "rot_deg": 88,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-066",
+   "kind": "fishing_bucket",
+   "pos": [
+    416.94,
+    470.45
+   ],
+   "rot_deg": 168,
+   "size": [
+    0.3,
+    0.3,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-067",
+   "kind": "reed_clump",
+   "pos": [
+    245.42,
+    478.44
+   ],
+   "rot_deg": 102,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-068",
+   "kind": "reed_clump",
+   "pos": [
+    255.86,
+    486.56
+   ],
+   "rot_deg": 182,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-069",
+   "kind": "reed_clump",
+   "pos": [
+    277.22,
+    484.41
+   ],
+   "rot_deg": 262,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-070",
+   "kind": "reed_clump",
+   "pos": [
+    290.08,
+    472.32
+   ],
+   "rot_deg": 342,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-071",
+   "kind": "reed_clump",
+   "pos": [
+    289.85,
+    458.14
+   ],
+   "rot_deg": 62,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-072",
+   "kind": "reed_clump",
+   "pos": [
+    276.7,
+    447.95
+   ],
+   "rot_deg": 142,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-073",
+   "kind": "reed_clump",
+   "pos": [
+    257.39,
+    448.21
+   ],
+   "rot_deg": 222,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-074",
+   "kind": "reed_clump",
+   "pos": [
+    244.18,
+    459.66
+   ],
+   "rot_deg": 302,
+   "size": [
+    1.5,
+    1,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-075",
+   "kind": "rounded_rock",
+   "pos": [
+    223.51,
+    564.62
+   ],
+   "rot_deg": 158,
+   "size": [
+    1,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-076",
+   "kind": "rounded_rock",
+   "pos": [
+    247.29,
+    556.06
+   ],
+   "rot_deg": 238,
+   "size": [
+    1,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-D-077",
+   "kind": "rounded_rock",
+   "pos": [
+    277.28,
+    558.09
+   ],
+   "rot_deg": 347,
+   "size": [
+    1,
+    0.8,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H05-PIG",
+   "kind": "pig_spawn_marker",
+   "pos": [
+    272.58,
+    519.82
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.9,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H12-PIG",
+   "kind": "pig_spawn_marker",
+   "pos": [
+    381.68,
+    463.03
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.9,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H17-PIG",
+   "kind": "pig_spawn_marker",
+   "pos": [
+    372.06,
+    419.06
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.9,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-A-PIG-0",
+   "kind": "pig_spawn_marker",
+   "pos": [
+    340.0,
+    565.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.9,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-A-PIG-1",
+   "kind": "pig_spawn_marker",
+   "pos": [
+    344.0,
+    565.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.9,
+    0.45,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H03-CHICKEN-0",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    266.82,
+    568.54
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H03-CHICKEN-1",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    267.32,
+    568.54
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H03-CHICKEN-2",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    266.82,
+    569.04
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H03-CHICKEN-3",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    267.32,
+    569.04
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H11-CHICKEN-0",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    349.63,
+    466.75
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H11-CHICKEN-1",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    350.13,
+    466.75
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H11-CHICKEN-2",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    349.63,
+    467.25
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H11-CHICKEN-3",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    350.13,
+    467.25
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H16-CHICKEN-0",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    357.28,
+    420.62
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H16-CHICKEN-1",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    357.78,
+    420.62
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H16-CHICKEN-2",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    357.28,
+    421.12
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-H16-CHICKEN-3",
+   "kind": "chicken_spawn_marker",
+   "pos": [
+    357.78,
+    421.12
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.2,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-L-0",
+   "kind": "pole_lamp",
+   "pos": [
+    428.85,
+    473.41
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-L-1",
+   "kind": "pole_lamp",
+   "pos": [
+    306.08,
+    500.72
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-L-2",
+   "kind": "pole_lamp",
+   "pos": [
+    216.58,
+    545.42
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-L-3",
+   "kind": "pole_lamp",
+   "pos": [
+    375.31,
+    544.85
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-L-4",
+   "kind": "pole_lamp",
+   "pos": [
+    312.99,
+    435.55
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-L-5",
+   "kind": "pole_lamp",
+   "pos": [
+    403.29,
+    460.41
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-TREE",
+   "kind": "tree",
+   "pos": [
+    323.0,
+    507.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false,
+   "tree_type": "shade"
+  },
+  {
+   "id": "02-SQ-TABLE",
+   "kind": "gathering_table",
+   "pos": [
+    324.0,
+    505.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.0,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-TB1",
+   "kind": "bench",
+   "pos": [
+    324.0,
+    506.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    0.4,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-TB2",
+   "kind": "bench",
+   "pos": [
+    324.0,
+    504.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    0.4,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-B1",
+   "kind": "bench",
+   "pos": [
+    333.0,
+    510.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    2.0,
+    0.5,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-B2",
+   "kind": "bench",
+   "pos": [
+    337.5,
+    510.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    2.0,
+    0.5,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-B3",
+   "kind": "bench",
+   "pos": [
+    339.4,
+    505.0
+   ],
+   "rot_deg": 90,
+   "size": [
+    2.0,
+    0.5,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-L-6",
+   "kind": "pole_lamp",
+   "pos": [
+    323.39,
+    502.22
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.2,
+    0.2,
+    0
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "02-SQ-NPC-0",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    321.5,
+    505.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-SQ-NPC-1",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    326.5,
+    505.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-SQ-NPC-2",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    333.0,
+    509.1
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-SQ-NPC-3",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    337.5,
+    509.1
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-SQ-NPC-4",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    338.4,
+    505.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-SQ-NPC-5",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    330.0,
+    503.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "02-SQ-NPC-6",
+   "kind": "npc_gathering_marker",
+   "pos": [
+    328.0,
+    508.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.6,
+    0.6,
+    0
+   ],
+   "grip_anchor": false
+  }
+ ],
+ "zones": [
+  {
+   "id": "02-A-BASE-PAD",
+   "kind": "van_loading_pad",
+   "poly": [
+    [
+     251.8,
+     506.5
+    ],
+    [
+     261.0,
+     506.5
+    ],
+    [
+     261.0,
+     515.7
+    ],
+    [
+     251.8,
+     515.7
+    ]
+   ],
+   "surface": "gravel_SK1d",
+   "notes": "Preserved parking/loading pad; flat gravel; reversing allowed, not claimed as full U-turn area."
+  },
+  {
+   "id": "02-A-BASE-TURN",
+   "kind": "manoeuvring_apron",
+   "poly": [
+    [
+     248.9,
+     504.1
+    ],
+    [
+     263.9,
+     504.1
+    ],
+    [
+     263.9,
+     518.1
+    ],
+    [
+     248.9,
+     518.1
+    ]
+   ],
+   "surface": "gravel_SK1d",
+   "notes": "Open extension around fixed pad; broad multi-point manoeuvre, validate turning in Unity."
+  },
+  {
+   "id": "02-A-PEN",
+   "kind": "small_pig_pen",
+   "poly": [
+    [
+     336.6,
+     562.1
+    ],
+    [
+     350.6,
+     562.1
+    ],
+    [
+     350.6,
+     569.1
+    ],
+    [
+     336.6,
+     569.1
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Former cow-pen anchor reused for pigs. Low livestock rails only here; no fences between house plots."
+  },
+  {
+   "id": "02-A-POND",
+   "kind": "pond",
+   "poly": [
+    [
+     247.2,
+     477.4
+    ],
+    [
+     247.48,
+     477.67
+    ],
+    [
+     247.8,
+     478.01
+    ],
+    [
+     248.14,
+     478.42
+    ],
+    [
+     248.52,
+     478.89
+    ],
+    [
+     248.92,
+     479.39
+    ],
+    [
+     249.36,
+     479.93
+    ],
+    [
+     249.84,
+     480.49
+    ],
+    [
+     250.35,
+     481.06
+    ],
+    [
+     250.9,
+     481.63
+    ],
+    [
+     251.48,
+     482.18
+    ],
+    [
+     252.1,
+     482.71
+    ],
+    [
+     252.76,
+     483.21
+    ],
+    [
+     253.46,
+     483.65
+    ],
+    [
+     254.2,
+     484.04
+    ],
+    [
+     254.98,
+     484.36
+    ],
+    [
+     255.8,
+     484.6
+    ],
+    [
+     256.69,
+     484.78
+    ],
+    [
+     257.67,
+     484.93
+    ],
+    [
+     258.73,
+     485.04
+    ],
+    [
+     259.85,
+     485.13
+    ],
+    [
+     261.03,
+     485.18
+    ],
+    [
+     262.25,
+     485.2
+    ],
+    [
+     263.49,
+     485.19
+    ],
+    [
+     264.76,
+     485.15
+    ],
+    [
+     266.04,
+     485.07
+    ],
+    [
+     267.31,
+     484.97
+    ],
+    [
+     268.56,
+     484.82
+    ],
+    [
+     269.79,
+     484.65
+    ],
+    [
+     270.98,
+     484.44
+    ],
+    [
+     272.12,
+     484.19
+    ],
+    [
+     273.2,
+     483.91
+    ],
+    [
+     274.2,
+     483.6
+    ],
+    [
+     275.16,
+     483.24
+    ],
+    [
+     276.11,
+     482.83
+    ],
+    [
+     277.04,
+     482.37
+    ],
+    [
+     277.96,
+     481.87
+    ],
+    [
+     278.86,
+     481.32
+    ],
+    [
+     279.74,
+     480.74
+    ],
+    [
+     280.59,
+     480.14
+    ],
+    [
+     281.41,
+     479.5
+    ],
+    [
+     282.2,
+     478.84
+    ],
+    [
+     282.96,
+     478.17
+    ],
+    [
+     283.68,
+     477.48
+    ],
+    [
+     284.36,
+     476.78
+    ],
+    [
+     284.99,
+     476.08
+    ],
+    [
+     285.58,
+     475.38
+    ],
+    [
+     286.12,
+     474.69
+    ],
+    [
+     286.6,
+     474.0
+    ],
+    [
+     287.04,
+     473.31
+    ],
+    [
+     287.44,
+     472.59
+    ],
+    [
+     287.8,
+     471.84
+    ],
+    [
+     288.12,
+     471.09
+    ],
+    [
+     288.4,
+     470.31
+    ],
+    [
+     288.65,
+     469.53
+    ],
+    [
+     288.85,
+     468.73
+    ],
+    [
+     289.01,
+     467.94
+    ],
+    [
+     289.13,
+     467.14
+    ],
+    [
+     289.21,
+     466.34
+    ],
+    [
+     289.25,
+     465.55
+    ],
+    [
+     289.25,
+     464.77
+    ],
+    [
+     289.2,
+     464.0
+    ],
+    [
+     289.11,
+     463.25
+    ],
+    [
+     288.98,
+     462.51
+    ],
+    [
+     288.8,
+     461.8
+    ],
+    [
+     288.57,
+     461.1
+    ],
+    [
+     288.29,
+     460.38
+    ],
+    [
+     287.96,
+     459.67
+    ],
+    [
+     287.59,
+     458.95
+    ],
+    [
+     287.17,
+     458.24
+    ],
+    [
+     286.7,
+     457.53
+    ],
+    [
+     286.19,
+     456.83
+    ],
+    [
+     285.65,
+     456.15
+    ],
+    [
+     285.07,
+     455.48
+    ],
+    [
+     284.46,
+     454.84
+    ],
+    [
+     283.81,
+     454.22
+    ],
+    [
+     283.14,
+     453.62
+    ],
+    [
+     282.44,
+     453.06
+    ],
+    [
+     281.71,
+     452.54
+    ],
+    [
+     280.97,
+     452.05
+    ],
+    [
+     280.2,
+     451.6
+    ],
+    [
+     279.39,
+     451.18
+    ],
+    [
+     278.53,
+     450.78
+    ],
+    [
+     277.61,
+     450.39
+    ],
+    [
+     276.64,
+     450.02
+    ],
+    [
+     275.64,
+     449.68
+    ],
+    [
+     274.6,
+     449.36
+    ],
+    [
+     273.54,
+     449.07
+    ],
+    [
+     272.46,
+     448.81
+    ],
+    [
+     271.37,
+     448.59
+    ],
+    [
+     270.28,
+     448.4
+    ],
+    [
+     269.18,
+     448.25
+    ],
+    [
+     268.1,
+     448.15
+    ],
+    [
+     267.03,
+     448.08
+    ],
+    [
+     265.99,
+     448.07
+    ],
+    [
+     264.98,
+     448.11
+    ],
+    [
+     264.0,
+     448.2
+    ],
+    [
+     263.03,
+     448.35
+    ],
+    [
+     262.05,
+     448.56
+    ],
+    [
+     261.06,
+     448.83
+    ],
+    [
+     260.07,
+     449.15
+    ],
+    [
+     259.07,
+     449.51
+    ],
+    [
+     258.08,
+     449.92
+    ],
+    [
+     257.1,
+     450.37
+    ],
+    [
+     256.14,
+     450.85
+    ],
+    [
+     255.19,
+     451.36
+    ],
+    [
+     254.28,
+     451.9
+    ],
+    [
+     253.39,
+     452.45
+    ],
+    [
+     252.54,
+     453.03
+    ],
+    [
+     251.73,
+     453.61
+    ],
+    [
+     250.97,
+     454.21
+    ],
+    [
+     250.26,
+     454.8
+    ],
+    [
+     249.6,
+     455.4
+    ],
+    [
+     248.99,
+     456.01
+    ],
+    [
+     248.42,
+     456.67
+    ],
+    [
+     247.88,
+     457.35
+    ],
+    [
+     247.38,
+     458.06
+    ],
+    [
+     246.9,
+     458.8
+    ],
+    [
+     246.47,
+     459.56
+    ],
+    [
+     246.07,
+     460.33
+    ],
+    [
+     245.7,
+     461.11
+    ],
+    [
+     245.37,
+     461.9
+    ],
+    [
+     245.07,
+     462.69
+    ],
+    [
+     244.8,
+     463.48
+    ],
+    [
+     244.58,
+     464.25
+    ],
+    [
+     244.38,
+     465.02
+    ],
+    [
+     244.22,
+     465.77
+    ],
+    [
+     244.09,
+     466.5
+    ],
+    [
+     244.0,
+     467.2
+    ],
+    [
+     243.96,
+     467.9
+    ],
+    [
+     244.0,
+     468.62
+    ],
+    [
+     244.1,
+     469.36
+    ],
+    [
+     244.26,
+     470.1
+    ],
+    [
+     244.46,
+     470.85
+    ],
+    [
+     244.7,
+     471.59
+    ],
+    [
+     244.96,
+     472.32
+    ],
+    [
+     245.25,
+     473.04
+    ],
+    [
+     245.55,
+     473.73
+    ],
+    [
+     245.85,
+     474.39
+    ],
+    [
+     246.14,
+     475.02
+    ],
+    [
+     246.42,
+     475.6
+    ],
+    [
+     246.67,
+     476.14
+    ],
+    [
+     246.89,
+     476.62
+    ],
+    [
+     247.07,
+     477.05
+    ],
+    [
+     247.2,
+     477.4
+    ]
+   ],
+   "surface": "water",
+   "notes": "Exact source village pond polygon, not its rectangular bbox. Water blocks van travel."
+  },
+  {
+   "id": "02-A-FIELD1",
+   "kind": "cultivated_field",
+   "poly": [
+    [
+     399.0,
+     550.0
+    ],
+    [
+     438.0,
+     550.0
+    ],
+    [
+     438.0,
+     591.09
+    ],
+    [
+     399.0,
+     591.0
+    ]
+   ],
+   "surface": "field_plowed",
+   "notes": "Preserve established cultivated bounds; no houses or road surfaces placed inside."
+  },
+  {
+   "id": "02-A-FIELD2",
+   "kind": "cultivated_field",
+   "poly": [
+    [
+     214.0,
+     389.0
+    ],
+    [
+     273.0,
+     389.0
+    ],
+    [
+     273.0,
+     428.0
+    ],
+    [
+     214.0,
+     428.0
+    ]
+   ],
+   "surface": "field_plowed",
+   "notes": "Preserve established cultivated bounds; no houses or road surfaces placed inside."
+  },
+  {
+   "id": "02-U-CEMETERY",
+   "kind": "cemetery",
+   "poly": [
+    [
+     232.5,
+     580.5
+    ],
+    [
+     255.5,
+     580.5
+    ],
+    [
+     255.5,
+     595.5
+    ],
+    [
+     232.5,
+     595.5
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Placed east of church, wholly inside district; no new NPC category or quest implied."
+  },
+  {
+   "id": "02-U-ORCHARD",
+   "kind": "orchard",
+   "poly": [
+    [
+     269.0,
+     571.0
+    ],
+    [
+     314.0,
+     571.0
+    ],
+    [
+     314.0,
+     596.0
+    ],
+    [
+     269.0,
+     596.0
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Small old orchard; productive trees with irregular gaps, no apiary."
+  },
+  {
+   "id": "02-FISH-DOCK",
+   "kind": "fishing_platform",
+   "poly": [
+    [
+     478.5,
+     450.0
+    ],
+    [
+     483.5,
+     450.0
+    ],
+    [
+     483.5,
+     452.0
+    ],
+    [
+     478.5,
+     452.0
+    ]
+   ],
+   "surface": "boards_SK5a",
+   "notes": "River anchor. Final bank abutment is a 3D integration check; platform may project over water."
+  },
+  {
+   "id": "02-H01-Y1",
+   "kind": "flower_strip",
+   "poly": [
+    [
+     228.17,
+     570.29
+    ],
+    [
+     231.15,
+     570.7
+    ],
+    [
+     231.01,
+     571.69
+    ],
+    [
+     228.03,
+     571.28
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H01; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H02-Y1",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     246.5,
+     569.23
+    ],
+    [
+     252.47,
+     568.6
+    ],
+    [
+     252.88,
+     572.58
+    ],
+    [
+     246.91,
+     573.2
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H02; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H03-Y2",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     260.67,
+     564.26
+    ],
+    [
+     264.61,
+     564.96
+    ],
+    [
+     264.09,
+     567.91
+    ],
+    [
+     260.15,
+     567.22
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H03; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H04-Y3",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     269.48,
+     530.92
+    ],
+    [
+     273.42,
+     530.23
+    ],
+    [
+     273.94,
+     533.18
+    ],
+    [
+     270.0,
+     533.88
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H04; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H05-Y3",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     274.29,
+     513.69
+    ],
+    [
+     278.2,
+     514.52
+    ],
+    [
+     277.57,
+     517.45
+    ],
+    [
+     273.66,
+     516.62
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H05; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H06-Y1",
+   "kind": "flower_strip",
+   "poly": [
+    [
+     314.76,
+     565.52
+    ],
+    [
+     317.75,
+     565.31
+    ],
+    [
+     317.82,
+     566.3
+    ],
+    [
+     314.83,
+     566.51
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H06; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H07-Y1",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     320.87,
+     583.2
+    ],
+    [
+     326.8,
+     584.13
+    ],
+    [
+     326.17,
+     588.09
+    ],
+    [
+     320.24,
+     587.15
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H07; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H08-Y2",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     367.32,
+     552.97
+    ],
+    [
+     371.27,
+     553.59
+    ],
+    [
+     370.8,
+     556.55
+    ],
+    [
+     366.85,
+     555.93
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H08; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H09-Y1",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     384.66,
+     512.58
+    ],
+    [
+     390.61,
+     511.85
+    ],
+    [
+     391.1,
+     515.82
+    ],
+    [
+     385.15,
+     516.55
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H09; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H10-Y1",
+   "kind": "flower_strip",
+   "poly": [
+    [
+     352.52,
+     506.45
+    ],
+    [
+     355.52,
+     506.55
+    ],
+    [
+     355.48,
+     507.55
+    ],
+    [
+     352.48,
+     507.45
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H10; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H11-Y2",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     342.71,
+     466.6
+    ],
+    [
+     347.54,
+     467.9
+    ],
+    [
+     346.77,
+     470.8
+    ],
+    [
+     341.94,
+     469.5
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H11; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H12-Y3",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     370.7,
+     466.94
+    ],
+    [
+     374.69,
+     466.66
+    ],
+    [
+     374.9,
+     469.66
+    ],
+    [
+     370.91,
+     469.94
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H12; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H13-Y3",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     412.24,
+     455.92
+    ],
+    [
+     416.2,
+     455.37
+    ],
+    [
+     416.62,
+     458.34
+    ],
+    [
+     412.66,
+     458.89
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H13; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H14-Y1",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     336.08,
+     451.79
+    ],
+    [
+     342.03,
+     452.52
+    ],
+    [
+     341.54,
+     456.49
+    ],
+    [
+     335.59,
+     455.76
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H14; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H15-Y3",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     347.7,
+     438.13
+    ],
+    [
+     351.63,
+     437.37
+    ],
+    [
+     352.2,
+     440.31
+    ],
+    [
+     348.27,
+     441.07
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H15; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H16-Y2",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     350.59,
+     418.2
+    ],
+    [
+     354.47,
+     419.17
+    ],
+    [
+     353.75,
+     422.08
+    ],
+    [
+     349.87,
+     421.11
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H16; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H17-Y3",
+   "kind": "vegetable_garden",
+   "poly": [
+    [
+     372.08,
+     422.83
+    ],
+    [
+     376.03,
+     422.21
+    ],
+    [
+     376.5,
+     425.17
+    ],
+    [
+     372.55,
+     425.79
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Belongs to 02-H17; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H18-Y2",
+   "kind": "open_working_grass",
+   "poly": [
+    [
+     425.5,
+     403.58
+    ],
+    [
+     429.4,
+     404.48
+    ],
+    [
+     428.72,
+     407.4
+    ],
+    [
+     424.82,
+     406.5
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H18; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-H19-Y3",
+   "kind": "overgrown_beds",
+   "poly": [
+    [
+     276.75,
+     437.68
+    ],
+    [
+     280.66,
+     436.85
+    ],
+    [
+     281.29,
+     439.78
+    ],
+    [
+     277.38,
+     440.61
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Belongs to 02-H19; unfenced, keep routes through yard. "
+  },
+  {
+   "id": "02-D-037",
+   "kind": "flower_strip",
+   "poly": [
+    [
+     227.83,
+     556.92
+    ],
+    [
+     226.9,
+     554.07
+    ],
+    [
+     227.85,
+     553.76
+    ],
+    [
+     228.78,
+     556.61
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Uneven care, some yards have none."
+  },
+  {
+   "id": "02-D-038",
+   "kind": "flower_strip",
+   "poly": [
+    [
+     255.62,
+     558.97
+    ],
+    [
+     258.27,
+     557.56
+    ],
+    [
+     258.74,
+     558.45
+    ],
+    [
+     256.09,
+     559.86
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "Uneven care, some yards have none."
+  },
+  {
+   "id": "02-D-078",
+   "kind": "mud_patch",
+   "poly": [
+    [
+     267.0,
+     526.18
+    ],
+    [
+     264.77,
+     528.19
+    ],
+    [
+     263.44,
+     526.7
+    ],
+    [
+     265.67,
+     524.69
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig/tractor areas; ground visual, no invented slow debuff."
+  },
+  {
+   "id": "02-D-079",
+   "kind": "mud_patch",
+   "poly": [
+    [
+     384.15,
+     461.38
+    ],
+    [
+     387.06,
+     460.66
+    ],
+    [
+     387.55,
+     462.6
+    ],
+    [
+     384.64,
+     463.32
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig/tractor areas; ground visual, no invented slow debuff."
+  },
+  {
+   "id": "02-D-080",
+   "kind": "mud_patch",
+   "poly": [
+    [
+     370.54,
+     423.11
+    ],
+    [
+     368.86,
+     425.59
+    ],
+    [
+     367.2,
+     424.47
+    ],
+    [
+     368.88,
+     421.99
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig/tractor areas; ground visual, no invented slow debuff."
+  },
+  {
+   "id": "02-D-081",
+   "kind": "mud_patch",
+   "poly": [
+    [
+     270.82,
+     522.21
+    ],
+    [
+     268.34,
+     523.89
+    ],
+    [
+     267.22,
+     522.23
+    ],
+    [
+     269.7,
+     520.55
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig/tractor areas; ground visual, no invented slow debuff."
+  },
+  {
+   "id": "02-D-082",
+   "kind": "mud_patch",
+   "poly": [
+    [
+     379.01,
+     461.71
+    ],
+    [
+     376.93,
+     459.56
+    ],
+    [
+     378.37,
+     458.17
+    ],
+    [
+     380.45,
+     460.32
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig/tractor areas; ground visual, no invented slow debuff."
+  },
+  {
+   "id": "02-D-083",
+   "kind": "mud_patch",
+   "poly": [
+    [
+     369.43,
+     425.62
+    ],
+    [
+     367.93,
+     428.22
+    ],
+    [
+     366.19,
+     427.22
+    ],
+    [
+     367.69,
+     424.62
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig/tractor areas; ground visual, no invented slow debuff."
+  },
+  {
+   "id": "02-D-084",
+   "kind": "wheel_rut",
+   "poly": [
+    [
+     358.41,
+     568.0
+    ],
+    [
+     362.09,
+     566.44
+    ],
+    [
+     362.79,
+     568.1
+    ],
+    [
+     359.11,
+     569.66
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Soft ground near field entrances."
+  },
+  {
+   "id": "02-D-085",
+   "kind": "wheel_rut",
+   "poly": [
+    [
+     383.77,
+     552.97
+    ],
+    [
+     381.25,
+     549.86
+    ],
+    [
+     382.65,
+     548.73
+    ],
+    [
+     385.17,
+     551.84
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Soft ground near field entrances."
+  },
+  {
+   "id": "02-D-086",
+   "kind": "wheel_rut",
+   "poly": [
+    [
+     357.19,
+     571.39
+    ],
+    [
+     357.95,
+     575.32
+    ],
+    [
+     356.19,
+     575.66
+    ],
+    [
+     355.43,
+     571.74
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Soft ground near field entrances."
+  },
+  {
+   "id": "02-D-087",
+   "kind": "wheel_rut",
+   "poly": [
+    [
+     386.07,
+     556.91
+    ],
+    [
+     382.87,
+     554.5
+    ],
+    [
+     383.95,
+     553.07
+    ],
+    [
+     387.15,
+     555.48
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Soft ground near field entrances."
+  },
+  {
+   "id": "02-D-088",
+   "kind": "wheel_rut",
+   "poly": [
+    [
+     355.02,
+     567.73
+    ],
+    [
+     354.88,
+     563.73
+    ],
+    [
+     356.68,
+     563.67
+    ],
+    [
+     356.82,
+     567.67
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Soft ground near field entrances."
+  },
+  {
+   "id": "02-D-089",
+   "kind": "wheel_rut",
+   "poly": [
+    [
+     392.13,
+     558.01
+    ],
+    [
+     395.96,
+     559.18
+    ],
+    [
+     395.43,
+     560.9
+    ],
+    [
+     391.6,
+     559.74
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Soft ground near field entrances."
+  },
+  {
+   "id": "02-D-090",
+   "kind": "dung_patch",
+   "poly": [
+    [
+     272.15,
+     517.96
+    ],
+    [
+     272.07,
+     517.37
+    ],
+    [
+     272.47,
+     517.32
+    ],
+    [
+     272.54,
+     517.91
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig shelters only, modest stylized dressing."
+  },
+  {
+   "id": "02-D-091",
+   "kind": "dung_patch",
+   "poly": [
+    [
+     384.27,
+     463.37
+    ],
+    [
+     384.86,
+     463.5
+    ],
+    [
+     384.77,
+     463.89
+    ],
+    [
+     384.19,
+     463.76
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig shelters only, modest stylized dressing."
+  },
+  {
+   "id": "02-D-092",
+   "kind": "dung_patch",
+   "poly": [
+    [
+     373.1,
+     420.66
+    ],
+    [
+     373.37,
+     421.2
+    ],
+    [
+     373.02,
+     421.38
+    ],
+    [
+     372.75,
+     420.84
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig shelters only, modest stylized dressing."
+  },
+  {
+   "id": "02-D-093",
+   "kind": "dung_patch",
+   "poly": [
+    [
+     270.03,
+     520.38
+    ],
+    [
+     269.44,
+     520.46
+    ],
+    [
+     269.38,
+     520.06
+    ],
+    [
+     269.98,
+     519.98
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Pig shelters only, modest stylized dressing."
+  },
+  {
+   "id": "02-SQ",
+   "kind": "village_square",
+   "poly": [
+    [
+     337.0,
+     499.5
+    ],
+    [
+     337.93,
+     499.65
+    ],
+    [
+     338.76,
+     500.07
+    ],
+    [
+     339.43,
+     500.74
+    ],
+    [
+     339.85,
+     501.57
+    ],
+    [
+     340.0,
+     502.5
+    ],
+    [
+     340.0,
+     508.5
+    ],
+    [
+     339.85,
+     509.43
+    ],
+    [
+     339.43,
+     510.26
+    ],
+    [
+     338.76,
+     510.93
+    ],
+    [
+     337.93,
+     511.35
+    ],
+    [
+     337.0,
+     511.5
+    ],
+    [
+     321.0,
+     511.5
+    ],
+    [
+     320.07,
+     511.35
+    ],
+    [
+     319.24,
+     510.93
+    ],
+    [
+     318.57,
+     510.26
+    ],
+    [
+     318.15,
+     509.43
+    ],
+    [
+     318.0,
+     508.5
+    ],
+    [
+     318.0,
+     502.5
+    ],
+    [
+     318.15,
+     501.57
+    ],
+    [
+     318.57,
+     500.74
+    ],
+    [
+     319.24,
+     500.07
+    ],
+    [
+     320.07,
+     499.65
+    ],
+    [
+     321.0,
+     499.5
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "Small village square where NPCs gather: packed earth with worn grass edges, open to the main road on the south; no monument, no shop, no playground. Van can drive across it."
+  },
+  {
+   "id": "02-R-main",
+   "kind": "street",
+   "polyline": [
+    [
+     460.0,
+     466.0
+    ],
+    [
+     442.0,
+     473.0
+    ],
+    [
+     420.0,
+     482.0
+    ],
+    [
+     396.0,
+     487.0
+    ],
+    [
+     365.0,
+     489.0
+    ],
+    [
+     341.0,
+     491.0
+    ],
+    [
+     319.0,
+     498.0
+    ],
+    [
+     300.0,
+     510.0
+    ],
+    [
+     294.0,
+     530.0
+    ],
+    [
+     294.0,
+     548.0
+    ],
+    [
+     276.0,
+     552.0
+    ],
+    [
+     250.0,
+     550.0
+    ],
+    [
+     228.0,
+     549.0
+    ],
+    [
+     217.0,
+     550.0
+    ]
+   ],
+   "width_m": 5.4,
+   "road_class": "dirt_main",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-north",
+   "kind": "street",
+   "polyline": [
+    [
+     294.0,
+     548.0
+    ],
+    [
+     318.0,
+     541.0
+    ],
+    [
+     341.0,
+     540.0
+    ],
+    [
+     372.0,
+     540.0
+    ],
+    [
+     400.0,
+     542.0
+    ],
+    [
+     435.0,
+     546.0
+    ],
+    [
+     458.0,
+     545.0
+    ]
+   ],
+   "width_m": 5.4,
+   "road_class": "dirt_main",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-south",
+   "kind": "street",
+   "polyline": [
+    [
+     319.0,
+     498.0
+    ],
+    [
+     320.0,
+     478.0
+    ],
+    [
+     314.0,
+     457.0
+    ],
+    [
+     307.0,
+     431.0
+    ],
+    [
+     302.0,
+     410.0
+    ],
+    [
+     305.0,
+     394.0
+    ],
+    [
+     304.0,
+     375.0
+    ]
+   ],
+   "width_m": 5.4,
+   "road_class": "dirt_main",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-loop",
+   "kind": "street",
+   "polyline": [
+    [
+     396.0,
+     487.0
+    ],
+    [
+     398.0,
+     462.0
+    ],
+    [
+     405.0,
+     439.0
+    ],
+    [
+     404.0,
+     417.0
+    ],
+    [
+     400.0,
+     396.0
+    ],
+    [
+     393.0,
+     382.0
+    ],
+    [
+     363.0,
+     385.0
+    ],
+    [
+     334.0,
+     390.0
+    ],
+    [
+     305.0,
+     394.0
+    ]
+   ],
+   "width_m": 4.2,
+   "road_class": "dirt_local",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-base",
+   "kind": "street",
+   "polyline": [
+    [
+     300.0,
+     510.0
+    ],
+    [
+     285.0,
+     505.0
+    ],
+    [
+     269.0,
+     506.0
+    ],
+    [
+     263.0,
+     511.0
+    ],
+    [
+     256.4,
+     511.1
+    ]
+   ],
+   "width_m": 4.2,
+   "road_class": "dirt_access",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-church",
+   "kind": "street",
+   "polyline": [
+    [
+     217.0,
+     550.0
+    ],
+    [
+     213.0,
+     563.0
+    ],
+    [
+     213.0,
+     578.0
+    ]
+   ],
+   "width_m": 3.6,
+   "road_class": "dirt_access",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-field09",
+   "kind": "street",
+   "polyline": [
+    [
+     305.0,
+     394.0
+    ],
+    [
+     290.0,
+     396.0
+    ],
+    [
+     278.0,
+     400.0
+    ]
+   ],
+   "width_m": 3.6,
+   "road_class": "farm_track",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  },
+  {
+   "id": "02-R-tower",
+   "kind": "street",
+   "polyline": [
+    [
+     420.0,
+     482.0
+    ],
+    [
+     413.0,
+     497.0
+    ],
+    [
+     414.0,
+     508.0
+    ],
+    [
+     408.0,
+     513.0
+    ]
+   ],
+   "width_m": 3.6,
+   "road_class": "service_track",
+   "surface": "dirt_SK1b",
+   "notes": "two ruts with grass in the middle, puddles (v02 §5)"
+  }
+ ],
+ "notes": "Plan v05 = v04 objects without wires/drainage/terrain blobs; utility poles kept as props (v05 still draws poles, wires removed). Terrain bumps +1.5..+3.8 m / dip -1.4 m are in terrain (HAMLET_LAYOUT terrain[]), not here. Grandpa yard dressing = Fedya scene i09 (barrel, paint cans, red rocking chair) — exact layout OPEN (handoff §16)."
+}
