@@ -54,6 +54,14 @@ namespace OnlyVolunteers.Operation.Stage1
         public float corpseGradeSeconds = 40f;
         public int earlyOverdoseLoss = 2;
         [Header("Incisions (marker-local metres)")]
+        [Tooltip("v04: one shared belly opening; the original v01/v02 assets keep their per-organ guides.")]
+        public bool sharedAbdomen;
+        public float abdomenCutLength = 0.32f;
+        public Vector2 abdomenHalfSize = new Vector2(0.145f, 0.19f);
+        [Tooltip("v04: centre of the opening from the midpoint of the two kidney markers: x along the table toward the head, " +
+                 "y up (just above the highest belly skin, so the skin never shows through the opening).")]
+        public Vector2 abdomenOffset = new Vector2(0.045f, 0.006f);
+        public Vector2 liverLoopRadius = new Vector2(0.050f, 0.049f);
         public float neatTolerance = 0.02f;
         public float cutTolerance = 0.05f;
         [Tooltip("A stroke may start this far (in incision lengths) before the start point...")]
@@ -102,6 +110,11 @@ namespace OnlyVolunteers.Operation.Stage1
         public float cameraFieldOfView = 50f;
         public float cameraBlendSeconds = 0.35f;
         public float maxZoom = 0.62f;
+        [Tooltip("v04: the same local wheel can back out from the close belly framing to reach the leg straps.")]
+        public float minZoom;
+        [Tooltip("v04: table-local camera offset at minZoom (fully wheeled out): up and toward the feet, so the whole " +
+                 "patient, all five straps and the tray are on screen. Zero keeps the v01-v03 behaviour.")]
+        public Vector3 wideCameraOffset;
         public float magnifierSize = 220f;   // v01 field
         public float magnifierZoom = 2.2f;   // v01 field
         [Tooltip("Use cameraPosition/cameraLookAt (table-local) instead of the table's CameraAnchor. The props v02 anchor sees the " +

@@ -17,7 +17,7 @@ namespace OnlyVolunteers.Operation.Stage1
     /// The player's walking and mouse-look (legacy-input KCC) are set directly on the motor/yaw/pitch. Every check reads
     /// the authoritative server state. Started by OperationTestHooks.Runner.Begin(name) (PlayMode test) or by
     /// -ops-scenario &lt;name&gt; (standalone two-process runs).</summary>
-    public sealed class OperationNetworkProbe : MonoBehaviour, IOperationScenarioRunner
+    public sealed partial class OperationNetworkProbe : MonoBehaviour, IOperationScenarioRunner
     {
         private readonly List<string> log = new();
         public bool Busy { get; private set; }
@@ -225,10 +225,10 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             started = Time.time;
             output = Argument("-ops-evidence");
-            if (string.IsNullOrEmpty(output)) output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Working", "Reviews", "Operations", "stage1_v3", "run_" + name));
+            if (string.IsNullOrEmpty(output)) output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Working", "Reviews", "Operations", "stage1_v4", "run_" + name));
+            output = FreshEvidenceFolder(output);
             Directory.CreateDirectory(output);
-            if (File.Exists(Path.Combine(output, "run-log.txt"))) File.Delete(Path.Combine(output, "run-log.txt"));
-            OperationTestHooks.SaveSlot = "operations_stage1_test_v02.json";
+            OperationTestHooks.SaveSlot = Path.Combine(output, "operations_stage1_test_v04.json");
             if (name != "natural-rolls") OperationTestHooks.ForcedRoll = 0.99f;
             SetupDevices();
             var session = NetworkSession.Active;
@@ -245,6 +245,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (player == null || table == null) { Check(false, "startup (player/table spawned)"); Finish(); yield break; }
             view = table.GetComponent<OperationTableView>();
             kcc = player.GetComponent<KccFirstPersonInput>();
+            if (!homeKnown) { tableHome = new Pose(table.transform.position, table.transform.rotation); homeKnown = true; }
             yield return new WaitForSeconds(0.8f);
             SetupCapture();
             mPos = new Vector2(captureWidth * 0.5f, captureHeight * 0.5f); PushMouse();
@@ -257,6 +258,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 "rotated" => Rotated(),
                 "hud720" => Hud720(),
                 "evidence" => Evidence(),
+                "v04-loop" => V04Loop(),
+                "v04-guide-edges" => V04GuideEdges(),
+                "v04-throw" => V04Throw(),
                 "net-host" => NetHost(),
                 "net-client" => NetClient(),
                 _ => null
@@ -264,7 +268,8 @@ namespace OnlyVolunteers.Operation.Stage1
             if (body == null) Check(false, "unknown scenario " + name);
             else
             {
-                recording = name == "loop" || name.StartsWith("net-");
+                recording = name == "loop" || name == "v04-loop" || name.StartsWith("net-");
+                if (name == "net-client" && table.Tuning.sharedAbdomen) StartCoroutine(V04RemoteCarry());
                 if (recording) StartCoroutine(Record());
                 yield return body;
                 recording = false;
@@ -278,9 +283,8 @@ namespace OnlyVolunteers.Operation.Stage1
             string root = output;
             foreach (var sub in new[] { "loop", "edges", "rotated", "hud720" })
             {
-                output = Path.Combine(Path.GetDirectoryName(root), "run_" + sub);
+                output = FreshEvidenceFolder(Path.Combine(Path.GetDirectoryName(root), "run_" + sub));
                 Directory.CreateDirectory(output);
-                if (File.Exists(Path.Combine(output, "run-log.txt"))) File.Delete(Path.Combine(output, "run-log.txt"));
                 int before = failures;
                 scenario = sub;
                 recording = sub == "loop";
@@ -354,6 +358,7 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             yield return new WaitForSeconds(0.6f);
             Shot("02_carry");
+            Line($"TABLE during the carry at {table.transform.position} frozen={table.Frozen} (brakes on while the patient is carried near it)");
             yield return Button(false);
             yield return WaitFor(() => S.onTable, 3f, "released over the pad -> auto-align starts");
             float alignStart = Time.time;
@@ -377,20 +382,35 @@ namespace OnlyVolunteers.Operation.Stage1
 
         private IEnumerator Straps(bool all)
         {
+            bool wheeledOut = false;
             for (int i = 0; i < 5; i++)
             {
                 if (!all && i != 4) continue;
                 if (S.restraints[i]) continue;
+                if (!wheeledOut && table.Tuning.minZoom < 0f && !StrapOnScreen(i))
+                {
+                    // v04 close top framing: the leg straps are beyond the bottom edge, so wheel out like a player.
+                    for (int k = 0; k < 8; k++) yield return Scroll(-120f);
+                    yield return new WaitForSeconds(0.45f);
+                    wheeledOut = true;
+                }
                 Collider hit = null;
                 foreach (var tag in table.GetComponentsInChildren<OperationTargetTag>()) if (tag.kind == TargetKind.Strap && tag.index == i) hit = tag.GetComponent<Collider>();
                 if (hit == null) { Check(false, "strap collider " + i); continue; }
                 var b = hit.bounds;
-                yield return AimAt(t => t.kind == TargetKind.Strap && t.index == i, new[] { b.center, b.center + table.transform.up * b.extents.y * 0.5f, b.center + table.transform.forward * 0.02f, b.center - table.transform.forward * 0.02f }, "strap " + i);
+                var candidates = new List<Vector3> { b.center, b.center + table.transform.up * b.extents.y * 0.5f, b.center + table.transform.forward * 0.02f, b.center - table.transform.forward * 0.02f };
+                candidates.AddRange(StrapCandidates(b)); // v04 top camera: the centre of an open strap can lie under a tray tool
+                yield return AimAt(t => t.kind == TargetKind.Strap && t.index == i, candidates, "strap " + i);
                 if (!aimed) { Check(false, "strap " + i + " found under the cursor"); continue; }
                 if (i == 0) Shot("03_strap_hover");
                 yield return Click();
                 yield return WaitFor(() => S.restraints[i], 1.5f, "strap " + OperationText.Straps[i] + " closed by click");
                 yield return new WaitForSeconds(0.3f);
+            }
+            if (wheeledOut)
+            {
+                for (int k = 0; k < 6; k++) yield return Scroll(120f);
+                yield return new WaitForSeconds(0.45f);
             }
         }
 
@@ -454,6 +474,11 @@ namespace OnlyVolunteers.Operation.Stage1
 
         private IEnumerator Cut(int organ, bool sloppy = false, bool capture = false)
         {
+            if (table.Tuning.sharedAbdomen)
+            {
+                if (!S.zoneOpened) yield return CutShared(OperationAbdomenGeometry.ZoneGuide, sloppy, capture);
+                yield break;
+            }
             if (view.LocalSlot != ToolSlot.Scalpel) yield return Select(Key.Digit4, ToolSlot.Scalpel);
             var tuning = table.Tuning;
             Vector3 n = table.OrganNormal(organ);
@@ -479,6 +504,8 @@ namespace OnlyVolunteers.Operation.Stage1
 
         private IEnumerator Snip(int organ, bool capture = false)
         {
+            if (table.Tuning.sharedAbdomen && organ == 2)
+            { if (!S.organs[2].Released) yield return CutShared(2, false, capture); yield break; }
             if (view.LocalSlot != ToolSlot.Scalpel) yield return Select(Key.Digit4, ToolSlot.Scalpel);
             yield return new WaitForSeconds(0.35f);
             if (capture) Shot("09_opened_cords");
@@ -510,7 +537,7 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 float t = (Time.time - t0) / seconds;
                 mPos = from + new Vector2(0, dist * t); PushMouse();
-                if (capture && !shot && t > 0.45f) { Shot("10_pulling"); shot = true; }
+                if (capture && !shot && t > 0.45f) { Shot(table.Tuning.sharedAbdomen ? "10_pulling_organ" + organ : "10_pulling"); shot = true; }
                 yield return null;
             }
             float end = Time.time + 1f; while (!S.organs[organ].removed && Time.time < end) { mPos = from + new Vector2(0, dist); PushMouse(); yield return null; }
@@ -526,7 +553,7 @@ namespace OnlyVolunteers.Operation.Stage1
             var trayCenter = table.TrayAnchor != null ? table.TrayAnchor.position + table.transform.up * 0.7f : pose.position;
             yield return AimAt(t => t.kind == TargetKind.Tray || t.kind == TargetKind.BloodBag || t.kind == TargetKind.Item, new[] { pose.position + pose.up * 0.02f, pose.position, pose.position - table.transform.forward * 0.04f, pose.position + table.transform.right * 0.04f, trayCenter }, "tray slot " + target);
             if (!aimed) { Check(false, "tray found under the cursor"); yield break; }
-            if (capture) Shot("11_organ_card_held");
+            if (capture) Shot(table.Tuning.sharedAbdomen ? "11_organ_card_held_organ" + organ : "11_organ_card_held");
             yield return Click();
             yield return WaitFor(() => player.GetComponent<OnlyVolunteers.Inventory.NetworkInventory>().PhysicalItem == null, 1.5f, "click tray -> organ placed");
             yield return new WaitForSeconds(0.6f);
@@ -755,6 +782,7 @@ namespace OnlyVolunteers.Operation.Stage1
 
         private IEnumerator Rotated()
         {
+            yield return TableHome(); // v04: earlier scenarios' ragdoll carries may have nudged the free gurney
             yield return Tap(Key.F10); yield return new WaitForSeconds(0.8f);
             var body = table.GetComponent<Rigidbody>();
             Vector3 p = table.transform.position + new Vector3(1.4f, 0f, 0.6f);
@@ -783,7 +811,8 @@ namespace OnlyVolunteers.Operation.Stage1
             Vector3 moved = table.transform.position + table.transform.forward * 0.8f;
             tb.position = moved; table.transform.position = moved;
             yield return new WaitForSeconds(0.3f);
-            Check(Vector3.Distance(table.PatientBody.transform.position, table.RestPose.position) < 0.01f, "the patient rides along when the gurney moves");
+            float ride = Vector3.Distance(table.PatientBody.transform.position, table.RestPose.position);
+            Check(ride < 0.01f, $"the patient rides along when the gurney moves ({ride:F3} m, table {table.transform.position}, v={tb.linearVelocity.magnitude:F2})");
         }
 
         // ---------- v03 animation evidence (patient states through the real table camera) ----------

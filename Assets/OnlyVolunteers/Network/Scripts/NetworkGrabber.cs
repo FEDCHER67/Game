@@ -152,7 +152,7 @@ namespace OnlyVolunteers.Network
                 profile.AcquisitionLayers, QueryTriggerInteraction.Ignore))
             {
                 var networkBody = hit.rigidbody != null
-                    ? hit.rigidbody.GetComponent<NetworkPhysicsBody>() : null;
+                    ? hit.rigidbody.GetComponentInParent<NetworkPhysicsBody>() : null;
                 Debug.Log($"[OV Grab] client hit={hit.collider.name}, rigidbody={hit.rigidbody?.name}, " +
                     $"networkBody={networkBody?.name}, spawned={networkBody != null && networkBody.NetworkObject.IsSpawned}");
                 if (networkBody != null && networkBody.NetworkObject.IsSpawned)
@@ -230,7 +230,7 @@ namespace OnlyVolunteers.Network
             Ray ray = new Ray(origin, direction.normalized);
             bool hitBody = Physics.Raycast(ray, out RaycastHit hit, profile.AcquireDistance,
                 profile.AcquisitionLayers, QueryTriggerInteraction.Ignore);
-            if (!hitBody || hit.rigidbody != body.Body)
+            if (!hitBody || hit.rigidbody == null || hit.rigidbody.GetComponentInParent<NetworkPhysicsBody>() != body)
             {
                 Debug.Log($"[OV Grab] server ray rejected: hit={hitBody}, collider={(hitBody ? hit.collider.name : "none")}, " +
                     $"rigidbody={(hitBody ? hit.rigidbody?.name : "none")}, requested={body.name}");

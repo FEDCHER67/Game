@@ -44,5 +44,8 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
         [UnityTest, Order(2), Timeout(400000)] public IEnumerator EdgeCases_EscapePanicRescueYankDirectCutToolReturnOverdoseF10() => Run("edges", 380f);
         [UnityTest, Order(3), Timeout(300000)] public IEnumerator RotatedAndMovedTable_TableLocalValidation() => Run("rotated", 280f);
         [UnityTest, Order(4), Timeout(120000)] public IEnumerator Hud_1280x720_Capture() => Run("hud720", 100f);
+        [UnityTest, Order(5), Timeout(400000)] public IEnumerator V04_RagdollCarrySharedBellyKidneysFromBelowLiverLoopAndTray() => Run("v04-loop", 360f);
+        [UnityTest, Order(6), Timeout(180000)] public IEnumerator V04_SharedGuideWrongStartResumeAndReentry() => Run("v04-guide-edges", 150f);
+        [UnityTest, Order(7), Timeout(120000)] public IEnumerator V04_ThrowLandAndRegrabRagdollWithRealInput() => Run("v04-throw", 100f);
     }
 }

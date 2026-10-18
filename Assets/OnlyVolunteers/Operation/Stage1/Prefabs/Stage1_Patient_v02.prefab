@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3369419046427743101}
   - component: {fileID: 5400613923757294625}
   - component: {fileID: 4921242015361247557}
+  - component: {fileID: 3761811468655860835}
+  - component: {fileID: 2672085919710314846}
   m_Layer: 0
   m_Name: Stage1_Patient_v02
   m_TagString: Untagged
@@ -242,6 +244,44 @@ MonoBehaviour:
   physicsCollider: {fileID: 3369419046427743101}
   Twitch: 0
   HeadShake: 0
+--- !u!114 &3761811468655860835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834793117486628785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303ac3a291627ad42a0c72d5f1293edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Characters.Npc.NpcRagdoll
+  _rig: {fileID: 0}
+  _bones: []
+  _boxBones: []
+  _bodies: []
+  _joints: []
+  _parts: []
+  _capsules: []
+  _boxes: []
+  _colliders: []
+  _active: 0
+  _grabbable: 0
+--- !u!114 &2672085919710314846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834793117486628785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb52bd25102349242a7145734b9b40fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Operation.Stage1.OperationPatientRagdoll
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8413450119318983109}
+  _networkObjectCache: {fileID: 0}
 --- !u!1001 &7535962587859351077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -301,6 +341,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6030971390bc7345a087bbe86915890, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6064834438602677134}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6030971390bc7345a087bbe86915890, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 293103520160059132}
   m_SourcePrefab: {fileID: 100100000, guid: e6030971390bc7345a087bbe86915890, type: 3}
 --- !u!4 &2105243520113946513 stripped
 Transform:
@@ -344,6 +387,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &293103520160059132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7229535080122698612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799461c1818bdce4b9a4bb0e43b66d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Characters.Npc.NpcRig
+  Ragdoll: {fileID: 11400000, guid: 9a4b6a8e3e5a81442b3267f9b6641f1c, type: 2}
+  Animator: {fileID: 6064834438602677134}
 --- !u!4 &7365637487694901595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1057534811342079870, guid: e6030971390bc7345a087bbe86915890, type: 3}

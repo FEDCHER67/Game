@@ -119,6 +119,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (active || player == null || table.State == null) return;
             if (Vector3.Distance(player.MotorPosition, table.transform.position) > table.Tuning.tableReach) return;
             active = true; restoring = false; blend = 0f; wasdHeld = 0f; wasdFrames = 0; zoom = zoomTarget = 0f;
+            if (table.Tuning.sharedAbdomen) focusLocal = table.Tuning.cameraLookAt;
             table.RequestJoin(true);
             priorMove = input.MovementLocked; priorLook = input.LookSuspended; fov0 = cam.fieldOfView;
             input.MovementLocked = true; input.LookSuspended = true;
@@ -179,8 +180,16 @@ namespace OnlyVolunteers.Operation.Stage1
             float scroll = mouse.scroll.ReadValue().y;
             if (Mathf.Abs(scroll) > 0.01f)
             {
-                if (scroll > 0f) { focusLocal = table.transform.InverseTransformPoint(hover.point); zoomTarget = Mathf.Min(table.Tuning.maxZoom, zoomTarget + 0.18f); }
-                else zoomTarget = Mathf.Max(0f, zoomTarget - 0.18f);
+                if (scroll > 0f)
+                {
+                    if (zoomTarget >= 0f) focusLocal = table.transform.InverseTransformPoint(hover.point);
+                    zoomTarget = zoomTarget < 0f ? Mathf.Min(0f, zoomTarget + 0.18f) : Mathf.Min(table.Tuning.maxZoom, zoomTarget + 0.18f);
+                }
+                else
+                {
+                    zoomTarget = Mathf.Max(table.Tuning.minZoom, zoomTarget - 0.18f);
+                    if (zoomTarget < 0f) focusLocal = table.Tuning.cameraLookAt;
+                }
             }
 
             if (key.digit1Key.wasPressedThisFrame) Select(ToolSlot.Hands);
@@ -240,8 +249,9 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (strokeOrgan < 0 || !table.AnatomyReady || table.State == null) return;
             Vector3 local = table.SiteLocal(strokeOrgan, hover.point);
-            Vector2 g = OperationGeometry.GuideCoordinates(table.Tuning, strokeOrgan, local);
-            if (Mathf.Abs(g.y) > table.Tuning.cutTolerance && table.State.organs[strokeOrgan].cut < 1f)
+            Vector2 g = table.GuideCoordinates(strokeOrgan, local);
+            float tolerance = table.Tuning.sharedAbdomen ? OperationAbdomenGeometry.Tolerance(table.Tuning, strokeOrgan) : table.Tuning.cutTolerance;
+            if (Mathf.Abs(g.y) > tolerance && table.GuideProgress(strokeOrgan) < 1f)
             {
                 if (offLineDots.Count == 0 || Vector3.Distance(offLineDots[offLineDots.Count - 1], hover.point) > 0.006f)
                 { offLineDots.Add(hover.point); if (offLineDots.Count > 80) offLineDots.RemoveAt(0); }
@@ -265,7 +275,8 @@ namespace OnlyVolunteers.Operation.Stage1
             if (stroke && strokeOrgan >= 0 && table.AnatomyReady)
             {
                 // During a stroke the blade stays on the incision's own skin plane (precise, never blocked by an arm).
-                var plane = new Plane(table.OrganNormal(strokeOrgan), table.SitePoint(strokeOrgan, Vector3.zero));
+                var plane = new Plane(table.OrganNormal(strokeOrgan), table.Tuning.sharedAbdomen
+                    ? table.GuidePosition(strokeOrgan, 0f) : table.SitePoint(strokeOrgan, Vector3.zero));
                 if (plane.Raycast(ray, out float d))
                 {
                     hover.hit = true; hover.point = ray.GetPoint(d); hover.normal = plane.normal;
@@ -425,7 +436,11 @@ namespace OnlyVolunteers.Operation.Stage1
             zoom = Mathf.SmoothDamp(zoom, zoomTarget, ref zoomVelocity, 0.12f, Mathf.Infinity, Time.unscaledDeltaTime);
             var anchor = table.CameraPose;
             Vector3 focus = table.transform.TransformPoint(focusLocal);
-            Vector3 position = anchor.position + (focus - anchor.position) * zoom;
+            // Wheel in: toward the cursor point. Wheel out (v04, negative zoom): up and toward the feet, for the leg straps.
+            var tuning = table.Tuning;
+            Vector3 position = zoom < 0f && tuning.minZoom < 0f && tuning.wideCameraOffset != Vector3.zero
+                ? anchor.position + table.transform.TransformVector(tuning.wideCameraOffset) * (zoom / tuning.minZoom)
+                : anchor.position + (focus - anchor.position) * zoom;
             float t = blend * blend * (3f - 2f * blend);
             // The KCC wrote the eye pose earlier this frame; blend from it.
             cam.transform.SetPositionAndRotation(Vector3.Lerp(cam.transform.position, position, t), Quaternion.Slerp(cam.transform.rotation, anchor.rotation, t));

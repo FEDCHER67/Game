@@ -33,6 +33,11 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool fatal;
         public int directCuts;
         public int yanks;
+        /// <summary>v04: progress around the liver's attachment loop (individual organ state).</summary>
+        public float connectionCut;
+        public bool connectionSloppyApplied;
+        /// <summary>v04: the way round the liver loop is cut (+1 counter-clockwise on the top camera, -1 clockwise, 0 not yet).</summary>
+        public int connectionDirection;
         public string outputId = "";
         public int Grade => Mathf.Max(0, intrinsicGrade - damage);
         public bool Opened => cut >= 1f;
@@ -67,6 +72,13 @@ namespace OnlyVolunteers.Operation.Stage1
         public int extracted;
         public int kidneysExtracted;
         public OrganState[] organs;
+        /// <summary>v04: one prepared abdomen opening shared by all three organ anchors.</summary>
+        public bool zoneOpened;
+        public float zoneCut;
+        public float zoneNeatCut;
+        public float zoneSloppyCut;
+        public float zoneOffLine;
+        public bool zoneSloppyApplied;
         public int cueSequence;
         public PatientCue lastCue;
         public bool Sleeping => alive && sleepRemaining > 0f;
@@ -107,7 +119,7 @@ namespace OnlyVolunteers.Operation.Stage1
     }
 
     /// <summary>Server-owned rules. No input, network, physics or file IO; the registered PatientRecord owns State.</summary>
-    public sealed class OperationRules
+    public sealed partial class OperationRules
     {
         public OperationState State { get; }
         private readonly OperationTuning tuning;
@@ -320,6 +332,7 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool SnipCord(int organIndex, int cord, float seconds)
         {
             if (organIndex < 0 || organIndex >= State.organs.Length || !Finite(seconds) || seconds <= 0) return false;
+            if (tuning.sharedAbdomen && (!State.zoneOpened || organIndex == 2)) return false;
             var organ = State.organs[organIndex];
             if (organ.removed || organ.cut < 1 || cord < 0 || cord >= organ.connections.Length || organ.connections[cord] >= 1) return false;
             organ.connections[cord] = Mathf.Min(1, organ.connections[cord] + seconds / tuning.connectionSeconds);
@@ -332,6 +345,7 @@ namespace OnlyVolunteers.Operation.Stage1
         // ---------- pull / extraction ----------
         public bool Pull(int index, float sharedTarget, int holders, float seconds, ref bool damageLatched)
         {
+            if (tuning.sharedAbdomen && !State.zoneOpened) return false;
             var organ = State.organs[index];
             if (organ.removed || !organ.Released || organ.cut < 1 || seconds <= 0 || !Finite(sharedTarget)) return false;
             if (holders == 0) { organ.pull = Mathf.MoveTowards(organ.pull, 0, seconds * tuning.springSpeed); damageLatched = false; return false; }
@@ -344,6 +358,7 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         public bool Extract(int index, float random)
         {
+            if (tuning.sharedAbdomen && !State.zoneOpened) return false;
             var organ = State.organs[index];
             if (organ.removed || organ.cut < 1 || !organ.Released || organ.pull < tuning.pullDistance) return false;
             organ.removed = true; organ.outputId = State.patientId + "/organ/" + index;
@@ -392,6 +407,15 @@ namespace OnlyVolunteers.Operation.Stage1
         /// <summary>Cord c of an organ: from its attachment on the organ to the rim of the opening (marker-local metres).</summary>
         public static void Cord(OperationTuning tuning, int organ, int cord, out Vector3 attach, out Vector3 rim)
         {
+            if (tuning.sharedAbdomen && organ < 2)
+            {
+                // The cords leave the underside of the kidney and hang below its lower end, inside the shared opening
+                // and above its floor, so the top camera reaches them without clicking through the kidney.
+                float side = cord == 0 ? -1f : 1f;
+                attach = new Vector3(side * 0.009f, -tuning.organHalfSize[organ].y * 0.5f, tuning.organLift - 0.006f);
+                rim = new Vector3(side * 0.019f, -tuning.organHalfSize[organ].y - 0.026f, tuning.organLift - 0.003f);
+                return;
+            }
             int count = Mathf.Max(1, tuning.connections[organ]);
             float angle = (cord + 0.5f) / count * Mathf.PI * 2f + tuning.cordPhase[organ] * Mathf.Deg2Rad;
             var dir = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f);

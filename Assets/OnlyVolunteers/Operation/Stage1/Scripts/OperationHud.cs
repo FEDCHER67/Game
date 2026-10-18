@@ -451,6 +451,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 var o = s.organs[i]; string text; Color bg;
                 if (o.removed) { text = OperationText.OrganShort[i] + " · вынута"; bg = new Color(0.25f, 0.55f, 1f, 0.35f); if (i == 2) text = "Печень · вынута"; }
                 else if (o.Opened && o.Released) { text = OperationText.OrganShort[i] + " · тяни!"; bg = new Color(0.35f, 0.85f, 0.4f, 0.35f); }
+                else if (o.Opened && i == 2 && tuning.sharedAbdomen) { text = "Печень · обвести " + Mathf.RoundToInt(o.connectionCut * 100f) + "%"; bg = new Color(1f, 0.75f, 0.2f, 0.3f); }
                 else if (o.Opened) { text = OperationText.OrganShort[i] + " · связки " + (o.connections.Length - o.CordsLeft) + "/" + o.connections.Length; bg = new Color(1f, 0.75f, 0.2f, 0.3f); }
                 else if (o.cut > 0.01f) { text = OperationText.OrganShort[i] + " · разрез " + Mathf.RoundToInt(o.cut * 100f) + "%"; bg = new Color(1f, 0.5f, 0.3f, 0.3f); }
                 else { text = OperationText.OrganShort[i] + " · цела"; bg = new Color(1, 1, 1, 0.08f); }
@@ -634,7 +635,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 case OpHint.SyringeNotFull: tone = HintTone.Warn; return "Сначала набери полный шприц крови [3]";
                 case OpHint.NoBags: tone = HintTone.Warn; return "Этот пакет уже занят";
                 case OpHint.StartAtDot: tone = HintTone.Warn; return "Начни от зелёной точки и веди по пунктиру";
-                case OpHint.CutCordsFirst: tone = HintTone.Warn; return "Сначала перережь связки скальпелем [4]";
+                case OpHint.CutCordsFirst: tone = HintTone.Warn; return arg == 2 && table.Tuning.sharedAbdomen ? "Сначала обведи печень скальпелем [4]" : "Сначала перережь связки скальпелем [4]";
                 case OpHint.NoBloodLeft: return "Крови больше нет";
                 case OpHint.WrongSpot: tone = HintTone.Warn; return "Не сюда";
                 case OpHint.StockEmpty: return "Наркоз кончился (F10 — новый набор)";
@@ -684,17 +685,19 @@ namespace OnlyVolunteers.Operation.Stage1
                     var o = s.organs[t.index];
                     if (slot == ToolSlot.Scalpel) { tone = HintTone.Bad; return "Это орган! Не тыкай скальпелем"; }
                     if (slot != ToolSlot.Hands) { tone = HintTone.Warn; return "Доставай руками [1]"; }
-                    if (!o.Released) { tone = HintTone.Warn; return "Сначала перережь связки [4]"; }
+                    if (!o.Released) { tone = HintTone.Warn; return t.index == 2 && tuning.sharedAbdomen ? "Сначала обведи печень скальпелем [4]" : "Сначала перережь связки [4]"; }
                     if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
                     tone = HintTone.Good; return "Зажми ЛКМ и тяни вверх — плавно";
                 }
                 case TargetKind.Incision:
                 {
-                    var o = s.organs[t.index];
+                    float progress = table.GuideProgress(t.index);
                     if (slot != ToolSlot.Scalpel) { tone = HintTone.Warn; return "Разрез · возьми скальпель [4]"; }
                     if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
-                    if (view.Stroking) { tone = HintTone.Good; return "Веди по пунктиру… " + Mathf.RoundToInt(o.cut * 100f) + "%"; }
-                    tone = HintTone.Good; return o.cut > 0.01f ? "Зажми ЛКМ там, где остановился, и веди дальше" : "Зажми ЛКМ у зелёной точки и веди по пунктиру";
+                    bool loop = tuning.sharedAbdomen && t.index == 2;
+                    if (view.Stroking) { tone = HintTone.Good; return (loop ? "Обводи по кругу… " : "Веди по пунктиру… ") + Mathf.RoundToInt(progress * 100f) + "%"; }
+                    tone = HintTone.Good; return progress > 0.01f ? "Зажми ЛКМ у зелёной точки и веди дальше" :
+                        loop ? "Зажми ЛКМ у зелёной точки и обведи печень по кругу" : "Зажми ЛКМ у зелёной точки и веди по пунктиру";
                 }
                 case TargetKind.Body:
                 {

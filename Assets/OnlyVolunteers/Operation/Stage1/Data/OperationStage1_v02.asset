@@ -48,6 +48,11 @@ MonoBehaviour:
   corpseGraceSeconds: 45
   corpseGradeSeconds: 40
   earlyOverdoseLoss: 2
+  sharedAbdomen: 1
+  abdomenCutLength: 0.26
+  abdomenHalfSize: {x: 0.14, y: 0.15}
+  abdomenOffset: {x: 0.074, y: 0.014}
+  liverLoopRadius: {x: 0.06, y: 0.052}
   neatTolerance: 0.02
   cutTolerance: 0.05
   cutStartSlack: 0.2
@@ -65,10 +70,10 @@ MonoBehaviour:
   - {x: 0.027, y: 0.0455}
   - {x: 0.029, y: 0.0455}
   organHalfSize:
-  - {x: 0.018, y: 0.031}
-  - {x: 0.018, y: 0.031}
+  - {x: 0.02, y: 0.035}
+  - {x: 0.02, y: 0.035}
   - {x: 0.021, y: 0.032}
-  organLift: 0.01
+  organLift: 0.028
   cordOverhang: 0.026
   cordPhase:
   - 40
@@ -100,11 +105,13 @@ MonoBehaviour:
   cameraFieldOfView: 50
   cameraBlendSeconds: 0.35
   maxZoom: 0.62
+  minZoom: -1
+  wideCameraOffset: {x: 0, y: 1.2, z: -0.5}
   magnifierSize: 220
   magnifierZoom: 2.2
   overrideCameraAnchor: 1
-  cameraPosition: {x: -1.2, y: 2.45, z: 0.1}
-  cameraLookAt: {x: -0.08, y: 0.55, z: -0.12}
+  cameraPosition: {x: 0.14, y: 2.03, z: 0.425}
+  cameraLookAt: {x: 0.14, y: 0.89, z: 0.425}
   patientRest: {x: 0, y: 0.66, z: 0}
   workSurface: {x: 0, y: 0.655, z: 0}
   trayPosition: {x: 0.66, y: 0, z: 0.05}

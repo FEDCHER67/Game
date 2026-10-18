@@ -60,6 +60,15 @@ namespace OnlyVolunteers.Network
             }
         }
         public bool HasHolder => ActiveHolderCount > 0;
+        /// <summary>Current physical hand point, also used by the operation patient's bone-to-handle joint.</summary>
+        public Vector3 GrabPoint
+        {
+            get
+            {
+                foreach (var hold in holds) if (hold != null) return transform.TransformPoint(hold.LocalPoint);
+                return transform.position;
+            }
+        }
 
         private void Awake()
         {

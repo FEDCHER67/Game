@@ -73,6 +73,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private float noAlignUntil;
         private bool falling;
         private float fallEndsAt;
+        public OperationAbdomen Abdomen { get; private set; }
 
         public OperationTuning Tuning => tuning;
         public OperationState State => IsServerInitialized ? rules?.State : mirror?.patient;
@@ -163,6 +164,8 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             get
             {
+                if (tuning.sharedAbdomen)
+                    return new Pose(transform.TransformPoint(tuning.cameraPosition), Quaternion.LookRotation(-transform.up, transform.forward));
                 var anchor = CameraAnchor;
                 if (anchor != null && !tuning.overrideCameraAnchor) return new Pose(anchor.position, anchor.rotation);
                 Vector3 p = transform.TransformPoint(tuning.cameraPosition);
@@ -191,11 +194,13 @@ namespace OnlyVolunteers.Operation.Stage1
         }
 
         // ---------- geometry ----------
-        public Vector3 SitePoint(int organ, Vector3 metres) => Anchors.Point(organ, metres);
-        public Vector3 SiteLocal(int organ, Vector3 world) => Anchors.LocalMetres(organ, world);
+        public Vector3 SitePoint(int organ, Vector3 metres) => tuning.sharedAbdomen && organ == OperationAbdomenGeometry.ZoneGuide ? Abdomen.Point(organ, metres) : Anchors.Point(organ, metres);
+        public Vector3 SiteLocal(int organ, Vector3 world) => tuning.sharedAbdomen && organ == OperationAbdomenGeometry.ZoneGuide ? Abdomen.Local(organ, world) : Anchors.LocalMetres(organ, world);
         public Vector3 OrganPosition(int i) => Anchors.Point(i, new Vector3(0, 0, tuning.organLift));
-        public Vector3 OrganNormal(int i) => Anchors.Normal(i);
-        public Vector3 GuidePosition(int i, float along) => Anchors.Point(i, OperationGeometry.GuidePoint(tuning, i, along));
+        public Vector3 OrganNormal(int i) => tuning.sharedAbdomen && i == OperationAbdomenGeometry.ZoneGuide ? transform.up : Anchors.Normal(i);
+        public Vector3 GuidePosition(int i, float along) => SitePoint(i, tuning.sharedAbdomen ? OperationAbdomenGeometry.Point(tuning, i, along) : OperationGeometry.GuidePoint(tuning, i, along));
+        public Vector2 GuideCoordinates(int i, Vector3 local) => tuning.sharedAbdomen ? Abdomen.Coordinates(i, local) : OperationGeometry.GuideCoordinates(tuning, i, local);
+        public float GuideProgress(int i) => tuning.sharedAbdomen ? Abdomen.Progress(i) : State.organs[i].cut;
         public Vector3 ConnectionPosition(int i, int c) { OperationGeometry.Cord(tuning, i, c, out var a, out var r); return Anchors.Point(i, (a + r) * 0.5f); }
 
         /// <summary>Where a held tool hangs for a cursor point: its tip just above the surface.</summary>
@@ -260,6 +265,10 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             snapshot.OnChange += Changed;
             tableBody = GetComponent<Rigidbody>();
+            if (tuning != null && tuning.sharedAbdomen)
+            {
+                Abdomen = gameObject.AddComponent<OperationAbdomen>(); Abdomen.Bind(this);
+            }
         }
         private void OnDestroy() => snapshot.OnChange -= Changed;
 
@@ -307,6 +316,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             record = registry != null ? registry.EnsureOperationPatient(world.patient.patientId, world.patient) : null;
             rules = new OperationRules(record != null ? record.Operation : world.patient, tuning);
+            rules.MigrateSharedOpening();
             world.patient = rules.State;
             rules.Cue += Hook;
             alignStartSet = false;
@@ -719,6 +729,8 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (patient == null) return;
             bool kinematic = rules.State.onTable || falling;
+            var ragdoll = patient.GetComponent<OperationPatientRagdoll>();
+            if (ragdoll != null) ragdoll.ServerTableState(kinematic);
             if (!kinematic) { patient.Body.position = patient.transform.position; patient.Body.rotation = patient.transform.rotation; }
             patient.Body.isKinematic = kinematic; patient.Body.useGravity = !kinematic;
             var rig = patient.GetComponent<OperationPatientRig>();
@@ -733,7 +745,10 @@ namespace OnlyVolunteers.Operation.Stage1
                 if (pair.Value.player == null || pair.Value.player.Owner == null || !pair.Value.player.Owner.IsActive || !InReach(pair.Value.player)) removedParticipants.Add(pair.Key);
             foreach (int id in removedParticipants) { ReleaseParticipant(participants[id], false); participants.Remove(id); }
 
-            bool freeze = participants.Count > 0;
+            // v04: brakes on while someone carries the patient near the gurney too (the dangling ragdoll would shove it).
+            bool loading = patient != null && patient.HasHolder && !rules.State.onTable &&
+                Vector3.Distance(patient.transform.position, transform.position) < tuning.tableReach;
+            bool freeze = participants.Count > 0 || loading;
             if (tableBody != null && freeze != frozen)
             {
                 frozen = freeze;
@@ -745,13 +760,21 @@ namespace OnlyVolunteers.Operation.Stage1
             if (patient != null && !s.onTable && !falling && !patient.HasHolder && Time.time >= noAlignUntil)
             {
                 Vector3 local = transform.InverseTransformPoint(patient.transform.position + transform.up * 0.1f);
+                // Retain the approved release-over-pad check. A settled ragdoll can also arrive with its handle
+                // beside the pad while its actual body rests on it.
+                Vector3 alignmentPoint = patient.transform.position;
+                var ragdoll = patient.GetComponent<OperationPatientRagdoll>();
+                if (!OperationGeometry.OverPad(local, tuning) && ragdoll != null && ragdoll.Active)
+                { alignmentPoint = ragdoll.PlacementPoint; local = transform.InverseTransformPoint(alignmentPoint); }
                 if (OperationGeometry.OverPad(local, tuning) && patient.Body.linearVelocity.magnitude < 4f &&
-                    rules.BeginAlignment(Vector3.Distance(patient.transform.position, RestPose.position)))
+                    rules.BeginAlignment(Vector3.Distance(alignmentPoint, RestPose.position)))
                 {
+                    // v04: the ragdoll hands the body back first (it re-seats the root under the lying body), then the
+                    // slide starts from there.
+                    ApplyPatientPhysics();
                     alignFromLocal = transform.InverseTransformPoint(patient.transform.position);
                     alignFromRotation = Quaternion.Inverse(transform.rotation) * patient.transform.rotation;
                     alignStartSet = true;
-                    ApplyPatientPhysics();
                     if (record != null && record.Stage < PatientStage.AtBase) registry.Move(record, PatientStage.AtBase);
                 }
             }
@@ -868,6 +891,8 @@ namespace OnlyVolunteers.Operation.Stage1
         private void Scalpel(Participant p, float dt)
         {
             var t = p.pressTarget;
+            if (t.kind == TargetKind.Incision && tuning.sharedAbdomen)
+            { if (Abdomen.IsGuide(t.index)) SharedStroke(p, t.index, dt); return; }
             if (t.kind == TargetKind.Incision && t.index < 3) { Stroke(p, t.index, dt); return; }
             if (t.kind == TargetKind.Cord && t.index < 3)
             {
@@ -930,6 +955,28 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             ctxOrgan = -1;
             p.lastPoint = p.point;
+        }
+        private void SharedStroke(Participant p, int guide, float dt)
+        {
+            if (p.strokeRejected || !AnatomyReady) return;
+            if (!rules.CanOperate(false)) { if (p.pressStart) Hint(p, OpHint.Squirming); return; }
+            Vector3 local = SiteLocal(guide, transform.TransformPoint(p.point));
+            if (Mathf.Abs(local.z) > tuning.incisionSurfaceTolerance) return;
+            Vector2 g = GuideCoordinates(guide, local);
+            if (p.strokeOrgan != guide)
+            {
+                if (!rules.CanBeginSharedGuide(guide, g.x, g.y))
+                {
+                    p.strokeRejected = true; Hint(p, OpHint.StartAtDot, guide);
+                    Debug.Log($"[OPS] STROKE refused guide={guide} along={g.x:F3} offset={g.y:F3} z={local.z:F3} progress={rules.GuideProgress(guide):F2}");
+                    return;
+                }
+                p.strokeOrgan = guide; p.lastPoint = p.point;
+            }
+            float travel = Vector3.Distance(p.point, p.lastPoint) / OperationAbdomenGeometry.GuideLength(tuning, guide);
+            ctxOrgan = guide == OperationAbdomenGeometry.ZoneGuide ? -1 : guide;
+            rules.CutSharedGuide(guide, g.x, g.y, dt, travel);
+            ctxOrgan = -1; p.lastPoint = p.point;
         }
         private void Hands(Participant p)
         {

@@ -471,15 +471,15 @@ namespace OnlyVolunteers.Operation.Stage1
             bool visible = table.PatientObject != null;
             bool opened = organ.Opened;
             bool intact = !opened && !organ.removed;
-            s.guide.gameObject.SetActive(visible && intact && state.onTable);
-            if (s.cover != null) s.cover.SetActive(visible && intact);
-            s.incisionCollider.enabled = intact && state.onTable;
+            s.guide.gameObject.SetActive(visible && intact && state.onTable && !tuning.sharedAbdomen);
+            if (s.cover != null) s.cover.SetActive(visible && intact && !tuning.sharedAbdomen);
+            s.incisionCollider.enabled = intact && state.onTable && !tuning.sharedAbdomen;
             if (intact)
             {
                 float pulse = 0.022f + Mathf.Sin(Time.time * 6f) * 0.006f;
                 s.start.localScale = new Vector3(pulse, pulse, 0.006f);
             }
-            s.trail.gameObject.SetActive(visible && organ.cut > 0.01f && !opened);
+            s.trail.gameObject.SetActive(visible && organ.cut > 0.01f && !opened && !tuning.sharedAbdomen);
             if (organ.cut > 0.01f && !opened)
             {
                 Vector3 a = OperationGeometry.GuidePoint(tuning, i, 0f), b = OperationGeometry.GuidePoint(tuning, i, Mathf.Clamp01(organ.cut));
@@ -489,7 +489,7 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             if (opened && !s.wasOpened) { s.openedAt = Time.time; }
             s.wasOpened = opened;
-            s.opening.gameObject.SetActive(visible && opened);
+            s.opening.gameObject.SetActive(visible && opened && !tuning.sharedAbdomen);
             if (opened)
             {
                 float t = Mathf.Clamp01((Time.time - s.openedAt) / 0.28f);
@@ -514,7 +514,7 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             for (int c = 0; c < s.cords.Length; c++)
             {
-                bool live = organVisible && organ.connections[c] < 1f;
+                bool live = organVisible && organ.connections[c] < 1f && !(tuning.sharedAbdomen && i == 2);
                 s.cords[c].gameObject.SetActive(live);
                 if (live)
                 {
