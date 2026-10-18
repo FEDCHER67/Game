@@ -16,7 +16,7 @@ import os
 import numpy as np
 from scipy import ndimage
 
-from common import OUT, WORK, W, H, GROUND, grid, poly_mask, polyline_dist, load_json, save_json, resample
+from common import OUT, REV, WORK, W, H, GROUND, grid, poly_mask, polyline_dist, load_json, save_json, resample
 
 BASE_Y, HEIGHT_RANGE, RES = -15.0, 135.0, 2049
 rng = np.random.default_rng(76)
@@ -83,17 +83,36 @@ def main():
     h_diag = (92.0 - 36.0 * smoothstep((xs - 470.0) / 102.0)) * np.clip(1 - d / 44.0, 0, 1) ** 1.12 * (0.8 + 0.2 * ridged)
     d = polyline_dist(F['right_ridge']['crest'], xs, ys, 60)
     h_r2 = 32.0 * np.clip(1 - d / 24.0, 0, 1) ** 1.1
-    h = np.where(land | mt, np.maximum(h, GROUND + np.maximum(mtn, np.maximum(h_diag, h_r2))), h)
+    mtv = np.maximum(mtn, np.maximum(h_diag, h_r2))
+    # v02 fix: lift only where a mountain / ridge term exists (v01 lifted ALL land to >= GROUND, which flattened the
+    # 0.6 -> 5 m coast ramp and the beach slope into a ~5 m cliff along every shore)
+    k = np.clip(mtv / 2.0, 0, 1)                                       # full v01 lift once the ridge adds >= 2 m, fades out below
+    h = np.where(land | mt, h + (np.maximum(h, GROUND + mtv) - h) * k, h)
     # --- grey sharp rocks (Quiet Valley, cornice cliffs, Tramduro shore): 6–14 m crags, impassable
     rock = ndimage.binary_opening(ndimage.binary_closing(cls == 6, iterations=2), iterations=2) & ~mt
     lab, n = ndimage.label(rock)
     rock = np.isin(lab, [i + 1 for i, s_ in enumerate(ndimage.sum(rock, lab, range(1, n + 1))) if s_ > 250])   # crags, not tree outlines
+    tram_base = None
+    if REV != 'v01' and os.path.exists(os.path.join(OUT, 'districts', 'tramduro_v76.json')):
+        # v02: Tramduro's grey concrete military yard and the lawn are not crags (v01 turned the whole south half into rock);
+        # the sharp rocks stay along the shore only (handoff v02 §8.10: "острые скалы 5–10 м по берегам")
+        tz = load_json('districts/tramduro_v76.json')['zones']
+        inner = np.zeros((H, W), bool)
+        for z in tz:
+            if z.get('kind') in ('continuous_concrete_base', 'coastal_presidential_lawn') and len(z.get('poly') or []) >= 3:
+                inner |= poly_mask(z['poly'], xs, ys)
+                if z['kind'] == 'continuous_concrete_base':
+                    tram_base = [tuple(q) for q in z['poly']]
+        rock &= ~ndimage.binary_erosion(inner, iterations=2)
     d_rock = ndimage.distance_transform_edt(rock)
     h = np.where(rock, np.maximum(h, GROUND + 4 + np.minimum(d_rock * 1.6, 10) + 2 * fbm(xs, ys, 8, 2, 7)), h)
     # --- hill B 50 m (crest hw 58, outer contour ~ +40 m) and the +8 m knoll
     d = polyline_dist(F['hill_B']['crest'], xs, ys, 140)
     hillB = 41.0 * smoothstep(1 - d / 110.0) ** 1.15 + 4.0 * smoothstep(1 - d / 40.0)          # GROUND + 45 = 50 m peak
-    h = np.where(land, np.maximum(h, GROUND + hillB * (1 + 0.025 * fbm(xs, ys, 30, 2, 8))), h)
+    # v02 fix: v01 shape where the hill adds >= 2 m, faded out below (v01: max(h, GROUND + 0) lifted all land to 5 m)
+    hb = GROUND + hillB * (1 + 0.025 * fbm(xs, ys, 30, 2, 8))
+    k = np.clip(hillB / 2.0, 0, 1)
+    h = np.where(land, h + (np.maximum(h, hb) - h) * k, h)
     cx, cy = F['chill_knoll']['centre']
     h += 8.0 * smoothstep(1 - np.hypot(xs - cx, ys - cy) / 34.0) ** 1.4
     # --- Elite hill 44 m: superellipse plateau +40..+44, slopes to ground / sea
@@ -101,15 +120,20 @@ def main():
     ea, eb = F['elite']['half']
     rho = ((np.abs(xs - ex) / ea) ** 4 + (np.abs(ys - ey) / eb) ** 4) ** 0.25
     plateau = 40.0 + 4.0 * (0.5 + 0.5 * fbm(xs, ys, 26, 2, 9))
-    cone = GROUND + 39.0 * smoothstep(1 - (rho - 1.0) / 0.75)
+    lift = 39.0 * smoothstep(1 - (rho - 1.0) / 0.75)
+    cone = GROUND + lift
     elite = np.where(rho <= 1.0, plateau, cone)
-    h = np.where(rho < 1.9, np.maximum(h, np.where(land, elite, np.minimum(elite, h + 0.0))), h)
+    # v02 fix: v01 shape where the cone adds >= 2 m, faded out below (v01: GROUND floor = 5 m wall at the City / Elite beach)
+    k = np.where(rho <= 1.0, 1.0, np.clip(lift / 2.0, 0, 1))
+    h = np.where(rho < 1.9, np.where(land, h + (np.maximum(h, elite) - h) * k, np.minimum(np.maximum(h, elite), h + 0.0)), h)
     # --- district pads (flat; Rough = Downtown height, Rough ground Y = 0 relative to the pad)
     pads = {'downtown': ([(790, 228), (1268, 228), (1268, 470), (790, 470)], GROUND),
             'rough': ([(655, 668), (1006, 668), (1006, 905), (655, 905)], GROUND),
             'construction': ([(528, 352), (700, 352), (700, 492), (528, 492)], None),
             'port': ([(1172, 596), (1356, 596), (1356, 684), (1172, 684)], 2.5),
             'quiet_valley_lab': ([(560, 225), (620, 225), (620, 265), (560, 265)], None)}
+    if tram_base:
+        pads['tramduro_base'] = (tram_base, None)                       # v02: flat concrete yard (hangar, vehicles, helipad)
     padw = np.zeros((H, W), np.float32)
     for name, (poly, hh) in pads.items():
         m = poly_mask(poly, xs, ys)
@@ -123,15 +147,21 @@ def main():
     water = load_json('water_v76.json')['bodies']
     river = np.zeros((H, W), bool)
     lakes = []
+    not_water = np.zeros((H, W), bool)                                       # v02: bodies dropped by s02b (legend, labels, roofs)
     for b in water:
         if 'outline' not in b:
             continue
         m = poly_mask(b['outline'], xs, ys)
-        if b['kind'] == 'river':
+        if b['kind'] == 'dropped':
+            not_water |= ndimage.binary_dilation(m, iterations=3)
+        elif b['kind'] == 'river':
             river |= m
         else:
             lakes.append((b, m))
-    river |= ndimage.binary_closing(cls == 2, iterations=2) & (xs > 440) & (xs < 690) & (ys > 80) & (ys < 760) & (padw < 0.5)
+    wc = (cls == 2) & ~not_water
+    lab_w, n_w = ndimage.label(wc, structure=np.ones((3, 3)))
+    big_w = np.isin(lab_w, [i + 1 for i, s_ in enumerate(ndimage.sum(wc, lab_w, range(1, n_w + 1))) if s_ >= 120])   # v02: no label letters
+    river |= ndimage.binary_closing(big_w, iterations=2) & ~not_water & (xs > 440) & (xs < 690) & (ys > 80) & (ys < 760) & (padw < 0.5)
     bridge = np.zeros((H, W), bool)
     for lb in F['land_bridges']:
         bridge |= ((xs - lb['centre'][0]) / lb['rx_m']) ** 2 + ((ys - lb['centre'][1]) / lb['ry_m']) ** 2 < 1
@@ -152,6 +182,14 @@ def main():
             surf = max(surf, GROUND + 14.0)
         b['surface_m'] = round(surf - 0.3, 2)
         h = np.where(dl < 10, np.minimum(h, surf - b['depth_m'] * smoothstep(1 - dl / 10.0) + 0.6 * smoothstep(dl / 10.0)), h)
+    # --- v02: piers and jetties are decks over the water (the builder lays the boards), not earth causeways drawn as land
+    if os.path.exists(os.path.join(OUT, 'districts', 'beach_v76.json')):
+        near_sea = ndimage.binary_dilation(sea, iterations=10) & ~(cls == 3)
+        for dn in ('beach', 'elite'):
+            for z in load_json('districts/%s_v76.json' % dn).get('zones', []):
+                if z.get('kind') == 'pier' and len(z.get('poly') or []) >= 3:
+                    m = ndimage.binary_dilation(poly_mask(z['poly'], xs, ys), iterations=1) & near_sea
+                    h = np.where(m, np.minimum(h, -1.5), h)
     # --- steppe beyond the fence rises softly to the horizon
     steppe = ys > np.interp(xs, [0, 540, 1060, 1744], [905, 912, 912, 905])
     h = np.where(steppe & land, np.maximum(h, GROUND + 18.0 * smoothstep((ys - 912) / 38.0)), h)
@@ -175,7 +213,9 @@ def main():
             prof = ndimage.uniform_filter1d(prof, 41, mode='nearest')
             prof = np.maximum(prof, 0.8)
             seg0 = np.hypot(np.diff([p[0] for p in pts]), np.diff([p[1] for p in pts]))
-            g = 0.08 if rd['kind'] != 'serpentine' else 0.12
+            g = 0.08 if rd['kind'] != 'serpentine' or rd.get('variant') else 0.12   # VIEW B serpentine: 12 % kept (Fedya 18.10, Q7); s02c hairpin variant: 8 %
+            if rd['id'] == 'border_checkpoint_road' and REV != 'v01':
+                g = 1.0          # v02: beyond the KPP the road just follows the steppe rise (v01 cut a 15 m trench into it)
             for _ in range(3):                                         # grade limit: cut on the way up, fill on the way down
                 for i in range(1, len(prof)):
                     prof[i] = np.clip(prof[i], prof[i - 1] - g * seg0[i - 1], prof[i - 1] + g * seg0[i - 1])

@@ -25,12 +25,22 @@ namespace OnlyVolunteers.Map.W76
     public static class W76Builder
     {
         const string Root = "Assets/OnlyVolunteers/Map/W76Build";
-        const string Data = Root + "/Data/v01";
+        const string Data = Root + "/Data/v02";            // v02 = v01 + local fixes (coast lift bug, water bodies, drawn crowns, seabed); Tools/MapV76
         const string Gen = Root + "/Generated/v01";
         const string ScenePath = "Assets/OnlyVolunteers/Scenes/Map/Map_W76_Build_v01.unity";
         const string SceneI10 = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity";
         const string KitSrc = "ArtSource/Props/FACADE_KIT_v01/FBX";
         const string TerrainMaterial = "Assets/OnlyVolunteers/Map/LookV3/Materials/V3_Terrain.mat";
+        // ---- answers to the 7 open questions (Fedya 18.10, docs/reports/MAP_V76_QUESTIONS_FOR_VADIM.md); change here and rebuild
+        const float DowntownCarriageway = 8.5f;          // Q1: m, 2 lanes (layout v26 data: 8.41); 0 = take the data value
+        const float DowntownSidewalk = 4.5f;             // Q1: m per side (data: 3.96); 0 = data
+        const string SeaMaterialKey = "water_sea";       // Q2: "water_sea" = Sea_trial_calm_v09 (variant 1), "water_sea_alt_v10" = v10
+        const float EliteGateSeconds = 4f;               // Q3: gate open after the van passes, s
+        const float EliteGuardSeconds = 2f;              // Q3: + guards come out, s
+        const int LifeguardTowers = 2;                   // Q4 answered (Fedya 18.10): 2 of the 6 on the map, one per van entry (x 895, x 1142)
+        // Q5 answered: port as on the approved v76 picture (latest shift; data as is, checked by overlay).
+        // Q6 answered: no fuel station for now: canopy + kiosk carry "disabled": true in the data and are skipped (set false to restore).
+        // Q7 answered: VIEW B serpentine kept as on v76 (12 %); an 8 % hairpin variant exists in Tools/MapV76/s02c_serpentine_8pct.py (not applied).
         static readonly StringBuilder Log = new();
         static Dictionary<string, object> MatMap;
         static readonly Dictionary<string, Material> Mats = new();
@@ -40,25 +50,27 @@ namespace OnlyVolunteers.Map.W76
         static int created, reused;
 
         [MenuItem("OnlyVolunteers/Map/W76 Build/Build Map_W76_Build_v01 (2D map v76)")]
-        public static void Build()
+        public static void Build() => Build(true);
+
+        // Same build without dialogs (automation: agents / batch mode). The output is only our own Generated/v01 + scene.
+        public static void BuildSilent() => Build(false);
+
+        static void Build(bool interactive)
         {
             if (!File.Exists(Data + "/terrain_v76.json"))
             {
-                EditorUtility.DisplayDialog("W76", "No data in " + Data + ". Run Tools/MapV76 (see docs/reports/MAP_V76_BUILD_CLOUD_HANDOFF.md).", "OK");
+                if (interactive) EditorUtility.DisplayDialog("W76", "No data in " + Data + ". Run Tools/MapV76 (see docs/reports/MAP_V76_BUILD_CLOUD_HANDOFF.md).", "OK");
+                else Debug.LogError("[W76] no data in " + Data);
                 return;
             }
-            if (File.Exists(ScenePath) && !EditorUtility.DisplayDialog("W76", "Rebuild " + ScenePath + " and " + Gen + " (own generated output, nothing approved is touched)?", "Rebuild", "Cancel"))
+            if (interactive && File.Exists(ScenePath) && !EditorUtility.DisplayDialog("W76", "Rebuild " + ScenePath + " and " + Gen + " (own generated output, nothing approved is touched)?", "Rebuild", "Cancel"))
                 return;
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            if (interactive && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             var t0 = DateTime.Now;
-            Log.Clear(); Mats.Clear(); MatTile.Clear(); created = reused = 0;
-            try
-            {
-                AssetDatabase.StartAssetEditing();
-                if (AssetDatabase.IsValidFolder(Gen)) AssetDatabase.DeleteAsset(Gen);
-                foreach (string f in new[] { "Meshes", "Materials", "Textures", "FacadeKit", "Terrain" }) Folder(Gen + "/" + f);
-            }
-            finally { AssetDatabase.StopAssetEditing(); }
+            Log.Clear(); Mats.Clear(); MatTile.Clear(); Built.Clear(); created = reused = 0; poolWater = null;
+            // (not inside Start/StopAssetEditing: a delete + re-create of the same folder in one batch left no folder on a rebuild)
+            if (AssetDatabase.IsValidFolder(Gen)) AssetDatabase.DeleteAsset(Gen);
+            foreach (string f in new[] { "Meshes", "Materials", "Textures", "FacadeKit", "Terrain" }) Folder(Gen + "/" + f);
             ImportKit();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var root = new GameObject("Map_W76_v01").transform;
@@ -75,6 +87,7 @@ namespace OnlyVolunteers.Map.W76
             Note($"materials: {reused} reused, {created} created");
             EditorSceneManager.SaveScene(scene, ScenePath);
             AssetDatabase.SaveAssets();
+            ReapplyTerrain();
             Note($"built in {(DateTime.Now - t0).TotalSeconds:0} s");
             File.WriteAllText(Gen + "/W76_build_log.txt", Log.ToString());
             AssetDatabase.ImportAsset(Gen + "/W76_build_log.txt");
@@ -214,6 +227,11 @@ namespace OnlyVolunteers.Map.W76
                     int k = (j * R + i) * 2;
                     heights[j, i] = (raw[k] | raw[k + 1] << 8) / 65535f;
                 }
+            // layers first: they import textures, and an import during the build reverted the fresh TerrainData to its saved (flat) state
+            var splat = Obj(Get(tj, "splat"));
+            var keys = Arr(Get(splat, "layers")).Select(o => (string)o).ToList();
+            var i10 = I10Layers();
+            var layerArr = keys.Select(k => Layer(k, i10)).ToArray();
             var td = new TerrainData { heightmapResolution = R, alphamapResolution = AR };
             td.size = new Vector3(W, F(size[1]), Hh);
             AssetDatabase.CreateAsset(td, Gen + "/Terrain/TerrainData_W76_v01.asset");
@@ -227,10 +245,7 @@ namespace OnlyVolunteers.Map.W76
                     holes[j, i] = (bits[b >> 3] >> (7 - (b & 7)) & 1) == 1;           // 1 = solid
                 }
             td.SetHoles(0, 0, holes);
-            var splat = Obj(Get(tj, "splat"));
-            var keys = Arr(Get(splat, "layers")).Select(o => (string)o).ToList();
-            var i10 = I10Layers();
-            td.terrainLayers = keys.Select(k => Layer(k, i10)).ToArray();
+            td.terrainLayers = layerArr;
             var masks = Arr(Get(splat, "files")).Select(f => LoadPng(Data + "/" + (string)f)).ToArray();
             var px32 = masks.Select(m => m.GetPixels32()).ToArray();
             int mw = masks[0].width, mh = masks[0].height;
@@ -253,6 +268,8 @@ namespace OnlyVolunteers.Map.W76
             foreach (var m in masks) Object.DestroyImmediate(m);
             Trees(td);
             EditorUtility.SetDirty(td);
+            AssetDatabase.SaveAssets();
+            lastHeights = heights; lastHoles = holes; lastAlpha = a;
             var go = Terrain.CreateTerrainGameObject(td);
             go.name = "Terrain_W76_v01";
             go.transform.SetParent(root, false);
@@ -264,7 +281,26 @@ namespace OnlyVolunteers.Map.W76
             Ter.drawInstanced = true; Ter.shadowCastingMode = ShadowCastingMode.On;
             go.AddComponent<MapHeightSampler>().Terrain = Ter;
             GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
-            Note($"terrain {W}x{F(size[1])}x{Hh} m, heightmap {R}, splat {AR} x {keys.Count} layers, {td.treeInstanceCount} trees");
+            Note($"terrain {W}x{F(size[1])}x{Hh} m, heightmap {R}, splat {AR} x {keys.Count} layers, {td.treeInstanceCount} trees, height probe {td.GetHeight(1024, 1024):0.00} m (expected {heights[1024, 1024] * td.size.y:0.00})");
+        }
+
+        // Local check: on a rebuild the TerrainData heights (and splat) came out blank after the later asset writes of the build
+        // (same Unity quirk as V3Terrain.ReapplySplat / W19 "data set before this is lost"): write them again once all is saved.
+        static float[,] lastHeights; static bool[,] lastHoles; static float[,,] lastAlpha;
+
+        static void ReapplyTerrain()
+        {
+            if (!Ter || lastHeights == null) return;
+            var td = Ter.terrainData;
+            td.SetHeights(0, 0, lastHeights);
+            td.SetHoles(0, 0, lastHoles);
+            td.SetAlphamaps(0, 0, lastAlpha);
+            EditorUtility.SetDirty(td);
+            foreach (Texture2D tex in td.alphamapTextures) EditorUtility.SetDirty(tex);
+            AssetDatabase.SaveAssets();
+            float probe = td.GetHeight(1024, 1024), expect = lastHeights[1024, 1024] * td.size.y;
+            Note($"terrain re-applied after the asset save: height probe {probe:0.00} m (expected {expect:0.00} m)");
+            lastHeights = null; lastHoles = null; lastAlpha = null;
         }
 
         static Texture2D LoadPng(string path)
@@ -285,6 +321,10 @@ namespace OnlyVolunteers.Map.W76
             ["bush"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Bush_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Bush_B_v04_03.prefab" },
             ["bare"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_C_v04_04.prefab" },
         };
+
+        // Tree-like prop kinds by whole word ("street_lamp" contains "tree" as a substring: v01 turned the 59 Rough lamps into trees).
+        static readonly HashSet<string> TreeWords = new() { "tree", "trees", "palm", "bush", "shrub", "oak", "apple", "pine", "birch", "poplar", "spruce" };
+        static bool IsTree(string kind) => kind.Split('_', ' ', '-').Any(w => TreeWords.Contains(w));
 
         static readonly List<TreePrototype> Protos = new();
         static readonly Dictionary<string, List<int>> ProtoIdx = new();
@@ -339,9 +379,9 @@ namespace OnlyVolunteers.Map.W76
                 {
                     var p = Obj(o);
                     string kind = (S(Get(p, "kind"), "") ?? "").ToLowerInvariant();
-                    if (!(kind.Contains("tree") || kind.Contains("palm") || kind.Contains("bush") || kind.Contains("oak") || kind.Contains("apple") || kind.Contains("pine") || kind.Contains("birch"))) continue;
+                    if (!IsTree(kind)) continue;
                     Vector2 q = V2(Get(p, "pos"));
-                    string k = kind.Contains("palm") ? "palm" : kind.Contains("bush") ? "bush" : f.Contains("rough") ? "bare" : kind.Contains("pine") ? "pine" : kind.Contains("birch") ? "birch" : kind.Contains("oak") ? "oak" : "leafy";
+                    string k = kind.Contains("palm") ? "palm" : kind.Contains("bush") || kind.Contains("shrub") ? "bush" : f.Contains("rough") ? "bare" : kind.Contains("pine") ? "pine" : kind.Contains("birch") ? "birch" : kind.Contains("oak") ? "oak" : "leafy";
                     AddTree(k, q.x, q.y, 1f, F(Get(p, "rot_deg")));
                 }
             td.SetTreeInstances(TreeList.ToArray(), true);
@@ -355,13 +395,17 @@ namespace OnlyVolunteers.Map.W76
             {
                 int n = V.Count;
                 V.Add(a); V.Add(b); V.Add(c); V.Add(d); UV.Add(ua); UV.Add(ub); UV.Add(uc); UV.Add(ud);
-                T.Add(n); T.Add(n + 2); T.Add(n + 1); T.Add(n); T.Add(n + 3); T.Add(n + 2);
+                T.Add(n); T.Add(n + 1); T.Add(n + 2); T.Add(n); T.Add(n + 2); T.Add(n + 3);     // front = (b - a) x (c - a): roads up, walls out
             }
             public void Tri(Vector3 a, Vector3 b, Vector3 c, Vector2 ua, Vector2 ub, Vector2 uc)
             {
                 int n = V.Count;
                 V.Add(a); V.Add(b); V.Add(c); UV.Add(ua); UV.Add(ub); UV.Add(uc);
                 T.Add(n); T.Add(n + 1); T.Add(n + 2);
+            }
+            public void QuadBoth(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector2 ua, Vector2 ub, Vector2 uc, Vector2 ud)
+            {
+                Quad(a, b, c, d, ua, ub, uc, ud); Quad(d, c, b, a, ud, uc, ub, ua);
             }
             public Mesh Build(string name, bool save = true)
             {
@@ -452,7 +496,7 @@ namespace OnlyVolunteers.Map.W76
                     int total = Resample(pl, 2f).Count;
                     hAt = i => hs[Mathf.Clamp(Mathf.RoundToInt(i / (float)(total - 1) * (hs.Length - 1)), 0, hs.Length - 1)];
                 }
-                var mesh = Ribbon("Road_" + id, pl, w, Tile(surf), .06f, hAt);
+                var mesh = Ribbon("Road_" + id, pl, w, Tile(surf), .05f + .006f * (n % 7), hAt);
                 MeshGo("Road_" + id, parent, mesh, Mat(surf));
                 if (kind == "stone_serpentine") Parapet(parent, id, pl, w);
                 n++;
@@ -475,7 +519,7 @@ namespace OnlyVolunteers.Map.W76
                 if (Vector2.Dot(nrm, (a + b) * .5f - c) < 0) nrm = -nrm;
                 Vector2 a2 = a + nrm * (w * .5f + .3f), b2 = b + nrm * (w * .5f + .3f);
                 Vector3 A = P(a2), B = P(b2);
-                mb.Quad(A, B, B + Vector3.up * .8f, A + Vector3.up * .8f, Vector2.zero, new Vector2(3f / 2f, 0), new Vector2(1.5f, .4f), new Vector2(0, .4f));
+                mb.QuadBoth(A, B, B + Vector3.up * .8f, A + Vector3.up * .8f, Vector2.zero, new Vector2(3f / 2f, 0), new Vector2(1.5f, .4f), new Vector2(0, .4f));
                 acc += (b - a).magnitude;
                 if (acc > 18f) { acc = 0f; Lamp(lamps, a2 + nrm * .3f); }
             }
@@ -523,6 +567,19 @@ namespace OnlyVolunteers.Map.W76
             var parent = new GameObject("Tunnel").transform; parent.SetParent(root, false);
             MeshGo("Tunnel_shell", parent, shell.Build("Tunnel_shell"), Mat("concrete_SK3c"), true);
             MeshGo("Tunnel_road", parent, road.Build("Tunnel_road"), Mat("asphalt_A5d12"), true);
+            for (int e = 0; e < 2; e++)
+            {
+                Vector2 p0 = e == 0 ? pts[0] : pts[pts.Count - 1], p1 = e == 0 ? pts[1] : pts[pts.Count - 2];
+                Vector2 dIn = (p1 - p0).normalized, nrm = new(-dIn.y, dIn.x);
+                float y0 = e == 0 ? h0 : h1, yaw = Mathf.Atan2(dIn.x, dIn.y) * Mathf.Rad2Deg;
+                Vector2 face = p0 - dIn * .6f;
+                foreach (int sgn in new[] { -1, 1 })
+                {
+                    Vector2 c = face + nrm * sgn * (width * .5f + 3f);
+                    Box(parent, "Portal_" + e + (sgn < 0 ? "_L" : "_R"), new Vector3(c.x, y0 + 4f, c.y), new Vector3(6f, clear + 9f, 1.2f), yaw, "concrete_SK3c", true);
+                }
+                Box(parent, "Portal_" + e + "_lintel", new Vector3(face.x, y0 + clear + 3f, face.y), new Vector3(width + 12f, 6f, 1.2f), yaw, "concrete_SK3c", true);
+            }
             var lights = new GameObject("Tunnel_lights").transform; lights.SetParent(parent, false);
             for (float s = 10f; s < total; s += 24f)
             {
@@ -550,7 +607,7 @@ namespace OnlyVolunteers.Map.W76
         static void BuildWater(Transform root)
         {
             var parent = new GameObject("Water").transform; parent.SetParent(root, false);
-            var sea = Mat("water_sea");
+            var sea = Mat(SeaMaterialKey);
             if (!sea || !sea.shader || !sea.shader.name.Contains("Water")) Note("WARNING: Sea_trial_calm_v09 not found or not the v05 water shader");
             // sea: dense grid over the map (vertex waves need vertices), coarse skirt to the horizon
             var mb = new MB();
@@ -564,29 +621,39 @@ namespace OnlyVolunteers.Map.W76
                         new Vector2(x, z) / 10f, new Vector2(x, z + step) / 10f, new Vector2(x + step, z + step) / 10f, new Vector2(x + step, z) / 10f);
                 }
             MeshGo("Sea_dense_0m", parent, mb.Build("Sea_dense"), sea).GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
-            var far = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            far.name = "Sea_far"; Object.DestroyImmediate(far.GetComponent<Collider>());
-            far.transform.SetParent(parent, false);
-            far.transform.position = new Vector3(W * .5f, -.05f, Hh * .5f - 1500f); far.transform.localScale = new Vector3(800f, 1f, 300f);
-            far.GetComponent<MeshRenderer>().sharedMaterial = sea;
+            // far sea all round outside the dense grid (south, west, east; north only east of the steppe, x > 1100: v67 harbour is sea)
+            var ring = new MB();
+            void FarQuad(float x0, float z0, float x1, float z1) => ring.Quad(new Vector3(x0, -.05f, z0), new Vector3(x0, -.05f, z1), new Vector3(x1, -.05f, z1), new Vector3(x1, -.05f, z0),
+                new Vector2(x0, z0) / 10f, new Vector2(x0, z1) / 10f, new Vector2(x1, z1) / 10f, new Vector2(x1, z0) / 10f);
+            const float far = 6000f, g = 200f;
+            FarQuad(-far, -far, W + far, -g);                    // south
+            FarQuad(-far, -g, -g, Hh + g);                       // west
+            FarQuad(W + g, -g, W + far, Hh + g);                 // east
+            FarQuad(1100f, Hh + g, W + far, Hh + far);           // north-east (sea north of the harbour and Tramduro)
+            MeshGo("Sea_far_ring", parent, ring.Build("Sea_far_ring"), sea).GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
             // rivers / lakes / swamp: flow mode, no waves (one colour with the sea)
             var flow = FlowMaterial(sea);
             var wj = Obj(Json.Parse(File.ReadAllText(Data + "/water_v76.json")));
             var tj = Obj(Json.Parse(File.ReadAllText(Data + "/terrain_v76.json")));
             var lakeLevel = Arr(Get(tj, "lakes")).Select(Obj).Where(l => l != null).ToDictionary(l => S(Get(l, "id")), l => F(Get(l, "surface_m"), 5f));
             int n = 0;
+            WaterAreas.Clear();
             foreach (object o in Arr(Get(wj, "bodies")))
             {
                 var b = Obj(o);
-                string kind = S(Get(b, "kind")), id = S(Get(b, "id"));
+                string kind = S(Get(b, "kind")), id = S(Get(b, "id")), name = S(Get(b, "name"), "");
                 var outline = V2s(Get(b, "outline"));
-                if (outline.Length < 3) continue;
+                // v02: only real inland water ("dropped" = legend swatch, label letters, a roof: Tools/MapV76/s02b_water_fix.py)
+                if (outline.Length < 3 || !(kind == "river" || kind == "lake" || kind == "swamp")) continue;
                 Func<Vector2, float> level = kind == "river"
                     ? q => RiverBed(q.y) + 1.2f
                     : q => lakeLevel.TryGetValue(id, out float lv) ? lv : Height(q.x, q.y) + .2f;
                 var mesh = Fill(id, outline, level, kind == "river" ? new Vector2(0f, -.6f) : Vector2.zero);
-                var go = MeshGo("Water_" + id, parent, mesh, kind == "swamp" ? SwampMaterial(flow) : flow);
+                // disposal kinds (WaterQuery): river = River, forest / mountain lake = Lake, Hamlet pond = Pond, swamp = Bog
+                var wk = kind == "river" ? Audio.WaterKind.River : kind == "swamp" ? Audio.WaterKind.Bog : name.Contains("pond") ? Audio.WaterKind.Pond : Audio.WaterKind.Lake;
+                var go = MeshGo("Water_" + wk + "_" + id, parent, mesh, kind == "swamp" ? SwampMaterial(flow) : flow);
                 go.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+                AddWaterArea(id, wk, mesh, kind == "river");
                 n++;
             }
             // waterfalls (river into the sea at Quiet Valley)
@@ -598,18 +665,52 @@ namespace OnlyVolunteers.Map.W76
                 float top = F(Get(b, "top_m"), 9f);
                 var wf = WaterfallMaterial(sea);
                 var m2 = new MB();
-                m2.Quad(new Vector3(q.x - 5f, top, q.y + 1f), new Vector3(q.x + 5f, top, q.y + 1f), new Vector3(q.x + 5f, 0f, q.y - 1f), new Vector3(q.x - 5f, 0f, q.y - 1f),
+                m2.QuadBoth(new Vector3(q.x - 5f, top, q.y + 1f), new Vector3(q.x + 5f, top, q.y + 1f), new Vector3(q.x + 5f, 0f, q.y - 1f), new Vector3(q.x - 5f, 0f, q.y - 1f),
                     new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0), new Vector2(0, 0));
                 MeshGo("Waterfall_" + S(Get(b, "id")), parent, m2.Build("Waterfall_" + S(Get(b, "id"))), wf);
             }
-            // sea return zone (out-of-bounds sea): far sea ring as triangles, the beach shallows stay playable
+            // sea return zone (out-of-bounds sea) all round the island: deep-sea cells (terrain < -1.2 m, i.e. past the ~8 m
+            // shallow band at the beaches) merged into row runs + the outside of the map; the van is put back on the last dry point
             var zone = new GameObject("SeaReturnZone").AddComponent<SeaReturnZone>();
             zone.transform.SetParent(parent, false);
-            zone.Triangles = new[]
+            var tris = new List<Vector2>();
+            void Rect(float x0, float z0, float x1, float z1) { tris.AddRange(new[] { new Vector2(x0, z0), new Vector2(x1, z0), new Vector2(x1, z1), new Vector2(x0, z0), new Vector2(x1, z1), new Vector2(x0, z1) }); }
+            Rect(-1500, -1500, W + 1500, 0); Rect(-1500, 0, 0, Hh); Rect(W, 0, W + 1500, Hh);       // south, west, east outside the terrain
+            const float cell = 8f;
+            for (float z = 0; z < Hh; z += cell)
             {
-                new Vector2(-400, -400), new Vector2(W + 400, -400), new Vector2(W + 400, 40), new Vector2(-400, -400), new Vector2(W + 400, 40), new Vector2(-400, 40),
-            };
-            Note($"water: dense sea grid {mb.V.Count / 4} quads + far plane, {n} inland bodies (flow mode), sea return zone south edge only (TODO full ring)");
+                float run = -1f;
+                for (float x = 0; x <= W; x += cell)
+                {
+                    bool deep = x < W && new[] { Height(x, z), Height(x + cell, z), Height(x, z + cell), Height(x + cell, z + cell) }.All(hh => hh < -1.2f);
+                    if (deep && run < 0) run = x;
+                    if (!deep && run >= 0) { Rect(run, z, x, z + cell); run = -1f; }
+                }
+            }
+            zone.Triangles = tris.ToArray();
+            WaterAreas.Add(new Audio.WaterData.Area { Id = "sea", Kind = Audio.WaterKind.Sea, SurfaceY = 0f, Triangles = tris.SelectMany(t => new[] { t.x, t.y }).ToArray() });
+            var wd = ScriptableObject.CreateInstance<Audio.WaterData>();
+            wd.PlanRevision = "W76_v01 (data v02)"; wd.Areas = WaterAreas.ToArray();
+            AssetDatabase.CreateAsset(wd, Gen + "/W76_WaterData_v01.asset");
+            Note($"water: dense sea grid {mb.V.Count / 4} quads + far plane, {n} inland bodies (flow mode), sea return zone {tris.Count / 3} triangles all round; " +
+                 $"WaterData {Gen}/W76_WaterData_v01.asset: " + string.Join(", ", WaterAreas.GroupBy(a => a.Kind).Select(g => g.Key + " " + g.Count())));
+        }
+
+        // WaterQuery data for this map (disposal: River / Lake / Canal only; Pond, Bog, Pool, Sea not). Rivers slope, so each
+        // river triangle is its own area at its mean level; lakes / ponds / bog are one flat area.
+        static readonly List<Audio.WaterData.Area> WaterAreas = new();
+
+        static void AddWaterArea(string id, Audio.WaterKind kind, Mesh m, bool perTriangle)
+        {
+            var v = m.vertices; var t = m.triangles;
+            if (!perTriangle)
+            {
+                WaterAreas.Add(new Audio.WaterData.Area { Id = id, Kind = kind, SurfaceY = v.Average(q => q.y), Triangles = t.SelectMany(i => new[] { v[i].x, v[i].z }).ToArray() });
+                return;
+            }
+            for (int i = 0; i + 2 < t.Length; i += 3)
+                WaterAreas.Add(new Audio.WaterData.Area { Id = id + "_" + i / 3, Kind = kind, SurfaceY = (v[t[i]].y + v[t[i + 1]].y + v[t[i + 2]].y) / 3f,
+                    Triangles = new[] { v[t[i]].x, v[t[i]].z, v[t[i + 1]].x, v[t[i + 1]].z, v[t[i + 2]].x, v[t[i + 2]].z } });
         }
 
         // River bed from Tools/MapV76/s03_terrain.py (bed_line): 1.5 m at the sea waterfall -> ~15 m under the mountain lake.
@@ -652,7 +753,7 @@ namespace OnlyVolunteers.Map.W76
         }
 
         // Ear-clipping fill of a simple polygon; per-vertex level; UV1 = flow velocity XZ for the v05 flow mode.
-        static Mesh Fill(string name, Vector2[] poly, Func<Vector2, float> level, Vector2 flow)
+        static Mesh Fill(string name, Vector2[] poly, Func<Vector2, float> level, Vector2 flow, bool save = true)
         {
             var pts = poly.ToList();
             if (Area(pts) < 0) pts.Reverse();
@@ -681,7 +782,7 @@ namespace OnlyVolunteers.Map.W76
                 if (!cut) break;
             }
             if (idx.Count == 3) { mb.T.Add(idx[0]); mb.T.Add(idx[2]); mb.T.Add(idx[1]); }
-            return mb.Build(name);
+            return mb.Build(name, save);
         }
 
         static float Area(List<Vector2> p) { float a = 0; for (int i = 0; i < p.Count; i++) { var u = p[i]; var v = p[(i + 1) % p.Count]; a += u.x * v.y - v.x * u.y; } return a * .5f; }
@@ -721,6 +822,25 @@ namespace OnlyVolunteers.Map.W76
                     Object.DestroyImmediate(p.GetComponent<Collider>());
                 }
             }
+            // v02: the invisible wall continues past both fence ends (local check: on foot one could walk round the east end over
+            // the right ridge's foot into the steppe): east along the right ridge crest into the sea, west along the north edge
+            var fj = Obj(Json.Parse(File.ReadAllText(Data + "/features_v76.json")));
+            var east = new List<Vector2> { pl[pl.Length - 1] };
+            east.AddRange(V2s(Get(Obj(Get(fj, "right_ridge")), "crest")));
+            east.Add(east[east.Count - 1] + (east[east.Count - 1] - east[east.Count - 2]).normalized * 20f);
+            var west = new List<Vector2> { pl[0], new Vector2(pl[0].x, Hh - 3f), new Vector2(-20f, Hh - 3f) };
+            int extra = 0;
+            foreach (var line in new[] { east, west })
+                for (int i = 1; i < line.Count; i++)
+                {
+                    Vector2 a = line[i - 1], b = line[i];
+                    var c = new GameObject("Wall_ridge_" + extra++).AddComponent<BoxCollider>();
+                    c.transform.SetParent(walls, false);
+                    float y0 = Mathf.Min(Height(a.x, a.y), Height(b.x, b.y)) - 5f;
+                    c.transform.position = new Vector3((a.x + b.x) * .5f, y0 + (wall + 60f) * .5f, (a.y + b.y) * .5f);
+                    c.transform.rotation = Quaternion.LookRotation(new Vector3(b.x - a.x, 0, b.y - a.y));
+                    c.size = new Vector3(.5f, wall + 60f, (b - a).magnitude + .2f);
+                }
             var nm = MeshGo("FenceNet", parent, net.Build("Border_fence_net"), Mat("fence_net"));
             nm.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.TwoSided;
             foreach (object o in Arr(Get(bj, "towers")))
@@ -745,10 +865,11 @@ namespace OnlyVolunteers.Map.W76
             var steppe = GameObject.CreatePrimitive(PrimitiveType.Plane);
             steppe.name = "Steppe_far"; Object.DestroyImmediate(steppe.GetComponent<Collider>());
             steppe.transform.SetParent(parent, false);
-            steppe.transform.position = new Vector3(W * .5f, F(Get(st, "rises_to_horizon_m"), 18f) + 4f, Hh + 1500f);
-            steppe.transform.localScale = new Vector3(600f, 1f, 300f);
+            // only over the land border (west of the right ridge, x < 1100); north of the harbour and Tramduro is sea (v67)
+            steppe.transform.position = new Vector3((-3000f + 1100f) * .5f, F(Get(st, "rises_to_horizon_m"), 18f) + 4f, Hh + 1500f);
+            steppe.transform.localScale = new Vector3((1100f + 3000f) / 10f, 1f, 300f);
             steppe.GetComponent<MeshRenderer>().sharedMaterial = SteppeMaterial();
-            Note($"border: fence {pl.Length} pts, invisible wall {wall} m, checkpoint + sliding gate + 'Leave the country' button");
+            Note($"border: fence {pl.Length} pts, invisible wall {wall} m (+{extra} ridge / north-edge segments past the fence ends), checkpoint + sliding gate + 'Leave the country' button");
         }
 
         static Material SteppeMaterial()
@@ -777,7 +898,7 @@ namespace OnlyVolunteers.Map.W76
 
         static void ImportKit()
         {
-            Kit.Clear();
+            Kit.Clear(); KitMats.Clear();
             if (!Directory.Exists(KitSrc)) { Note("facade kit missing: " + KitSrc); return; }
             foreach (string f in Directory.GetFiles(KitSrc, "*.fbx"))
             {
@@ -786,27 +907,60 @@ namespace OnlyVolunteers.Map.W76
                 File.Copy(f, dst, true);
                 AssetDatabase.ImportAsset(dst, ImportAssetOptions.ForceSynchronousImport);
                 var mi = AssetImporter.GetAtPath(dst) as ModelImporter;
-                if (mi) { mi.globalScale = 1f; mi.importAnimation = false; mi.materialImportMode = ModelImporterMaterialImportMode.ImportStandard; mi.SaveAndReimport(); }
+                if (mi)
+                {
+                    mi.globalScale = 1f; mi.importAnimation = false; mi.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
+                    // one shared material per kit material name (FK_Concrete, FK_Metal_Dark, ...) instead of a copy per FBX
+                    foreach (var em in AssetDatabase.LoadAllAssetsAtPath(dst).OfType<Material>())
+                        mi.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material), em.name), KitMaterial(em));
+                    mi.SaveAndReimport();
+                }
                 var go = AssetDatabase.LoadAssetAtPath<GameObject>(dst);
                 if (go) Kit[Path.GetFileNameWithoutExtension(f)] = go;
             }
-            Note($"facade kit: {Kit.Count} pieces imported");
+            Note($"facade kit: {Kit.Count} pieces imported, {KitMats.Count} shared kit materials");
+        }
+
+        static readonly Dictionary<string, Material> KitMats = new();
+
+        // Kit placeholder material (FACADE_KIT_v01 README: one placeholder per kind, real textures later): URP Lit, kit colour.
+        static Material KitMaterial(Material embedded)
+        {
+            if (KitMats.TryGetValue(embedded.name, out Material m) && m) return m;
+            string path = Gen + "/FacadeKit/Materials/" + Safe(embedded.name) + ".mat";
+            Folder(Gen + "/FacadeKit/Materials");
+            m = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (!m)
+            {
+                Color c = embedded.HasProperty("_BaseColor") ? embedded.GetColor("_BaseColor") : embedded.HasProperty("_Color") ? embedded.color : Color.grey;
+                m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = embedded.name, enableInstancing = true };
+                m.SetColor("_BaseColor", c);
+                m.SetFloat("_Smoothness", embedded.name.Contains("Glass") ? .8f : .15f);
+                if (embedded.name.Contains("Metal")) m.SetFloat("_Metallic", .4f);
+                AssetDatabase.CreateAsset(m, path);
+                created++;
+            }
+            return KitMats[embedded.name] = m;
         }
 
         // Instance a kit piece; UCX_ children -> convex MeshCollider on the piece, UCX renderer removed (ROOF_COLLISION_NOTE).
         static GameObject Piece(string name, Transform parent, Vector3 pos, Vector3 outward)
         {
             if (!Kit.TryGetValue(name, out GameObject src)) return null;
-            var go = (GameObject)PrefabUtility.InstantiatePrefab(src, parent);
+            // plain copy (no prefab link): children of a prefab instance cannot be destroyed / stripped
+            var go = Object.Instantiate(src, parent);
+            go.name = name;
             go.transform.position = pos;
             go.transform.rotation = Quaternion.LookRotation(outward, Vector3.up);
+            // UCX_ child keeps its own transform (FBX axis conversion): collider on the child, its renderer removed
             foreach (var mf in go.GetComponentsInChildren<MeshFilter>(true).Where(m => m.name.StartsWith("UCX_")).ToList())
             {
-                var mc = go.AddComponent<MeshCollider>(); mc.sharedMesh = mf.sharedMesh; mc.convex = true;
-                Object.DestroyImmediate(mf.gameObject);
+                var ucx = mf.gameObject;
+                var mesh = mf.sharedMesh;
+                Object.DestroyImmediate(ucx.GetComponent<MeshRenderer>());
+                Object.DestroyImmediate(mf);
+                var mc = ucx.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; mc.convex = true;
             }
-            foreach (var r in go.GetComponentsInChildren<MeshRenderer>())
-                foreach (var m in r.sharedMaterials) if (m) m.enableInstancing = true;
             GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
             return go;
         }
@@ -819,9 +973,244 @@ namespace OnlyVolunteers.Map.W76
             var parent = new GameObject("District_" + district).transform; parent.SetParent(root, false);
             int nb = 0, np = 0, nz = 0;
             foreach (object o in Arr(Get(dj, "zones"))) if (Zone(parent, Obj(o))) nz++;
-            foreach (object o in Arr(Get(dj, "buildings"))) { if (Building(parent, Obj(o), district)) nb++; }
-            foreach (object o in Arr(Get(dj, "props"))) { if (Prop(parent, Obj(o))) np++; }
-            Note($"{district}: {nb} buildings, {np} props, {nz} zone surfaces");
+            foreach (object o in Arr(Get(dj, "buildings"))) { if (Get(Obj(o), "disabled") is bool off && off) continue; if (Building(parent, Obj(o), district)) nb++; }
+            var props = Arr(Get(dj, "props")).Select(Obj).Where(o => o != null && !(Get(o, "disabled") is bool off && off)).ToList();
+            var towers = props.Where(o => S(Get(o, "kind")) == "lifeguard_tower").ToList();
+            if (towers.Count > LifeguardTowers)
+            {   // Q4: keep the tower nearest to each van entry and to the pier (handoff v02 §8.9: <= 2; map v45: 6)
+                var keep = new List<Dictionary<string, object>>();
+                foreach (float x in new[] { 895f, 1142f, 1032f, 960f, 1090f, 1200f })
+                {
+                    if (keep.Count >= LifeguardTowers) break;
+                    var t = towers.Where(o => !keep.Contains(o)).OrderBy(o => Mathf.Abs(V2(Get(o, "pos")).x - x)).FirstOrDefault();
+                    if (t != null) keep.Add(t);
+                }
+                props.RemoveAll(o => towers.Contains(o) && !keep.Contains(o));
+            }
+            foreach (var o in props) { if (Prop(parent, o)) np++; }
+            string extras = Extras(parent, dj, district);
+            Note($"{district}: {nb} buildings, {np} props, {nz} zone surfaces{extras}");
+        }
+
+        // ------------------------------------------------------------------ district extras (v02 local: zones the v01 builder skipped)
+        // Downtown streets with sidewalks + curbs, perimeter fences (Construction, Elite, Tramduro), dead-end alley plug walls,
+        // piers / boardwalks, Elite inner ring, pool water. Data only; nothing new is invented.
+        static string Extras(Transform parent, Dictionary<string, object> dj, string district)
+        {
+            var zones = Arr(Get(dj, "zones")).Select(Obj).Where(z => z != null).ToList();
+            var sb = new StringBuilder();
+            var streets = zones.Where(z => S(Get(z, "kind")) == "street" && Get(z, "carriageway_m") != null && Arr(Get(z, "poly_line")).Count >= 2).ToList();
+            if (streets.Count > 0) sb.Append($", {Streets(parent, streets)} street meshes (carriageway + sidewalks with curbs)");
+            int fences = 0, piers = 0, plugs = 0;
+            foreach (var z in zones)
+            {
+                string kind = S(Get(z, "kind"), "");
+                if (kind == "fence" && district.Contains("construction"))
+                {
+                    var gates = Arr(Get(zones.FirstOrDefault(g => S(Get(g, "kind")) == "gates"), "items")).Select(Obj)
+                        .Select(g => (V2(Get(g, "centre_v76_estimate")), F(Get(g, "w_m"), 12f))).ToList();
+                    Fence(parent, S(Get(z, "id")), V2s(Get(z, "poly")), true, F(Get(z, "height_m"), 2f), "metal_painted_SK6a", gates, false); fences++;
+                }
+                else if (kind == "fence" && district.Contains("elite"))
+                {   // open polyline: the gap between the first and the last point is gate 06 (the trap)
+                    Fence(parent, S(Get(z, "id")), V2s(Get(z, "poly")), false, F(Get(z, "height_m"), 3.5f), "concrete_panel_SK3c", null, false); fences++;
+                }
+                else if (kind == "common_perimeter_fence" && district.Contains("tramduro"))
+                {   // layout v06 data are in v11 metres: same translation as the district (v76 = v11 + (244.2, 194.5)); the gap = bridge gate
+                    var d = Obj(Get(z, "data"));
+                    var pl = V2s(Get(d, "polyline_m")).Select(q => q + new Vector2(244.2f, 194.5f)).ToArray();
+                    Fence(parent, S(Get(z, "id")), pl, false, F(Get(d, "height_m"), 4f), "fence_net", null, true); fences++;
+                }
+                else if (kind == "dead_end_alley_pair")
+                {   // two dead ends: the plug wall in the middle of the through-alley (DOWNTOWN_LEGEND v26: 12 dead ends)
+                    var pw = V2s(Get(z, "plug_wall"));
+                    if (pw.Length >= 3)
+                    {
+                        Frame(pw.ToList(), new Dictionary<string, object>(), out Vector2 c, out Vector2 ax, out Vector2 ay, out float hx, out float hy);
+                        float baseY = pw.Min(q => Height(q.x, q.y)) - .2f;
+                        Box(parent, "AlleyPlug_" + S(Get(z, "id")), new Vector3(c.x, baseY + 4.5f, c.y), new Vector3(2 * hx, 9f, 2 * hy), -Mathf.Atan2(ax.y, ax.x) * Mathf.Rad2Deg, "brick_SK3a", true);
+                        plugs++;
+                    }
+                    var poly = V2s(Get(z, "poly"));
+                    if (poly.Length >= 3) FlatPatch(parent, "Alley_" + S(Get(z, "id")), poly, S(Get(z, "surface"), "asphalt_old_SK2a"), .05f);
+                }
+                else if (kind == "continuous_concrete_base")
+                {   // Tramduro military yard: concrete slab over the flat pad (data v02)
+                    var poly = V2s(Get(z, "poly"));
+                    if (poly.Length >= 3) FlatPatch(parent, "Yard_" + S(Get(z, "id")), poly, "concrete_SK3c", .04f);
+                }
+                else if (kind == "pier") { Pier(parent, S(Get(z, "id")), V2s(Get(z, "poly")), S(Get(z, "surface"), "boards_pier_SK5a_v02")); piers++; }
+                else if (kind == "gate_trap")
+                {   // marker only: the mechanics are OPEN (Vadim); timing = Q3 default
+                    var tm = new GameObject("EliteGateTrap_" + S(Get(z, "id"))).AddComponent<W76TrapMarker>();
+                    tm.transform.SetParent(parent, false);
+                    tm.transform.position = P(V2(Get(z, "pos")), .5f);
+                    tm.Kind = "elite_gate_latch"; tm.Seconds = EliteGateSeconds; tm.GuardSeconds = EliteGuardSeconds;
+                }
+                else if (kind == "boardwalk")
+                {
+                    var pl = V2s(Get(z, "poly_line"));
+                    if (pl.Length >= 2) MeshGo("Boardwalk_" + S(Get(z, "id")), parent, Ribbon("Boardwalk_" + S(Get(z, "id")), pl, F(Get(z, "width_m"), 3f), Tile("boards_pier_SK5a_v02"), .12f), Mat("boards_pier_SK5a_v02"));
+                }
+                else if (kind == "ring_road")
+                {
+                    Vector2 c = V2(Get(z, "centre")); float rx = F(Get(z, "rx_m")), ry = F(Get(z, "ry_m"));
+                    var ring = Enumerable.Range(0, 73).Select(i => c + new Vector2(Mathf.Cos(i * 5f * Mathf.Deg2Rad) * rx, Mathf.Sin(i * 5f * Mathf.Deg2Rad) * ry)).ToArray();
+                    MeshGo("Ring_" + S(Get(z, "id")), parent, Ribbon("Ring_" + S(Get(z, "id")), ring, F(Get(z, "width_m"), 6.4f), Tile("asphalt_A5d12"), .06f), Mat("asphalt_A5d12"));
+                    var lamps = new GameObject("Lamps_" + S(Get(z, "id"))).transform; lamps.SetParent(parent, false);
+                    for (int i = 0; i < 72; i += 8) Lamp(lamps, c + new Vector2(Mathf.Cos(i * 5f * Mathf.Deg2Rad) * (rx + 4.5f), Mathf.Sin(i * 5f * Mathf.Deg2Rad) * (ry + 4.5f)));
+                }
+                else if (kind == "pool")
+                {
+                    var poly = V2s(Get(z, "poly"));
+                    if (poly.Length < 3) continue;
+                    float baseH = poly.Average(q => Height(q.x, q.y));
+                    bool basin = S(Get(z, "surface")) != null;                       // Elite: tiled basin at -0.25 (zone surface); Downtown: 0.3 m mirror pool
+                    float lv = basin ? baseH - .08f : baseH + .3f;
+                    var wm = Fill("Pool_" + S(Get(z, "id")), poly, q => lv, Vector2.zero);
+                    var go = MeshGo("Water_Pool_" + S(Get(z, "id")), parent, wm, PoolWater());
+                    go.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+                    AddWaterArea(S(Get(z, "id")), Audio.WaterKind.Pool, wm, false);
+                    if (!basin)
+                    {   // low stone rim the van rolls over (no collider: "бусик въезжает с брызгами")
+                        var rim = new MB();
+                        for (int i = 0; i < poly.Length; i++)
+                        {
+                            Vector2 a = poly[i], b = poly[(i + 1) % poly.Length];
+                            rim.QuadBoth(new Vector3(a.x, baseH, a.y), new Vector3(a.x, baseH + .34f, a.y), new Vector3(b.x, baseH + .34f, b.y), new Vector3(b.x, baseH, b.y),
+                                Vector2.zero, new Vector2(0, .34f), new Vector2((b - a).magnitude, .34f), new Vector2((b - a).magnitude, 0));
+                        }
+                        MeshGo("PoolRim_" + S(Get(z, "id")), parent, rim.Build("PoolRim_" + S(Get(z, "id"))), Mat("plaza_M3"));
+                    }
+                }
+            }
+            if (fences + piers + plugs > 0) sb.Append($", {fences} fences, {piers} piers, {plugs} alley plug walls");
+            return sb.ToString();
+        }
+
+        static Material poolWater;
+        static Material PoolWater()
+        {
+            if (poolWater) return poolWater;
+            var flow = AssetDatabase.LoadAssetAtPath<Material>(Gen + "/Materials/W76_water_flow.mat");
+            poolWater = flow ? flow : Mat("water_sea");
+            return poolWater;
+        }
+
+        static void FlatPatch(Transform parent, string name, Vector2[] poly, string surf, float lift)
+        {
+            float baseH = poly.Average(q => Height(q.x, q.y));
+            var mesh = Fill(name, poly, q => baseH + lift, Vector2.zero);
+            float t = Tile(surf);
+            mesh.uv = mesh.vertices.Select(v => new Vector2(v.x, v.z) / t).ToArray();
+            EditorUtility.SetDirty(mesh);
+            MeshGo(name, parent, mesh, Mat(surf));
+        }
+
+        // Downtown streets (DOWNTOWN_LEGEND v26 / zones "street"): asphalt carriageway + raised sidewalks with a 15 cm curb on both
+        // sides; sidewalks stop where they would cross another street's carriageway (junctions stay flat asphalt).
+        static int Streets(Transform parent, List<Dictionary<string, object>> streets)
+        {
+            var root = new GameObject("Streets").transform; root.SetParent(parent, false);
+            var lines = streets.Select(z => (z, pl: Extend(V2s(Get(z, "poly_line")), CarriagewayOf(z) * .5f))).ToList();
+            int n = 0;
+            foreach (var (z, pl) in lines)
+            {
+                string id = S(Get(z, "id"), "street");
+                float cw = CarriagewayOf(z), sw = DowntownSidewalk > 0f ? DowntownSidewalk : F(Get(z, "sidewalk_m"), 4f), curb = F(Get(z, "curb_m"), .15f);
+                string surf = S(Get(z, "surface"), "asphalt_A5d12"), side = S(Get(z, "sidewalk_surface"), "sidewalk_S1");
+                MeshGo("Street_" + id, root, Ribbon("Street_" + id, pl, cw, Tile(surf), .06f), Mat(surf));
+                var pts = Resample(pl, 1f);
+                float st = Tile(side);
+                foreach (int sgn in new[] { 1, -1 })
+                {
+                    var mb = new MB();
+                    Vector2? prevIn = null, prevOut = null; float acc = 0f;
+                    for (int i = 0; i < pts.Count; i++)
+                    {
+                        Vector2 dir = (pts[Mathf.Min(i + 1, pts.Count - 1)] - pts[Mathf.Max(i - 1, 0)]).normalized, nrm = new Vector2(-dir.y, dir.x) * sgn;
+                        Vector2 pin = pts[i] + nrm * cw * .5f, pout = pts[i] + nrm * (cw * .5f + sw), mid = (pin + pout) * .5f;
+                        bool blocked = lines.Any(o => !ReferenceEquals(o.z, z) && W76Atmosphere.Distance(o.pl, mid) < CarriagewayOf(o.z) * .5f + sw * .5f);
+                        if (blocked || prevIn == null) { prevIn = blocked ? (Vector2?)null : pin; prevOut = blocked ? (Vector2?)null : pout; continue; }
+                        float y = Height(pts[i].x, pts[i].y) + .06f + curb;
+                        Vector3 a0 = new(prevIn.Value.x, y, prevIn.Value.y), a1 = new(prevOut.Value.x, y, prevOut.Value.y), b0 = new(pin.x, y, pin.y), b1 = new(pout.x, y, pout.y);
+                        float u0 = acc / st, u1 = (acc + 1f) / st; acc += 1f;
+                        // top face up for either side (inner edge a0/b0, outer edge a1/b1)
+                        if (sgn > 0) mb.Quad(a1, b1, b0, a0, new Vector2(sw / st, u0), new Vector2(sw / st, u1), new Vector2(0, u1), new Vector2(0, u0));
+                        else mb.Quad(a0, b0, b1, a1, new Vector2(0, u0), new Vector2(0, u1), new Vector2(sw / st, u1), new Vector2(sw / st, u0));
+                        Vector3 down = Vector3.down * (curb + .1f);
+                        mb.QuadBoth(a0 + down, b0 + down, b0, a0, Vector2.zero, new Vector2(1f / st, 0), new Vector2(1f / st, .1f), new Vector2(0, .1f));   // curb face
+                        prevIn = pin; prevOut = pout;
+                    }
+                    if (mb.V.Count == 0) continue;
+                    string nm = "Sidewalk_" + id + (sgn > 0 ? "_L" : "_R");
+                    MeshGo(nm, root, mb.Build(nm), Mat(side), true);
+                    n++;
+                }
+                n++;
+            }
+            return n;
+        }
+
+        static float CarriagewayOf(Dictionary<string, object> z) => DowntownCarriageway > 0f ? DowntownCarriageway : F(Get(z, "carriageway_m"), 8.4f);
+
+        static Vector2[] Extend(Vector2[] pl, float by)
+        {
+            if (pl.Length < 2) return pl;
+            var o = pl.ToArray();
+            o[0] = pl[0] + (pl[0] - pl[1]).normalized * by;
+            o[o.Length - 1] = pl[pl.Length - 1] + (pl[pl.Length - 1] - pl[pl.Length - 2]).normalized * by;
+            return o;
+        }
+
+        // Perimeter fence: 2 m panels on the ground, double-sided, a thin box collider per panel; gates = gaps (centre, width).
+        static void Fence(Transform parent, string id, Vector2[] line, bool closed, float h, string mat, List<(Vector2 c, float w)> gaps, bool net)
+        {
+            if (line.Length < 2) return;
+            var pts = line.ToList(); if (closed) pts.Add(line[0]);
+            var mb = new MB();
+            var col = new GameObject("Fence_" + id).transform; col.SetParent(parent, false);
+            float t = net ? 1f : Tile(mat);
+            for (int i = 1; i < pts.Count; i++)
+            {
+                Vector2 a = pts[i - 1], b = pts[i];
+                int k = Mathf.Max(1, Mathf.CeilToInt((b - a).magnitude / 2f));
+                for (int j = 0; j < k; j++)
+                {
+                    Vector2 p0 = Vector2.Lerp(a, b, j / (float)k), p1 = Vector2.Lerp(a, b, (j + 1) / (float)k), m = (p0 + p1) * .5f;
+                    if (gaps != null && gaps.Any(g => (g.c - m).magnitude < g.w * .5f)) continue;
+                    float y0 = Height(p0.x, p0.y) - .3f, y1 = Height(p1.x, p1.y) - .3f, L = (p1 - p0).magnitude;
+                    mb.QuadBoth(new Vector3(p0.x, y0, p0.y), new Vector3(p0.x, y0 + h + .3f, p0.y), new Vector3(p1.x, y1 + h + .3f, p1.y), new Vector3(p1.x, y1, p1.y),
+                        Vector2.zero, new Vector2(0, (h + .3f) / t), new Vector2(L / t, (h + .3f) / t), new Vector2(L / t, 0));
+                    var bc = new GameObject("p").AddComponent<BoxCollider>();
+                    bc.transform.SetParent(col, false);
+                    bc.transform.position = new Vector3(m.x, (y0 + y1) * .5f + (h + .3f) * .5f, m.y);
+                    bc.transform.rotation = Quaternion.LookRotation(new Vector3(p1.x - p0.x, 0, p1.y - p0.y));
+                    bc.size = new Vector3(.2f, h + .3f, L + .05f);
+                }
+            }
+            var go = MeshGo("FenceMesh_" + id, col, mb.Build("Fence_" + id), Mat(mat));
+            go.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.TwoSided;
+        }
+
+        // Pier / jetty deck: boards 1.2 m over the sea (follows the sand where it starts on the beach), 0.4 m skirt, walkable.
+        static void Pier(Transform parent, string id, Vector2[] poly, string mat)
+        {
+            if (poly.Length < 3) return;
+            Func<Vector2, float> lv = q => Mathf.Max(1.2f, Height(q.x, q.y) + .15f);
+            var deck = Fill("Pier_" + id, poly, lv, Vector2.zero);
+            float t = Tile(mat);
+            deck.uv = deck.vertices.Select(v => new Vector2(v.x, v.z) / t).ToArray();
+            EditorUtility.SetDirty(deck);
+            MeshGo("Pier_" + id, parent, deck, Mat(mat), true);
+            var sk = new MB();
+            for (int i = 0; i < poly.Length; i++)
+            {
+                Vector2 a = poly[i], b = poly[(i + 1) % poly.Length];
+                float ya = lv(a), yb = lv(b);
+                sk.QuadBoth(new Vector3(a.x, ya - .4f, a.y), new Vector3(a.x, ya, a.y), new Vector3(b.x, yb, b.y), new Vector3(b.x, yb - .4f, b.y), Vector2.zero, new Vector2(0, .4f), new Vector2(1, .4f), new Vector2(1, 0));
+            }
+            MeshGo("PierSkirt_" + id, parent, sk.Build("PierSkirt_" + id), Mat(mat));
         }
 
         static readonly HashSet<string> FlatZones = new() { "plaza", "pool", "playground", "parking", "yard", "sidewalk", "pitch", "box", "court", "deck", "helipad", "terrace", "lot", "square", "trash", "base_yard", "courtyard" };
@@ -902,6 +1291,7 @@ namespace OnlyVolunteers.Map.W76
             }
             Roof(go.transform, id, fp, top, roofType, roof, roofMat, walls);
             Colliders(go.transform, id, fp, baseY, top, roofType, roof, arches);
+            Built.Add(new BInfo { Go = go, Id = district + "/" + id, Fp = fp, Base = baseY, Top = top, Type = roofType, Roof = roof });
             Sockets(details, b, fp, baseY, top, floors, floorH, district);
             // LOD: details off at distance (kit pieces), body + roof always
             var lod = go.AddComponent<LODGroup>();
@@ -912,6 +1302,9 @@ namespace OnlyVolunteers.Map.W76
             GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic | StaticEditorFlags.OccluderStatic);
             return true;
         }
+
+        sealed class BInfo { public GameObject Go; public string Id, Type; public List<Vector2> Fp; public float Base, Top; public Dictionary<string, object> Roof; }
+        static readonly List<BInfo> Built = new();
 
         static IEnumerable<(float s0, float s1, bool arch)> Segments(float L, List<(float s, float w)> cuts)
         {
@@ -949,10 +1342,10 @@ namespace OnlyVolunteers.Map.W76
             if (type == "none") return;
             if (type == "flat")
             {
-                var cap = Fill("B_" + id + "_roof", fp.ToArray(), q => top, Vector2.zero);
-                cap.uv = cap.vertices.Select(v => new Vector2(v.x, v.z) / tile).ToArray();
-                EditorUtility.SetDirty(cap);
-                MeshGo("roof", parent, cap, Mat(roofMat));
+                var capMesh = Fill("B_" + id + "_roof", fp.ToArray(), q => top, Vector2.zero);
+                capMesh.uv = capMesh.vertices.Select(v => new Vector2(v.x, v.z) / tile).ToArray();
+                EditorUtility.SetDirty(capMesh);
+                MeshGo("roof", parent, capMesh, Mat(roofMat));
                 float ph = F(Get(roof, "parapet_h_m"), 0f);
                 if (ph > 0f)
                 {
@@ -1033,12 +1426,13 @@ namespace OnlyVolunteers.Map.W76
                 AddBox(col.transform, c, baseY + 4.5f, top, 2 * hx, 2 * hy, yaw);
             }
             else if (rect) AddBox(col.transform, c, baseY, top, 2 * hx, 2 * hy, yaw);
-            else
+            else if (IsConvex(fp))
             {
                 var pts = new List<Vector3>();
                 foreach (var q in fp) { pts.Add(new Vector3(q.x, baseY, q.y)); pts.Add(new Vector3(q.x, top, q.y)); }
                 Hull(col.transform, "body", pts, id);
             }
+            else Prism(col.transform, fp, baseY, top, id);     // v02: concave (L / U / T) bodies -> closed non-convex prism, no filled corners
             if (type == "flat" || type == "none") { float ph = F(Get(roof, "parapet_h_m"), 0f); if (ph > 0) ParapetBoxes(col.transform, fp, top, ph); return; }
             float ov = F(Get(roof, "overhang_m"), .4f), rh = F(Get(roof, "ridge_h_m"), Mathf.Max(1.5f, hy * .7f));
             float HX = hx + ov, HY = hy + ov, e = top - ov * rh / Mathf.Max(hy, .5f);
@@ -1048,6 +1442,42 @@ namespace OnlyVolunteers.Map.W76
             if (type == "shed") roofPts = new List<Vector3> { Q(-HX, -HY, e), Q(HX, -HY, e), Q(HX, HY, top + rh), Q(-HX, HY, top + rh), Q(-HX, -HY, top - .05f), Q(HX, HY, top - .05f) };
             roofPts.Add(Q(0, 0, top - .02f));                                           // overlap the body (no gap > 0.02 m)
             Hull(col.transform, "roof", roofPts, id);
+        }
+
+        static bool IsConvex(List<Vector2> fp)
+        {
+            int sign = 0;
+            for (int i = 0; i < fp.Count; i++)
+            {
+                float c = Cross(fp[i], fp[(i + 1) % fp.Count], fp[(i + 2) % fp.Count]);
+                if (Mathf.Abs(c) < 1e-4f) continue;
+                int sg = c > 0 ? 1 : -1;
+                if (sign != 0 && sg != sign) return false;
+                sign = sg;
+            }
+            return true;
+        }
+
+        // Closed prism (walls out, cap up, floor down) as a static non-convex MeshCollider for concave footprints.
+        static void Prism(Transform parent, List<Vector2> fp, float y0, float y1, string id)
+        {
+            var mb = new MB();
+            for (int i = 0; i < fp.Count; i++)
+            {
+                Vector2 a = fp[i], b = fp[(i + 1) % fp.Count];
+                mb.Quad(new Vector3(a.x, y0, a.y), new Vector3(a.x, y1, a.y), new Vector3(b.x, y1, b.y), new Vector3(b.x, y0, b.y), Vector2.zero, Vector2.up, Vector2.one, Vector2.right);
+            }
+            var cap = Fill("tmp", fp.ToArray(), q => y1, Vector2.zero, false);
+            int o = mb.V.Count;
+            mb.V.AddRange(cap.vertices); mb.UV.AddRange(cap.vertices.Select(v => Vector2.zero)); mb.T.AddRange(cap.triangles.Select(t => t + o));
+            o = mb.V.Count;
+            mb.V.AddRange(cap.vertices.Select(v => new Vector3(v.x, y0, v.z))); mb.UV.AddRange(cap.vertices.Select(v => Vector2.zero));
+            var tt = cap.triangles;
+            for (int i = 0; i + 2 < tt.Length; i += 3) { mb.T.Add(tt[i] + o); mb.T.Add(tt[i + 2] + o); mb.T.Add(tt[i + 1] + o); }
+            Object.DestroyImmediate(cap);
+            var m = mb.Build("B_" + id + "_body_prism");
+            var g = new GameObject("body"); g.transform.SetParent(parent, false);
+            g.AddComponent<MeshCollider>().sharedMesh = m;
         }
 
         static void AddBox(Transform parent, Vector2 c, float y0, float y1, float sx, float sz, float yaw)
@@ -1158,7 +1588,15 @@ namespace OnlyVolunteers.Map.W76
         static bool Prop(Transform parent, Dictionary<string, object> p)
         {
             string kind = (S(Get(p, "kind"), "") ?? "").ToLowerInvariant();
-            if (kind.Contains("tree") || kind.Contains("palm") || kind.Contains("bush") || kind.Contains("oak") || kind.Contains("apple") || kind.Contains("pine") || kind.Contains("birch")) return false; // terrain trees
+            if (IsTree(kind)) return false;                                         // terrain trees
+            if (Arr(Get(p, "pos")).Count < 2) return false;                         // "count only, place by logic (OPEN)" props have no position
+            if (kind == "legend_object")
+            {   // numbered legend circle of the district plan (police 1, ATM, pavilion ...): a named marker, not a 1 m cube
+                var mk = new GameObject("Legend_" + S(Get(p, "id"), "") + "_" + Safe(S(Get(p, "label"), S(Get(p, "notes"), "")) ?? ""));
+                mk.transform.SetParent(parent, false);
+                mk.transform.position = P(V2(Get(p, "pos")));
+                return true;
+            }
             Vector2 q = V2(Get(p, "pos"));
             var sz = Arr(Get(p, "size"));
             Vector3 size = sz.Count >= 3 ? new Vector3(F(sz[0]), F(sz[2]), F(sz[1])) : sz.Count == 2 ? new Vector3(F(sz[0]), 1f, F(sz[1])) : DefaultSize(kind);
@@ -1237,23 +1675,79 @@ namespace OnlyVolunteers.Map.W76
             foreach (var mr in root.GetComponentsInChildren<MeshRenderer>(true)) if (!mr.sharedMaterial) miss++;
             foreach (var t in root.GetComponentsInChildren<Transform>(true))
                 if (t.name == "colliders" && t.GetComponentsInChildren<Collider>().Length == 0) holes++;
-            // roof collision check (ROOF_COLLISION_NOTE): rays down every 0.5 m over 20 sample roofs must hit
-            int rays = 0, missed = 0;
-            foreach (var b in root.GetComponentsInChildren<LODGroup>().Where(g => g.GetComponentsInChildren<Collider>().Length > 0).Take(20))
+            RoofTest(out int rays, out int missed);
+            Note($"validate: renderers without material {miss}, buildings without colliders {holes}, roof rays {rays} (missed {missed}) - details {Gen}/W76_roof_test.txt");
+        }
+
+        // ROOF_COLLISION_NOTE check over ALL buildings: (1) a ray straight down every 0.5 m over the footprint must hit this
+        // building's colliders at roof level (flat: >= roof - 5 cm; pitched: >= eave - 5 cm); (2) ridge penetration: rays every
+        // 0.25 m along the ridge at 0 / +-5 cm across must hit >= ridge - 20 cm, and a 0.3 m sphere (a player's capsule) swept
+        // down onto the ridge must stop >= ridge - 50 cm. Hits on other objects (trees, neighbours) are ignored.
+        static void RoofTest(out int rays, out int missed)
+        {
+            Physics.SyncTransforms();
+            rays = missed = 0;
+            int ridgeRays = 0, ridgeMiss = 0, sweeps = 0, sweepMiss = 0, bad = 0;
+            var rep = new StringBuilder("W76 roof collision test (all buildings)\n");
+            foreach (var b in Built)
             {
-                var bounds = b.GetComponentsInChildren<Collider>().Select(c => c.bounds).Aggregate((x, y) => { x.Encapsulate(y); return x; });
-                Physics.SyncTransforms();
-                for (float x = bounds.min.x + .5f; x < bounds.max.x - .5f; x += .5f)
-                    for (float z = bounds.min.z + .5f; z < bounds.max.z - .5f; z += .5f)
+                int r0 = rays, m0 = missed, rr0 = ridgeMiss, s0 = sweepMiss;
+                bool pitched = b.Type != "flat" && b.Type != "none";
+                float minY = b.Top - .05f, ridge = b.Top;
+                Frame(b.Fp, b.Roof, out Vector2 c, out Vector2 ax, out Vector2 ay, out float hx, out float hy);
+                float ov = F(Get(b.Roof, "overhang_m"), .4f), rh = F(Get(b.Roof, "ridge_h_m"), Mathf.Max(1.5f, hy * .7f));
+                if (pitched) { minY = b.Top - ov * rh / Mathf.Max(hy, .5f) - .05f; ridge = b.Top + rh; }
+                float x0 = b.Fp.Min(q => q.x), x1 = b.Fp.Max(q => q.x), z0 = b.Fp.Min(q => q.y), z1 = b.Fp.Max(q => q.y);
+                for (float x = x0 + .25f; x < x1; x += .5f)
+                    for (float z = z0 + .25f; z < z1; z += .5f)
                     {
-                        var o = new Vector3(x, bounds.max.y + 5f, z);
-                        bool inFootprint = b.GetComponentsInChildren<Collider>().Any(c => c.bounds.Contains(new Vector3(x, bounds.center.y, z)));
-                        if (!inFootprint) continue;
+                        var p = new Vector2(x, z);
+                        if (!W76Atmosphere.Inside(b.Fp.ToArray(), p) || W76Atmosphere.Distance(b.Fp.Append(b.Fp[0]).ToArray(), p) < .15f) continue;
                         rays++;
-                        if (!Physics.Raycast(o, Vector3.down, 30f)) missed++;
+                        if (!HitOwn(b.Go, new Vector3(x, ridge + 30f, z), out float y) || y < minY) missed++;
                     }
+                if (pitched)
+                {
+                    float rx = b.Type == "hip" ? Mathf.Max(0f, hx + ov - (hy + ov)) : b.Type == "pyramid" ? 0f : hx + ov;
+                    // along the whole ridge except the last 10 cm at the gable faces (a ray exactly on the hull's end face is a tangent)
+                    float r0x = rx > .2f ? -rx + .1f : 0f, r1x = rx > .2f ? rx - .1f : 0f;
+                    for (float sAx = r0x; sAx <= r1x + 1e-3f; sAx += .25f)
+                        foreach (float v in b.Type == "shed" ? new[] { hy + ov - .3f } : new[] { -.05f, 0f, .05f })
+                        {
+                            Vector2 q = c + ax * sAx + ay * v;
+                            float eav = b.Top - ov * rh / Mathf.Max(hy, .5f), target = b.Type == "shed" ? eav + (b.Top + rh - eav) * (2f * (hy + ov) - .3f) / (2f * (hy + ov)) : ridge;
+                            ridgeRays++;
+                            if (!HitOwn(b.Go, new Vector3(q.x, target + 10f, q.y), out float y) || y < target - .2f)
+                            {
+                                ridgeMiss++;
+                                rep.AppendLine($"  ridge miss {b.Id} at ({q.x:0.00}, {q.y:0.00}) along {sAx:0.00} across {v:0.00}: hit {(y > float.MinValue ? y.ToString("0.00") : "none")} < ridge {target:0.00}");
+                            }
+                            if (v != 0f) continue;
+                            sweeps++;
+                            var hits = Physics.SphereCastAll(new Vector3(q.x, target + 10f, q.y), .3f, Vector3.down, 30f);
+                            float best = float.MinValue;
+                            foreach (var h in hits) if (h.collider.transform.IsChildOf(b.Go.transform) && h.distance > 0f) best = Mathf.Max(best, target + 10f - h.distance);
+                            if (best < target - .5f) sweepMiss++;
+                        }
+                }
+                if (missed > m0 || ridgeMiss > rr0 || sweepMiss > s0)
+                {
+                    bad++;
+                    rep.AppendLine($"FAIL {b.Id} ({b.Type}): grid {missed - m0}/{rays - r0} missed, ridge {ridgeMiss - rr0}, sweep {sweepMiss - s0}");
+                }
             }
-            Note($"validate: renderers without material {miss}, buildings without colliders {holes}, roof rays {rays} (missed {missed})");
+            rep.Insert(0, $"buildings {Built.Count}, failing {bad}; grid rays {rays} missed {missed}; ridge rays {ridgeRays} missed {ridgeMiss}; ridge sphere sweeps {sweeps} missed {sweepMiss}\n");
+            File.WriteAllText(Gen + "/W76_roof_test.txt", rep.ToString());
+            Note($"roof test: {Built.Count} buildings, failing {bad}; ridge rays {ridgeRays} (missed {ridgeMiss}), sweeps {sweeps} (missed {sweepMiss})");
+        }
+
+        // Highest hit on this building's own colliders straight below `from`.
+        static bool HitOwn(GameObject b, Vector3 from, out float y)
+        {
+            y = float.MinValue;
+            foreach (var h in Physics.RaycastAll(from, Vector3.down, 200f))
+                if (h.collider.transform.IsChildOf(b.transform)) y = Mathf.Max(y, h.point.y);
+            return y > float.MinValue;
         }
 
         // ------------------------------------------------------------------ minimal JSON (objects, arrays, numbers, strings, bools, null)

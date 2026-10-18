@@ -1,0 +1,1316 @@
+{
+ "district": "elite",
+ "sources": [
+  "ArtSource/References/Map/World_v11/Districts/D07_Elite_Hill_layout_v09.json",
+  "ArtSource/References/Map/World_v74/make_elite_v10.py",
+  "ArtSource/References/Map/World_v74/elite_v10_world.png",
+  "ArtSource/References/Map/World_v76/build_world_v76.py (RING, fence)"
+ ],
+ "transform": "v11 + (140.2, 0) = v76 pre-shift, then post_shift (+20, -28); png px -> (1260 + px/6, 450 - py/6) pre-shift",
+ "pad_height_m": null,
+ "abs_heights": true,
+ "buildings": [
+  {
+   "id": "07-V01",
+   "kind": "villa",
+   "footprint": [
+    [
+     1356.87,
+     365.43
+    ],
+    [
+     1379.44,
+     360.78
+    ],
+    [
+     1381.23,
+     369.46
+    ],
+    [
+     1358.65,
+     374.11
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 3.4,
+   "height_m": 6.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.5,
+    "roof_terrace": true
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#F2F0EA",
+   "entrances": [
+    {
+     "pos": [
+      1369.05,
+      367.44
+     ],
+     "facing_deg": 0,
+     "kind": "door",
+     "w_m": 1.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "pergola": true,
+    "louvres": true
+   },
+   "collider": "full_roof",
+   "house_type": "L",
+   "notes": "VIP villa (parody of IShowSpeed); footprint read from elite_v10_world.png; ~22x10 m (v02 §8.7)"
+  },
+  {
+   "id": "07-V01_garage",
+   "kind": "garage",
+   "footprint": [
+    [
+     1383.99,
+     344.71
+    ],
+    [
+     1391.03,
+     343.55
+    ],
+    [
+     1392.13,
+     350.26
+    ],
+    [
+     1385.1,
+     351.42
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.3
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#ECEAE3",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {},
+   "collider": "full_roof",
+   "notes": ""
+  },
+  {
+   "id": "07-V02",
+   "kind": "villa",
+   "footprint": [
+    [
+     1454.42,
+     363.33
+    ],
+    [
+     1472.75,
+     362.35
+    ],
+    [
+     1473.16,
+     369.92
+    ],
+    [
+     1454.82,
+     370.91
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 3.4,
+   "height_m": 6.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.5,
+    "roof_terrace": true
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#F2F0EA",
+   "entrances": [
+    {
+     "pos": [
+      1463.79,
+      366.63
+     ],
+     "facing_deg": 0,
+     "kind": "door",
+     "w_m": 1.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "pergola": true,
+    "louvres": true
+   },
+   "collider": "full_roof",
+   "house_type": "R",
+   "notes": "VIP villa (parody of Sweetie Fox); footprint read from elite_v10_world.png; ~22x10 m (v02 §8.7)"
+  },
+  {
+   "id": "07-V02_garage",
+   "kind": "garage",
+   "footprint": [
+    [
+     1442.55,
+     348.44
+    ],
+    [
+     1450.22,
+     348.32
+    ],
+    [
+     1450.34,
+     355.21
+    ],
+    [
+     1442.66,
+     355.33
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.3
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#ECEAE3",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {},
+   "collider": "full_roof",
+   "notes": ""
+  },
+  {
+   "id": "07-V03",
+   "kind": "villa",
+   "footprint": [
+    [
+     1456.44,
+     272.18
+    ],
+    [
+     1479.44,
+     270.58
+    ],
+    [
+     1480.04,
+     279.25
+    ],
+    [
+     1457.05,
+     280.85
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 3.4,
+   "height_m": 6.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.5,
+    "roof_terrace": true
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#F2F0EA",
+   "entrances": [
+    {
+     "pos": [
+      1468.24,
+      275.71
+     ],
+     "facing_deg": 0,
+     "kind": "door",
+     "w_m": 1.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "pergola": true,
+    "louvres": true
+   },
+   "collider": "full_roof",
+   "house_type": "L",
+   "notes": "VIP villa (parody of Michael Jackson); footprint read from elite_v10_world.png; ~22x10 m (v02 §8.7)"
+  },
+  {
+   "id": "07-V03_garage",
+   "kind": "garage",
+   "footprint": [
+    [
+     1442.71,
+     291.24
+    ],
+    [
+     1449.75,
+     289.25
+    ],
+    [
+     1451.62,
+     295.86
+    ],
+    [
+     1444.59,
+     297.85
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.3
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#ECEAE3",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {},
+   "collider": "full_roof",
+   "notes": ""
+  },
+  {
+   "id": "07-V04",
+   "kind": "villa",
+   "footprint": [
+    [
+     1380.51,
+     284.41
+    ],
+    [
+     1362.84,
+     280.26
+    ],
+    [
+     1364.55,
+     272.95
+    ],
+    [
+     1382.22,
+     277.09
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 3.4,
+   "height_m": 6.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.5,
+    "roof_terrace": true
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#F2F0EA",
+   "entrances": [
+    {
+     "pos": [
+      1372.53,
+      278.68
+     ],
+     "facing_deg": 0,
+     "kind": "door",
+     "w_m": 1.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "pergola": true,
+    "louvres": true
+   },
+   "collider": "full_roof",
+   "house_type": "R",
+   "notes": "VIP villa (parody of Satoru Gojo); footprint read from elite_v10_world.png; ~22x10 m (v02 §8.7)"
+  },
+  {
+   "id": "07-V04_garage",
+   "kind": "garage",
+   "footprint": [
+    [
+     1388.64,
+     302.29
+    ],
+    [
+     1381.31,
+     299.96
+    ],
+    [
+     1383.35,
+     293.52
+    ],
+    [
+     1390.68,
+     295.85
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.3
+   },
+   "walls": "facade_elite_villa",
+   "tint": "#ECEAE3",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {},
+   "collider": "full_roof",
+   "notes": ""
+  },
+  {
+   "id": "07-05_FBI",
+   "kind": "fbi_post",
+   "footprint": [
+    [
+     1428.64,
+     327.93
+    ],
+    [
+     1405.25,
+     327.78
+    ],
+    [
+     1405.32,
+     315.89
+    ],
+    [
+     1428.71,
+     316.04
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 3.5,
+   "height_m": 7.0,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6
+   },
+   "walls": "concrete_panel_SK3c",
+   "tint": "#4E5A66",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "flag": true,
+    "cameras_decor": true
+   },
+   "collider": "full_roof",
+   "notes": "FBI building in the centre of the inner ring (~28x14 m), 3 black jeeps; trap at the gate (canon 18.10)"
+  }
+ ],
+ "props": [
+  {
+   "id": "07-V01_gate",
+   "kind": "villa_gate",
+   "pos": [
+    1390.0,
+    343.8
+   ],
+   "notes": "v09 gate; plot was rotated in v10 — snap to plot edge"
+  },
+  {
+   "id": "07-V02_gate",
+   "kind": "villa_gate",
+   "pos": [
+    1448.0,
+    342.9
+   ],
+   "notes": "v09 gate; plot was rotated in v10 — snap to plot edge"
+  },
+  {
+   "id": "07-V03_gate",
+   "kind": "villa_gate",
+   "pos": [
+    1448.3,
+    301.5
+   ],
+   "notes": "v09 gate; plot was rotated in v10 — snap to plot edge"
+  },
+  {
+   "id": "07-V04_gate",
+   "kind": "villa_gate",
+   "pos": [
+    1388.7,
+    300.4
+   ],
+   "notes": "v09 gate; plot was rotated in v10 — snap to plot edge"
+  },
+  {
+   "id": "07_yacht_0",
+   "kind": "yacht",
+   "pos": [
+    1532.2,
+    298.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    22,
+    6,
+    3
+   ]
+  },
+  {
+   "id": "07_yacht_1",
+   "kind": "yacht",
+   "pos": [
+    1558.2,
+    284.0
+   ],
+   "rot_deg": 90,
+   "size": [
+    15,
+    5,
+    3
+   ]
+  },
+  {
+   "id": "07_yacht_2",
+   "kind": "yacht",
+   "pos": [
+    1558.2,
+    272.0
+   ],
+   "rot_deg": 90,
+   "size": [
+    12,
+    4,
+    3
+   ]
+  },
+  {
+   "id": "07_yacht_3",
+   "kind": "yacht",
+   "pos": [
+    1534.2,
+    285.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    10,
+    3.6,
+    3
+   ]
+  },
+  {
+   "id": "07_yacht_4",
+   "kind": "yacht",
+   "pos": [
+    1555.2,
+    242.0
+   ],
+   "rot_deg": 20,
+   "size": [
+    8,
+    3,
+    3
+   ]
+  }
+ ],
+ "zones": [
+  {
+   "id": "07-V01_plot",
+   "kind": "villa_plot",
+   "poly": [
+    [
+     1352.0,
+     347.58
+    ],
+    [
+     1395.1,
+     338.71
+    ],
+    [
+     1400.34,
+     364.17
+    ],
+    [
+     1357.24,
+     373.04
+    ]
+   ],
+   "surface": "lawn",
+   "hedge_h_m": 1.8,
+   "terrace": "+7 м",
+   "notes": "plot rotated -5 deg and shifted (make_elite_v10.py)"
+  },
+  {
+   "id": "07-V01_pool",
+   "kind": "pool",
+   "poly": [
+    [
+     1364.3,
+     351.54
+    ],
+    [
+     1377.44,
+     348.79
+    ],
+    [
+     1378.5,
+     353.84
+    ],
+    [
+     1365.36,
+     356.59
+    ]
+   ],
+   "surface": "pool_tile",
+   "depth_m": 1.5,
+   "notes": "deck 13x5 pool, loungers, umbrellas, palms"
+  },
+  {
+   "id": "07-V02_plot",
+   "kind": "villa_plot",
+   "poly": [
+    [
+     1439.06,
+     345.48
+    ],
+    [
+     1481.0,
+     343.22
+    ],
+    [
+     1482.39,
+     369.19
+    ],
+    [
+     1440.45,
+     371.44
+    ]
+   ],
+   "surface": "lawn",
+   "hedge_h_m": 1.8,
+   "terrace": "+9 м",
+   "notes": "plot rotated -9 deg and shifted (make_elite_v10.py)"
+  },
+  {
+   "id": "07-V02_pool",
+   "kind": "pool",
+   "poly": [
+    [
+     1465.03,
+     351.06
+    ],
+    [
+     1478.83,
+     351.02
+    ],
+    [
+     1478.85,
+     356.02
+    ],
+    [
+     1465.04,
+     356.06
+    ]
+   ],
+   "surface": "pool_tile",
+   "depth_m": 1.5,
+   "notes": "deck 13x5 pool, loungers, umbrellas, palms"
+  },
+  {
+   "id": "07-V03_plot",
+   "kind": "villa_plot",
+   "poly": [
+    [
+     1437.05,
+     274.51
+    ],
+    [
+     1480.94,
+     271.45
+    ],
+    [
+     1482.82,
+     298.39
+    ],
+    [
+     1438.93,
+     301.45
+    ]
+   ],
+   "surface": "lawn",
+   "hedge_h_m": 1.8,
+   "terrace": "+5 м",
+   "notes": "plot rotated +4 deg and shifted (make_elite_v10.py)"
+  },
+  {
+   "id": "07-V03_pool",
+   "kind": "pool",
+   "poly": [
+    [
+     1457.47,
+     288.13
+    ],
+    [
+     1470.83,
+     286.85
+    ],
+    [
+     1471.33,
+     292.03
+    ],
+    [
+     1457.97,
+     293.31
+    ]
+   ],
+   "surface": "pool_tile",
+   "depth_m": 1.5,
+   "notes": "deck 13x5 pool, loungers, umbrellas, palms"
+  },
+  {
+   "id": "07-V04_plot",
+   "kind": "villa_plot",
+   "poly": [
+    [
+     1391.12,
+     306.08
+    ],
+    [
+     1349.25,
+     296.26
+    ],
+    [
+     1355.2,
+     270.94
+    ],
+    [
+     1397.06,
+     280.77
+    ]
+   ],
+   "surface": "lawn",
+   "hedge_h_m": 1.8,
+   "terrace": "+3 м",
+   "notes": "plot rotated +10 deg and shifted (make_elite_v10.py)"
+  },
+  {
+   "id": "07-V04_pool",
+   "kind": "pool",
+   "poly": [
+    [
+     1366.89,
+     293.26
+    ],
+    [
+     1353.62,
+     289.42
+    ],
+    [
+     1355.0,
+     284.65
+    ],
+    [
+     1368.27,
+     288.49
+    ]
+   ],
+   "surface": "pool_tile",
+   "depth_m": 1.5,
+   "notes": "deck 13x5 pool, loungers, umbrellas, palms"
+  },
+  {
+   "id": "07_fence",
+   "kind": "fence",
+   "poly": [
+    [
+     1346.2,
+     328.0
+    ],
+    [
+     1346.2,
+     369.0
+    ],
+    [
+     1360.2,
+     380.0
+    ],
+    [
+     1476.2,
+     380.0
+    ],
+    [
+     1490.2,
+     369.0
+    ],
+    [
+     1490.2,
+     274.0
+    ],
+    [
+     1476.2,
+     263.0
+    ],
+    [
+     1360.2,
+     263.0
+    ],
+    [
+     1346.2,
+     274.0
+    ],
+    [
+     1346.2,
+     316.0
+    ]
+   ],
+   "height_m": 3.5,
+   "notes": "high, solid (no beach exit: v10 closes the gap at gate 08), floodlights, barbed wire; octagon of v09/v10 plan"
+  },
+  {
+   "id": "07_plateau",
+   "kind": "plateau",
+   "poly": [
+    [
+     1490.7,
+     321.5
+    ],
+    [
+     1490.62,
+     336.54
+    ],
+    [
+     1490.39,
+     342.74
+    ],
+    [
+     1490.0,
+     347.47
+    ],
+    [
+     1489.45,
+     351.41
+    ],
+    [
+     1488.75,
+     354.84
+    ],
+    [
+     1487.89,
+     357.87
+    ],
+    [
+     1486.86,
+     360.6
+    ],
+    [
+     1485.67,
+     363.08
+    ],
+    [
+     1484.31,
+     365.33
+    ],
+    [
+     1482.78,
+     367.38
+    ],
+    [
+     1481.06,
+     369.25
+    ],
+    [
+     1479.16,
+     370.94
+    ],
+    [
+     1477.07,
+     372.48
+    ],
+    [
+     1474.77,
+     373.87
+    ],
+    [
+     1472.24,
+     375.12
+    ],
+    [
+     1469.47,
+     376.22
+    ],
+    [
+     1466.42,
+     377.19
+    ],
+    [
+     1463.05,
+     378.02
+    ],
+    [
+     1459.3,
+     378.72
+    ],
+    [
+     1455.08,
+     379.29
+    ],
+    [
+     1450.22,
+     379.73
+    ],
+    [
+     1444.39,
+     380.05
+    ],
+    [
+     1436.74,
+     380.24
+    ],
+    [
+     1418.2,
+     380.3
+    ],
+    [
+     1399.66,
+     380.24
+    ],
+    [
+     1392.01,
+     380.05
+    ],
+    [
+     1386.18,
+     379.73
+    ],
+    [
+     1381.32,
+     379.29
+    ],
+    [
+     1377.1,
+     378.72
+    ],
+    [
+     1373.35,
+     378.02
+    ],
+    [
+     1369.98,
+     377.19
+    ],
+    [
+     1366.93,
+     376.22
+    ],
+    [
+     1364.16,
+     375.12
+    ],
+    [
+     1361.63,
+     373.87
+    ],
+    [
+     1359.33,
+     372.48
+    ],
+    [
+     1357.24,
+     370.94
+    ],
+    [
+     1355.34,
+     369.25
+    ],
+    [
+     1353.62,
+     367.38
+    ],
+    [
+     1352.09,
+     365.33
+    ],
+    [
+     1350.73,
+     363.08
+    ],
+    [
+     1349.54,
+     360.6
+    ],
+    [
+     1348.51,
+     357.87
+    ],
+    [
+     1347.65,
+     354.84
+    ],
+    [
+     1346.95,
+     351.41
+    ],
+    [
+     1346.4,
+     347.47
+    ],
+    [
+     1346.01,
+     342.74
+    ],
+    [
+     1345.78,
+     336.54
+    ],
+    [
+     1345.7,
+     321.5
+    ],
+    [
+     1345.78,
+     306.46
+    ],
+    [
+     1346.01,
+     300.26
+    ],
+    [
+     1346.4,
+     295.53
+    ],
+    [
+     1346.95,
+     291.59
+    ],
+    [
+     1347.65,
+     288.16
+    ],
+    [
+     1348.51,
+     285.13
+    ],
+    [
+     1349.54,
+     282.4
+    ],
+    [
+     1350.73,
+     279.92
+    ],
+    [
+     1352.09,
+     277.67
+    ],
+    [
+     1353.62,
+     275.62
+    ],
+    [
+     1355.34,
+     273.75
+    ],
+    [
+     1357.24,
+     272.06
+    ],
+    [
+     1359.33,
+     270.52
+    ],
+    [
+     1361.63,
+     269.13
+    ],
+    [
+     1364.16,
+     267.88
+    ],
+    [
+     1366.93,
+     266.78
+    ],
+    [
+     1369.98,
+     265.81
+    ],
+    [
+     1373.35,
+     264.98
+    ],
+    [
+     1377.1,
+     264.28
+    ],
+    [
+     1381.32,
+     263.71
+    ],
+    [
+     1386.18,
+     263.27
+    ],
+    [
+     1392.01,
+     262.95
+    ],
+    [
+     1399.66,
+     262.76
+    ],
+    [
+     1418.2,
+     262.7
+    ],
+    [
+     1436.74,
+     262.76
+    ],
+    [
+     1444.39,
+     262.95
+    ],
+    [
+     1450.22,
+     263.27
+    ],
+    [
+     1455.08,
+     263.71
+    ],
+    [
+     1459.3,
+     264.28
+    ],
+    [
+     1463.05,
+     264.98
+    ],
+    [
+     1466.42,
+     265.81
+    ],
+    [
+     1469.47,
+     266.78
+    ],
+    [
+     1472.24,
+     267.88
+    ],
+    [
+     1474.77,
+     269.13
+    ],
+    [
+     1477.07,
+     270.52
+    ],
+    [
+     1479.16,
+     272.06
+    ],
+    [
+     1481.06,
+     273.75
+    ],
+    [
+     1482.78,
+     275.62
+    ],
+    [
+     1484.31,
+     277.67
+    ],
+    [
+     1485.67,
+     279.92
+    ],
+    [
+     1486.86,
+     282.4
+    ],
+    [
+     1487.89,
+     285.13
+    ],
+    [
+     1488.75,
+     288.16
+    ],
+    [
+     1489.45,
+     291.59
+    ],
+    [
+     1490.0,
+     295.53
+    ],
+    [
+     1490.39,
+     300.26
+    ],
+    [
+     1490.62,
+     306.46
+    ]
+   ],
+   "abs_height_m": [
+    40,
+    44
+   ],
+   "notes": "uneven: +44 N, +41 W, +43 E, +40 S (elite_v10 labels)"
+  },
+  {
+   "id": "07_inner_ring",
+   "kind": "ring_road",
+   "centre": [
+    1418.2,
+    322.0
+   ],
+   "rx_m": 29.0,
+   "ry_m": 19.0,
+   "width_m": 6.4,
+   "surface": "asphalt_A5d12",
+   "lamps": true
+  },
+  {
+   "id": "07_gate_06",
+   "kind": "gate_trap",
+   "pos": [
+    1347.0,
+    323.0
+   ],
+   "abs_height_m": 44.0,
+   "notes": "gate latches shut right behind the van, very little time; FBI-style guards beat players (mechanics OPEN)"
+  },
+  {
+   "id": "07_P1",
+   "kind": "pier",
+   "poly": [
+    [
+     1518.2,
+     306.0
+    ],
+    [
+     1542.2,
+     306.0
+    ],
+    [
+     1542.2,
+     316.0
+    ],
+    [
+     1546.2,
+     316.0
+    ],
+    [
+     1546.2,
+     302.0
+    ],
+    [
+     1518.2,
+     302.0
+    ]
+   ],
+   "surface": "boards_pier_SK5a_v02"
+  },
+  {
+   "id": "07_P2",
+   "kind": "pier",
+   "poly": [
+    [
+     1518.2,
+     276.0
+    ],
+    [
+     1548.2,
+     276.0
+    ],
+    [
+     1548.2,
+     268.0
+    ],
+    [
+     1553.2,
+     268.0
+    ],
+    [
+     1553.2,
+     290.0
+    ],
+    [
+     1548.2,
+     290.0
+    ],
+    [
+     1548.2,
+     281.0
+    ],
+    [
+     1518.2,
+     281.0
+    ]
+   ],
+   "surface": "boards_pier_SK5a_v02"
+  },
+  {
+   "id": "07_P3",
+   "kind": "pier",
+   "poly": [
+    [
+     1517.2,
+     258.0
+    ],
+    [
+     1530.2,
+     255.0
+    ],
+    [
+     1541.2,
+     247.0
+    ],
+    [
+     1549.2,
+     247.0
+    ],
+    [
+     1549.2,
+     238.0
+    ],
+    [
+     1539.2,
+     238.0
+    ],
+    [
+     1539.2,
+     243.0
+    ],
+    [
+     1529.2,
+     251.0
+    ],
+    [
+     1517.2,
+     254.0
+    ]
+   ],
+   "surface": "boards_pier_SK5a_v02"
+  }
+ ],
+ "open": [
+  "trap timing / consequences",
+  "catching on Elite beach",
+  "yachts/piers positions from v09 json (v10 png keeps them)"
+ ]
+}

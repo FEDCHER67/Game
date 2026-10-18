@@ -1,0 +1,7570 @@
+{
+ "district": "rough",
+ "sources": [
+  "ArtSource/References/Map/World_v11/Districts/D04_Rough_District_layout_v45.json",
+  "docs/specs/ROUGH_LEGEND_v45.md",
+  "docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-18_v02.md §8.4"
+ ],
+ "transform": "v76 = local v45 (x east, z north, origin SW outer-road corner) + (667, 668), scale 1.0, fitted on the v76 render (outer asphalt U + 13 houses)",
+ "pad_height_m": 5.0,
+ "lighting": "overcast_fog",
+ "buildings": [
+  {
+   "id": "04-H1a",
+   "group": "H1",
+   "name_ru": "Г-дом СЗ (двор 9)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     670.55,
+     874.45
+    ],
+    [
+     742.6,
+     874.45
+    ],
+    [
+     742.6,
+     887.45
+    ],
+    [
+     670.55,
+     887.45
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      693.39,
+      874.45
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      713.08,
+      874.45
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      732.76,
+      874.45
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H1b",
+   "group": "H1",
+   "name_ru": "Г-дом СЗ (двор 9)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     670.55,
+     841.64
+    ],
+    [
+     683.55,
+     841.64
+    ],
+    [
+     683.55,
+     874.45
+    ],
+    [
+     670.55,
+     874.45
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      683.55,
+      858.05
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H2",
+   "group": "H2",
+   "name_ru": "дом над 10",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     669.76,
+     814.89
+    ],
+    [
+     722.0,
+     814.89
+    ],
+    [
+     722.0,
+     826.89
+    ],
+    [
+     669.76,
+     826.89
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      682.82,
+      826.89
+     ],
+     "facing_deg": 90,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      708.94,
+      826.89
+     ],
+     "facing_deg": 90,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H3",
+   "group": "H3",
+   "name_ru": "дом 10 (арка)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     669.76,
+     790.96
+    ],
+    [
+     722.0,
+     790.96
+    ],
+    [
+     722.0,
+     803.22
+    ],
+    [
+     669.76,
+     803.22
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      682.82,
+      790.96
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      708.94,
+      790.96
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      691.73,
+      797.09
+     ],
+     "facing_deg": 90,
+     "kind": "arch",
+     "w_m": 7.06,
+     "through": "N-S",
+     "arch_id": "А1"
+    }
+   ],
+   "arches": [
+    {
+     "id": "А1",
+     "rect": [
+      [
+       688.2,
+       790.96
+      ],
+      [
+       695.26,
+       790.96
+      ],
+      [
+       695.26,
+       803.22
+      ],
+      [
+       688.2,
+       803.22
+      ]
+     ],
+     "through": "N-S",
+     "clear_w_m": 4.0,
+     "clear_h_m": 4.0
+    }
+   ],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H7",
+   "group": "H7",
+   "name_ru": "средний длинный",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     769.87,
+     824.69
+    ],
+    [
+     848.11,
+     824.69
+    ],
+    [
+     848.11,
+     837.69
+    ],
+    [
+     769.87,
+     837.69
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      779.65,
+      824.69
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      799.21,
+      824.69
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      818.77,
+      824.69
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      838.33,
+      824.69
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H8",
+   "group": "H8",
+   "name_ru": "СВ длинный",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     867.64,
+     855.84
+    ],
+    [
+     956.65,
+     855.84
+    ],
+    [
+     956.65,
+     868.84
+    ],
+    [
+     867.64,
+     868.84
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      878.77,
+      855.84
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      901.02,
+      855.84
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      923.27,
+      855.84
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      945.53,
+      855.84
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H9a",
+   "group": "H9",
+   "name_ru": "Г-дом двора 12 (арка)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     893.84,
+     828.35
+    ],
+    [
+     959.2,
+     828.35
+    ],
+    [
+     959.2,
+     841.34
+    ],
+    [
+     893.84,
+     841.34
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      902.56,
+      828.35
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      913.64,
+      828.35
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      937.48,
+      828.35
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      923.05,
+      834.85
+     ],
+     "facing_deg": 90,
+     "kind": "arch",
+     "w_m": 6.44,
+     "through": "N-S",
+     "arch_id": "А2"
+    }
+   ],
+   "arches": [
+    {
+     "id": "А2",
+     "rect": [
+      [
+       919.83,
+       828.35
+      ],
+      [
+       926.27,
+       828.35
+      ],
+      [
+       926.27,
+       841.34
+      ],
+      [
+       919.83,
+       841.34
+      ]
+     ],
+     "through": "N-S",
+     "clear_w_m": 4.0,
+     "clear_h_m": 4.0
+    }
+   ],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H9b",
+   "group": "H9",
+   "name_ru": "Г-дом двора 12 (арка)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     946.2,
+     779.44
+    ],
+    [
+     959.2,
+     779.44
+    ],
+    [
+     959.2,
+     828.35
+    ],
+    [
+     946.2,
+     828.35
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      946.2,
+      816.12
+     ],
+     "facing_deg": 180,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      946.2,
+      791.67
+     ],
+     "facing_deg": 180,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H11a",
+   "group": "H11",
+   "name_ru": "П-дом 11 (арка)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     681.46,
+     739.95
+    ],
+    [
+     692.11,
+     739.95
+    ],
+    [
+     692.11,
+     768.05
+    ],
+    [
+     681.46,
+     768.05
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      692.11,
+      760.0
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H11b",
+   "group": "H11",
+   "name_ru": "П-дом 11 (арка)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     716.75,
+     739.95
+    ],
+    [
+     725.54,
+     739.95
+    ],
+    [
+     725.54,
+     777.09
+    ],
+    [
+     716.75,
+     777.09
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      716.75,
+      764.52
+     ],
+     "facing_deg": 180,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H11c",
+   "group": "H11",
+   "name_ru": "П-дом 11 (арка)",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     692.11,
+     739.95
+    ],
+    [
+     716.75,
+     739.95
+    ],
+    [
+     716.75,
+     751.96
+    ],
+    [
+     692.11,
+     751.96
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      698.27,
+      751.96
+     ],
+     "facing_deg": 90,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      716.38,
+      751.96
+     ],
+     "facing_deg": 90,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      705.73,
+      744.22
+     ],
+     "facing_deg": 90,
+     "kind": "arch",
+     "w_m": 8.91,
+     "through": "N-S",
+     "arch_id": "А3"
+    }
+   ],
+   "arches": [
+    {
+     "id": "А3",
+     "rect": [
+      [
+       701.27,
+       739.95
+      ],
+      [
+       710.19,
+       739.95
+      ],
+      [
+       710.19,
+       748.49
+      ],
+      [
+       701.27,
+       748.49
+      ]
+     ],
+     "through": "N-S",
+     "clear_w_m": 4.0,
+     "clear_h_m": 4.0
+    }
+   ],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H13",
+   "group": "H13",
+   "name_ru": "дом у коробки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     801.76,
+     748.37
+    ],
+    [
+     848.18,
+     748.37
+    ],
+    [
+     848.18,
+     758.77
+    ],
+    [
+     801.76,
+     758.77
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      813.37,
+      748.37
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      836.58,
+      748.37
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H14",
+   "group": "H14",
+   "name_ru": "вертикаль у коробки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     765.14,
+     685.59
+    ],
+    [
+     778.51,
+     685.59
+    ],
+    [
+     778.51,
+     750.96
+    ],
+    [
+     765.14,
+     750.96
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      778.51,
+      734.61
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      778.51,
+      701.93
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H17a",
+   "group": "H17",
+   "name_ru": "база 1 — Г-дом, гараж в 1 этаже",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     680.3,
+     676.56
+    ],
+    [
+     692.06,
+     676.56
+    ],
+    [
+     692.06,
+     716.67
+    ],
+    [
+     680.3,
+     716.67
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      692.06,
+      702.99
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H17b",
+   "group": "H17",
+   "name_ru": "база 1 — Г-дом, гараж в 1 этаже",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     692.06,
+     676.56
+    ],
+    [
+     721.89,
+     676.56
+    ],
+    [
+     721.89,
+     689.31
+    ],
+    [
+     692.06,
+     689.31
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      712.67,
+      688.94
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 3.8,
+     "note": "base 3: van garage in the ground floor, iron gate 3.8 m"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H56a",
+   "group": "H56",
+   "name_ru": "два верхних дома, сцеплены углами",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     769.87,
+     865.87
+    ],
+    [
+     808.62,
+     865.87
+    ],
+    [
+     808.62,
+     878.87
+    ],
+    [
+     769.87,
+     878.87
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      779.56,
+      865.87
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      798.93,
+      865.87
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-H56b",
+   "group": "H56",
+   "name_ru": "два верхних дома, сцеплены углами",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     808.99,
+     852.5
+    ],
+    [
+     848.11,
+     852.5
+    ],
+    [
+     848.11,
+     865.5
+    ],
+    [
+     808.99,
+     865.5
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      818.77,
+      852.5
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      838.33,
+      852.5
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Wa",
+   "group": "W",
+   "name_ru": "две вертикали слева, между ними арка",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     739.49,
+     788.38
+    ],
+    [
+     753.48,
+     788.38
+    ],
+    [
+     753.48,
+     834.43
+    ],
+    [
+     739.49,
+     834.43
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      753.48,
+      822.92
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      753.48,
+      799.89
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Wb",
+   "group": "W",
+   "name_ru": "две вертикали слева, между ними арка",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     739.86,
+     720.04
+    ],
+    [
+     752.86,
+     720.04
+    ],
+    [
+     752.86,
+     775.75
+    ],
+    [
+     739.86,
+     775.75
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      752.86,
+      761.82
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      752.86,
+      733.97
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Ea",
+   "group": "E",
+   "name_ru": "вертикаль у двора 12 + длинный + молния (притон 5), арки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     869.29,
+     775.52
+    ],
+    [
+     882.29,
+     775.52
+    ],
+    [
+     882.29,
+     832.71
+    ],
+    [
+     869.29,
+     832.71
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      882.29,
+      818.41
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 0,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      882.29,
+      789.82
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Eb",
+   "group": "E",
+   "name_ru": "вертикаль у двора 12 + длинный + молния (притон 5), арки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     869.29,
+     685.39
+    ],
+    [
+     882.91,
+     685.39
+    ],
+    [
+     882.91,
+     762.15
+    ],
+    [
+     869.29,
+     762.15
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      882.91,
+      749.89
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      882.91,
+      725.38
+     ],
+     "facing_deg": 0,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Ec",
+   "group": "E",
+   "name_ru": "вертикаль у двора 12 + длинный + молния (притон 5), арки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     925.49,
+     739.12
+    ],
+    [
+     969.44,
+     739.12
+    ],
+    [
+     969.44,
+     752.12
+    ],
+    [
+     925.49,
+     752.12
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      946.23,
+      739.12
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      961.71,
+      739.12
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 1,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    }
+   ],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Ed",
+   "group": "E",
+   "name_ru": "вертикаль у двора 12 + длинный + молния (притон 5), арки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     925.49,
+     713.12
+    ],
+    [
+     938.49,
+     713.12
+    ],
+    [
+     938.49,
+     739.12
+    ],
+    [
+     925.49,
+     739.12
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [],
+   "arches": [],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-Ee",
+   "group": "E",
+   "name_ru": "вертикаль у двора 12 + длинный + молния (притон 5), арки",
+   "kind": "khrushchevka",
+   "footprint": [
+    [
+     882.91,
+     700.12
+    ],
+    [
+     938.49,
+     700.12
+    ],
+    [
+     938.49,
+     713.12
+    ],
+    [
+     882.91,
+     713.12
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 2.8,
+   "height_m": 14.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.6,
+    "kit_parapet": "FK_R_Parapet_3m2",
+    "vents": "FK_R_Roof_Vent"
+   },
+   "walls": "KH1b",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      896.8,
+      700.12
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      924.6,
+      700.12
+     ],
+     "facing_deg": 270,
+     "kind": "podyezd",
+     "w_m": 1.2,
+     "benches": 2,
+     "canopy": "FK_R_Entrance_Canopy",
+     "steps": "FK_R_Entrance_Steps2|3",
+     "door": "FK_R_IronDoor"
+    },
+    {
+     "pos": [
+      905.19,
+      706.62
+     ],
+     "facing_deg": 90,
+     "kind": "arch",
+     "w_m": 6.44,
+     "through": "N-S",
+     "arch_id": "А6"
+    }
+   ],
+   "arches": [
+    {
+     "id": "А6",
+     "rect": [
+      [
+       901.97,
+       700.12
+      ],
+      [
+       908.41,
+       700.12
+      ],
+      [
+       908.41,
+       713.12
+      ],
+      [
+       901.97,
+       713.12
+      ]
+     ],
+     "through": "N-S",
+     "clear_w_m": 4.0,
+     "clear_h_m": 4.0
+    }
+   ],
+   "facade_kit": "rough",
+   "sockets": {
+    "balconies": "mixed",
+    "windows": true,
+    "window_frame": "FK_R_Window_Frame",
+    "drainpipes": "FK_R_Drainpipe_2m8",
+    "fire_escape": false,
+    "ac_units": 0,
+    "water_tank": false,
+    "awning": false,
+    "ridge_cap": null,
+    "balcony_pieces": [
+     "FK_R_Balcony_Open",
+     "FK_R_Balcony_Glazed"
+    ],
+    "balcony_collider": "solid, not walkable inside"
+   },
+   "collider": "full_roof",
+   "notes": "all one grey KH1b, shabby (streaks, patched seams, rust under balconies, dark plinth); bay 3.2 m (kit rough_grid); no basements, no interiors; palisade ~4 m live grass + low fence on podyezd sides"
+  },
+  {
+   "id": "04-G01",
+   "kind": "garage",
+   "footprint": [
+    [
+     775.57,
+     888.55
+    ],
+    [
+     781.14,
+     888.55
+    ],
+    [
+     781.14,
+     896.97
+    ],
+    [
+     775.57,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      778.36,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G02",
+   "kind": "garage",
+   "footprint": [
+    [
+     781.14,
+     888.55
+    ],
+    [
+     786.71,
+     888.55
+    ],
+    [
+     786.71,
+     896.97
+    ],
+    [
+     781.14,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      783.92,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G03",
+   "kind": "garage",
+   "footprint": [
+    [
+     786.71,
+     888.55
+    ],
+    [
+     792.28,
+     888.55
+    ],
+    [
+     792.28,
+     896.97
+    ],
+    [
+     786.71,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      789.5,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G04",
+   "kind": "garage",
+   "footprint": [
+    [
+     792.28,
+     888.55
+    ],
+    [
+     797.85,
+     888.55
+    ],
+    [
+     797.85,
+     896.97
+    ],
+    [
+     792.28,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      795.07,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G05",
+   "kind": "garage",
+   "footprint": [
+    [
+     797.85,
+     888.55
+    ],
+    [
+     803.42,
+     888.55
+    ],
+    [
+     803.42,
+     896.97
+    ],
+    [
+     797.85,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      800.63,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G06",
+   "kind": "garage",
+   "footprint": [
+    [
+     803.42,
+     888.55
+    ],
+    [
+     808.99,
+     888.55
+    ],
+    [
+     808.99,
+     896.97
+    ],
+    [
+     803.42,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      806.2,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G07",
+   "kind": "garage",
+   "footprint": [
+    [
+     808.99,
+     888.55
+    ],
+    [
+     814.56,
+     888.55
+    ],
+    [
+     814.56,
+     896.97
+    ],
+    [
+     808.99,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      811.77,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G08",
+   "kind": "garage",
+   "footprint": [
+    [
+     814.56,
+     888.55
+    ],
+    [
+     820.14,
+     888.55
+    ],
+    [
+     820.14,
+     896.97
+    ],
+    [
+     814.56,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      817.35,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G09",
+   "kind": "garage",
+   "footprint": [
+    [
+     820.14,
+     888.55
+    ],
+    [
+     825.71,
+     888.55
+    ],
+    [
+     825.71,
+     896.97
+    ],
+    [
+     820.14,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      822.92,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G10",
+   "kind": "garage",
+   "footprint": [
+    [
+     825.71,
+     888.55
+    ],
+    [
+     831.28,
+     888.55
+    ],
+    [
+     831.28,
+     896.97
+    ],
+    [
+     825.71,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      828.5,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G11",
+   "kind": "garage",
+   "footprint": [
+    [
+     831.28,
+     888.55
+    ],
+    [
+     836.85,
+     888.55
+    ],
+    [
+     836.85,
+     896.97
+    ],
+    [
+     831.28,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      834.07,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G12",
+   "kind": "garage",
+   "footprint": [
+    [
+     836.85,
+     888.55
+    ],
+    [
+     842.42,
+     888.55
+    ],
+    [
+     842.42,
+     896.97
+    ],
+    [
+     836.85,
+     896.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      839.63,
+      888.55
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G13",
+   "kind": "garage",
+   "footprint": [
+    [
+     782.87,
+     800.52
+    ],
+    [
+     788.57,
+     800.52
+    ],
+    [
+     788.57,
+     808.93
+    ],
+    [
+     782.87,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      785.72,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G14",
+   "kind": "garage",
+   "footprint": [
+    [
+     788.57,
+     800.52
+    ],
+    [
+     794.26,
+     800.52
+    ],
+    [
+     794.26,
+     808.93
+    ],
+    [
+     788.57,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      791.41,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G15",
+   "kind": "garage",
+   "footprint": [
+    [
+     794.26,
+     800.52
+    ],
+    [
+     799.96,
+     800.52
+    ],
+    [
+     799.96,
+     808.93
+    ],
+    [
+     794.26,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      797.11,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G16",
+   "kind": "garage",
+   "footprint": [
+    [
+     799.96,
+     800.52
+    ],
+    [
+     805.65,
+     800.52
+    ],
+    [
+     805.65,
+     808.93
+    ],
+    [
+     799.96,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      802.81,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G17",
+   "kind": "garage",
+   "footprint": [
+    [
+     805.65,
+     800.52
+    ],
+    [
+     811.35,
+     800.52
+    ],
+    [
+     811.35,
+     808.93
+    ],
+    [
+     805.65,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      808.5,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G18",
+   "kind": "garage",
+   "footprint": [
+    [
+     811.35,
+     800.52
+    ],
+    [
+     817.04,
+     800.52
+    ],
+    [
+     817.04,
+     808.93
+    ],
+    [
+     811.35,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      814.19,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G19",
+   "kind": "garage",
+   "footprint": [
+    [
+     817.04,
+     800.52
+    ],
+    [
+     822.74,
+     800.52
+    ],
+    [
+     822.74,
+     808.93
+    ],
+    [
+     817.04,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      819.89,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G20",
+   "kind": "garage",
+   "footprint": [
+    [
+     822.74,
+     800.52
+    ],
+    [
+     828.43,
+     800.52
+    ],
+    [
+     828.43,
+     808.93
+    ],
+    [
+     822.74,
+     808.93
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      825.59,
+      800.52
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G21",
+   "kind": "garage",
+   "footprint": [
+    [
+     782.87,
+     779.1
+    ],
+    [
+     788.57,
+     779.1
+    ],
+    [
+     788.57,
+     787.52
+    ],
+    [
+     782.87,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      785.72,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G22",
+   "kind": "garage",
+   "footprint": [
+    [
+     788.57,
+     779.1
+    ],
+    [
+     794.26,
+     779.1
+    ],
+    [
+     794.26,
+     787.52
+    ],
+    [
+     788.57,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      791.41,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G23",
+   "kind": "garage",
+   "footprint": [
+    [
+     794.26,
+     779.1
+    ],
+    [
+     799.96,
+     779.1
+    ],
+    [
+     799.96,
+     787.52
+    ],
+    [
+     794.26,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      797.11,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G24",
+   "kind": "garage",
+   "footprint": [
+    [
+     799.96,
+     779.1
+    ],
+    [
+     805.65,
+     779.1
+    ],
+    [
+     805.65,
+     787.52
+    ],
+    [
+     799.96,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      802.81,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G25",
+   "kind": "garage",
+   "footprint": [
+    [
+     805.65,
+     779.1
+    ],
+    [
+     811.35,
+     779.1
+    ],
+    [
+     811.35,
+     787.52
+    ],
+    [
+     805.65,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      808.5,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G26",
+   "kind": "garage",
+   "footprint": [
+    [
+     811.35,
+     779.1
+    ],
+    [
+     817.04,
+     779.1
+    ],
+    [
+     817.04,
+     787.52
+    ],
+    [
+     811.35,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      814.19,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G27",
+   "kind": "garage",
+   "footprint": [
+    [
+     817.04,
+     779.1
+    ],
+    [
+     822.74,
+     779.1
+    ],
+    [
+     822.74,
+     787.52
+    ],
+    [
+     817.04,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      819.89,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G28",
+   "kind": "garage",
+   "footprint": [
+    [
+     822.74,
+     779.1
+    ],
+    [
+     828.43,
+     779.1
+    ],
+    [
+     828.43,
+     787.52
+    ],
+    [
+     822.74,
+     787.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      825.59,
+      787.52
+     ],
+     "facing_deg": 90,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G29",
+   "kind": "garage",
+   "footprint": [
+    [
+     772.6,
+     793.95
+    ],
+    [
+     779.65,
+     793.95
+    ],
+    [
+     779.65,
+     801.38
+    ],
+    [
+     772.6,
+     801.38
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      779.65,
+      797.66
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G30",
+   "kind": "garage",
+   "footprint": [
+    [
+     772.6,
+     786.53
+    ],
+    [
+     779.65,
+     786.53
+    ],
+    [
+     779.65,
+     793.95
+    ],
+    [
+     772.6,
+     793.95
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      779.65,
+      790.24
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G31",
+   "kind": "garage",
+   "footprint": [
+    [
+     831.65,
+     793.95
+    ],
+    [
+     838.71,
+     793.95
+    ],
+    [
+     838.71,
+     801.38
+    ],
+    [
+     831.65,
+     801.38
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      831.65,
+      797.66
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G32",
+   "kind": "garage",
+   "footprint": [
+    [
+     831.65,
+     786.53
+    ],
+    [
+     838.71,
+     786.53
+    ],
+    [
+     838.71,
+     793.95
+    ],
+    [
+     831.65,
+     793.95
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      831.65,
+      790.24
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G33",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     828.46
+    ],
+    [
+     975.52,
+     828.46
+    ],
+    [
+     975.52,
+     834.03
+    ],
+    [
+     967.11,
+     834.03
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      831.25
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G34",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     822.89
+    ],
+    [
+     975.52,
+     822.89
+    ],
+    [
+     975.52,
+     828.46
+    ],
+    [
+     967.11,
+     828.46
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      825.67
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G35",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     817.32
+    ],
+    [
+     975.52,
+     817.32
+    ],
+    [
+     975.52,
+     822.89
+    ],
+    [
+     967.11,
+     822.89
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      820.11
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G36",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     811.75
+    ],
+    [
+     975.52,
+     811.75
+    ],
+    [
+     975.52,
+     817.32
+    ],
+    [
+     967.11,
+     817.32
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      814.53
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G37",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     806.18
+    ],
+    [
+     975.52,
+     806.18
+    ],
+    [
+     975.52,
+     811.75
+    ],
+    [
+     967.11,
+     811.75
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      808.97
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G38",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     800.6
+    ],
+    [
+     975.52,
+     800.6
+    ],
+    [
+     975.52,
+     806.18
+    ],
+    [
+     967.11,
+     806.18
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      803.39
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G39",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     795.03
+    ],
+    [
+     975.52,
+     795.03
+    ],
+    [
+     975.52,
+     800.6
+    ],
+    [
+     967.11,
+     800.6
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      797.82
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G40",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     789.46
+    ],
+    [
+     975.52,
+     789.46
+    ],
+    [
+     975.52,
+     795.03
+    ],
+    [
+     967.11,
+     795.03
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      792.25
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G41",
+   "kind": "garage",
+   "footprint": [
+    [
+     967.11,
+     783.89
+    ],
+    [
+     975.52,
+     783.89
+    ],
+    [
+     975.52,
+     789.46
+    ],
+    [
+     967.11,
+     789.46
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      975.52,
+      786.67
+     ],
+     "facing_deg": 0,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G42",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     828.46
+    ],
+    [
+     992.36,
+     828.46
+    ],
+    [
+     992.36,
+     834.03
+    ],
+    [
+     983.94,
+     834.03
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      831.25
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G43",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     822.89
+    ],
+    [
+     992.36,
+     822.89
+    ],
+    [
+     992.36,
+     828.46
+    ],
+    [
+     983.94,
+     828.46
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      825.67
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G44",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     817.32
+    ],
+    [
+     992.36,
+     817.32
+    ],
+    [
+     992.36,
+     822.89
+    ],
+    [
+     983.94,
+     822.89
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      820.11
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G45",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     811.75
+    ],
+    [
+     992.36,
+     811.75
+    ],
+    [
+     992.36,
+     817.32
+    ],
+    [
+     983.94,
+     817.32
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      814.53
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G46",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     806.18
+    ],
+    [
+     992.36,
+     806.18
+    ],
+    [
+     992.36,
+     811.75
+    ],
+    [
+     983.94,
+     811.75
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      808.97
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G47",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     800.6
+    ],
+    [
+     992.36,
+     800.6
+    ],
+    [
+     992.36,
+     806.18
+    ],
+    [
+     983.94,
+     806.18
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      803.39
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G48",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     795.03
+    ],
+    [
+     992.36,
+     795.03
+    ],
+    [
+     992.36,
+     800.6
+    ],
+    [
+     983.94,
+     800.6
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      797.82
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G49",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     789.46
+    ],
+    [
+     992.36,
+     789.46
+    ],
+    [
+     992.36,
+     795.03
+    ],
+    [
+     983.94,
+     795.03
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      792.25
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G50",
+   "kind": "garage",
+   "footprint": [
+    [
+     983.94,
+     783.89
+    ],
+    [
+     992.36,
+     783.89
+    ],
+    [
+     992.36,
+     789.46
+    ],
+    [
+     983.94,
+     789.46
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      983.94,
+      786.67
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G51",
+   "kind": "garage",
+   "footprint": [
+    [
+     975.52,
+     834.03
+    ],
+    [
+     983.94,
+     834.03
+    ],
+    [
+     983.94,
+     839.97
+    ],
+    [
+     975.52,
+     839.97
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      979.73,
+      834.03
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G52",
+   "kind": "garage",
+   "footprint": [
+    [
+     706.29,
+     708.13
+    ],
+    [
+     711.87,
+     708.13
+    ],
+    [
+     711.87,
+     716.54
+    ],
+    [
+     706.29,
+     716.54
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      709.08,
+      708.13
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G53",
+   "kind": "garage",
+   "footprint": [
+    [
+     711.87,
+     708.13
+    ],
+    [
+     717.44,
+     708.13
+    ],
+    [
+     717.44,
+     716.54
+    ],
+    [
+     711.87,
+     716.54
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      714.65,
+      708.13
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G54",
+   "kind": "garage",
+   "footprint": [
+    [
+     717.44,
+     708.13
+    ],
+    [
+     723.01,
+     708.13
+    ],
+    [
+     723.01,
+     716.54
+    ],
+    [
+     717.44,
+     716.54
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      720.23,
+      708.13
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G55",
+   "kind": "garage",
+   "footprint": [
+    [
+     723.01,
+     708.13
+    ],
+    [
+     728.58,
+     708.13
+    ],
+    [
+     728.58,
+     716.54
+    ],
+    [
+     723.01,
+     716.54
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      725.79,
+      708.13
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G56",
+   "kind": "garage",
+   "footprint": [
+    [
+     728.58,
+     708.13
+    ],
+    [
+     734.15,
+     708.13
+    ],
+    [
+     734.15,
+     716.54
+    ],
+    [
+     728.58,
+     716.54
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      731.37,
+      708.13
+     ],
+     "facing_deg": 270,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G57",
+   "kind": "garage",
+   "footprint": [
+    [
+     725.73,
+     703.55
+    ],
+    [
+     734.15,
+     703.55
+    ],
+    [
+     734.15,
+     708.13
+    ],
+    [
+     725.73,
+     708.13
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      725.73,
+      705.84
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-G58",
+   "kind": "garage",
+   "footprint": [
+    [
+     725.73,
+     698.96
+    ],
+    [
+     734.15,
+     698.96
+    ],
+    [
+     734.15,
+     703.55
+    ],
+    [
+     725.73,
+     703.55
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "parapet_h_m": 0.0
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      725.73,
+      701.25
+     ],
+     "facing_deg": 180,
+     "kind": "garage_gate",
+     "w_m": 2.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "rusty, peeling paint, ~14 of 58 with graffiti, a couple open with junk (legend); walls material: facade_corrugated_metal (handoff 3.1 \"ржавый — гаражи\")"
+  },
+  {
+   "id": "04-shop24",
+   "kind": "shop",
+   "footprint": [
+    [
+     814.34,
+     676.69
+    ],
+    [
+     834.4,
+     676.69
+    ],
+    [
+     834.4,
+     686.72
+    ],
+    [
+     814.34,
+     686.72
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.6,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.4
+   },
+   "walls": null,
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "24 h shop ~20x10 m, drunks at the door, two kiosks next to it (legend); wall material and door side NOT given -> OPEN"
+  },
+  {
+   "id": "04-transformer1",
+   "kind": "transformer_booth",
+   "footprint": [
+    [
+     933.34,
+     778.78
+    ],
+    [
+     937.55,
+     778.78
+    ],
+    [
+     937.55,
+     782.99
+    ],
+    [
+     933.34,
+     782.99
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.0,
+   "height_m": 3.0,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {},
+   "collider": "full_roof",
+   "notes": "brick, \"do not enter\" sign (legend)"
+  },
+  {
+   "id": "04-transformer2",
+   "kind": "transformer_booth",
+   "footprint": [
+    [
+     756.18,
+     701.9
+    ],
+    [
+     760.39,
+     701.9
+    ],
+    [
+     760.39,
+     706.11
+    ],
+    [
+     756.18,
+     706.11
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.0,
+   "height_m": 3.0,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {},
+   "collider": "full_roof",
+   "notes": "brick, \"do not enter\" sign (legend)"
+  }
+ ],
+ "props": [
+  {
+   "id": "04-turnik0",
+   "kind": "pull_up_bar",
+   "pos": [
+    687.75,
+    843.15
+   ],
+   "rot_deg": 0,
+   "size": [
+    6.19,
+    0.1,
+    2.4
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-turnik1",
+   "kind": "pull_up_bar",
+   "pos": [
+    896.27,
+    776.97
+   ],
+   "rot_deg": 0,
+   "size": [
+    7.43,
+    0.1,
+    2.4
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-tree00",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    688.47,
+    872.47
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree01",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    703.23,
+    872.47
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree02",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    685.53,
+    866.25
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree03",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    676.29,
+    828.88
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree04",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    695.88,
+    828.88
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree05",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    676.29,
+    788.98
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree06",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    715.47,
+    788.98
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree07",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    774.76,
+    822.71
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree08",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    789.43,
+    822.71
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree09",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    808.99,
+    822.71
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree10",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    828.55,
+    822.71
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree11",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    843.22,
+    822.71
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree12",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    873.2,
+    853.86
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree13",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    889.89,
+    853.86
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree14",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    951.09,
+    853.86
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree15",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    908.1,
+    826.36
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree16",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    941.84,
+    826.36
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree17",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    944.22,
+    822.23
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree18",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    944.22,
+    785.56
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree19",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    714.77,
+    770.8
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree20",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    807.56,
+    746.39
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree21",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    842.38,
+    746.39
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree22",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    780.49,
+    742.79
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree23",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    780.49,
+    718.27
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree24",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    694.04,
+    709.83
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree25",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    789.25,
+    863.89
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree26",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    803.78,
+    863.89
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree27",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    813.88,
+    850.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree28",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    828.55,
+    850.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree29",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    843.22,
+    850.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree30",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    755.46,
+    828.68
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree31",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    755.46,
+    811.4
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree32",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    755.46,
+    794.13
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree33",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    754.84,
+    747.9
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree34",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    754.84,
+    727.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree35",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    884.27,
+    804.12
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree36",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    884.27,
+    782.67
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree37",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    884.89,
+    756.02
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree38",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    884.89,
+    737.64
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree39",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    884.89,
+    719.25
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree40",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    889.86,
+    698.14
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree41",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    792.69,
+    715.93
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree42",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    790.31,
+    712.27
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree43",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    787.88,
+    715.79
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree44",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    788.76,
+    721.63
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree45",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    791.73,
+    721.72
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree46",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    964.38,
+    702.33
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree47",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    959.48,
+    699.72
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree48",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    954.49,
+    702.23
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree49",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    956.3,
+    706.41
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree50",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    962.41,
+    706.47
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree51",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    766.88,
+    811.73
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree52",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    844.43,
+    776.3
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree53",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    963.42,
+    841.15
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree54",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    704.7,
+    720.14
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-tree55",
+   "kind": "tree_bare_crooked",
+   "pos": [
+    768.21,
+    898.64
+   ],
+   "rot_deg": 0,
+   "size": [
+    5,
+    5,
+    7
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-lamp00",
+   "kind": "street_lamp",
+   "pos": [
+    669.06,
+    872.72
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp01",
+   "kind": "street_lamp",
+   "pos": [
+    744.09,
+    872.72
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp02",
+   "kind": "street_lamp",
+   "pos": [
+    685.28,
+    840.16
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp03",
+   "kind": "street_lamp",
+   "pos": [
+    668.27,
+    828.63
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp04",
+   "kind": "street_lamp",
+   "pos": [
+    723.49,
+    828.63
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp05",
+   "kind": "street_lamp",
+   "pos": [
+    668.27,
+    789.23
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp06",
+   "kind": "street_lamp",
+   "pos": [
+    723.49,
+    789.23
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp07",
+   "kind": "street_lamp",
+   "pos": [
+    768.39,
+    822.95
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp08",
+   "kind": "street_lamp",
+   "pos": [
+    849.6,
+    822.95
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp09",
+   "kind": "street_lamp",
+   "pos": [
+    866.15,
+    854.11
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp10",
+   "kind": "street_lamp",
+   "pos": [
+    958.14,
+    854.11
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp11",
+   "kind": "street_lamp",
+   "pos": [
+    892.35,
+    826.61
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp12",
+   "kind": "street_lamp",
+   "pos": [
+    960.69,
+    826.61
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp13",
+   "kind": "street_lamp",
+   "pos": [
+    944.47,
+    777.96
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp14",
+   "kind": "street_lamp",
+   "pos": [
+    693.84,
+    738.46
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp15",
+   "kind": "street_lamp",
+   "pos": [
+    715.01,
+    778.57
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp16",
+   "kind": "street_lamp",
+   "pos": [
+    715.01,
+    738.46
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp17",
+   "kind": "street_lamp",
+   "pos": [
+    800.27,
+    746.64
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp18",
+   "kind": "street_lamp",
+   "pos": [
+    849.67,
+    746.64
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp19",
+   "kind": "street_lamp",
+   "pos": [
+    780.24,
+    752.44
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp20",
+   "kind": "street_lamp",
+   "pos": [
+    780.24,
+    684.1
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp21",
+   "kind": "street_lamp",
+   "pos": [
+    693.79,
+    718.15
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp22",
+   "kind": "street_lamp",
+   "pos": [
+    693.79,
+    675.07
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp23",
+   "kind": "street_lamp",
+   "pos": [
+    768.39,
+    864.13
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp24",
+   "kind": "street_lamp",
+   "pos": [
+    807.51,
+    850.76
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp25",
+   "kind": "street_lamp",
+   "pos": [
+    849.6,
+    850.76
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp26",
+   "kind": "street_lamp",
+   "pos": [
+    755.21,
+    835.92
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp27",
+   "kind": "street_lamp",
+   "pos": [
+    755.21,
+    786.89
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp28",
+   "kind": "street_lamp",
+   "pos": [
+    754.6,
+    718.55
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp29",
+   "kind": "street_lamp",
+   "pos": [
+    884.02,
+    834.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp30",
+   "kind": "street_lamp",
+   "pos": [
+    884.02,
+    774.03
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp31",
+   "kind": "street_lamp",
+   "pos": [
+    884.64,
+    763.63
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp32",
+   "kind": "street_lamp",
+   "pos": [
+    884.64,
+    683.91
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp33",
+   "kind": "street_lamp",
+   "pos": [
+    924.01,
+    737.39
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp34",
+   "kind": "street_lamp",
+   "pos": [
+    970.93,
+    737.39
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp35",
+   "kind": "street_lamp",
+   "pos": [
+    939.98,
+    698.39
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp36",
+   "kind": "street_lamp",
+   "pos": [
+    894.47,
+    810.12
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp37",
+   "kind": "street_lamp",
+   "pos": [
+    925.42,
+    810.12
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp38",
+   "kind": "street_lamp",
+   "pos": [
+    894.47,
+    786.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp39",
+   "kind": "street_lamp",
+   "pos": [
+    925.42,
+    786.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp40",
+   "kind": "street_lamp",
+   "pos": [
+    699.58,
+    859.84
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp41",
+   "kind": "street_lamp",
+   "pos": [
+    721.86,
+    859.84
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp42",
+   "kind": "street_lamp",
+   "pos": [
+    699.58,
+    842.51
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp43",
+   "kind": "street_lamp",
+   "pos": [
+    721.86,
+    842.51
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp44",
+   "kind": "street_lamp",
+   "pos": [
+    801.4,
+    738.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp45",
+   "kind": "street_lamp",
+   "pos": [
+    848.81,
+    738.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp46",
+   "kind": "street_lamp",
+   "pos": [
+    801.4,
+    698.21
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp47",
+   "kind": "street_lamp",
+   "pos": [
+    848.81,
+    698.21
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp48",
+   "kind": "street_lamp",
+   "pos": [
+    672.2,
+    716.62
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp49",
+   "kind": "street_lamp",
+   "pos": [
+    672.2,
+    672.06
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp50",
+   "kind": "street_lamp",
+   "pos": [
+    711.57,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp51",
+   "kind": "street_lamp",
+   "pos": [
+    756.14,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp52",
+   "kind": "street_lamp",
+   "pos": [
+    800.7,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp53",
+   "kind": "street_lamp",
+   "pos": [
+    845.27,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp54",
+   "kind": "street_lamp",
+   "pos": [
+    889.84,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp55",
+   "kind": "street_lamp",
+   "pos": [
+    934.41,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp56",
+   "kind": "street_lamp",
+   "pos": [
+    978.98,
+    673.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp57",
+   "kind": "street_lamp",
+   "pos": [
+    976.94,
+    712.57
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-lamp58",
+   "kind": "street_lamp",
+   "pos": [
+    976.94,
+    757.14
+   ],
+   "rot_deg": 0,
+   "size": [
+    0.3,
+    0.3,
+    6
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "04-car0",
+   "kind": "old_soviet_car",
+   "pos": [
+    692.0,
+    786.06
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car1",
+   "kind": "old_soviet_car",
+   "pos": [
+    825.71,
+    842.22
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car2",
+   "kind": "old_soviet_car",
+   "pos": [
+    913.55,
+    763.6
+   ],
+   "rot_deg": 90,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car3",
+   "kind": "old_soviet_car",
+   "pos": [
+    811.0,
+    672.01
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car4",
+   "kind": "old_soviet_car",
+   "pos": [
+    798.97,
+    883.93
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car5",
+   "kind": "old_soviet_car",
+   "pos": [
+    885.87,
+    847.83
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car6",
+   "kind": "old_soviet_car",
+   "pos": [
+    952.73,
+    730.17
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "04-car7",
+   "kind": "old_soviet_car",
+   "pos": [
+    819.02,
+    740.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    1.6,
+    1.45
+   ],
+   "grip_anchor": false
+  }
+ ],
+ "zones": [
+  {
+   "id": "04-club5",
+   "kind": "club_in_ground_floor",
+   "poly": [
+    [
+     925.62,
+     714.98
+    ],
+    [
+     934.78,
+     714.98
+    ],
+    [
+     934.78,
+     737.02
+    ],
+    [
+     925.62,
+     737.02
+    ]
+   ],
+   "surface": null,
+   "entrance": {
+    "pos": [
+     924.5,
+     726.0
+    ],
+    "facing_deg": 180,
+    "canopy": true,
+    "neon_heart_no_words": true
+   },
+   "notes": "club (притон 5) in the ground floor of the \"lightning\" block; smokers corner with bouncer and crowd"
+  },
+  {
+   "id": "04-box",
+   "kind": "football_box",
+   "poly": [
+    [
+     802.64,
+     699.45
+    ],
+    [
+     847.57,
+     699.45
+    ],
+    [
+     847.57,
+     736.96
+    ],
+    [
+     802.64,
+     736.96
+    ]
+   ],
+   "surface": "lawn",
+   "notes": "44.9 x 37.5 m, wooden board + tall chain-link, goals with torn nets, one wicket from the north (van enters), 2 floodlights, bench with gopniks, worn grass"
+  },
+  {
+   "id": "04-play-двор 12, большая",
+   "kind": "playground",
+   "poly": [
+    [
+     895.7,
+     787.84
+    ],
+    [
+     924.18,
+     787.84
+    ],
+    [
+     924.18,
+     808.88
+    ],
+    [
+     895.7,
+     808.88
+    ]
+   ],
+   "surface": "rubber",
+   "notes": "swings, slide, sandbox, roundabout; neat rectangle with kerb"
+  },
+  {
+   "id": "04-play-двор 9, малая",
+   "kind": "playground",
+   "poly": [
+    [
+     700.82,
+     843.75
+    ],
+    [
+     720.63,
+     843.75
+    ],
+    [
+     720.63,
+     858.6
+    ],
+    [
+     700.82,
+     858.6
+    ]
+   ],
+   "surface": "rubber",
+   "notes": "swings, slide, sandbox, roundabout; neat rectangle with kerb"
+  },
+  {
+   "id": "04-trash-двор 12",
+   "kind": "trash_section",
+   "poly": [
+    [
+     926.65,
+     794.52
+    ],
+    [
+     936.56,
+     794.52
+    ],
+    [
+     936.56,
+     802.2
+    ],
+    [
+     926.65,
+     802.2
+    ]
+   ],
+   "surface": "concrete_SK3c",
+   "open": "открыта на юг",
+   "notes": "concrete, profiled sheet on 3 sides, 2 skip bins + 3 green bins"
+  },
+  {
+   "id": "04-trash-двор 9",
+   "kind": "trash_section",
+   "poly": [
+    [
+     705.77,
+     835.08
+    ],
+    [
+     715.67,
+     835.08
+    ],
+    [
+     715.67,
+     842.76
+    ],
+    [
+     705.77,
+     842.76
+    ]
+   ],
+   "surface": "concrete_SK3c",
+   "open": "открыта на запад",
+   "notes": "concrete, profiled sheet on 3 sides, 2 skip bins + 3 green bins"
+  },
+  {
+   "id": "04-base-yard",
+   "kind": "van_yard",
+   "poly": [
+    [
+     712.48,
+     690.55
+    ],
+    [
+     717.68,
+     690.55
+    ],
+    [
+     717.68,
+     699.21
+    ],
+    [
+     712.48,
+     699.21
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "notes": "base 3 van spot 5.2 x 8.7 m"
+  },
+  {
+   "id": "04-track0",
+   "kind": "track",
+   "line": [
+    [
+     667.0,
+     782.99
+    ],
+    [
+     756.85,
+     782.99
+    ],
+    [
+     756.85,
+     768.68
+    ],
+    [
+     982.14,
+     768.68
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-track1",
+   "kind": "track",
+   "line": [
+    [
+     859.4,
+     668.0
+    ],
+    [
+     859.4,
+     768.68
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-track2",
+   "kind": "track",
+   "line": [
+    [
+     735.06,
+     668.0
+    ],
+    [
+     735.06,
+     693.14
+    ],
+    [
+     718.74,
+     693.14
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-track3",
+   "kind": "track",
+   "line": [
+    [
+     730.51,
+     782.99
+    ],
+    [
+     730.51,
+     866.95
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-track4",
+   "kind": "track",
+   "line": [
+    [
+     730.51,
+     844.89
+    ],
+    [
+     864.48,
+     844.89
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-track5",
+   "kind": "track",
+   "line": [
+    [
+     760.46,
+     841.82
+    ],
+    [
+     760.46,
+     885.0
+    ],
+    [
+     851.78,
+     885.0
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-track6",
+   "kind": "track",
+   "line": [
+    [
+     913.55,
+     768.68
+    ],
+    [
+     913.55,
+     783.65
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": [
+    3.0,
+    5.0
+   ],
+   "notes": "uneven grey ruts over faded dry grass (L02), ragged edges, gaps, puddles — NOT concrete; no lamps/trees on ruts"
+  },
+  {
+   "id": "04-outer-road",
+   "kind": "road",
+   "line": [
+    [
+     667.0,
+     761.19
+    ],
+    [
+     667.0,
+     668.0
+    ],
+    [
+     982.14,
+     668.0
+    ],
+    [
+     982.14,
+     768.68
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "width_m": 6.0,
+   "kerb": true
+  },
+  {
+   "id": "04-exit0",
+   "kind": "road",
+   "line": [
+    [
+     667.0,
+     761.19
+    ],
+    [
+     635.85,
+     761.19
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "width_m": 6.0,
+   "kerb": true
+  },
+  {
+   "id": "04-exit1",
+   "kind": "road",
+   "line": [
+    [
+     982.14,
+     753.97
+    ],
+    [
+     1020.91,
+     753.97
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "width_m": 6.0,
+   "kerb": true
+  },
+  {
+   "id": "04-exit2",
+   "kind": "road",
+   "line": [
+    [
+     712.46,
+     668.0
+    ],
+    [
+     712.46,
+     641.93
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "width_m": 6.0,
+   "kerb": true
+  },
+  {
+   "id": "04-exit3",
+   "kind": "road",
+   "line": [
+    [
+     743.61,
+     668.0
+    ],
+    [
+     743.61,
+     641.93
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "width_m": 6.0,
+   "kerb": true
+  },
+  {
+   "id": "04-exit4",
+   "kind": "road",
+   "line": [
+    [
+     887.88,
+     668.0
+    ],
+    [
+     887.88,
+     641.93
+    ]
+   ],
+   "surface": "asphalt_old_SK2a",
+   "width_m": 6.0,
+   "kerb": true
+  },
+  {
+   "id": "04-fence",
+   "kind": "fence",
+   "line": [
+    [
+     656.7,
+     766.27
+    ],
+    [
+     656.7,
+     898.64
+    ],
+    [
+     755.11,
+     898.64
+    ],
+    [
+     755.11,
+     901.58
+    ],
+    [
+     861.14,
+     901.58
+    ],
+    [
+     861.14,
+     876.18
+    ],
+    [
+     994.04,
+     876.18
+    ],
+    [
+     994.04,
+     764.0
+    ],
+    [
+     979.2,
+     764.0
+    ]
+   ],
+   "surface": null,
+   "notes": "district edge per layout v45 (legend: tree band / blind fences = light boundary with Construction)"
+  },
+  {
+   "id": "04-ground",
+   "kind": "ground",
+   "poly": [
+    [
+     656.7,
+     642.0
+    ],
+    [
+     1020.9,
+     642.0
+    ],
+    [
+     1020.9,
+     901.6
+    ],
+    [
+     656.7,
+     901.6
+    ]
+   ],
+   "surface": "worn_grass_L02",
+   "notes": "flat (Y = pad), dry faded yellow-brown grass"
+  }
+ ],
+ "counts": {
+  "khrushchevka_parts": 24,
+  "houses": 13,
+  "podyezds": 46,
+  "benches": 56,
+  "arches": 6,
+  "garages": 58,
+  "trees": 56,
+  "lamps": 59,
+  "cars": 8
+ }
+}

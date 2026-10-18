@@ -12,7 +12,7 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 
-from common import OUT, WORK, W, H, grid, poly_mask, load_json, resample
+from common import OUT, REV, WORK, W, H, grid, poly_mask, load_json, resample
 
 LAYERS = ['L01_meadow', 'L02_worn_grass', 'L03_dirt_SK1b', 'L04_forest_floor_p10', 'L05_sand_white', 'L05b_sand_wet', 'L06_gravel_SK1d',
           'L07_rock_macro', 'L08_lawn_park', 'L09_field_plowed', 'L10_field_stubble']
@@ -52,13 +52,28 @@ def main():
     foot = ndimage.binary_dilation((cls == 5), iterations=6) & ~(cls == 5) & (h > 6)
     w[6] = ndimage.gaussian_filter((shoulder | foot).astype(np.float32), 0.8)
     rock = (cls == 5) & (h > 22) | (cls == 6) | (slope > 38)
+    tpath = os.path.join(OUT, 'districts', 'tramduro_v76.json')
+    if REV != 'v01' and os.path.exists(tpath):                          # v02: Tramduro yard / lawn are not rock (crags on the shore only)
+        import json
+        inner = np.zeros((H, W), bool)
+        for z in json.load(open(tpath, encoding='utf-8'))['zones']:
+            if z.get('kind') in ('continuous_concrete_base', 'coastal_presidential_lawn') and len(z.get('poly') or []) >= 3:
+                inner |= poly_mask(z['poly'], xs, ys)
+        rock &= ~ndimage.binary_erosion(inner, iterations=2) | (slope > 38)
     w[7] = ndimage.gaussian_filter(rock.astype(np.float32), 1.0)
     pads = load_json('terrain_v76.json')['pads']
     F = load_json('features_v76.json')
     lawn = poly_mask(pads['downtown']['poly'], xs, ys) | (((np.abs(xs - F['elite']['centre'][0]) / F['elite']['half'][0]) ** 4 +
                                                          (np.abs(ys - F['elite']['centre'][1]) / F['elite']['half'][1]) ** 4) < 1) | ((xs > 1440) & (ys > 640) & (cls == 0))
     w[8] = ndimage.gaussian_filter(lawn.astype(np.float32), 1.5)
-    yard = poly_mask(pads['construction']['poly'], xs, ys) | (cls == 9) | track
+    site = pads['construction']['poly']
+    cpath = os.path.join(OUT, 'districts', 'construction_v76.json')
+    if REV != 'v01' and os.path.exists(cpath):                          # v02: dirt inside the site fence (contour of v76), not the pad rectangle
+        import json
+        g = [z for z in json.load(open(cpath, encoding='utf-8'))['zones'] if z.get('kind') == 'ground' and z.get('poly')]
+        if g:
+            site = g[0]['poly']
+    yard = ndimage.binary_dilation(poly_mask(site, xs, ys), iterations=2) | (cls == 9) | track
     w[2] = ndimage.gaussian_filter(yard.astype(np.float32), 1.0)
     dpath = os.path.join(OUT, 'districts', 'hamlet_v76.json')
     if os.path.exists(dpath):
@@ -68,6 +83,9 @@ def main():
             if 'poly' in z and ('field' in k or 'plough' in k or 'plow' in k or 'stubble' in k or 'garden_bed' in k or 'ogorod' in k):
                 m = poly_mask(z['poly'], xs, ys)
                 w[10 if 'stubble' in k else 9] = np.maximum(w[10 if 'stubble' in k else 9], m)
+    if REV != 'v01':                                                    # v02: no meadow under water (clear water shows the bed)
+        w[4] = np.maximum(w[4], ndimage.gaussian_filter(sea.astype(np.float32), 1.0))          # sea floor: white sand
+        w[2] = np.maximum(w[2], ndimage.gaussian_filter((cls == 2).astype(np.float32), 1.0) * ~sea)   # river / lake beds: dirt
     # priority: later layers override earlier where strong
     order = [0, 3, 1, 8, 2, 9, 10, 6, 4, 5, 7]
     acc = np.zeros((len(LAYERS), H, W), np.float32)

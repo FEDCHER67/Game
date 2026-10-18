@@ -24,6 +24,7 @@ namespace OnlyVolunteers.Map.W76
     public sealed class W76TrapMarker : MonoBehaviour
     {
         public string Kind = "elite_gate_latch";
-        [Tooltip("Seconds until the gate shuts behind the van (OPEN, Vadim).")] public float Seconds = 8f;
+        [Tooltip("Seconds until the gate shuts behind the van (OPEN, Vadim; proposed default 4).")] public float Seconds = 4f;
+        [Tooltip("Then the guards come out after this many seconds (OPEN, Vadim; proposed default 2).")] public float GuardSeconds = 2f;
     }
 }

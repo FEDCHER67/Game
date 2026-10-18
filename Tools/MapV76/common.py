@@ -15,8 +15,11 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 MAP_DIR = os.path.join(ROOT, 'ArtSource', 'References', 'Map', 'World_v76')
 MAP_FULL = os.path.join(MAP_DIR, 'VOLUNTEERS_MAP_FINAL_v76.png')
 MAP_PREVIEW = os.path.join(MAP_DIR, 'VOLUNTEERS_MAP_PREVIEW_v76.png')   # same render at 1 px/m
-OUT = os.path.join(ROOT, 'Assets', 'OnlyVolunteers', 'Map', 'W76Build', 'Data', 'v01')
-WORK = os.path.join(ROOT, 'Tools', 'MapV76', 'out')                     # previews, renders, reports (git)
+# Data revision: v01 = cloud build 2026-10-18; v02 = local fixes (coast lift bug, water bodies, meadow crowns, seabed sand).
+# Select with the env var MAPV76_REV (default v01 so the cloud scripts behave as before); WORK follows (out / out_v02).
+REV = os.environ.get('MAPV76_REV', 'v01')
+OUT = os.path.join(ROOT, 'Assets', 'OnlyVolunteers', 'Map', 'W76Build', 'Data', REV)
+WORK = os.path.join(ROOT, 'Tools', 'MapV76', 'out' if REV == 'v01' else 'out_' + REV)   # previews, renders, reports (git)
 W, H = 1744, 950                                                         # world size, m (1 m grid)
 SEA_LEVEL = 0.0
 GROUND = 5.0                                                             # "ровная земля ~5 м" (handoff v02 §4)

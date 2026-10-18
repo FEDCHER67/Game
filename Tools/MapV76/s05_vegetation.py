@@ -15,7 +15,7 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 
-from common import MAP_PREVIEW, OUT, WORK, W, H, grid, poly_mask, load_json, save_json, resample, rnd2
+from common import MAP_FULL, MAP_PREVIEW, OUT, REV, WORK, W, H, grid, poly_mask, load_json, save_json, resample, rnd2
 
 
 def poisson(mask_density, spacing_fn, seed, max_n=60000):
@@ -52,6 +52,38 @@ def poisson(mask_density, spacing_fn, seed, max_n=60000):
                 if len(pts) >= max_n:
                     return pts
     return pts
+
+
+def drawn_crowns(tile=1200, pad=48):
+    """v02: one tree per crown DRAWN on the full map (5 px/m): crowns are green discs darker than their local
+    background; a tree sits at each distance-transform peak (radius 1.4-4.8 m). Returns [(x, y, r_m)] in world metres.
+    (v01 scattered Poisson trees by canopy density, ~3x the drawn crowns in the open meadow; Vadim: 8 sparse groves,
+    one grove of ~46 trees, single trees.)"""
+    Image.MAX_IMAGE_PIXELS = None
+    im = Image.open(MAP_FULL).convert('RGB')
+    PW, PH = im.size
+    out = []
+    for ty in range(0, PH, tile):
+        for tx in range(0, PW, tile):
+            x0, y0 = max(0, tx - pad), max(0, ty - pad)
+            x1, y1 = min(PW, tx + tile + pad), min(PH, ty + tile + pad)
+            a = np.asarray(im.crop((x0, y0, x1, y1))).astype(np.int16)
+            R, G = a[..., 0], a[..., 1]
+            lum = a.mean(-1)
+            crown = (G - R >= 10) & (lum < ndimage.uniform_filter(lum, 61) - 8)
+            crown = ndimage.binary_opening(crown, iterations=2)
+            dt = ndimage.distance_transform_edt(crown)
+            pk = (dt == ndimage.maximum_filter(dt, size=13)) & (dt >= 7) & (dt <= 24)
+            lab, n = ndimage.label(pk)
+            if n == 0:
+                continue
+            cs = ndimage.center_of_mass(pk, lab, range(1, n + 1))
+            rad = ndimage.maximum(dt, lab, range(1, n + 1))
+            for (py, px), r in zip(cs, rad):
+                gx, gy = px + x0, py + y0
+                if tx <= gx < tx + tile and ty <= gy < ty + tile:
+                    out.append((gx / 5.0, (PH - gy) / 5.0, float(r) / 5.0))
+    return out
 
 
 def main():
@@ -108,7 +140,21 @@ def main():
     # instances
     def spacing(x, y, d):
         return 3.6 if nodrive[int(y), int(x)] else 5.0 + 4.0 * (1 - d)
-    pts = poisson(np.where(nodrive, 0.95, forest * 0.8), spacing, 76, 80000)
+    if REV == 'v01':
+        pts = poisson(np.where(nodrive, 0.95, forest * 0.8), spacing, 76, 80000)
+    else:
+        # v02: Poisson only in the no-drive forest and the foothill pines (designed densities); everywhere else one tree
+        # per drawn crown. District-owned trees (Hamlet layout, Rough, beach, Tramduro) are not duplicated.
+        pts = poisson(np.where(nodrive, 0.95, np.where(foothill, forest * 0.8, 0)), spacing, 76, 80000)
+        ham = load_json('districts/hamlet_v76.json')
+        hp = np.array([p['pos'] for p in ham['props'] if 'pos' in p] + [q for b in ham['buildings'] for q in b['footprint']], float)
+        from scipy.spatial import ConvexHull
+        hull = hp[ConvexHull(hp).vertices]
+        hamlet = ndimage.binary_dilation(poly_mask([tuple(q) for q in hull], xs, ys), iterations=6)
+        skip = excl | nodrive | foothill | hamlet
+        crowns = [(x, y) for x, y, r_ in drawn_crowns() if 0 <= x < W and 0 <= y < H and not skip[int(y), int(x)]]
+        pts = list(pts) + crowns
+        print('drawn crowns kept', len(crowns))
     rng = np.random.default_rng(7676)
     trees = []
     for x, y in pts:
