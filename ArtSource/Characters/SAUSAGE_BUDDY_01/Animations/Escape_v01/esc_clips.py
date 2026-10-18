@@ -100,7 +100,10 @@ class Lib:
     def edge_plant(self, t, lift=0.0):
         return self.plant(t, -0.17, -0.30, -90.0, lift=lift)
 
-    def EDGE(self):
+    def EDGE(self, side='R'):
+        """EDGE_R; EDGE_L = exact channel mirror (his left pad edge, instrument-stand side)."""
+        if side == 'L':
+            return E.mirror_dict(self.EDGE('R'))
         d = dict(yaw=-90, pitch=84, px=-0.17, py=-0.30, pz=0.0, crunch=6, seat=1, neck=0, hnod=0, hyaw=0, htilt=0,
                  roll=0, twist=0, bend=0, look_w=0.0, floor=0.0,
                  lrail_L=0, lrail_R=0, fl_L=84, fl_R=84, kn_L=88, kn_R=88, ab_L=0, ab_R=0, lr_L=0, lr_R=0, fo_L=0, fo_R=0,
@@ -446,7 +449,18 @@ def tug_legs(lib):
 T_SWING = 1.2
 
 
-def swing_off(lib):
+def mirror_keys(K, first):
+    """Left-side version of a right-side key list: every key channel-mirrored, the first key replaced
+    by the exact (unmirrored) start pose so the seam stays exact."""
+    return [(0.0, first)] + [(t, E.mirror_dict(d)) for t, d in K[1:]]
+
+
+def swing_off(lib, side='R'):
+    if side == 'L':
+        sp = swing_off(lib, 'R')
+        sp.update(stem='Esc_SwingOff_L_v01', end='EDGE_L', leg_clear=0.010, keys=mirror_keys(sp['keys'], lib.SIT()), next=['Esc_HopRun_L_v01'],
+                  beats=[b.replace('right', 'left').replace('EDGE_R', 'EDGE_L') for b in sp['beats']])
+        return sp
     SIT = lib.SIT()
     EDGE = lib.EDGE()
     T = T_SWING
@@ -477,6 +491,60 @@ def swing_off(lib):
                 beats=['0.12 looks at his right edge', '0.20-0.40 knees tuck to the chest (clear the open straps)',
                        '0.40-0.76 spins 90 deg on his butt toward his right, scoots toward the foot end',
                        '0.76-1.04 legs drop over the edge, palms plant', '1.20 EDGE_R'])
+
+
+# ===================================================================================== slump on the edge
+T_SLUMP_EDGE = 2.0
+
+
+def slump_edge(lib, side='R'):
+    """Interrupt while sitting on the pad edge (EDGE_x, or crossfaded from late SwingOff / early HopRun):
+    jolt, sags limp, is swung back onto the pad (reverse SwingOff path) and tips over backward to LIE."""
+    if side == 'L':
+        sp = slump_edge(lib, 'R')
+        sp.update(stem='Esc_Slump_Edge_L_v01', start='EDGE_L', leg_clear=0.010, keys=mirror_keys(sp['keys'], lib.EDGE('L')),
+                  beats=[b.replace('EDGE_R', 'EDGE_L').replace('right', 'left') for b in sp['beats']])
+        return sp
+    pl = lambda px, py, yaw, **kw: {**lib.plant('L', px, py, yaw, **kw), **lib.plant('R', px, py, yaw, **kw)}
+    T = T_SLUMP_EDGE
+    K = [(0.0, lib.EDGE())]
+    K.append((0.08, {'pitch': 90, 'crunch': 2, 'neck': 14, 'hnod': -10, 'cu_L': -0.4, 'cu_R': -0.4, 'kn_L': 80, 'kn_R': 78,
+                     **pl(-0.17, -0.30, -90, lift=0.04)}))
+    K.append((0.30, {'pitch': 82, 'crunch': 14, 'neck': 14, 'hnod': 16, 'cu_L': 0.0, 'cu_R': 0.0, 'kn_L': 90, 'kn_R': 92,
+                     **pl(-0.17, -0.30, -90)}))
+    # swung back onto the pad: the SwingOff path backward, head still lolling
+    K.append((0.58, {'yaw': -80, 'px': -0.14, 'py': -0.26, 'fl_L': 110, 'fl_R': 110, 'kn_L': 120, 'kn_R': 118, 'pitch': 82,
+                     'hyaw': -6, 'crunch': 12, 'neck': 12, 'hnod': 12, **pl(-0.14, -0.26, -80, lift=0.03)}))
+    K.append((0.82, {'yaw': -40, 'px': -0.07, 'py': -0.12, 'fl_L': 128, 'fl_R': 130, 'kn_L': 130, 'kn_R': 132, 'pitch': 78,
+                     'hyaw': 8, 'crunch': 10, 'neck': 8, 'hnod': 10, **pl(-0.07, -0.12, -40, lift=0.05)}))
+    K.append((1.02, {'yaw': 0, 'px': -0.02, 'py': 0.0, 'lrail_L': 0.0, 'lrail_R': 0.0, 'fl_L': 120, 'fl_R': 122, 'kn_L': 120,
+                     'kn_R': 122, 'fo_L': -10, 'fo_R': -10, 'pitch': 74, 'crunch': 10, 'hyaw': 12,
+                     **pl(-0.02, 0.0, 0.0, back=0.08)}))
+    K.append((1.16, {'px': 0.0, 'fl_L': 84, 'fl_R': 84, 'kn_L': 30, 'kn_R': 32, 'fo_L': 0, 'fo_R': 0, 'pitch': 76, 'hyaw': 16,
+                     **lib.sit_plant('L', lift=0.02), **lib.sit_plant('R', lift=0.02)}))
+    K.append((1.26, {'lrail_L': 1.0, 'lrail_R': 1.0, 'fl_L': 78, 'fl_R': 78, 'kn_L': 0, 'kn_R': 0, 'pitch': 74, 'crunch': 6,
+                     'neck': 2, 'hnod': 4, 'hyaw': 18, **lib.sit_plant('L', lift=0.03), **lib.sit_plant('R', lift=0.03)}))
+    # tips over backward, limp (tail of Esc_Slump_Sit)
+    K.append((1.42, {'pitch': 40, 'crunch': 2, 'neck': 8, 'hnod': 2, 'hyaw': 20, 'seat': 0.6,
+                     **lib.rest_hand('L', V(0.06, 0.06, 0.14)), **lib.rest_hand('R', V(-0.06, 0.06, 0.14))}))
+    K.append((1.56, {'pitch': -1.5, 'crunch': -2, 'neck': -4, 'hnod': 0, 'hyaw': 26, 'seat': 0.0,
+                     **lib.rest_hand('L', V(0.0, 0.0, 0.008)), **lib.rest_hand('R', V(0.0, 0.0, 0.008))}))
+    K.append((1.68, {'pitch': 3, 'crunch': 2, 'neck': 2, 'hyaw': 24, **lib.rest_hand('L', V(0.0, 0.0, 0.02)),
+                     **lib.rest_hand('R', V(0.0, 0.0, 0.015))}))
+    K.append((1.80, {'pitch': 0, 'crunch': 0, 'neck': 0, 'hyaw': 16, **lib.rest_hand('L'), **lib.rest_hand('R'),
+                     'arail_L': 0.0, 'arail_R': 0.0}))
+    K.append((1.90, {'arail_L': 1.0, 'arail_R': 1.0}))
+    K.append((T, lib.rest()))
+    K.append((T, {'ik_L': 1.0, 'ik_R': 1.0}))
+    return dict(stem='Esc_Slump_Edge_R_v01', T=T, loop=False, start='EDGE_R', end='LIE',
+                pre={'closed': [], 'open': list(E.LIMB_STRAPS), 'any': []},
+                closed0=[], straps={}, keys=K, events=[{'name': 'Limp', 't': 0.30}, {'name': 'BackHitsPad', 't': 1.56}],
+                after={}, next=['Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit); straps stay open'],
+                views=('three_quarter', 'side'),
+                beats=['0.00 = EDGE_R (crossfade in from late SwingOff_R or HopRun_R before 0.30)', '0.08 jolt, fingers splay',
+                       '0.30 sags limp, head drops', '0.58-1.02 swung back onto the pad (SwingOff path backward)',
+                       '1.02-1.26 legs straighten into their rest line', '1.26-1.56 tips over backward, limp',
+                       '1.56 back hits the pad, bounce', '2.00 LIE'])
 
 
 # ===================================================================================== slumps

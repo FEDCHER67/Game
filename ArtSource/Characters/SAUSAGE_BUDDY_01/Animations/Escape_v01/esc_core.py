@@ -556,14 +556,15 @@ class EscCtx:
             t = s[0]
             if closed.get('leg_' + t) or cc['lrail_' + t] > 0.999 or cc['fik_' + t] > 0.999:
                 continue
+            clr = getattr(self, 'leg_clear', 0.004)        # v01b: left-exit clips use a larger clearance
             gl, _ = self.pad_gap(out, ('leg_' + s,))
-            if gl >= 0.004:
+            if gl >= clr:
                 continue
             lo, hi = 0.0, None
             for x in (4.0, 8.0, 16.0, 30.0, 45.0):
                 c2 = dict(cc)
                 c2['fl_' + t] += x
-                if self.pad_gap(self.pose(c2, closed), ('leg_' + s,))[0] >= 0.004:
+                if self.pad_gap(self.pose(c2, closed), ('leg_' + s,))[0] >= clr:
                     hi = x
                     break
                 lo = x
@@ -573,7 +574,7 @@ class EscCtx:
                 mid = 0.5 * (lo + hi)
                 c2 = dict(cc)
                 c2['fl_' + t] += mid
-                if self.pad_gap(self.pose(c2, closed), ('leg_' + s,))[0] >= 0.004:
+                if self.pad_gap(self.pose(c2, closed), ('leg_' + s,))[0] >= clr:
                     hi = mid
                 else:
                     lo = mid

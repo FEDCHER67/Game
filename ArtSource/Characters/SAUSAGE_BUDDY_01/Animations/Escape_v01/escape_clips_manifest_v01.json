@@ -9,7 +9,13 @@
   "REACH_R",
   "REACH_L",
   "LEGS_REACH",
-  "RUN0"
+  "RUN0",
+  "EDGE_L",
+  "RUN0_L",
+  "LAND_R",
+  "DOWN_R",
+  "LAND_L",
+  "DOWN_L"
  ],
  "run0_root": {
   "position": [
@@ -34,7 +40,75 @@
   },
   "speed_mps_at_end": 3.2
  },
+ "run0_root_L": {
+  "position": [
+   -1.6435,
+   -0.66,
+   1.1671
+  ],
+  "yaw_deg_about_up": -50.0,
+  "facing_unity": [
+   -0.766,
+   0.0,
+   0.6428
+  ],
+  "note": "PatientRest-local Unity transform of the floor root that Flee_Run_v01 frame 1 expects (position (-x, z, -y) of armature space; rotation = -yaw about Unity +Y, sign flips with the handedness). Equivalently table-local: PatientRest @ this.",
+  "patientrest_armature": {
+   "position": [
+    1.6435,
+    -1.1671,
+    -0.66
+   ],
+   "yaw_deg_about_z": 50.0
+  },
+  "speed_mps_at_end": 3.2
+ },
  "clips": {
+  "Esc_HopRun_L_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_HopRun_L_v01",
+   "frames": [
+    1,
+    46
+   ],
+   "duration_s": 1.5,
+   "loop": false,
+   "start_pose_key": "EDGE_L",
+   "end_pose_key": "RUN0_L",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Land",
+     "t": 0.52,
+     "norm": 0.3467
+    },
+    {
+     "name": "RunStart",
+     "t": 0.98,
+     "norm": 0.6533
+    },
+    {
+     "name": "HandOffToRun",
+     "t": 1.5,
+     "note": "end pose = Flee_Run_v01 frame 1 at RUN0_L",
+     "norm": 1.0
+    }
+   ],
+   "next": [
+    "Flee_Run_v01 (loop) on the free NPC root placed at RUN0_L, moving 3.2 m/s along its facing"
+   ],
+   "root_motion": "hips leave the table (PatientRest-local); final hand-off root RUN0_L (see esc_pose_keys_v01.json run0_root_L_patientrest_unity); speed at the end 3.2 m/s along the facing"
+  },
   "Esc_HopRun_R_v01": {
    "take": "Buddy_Rig_Mixamo65|Esc_HopRun_R_v01",
    "frames": [
@@ -353,6 +427,36 @@
    ],
    "next": [
     "Esc_SitUp_v01 (both arms now free)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_SitUp_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_SitUp_v01",
+   "frames": [
+    1,
+    31
+   ],
+   "duration_s": 1.0,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "SIT",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "Esc_Sit_UnbuckleLegsBoth_v01 / _LegL_ / _LegR_ (a leg strap closed)",
+    "Esc_SwingOff_R_v01 (all open)"
    ],
    "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
   },
@@ -770,33 +874,81 @@
    ],
    "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
   },
-  "Esc_SitUp_v01": {
-   "take": "Buddy_Rig_Mixamo65|Esc_SitUp_v01",
+  "Esc_Slump_Edge_L_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Slump_Edge_L_v01",
    "frames": [
     1,
-    31
+    61
    ],
-   "duration_s": 1.0,
+   "duration_s": 2.0,
    "loop": false,
-   "start_pose_key": "LIE",
-   "end_pose_key": "SIT",
+   "start_pose_key": "EDGE_L",
+   "end_pose_key": "LIE",
    "preconditions": {
     "closed": [],
     "open": [
      "STRAP_ARM_L",
-     "STRAP_ARM_R"
-    ],
-    "any": [
+     "STRAP_ARM_R",
      "STRAP_LEG_L",
      "STRAP_LEG_R"
-    ]
+    ],
+    "any": []
    },
    "straps_after": {},
    "strap_animation": {},
-   "events": [],
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.3,
+     "norm": 0.15
+    },
+    {
+     "name": "BackHitsPad",
+     "t": 1.56,
+     "norm": 0.78
+    }
+   ],
    "next": [
-    "Esc_Sit_UnbuckleLegsBoth_v01 / _LegL_ / _LegR_ (a leg strap closed)",
-    "Esc_SwingOff_R_v01 (all open)"
+    "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit); straps stay open"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Slump_Edge_R_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Slump_Edge_R_v01",
+   "frames": [
+    1,
+    61
+   ],
+   "duration_s": 2.0,
+   "loop": false,
+   "start_pose_key": "EDGE_R",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.3,
+     "norm": 0.15
+    },
+    {
+     "name": "BackHitsPad",
+     "t": 1.56,
+     "norm": 0.78
+    }
+   ],
+   "next": [
+    "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit); straps stay open"
    ],
    "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
   },
@@ -909,6 +1061,134 @@
    ],
    "next": [
     "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Stumble_Off_L_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Stumble_Off_L_v01",
+   "frames": [
+    1,
+    49
+   ],
+   "duration_s": 1.6,
+   "loop": false,
+   "start_pose_key": "LAND_L",
+   "end_pose_key": "DOWN_L",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.08,
+     "norm": 0.05
+    },
+    {
+     "name": "KneesHit",
+     "t": 0.52,
+     "norm": 0.325
+    },
+    {
+     "name": "BodyHitsFloor",
+     "t": 1.0,
+     "norm": 0.625
+    },
+    {
+     "name": "RagdollReady",
+     "t": 1.6,
+     "note": "end pose DOWN_x: face down on the floor, relaxed; start the knocked-down ragdoll from this pose (or hold it)",
+     "norm": 1.0
+    }
+   ],
+   "next": [
+    "knocked-down ragdoll (start from the last frame), then the capture flow"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body on the floor beside the table (Apply Root Motion off)"
+  },
+  "Esc_Stumble_Off_R_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Stumble_Off_R_v01",
+   "frames": [
+    1,
+    49
+   ],
+   "duration_s": 1.6,
+   "loop": false,
+   "start_pose_key": "LAND_R",
+   "end_pose_key": "DOWN_R",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.08,
+     "norm": 0.05
+    },
+    {
+     "name": "KneesHit",
+     "t": 0.52,
+     "norm": 0.325
+    },
+    {
+     "name": "BodyHitsFloor",
+     "t": 1.0,
+     "norm": 0.625
+    },
+    {
+     "name": "RagdollReady",
+     "t": 1.6,
+     "note": "end pose DOWN_x: face down on the floor, relaxed; start the knocked-down ragdoll from this pose (or hold it)",
+     "norm": 1.0
+    }
+   ],
+   "next": [
+    "knocked-down ragdoll (start from the last frame), then the capture flow"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body on the floor beside the table (Apply Root Motion off)"
+  },
+  "Esc_SwingOff_L_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_SwingOff_L_v01",
+   "frames": [
+    1,
+    37
+   ],
+   "duration_s": 1.2,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "EDGE_L",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "Esc_HopRun_L_v01"
    ],
    "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
   },

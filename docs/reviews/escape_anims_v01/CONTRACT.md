@@ -11,7 +11,7 @@ Clips: `ArtSource/Characters/SAUSAGE_BUDDY_01/Animations/Escape_v01/` (FBX + .bl
 - Unity PatientRest-local position = `(-x, z, -y)` of the authoring space.
 - **Root motion: none.** Apply Root Motion stays off, as for the Operation clips; the Hips curves place the body. One exception is `Esc_HopRun_R` (see below).
 - **Straps:** there are 4 limb straps, `STRAP_ARM_L/R` and `STRAP_LEG_L/R`. The torso strap is removed (Fedya 2026-10-18), so no torso clips exist and the sit-up needs only free arms.
-- **Exit side:** the patient leaves on his RIGHT, the table-camera side. The instrument stand stays on his left.
+- **Exit side:** the main exit is on his RIGHT, the table-camera side. v01b adds the exact mirror on his LEFT (`*_L`, instrument-stand side); gameplay picks the side, e.g. away from the player or from the stand.
 
 ## Pose keys (exact seams)
 
@@ -25,6 +25,10 @@ Every clip starts and ends on one of these poses with identical raw values (seam
 | `RUN0` | `Escape_Police_v01/Flee_Run_v01` frame 1 on the floor at the RUN0 root (see HopRun). |
 | `REACH_R` / `REACH_L` | Grab pose of `Esc_Lie_UnbuckleArmR_ByL` / `...ArmL_ByR` at 1.25 s. Start of the matching lying slump. |
 | `LEGS_REACH` | Grab pose of `Esc_Sit_UnbuckleLegsBoth` at 0.80 s. Start of `Esc_Slump_Sit`. |
+| `EDGE_L` | v01b. Exact channel mirror of `EDGE_R`: sitting on his LEFT pad edge, legs hanging. |
+| `RUN0_L` | v01b. `Flee_Run_v01` frame 1 at the RUN0_L root (see HopRun). |
+| `LAND_R` / `LAND_L` | v01b. `Esc_HopRun_R/L` at 0.60 s (landing squash). Start of `Esc_Stumble_Off_R/L`. |
+| `DOWN_R` / `DOWN_L` | v01b. Face down on the floor beside the table, relaxed. End of `Esc_Stumble_Off_R/L` = knocked-down ragdoll start. |
 
 Raw values for all keys are in `esc_pose_keys_v01.json`.
 
@@ -48,6 +52,12 @@ Strap columns: **closed** = must be closed, **open** = must be open, **any** = e
 | `Esc_Slump_LieReachR_v01` | 1.30 / 1–40 | – | REACH_R → LIE | ARM_R | ARM_L | legs | – | Op_Lie_Asleep / Awake / Panic |
 | `Esc_Slump_LieReachL_v01` | 1.30 / 1–40 | – | REACH_L → LIE | ARM_L | ARM_R | legs | – | same |
 | `Esc_Slump_Sit_v01` | 1.40 / 1–43 | – | LEGS_REACH → LIE | – | arms | legs | – | same |
+| `Esc_SwingOff_L_v01` (v01b) | 1.20 / 1–37 | – | SIT → EDGE_L | – | all 4 | – | – | HopRun_L |
+| `Esc_HopRun_L_v01` (v01b) | 1.50 / 1–46 | – | EDGE_L → RUN0_L | – | all 4 | – | – | Flee_Run_v01 (loop) at RUN0_L |
+| `Esc_Slump_Edge_R_v01` (v01b) | 2.00 / 1–61 | – | EDGE_R → LIE | – | all 4 | – | – | Op_Lie_Asleep / Awake / Panic |
+| `Esc_Slump_Edge_L_v01` (v01b) | 2.00 / 1–61 | – | EDGE_L → LIE | – | all 4 | – | – | same |
+| `Esc_Stumble_Off_R_v01` (v01b) | 1.60 / 1–49 | – | LAND_R → DOWN_R | – | all 4 | – | – | knocked-down ragdoll |
+| `Esc_Stumble_Off_L_v01` (v01b) | 1.60 / 1–49 | – | LAND_L → DOWN_L | – | all 4 | – | – | same |
 
 Clip side naming: `ArmR_ByL` means the free LEFT hand opens the RIGHT wrist strap.
 
@@ -56,7 +66,8 @@ Clip side naming: `ArmR_ByL` means the free LEFT hand opens the RIGHT wrist stra
 Full lists with times and normalized times are in each `_authoring.json` and in the manifest.
 
 - `StrapOpen` (the only gameplay-relevant event): at this time set the strap state to Open and start the strap flip.
-- `Grab`, `Slip`, `Release`, `Land`, `Limp`, `BackHitsPad`, `RunStart`, `HandOffToRun` are cosmetic or audio cues.
+- `Grab`, `Slip`, `Release`, `Land`, `Limp`, `BackHitsPad`, `RunStart`, `HandOffToRun`, `KneesHit`, `BodyHitsFloor` are cosmetic or audio cues.
+- `RagdollReady` (v01b, last frame of `Esc_Stumble_Off_*`): the pose may be handed to the knocked-down ragdoll.
 
 **Strap flip curve.** This is the rotation about the strap's local +X; the sign is the same in Unity; 0 = closed, 120 = open. Interpolate monotonically.
 
@@ -91,7 +102,7 @@ The palm is placed 4 mm (arm) or 12 mm (leg) above that point, along the normal.
    - both closed → `Esc_Sit_UnbuckleLegsBoth`;
    - one closed → `Esc_Sit_UnbuckleLegL` or `...LegR`;
    - optionally `Esc_Sit_TugLegs_Loop` before either.
-5. `Esc_SwingOff_R` → `Esc_HopRun_R` → hand-off to the free NPC running `Flee_Run_v01`.
+5. `Esc_SwingOff_R` → `Esc_HopRun_R` → hand-off to the free NPC running `Flee_Run_v01` at RUN0; or the left exit `Esc_SwingOff_L` → `Esc_HopRun_L` → hand-off at RUN0_L. Times are the same on both sides.
 
 Escape time without optional tug loops:
 
@@ -116,9 +127,14 @@ Each tug loop adds 2.0 s (arm) or 1.6 s (legs).
 
 All slumps end exactly on `LIE`. Continue with `Op_Lie_Asleep` (re-injected) or `Op_Lie_Awake` / `Op_Panic` (hit) using a 0.25 s crossfade.
 
-**Not covered in v01:** an interrupt during `SwingOff` / `HopRun` (on the edge or off the table). Options:
-- let gameplay ragdoll the patient;
-- order an `Esc_Slump_Edge` clip in v02.
+| v01b: `Esc_SwingOff_X` after 0.76 s, sitting on `EDGE_X`, or `Esc_HopRun_X` before 0.30 s | `Esc_Slump_Edge_X` |
+| v01b: `Esc_HopRun_X` 0.47–0.98 s (feet on the floor, before the run blend) | `Esc_Stumble_Off_X` |
+| `Esc_SwingOff_X` before 0.76 s | `Esc_Slump_Sit` (he is still sitting on the pad) |
+| `Esc_HopRun_X` 0.30–0.47 s (in the air) or after 0.98 s (running) | gameplay ragdoll / the normal Flee capture flow |
+
+**Slump_Edge ends on LIE, not SIT** (v01b decision): a re-injected or hit patient must end lying, and every lying continuation (`Op_Lie_*`) starts from LIE. Ending on SIT would need a second clip. Path: jolt, sags limp, is swung back onto the pad along the SwingOff path backward, legs straighten into their rest line, tips over backward like `Esc_Slump_Sit`. The straps stay open; gameplay re-straps as usual.
+
+**Stumble_Off → ragdoll:** the clip ends on `DOWN_X`, face down on the floor next to the table, turned toward the foot end, head turned aside, arms splayed, knees slightly bent, every vertex ≥ 0.3 mm above the floor and nothing under the pad. At `RagdollReady` (last frame) copy the bone transforms into the knocked-down ragdoll and enable physics, or just hold the pose. Rig root stays at PatientRest (no root motion); the Hips curves carry the body to the floor.
 
 ## HopRun root hand-off
 
@@ -130,6 +146,12 @@ All slumps end exactly on `LIE`. Continue with `Op_Lie_Asleep` (re-injected) or 
   - this is on the camera side, toward the foot end.
 - Then play `Flee_Run_v01` with the root moving 3.2 m/s × playback speed.
 - Landing event at 0.52 s.
+
+**Left side (v01b), RUN0_L** = exact mirror of RUN0:
+- PatientRest-local Unity position (-1.6435, -0.66, 1.1671), yaw −50° about Unity +Y;
+- table-local (1.644, 0, -1.167), yaw 130°; on the instrument-stand side, toward the foot end;
+- `run0_root_L_patientrest_unity` in `esc_pose_keys_v01.json` and `run0_root_L` in the manifest.
+- The hop keys are mirrored; the run-in uses the unmirrored `Flee_Run_v01` cycle on the mirrored root, so it ends exactly on frame 1.
 
 ## Validation
 
@@ -144,9 +166,26 @@ Method: the keyed actions were sampled at 120 Hz and skinned (Body/Face/Shorts v
 - Closed-strap segments stay on their strap line. They slide along it by ≤ 29 mm (Operation_v01 allowed ≤ 40 mm).
 - IK overreach ≤ 14 mm in the reaches. HopRun feet reach 67 mm, which is the hop take-off where the feet leave their marks.
 
+**v01b clips** (same method, headless `bpy` 5.2.2 in the cloud; per-clip numbers in each `_authoring.json`):
+
+> The v01b FBX/.blend files are **not committed**: the cloud session cannot upload to Git LFS. Rebuild them locally with `--clip <Name> --final --validate` for the 6 v01b names (see Rebuild); the `_authoring.json` files already hold the validated numbers, so delete each one first because the scripts never overwrite.
+
+| Clip | Seams | Key step | Pad min | Floor min | Self-pen. |
+|---|---|---|---|---|---|
+| SwingOff_L | 0 / 0 | 20.27° | −1.03 mm (right shin) | 235 mm | 0 |
+| HopRun_L | 0 / 0 | 20.60° | 0.0 mm | 0.5 mm | 0 |
+| Slump_Edge_R | 0 / 0 | 20.04° | 0.0 mm | 240 mm | 0 |
+| Slump_Edge_L | 0 / 0 | 20.04° | −0.29 mm | 240 mm | 0 |
+| Stumble_Off_R | 0 / 0 | 20.78° | – (off the pad) | 0.3 mm | 0 |
+| Stumble_Off_L | 0 / 0 | 20.29° | – | 0.3 mm | 0 |
+
+- No closed straps in any v01b clip, so there is no strap slide to check. FBX re-import: bind error 1.65e-5, bone position error 1e-6 m.
+- The table is only mirror-symmetric to a few mm, so the left clips raise the free-leg pad clearance from 4 mm to 10 mm (`leg_clear`); the right clips keep 4 mm and rebuild exactly as before.
+- The cloud container cannot render (no EGL), so there are no v01b stills or contact sheet. Not checked: the stumble against the table legs/frame under the pad (only the pad slab and floor are tested); someone should look at the stumble and edge slump in Blender.
+
 **Not checked:**
 - Nothing was imported into Unity, and the Unity strap tween is not wired.
-- The hand meets the buckle as a palm-on-buckle placement; there is no per-finger grip.
+- The hand meets the buckle as a palm-on-buckle placement; there is no per-finger grip (the optional finger curl was not done in v01b).
 
 ## Rebuild
 
@@ -157,6 +196,7 @@ blender -b --factory-startup --python ArtSource/Characters/SAUSAGE_BUDDY_01/Anim
 blender -b --factory-startup --python .../build_esc_v01.py -- --clip <Name> --final --validate --stills <dir>
 ```
 
-- Clip names: UnbuckleArmR_ByL, UnbuckleArmL_ByR, TugArmR, TugArmL, SitUp, UnbuckleLegL, UnbuckleLegR, UnbuckleLegsBoth, TugLegs, SwingOff, HopRun, SlumpLieReachR, SlumpLieReachL, SlumpSit.
+- Clip names: UnbuckleArmR_ByL, UnbuckleArmL_ByR, TugArmR, TugArmL, SitUp, UnbuckleLegL, UnbuckleLegR, UnbuckleLegsBoth, TugLegs, SwingOff, HopRun, SlumpLieReachR, SlumpLieReachL, SlumpSit; v01b: SwingOff_L, HopRun_L, SlumpEdgeR, SlumpEdgeL, StumbleOffR, StumbleOffL.
+- Headless without Blender also works: `pip install bpy==5.2.*` (Python 3.13), then `python build_esc_v01.py -- <args>`.
 - Then run `python make_sheet_esc.py <dir> <png>` and `python make_manifest_esc.py`.
 - The scripts never overwrite existing files.

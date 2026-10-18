@@ -39,7 +39,9 @@ args = ap.parse_args(argv)
 DEST = Path(args.dest) if args.dest else HERE
 
 CLIP_NAMES = ['UnbuckleArmR_ByL', 'UnbuckleArmL_ByR', 'TugArmR', 'TugArmL', 'SitUp', 'UnbuckleLegL', 'UnbuckleLegR',
-              'UnbuckleLegsBoth', 'TugLegs', 'SwingOff', 'HopRun', 'SlumpLieReachR', 'SlumpLieReachL', 'SlumpSit']
+              'UnbuckleLegsBoth', 'TugLegs', 'SwingOff', 'HopRun', 'SlumpLieReachR', 'SlumpLieReachL', 'SlumpSit',
+              # v01b: left exit, interrupts on the edge / right after the hop-off
+              'SwingOff_L', 'HopRun_L', 'SlumpEdgeR', 'SlumpEdgeL', 'StumbleOffR', 'StumbleOffL']
 SHOTS = {
     'UnbuckleArmR_ByL': (0.0, 0.66, 0.80, 1.06, 1.46, 1.86, 2.6),
     'UnbuckleArmL_ByR': (0.0, 0.66, 0.80, 1.06, 1.46, 1.86, 2.6),
@@ -55,6 +57,12 @@ SHOTS = {
     'SlumpLieReachR': (0.0, 0.07, 0.20, 0.42, 0.70, 1.3),
     'SlumpLieReachL': (0.0, 0.07, 0.20, 0.42, 0.70, 1.3),
     'SlumpSit': (0.0, 0.08, 0.26, 0.50, 0.66, 1.4),
+    'SwingOff_L': (0.0, 0.40, 0.58, 0.76, 0.92, 1.2),
+    'HopRun_L': None,
+    'SlumpEdgeR': (0.0, 0.08, 0.30, 0.58, 0.82, 1.02, 1.26, 1.42, 1.56, 2.0),
+    'SlumpEdgeL': (0.0, 0.08, 0.30, 0.58, 0.82, 1.02, 1.26, 1.42, 1.56, 2.0),
+    'StumbleOffR': (0.0, 0.08, 0.30, 0.52, 0.84, 1.00, 1.6),
+    'StumbleOffL': (0.0, 0.08, 0.30, 0.52, 0.84, 1.00, 1.6),
 }
 
 
@@ -81,6 +89,14 @@ def make_specs(lib):
     curves, _ = E.build_curves(sp['UnbuckleLegsBoth']['keys'], lib.ctx)
     tp = sp['UnbuckleLegsBoth']['peak'][1]
     sp['SlumpSit'] = EC.slump_sit(lib, {k: cv(tp) for k, cv in curves.items()})
+    sp['SwingOff_L'] = EC.swing_off(lib, 'L')
+    sp['HopRun_L'] = EH.hop_run(lib, 'L')
+    sp['SlumpEdgeR'] = EC.slump_edge(lib, 'R')
+    sp['SlumpEdgeL'] = EC.slump_edge(lib, 'L')
+    # stumbles start on the landing squash of their hop (HopRun at STUMBLE_FROM, before the run blend)
+    for nm, src, a in (('StumbleOffR', 'HopRun', 'R'), ('StumbleOffL', 'HopRun_L', 'L')):
+        curves, _ = E.build_curves(sp[src]['keys'], lib.ctx)
+        sp[nm] = EH.stumble_off(lib, {k: cv(EH.STUMBLE_FROM) for k, cv in curves.items()}, a)
     return sp
 
 
@@ -115,6 +131,7 @@ class Session:
         if curves is None:
             curves, _ = E.build_curves(spec['keys'], self.ctx)
         c = {k: cv(t) for k, cv in curves.items()}
+        self.ctx.leg_clear = spec.get('leg_clear', 0.004)
         ang, closed = strap_state(spec, t)
         if 'pose_fn' in spec:
             return spec['pose_fn'](self, spec, t, c, closed)
@@ -134,6 +151,16 @@ class Session:
             out, _ = self.eval_spec(sp, tp)
             keys[k] = B.values_from_pose(out)
         keys['RUN0'] = B.values_from_pose(EH.run0_pose(self))
+        # v01b
+        edge, _, _ = ctx.solve({**ctx.ch0(), **lib.EDGE('L')}, {})
+        keys['EDGE_L'] = B.values_from_pose(edge)
+        keys['RUN0_L'] = B.values_from_pose(EH.run0_pose(self, 'L'))
+        for a, hop, st in (('R', 'HopRun', 'StumbleOffR'), ('L', 'HopRun_L', 'StumbleOffL')):
+            out, _ = self.eval_spec(self.specs[hop], EH.STUMBLE_FROM)
+            keys['LAND_' + a] = B.values_from_pose(out)
+            sp = self.specs[st]
+            out, _ = self.eval_spec(sp, sp['T'])
+            keys['DOWN_' + a] = B.values_from_pose(out)
         return keys
 
 
@@ -489,7 +516,8 @@ def write_keys(sess):
     B, S, ctx = sess.B, sess.S, sess.ctx
     out = {'version': 'esc_pose_keys_v01', 'fps': E.FPS, 'rig': E.O.RIG_NAME, 'bones': B.order,
            'note': 'raw pose-bone values (quaternion w,x,y,z; Hips location) keyed at clip seams; rig object at PatientRest',
-           'run0_root_patientrest_unity': EH.run0_root_unity(sess), 'keys': {}}
+           'run0_root_patientrest_unity': EH.run0_root_unity(sess),
+           'run0_root_L_patientrest_unity': EH.run0_root_unity(sess, 'L'), 'keys': {}}
     for k, v in sess.keys.items():
         out['keys'][k] = {n: {'q': [round(x, 8) for x in v[n]['q']], 'loc': [round(x, 8) for x in v[n]['loc']] if v[n]['loc'] else None}
                           for n in B.order}

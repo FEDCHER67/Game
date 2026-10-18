@@ -1,0 +1,107 @@
+{
+  "clip": "Esc_Stumble_Off_L_v01",
+  "action": "Esc_Stumble_Off_L_v01",
+  "take": "Buddy_Rig_Mixamo65|Esc_Stumble_Off_L_v01",
+  "frames": [
+    1,
+    49
+  ],
+  "fps": 30,
+  "duration_s": 1.6,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "LAND_L",
+  "end_pose_key": "DOWN_L",
+  "preconditions": {
+    "closed": [],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R",
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ],
+    "any": []
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [
+    {
+      "name": "Limp",
+      "t": 0.08,
+      "norm": 0.05
+    },
+    {
+      "name": "KneesHit",
+      "t": 0.52,
+      "norm": 0.325
+    },
+    {
+      "name": "BodyHitsFloor",
+      "t": 1.0,
+      "norm": 0.625
+    },
+    {
+      "name": "RagdollReady",
+      "t": 1.6,
+      "note": "end pose DOWN_x: face down on the floor, relaxed; start the knocked-down ragdoll from this pose (or hold it)",
+      "norm": 1.0
+    }
+  ],
+  "next": [
+    "knocked-down ragdoll (start from the last frame), then the capture flow"
+  ],
+  "beats": [
+    "0.00 = LAND_L (HopRun_L at 0.60; crossfade in from HopRun_L 0.47-0.98)",
+    "0.08 jolt, arms fly up",
+    "0.30 knees buckle",
+    "0.52 knees hit the floor",
+    "0.62-1.00 topples forward (turning toward the foot end, away from the table), face down, head turns aside, arms flop out",
+    "1.00 body hits the floor",
+    "1.12-1.60 small bounce, settles limp = DOWN_L"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body on the floor beside the table (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "foot_Right": 0.0257,
+      "foot_Left": 0.0217
+    },
+    "contact_root_lift_max_m": 0.3492,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightLeg": 13,
+      "mixamorig:RightFoot": 8,
+      "mixamorig:LeftLeg": 13,
+      "mixamorig:LeftFoot": 8
+    },
+    "root_height_smoothing_max_m": 0.1033,
+    "inbetween_lift_max_m": 0.00506
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.29,
+    "max_key_step_bone": "mixamorig:LeftFoot",
+    "pad_gap_min_mm": {},
+    "pad_gap_min_at_s": {},
+    "floor_min_mm": 0.3,
+    "floor_min_at_s": 0.358,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "fbx_bind_err": 1.65402889251709e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Stumble_Off_L_v01",
+    "fbx_bones": 65
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend"
+}

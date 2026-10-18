@@ -79,8 +79,17 @@ def dist(t):
     return sum(0.5 * (speed(RUN_T0 + i * h) + speed(RUN_T0 + (i + 1) * h)) * h for i in range(n))
 
 
-def run_dir():
-    a = math.radians(YAW_RUN)
+def sgn(side):
+    return 1.0 if side == 'R' else -1.0
+
+
+def yaw_run(side='R'):
+    """Final run facing; the left exit is the exact mirror (toward his left AND the foot end)."""
+    return YAW_RUN * sgn(side)
+
+
+def run_dir(side='R'):
+    a = math.radians(yaw_run(side))
     return Vector((math.sin(a), -math.cos(a), 0.0))
 
 
@@ -94,7 +103,10 @@ def foot_bottom(ctx):
     return B.rest[P + 'LeftFoot'].translation.z - low
 
 
-def hop_keys(lib):
+def hop_keys(lib, side='R'):
+    if side == 'L':
+        K = hop_keys(lib, 'R')
+        return [(0.0, lib.EDGE('L'))] + [(t, E.mirror_dict(d)) for t, d in K[1:]]
     ctx = lib.ctx
     EDGE = lib.EDGE()
     ah = foot_bottom(ctx) + 0.0015            # ankle height above the floor for a planted sole
@@ -155,9 +167,9 @@ def hop_keys(lib):
     return K
 
 
-def hop_run(lib):
-    K = hop_keys(lib)
-    return dict(stem='Esc_HopRun_R_v01', T=T_HOP, loop=False, start='EDGE_R', end='RUN0',
+def hop_run(lib, side='R'):
+    K = hop_keys(lib, side)
+    sp = dict(stem='Esc_HopRun_%s_v01' % side, side=side, T=T_HOP, loop=False, start='EDGE_' + side, end='RUN0' + ('_L' if side == 'L' else ''),
                 pre={'closed': [], 'open': list(E.LIMB_STRAPS), 'any': []},
                 closed0=[], straps={}, keys=K, pose_fn=hop_pose,
                 events=[{'name': 'Land', 't': LAND_T}, {'name': 'RunStart', 't': RUN_T0},
@@ -169,53 +181,61 @@ def hop_run(lib):
                        '0.52 LAND (both feet), squash, arms fly up', '0.70-0.80 dizzy wobble (knees knock, head circles)',
                        '0.86-0.98 hop-turn 40 deg toward the foot end', '0.98-1.50 accelerates 0.8 -> 3.2 m/s into Flee_Run',
                        '1.50 = Flee_Run_v01 frame 1 at RUN0'])
+    if side == 'L':
+        sp.update(root=sp['root'].replace('RUN0 (see esc_pose_keys_v01.json run0_root_patientrest_unity)',
+                                          'RUN0_L (see esc_pose_keys_v01.json run0_root_L_patientrest_unity)'),
+                  next=[sp['next'][0].replace('RUN0', 'RUN0_L')],
+                  beats=[b.replace('EDGE_R', 'EDGE_L').replace('RUN0', 'RUN0_L') for b in sp['beats']])
+        sp['events'][-1]['note'] = 'end pose = Flee_Run_v01 frame 1 at RUN0_L'
+    return sp
 
 
-def run_root(sess, t):
+def run_root(sess, t, side='R'):
     """Cycle root (armature space) at time t during the run-in."""
-    d = run_dir()
-    P0 = sess.run_p0
+    d = run_dir(side)
+    P0 = sess.run_p0[side]
     s = dist(t)
     pos = P0 + d * s
-    return Matrix.Translation((pos.x, pos.y, E.FLOOR_Z)) @ Matrix.Rotation(math.radians(YAW_RUN), 4, 'Z')
+    return Matrix.Translation((pos.x, pos.y, E.FLOOR_Z)) @ Matrix.Rotation(math.radians(yaw_run(side)), 4, 'Z')
 
 
 def run_phase(t):
     return -(dist(T_HOP) - dist(t)) / RUN_SPEED
 
 
-def setup_run(sess):
-    if getattr(sess, 'run_p0', None) is not None:
+def setup_run(sess, side='R'):
+    if getattr(sess, 'run_p0', None) is None:
+        sess.run_p0 = {}
+    if side in sess.run_p0:
         return
-    spec = sess.specs['HopRun'] if hasattr(sess, 'specs') and 'HopRun' in sess.specs else None
-    curves, _ = E.build_curves(hop_keys(sess.lib), sess.ctx)
+    curves, _ = E.build_curves(hop_keys(sess.lib, side), sess.ctx)
     c = {k: cv(RUN_T0) for k, cv in curves.items()}
     hip = sess.ctx.h0 + Vector((c['px'], c['py'], c['pz']))
     # cycle hips at RUN_T0 phase, relative to the cycle root: put the cycle root so its hips sit over ours
     ph = run_phase(RUN_T0)
     fp = flee_pose(sess.B, sess.flee, ph)
     hl = fp[P + 'Hips'].translation
-    Rz = Matrix.Rotation(math.radians(YAW_RUN), 3, 'Z')
+    Rz = Matrix.Rotation(math.radians(yaw_run(side)), 3, 'Z')
     off = Rz @ Vector((hl.x, hl.y, 0.0))
-    sess.run_p0 = Vector((hip.x - off.x, hip.y - off.y, 0.0))
+    sess.run_p0[side] = Vector((hip.x - off.x, hip.y - off.y, 0.0))
 
 
-def run0_pose(sess):
-    setup_run(sess)
-    Rr = run_root(sess, T_HOP)
+def run0_pose(sess, side='R'):
+    setup_run(sess, side)
+    Rr = run_root(sess, T_HOP, side)
     fp = OC.pose_from_vals(sess.B, sess.flee['samples'][0])
     return {k: Rr @ v for k, v in fp.items()}
 
 
-def run0_root_unity(sess):
-    setup_run(sess)
-    Rr = run_root(sess, T_HOP)
+def run0_root_unity(sess, side='R'):
+    setup_run(sess, side)
+    Rr = run_root(sess, T_HOP, side)
     p = Rr.translation
     return {'position': [round(-p.x, 4), round(p.z, 4), round(-p.y, 4)],
-            'yaw_deg_about_up': round(-YAW_RUN, 2),
-            'facing_unity': [round(-run_dir().x, 4), 0.0, round(-run_dir().y, 4)],
+            'yaw_deg_about_up': round(-yaw_run(side), 2),
+            'facing_unity': [round(-run_dir(side).x, 4), 0.0, round(-run_dir(side).y, 4)],
             'note': 'PatientRest-local Unity transform of the floor root that Flee_Run_v01 frame 1 expects (position (-x, z, -y) of armature space; rotation = -yaw about Unity +Y, sign flips with the handedness). Equivalently table-local: PatientRest @ this.',
-            'patientrest_armature': {'position': [round(p.x, 4), round(p.y, 4), round(p.z, 4)], 'yaw_deg_about_z': YAW_RUN},
+            'patientrest_armature': {'position': [round(p.x, 4), round(p.y, 4), round(p.z, 4)], 'yaw_deg_about_z': yaw_run(side)},
             'speed_mps_at_end': RUN_SPEED}
 
 
@@ -249,12 +269,13 @@ def blend_full(B, a, b, w):
 
 
 def hop_pose(sess, spec, t, c, closed):
-    setup_run(sess)
+    side = spec.get('side', 'R')
+    setup_run(sess, side)
     ctx = sess.ctx
     if t < RUN_T0 + RUN_BLEND:
         out, cc, info = ctx.solve(c, closed)
     if t >= RUN_T0:
-        Rr = run_root(sess, t)
+        Rr = run_root(sess, t, side)
         fp = flee_pose(sess.B, sess.flee, run_phase(t))
         cyc = {k: Rr @ v for k, v in fp.items()}
         u = min(1.0, (t - RUN_T0) / RUN_BLEND)
@@ -268,3 +289,56 @@ def hop_pose(sess, spec, t, c, closed):
             out = {k: M @ v for k, v in out.items()}
         return out, {'run_w': w, 'dist': dist(t)}
     return out, info
+
+
+# ===================================================================================== stumble off
+T_STUMBLE = 1.6
+STUMBLE_FROM = 0.60          # HopRun time of the start pose LAND_x (landing squash)
+
+
+def stumble_off(lib, land_c, side='R'):
+    """Interrupt right after the hop-off (crossfade from HopRun 0.47-0.98): jolt, knees buckle, drops to the
+    knees and topples forward onto the floor, face down, head turned, arms splayed = DOWN_x (ragdoll start)."""
+    if side == 'L':
+        sp = stumble_off(lib, E.mirror_dict(land_c), 'R')
+        sp.update(stem='Esc_Stumble_Off_L_v01', side='L', start='LAND_L', end='DOWN_L',
+                  keys=[(0.0, land_c)] + [(t, E.mirror_dict(d)) for t, d in sp['keys'][1:]],
+                  beats=[b.replace('_R', '_L') for b in sp['beats']])
+        return sp
+    T = T_STUMBLE
+    LX, LY = land_c['px'], land_c['py']
+    K = [(0.0, land_c)]
+    K.append((0.0, {'floor': 1.0}))
+    K.append((0.08, {'pitch': 98, 'crunch': 4, 'neck': 14, 'hnod': -8, 'cu_L': -0.4, 'cu_R': -0.4, 'afl_L': 120, 'afl_R': 115,
+                     'aab_L': 60, 'aab_R': 65, 'el_L': 20, 'el_R': 25}))
+    # knees buckle (feet still planted)
+    K.append((0.30, {'pz': -0.30, 'pitch': 112, 'crunch': 16, 'neck': 8, 'hnod': 12, 'roll': 4, 'cu_L': 0.0, 'cu_R': 0.0,
+                     'afl_L': 70, 'afl_R': 60, 'aab_L': 40, 'aab_R': 45, 'el_L': 30, 'el_R': 30, 'fik_L': 1.0, 'fik_R': 1.0}))
+    # knees hit the floor
+    K.append((0.52, {'fik_L': 0.0, 'fik_R': 0.0, 'px': LX - 0.06, 'py': LY, 'pitch': 106, 'crunch': 10, 'roll': 2,
+                     'fl_L': 10, 'fl_R': 12, 'kn_L': 100, 'kn_R': 96, 'fo_L': 30, 'fo_R': 30, 'neck': 4, 'hnod': 14,
+                     'afl_L': 40, 'afl_R': 36, 'aab_L': 30, 'aab_R': 30, 'el_L': 20, 'el_R': 20}))
+    K.append((0.62, {'pitch': 112, 'crunch': 14, 'hnod': 20, 'afl_L': 30, 'afl_R': 28}))
+    # topples forward, arms flop out
+    K.append((0.84, {'px': LX - 0.36, 'py': LY - 0.10, 'yaw': -108, 'pitch': 145, 'crunch': 10, 'neck': 10, 'hnod': 6, 'hyaw': 30, 'roll': 6,
+                     'fl_L': 20, 'fl_R': 24, 'kn_L': 70, 'kn_R': 64, 'fo_L': 20, 'fo_R': 20,
+                     'afl_L': 80, 'afl_R': 76, 'aab_L': 65, 'aab_R': 70, 'el_L': 30, 'el_R': 35}))
+    K.append((1.00, {'px': LX - 0.56, 'py': LY - 0.20, 'yaw': -122, 'pitch': 176, 'crunch': -2, 'neck': -6, 'hnod': -10, 'hyaw': 62, 'htilt': 4, 'roll': 4,
+                     'fl_L': 6, 'fl_R': 8, 'kn_L': 14, 'kn_R': 10, 'fo_L': 40, 'fo_R': 36,
+                     'afl_L': 70, 'afl_R': 66, 'aab_L': 85, 'aab_R': 90, 'el_L': 40, 'el_R': 35}))
+    # bounce and settle
+    K.append((1.12, {'pitch': 172, 'crunch': 2, 'neck': -2, 'hnod': -4, 'kn_L': 18, 'kn_R': 14}))
+    K.append((1.28, {'pitch': 177, 'crunch': -2, 'neck': -6, 'hnod': -10, 'kn_L': 12, 'kn_R': 8, 'cu_L': 0.25, 'cu_R': 0.25}))
+    K.append((T, {'pitch': 176, 'crunch': -1, 'neck': -5, 'hnod': -9, 'kn_L': 10, 'kn_R': 6, 'cu_L': 0.3, 'cu_R': 0.3}))
+    return dict(stem='Esc_Stumble_Off_R_v01', side='R', T=T, loop=False, start='LAND_R', end='DOWN_R',
+                pre={'closed': [], 'open': list(E.LIMB_STRAPS), 'any': []},
+                closed0=[], straps={}, keys=K,
+                events=[{'name': 'Limp', 't': 0.08}, {'name': 'KneesHit', 't': 0.52}, {'name': 'BodyHitsFloor', 't': 1.00},
+                        {'name': 'RagdollReady', 't': T, 'note': 'end pose DOWN_x: face down on the floor, relaxed; start the knocked-down ragdoll from this pose (or hold it)'}],
+                after={}, next=['knocked-down ragdoll (start from the last frame), then the capture flow'],
+                views=('exit',),
+                root='none: rig object at PatientRest, the Hips curves place the body on the floor beside the table (Apply Root Motion off)',
+                beats=['0.00 = LAND_R (HopRun_R at %.2f; crossfade in from HopRun_R 0.47-0.98)' % STUMBLE_FROM,
+                       '0.08 jolt, arms fly up', '0.30 knees buckle', '0.52 knees hit the floor',
+                       '0.62-1.00 topples forward (turning toward the foot end, away from the table), face down, head turns aside, arms flop out', '1.00 body hits the floor',
+                       '1.12-1.60 small bounce, settles limp = DOWN_R'])
