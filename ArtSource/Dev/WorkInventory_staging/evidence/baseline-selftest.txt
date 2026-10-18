@@ -1,0 +1,38 @@
+PASS extraction id mints exactly once
+PASS zip ties merge into one stack (5+4=9)
+PASS 7th distinct item does not fit 6 pockets
+PASS a refused mint did not burn the extraction id
+PASS no loss before 300 s in the room
+PASS one grade lost at exactly 300 s, event time 300
+PASS Damaged is the floor
+PASS cooler is an item and a closed 8-slot container
+PASS closed cooler refuses a hand transfer
+PASS half a grade of room progress carried into the cooler
+PASS next loss in the cooler at 150 + 750 s
+PASS still Good just before the cooler loss
+PASS cooler loss at 900 s
+PASS duplicate request id returns the first result and does not move
+PASS lifting closes the cooler
+PASS organ in a carried cooler still uses the cooler rate
+PASS cooler never fits pockets
+PASS one two-handed carry per player
+PASS cooler 100 s -> hand 30 s -> case = delivered cooled
+PASS 10 s of flash cooling does not count
+PASS 100 s in pockets after the cooler breaks the cold chain
+PASS taking an organ out of the case clears its latch
+PASS powered fridge pauses spoilage
+PASS unpowered fridge spoils at the room rate
+PASS cold stint restarts when power returns
+PASS impact -1 grade once per cooldown
+PASS thrown cooler: each organ inside takes one hit
+PASS using the last tie removes the stack
+PASS leave: organ, blood bag and carried cooler drop; syringe stays
+PASS arrest confiscates the most valuable pocket item
+PASS snapshot -> restore -> snapshot is identical
+PASS restored ledger still rejects a re-extraction
+PASS restored cooler organ resumes from saved progress
+PASS legacy grade 2 (0..4 scale) becomes tier 3 (Good)
+PASS 7 legacy ties become one zip-tie stack
+PASS migration minted 12 items, 4 overflowed to the world, warnings 0
+PASS price 400 for a kidney maps back to Good
+RESULT PASS 37/37

@@ -1,0 +1,43 @@
+{
+  "asset": "BODYBAG",
+  "pass_fbx": true,
+  "mesh_rows": [
+    {
+      "name": "SM_BodyBag_Closed",
+      "triangles": 420,
+      "expected_triangles": 420,
+      "max_dimension_error_m": 4.4095611573258253e-07,
+      "uv_layers": 1,
+      "zero_area_faces": 0,
+      "boundary_edges": 0,
+      "pass": true
+    },
+    {
+      "name": "SM_BodyBag_OpenFlat",
+      "triangles": 424,
+      "expected_triangles": 424,
+      "max_dimension_error_m": 2.66955615529918e-07,
+      "uv_layers": 1,
+      "zero_area_faces": 0,
+      "boundary_edges": 8,
+      "pass": true
+    }
+  ],
+  "images": [
+    {
+      "name": "G34_Astra_ColourAtlas_256_v01",
+      "size": [
+        256,
+        256
+      ],
+      "packed": true,
+      "file": "C:\\Dev\\Game\\ArtSource\\Props\\BODYBAG-ASTRA-001\\Textures\\BODYBAG_ASTRA_001_v01_ColourAtlas.png"
+    }
+  ],
+  "roots": [
+    "BodyBag_Closed_Root",
+    "BodyBag_OpenFlat_Root"
+  ],
+  "slot_anchors": 0,
+  "unity_import": "NOT RUN \u2014 explicitly forbidden by the brief"
+}

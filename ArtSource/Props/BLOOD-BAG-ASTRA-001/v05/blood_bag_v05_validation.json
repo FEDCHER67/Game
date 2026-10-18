@@ -1,0 +1,190 @@
+{
+ "axis": "Blender +Z up when hanging (Unity +Y); label/front = -Y; root origin = pouch centre",
+ "bounds_m": {
+  "min": [
+   -0.0675,
+   -0.017,
+   -0.1546
+  ],
+  "max": [
+   0.0925,
+   0.016,
+   0.1195
+  ],
+  "size": [
+   0.16,
+   0.0329,
+   0.2741
+  ]
+ },
+ "chamber_m": {
+  "width": 0.12,
+  "height": 0.172,
+  "full_thickness": 0.032
+ },
+ "fill": {
+  "object": "BLOOD_LIQUID",
+  "kind": "blend shapes (SkinnedMeshRenderer in Unity), basis = empty 1.5 mm film",
+  "shape_keys": [
+   "Fill_025",
+   "Fill_050",
+   "Fill_075",
+   "Fill_100"
+  ],
+  "rule": "cumulative steps: weight_k = clamp(4*fill - (k-1), 0, 1) for k = 1..4 (Unity weight x100); the liquid surface stays flat and follows the pouch walls; hide BLOOD_LIQUID and BLOOD_TUBE_LIQUID below fill 0.01",
+  "origin": "fill plane at the bottom of the chamber, z = -0.0838 (pouch-centre frame)",
+  "full_bounds_local": {
+   "min": [
+    -0.0577,
+    -0.0151,
+    -0.0838
+   ],
+   "max": [
+    0.0577,
+    0.0151,
+    0.0838
+   ]
+  },
+  "unity_bounds_note": "the imported mesh bounds are the EMPTY basis: set SkinnedMeshRenderer.localBounds to full_bounds_local (minus origin) or enable updateWhenOffscreen",
+  "liquid_verts_outside_pouch_per_fill": {
+   "0.0": 0,
+   "0.25": 0,
+   "0.5": 0,
+   "0.75": 0,
+   "1.0": 0
+  }
+ },
+ "objects": {
+  "BAG_POUCH": {
+   "tris": 1060,
+   "materials": [
+    "MAT_BagPVC_v05"
+   ]
+  },
+  "BAG_SEAL": {
+   "tris": 608,
+   "materials": [
+    "MAT_BagSeal_v05"
+   ]
+  },
+  "BAG_LABEL": {
+   "tris": 170,
+   "materials": [
+    "MAT_BagLabel_v05",
+    "MAT_BagPrintRed_v05",
+    "MAT_BagPrintDark_v05"
+   ]
+  },
+  "BAG_PORTS": {
+   "tris": 280,
+   "materials": [
+    "MAT_BagCap_v05",
+    "MAT_BagCap_v05"
+   ]
+  },
+  "BAG_TUBE": {
+   "tris": 976,
+   "materials": [
+    "MAT_BagPVC_v05"
+   ]
+  },
+  "BAG_CLAMP": {
+   "tris": 200,
+   "materials": [
+    "MAT_BagClamp_v05",
+    "MAT_BagCap_v05"
+   ]
+  },
+  "BLOOD_LIQUID": {
+   "tris": 924,
+   "materials": [
+    "MAT_Blood_v05"
+   ]
+  },
+  "BLOOD_TUBE_LIQUID": {
+   "tris": 748,
+   "materials": [
+    "MAT_Blood_v05"
+   ]
+  }
+ },
+ "total_tris": 4966,
+ "materials_unity": {
+  "MAT_BagPVC_v05": {
+   "unity_base_color_srgb": [
+    0.88,
+    0.94,
+    1.0
+   ],
+   "unity_smoothness": 0.85,
+   "unity_surface": "Transparent",
+   "unity_alpha": 0.14
+  },
+  "MAT_BagSeal_v05": {
+   "unity_base_color_srgb": [
+    0.92,
+    0.95,
+    0.98
+   ],
+   "unity_smoothness": 0.65,
+   "unity_surface": "Transparent",
+   "unity_alpha": 0.62
+  },
+  "MAT_Blood_v05": {
+   "unity_base_color_srgb": [
+    0.62,
+    0.03,
+    0.07
+   ],
+   "unity_smoothness": 0.7,
+   "unity_surface": "Opaque"
+  },
+  "MAT_BagLabel_v05": {
+   "unity_base_color_srgb": [
+    0.97,
+    0.96,
+    0.93
+   ],
+   "unity_smoothness": 0.3,
+   "unity_surface": "Opaque"
+  },
+  "MAT_BagPrintRed_v05": {
+   "unity_base_color_srgb": [
+    0.86,
+    0.12,
+    0.16
+   ],
+   "unity_smoothness": 0.4,
+   "unity_surface": "Opaque"
+  },
+  "MAT_BagPrintDark_v05": {
+   "unity_base_color_srgb": [
+    0.2,
+    0.24,
+    0.3
+   ],
+   "unity_smoothness": 0.3,
+   "unity_surface": "Opaque"
+  },
+  "MAT_BagClamp_v05": {
+   "unity_base_color_srgb": [
+    0.24,
+    0.46,
+    0.86
+   ],
+   "unity_smoothness": 0.55,
+   "unity_surface": "Opaque"
+  },
+  "MAT_BagCap_v05": {
+   "unity_base_color_srgb": [
+    0.95,
+    0.95,
+    0.96
+   ],
+   "unity_smoothness": 0.55,
+   "unity_surface": "Opaque"
+  }
+ },
+ "fbx_default_state": "EMPTY basis, shape keys at 0 (set them from fill)",
+ "organ_bag_note": "ORGANBAG-ASTRA-001 G34 v02 is an opaque insulated pouch with no fill/tint state - not changed"
+}

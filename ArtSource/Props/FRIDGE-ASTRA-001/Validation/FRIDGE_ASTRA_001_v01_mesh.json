@@ -1,0 +1,181 @@
+{
+  "description": "Stationary 1.64 m cabinet with four visible 3 x 2 shelf modules (24 slots), a hinged left door, and raised feet.",
+  "new": true,
+  "slot_count": 24,
+  "hinge_axis": "Z",
+  "interfaces": {
+    "shelf_side_overlap_m": 0.0045,
+    "feet_casing_overlap_m": 0.0065,
+    "door_handle_mount_overlap_m": 0.01
+  },
+  "mesh_audit": {
+    "Closed": [
+      {
+        "object": "SM_Fridge_Cabinet_Closed",
+        "triangles": 772,
+        "dimensions_m": [
+          0.737,
+          0.665,
+          1.6375
+        ],
+        "bounds_min_m": [
+          -0.37699997425079346,
+          -0.3299999535083771,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3349999785423279,
+          1.6375000476837158
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Door_Closed",
+        "triangles": 392,
+        "dimensions_m": [
+          0.721,
+          0.17,
+          1.56
+        ],
+        "bounds_min_m": [
+          -0.3605000078678131,
+          -0.4429999887943268,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          0.3604999780654907,
+          -0.27300000190734863,
+          1.6399999856948853
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          -0.3619999885559082,
+          -0.3149999976158142,
+          0.07999999821186066
+        ],
+        "pass": true
+      }
+    ],
+    "Open": [
+      {
+        "object": "SM_Fridge_Cabinet_Open",
+        "triangles": 772,
+        "dimensions_m": [
+          0.737,
+          0.665,
+          1.6375
+        ],
+        "bounds_min_m": [
+          -0.37699997425079346,
+          -0.3299999535083771,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3349999785423279,
+          1.6375000476837158
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Door_Open",
+        "triangles": 392,
+        "dimensions_m": [
+          0.332844,
+          0.694055,
+          1.56
+        ],
+        "bounds_min_m": [
+          -0.6726991534233093,
+          -1.0007476806640625,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          -0.33985498547554016,
+          -0.306692510843277,
+          1.6399999856948853
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          -0.3619999885559082,
+          -0.3149999976158142,
+          0.07999999821186066
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "states": {
+    "Closed": {
+      "triangles": 1164,
+      "dimensions_m": [
+        0.7375,
+        0.778,
+        1.64
+      ],
+      "pass_mesh": true
+    },
+    "Open": {
+      "triangles": 1164,
+      "dimensions_m": [
+        1.032699,
+        1.335748,
+        1.64
+      ],
+      "pass_mesh": true
+    }
+  }
+}

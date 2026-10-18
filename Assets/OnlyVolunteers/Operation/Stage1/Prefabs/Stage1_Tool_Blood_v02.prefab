@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8760468736174399321
 Transform:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3814683242401605974
 Transform:
   m_ObjectHideFlags: 0
@@ -377,6 +377,10 @@ MonoBehaviour:
   plungerTravel: 0.056
   liquidBottom: 0.081
   liquidLength: 0.058
+  plungerV02: {fileID: 789423933335443962}
+  bloodV02: {fileID: 1489725658943122610}
+  plungerZ0: 0.0797
+  plungerTravelV02: 0.04839
 --- !u!1 &4383915627950177261
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1028067982876488007
 Transform:
   m_ObjectHideFlags: 0
@@ -500,6 +504,7 @@ Transform:
   - {fileID: 1028067982876488007}
   - {fileID: 8760468736174399321}
   - {fileID: 3814683242401605974}
+  - {fileID: 6800831565101710246}
   m_Father: {fileID: 3626484838718726267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &565221232711593996
@@ -554,6 +559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SYRINGE-ASTRA-001
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5cd351197e8bdb64a883aa121d454f9d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3125701836519003499, guid: 5cd351197e8bdb64a883aa121d454f9d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -602,4 +611,88 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -549653500213556981, guid: 5cd351197e8bdb64a883aa121d454f9d, type: 3}
   m_PrefabInstance: {fileID: 565221232711593996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6479502543752518733
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8651827254028650214}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1764705
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1764705
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1764705
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+      propertyPath: m_Name
+      value: SYRINGE_ASTRA_001_v02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+--- !u!4 &789423933335443962 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5989587227162527159, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+  m_PrefabInstance: {fileID: 6479502543752518733}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1489725658943122610 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5568490536774217983, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+  m_PrefabInstance: {fileID: 6479502543752518733}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6800831565101710246 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3376eeef1eb772f43abad376159d1bdb, type: 3}
+  m_PrefabInstance: {fileID: 6479502543752518733}
   m_PrefabAsset: {fileID: 0}

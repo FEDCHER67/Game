@@ -5,7 +5,7 @@ using UnityEngine;
 namespace OnlyVolunteers.Operation.Stage1
 {
     /// <summary>Syringe = the anesthesia syringe (v01 name kept for the v01 builder).</summary>
-    public enum OperationToolKind { Scalpel = 0, Syringe = 1, BloodSyringe = 2 }
+    public enum OperationToolKind { Scalpel = 0, Syringe = 1, BloodSyringe = 2, Suture = 3 }
     public enum ToolMode : byte { Docked = 0, Held = 1, Loose = 2, Returning = 3 }
 
     /// <summary>One physical networked tool of a table. The server owns its mode and, while it is loose, its physics;
@@ -29,6 +29,10 @@ namespace OnlyVolunteers.Operation.Stage1
         [SerializeField] private float plungerTravel = 0.06f;
         [SerializeField] private float liquidBottom = 0.08f;
         [SerializeField] private float liquidLength = 0.065f;
+        [Header("SYRINGE-ASTRA-001 v02 parts (syringe_v02_validation.json): plunger local Z = z0 + fill * travel, BLOOD local Z scale = fill")]
+        [SerializeField] private Transform plungerV02;
+        [SerializeField] private Transform bloodV02;
+        [SerializeField] private float plungerZ0 = 0.0797f, plungerTravelV02 = 0.04839f;
 
         private readonly SyncVar<int> holder = new(-1);
         private readonly SyncVar<byte> mode = new((byte)ToolMode.Docked);
@@ -47,7 +51,8 @@ namespace OnlyVolunteers.Operation.Stage1
 
         public OperationToolKind Kind => kind;
         public int StockIndex => stockIndex;
-        public ToolSlot Slot => kind == OperationToolKind.Scalpel ? ToolSlot.Scalpel : kind == OperationToolKind.BloodSyringe ? ToolSlot.Blood : ToolSlot.Anesthesia;
+        public ToolSlot Slot => kind == OperationToolKind.Scalpel ? ToolSlot.Scalpel : kind == OperationToolKind.BloodSyringe ? ToolSlot.Blood
+            : kind == OperationToolKind.Suture ? ToolSlot.Suture : ToolSlot.Anesthesia;
         public int Holder => holder.Value;
         public ToolMode Mode => (ToolMode)mode.Value;
         public float Fill => fill.Value;
@@ -168,9 +173,22 @@ namespace OnlyVolunteers.Operation.Stage1
             UpdateParts();
         }
 
+        private float shownFill;
         private void UpdateParts()
         {
-            float f = Mathf.Clamp01(Fill);
+            // Smooth on clients (the synced fill arrives in steps): the plunger and the level move evenly.
+            shownFill = IsServerInitialized ? Fill : Mathf.MoveTowards(shownFill, Fill, Time.deltaTime * 2.5f);
+            float f = Mathf.Clamp01(shownFill);
+            if (plungerV02 != null)
+            {
+                var p = plungerV02.localPosition; plungerV02.localPosition = new Vector3(p.x, p.y, plungerZ0 + f * plungerTravelV02);
+                if (bloodV02 != null)
+                {
+                    var s = bloodV02.localScale; bloodV02.localScale = new Vector3(s.x, s.y, Mathf.Max(0.0001f, f));
+                    if (bloodV02.TryGetComponent(out Renderer blood)) blood.enabled = f >= 0.01f;
+                }
+                return;
+            }
             if (plunger != null && plungerRest != null && visual != null)
                 for (int i = 0; i < plunger.Length; i++)
                 {

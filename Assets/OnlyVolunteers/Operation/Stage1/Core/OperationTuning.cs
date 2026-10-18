@@ -20,6 +20,18 @@ namespace OnlyVolunteers.Operation.Stage1
         public float toolReach = 2.5f;
         public float dazedSeconds = 4f;
         public float escapeSeconds = 7f;
+        [Tooltip("Round 3 (Fedya): the torso strap is removed for now; only the four limb straps hold him. True brings it back " +
+                 "(5 straps, the torso alone holds him, as in stage 1).")]
+        public bool torsoStrap = false;
+        [Tooltip("Awake on the table with a free hand: seconds that hand needs to unbuckle the next closed strap (procedural " +
+                 "for now; per-strap escape clips can be plugged into the Unbuckled cue).")]
+        public float unbuckleSeconds = 5f;
+        [Tooltip("Round 3: suturing speed along the incision line, m/s of seam.")]
+        public float sutureSpeed = 0.35f;
+        [Tooltip("Round 3: stitches of the seam (OperationSutured_v05 has SUTURE_STITCH_01..20).")]
+        public int sutureStitches = 20;
+        [Tooltip("Round 3: the approved sutured state (OperationSutured_v05.fbx, the INC_ABDOMEN frame of the opening).")]
+        public GameObject suturedModel;
         [Tooltip("Length of Op_EscapeFall_v01: the root stays on PatientRest while it plays.")]
         public float escapeFallSeconds = 3f;
         [Tooltip("PatientRest-local root of the KnockedOut clip after the EscapeFall clip: the floor point under the landed hips. " +
@@ -41,6 +53,13 @@ namespace OnlyVolunteers.Operation.Stage1
         public float syringeStock = 10f; // v01 field
         [Header("Blood / death")]
         public float bloodSeconds = 4.5f;
+        [Tooltip("Rework 2026-10-18 (Fedya): a full blood syringe empties into the clicked bag over this time: the plunger goes " +
+                 "down, the barrel empties and the bag fills by the same amount.")]
+        public float bloodTransferSeconds = 1.2f;
+        [Tooltip("Portions one bag holds; a portion fills 1/this of the bag.")]
+        public int bloodPortionsPerBag = 1;
+        [Tooltip("Angle of the syringe to the skin while it draws blood or injects (degrees).")]
+        public float syringeSkinAngle = 30f;
         public float unsealedBloodSeconds = 120f;
         public float sealSeconds = 1f;
         public int bloodValue = 50;
@@ -49,6 +68,9 @@ namespace OnlyVolunteers.Operation.Stage1
         public float firstKidneyChance = 0.1f;
         public float secondKidneyChance = 0.2f;
         public float liverChance = 0.3f;
+        [Tooltip("Lead decision 2026-10-18 (Fedya's playtest: liver + both kidneys out and he lived): removing the liver, or the " +
+                 "second kidney, kills him at once (chance 1). Only the first kidney keeps its roll (+ blood portions).")]
+        public bool liverOrBothKidneysFatal = true;
         public float bloodChancePerPortion = 0.1f;
         public float corpseGraceSeconds = 45f;
         public float corpseGradeSeconds = 40f;
@@ -56,6 +78,30 @@ namespace OnlyVolunteers.Operation.Stage1
         [Header("Incisions (marker-local metres)")]
         [Tooltip("v04: one shared belly opening; the original v01/v02 assets keep their per-organ guides.")]
         public bool sharedAbdomen;
+        [Header("Approved anatomy v02 (imported copies; source models stay unchanged)")]
+        public bool anatomicalLayout;
+        public GameObject abdomenModel;
+        public Texture2D abdomenGradient;
+        public Shader skinStencilShader;
+        public Shader maskStencilShader;
+        [Tooltip("Readable copies of the table's strap meshes and the v02 ABDOMEN_MASK for the query-only MeshColliders. " +
+                 "The source FBX meshes are not readable: a runtime MeshCollider on them has no collision data in a player build " +
+                 "(Fedya's 2026-10-18 build: straps could not be clicked at all). Baked by OperationQueryMeshBaker.")]
+        public Mesh[] queryMeshes = new Mesh[0];
+        [Header("Approved anatomy v03 (organs at their SOCKET_* frames 1:1, chest visuals; Claude 2026-10-18)")]
+        [Tooltip("Patient_v03 + Organs_v03 + OperationAbdomen_v03: organs are the ORGAN_*_v03 meshes at the patient's SOCKET_* " +
+                 "frames, unscaled, the same mesh on the tray; belly guide and kidney cords come from the fields below.")]
+        public bool anatomyV03;
+        [Tooltip("INC_ABDOMEN-local Unity metres of the belly guide (v03 ORGANS_LAYOUT guide_belly).")]
+        public Vector3 bellyStart, bellyEnd;
+        [Tooltip("Kidney cords, marker-local Unity metres: L artery, L vein, R artery, R vein (v03 organs.*.cords).")]
+        public Vector3[] cordStarts = new Vector3[0], cordEnds = new Vector3[0];
+        [Tooltip("v03 organ meshes for organ 0 (left kidney), 1 (right kidney), 2 (liver): FBX roots, the mesh is used at 1:1.")]
+        public GameObject[] organModelsV03 = new GameObject[0];
+        [Tooltip("Visual-only chest parts: heart, left lung, right lung (at SOCKET_HEART/LUNG_L/LUNG_R), ribcage and chest vessels (SOCKET_THORAX).")]
+        public GameObject[] chestModelsV03 = new GameObject[0];
+        [Tooltip("BLOOD-BAG v05 (BLOOD_LIQUID blend shapes Fill_025..Fill_100) for the bags on the tray and the sealed bag.")]
+        public GameObject bloodBagModel;
         public float abdomenCutLength = 0.32f;
         public Vector2 abdomenHalfSize = new Vector2(0.145f, 0.19f);
         [Tooltip("v04: centre of the opening from the midpoint of the two kidney markers: x along the table toward the head, " +

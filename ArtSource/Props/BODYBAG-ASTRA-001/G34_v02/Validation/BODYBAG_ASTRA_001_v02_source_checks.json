@@ -1,0 +1,270 @@
+{
+  "change": "Approved G34 appearance retained; UCX collision proxies added.",
+  "source_blend": "C:\\Dev\\Game\\ArtSource\\Props\\BODYBAG-ASTRA-001\\BODYBAG_ASTRA_001_v01.blend",
+  "appearance_fingerprint": "1f38c3fa645dcb302a5b9373be69bfde2668feec4a3085b4c53e96a2755d87c7",
+  "asset": "BODYBAG",
+  "states": {
+    "Closed": {
+      "visual_triangles": 420,
+      "ucx_parts": 1,
+      "dimensions_m": [
+        0.9538005590438843,
+        1.9600000381469727,
+        0.19950000941753387
+      ]
+    },
+    "OpenFlat": {
+      "visual_triangles": 424,
+      "ucx_parts": 1,
+      "dimensions_m": [
+        0.9800000190734863,
+        2.0199999809265137,
+        0.03100000135600567
+      ]
+    }
+  },
+  "mesh_audit": {
+    "Closed": [
+      {
+        "object": "SM_BodyBag_Closed",
+        "triangles": 420,
+        "dimensions_m": [
+          0.953801,
+          1.96,
+          0.1995
+        ],
+        "bounds_min_m": [
+          -0.47690027952194214,
+          -0.9800000190734863,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.47690027952194214,
+          0.9800000190734863,
+          0.19950000941753387
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      }
+    ],
+    "OpenFlat": [
+      {
+        "object": "SM_BodyBag_OpenFlat",
+        "triangles": 424,
+        "dimensions_m": [
+          0.98,
+          2.02,
+          0.031
+        ],
+        "bounds_min_m": [
+          -0.49000000953674316,
+          -1.0099999904632568,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.49000000953674316,
+          1.0099999904632568,
+          0.03100000135600567
+        ],
+        "boundary_edges": 8,
+        "nonmanifold_edges": 8,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "visuals": {
+    "SM_BodyBag_Closed": {
+      "state": "Closed",
+      "visual_triangles": 420,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.47690027952194214,
+            -0.9800000190734863,
+            0.0
+          ],
+          "max": [
+            0.47690027952194214,
+            0.9800000190734863,
+            0.19950000941753387
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.47690027952194214,
+            -0.9800000190734863,
+            0.0
+          ],
+          "max": [
+            0.47690027952194214,
+            0.9800000190734863,
+            0.19950000941753387
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_BodyBag_Closed_00",
+          "triangles": 56,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.4769003093242645,
+                -0.9800000190734863,
+                0.0
+              ],
+              "max": [
+                0.4769003093242645,
+                0.9800000190734863,
+                0.19949999451637268
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.4769003093242645,
+                -0.9800000190734863,
+                0.0
+              ],
+              "max": [
+                0.4769003093242645,
+                0.9800000190734863,
+                0.19949999451637268
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 2.7008354663848877e-08,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.2202163388437678,
+            "triangles": 56,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "BodyBag_Closed_Root"
+    },
+    "SM_BodyBag_OpenFlat": {
+      "state": "OpenFlat",
+      "visual_triangles": 424,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.49000000953674316,
+            -1.0099999904632568,
+            0.0
+          ],
+          "max": [
+            0.49000000953674316,
+            1.0099999904632568,
+            0.03100000135600567
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.49000000953674316,
+            -1.0099999904632568,
+            0.0
+          ],
+          "max": [
+            0.49000000953674316,
+            1.0099999904632568,
+            0.03100000135600567
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_BodyBag_OpenFlat_00",
+          "triangles": 40,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.49000000953674316,
+                -1.0099999904632568,
+                0.0
+              ],
+              "max": [
+                0.49000000953674316,
+                1.0099999904632568,
+                0.03099999949336052
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.49000000953674316,
+                -1.0099999904632568,
+                0.0
+              ],
+              "max": [
+                0.49000000953674316,
+                1.0099999904632568,
+                0.03099999949336052
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 3.725290298461914e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.043501902877401306,
+            "triangles": 40,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "BodyBag_OpenFlat_Root"
+    }
+  },
+  "state_objects": {
+    "Closed": [
+      "SM_BodyBag_Closed"
+    ],
+    "OpenFlat": [
+      "SM_BodyBag_OpenFlat"
+    ]
+  },
+  "collision_validation": "PASS",
+  "visual_objects": 2,
+  "ucx_parts": 2,
+  "blend": "C:\\Dev\\Game\\ArtSource\\Props\\BODYBAG-ASTRA-001\\G34_v02\\BODYBAG_ASTRA_001_v02.blend",
+  "fbx": "C:\\Dev\\Game\\ArtSource\\Props\\BODYBAG-ASTRA-001\\G34_v02\\BODYBAG_ASTRA_001_v02.fbx",
+  "textures": [
+    "C:\\Dev\\Game\\ArtSource\\Props\\BODYBAG-ASTRA-001\\G34_v02\\Textures\\BODYBAG_ASTRA_001_v02_Atlas_00.png"
+  ]
+}

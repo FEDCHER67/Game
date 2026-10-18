@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using FishNet.Object;
 using OnlyVolunteers.Audio;
@@ -71,6 +72,22 @@ namespace OnlyVolunteers.Operation.Stage1
         private float flashAt = -10f;
         private bool built;
 
+        public void ReleasePatientVisuals()
+        {
+            // Round 2 (item 8): the body leaves the table as a free ragdoll; its internals stay hidden from now on (they are
+            // destroyed with it), so no rib or organ can poke through his skin while he is carried, dragged or bagged.
+            foreach (var part in chestParts) if (part != null) part.SetActive(false);
+            chestParts.Clear(); BoneColliders = 0;
+            for (int i = 0; i < sites.Length; i++)
+            {
+                if (sites[i] == null) continue;
+                if (sites[i].organ != null) sites[i].organ.gameObject.SetActive(false);
+                if (sites[i].cords != null) foreach (var cord in sites[i].cords) if (cord != null) cord.gameObject.SetActive(false);
+            }
+            for (int i = 0; i < sites.Length; i++) sites[i] = null;
+            patientBuiltFor = null; rig = null;
+        }
+
         private void OnEnable() { if (table != null) table.CueReceived += OnCue; Application.onBeforeRender += OnBeforeRender; }
         private void OnDisable() { if (table != null) table.CueReceived -= OnCue; Application.onBeforeRender -= OnBeforeRender; }
 
@@ -102,14 +119,15 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 var strap = table.StrapTransform(i);
                 if (strap == null) continue;
-                bool tagged = false;
-                foreach (var t in strap.GetComponentsInChildren<OperationTargetTag>(true)) if (t.kind == TargetKind.Strap) tagged = true;
-                if (!tagged) AddBoundsCollider(strap, "Hit_Strap", new OpTarget(TargetKind.Strap, i), 0.025f);
-                var half = i == 4 ? table.Slot("STRAP_TORSO_SecondHalf") : null; // placeholder two-part belt
-                if (half != null && half.GetComponentInChildren<OperationTargetTag>(true) == null) AddBoundsCollider(half, "Hit_Strap", new OpTarget(TargetKind.Strap, 4), 0.025f);
-                foreach (var t in strap.GetComponentsInChildren<OperationTargetTag>(true)) if (t.kind == TargetKind.Strap && t.highlight == null) t.highlight = strap.GetComponentsInChildren<Renderer>();
                 SetStrap(i, 1f);
+                // Round 3 (Fedya): no torso strap for now (OperationTuning.torsoStrap brings it back).
+                if (!OperationStraps.Active(table.Tuning, i))
+                {
+                    strap.gameObject.SetActive(false);
+                    var second = table.Slot("STRAP_TORSO_SecondHalf"); if (i == 4 && second != null) second.gameObject.SetActive(false);
+                }
             }
+            OperationStrapTargets.Install(table);
             strapsReady = true;
             // Empty blood bags on their slots.
             int count = table.Tuning.bloodBagCount;
@@ -121,16 +139,22 @@ namespace OnlyVolunteers.Operation.Stage1
                 holder.SetParent(table.Slot(NetworkOperationTable.BagSlotName(i)) ?? table.TrayAnchor ?? table.transform, false);
                 holder.SetPositionAndRotation(pose.position, pose.rotation);
                 Renderer[] renderers;
-                if (bagModel != null)
+                var bagSource = table.Tuning.bloodBagModel != null ? table.Tuning.bloodBagModel : bagModel;
+                bool realFill = table.Tuning.bloodBagModel != null; // v05: its own clear pouch and blood (blend shapes)
+                if (bagSource != null)
                 {
-                    var model = Instantiate(bagModel, holder, false);
+                    var model = Instantiate(bagSource, holder, false);
                     foreach (var c in model.GetComponentsInChildren<Collider>()) Destroy(c);
                     LayFlat(model.transform, holder);
-                    Fit(model.transform, holder, 0.2f, true);
+                    Fit(model.transform, holder, OperationBloodFill.TrayBagSize, true);
                     renderers = model.GetComponentsInChildren<Renderer>();
-                    // Empty bags: a pale plastic look (the bag texture shows a full red bag).
-                    var empty = OperationVisuals.Lit("emptybag", new Color(0.9f, 0.93f, 0.96f), 0.7f);
-                    foreach (var r in renderers) { var mats = r.sharedMaterials; for (int m = 0; m < mats.Length; m++) mats[m] = empty; r.sharedMaterials = mats; }
+                    if (realFill) OperationBloodFill.Attach(model.transform);
+                    else
+                    {
+                        // Empty v04 bags: a pale plastic look (the v04 texture shows a full red bag).
+                        var empty = OperationVisuals.Lit("emptybag", new Color(0.9f, 0.93f, 0.96f), 0.7f);
+                        foreach (var r in renderers) { var mats = r.sharedMaterials; for (int m = 0; m < mats.Length; m++) mats[m] = empty; r.sharedMaterials = mats; }
+                    }
                 }
                 else
                 {
@@ -224,7 +248,7 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             return b;
         }
-        private static void Fit(Transform model, Transform space, float largest, bool groundAligned)
+        public static void Fit(Transform model, Transform space, float largest, bool groundAligned)
         {
             var renderers = model.GetComponentsInChildren<Renderer>();
             if (renderers.Length == 0) return;
@@ -247,8 +271,65 @@ namespace OnlyVolunteers.Operation.Stage1
             model.localPosition += shift;
         }
 
+        private static readonly string[] OrganSockets = { "SOCKET_KIDNEY_L", "SOCKET_KIDNEY_R", "SOCKET_LIVER" };
+        private static readonly string[] ChestSockets = { "SOCKET_HEART", "SOCKET_LUNG_L", "SOCKET_LUNG_R", "SOCKET_THORAX", "SOCKET_THORAX" };
+        private static Transform FindDeep(Transform root, string name)
+        {
+            if (root == null) return null;
+            foreach (var t in root.GetComponentsInChildren<Transform>(true)) if (t.name == name) return t;
+            return null;
+        }
+        /// <summary>v03 chest: heart, lungs, ribcage and chest vessels as visuals at their sockets (not extractable yet).</summary>
+        private void BuildChestV03()
+        {
+            var tuning = table.Tuning;
+            foreach (var old in chestParts) if (old != null) Destroy(old);
+            chestParts.Clear(); BoneColliders = 0;
+            if (!tuning.anatomyV03 || tuning.chestModelsV03 == null || table.PatientObject == null) return;
+            for (int i = 0; i < tuning.chestModelsV03.Length && i < ChestSockets.Length; i++)
+            {
+                var model = tuning.chestModelsV03[i]; var socket = FindDeep(table.PatientObject.transform, ChestSockets[i]);
+                if (model == null || socket == null) continue;
+                var part = VisualCopy(model, model.name + " (chest visual)").transform;
+                part.SetParent(socket, false);
+                float k = 1f / Mathf.Max(0.0001f, socket.lossyScale.x);
+                part.localPosition = Vector3.zero; part.localRotation = Quaternion.identity; part.localScale = Vector3.one * k;
+                // G38 v03d: the ribcage's UCX_* meshes become query-only bone colliders (layer SurgicalBone).
+                BoneColliders += OperationSurgicalBones.Setup(part.gameObject);
+                chestParts.Add(part.gameObject);
+                part.gameObject.SetActive(InternalsShown);
+            }
+        }
+        private readonly List<GameObject> chestParts = new();
+        /// <summary>Round 2 (Fedya: "internal organs/ribs must NEVER poke through the skin in any pose"): the in-body organs,
+        /// ribs, heart, lungs and vessels are shown only while the patient lies aligned on the table, where the operation
+        /// needs them and his pose is the table rest pose they were authored for. Off the table (carried, dragged, thrown,
+        /// bagged, a free ragdoll) they hang on mixamorig:Spine while the chest part (Spine1) bends, so they are hidden;
+        /// they come back when he is laid on the table again. Their state (cut, removed) is untouched.</summary>
+        public bool InternalsShown { get; private set; } = true;
+        private void UpdateInternals(OperationState state)
+        {
+            bool shown = state != null && state.onTable && state.aligned;
+            if (shown == InternalsShown) return;
+            InternalsShown = shown;
+            foreach (var part in chestParts) if (part != null) part.SetActive(shown);
+        }
+
+        /// <summary>The ribcage's bone colliders built for the current patient (G38 v03d: 96).</summary>
+        public int BoneColliders { get; private set; }
+        public IReadOnlyList<GameObject> ChestParts => chestParts;
+        /// <summary>An instance of a v03 FBX for display: no colliders; its root's import rotation (the axis conversion) is
+        /// replaced by the caller's frame, so the authored socket-space mesh sits in that frame.</summary>
+        public static GameObject VisualCopy(GameObject fbx, string name)
+        {
+            var go = Instantiate(fbx); go.name = name;
+            foreach (var c in go.GetComponentsInChildren<Collider>(true)) Destroy(c);
+            return go;
+        }
+
         private void BuildSites()
         {
+            BuildChestV03();
             var anchors = table.Anchors;
             if (anchors == null || !anchors.Valid) return;
             patientBuiltFor = table.PatientObject;
@@ -310,15 +391,40 @@ namespace OnlyVolunteers.Operation.Stage1
                 s.organ = new GameObject("Organ").transform; s.organ.SetParent(root, false);
                 s.organ.localPosition = Vector3.forward * tuning.organLift;
                 var model = organModels != null && organModels.Length > (i == 2 ? 1 : 0) ? organModels[i == 2 ? 1 : 0] : null;
-                if (model != null)
+                var v03 = tuning.anatomyV03 && tuning.organModelsV03 != null && i < tuning.organModelsV03.Length ? tuning.organModelsV03[i] : null;
+                var socket = v03 != null ? FindDeep(table.PatientObject.transform, OrganSockets[i]) : null;
+                if (v03 != null && socket != null)
+                {
+                    // v03 (Claude 2026-10-18): the ORGAN_*_v03 mesh sits at its SOCKET_* frame, 1:1, the same mesh as on the tray.
+                    var inst = VisualCopy(v03, "Organ_" + SiteNames[i] + "_v03").transform;
+                    inst.SetParent(s.organ, false);
+                    inst.SetPositionAndRotation(socket.position, socket.rotation);
+                    float k = 1f / Mathf.Max(0.0001f, s.organ.lossyScale.x);
+                    inst.localScale = Vector3.one * k;
+                    s.organModel = inst;
+                }
+                else if (model != null)
                 {
                     var inst = Instantiate(model, s.organ, false).transform;
                     foreach (var c in inst.GetComponentsInChildren<Collider>()) Destroy(c);
-                    if (i < 2) KeepOneKidney(inst, i == 0);
+                    if (i < 2) KeepOneKidney(inst, tuning.anatomicalLayout ? i != 0 : i == 0);
                     // Kidney half: long axis Y, flat along Z; liver: long axis X, flat along Z. Both match the site axes as is.
-                    inst.localRotation = Quaternion.identity;
-                    Vector2 oh = tuning.organHalfSize[i];
-                    Fit(inst, s.organ, Mathf.Max(oh.x, oh.y) * 2.2f, false);
+                    if (tuning.anatomicalLayout)
+                    {
+                        // Preserve imported FBX axis conversion. The approved marker is the bean/organ centre.
+                        if (i < 2)
+                        {
+                            inst.localScale *= 0.9f;
+                            inst.localPosition = -new Vector3(i == 0 ? -0.0702f : 0.0713f, i == 0 ? -0.0008f : 0.0012f, 0f) * 0.9f;
+                        }
+                        else { inst.localScale = Vector3.Scale(inst.localScale, new Vector3(1.08f, 1.08f, 0.88f)); inst.localPosition = Vector3.zero; }
+                    }
+                    else
+                    {
+                        inst.localRotation = Quaternion.identity;
+                        Vector2 oh = tuning.organHalfSize[i];
+                        Fit(inst, s.organ, Mathf.Max(oh.x, oh.y) * 2.2f, false);
+                    }
                     s.organModel = inst;
                 }
                 else
@@ -342,15 +448,15 @@ namespace OnlyVolunteers.Operation.Stage1
                 {
                     OperationGeometry.Cord(tuning, i, c, out var a, out var r);
                     var cord = new GameObject("Cord_" + c).transform; cord.SetParent(root, false);
-                    var tube = OperationVisuals.Primitive(PrimitiveType.Cylinder, "Tube", cord, OperationVisuals.Lit("cord" + c, CordColors[c % CordColors.Length], 0.55f));
-                    OperationVisuals.Between(tube.transform, a, r, 0.0105f);
-                    var knot = OperationVisuals.Primitive(PrimitiveType.Sphere, "Knot", cord, OperationVisuals.Lit("cord" + c, CordColors[c % CordColors.Length], 0.55f));
+                    var tube = OperationVisuals.Primitive(PrimitiveType.Cylinder, "Tube", cord, OperationVisuals.Lit((tuning.anatomicalLayout ? "cord_v02_" : "cord") + c, tuning.anatomicalLayout ? (c == 0 ? new Color(0.8f, 0.16f, 0.2f) : new Color(0.52f, 0.36f, 0.66f)) : CordColors[c % CordColors.Length], 0.68f));
+                    OperationVisuals.Between(tube.transform, a, r, tuning.anatomicalLayout ? (c == 0 ? 0.010f : 0.012f) : 0.0105f);
+                    var knot = OperationVisuals.Primitive(PrimitiveType.Sphere, "Knot", cord, OperationVisuals.Lit((tuning.anatomicalLayout ? "cord_v02_" : "cord") + c, tuning.anatomicalLayout ? (c == 0 ? new Color(0.8f, 0.16f, 0.2f) : new Color(0.52f, 0.36f, 0.66f)) : CordColors[c % CordColors.Length], 0.68f));
                     knot.transform.localPosition = r; knot.transform.localScale = Vector3.one * 0.016f;
                     var chit = new GameObject("Hit_Cord"); chit.transform.SetParent(cord, false);
                     var cc = chit.AddComponent<CapsuleCollider>(); cc.isTrigger = true; cc.direction = 1;
                     OperationVisuals.Between(chit.transform, a, r, 1f); chit.transform.localScale = Vector3.one;
                     chit.transform.localRotation = Quaternion.FromToRotation(Vector3.up, (r - a).normalized);
-                    cc.radius = 0.019f; cc.height = (r - a).magnitude + 0.038f;
+                    cc.radius = tuning.anatomicalLayout ? 0.008f : 0.019f; cc.height = (r - a).magnitude + cc.radius * 2f;
                     var ctag = chit.AddComponent<OperationTargetTag>(); ctag.kind = TargetKind.Cord; ctag.index = i; ctag.sub = c;
                     ctag.highlight = cord.GetComponentsInChildren<Renderer>();
                     s.cords[c] = cord; s.cordColliders[c] = cc;
@@ -389,6 +495,8 @@ namespace OnlyVolunteers.Operation.Stage1
         // ---------- per frame ----------
         private void Update()
         {
+            // Round 2 (Fedya): the tray, its empty blood bags and the straps are there from the start, with or without a patient.
+            if (!built && table.Tuning != null && table.View != null) BuildStatic();
             var state = table.State;
             if (state == null) return;
             if (!built) BuildStatic();
@@ -410,9 +518,10 @@ namespace OnlyVolunteers.Operation.Stage1
         private void LateUpdate()
         {
             var state = table.State;
-            if (state == null) return;
+            if (state == null) { InternalsShown = false; UpdateBags(table.View); return; }
             FollowTable(state);
             var view = table.View;
+            UpdateInternals(state);
             UpdateStraps(state);
             UpdateBags(view);
             if (sites[0] != null) for (int i = 0; i < 3; i++) UpdateSite(i, state, view);
@@ -436,7 +545,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private void UpdateStraps(OperationState state)
         {
             if (!strapsReady) return;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < OperationStraps.Count(table.Tuning); i++)
             {
                 bool closed = state.restraints[i];
                 float target = closed ? 0f : 1f;
@@ -460,6 +569,13 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 bool show = (view.bagsUsedMask & (1 << i)) == 0;
                 if (bags[i] != null && bagShown[i] != show) { bags[i].gameObject.SetActive(show); bagShown[i] = show; }
+                // Rework 2026-10-18: the bag fills while the syringe empties into it (synced float, smoothed here).
+                if (bags[i] != null && show)
+                {
+                    var fill = bags[i].GetComponentInChildren<OperationBloodFill>();
+                    if (fill == null) fill = OperationBloodFill.Attach(bags[i]);
+                    fill.SetTarget(view.bagFill != null && i < view.bagFill.Length ? view.bagFill[i] : 0f);
+                }
             }
         }
 
@@ -496,7 +612,8 @@ namespace OnlyVolunteers.Operation.Stage1
                 float pop = t < 1f ? Mathf.Sin(t * Mathf.PI * 0.5f) * (1f + 0.25f * Mathf.Sin(t * Mathf.PI)) : 1f;
                 s.opening.localScale = new Vector3(pop, pop, 1f);
             }
-            bool organVisible = visible && opened && !organ.removed;
+            // Round 3: once suturing starts the seam's skin patch covers the hole: the organs are out of reach and out of view.
+            bool organVisible = visible && opened && !organ.removed && InternalsShown && state.zoneSuture <= 0f && !state.sutured;
             s.organ.gameObject.SetActive(organVisible);
             if (organVisible)
             {
@@ -627,7 +744,8 @@ namespace OnlyVolunteers.Operation.Stage1
             // Awake on the table: scared. Strapped (torso) he fights the straps; unstrapped he first lies there, then
             // wriggles towards the edge (the Struggle clip) until the escape clip takes over.
             float escape = Mathf.Clamp01(s.escapeProgress / Mathf.Max(0.1f, tuning.escapeSeconds));
-            rig.SetOpState(s.Torso || escape > 0.25f ? OperationPatientRig.StateStruggle : OperationPatientRig.StateTableAwake);
+            bool fighting = OperationStraps.Held(s, tuning) || s.unbuckleProgress > 0f || escape > 0.25f;
+            rig.SetOpState(fighting ? OperationPatientRig.StateStruggle : OperationPatientRig.StateTableAwake);
             rig.Face(10f + weak * 30f, 80f + weak * 20f, 30f + 40f * Mathf.Max(0f, Mathf.Sin(t * 2.3f)), 0f);
             for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0f : FreeLimbStruggle * escape;
         }
@@ -644,6 +762,17 @@ namespace OnlyVolunteers.Operation.Stage1
                 case PatientCue.Aligned:
                     hud?.WorldToast("Лёг ровно", at, HintTone.Good);
                     hud?.Toast("Пристегни его, пока не очухался!", HintTone.Warn);
+                    break;
+                case PatientCue.Stitch:
+                    OperationSfx.Play(audioSource, OperationCue.Tick, 0.6f);
+                    break;
+                case PatientCue.Sutured:
+                    OperationSfx.Play(audioSource, OperationCue.Tape, 0.8f);
+                    hud?.WorldToast("Зашито!", at, HintTone.Good);
+                    break;
+                case PatientCue.Unbuckled:
+                    OperationSfx.Play(audioSource, OperationCue.Strap, 0.7f);
+                    hud?.WorldToast("Он расстегнул ремень!", head, HintTone.Bad);
                     break;
                 case PatientCue.IncisionOpened:
                     OperationSfx.Play(audioSource, OperationCue.Slit, 0.8f);

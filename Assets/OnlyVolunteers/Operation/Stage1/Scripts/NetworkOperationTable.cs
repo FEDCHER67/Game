@@ -22,6 +22,8 @@ namespace OnlyVolunteers.Operation.Stage1
         public int bagsUsedMask;
         public bool injecting;
         public int drawing = -1;
+        /// <summary>Fill (0..1) of each empty blood bag on the tray; it rises while a syringe empties into it.</summary>
+        public float[] bagFill = new float[0];
         public int[] pullers = new int[3];
         /// <summary>The escape clip (Op_EscapeFall) is playing: the root stays on PatientRest until it lands.</summary>
         public bool falling;
@@ -63,6 +65,27 @@ namespace OnlyVolunteers.Operation.Stage1
         private Rigidbody tableBody;
         private PatientRecord record;
         private float nextSnapshot;
+        // Rework 2026-10-18: a full blood syringe empties into a bag over tuning.bloodTransferSeconds.
+        private int transferBag = -1, transferClient = -1;
+        private float transferProgress;
+        private float[] bagFills = new float[0];
+        public bool Transferring => transferBag >= 0;
+        /// <summary>The transfer's source is a player's field blood syringe (stage A), not the table's own syringe.</summary>
+        private const int FieldClient = -2;
+        private System.Action<float> fieldFill;
+        /// <summary>Server: the empty bag slot 'bag' can take blood now (not used, no transfer running).</summary>
+        public bool BagFree(int bag) => IsServerInitialized && world != null && bag >= 0 && bag < tuning.bloodBagCount && (world.bagsUsedMask & (1 << bag)) == 0 && transferBag < 0;
+        /// <summary>Server, stage A (Fedya round 2): a player walks up with the blood syringe he filled in the field and
+        /// empties it into an empty table bag: the same smooth transfer as the table's own syringe (the plunger goes down
+        /// through 'setFieldFill' 1 → 0 while the bag fills by the same amount, synced), then the bag is sealed into one
+        /// blood item. The portion was already counted on the NPC when it was drawn; the bag value is counted once here.</summary>
+        public bool ServerFieldTransfer(int bag, System.Action<float> setFieldFill)
+        {
+            if (!BagFree(bag) || setFieldFill == null) return false;
+            transferBag = bag; transferClient = FieldClient; transferProgress = 0f; fieldFill = setFieldFill;
+            Debug.Log($"[OPS] BLOOD TRANSFER (field syringe) start bag={bag}");
+            return true;
+        }
         private float nextSave;
         private bool frozen;
         private bool alignStartSet;
@@ -73,9 +96,17 @@ namespace OnlyVolunteers.Operation.Stage1
         private float noAlignUntil;
         private bool falling;
         private float fallEndsAt;
+        // Capture -> delivery stage A (map scene, CAPTURE_DELIVERY_SPEC v01 D3/D4): the table starts empty and takes the
+        // captured NPC's own OperationState when he is laid on it (ServerAdmit). It never writes the dev operation save.
+        private bool admissionMode;
         public OperationAbdomen Abdomen { get; private set; }
+        public bool AdmissionMode => admissionMode;
+        public bool HasPatient => rules != null && patient != null;
+        /// <summary>Server: raised after the patient object was spawned (fresh, admitted or restored).</summary>
+        public event Action<NetworkPhysicsBody> ServerPatientSpawned;
 
         public OperationTuning Tuning => tuning;
+        public NetworkPhysicsBody PatientPrefab => patientPrefab;
         public OperationState State => IsServerInitialized ? rules?.State : mirror?.patient;
         public OperationView View => IsServerInitialized ? serverView : mirror;
         public NetworkObject PatientObject => patientObject.Value;
@@ -103,6 +134,7 @@ namespace OnlyVolunteers.Operation.Stage1
             public float at;
         }
 
+        private const float PrepClickDelay = 0.1f;
         public sealed class Participant
         {
             public int id;
@@ -125,6 +157,9 @@ namespace OnlyVolunteers.Operation.Stage1
             public OpHint lastHint;
             public float hintAt;
             public bool directDone;
+            public TableCamera cameraMode = TableCamera.Prep;
+            /// <summary>Server time the participant's view became PREP (strap clicks need the PREP camera to have blended in).</summary>
+            public float prepSince;
         }
 
         // ---------- named anchors ----------
@@ -180,6 +215,12 @@ namespace OnlyVolunteers.Operation.Stage1
             int i = tool.Kind == OperationToolKind.Syringe ? 0 : tool.Kind == OperationToolKind.BloodSyringe ? 1 : 2;
             var slot = Find(ToolSlotNames[i]);
             Vector3 p = slot != null ? slot.position : transform.TransformPoint(tuning.trayPosition + new Vector3(0.135f, 0.69f, 0.165f - i * 0.165f));
+            // Round 3: the needle holder lies on the stand next to the scalpel (its own SLOT_SUTURE when the stand has one).
+            if (tool.Kind == OperationToolKind.Suture)
+            {
+                var own = Find("SLOT_SUTURE");
+                p = own != null ? own.position : p + transform.right * -0.06f;
+            }
             return tool.DockPoseFor(new Pose(p, ToolSlotRotation));
         }
         public Pose BagPose(int i)
@@ -204,15 +245,27 @@ namespace OnlyVolunteers.Operation.Stage1
         public Vector3 ConnectionPosition(int i, int c) { OperationGeometry.Cord(tuning, i, c, out var a, out var r); return Anchors.Point(i, (a + r) * 0.5f); }
 
         /// <summary>Where a held tool hangs for a cursor point: its tip just above the surface.</summary>
-        public Pose HeldToolPose(OperationToolKind kind, Vector3 point, Vector3 normal)
+        public Pose HeldToolPose(OperationToolKind kind, Vector3 point, Vector3 normal, bool inSkin = false)
         {
             Vector3 flatBack = Vector3.ProjectOnPlane(-CameraPose.forward, transform.up).normalized;
+            if (flatBack.sqrMagnitude < 0.0001f) flatBack = -transform.forward;
             Vector3 right = Vector3.Cross(transform.up, flatBack).normalized;
             Vector3 tip = point + normal * tuning.toolHover;
-            if (kind == OperationToolKind.Scalpel)
+            if (kind == OperationToolKind.Scalpel || kind == OperationToolKind.Suture)
             {
                 Vector3 toHandle = (transform.up * 0.8f + flatBack * 0.45f - right * 0.3f).normalized;
                 return new Pose(tip, Basis(-toHandle, transform.up));
+            }
+            if (inSkin)
+            {
+                // Drawing blood / injecting (Fedya 2026-10-18): the needle tip in the skin, the barrel at ~30 deg to it,
+                // leaning toward the shared camera so the plunger and the rising blood are in view.
+                Vector3 along = Vector3.ProjectOnPlane(flatBack - right * 0.6f, normal);
+                if (along.sqrMagnitude < 1e-6f) along = Vector3.ProjectOnPlane(-transform.forward, normal);
+                along.Normalize();
+                float a = tuning.syringeSkinAngle * Mathf.Deg2Rad;
+                Vector3 barrel = (normal * Mathf.Sin(a) + along * Mathf.Cos(a)).normalized;
+                return new Pose(point - normal * 0.004f, Basis(Vector3.Cross(barrel, along).normalized, barrel));
             }
             // Syringe in profile for the shared camera: needle at the cursor, plunger up and to the left.
             Vector3 up = (transform.up * 0.62f + flatBack * 0.15f - right * 0.62f).normalized;
@@ -235,7 +288,9 @@ namespace OnlyVolunteers.Operation.Stage1
             if (view != null && view.LocalClientId == holderId && view.Active) return view.TryLocalHeldPose(tool.Kind, out pose);
             if (cursors.TryGetValue(holderId, out var c) && Time.time - c.at < 2f)
             {
-                pose = HeldToolPose(tool.Kind, transform.TransformPoint(c.smoothed), transform.up);
+                var v = View;
+                bool inSkin = v != null && ((tool.Kind == OperationToolKind.BloodSyringe && v.drawing >= 0) || (tool.Kind == OperationToolKind.Syringe && v.injecting));
+                pose = HeldToolPose(tool.Kind, transform.TransformPoint(c.smoothed), transform.up, inSkin);
                 return true;
             }
             if (IsServerInitialized && participants.TryGetValue(holderId, out var p))
@@ -265,6 +320,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             snapshot.OnChange += Changed;
             tableBody = GetComponent<Rigidbody>();
+            if (GetComponent<OperationTableBrake>() == null) gameObject.AddComponent<OperationTableBrake>();
             if (tuning != null && tuning.sharedAbdomen)
             {
                 Abdomen = gameObject.AddComponent<OperationAbdomen>(); Abdomen.Bind(this);
@@ -272,9 +328,26 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         private void OnDestroy() => snapshot.OnChange -= Changed;
 
+        /// <summary>Stage A adapter, before Spawn: start empty, use the scene's patient registry, never load or write the
+        /// dev operation save.</summary>
+        public void ConfigureAdmission(PatientRegistry sceneRegistry)
+        {
+            admissionMode = true;
+            loadSavedOperation = false;
+            if (sceneRegistry != null) registry = sceneRegistry;
+        }
+
         public override void OnStartServer()
         {
             base.OnStartServer();
+            if (admissionMode)
+            {
+                world = new OperationWorldState { v02 = true, anesthesiaStock = tuning.anesthesiaStock, anesthesiaBarrel = tuning.syringeCapacity };
+                SpawnTools();
+                Publish();
+                Debug.Log("[OPS] WORLD admission mode: empty table, waiting for a captured patient");
+                return;
+            }
             bool wantLoad = loadSavedOperation || HasArgument("-ops-load");
             bool load = wantLoad && ClinicSave.TryReadOperation(out world, out _);
             if (!load) world = FreshWorld();
@@ -322,6 +395,12 @@ namespace OnlyVolunteers.Operation.Stage1
             alignStartSet = false;
             falling = false; serverView.falling = false;
             SpawnPatient();
+            SpawnTools();
+            foreach (var item in world.items) SpawnItem(item, null);
+            Publish();
+        }
+        private void SpawnTools()
+        {
             if (tools.Count == 0)
             {
                 foreach (var prefab in toolPrefabs)
@@ -335,8 +414,110 @@ namespace OnlyVolunteers.Operation.Stage1
                 }
             }
             else foreach (var tool in tools) if (tool != null) tool.ServerDock();
-            foreach (var item in world.items) SpawnItem(item, null);
+        }
+
+        // ---------- stage A admission (map scene) ----------
+        /// <summary>Server, admission mode: the captured NPC's own state becomes the patient (same identity, counters and
+        /// organ grades). The patient object is spawned at the given pose (over the pad); the existing release-over-pad
+        /// magnet snap then aligns him in FixedUpdate. Every patient gets a fresh table kit (stock, barrel, bags).</summary>
+        public bool ServerAdmit(OperationState state, Vector3 position, Quaternion rotation)
+        {
+            if (!IsServerInitialized || !admissionMode || state == null || state.organs == null || state.organs.Length != 3 || patient != null) return false;
+            state.onTable = false; state.aligned = false; state.knockedOut = true; state.escapeProgress = 0f;
+            world.patient = state;
+            world.patientPosition = position; world.patientRotation = rotation;
+            world.anesthesiaStock = tuning.anesthesiaStock; world.anesthesiaBarrel = tuning.syringeCapacity; world.bloodFill = 0f; world.bagsUsedMask = 0;
+            BindRules(state);
+            alignStartSet = false; falling = false; serverView.falling = false; noAlignUntil = 0f;
+            SpawnPatient();
+            foreach (var tool in tools) if (tool != null) tool.ServerDock();
             Publish();
+            Debug.Log($"[OPS] ADMIT patient={state.patientId} alive={state.alive} sleep={state.sleepRemaining:F1} residual={state.residual:F2} blood={state.bloodPortions} conditionLoss={state.conditionLoss} grades={state.organs[0].intrinsicGrade}/{state.organs[1].intrinsicGrade}/{state.organs[2].intrinsicGrade}");
+            return true;
+        }
+        private void BindRules(OperationState state)
+        {
+            record = registry != null ? registry.EnsureOperationPatient(state.patientId, state) : null;
+            rules = new OperationRules(record != null && record.Operation != null ? record.Operation : state, tuning);
+            rules.MigrateSharedOpening();
+            world.patient = rules.State;
+            rules.Cue += Hook;
+        }
+        /// <summary>Server, admission mode: the patient (a resolved body) leaves the table for good. Returns his id.</summary>
+        public string ServerRemovePatient(bool despawn = true)
+        {
+            if (!IsServerInitialized || !admissionMode || rules == null) return null;
+            string id = rules.State.patientId;
+            foreach (var p in participants.Values) ReleaseParticipant(p, true);
+            participants.Clear();
+            if (despawn && patient != null && patient.IsSpawned) Despawn(patient.NetworkObject);
+            patient = null; patientObject.Value = null;
+            rules.Cue -= Hook; rules = null; record = null;
+            world.patient = null; alignStartSet = false; falling = false; serverView.falling = false;
+            foreach (var tool in tools) if (tool != null) tool.ServerDock();
+            Publish();
+            Debug.Log($"[OPS] REMOVED patient={id}");
+            return id;
+        }
+        public NetworkPhysicsBody ServerDetachCorpse()
+        {
+            if (!IsServerInitialized || !admissionMode || !HasPatient || State.alive) return null;
+            foreach (bool closed in State.restraints) if (closed) return null;
+            var body = patient;
+            State.onTable = false; State.aligned = false; noAlignUntil = float.PositiveInfinity;
+            ApplyPatientPhysics();
+            GetComponent<OperationPresentation>()?.ReleasePatientVisuals();
+            Abdomen?.ReleasePatientVisuals();
+            body.GetComponent<OperationPatientRagdoll>()?.ServerCorpse();
+            ServerRemovePatient(false);
+            return body;
+        }
+
+        /// <summary>Server, admission mode: restore a saved table (the patient on or by it, outputs, stock).</summary>
+        public void ServerRestore(OperationWorldState saved)
+        {
+            if (!IsServerInitialized || !admissionMode || saved == null) return;
+            ServerRemovePatient();
+            foreach (var item in items) if (item != null && item.IsSpawned) Despawn(item.NetworkObject);
+            items.Clear();
+            world = saved;
+            world.v02 = true;
+            world.items ??= new List<OperationItemState>();
+            if (world.hasTablePose && tableBody != null)
+            {
+                // The gurney first, then its patient and outputs (saved in world space) land on it, not beside it.
+                tableBody.linearVelocity = Vector3.zero; tableBody.angularVelocity = Vector3.zero;
+                tableBody.position = world.tablePosition; tableBody.rotation = world.tableRotation;
+                transform.SetPositionAndRotation(world.tablePosition, world.tableRotation);
+                Physics.SyncTransforms();
+            }
+            bool hasPatient = world.patient != null && !string.IsNullOrEmpty(world.patient.patientId) && world.patient.organs != null && world.patient.organs.Length == 3;
+            if (hasPatient)
+            {
+                if (world.patient.onTable && world.patient.aligned) world.patient.knockedOut = false;
+                BindRules(world.patient);
+                alignStartSet = false; falling = false; serverView.falling = false;
+                SpawnPatient();
+            }
+            else world.patient = null;
+            foreach (var tool in tools) if (tool != null) tool.ServerDock();
+            foreach (var item in world.items) SpawnItem(item, null)?.SuppressImpactsFor(2f); // settling after a load is no drop
+            Publish();
+            Debug.Log($"[OPS] RESTORED table patient={(hasPatient ? world.patient.patientId : "-")} outputs={items.Count}");
+        }
+        /// <summary>Server: the world as it is now (patient pose, outputs), for a save.</summary>
+        public OperationWorldState SnapshotWorld()
+        {
+            if (world == null) return null;
+            // A blood transfer is 1.2 s of animation: a save in the middle finishes it, or the portion would be lost (the
+            // progress is not saved and a half-empty syringe cannot be poured again). Round-2 review item 2.
+            if (IsServerInitialized && transferBag >= 0) TickTransfer(10f);
+            world.patient = rules != null ? rules.State : null;
+            world.hasTablePose = true; world.tablePosition = transform.position; world.tableRotation = transform.rotation;
+            if (patient != null) { world.patientPosition = patient.transform.position; world.patientRotation = patient.transform.rotation; }
+            world.items.Clear();
+            foreach (var item in items) if (item != null && item.Data != null) world.items.Add(item.Data);
+            return world;
         }
         private void SpawnPatient()
         {
@@ -352,6 +533,7 @@ namespace OnlyVolunteers.Operation.Stage1
             var rig = patient.GetComponent<OperationPatientRig>();
             if (rig != null) rig.SetFloorPose(!rules.State.onTable); // KnockedOut lies along the root's X axis
             ApplyPatientPhysics();
+            ServerPatientSpawned?.Invoke(patient);
         }
         public override void OnStartClient() { base.OnStartClient(); Changed("", snapshot.Value, false); }
         public override void OnStopServer()
@@ -443,21 +625,25 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (asServer || string.IsNullOrEmpty(next)) return;
             mirror = JsonUtility.FromJson<OperationView>(next);
+            // JsonUtility writes a missing patient (admission mode, empty table) as an empty object.
+            if (mirror != null && mirror.patient != null && string.IsNullOrEmpty(mirror.patient.patientId)) mirror.patient = null;
         }
         private void Publish()
         {
             serverView.patient = State; serverView.stock = world.anesthesiaStock; serverView.barrel = world.anesthesiaBarrel;
             serverView.blood = world.bloodFill; serverView.bagsUsedMask = world.bagsUsedMask;
+            if (bagFills.Length != tuning.bloodBagCount) bagFills = new float[tuning.bloodBagCount];
+            serverView.bagFill = bagFills;
             snapshot.Value = JsonUtility.ToJson(serverView);
             nextSnapshot = Time.time + tuning.snapshotInterval;
         }
         public void Save()
         {
-            if (world == null || !IsServerInitialized || rules == null) return;
-            world.patient = State;
-            if (patient != null) { world.patientPosition = patient.transform.position; world.patientRotation = patient.transform.rotation; }
-            world.items.Clear();
-            foreach (var item in items) if (item != null && item.Data != null) world.items.Add(item.Data);
+            if (world == null || !IsServerInitialized) return;
+            // Stage A: the capture save (Capture/CaptureSave) snapshots the table itself; the dev operation file is never touched.
+            if (admissionMode) { SnapshotWorld(); nextSave = Time.time + tuning.saveInterval; return; }
+            if (rules == null) return;
+            SnapshotWorld();
             ClinicSave.WriteOperation(world, out _); nextSave = Time.time + tuning.saveInterval;
         }
 
@@ -477,7 +663,7 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         public bool IsParticipant(int clientId) => participants.ContainsKey(clientId);
         /// <summary>The same rule as OperationRules.CanOperate (nobody holds the patient in stage 1), for client hints.</summary>
-        public bool ServerOrLocalCanOperate(OperationState s) => s != null && s.onTable && s.aligned && (!s.alive || s.Sleeping || s.Torso);
+        public bool ServerOrLocalCanOperate(OperationState s) => s != null && s.onTable && s.aligned && (!s.alive || s.Sleeping || OperationStraps.Held(s, tuning));
         public OperationTool ParticipantTool(int clientId) => participants.TryGetValue(clientId, out var p) ? p.tool : null;
 
         [ServerRpc(RequireOwnership = false)]
@@ -493,8 +679,16 @@ namespace OnlyVolunteers.Operation.Stage1
             if (!InReach(player) || participants.ContainsKey(sender.ClientId)) return;
             var inventory = player.GetComponent<NetworkInventory>();
             if (inventory == null) { Debug.LogError("[OPS] player prefab requires NetworkInventory", player); return; }
-            participants.Add(sender.ClientId, new Participant { id = sender.ClientId, player = player, inventory = inventory, received = Time.time, point = transform.InverseTransformPoint(RestPose.position) });
+            participants.Add(sender.ClientId, new Participant { id = sender.ClientId, player = player, inventory = inventory, received = Time.time, prepSince = Time.time, point = transform.InverseTransformPoint(RestPose.position) });
             Debug.Log($"[OPS] JOIN client={sender.ClientId} count={participants.Count}");
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void RequestCameraMode(TableCamera mode, NetworkConnection sender = null)
+        {
+            if (!Valid(sender, out var p) || (mode != TableCamera.Prep && mode != TableCamera.Operation)) return;
+            if (mode == TableCamera.Prep && p.cameraMode != TableCamera.Prep) p.prepSince = Time.time;
+            p.cameraMode = mode;
         }
 
         [ServerRpc(RequireOwnership = false)]
@@ -524,13 +718,19 @@ namespace OnlyVolunteers.Operation.Stage1
                 switch (target.kind)
                 {
                     case TargetKind.Strap:
-                        if (target.index >= 5) return;
+                        // PREP only, and not in the same instant the client claims it switched (a real switch blends the
+                        // camera first): a client cannot unbuckle from OPERATION by sending "PREP + click" together.
+                        if (target.index >= 5 || p.cameraMode != TableCamera.Prep || Time.time - p.prepSince < PrepClickDelay) return;
+                        // The exact strap triangles also exist on a server without presentation (headless/dedicated).
+                        var straps = OperationStrapTargets.Install(this);
+                        if (straps == null || !straps.Contains(target.index, transform.TransformPoint(local))) return;
                         if (!State.onTable || !State.aligned) { Hint(p, OpHint.NotOnTable); return; }
+                        if (State.restraints[target.index] && rules.MustSutureBeforeRelease) { Hint(p, OpHint.SutureFirst); return; }
                         rules.ToggleRestraint(target.index);
                         Publish();
                         break;
                     case TargetKind.Tool:
-                        RequestSelectServer(p, (ToolSlot)Mathf.Clamp(target.index, 1, 3));
+                        RequestSelectServer(p, (ToolSlot)Mathf.Clamp(target.index, 1, (int)ToolSlot.Suture));
                         break;
                     case TargetKind.BloodBag:
                         FillBag(p, target.index);
@@ -589,6 +789,7 @@ namespace OnlyVolunteers.Operation.Stage1
         public void RequestDev(byte command, NetworkConnection sender = null)
         {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (admissionMode) return; // stage A: F9/F10 belong to the map (pins, body mode); patients come from capture
             var player = PlayerFor(sender);
             if (player == null) return;
             if (command == 9) DevPlaceOnTable();
@@ -660,7 +861,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 held.LeaveTable();
             p.pressed = false; p.pullOrgan = -1;
             cursors.Remove(p.id);
-            Debug.Log($"[OPS] LEAVE client={p.id} preserved cuts={State.organs[0].cut:F2}/{State.organs[1].cut:F2}/{State.organs[2].cut:F2} extracted={State.extracted} outputs={items.Count}");
+            if (State != null) Debug.Log($"[OPS] LEAVE client={p.id} preserved cuts={State.organs[0].cut:F2}/{State.organs[1].cut:F2}/{State.organs[2].cut:F2} extracted={State.extracted} outputs={items.Count}");
         }
 
         // ---------- items ----------
@@ -696,13 +897,37 @@ namespace OnlyVolunteers.Operation.Stage1
             if (p.tool == null || p.tool.Kind != OperationToolKind.BloodSyringe) { Hint(p, OpHint.SyringeNotFull); return; }
             if (world.bloodFill < 1f) { Hint(p, OpHint.SyringeNotFull); return; }
             if ((world.bagsUsedMask & (1 << bag)) != 0) { Hint(p, OpHint.NoBags); return; }
-            world.bagsUsedMask |= 1 << bag; world.bloodFill = 0f; world.bloodBagged++;
+            if (transferBag >= 0) return; // one syringe, one transfer at a time
+            transferBag = bag; transferClient = p.id; transferProgress = 0f;
+            Debug.Log($"[OPS] BLOOD TRANSFER start bag={bag} client={p.id}");
+        }
+        /// <summary>The plunger goes down: the syringe empties and the bag fills by the same amount; then it is sealed.</summary>
+        private void TickTransfer(float dt)
+        {
+            if (transferBag < 0) return;
+            if (bagFills.Length != tuning.bloodBagCount) bagFills = new float[tuning.bloodBagCount];
+            transferProgress = Mathf.Min(1f, transferProgress + dt / Mathf.Max(0.05f, tuning.bloodTransferSeconds));
+            if (transferClient == FieldClient) fieldFill?.Invoke(1f - transferProgress);
+            else world.bloodFill = 1f - transferProgress;
+            bagFills[transferBag] = transferProgress / Mathf.Max(1, tuning.bloodPortionsPerBag);
+            if (Time.time >= nextSnapshot - tuning.snapshotInterval * 0.5f) Publish();
+            if (transferProgress < 1f) return;
+            int bag = transferBag; transferBag = -1;
+            bool field = transferClient == FieldClient; fieldFill = null;
+            participants.TryGetValue(transferClient, out var p);
+            CompleteBag(p, bag, field);
+        }
+        private void CompleteBag(Participant p, int bag, bool field = false)
+        {
+            world.bagsUsedMask |= 1 << bag; if (!field) world.bloodFill = 0f; world.bloodBagged++;
+            if (bag < bagFills.Length) bagFills[bag] = 0f;
             var pose = BagPose(bag);
-            var data = new OperationItemState { id = State.patientId + "/blood/" + world.bloodBagged, kind = 2, grade = 0, sealedBlood = true, position = pose.position + pose.up * 0.04f, rotation = pose.rotation };
+            var data = new OperationItemState { id = (field ? "field" : State != null ? State.patientId : "blood") + "/blood/" + world.bloodBagged, kind = 2, grade = 0, sealedBlood = true, position = pose.position + pose.up * 0.04f, rotation = pose.rotation };
             SpawnItem(data, null);
-            Hint(p, OpHint.BagReady);
-            ObserversCue(PatientCue.BagSealed, bag, p.id);
-            CueReceived?.Invoke(PatientCue.BagSealed, bag, p.id);
+            if (p != null) Hint(p, OpHint.BagReady);
+            int client = p != null ? p.id : transferClient;
+            ObserversCue(PatientCue.BagSealed, bag, client);
+            CueReceived?.Invoke(PatientCue.BagSealed, bag, client);
             Debug.Log($"[OPS] BAG id={data.id} bag={bag} value={tuning.bloodValue}");
             Publish(); Save();
         }
@@ -738,6 +963,8 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         private void FixedUpdate()
         {
+            // A field-syringe transfer runs with or without a patient on the table.
+            if (IsServerInitialized && transferBag >= 0 && transferClient == FieldClient) TickTransfer(Time.fixedDeltaTime);
             if (!IsServerInitialized || rules == null) return;
             float dt = Time.fixedDeltaTime;
             removedParticipants.Clear();
@@ -748,6 +975,9 @@ namespace OnlyVolunteers.Operation.Stage1
             // v04: brakes on while someone carries the patient near the gurney too (the dangling ragdoll would shove it).
             bool loading = patient != null && patient.HasHolder && !rules.State.onTable &&
                 Vector3.Distance(patient.transform.position, transform.position) < tuning.tableReach;
+            // Any other body carried near it (a captured NPC on the map grab, a corpse or body bag): brakes on too, so a
+            // body hauled onto the pad never shoves the gurney away (Claude rework; thrown/loose bodies still nudge it).
+            if (!loading && OperationTableBrake.CarryingNear != null) loading = OperationTableBrake.CarryingNear(transform.position, tuning.tableReach);
             bool freeze = participants.Count > 0 || loading;
             if (tableBody != null && freeze != frozen)
             {
@@ -788,7 +1018,12 @@ namespace OnlyVolunteers.Operation.Stage1
                 Vector3 world = transform.TransformPoint(p.point);
                 if (p.inventory.PhysicalItem != null && p.inventory.PhysicalItem.TryGetComponent(out OperationPhysicalItem heldItem))
                     heldItem.SetTableTarget(world + transform.up * 0.1f);
-                if (p.tool != null) p.tool.ServerHoldAt(HeldToolPose(p.tool.Kind, world, transform.up));
+                if (p.tool != null)
+                {
+                    bool inSkin = p.pressed && ((p.tool.Kind == OperationToolKind.BloodSyringe && p.pressTarget.ArmSide >= 0) ||
+                                                (p.tool.Kind == OperationToolKind.Syringe && p.pressTarget.IsInjectionSite));
+                    p.tool.ServerHoldAt(HeldToolPose(p.tool.Kind, world, transform.up, inSkin));
+                }
                 if (!p.pressed) { p.pressStart = false; continue; }
                 var slot = p.tool != null ? p.tool.Slot : ToolSlot.Hands;
                 ctxClient = p.id;
@@ -833,7 +1068,8 @@ namespace OnlyVolunteers.Operation.Stage1
                     if (!p.pressed) continue;
                     ctxClient = p.id;
                     var slot = p.tool != null ? p.tool.Slot : ToolSlot.Hands;
-                    if (slot == ToolSlot.Scalpel) Scalpel(p, dt);
+                    if (slot == ToolSlot.Suture) SutureStroke(p, dt);
+                    else if (slot == ToolSlot.Scalpel) Scalpel(p, dt);
                     else if (slot == ToolSlot.Hands) Hands(p);
                     p.pressStart = false;
                     ctxClient = -1;
@@ -852,6 +1088,7 @@ namespace OnlyVolunteers.Operation.Stage1
             foreach (var tool in tools) if (tool != null) tool.ServerTick(dt);
             var anesthesia = tools.Find(t => t != null && t.Kind == OperationToolKind.Syringe);
             if (anesthesia != null) anesthesia.ServerSetFill(world.anesthesiaBarrel / Mathf.Max(0.01f, tuning.syringeCapacity));
+            if (transferClient != FieldClient) TickTransfer(dt);
             var bloodTool = tools.Find(t => t != null && t.Kind == OperationToolKind.BloodSyringe);
             if (bloodTool != null) bloodTool.ServerSetFill(world.bloodFill);
             if (Time.time >= nextSnapshot) Publish();
@@ -977,6 +1214,28 @@ namespace OnlyVolunteers.Operation.Stage1
             ctxOrgan = guide == OperationAbdomenGeometry.ZoneGuide ? -1 : guide;
             rules.CutSharedGuide(guide, g.x, g.y, dt, travel);
             ctxOrgan = -1; p.lastPoint = p.point;
+        }
+        private const int SutureStrokeId = 103;
+        /// <summary>Round 3: the needle holder sews the incision up, stroke by stroke along the same line as the cut, from the
+        /// top end. Server-authoritative: the rules advance the seam (OperationRules.Suture); the state travels in the view.</summary>
+        private void SutureStroke(Participant p, float dt)
+        {
+            if (p.strokeRejected || !AnatomyReady) return;
+            var s = State;
+            if (!s.zoneOpened || s.sutured) { if (p.pressStart) Hint(p, OpHint.NothingToSuture); return; }
+            if (!rules.CanOperate(false)) { if (p.pressStart) Hint(p, OpHint.Squirming); return; }
+            int guide = OperationAbdomenGeometry.ZoneGuide;
+            Vector3 local = SiteLocal(guide, transform.TransformPoint(p.point));
+            if (Mathf.Abs(local.z) > tuning.incisionSurfaceTolerance) return;
+            Vector2 g = GuideCoordinates(guide, local);
+            if (p.strokeOrgan != SutureStrokeId)
+            {
+                if (!rules.CanBeginSuture(g.x, g.y)) { p.strokeRejected = true; Hint(p, OpHint.StitchFromTop); return; }
+                p.strokeOrgan = SutureStrokeId;
+            }
+            ctxClient = p.id;
+            if (rules.Suture(g.x, g.y, dt) == CutStep.Completed) { Debug.Log($"[OPS] SUTURED patient={s.patientId} client={p.id}"); nextSnapshot = 0f; }
+            ctxClient = -1;
         }
         private void Hands(Participant p)
         {

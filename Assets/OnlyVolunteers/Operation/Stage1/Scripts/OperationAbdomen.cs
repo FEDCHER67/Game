@@ -11,10 +11,18 @@ namespace OnlyVolunteers.Operation.Stage1
     public sealed class OperationAbdomen : MonoBehaviour
     {
         private const float LiverModelScale = 1.3f;
+        private OperationOpeningV02 approvedOpening;
+        public bool OpeningContains(Ray ray) => approvedOpening != null && approvedOpening.Contains(ray);
         private static readonly Color GuideColor = new(0.25f, 0.95f, 0.85f);
         private NetworkOperationTable table;
         private Transform patient, zone, opening;
         private Guide belly, liver;
+        /// <summary>Round 3: the seam (sutured v05 meshes) and its guide along the incision line (thread colour).</summary>
+        private OperationSutureV05 suture;
+        private Guide sutureGuide;
+        private OperationTableView viewCache;
+        public OperationSutureV05 Suture => suture;
+        private int StitchesFor(OperationState s) => s.sutured ? Mathf.Max(1, table.Tuning.sutureStitches) : Mathf.FloorToInt(s.zoneSuture * Mathf.Max(1, table.Tuning.sutureStitches) + 0.0001f);
         private Material skin, cavity, lip, guideMaterial, trailMaterial, startMaterial;
         private bool liverTurned, wasOpened;
         private float openedAt = -10f;
@@ -28,6 +36,29 @@ namespace OnlyVolunteers.Operation.Stage1
             public int index;
         }
 
+        public void ReleasePatientVisuals()
+        {
+            // Round 2: the body leaves the table with its opening (the cut stays) but without the table's guides (the
+            // dashes, the start dot and the liver loop are operation UI, not part of him).
+            if (belly?.root != null) belly.root.gameObject.SetActive(false);
+            if (liver?.root != null) liver.root.gameObject.SetActive(false);
+            if (sutureGuide?.root != null) sutureGuide.root.gameObject.SetActive(false);
+            belly = null; sutureGuide = null;
+            // Round 3 (lead rule): off the table an opened belly is always closed: the seam if he was sewn up, else the
+            // plain skin patch with blood and no stitches (a dead body may leave unsewn), never a see-through cavity.
+            var st = table.State;
+            if (st != null && st.zoneOpened && suture != null)
+            {
+                if (zone != null) zone.gameObject.SetActive(true);
+                if (opening != null) { opening.gameObject.SetActive(true); opening.localScale = Vector3.one; }
+                approvedOpening?.SetCavityVisible(false);
+                suture.Show(true, st.sutured ? suture.StitchCount : 0);
+            }
+            suture = null;
+            if (zone != null && table.Anchors != null && table.Anchors.Abdomen != null) zone.SetParent(table.Anchors.Abdomen, true);
+            zone = null; opening = null; patient = null; liver = null; approvedOpening = null;
+        }
+
         public void Bind(NetworkOperationTable owner) => table = owner;
 
         /// <summary>Opening frame: z along the table's up, y toward the head, centred between the kidney markers.</summary>
@@ -36,6 +67,7 @@ namespace OnlyVolunteers.Operation.Stage1
             get
             {
                 var anchors = table.Anchors;
+                if (table.Tuning.anatomicalLayout && anchors.Abdomen != null) return new Pose(anchors.Abdomen.position, anchors.Abdomen.rotation);
                 Vector2 offset = table.Tuning.abdomenOffset;
                 Vector3 p = (anchors.Marker(0).position + anchors.Marker(1).position) * 0.5f +
                     table.transform.forward * offset.x + table.transform.up * offset.y;
@@ -52,7 +84,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (guide != OperationAbdomenGeometry.ZoneGuide) return table.Anchors.LocalMetres(guide, world);
             var pose = ZonePose; return Quaternion.Inverse(pose.rotation) * (world - pose.position);
         }
-        public Vector3 Normal(int guide) => guide == OperationAbdomenGeometry.ZoneGuide ? table.transform.up : table.Anchors.Normal(guide);
+        public Vector3 Normal(int guide) => guide == OperationAbdomenGeometry.ZoneGuide ? (table.Tuning.anatomicalLayout ? table.Anchors.Normal(3) : table.transform.up) : table.Anchors.Normal(guide);
         public float Progress(int guide) => guide == OperationAbdomenGeometry.ZoneGuide ? table.State.zoneCut : table.State.organs[2].connectionCut;
         public int Direction(int guide) => guide == 2 && table.State.organs[2].connectionDirection < 0 ? -1 : 1;
         public Vector2 Coordinates(int guide, Vector3 local) => OperationAbdomenGeometry.Coordinates(table.Tuning, guide, local);
@@ -72,20 +104,27 @@ namespace OnlyVolunteers.Operation.Stage1
                 Build();
                 wasOpened = table.State.zoneOpened;
             }
-            if (!liverTurned) liverTurned = TurnLiverFaceUp();
+            if (!table.Tuning.anatomicalLayout && !liverTurned) liverTurned = TurnLiverFaceUp();
             var pose = ZonePose;
             zone.SetPositionAndRotation(pose.position, pose.rotation);
             var state = table.State;
             bool shown = state.onTable;
             zone.gameObject.SetActive(shown);
             opening.gameObject.SetActive(shown && state.zoneOpened);
+            // Round 3: from the first stitch the seam's skin patch closes the hole; stitches appear in their order.
+            bool patched = state.zoneOpened && (state.sutured || state.zoneSuture > 0f);
+            approvedOpening?.SetCavityVisible(!patched);
+            suture?.Show(shown && patched, StitchesFor(state));
+            var localView = viewCache != null ? viewCache : viewCache = table.GetComponent<OperationTableView>();
+            bool sewing = localView != null && localView.Active && localView.LocalSlot == ToolSlot.Suture;
+            UpdateGuide(sutureGuide, shown && state.zoneOpened && !state.sutured && (sewing || state.zoneSuture > 0f), state.zoneSuture, 1);
             if (state.zoneOpened && !wasOpened) openedAt = Time.time;
             wasOpened = state.zoneOpened;
             float t = Mathf.Clamp01((Time.time - openedAt) / 0.3f);
             float pop = t < 1f ? Mathf.Lerp(0.55f, 1f, Mathf.Sin(t * Mathf.PI * 0.5f)) * (1f + 0.08f * Mathf.Sin(t * Mathf.PI)) : 1f;
             opening.localScale = new Vector3(pop, pop, 1f);
             UpdateGuide(belly, shown && !state.zoneOpened, state.zoneCut, 1);
-            UpdateGuide(liver, shown && state.zoneOpened && !state.organs[2].removed && !state.organs[2].Released,
+            UpdateGuide(liver, shown && state.zoneOpened && !patched && !state.organs[2].removed && !state.organs[2].Released,
                 state.organs[2].connectionCut, Direction(2));
         }
 
@@ -106,12 +145,31 @@ namespace OnlyVolunteers.Operation.Stage1
             zone.localScale = Vector3.one / Mathf.Max(0.0001f, patient.lossyScale.x);
             opening = new GameObject("One opening").transform; opening.SetParent(zone, false);
             Vector2 half = tuning.abdomenHalfSize;
+            if (tuning.anatomicalLayout && tuning.abdomenModel != null)
+            {
+                approvedOpening = OperationOpeningV02.Create(tuning, zone, patient);
+                opening = approvedOpening.transform;
+            }
+            else
+            {
             Oval("Cavity", opening, cavity, half, 0.002f);
             // Wound lip (pink) round the cavity, then the pulled-back skin: thin at the head and feet ends, rolled
             // wider at both sides, all inside the belly outline so nothing sticks out over the arms.
             Ring("Wound lip", opening, lip, half, 0f, 0.006f, 0.0045f, 0.0035f);
             Ring("Pulled-back skin", opening, skin, half + Vector2.one * 0.005f, 0.004f, 0.013f, 0.0075f, 0.005f);
+            }
             belly = BuildGuide(zone, OperationAbdomenGeometry.ZoneGuide);
+            // Round 3: the seam guide on the same line, in thread colour (shown with the needle holder in hand).
+            var cutColours = (guideMaterial, trailMaterial, startMaterial);
+            guideMaterial = OperationVisuals.Unlit("suture guide", new Color(0.55f, 0.65f, 1f));
+            trailMaterial = OperationVisuals.Unlit("suture thread", new Color(0.12f, 0.15f, 0.34f));
+            startMaterial = OperationVisuals.Unlit("suture start", new Color(0.45f, 0.75f, 1f));
+            sutureGuide = BuildGuide(zone, OperationAbdomenGeometry.ZoneGuide);
+            sutureGuide.root.name = "Guide_Suture";
+            sutureGuide.root.gameObject.SetActive(false);
+            (guideMaterial, trailMaterial, startMaterial) = cutColours;
+            if (table.Tuning.anatomicalLayout && table.Tuning.suturedModel != null)
+                suture = OperationSutureV05.Create(table.Tuning, zone, approvedOpening != null ? approvedOpening.OriginalSkin : null);
             var marker = table.Anchors.Marker(2);
             var liverRoot = new GameObject("LiverAttachmentLoop_v04").transform;
             liverRoot.SetParent(marker, false);

@@ -1,0 +1,59 @@
+  Buyers.Copy -> C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\buyers\bin\Release\netstandard2.1\Buyers.Copy.dll
+  WorkInventory.Core -> C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\src\bin\Release\netstandard2.1\WorkInventory.Core.dll
+  WorkInventory.Tests -> C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\bin\Release\net8.0\WorkInventory.Tests.dll
+Test run for C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\bin\Release\net8.0\WorkInventory.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Failed ColdChain_StintGap_59,999_0 [3 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=False actual=True
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c__DisplayClass10_2.<Storage>b__27() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 48
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed ColdChain_StintGap_60_60,001 [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=False actual=True
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c__DisplayClass10_2.<Storage>b__27() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 48
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed ColdChain_StintGap_10_5 [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=False actual=True
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c__DisplayClass10_2.<Storage>b__27() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 48
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed ColdChain_LatchSurvivesInspectionButClearsOnUnload [< 1 ms]
+  Error Message:
+   System.InvalidOperationException : condition
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.True(Boolean condition, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 20
+   at WorkInventory.Checks.Scenarios.<>c.<Storage>b__10_4() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 54
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed ColdChain_WarmOnlyIsNeverCooled [< 1 ms]
+  Error Message:
+   System.InvalidOperationException : condition
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.True(Boolean condition, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 20
+   at WorkInventory.Checks.Scenarios.<>c.<Storage>b__10_5() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 57
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+WARNING: Overwriting results file: C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\evidence\M4-cold-chain.trx
+Results File: C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\evidence\M4-cold-chain.trx
+
+Failed!  - Failed:     5, Passed:   346, Skipped:     0, Total:   351, Duration: 252 ms - WorkInventory.Tests.dll (net8.0)

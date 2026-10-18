@@ -312,6 +312,8 @@ The eye's base chance is zero. Whether the blood modifier also applies to eye ch
 
 Once an NPC is dead, do not repeat survival checks. Persist completed checks and outcomes across loading, player changes and specialist takeover.
 
+> **Decision 2026-10-18 (Fedya, after the capture → table playtests; supersedes the second-kidney and liver rows above).** The **liver** and the **second kidney** are now **always fatal** (100 %, no roll): either kills the NPC immediately at the moment of extraction. The **first kidney** keeps the chance roll (10 % plus 10 percentage points per prior blood portion, as in the tables above). Fedya re-checked the old 20 % / 30 % values and keeps the new rule. Implemented as `OperationTuning.liverOrBothKidneysFatal = true` (stage 1, `OperationState.Extract`); EditMode tests `OP18_*` and `OperationAbdomenRulesTests` cover it. With all three abdominal organs the derived totals above no longer apply: taking the liver or both kidneys always ends with a death.
+
 ### 11.2 Death consequences
 
 Death does not immediately destroy the remaining organs. It starts the body decay timeline. Players may continue extracting from opened or unopened zones during that timeline.

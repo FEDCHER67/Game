@@ -9,7 +9,9 @@ namespace OnlyVolunteers.Operation.Stage1
     {
         Placed, Aligning, Aligned, StrapChanged, LimbAdjusted, Struggling, Sleeping, Waking, Weakened, Panic, Rescue,
         ShockDeath, EscapeAttempt, FailedEscapeFall, Death, ConnectionReleased, Extracted,
-        Escaped, KnockedOut, IncisionOpened, SloppyCut, DirectCut, Yank, BloodPortion, Overdosing, Dazed, BagSealed
+        Escaped, KnockedOut, IncisionOpened, SloppyCut, DirectCut, Yank, BloodPortion, Overdosing, Dazed, BagSealed,
+        // Round 3 (Claude): one stitch of the seam, the seam finished, a strap unbuckled by a free hand.
+        Stitch, Sutured, Unbuckled
     }
     public enum DeathCause { None, Blood, Extraction, Overdose, Shock, FailedEscape }
     public enum CutStep { None, Advanced, OffLine, Completed }
@@ -81,9 +83,20 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool zoneSloppyApplied;
         public int cueSequence;
         public PatientCue lastCue;
+        /// <summary>Capture → delivery (CAPTURE_DELIVERY_SPEC v01 D8): grades every organ loses when it is extracted, from
+        /// the NPC's condition at the hand-over (0 for the dev patients). Applied once per organ in Extract.</summary>
+        public int conditionLoss;
+        /// <summary>Round 3: suturing progress along the incision line (0 head end .. 1 pubic end) and its completion.</summary>
+        public float zoneSuture;
+        public bool sutured;
+        /// <summary>Round 3: a free hand working on the next strap (0..1 of unbuckleSeconds).</summary>
+        public float unbuckleProgress;
         public bool Sleeping => alive && sleepRemaining > 0f;
         public bool Dazed => alive && onTable && dazedRemaining > 0f;
-        public bool Torso => restraints[4];
+        public bool Torso => restraints.Length > 4 && restraints[4];
+        public bool LimbsStrapped => restraints[0] && restraints[1] && restraints[2] && restraints[3];
+        /// <summary>The belly is open and not sewn up yet: organs reachable, a living patient may not leave.</summary>
+        public bool CavityOpen => zoneOpened && !sutured;
         public bool Panicking => alive && panicRemaining >= 0f;
     }
 
@@ -116,6 +129,11 @@ namespace OnlyVolunteers.Operation.Stage1
         public float bloodFill;
         public int bagsUsedMask;
         public int bloodBagged;
+        /// <summary>Round 2: where the (now movable) gurney stood; its outputs are saved in world space, so it is put back
+        /// there first. Absent in older saves (the gurney then stays at its spawn).</summary>
+        public bool hasTablePose;
+        public Vector3 tablePosition;
+        public Quaternion tableRotation = Quaternion.identity;
     }
 
     /// <summary>Server-owned rules. No input, network, physics or file IO; the registered PatientRecord owns State.</summary>
@@ -126,7 +144,12 @@ namespace OnlyVolunteers.Operation.Stage1
         private bool struggling;
         private bool overdosing;
         public event Action<PatientCue> Cue;
-        public OperationRules(OperationState state, OperationTuning config) { State = state; tuning = config; }
+        public OperationRules(OperationState state, OperationTuning config)
+        {
+            State = state; tuning = config;
+            // Round 3: without the torso strap an old save's closed torso strap simply is not there any more.
+            if (State != null && State.restraints != null && State.restraints.Length > 4 && tuning != null && !tuning.torsoStrap) State.restraints[4] = false;
+        }
         public OperationTuning Tuning => tuning;
         public static OperationState Create(string id, OperationTuning config)
         {
@@ -159,7 +182,9 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         public bool ToggleRestraint(int index)
         {
-            if (!State.aligned || index < 0 || index >= 5) return false;
+            if (!State.aligned || index < 0 || index >= 5 || !OperationStraps.Active(tuning, index)) return false;
+            if (State.restraints[index] && MustSutureBeforeRelease) return false; // sew him up first
+            State.unbuckleProgress = 0f;
             State.restraints[index] = !State.restraints[index]; Emit(PatientCue.StrapChanged); return true;
         }
         public void AdjustLimb(int index, float position)
@@ -167,7 +192,11 @@ namespace OnlyVolunteers.Operation.Stage1
             if (!State.aligned || index < 0 || index >= 4 || State.restraints[index] || !Finite(position)) return;
             State.limbs[index] = Mathf.Clamp(position, -1, 1); Emit(PatientCue.LimbAdjusted);
         }
-        public bool CanOperate(bool held) => State.onTable && State.aligned && (!State.alive || State.Sleeping || State.Torso || held);
+        /// <summary>Held down on the table: the torso strap (when it exists) or, round 3, all four limb straps.</summary>
+        public bool Held => OperationStraps.Held(State, tuning);
+        /// <summary>Round 3 (lead rule): a living patient with an open, unsutured belly is not released: no strap opens, no escape.</summary>
+        public bool MustSutureBeforeRelease => State.alive && State.CavityOpen;
+        public bool CanOperate(bool held) => State.onTable && State.aligned && (!State.alive || State.Sleeping || Held || held);
         public bool CanInject => State.alive && State.onTable && State.aligned;
 
         // ---------- time ----------
@@ -203,17 +232,30 @@ namespace OnlyVolunteers.Operation.Stage1
                 if (State.extracted > 0 && State.panicRemaining < 0)
                 { State.panicRemaining = tuning.rescueSeconds; Emit(PatientCue.Panic); }
             }
-            bool nowStruggling = State.onTable && State.aligned && !State.Sleeping && !State.Dazed && (State.Torso || held);
+            bool restrained = Held || (!tuning.torsoStrap && AnyStrapClosed);
+            bool nowStruggling = State.onTable && State.aligned && !State.Sleeping && !State.Dazed && (restrained || held);
             if (nowStruggling && !struggling) Emit(PatientCue.Struggling);
             struggling = nowStruggling;
+            bool awakeOnTable = State.onTable && State.aligned && !State.Sleeping && !State.Dazed && !held;
+            // Round 3: a free hand unbuckles the other straps one by one (the per-strap escape steps; clips hook Unbuckled).
+            if (awakeOnTable && !tuning.torsoStrap && !MustSutureBeforeRelease && NextUnbuckle(out int strap, out _))
+            {
+                State.unbuckleProgress += seconds / Mathf.Max(0.1f, tuning.unbuckleSeconds);
+                if (State.unbuckleProgress >= 1f)
+                {
+                    State.unbuckleProgress = 0f; State.restraints[strap] = false;
+                    Emit(PatientCue.Unbuckled); Emit(PatientCue.StrapChanged);
+                }
+            }
+            else State.unbuckleProgress = 0f;
             if (State.panicRemaining >= 0)
             {
-                if (!State.Torso && !held && State.escapeProgress == 0) Emit(PatientCue.EscapeAttempt);
-                if (!State.Torso && !held) State.escapeProgress += seconds;
+                if (!Held && !held && State.escapeProgress == 0) Emit(PatientCue.EscapeAttempt);
+                if (!Held && !held) State.escapeProgress += seconds;
                 State.panicRemaining = Mathf.Max(0, State.panicRemaining - seconds);
-                if (State.panicRemaining <= 0) Die(!State.Torso && !held ? DeathCause.FailedEscape : DeathCause.Shock);
+                if (State.panicRemaining <= 0) Die(!Held && !held ? DeathCause.FailedEscape : DeathCause.Shock);
             }
-            else if (State.onTable && State.aligned && !State.Sleeping && !State.Dazed && !State.Torso && !held)
+            else if (awakeOnTable && CanEscape)
             {
                 if (State.escapeProgress == 0) Emit(PatientCue.EscapeAttempt);
                 State.escapeProgress += seconds;
@@ -221,9 +263,27 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             else State.escapeProgress = 0;
         }
+
+        private bool AnyStrapClosed { get { for (int i = 0; i < OperationStraps.Count(tuning); i++) if (State.restraints[i]) return true; return false; } }
+
+        /// <summary>Free to slide off: with the torso strap, it open; without it, every limb strap open. Never with an
+        /// open, unsutured belly (round 3 lead rule).</summary>
+        public bool CanEscape => !MustSutureBeforeRelease && (tuning.torsoStrap ? !State.Torso : !AnyStrapClosed);
+
+        /// <summary>The escape steps (hook for strap-combination clips): the next strap a FREE hand unbuckles and which hand
+        /// (0 left, 1 right). Order: the other arm first, then the left leg, the right leg. None while both arms are strapped.</summary>
+        public bool NextUnbuckle(out int strap, out int hand)
+        {
+            strap = -1; hand = -1;
+            bool left = !State.restraints[0], right = !State.restraints[1];
+            if (!left && !right) return false;
+            hand = left ? 0 : 1;
+            foreach (int i in new[] { 0, 1, 2, 3 }) if (State.restraints[i]) { strap = i; return true; }
+            return false;
+        }
         private void Escape()
         {
-            State.onTable = State.aligned = false; State.knockedOut = true; State.escapeProgress = 0f; State.escapes++;
+            State.onTable = State.aligned = false; State.knockedOut = true; State.escapeProgress = 0f; State.escapes++; State.unbuckleProgress = 0f;
             Array.Clear(State.restraints, 0, 5);
             Emit(PatientCue.FailedEscapeFall); Emit(PatientCue.Escaped);
         }
@@ -251,7 +311,7 @@ namespace OnlyVolunteers.Operation.Stage1
         // ---------- blood ----------
         /// <summary>Asleep, torso or that arm strapped, or dead; and the body still has a portion to give.</summary>
         public bool CanDrawBlood(int arm) => State.onTable && State.aligned && State.bloodPortions < tuning.fatalPortion &&
-            (!State.alive || State.Sleeping || State.Torso || (arm >= 0 && arm < 2 && State.restraints[arm]));
+            (!State.alive || State.Sleeping || Held || (arm >= 0 && arm < 2 && State.restraints[arm]));
         /// <summary>Fills one syringe; when it is full one portion counts (2nd weakens, 3rd kills a living patient).</summary>
         public bool FillBlood(ref float fill, float seconds)
         {
@@ -332,7 +392,7 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool SnipCord(int organIndex, int cord, float seconds)
         {
             if (organIndex < 0 || organIndex >= State.organs.Length || !Finite(seconds) || seconds <= 0) return false;
-            if (tuning.sharedAbdomen && (!State.zoneOpened || organIndex == 2)) return false;
+            if (tuning.sharedAbdomen && (!State.CavityOpen || organIndex == 2)) return false;
             var organ = State.organs[organIndex];
             if (organ.removed || organ.cut < 1 || cord < 0 || cord >= organ.connections.Length || organ.connections[cord] >= 1) return false;
             organ.connections[cord] = Mathf.Min(1, organ.connections[cord] + seconds / tuning.connectionSeconds);
@@ -345,7 +405,7 @@ namespace OnlyVolunteers.Operation.Stage1
         // ---------- pull / extraction ----------
         public bool Pull(int index, float sharedTarget, int holders, float seconds, ref bool damageLatched)
         {
-            if (tuning.sharedAbdomen && !State.zoneOpened) return false;
+            if (tuning.sharedAbdomen && !State.CavityOpen) return false;
             var organ = State.organs[index];
             if (organ.removed || !organ.Released || organ.cut < 1 || seconds <= 0 || !Finite(sharedTarget)) return false;
             if (holders == 0) { organ.pull = Mathf.MoveTowards(organ.pull, 0, seconds * tuning.springSpeed); damageLatched = false; return false; }
@@ -358,18 +418,21 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         public bool Extract(int index, float random)
         {
-            if (tuning.sharedAbdomen && !State.zoneOpened) return false;
+            if (tuning.sharedAbdomen && !State.CavityOpen) return false;
             var organ = State.organs[index];
             if (organ.removed || organ.cut < 1 || !organ.Released || organ.pull < tuning.pullDistance) return false;
             organ.removed = true; organ.outputId = State.patientId + "/organ/" + index;
+            if (State.conditionLoss > 0) organ.damage += State.conditionLoss; // D8: condition loss lands at extraction
             State.extracted++;
             if (index < 2) State.kidneysExtracted++;
             if (State.alive)
             {
-                organ.deathChance = Mathf.Clamp01((index == 2 ? tuning.liverChance : State.kidneysExtracted == 1 ? tuning.firstKidneyChance : tuning.secondKidneyChance)
+                // Lead decision 2026-10-18: the liver, or the second kidney, is a vital removal: death at once, no roll.
+                bool vital = tuning.liverOrBothKidneysFatal && (index == 2 || State.kidneysExtracted >= 2);
+                organ.deathChance = vital ? 1f : Mathf.Clamp01((index == 2 ? tuning.liverChance : State.kidneysExtracted == 1 ? tuning.firstKidneyChance : tuning.secondKidneyChance)
                     + State.bloodPortions * tuning.bloodChancePerPortion);
                 organ.rolled = Mathf.Clamp01(random); organ.rollCompleted = true;
-                organ.fatal = organ.rolled < organ.deathChance;
+                organ.fatal = vital || organ.rolled < organ.deathChance;
                 if (organ.fatal) Die(DeathCause.Extraction);
                 else if (!State.Sleeping && State.panicRemaining < 0)
                 { State.panicRemaining = tuning.rescueSeconds; Emit(PatientCue.Panic); }
@@ -407,6 +470,8 @@ namespace OnlyVolunteers.Operation.Stage1
         /// <summary>Cord c of an organ: from its attachment on the organ to the rim of the opening (marker-local metres).</summary>
         public static void Cord(OperationTuning tuning, int organ, int cord, out Vector3 attach, out Vector3 rim)
         {
+            if (tuning.anatomicalLayout && organ < 2)
+            { OperationAnatomyV02.Cord(tuning, organ, cord, out attach, out rim); return; }
             if (tuning.sharedAbdomen && organ < 2)
             {
                 // The cords leave the underside of the kidney and hang below its lower end, inside the shared opening

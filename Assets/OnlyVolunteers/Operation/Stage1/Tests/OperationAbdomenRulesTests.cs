@@ -10,7 +10,7 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
         private OperationRules rules;
         [SetUp] public void Setup()
         {
-            tuning = ScriptableObject.CreateInstance<OperationTuning>(); tuning.sharedAbdomen = true;
+            tuning = ScriptableObject.CreateInstance<OperationTuning>(); tuning.sharedAbdomen = true; tuning.torsoStrap = true; // stage-1 torso mode
             state = OperationRules.Create("v04-zone", tuning); rules = new OperationRules(state, tuning);
             state.onTable = state.aligned = true; state.restraints[4] = true;
         }
@@ -172,7 +172,9 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
             {
                 foreach (int c in System.Linq.Enumerable.Range(0, state.organs[i].connections.Length)) state.organs[i].connections[c] = 1f;
                 state.organs[i].pull = tuning.pullDistance; Assert.True(rules.Extract(i, 0.99f));
-                Assert.AreEqual(new[] { 0.1f, 0.2f, 0.3f }[i], state.organs[i].deathChance, 0.0001f);
+                // The opening changes nothing about the extraction rules: first kidney 10 %, the second kidney is a vital
+                // removal (lead decision 2026-10-18: death, chance 1), and a dead body is never rolled again.
+                Assert.AreEqual(new[] { 0.1f, 1f, 0f }[i], state.organs[i].deathChance, 0.0001f);
             }
         }
         [Test] public void LiverLoopReleaseThenHandsExtractExactlyOnce()

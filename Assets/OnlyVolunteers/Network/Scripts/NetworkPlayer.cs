@@ -15,6 +15,10 @@ namespace OnlyVolunteers.Network
     [RequireComponent(typeof(NetworkObject))]
     public sealed class NetworkPlayer : NetworkBehaviour
     {
+        [Tooltip("Capture → delivery stage A (map scene as a solo host): this NetworkPlayer sits on the map's own KCC pawn, " +
+                 "which keeps its own control, camera, HUD and phone. The NetworkPlayer then never switches them and only " +
+                 "gives the networked operation code a player identity. Off on every network prefab.")]
+        [SerializeField] private bool externalControl;
         private KccFirstPersonInput input;
         private ExampleCharacterController character;
         private PhysicsGrabber localPhysicsGrabber;
@@ -57,12 +61,20 @@ namespace OnlyVolunteers.Network
             visualRoot = character != null && character.Motor != null
                 ? character.Motor.transform.Find("RemoteVisual") : null;
             visualHead = visualRoot != null ? visualRoot.Find("Head") : null;
-            SetLocalControl(false);
+            if (!externalControl) SetLocalControl(false);
         }
+
+        public bool ExternalControl => externalControl;
 
         public override void OnStartClient()
         {
             base.OnStartClient();
+            if (externalControl)
+            {
+                Debug.Log($"[OV Network] observed external-control player={OwnerId}, owner={IsOwner}, motor={MotorPosition}");
+                if (IsOwner) NetworkSession.Active?.LocalPlayerChanged(this);
+                return;
+            }
             SetLocalControl(IsOwner);
             Debug.Log($"[OV Network] observed player={OwnerId}, owner={IsOwner}, root={transform.position}, motor={MotorPosition}, " +
                 $"input={LocalControlEnabled}, camera={viewCamera != null && viewCamera.enabled}, " +
@@ -94,7 +106,7 @@ namespace OnlyVolunteers.Network
             Debug.Log($"[OV Network] player removed={OwnerId}, owner={IsOwner}");
             if (IsOwner)
                 NetworkSession.Active?.LocalPlayerChanged(null);
-            SetLocalControl(false);
+            if (!externalControl) SetLocalControl(false);
             if (localHud != null) Destroy(localHud);
             if (localCrosshair != null) Destroy(localCrosshair);
             if (phone != null) Destroy(phone.gameObject);
@@ -103,7 +115,7 @@ namespace OnlyVolunteers.Network
 
         public void SetPanelOpen(bool open)
         {
-            if (IsOwner && input != null)
+            if (IsOwner && input != null && !externalControl)
                 input.enabled = !open;
         }
 

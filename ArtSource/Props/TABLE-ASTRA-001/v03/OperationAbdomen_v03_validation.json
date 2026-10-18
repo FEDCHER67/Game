@@ -1,0 +1,209 @@
+{
+  "marker": "INC_ABDOMEN",
+  "origin_table_blender": [
+    0.0,
+    -0.13,
+    0.8889
+  ],
+  "mask_normals": "+Z (out of the belly): a Cull Back stencil-mask shader never writes from inside/behind",
+  "organs_vs_cavity_verts_inside": {
+    "VESSELS_VENA_CAVA": {
+      "verts": 388,
+      "inside_cavity": 0
+    },
+    "VESSELS_PULMONARY_VEINS": {
+      "verts": 136,
+      "inside_cavity": 0
+    },
+    "VESSELS_PULMONARY_ARTERY": {
+      "verts": 594,
+      "inside_cavity": 0
+    },
+    "VESSELS_AORTA": {
+      "verts": 808,
+      "inside_cavity": 0
+    },
+    "STERNUM_R": {
+      "verts": 190,
+      "inside_cavity": 0
+    },
+    "STERNUM_L": {
+      "verts": 190,
+      "inside_cavity": 0
+    },
+    "SPINE_THORACIC": {
+      "verts": 2340,
+      "inside_cavity": 0
+    },
+    "RIB_R_09": {
+      "verts": 372,
+      "inside_cavity": 0
+    },
+    "RIB_R_08": {
+      "verts": 388,
+      "inside_cavity": 0
+    },
+    "RIB_R_07": {
+      "verts": 436,
+      "inside_cavity": 0
+    },
+    "RIB_R_06": {
+      "verts": 436,
+      "inside_cavity": 0
+    },
+    "RIB_R_05": {
+      "verts": 436,
+      "inside_cavity": 0
+    },
+    "RIB_R_04": {
+      "verts": 428,
+      "inside_cavity": 0
+    },
+    "RIB_R_03": {
+      "verts": 412,
+      "inside_cavity": 0
+    },
+    "RIB_R_02": {
+      "verts": 372,
+      "inside_cavity": 0
+    },
+    "RIB_R_01": {
+      "verts": 300,
+      "inside_cavity": 0
+    },
+    "RIB_L_09": {
+      "verts": 372,
+      "inside_cavity": 0
+    },
+    "RIB_L_08": {
+      "verts": 388,
+      "inside_cavity": 0
+    },
+    "RIB_L_07": {
+      "verts": 436,
+      "inside_cavity": 0
+    },
+    "RIB_L_06": {
+      "verts": 436,
+      "inside_cavity": 0
+    },
+    "RIB_L_05": {
+      "verts": 436,
+      "inside_cavity": 0
+    },
+    "RIB_L_04": {
+      "verts": 428,
+      "inside_cavity": 0
+    },
+    "RIB_L_03": {
+      "verts": 412,
+      "inside_cavity": 0
+    },
+    "RIB_L_02": {
+      "verts": 372,
+      "inside_cavity": 0
+    },
+    "RIB_L_01": {
+      "verts": 300,
+      "inside_cavity": 0
+    },
+    "ORGAN_LUNG_R": {
+      "verts": 600,
+      "inside_cavity": 0
+    },
+    "ORGAN_LUNG_L": {
+      "verts": 466,
+      "inside_cavity": 0
+    },
+    "ORGAN_LIVER": {
+      "verts": 177,
+      "inside_cavity": 85
+    },
+    "ORGAN_KIDNEY_R": {
+      "verts": 139,
+      "inside_cavity": 88
+    },
+    "ORGAN_KIDNEY_L": {
+      "verts": 137,
+      "inside_cavity": 116
+    },
+    "ORGAN_HEART": {
+      "verts": 2444,
+      "inside_cavity": 0
+    },
+    "DIAPHRAGM": {
+      "verts": 1442,
+      "inside_cavity": 0
+    }
+  },
+  "objects": {
+    "ABDOMEN_OPENING": {
+      "tris": 7552,
+      "materials": [
+        "Buddy_Skin",
+        "MAT_Abdomen_Interior_v03"
+      ]
+    },
+    "ABDOMEN_MASK": {
+      "tris": 126,
+      "materials": [
+        "MAT_Abdomen_StencilMask_v03"
+      ]
+    },
+    "ABDOMEN_INTESTINES": {
+      "tris": 4560,
+      "materials": [
+        "MAT_Abdomen_Bowel_v03"
+      ]
+    },
+    "ABDOMEN_VESSELS": {
+      "tris": 1840,
+      "materials": [
+        "MAT_Vessel_Artery_v03",
+        "MAT_Vessel_Vein_v03"
+      ]
+    },
+    "CORD_KIDNEY_L_A": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Artery_v03"
+      ]
+    },
+    "CORD_KIDNEY_L_B": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Vein_v03"
+      ]
+    },
+    "CORD_KIDNEY_R_A": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Artery_v03"
+      ]
+    },
+    "CORD_KIDNEY_R_B": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Vein_v03"
+      ]
+    }
+  },
+  "flap_height_above_skin_mm": [
+    -0.7,
+    7.83
+  ],
+  "deepest_floor_marker_local_m": -0.155,
+  "min_body_left_behind_floor_m": 0.0333,
+  "floor_points_without_body_behind": 0,
+  "gradient_png": "OperationAbdomen_v03_Gradient.png",
+  "vessel_bottom_minus_floor_mm": {
+    "aorta": [
+      -0.6,
+      0.6
+    ],
+    "vena_cava": [
+      -0.4,
+      0.8
+    ]
+  }
+}

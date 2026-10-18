@@ -1,0 +1,4130 @@
+{
+  "change": "Approved G34 appearance retained; UCX collision proxies added.",
+  "source_blend": "C:\\Dev\\Game\\ArtSource\\Props\\FRIDGE-ASTRA-001\\FRIDGE_ASTRA_001_v01.blend",
+  "appearance_fingerprint": "784fe444f8810f77133966870611d7c479cb32859f06095a20ddacda51eeadfe",
+  "asset": "FRIDGE",
+  "states": {
+    "Closed": {
+      "visual_triangles": 1164,
+      "ucx_parts": 31,
+      "dimensions_m": [
+        0.7374999523162842,
+        0.7779999673366547,
+        1.6399999856948853
+      ]
+    },
+    "Open": {
+      "visual_triangles": 1164,
+      "ucx_parts": 31,
+      "dimensions_m": [
+        1.032699167728424,
+        1.3357476592063904,
+        1.6399999856948853
+      ]
+    }
+  },
+  "mesh_audit": {
+    "Closed": [
+      {
+        "object": "SM_Fridge_Door_Closed",
+        "triangles": 392,
+        "dimensions_m": [
+          0.721,
+          0.17,
+          1.56
+        ],
+        "bounds_min_m": [
+          -0.3605000078678131,
+          -0.4429999887943268,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          0.3604999780654907,
+          -0.27300000190734863,
+          1.6399999856948853
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          -0.3619999885559082,
+          -0.3149999976158142,
+          0.07999999821186066
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Back",
+        "triangles": 44,
+        "dimensions_m": [
+          0.72,
+          0.052,
+          1.55
+        ],
+        "bounds_min_m": [
+          -0.36000001430511475,
+          0.28299999237060547,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3349999785423279,
+          1.6299999952316284
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_LeftWall",
+        "triangles": 100,
+        "dimensions_m": [
+          0.063,
+          0.64,
+          1.55
+        ],
+        "bounds_min_m": [
+          -0.37699997425079346,
+          -0.3299999535083771,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          -0.3140000104904175,
+          0.3100000023841858,
+          1.6299999952316284
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_RightWall",
+        "triangles": 44,
+        "dimensions_m": [
+          0.046,
+          0.62,
+          1.55
+        ],
+        "bounds_min_m": [
+          0.3140000104904175,
+          -0.3099999725818634,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3100000023841858,
+          1.6299999952316284
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Base",
+        "triangles": 44,
+        "dimensions_m": [
+          0.72,
+          0.62,
+          0.055
+        ],
+        "bounds_min_m": [
+          -0.36000001430511475,
+          -0.3099999725818634,
+          0.07350003719329834
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3100000023841858,
+          0.12849998474121094
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Top",
+        "triangles": 44,
+        "dimensions_m": [
+          0.72,
+          0.62,
+          0.055
+        ],
+        "bounds_min_m": [
+          -0.36000001430511475,
+          -0.3099999725818634,
+          1.5824999809265137
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3100000023841858,
+          1.6375000476837158
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Feet",
+        "triangles": 176,
+        "dimensions_m": [
+          0.615,
+          0.535,
+          0.08
+        ],
+        "bounds_min_m": [
+          -0.3075000047683716,
+          -0.26750001311302185,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.3075000047683716,
+          0.26750001311302185,
+          0.08000004291534424
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Shelf_1",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          0.2290000319480896
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          0.3604999780654907
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Shelf_2",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          0.5590000152587891
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          0.690500020980835
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Shelf_3",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          0.8889999985694885
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          1.0204999446868896
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Closed_Shelf_4",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          1.218999981880188
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          1.3504999876022339
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      }
+    ],
+    "Open": [
+      {
+        "object": "SM_Fridge_Door_Open",
+        "triangles": 392,
+        "dimensions_m": [
+          0.332844,
+          0.694055,
+          1.56
+        ],
+        "bounds_min_m": [
+          -0.6726991534233093,
+          -1.0007476806640625,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          -0.33985498547554016,
+          -0.306692510843277,
+          1.6399999856948853
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          -0.3619999885559082,
+          -0.3149999976158142,
+          0.07999999821186066
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Back",
+        "triangles": 44,
+        "dimensions_m": [
+          0.72,
+          0.052,
+          1.55
+        ],
+        "bounds_min_m": [
+          -0.36000001430511475,
+          0.28299999237060547,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3349999785423279,
+          1.6299999952316284
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_LeftWall",
+        "triangles": 100,
+        "dimensions_m": [
+          0.063,
+          0.64,
+          1.55
+        ],
+        "bounds_min_m": [
+          -0.37699997425079346,
+          -0.3299999535083771,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          -0.3140000104904175,
+          0.3100000023841858,
+          1.6299999952316284
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_RightWall",
+        "triangles": 44,
+        "dimensions_m": [
+          0.046,
+          0.62,
+          1.55
+        ],
+        "bounds_min_m": [
+          0.3140000104904175,
+          -0.3099999725818634,
+          0.08000004291534424
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3100000023841858,
+          1.6299999952316284
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Base",
+        "triangles": 44,
+        "dimensions_m": [
+          0.72,
+          0.62,
+          0.055
+        ],
+        "bounds_min_m": [
+          -0.36000001430511475,
+          -0.3099999725818634,
+          0.07350003719329834
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3100000023841858,
+          0.12849998474121094
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Top",
+        "triangles": 44,
+        "dimensions_m": [
+          0.72,
+          0.62,
+          0.055
+        ],
+        "bounds_min_m": [
+          -0.36000001430511475,
+          -0.3099999725818634,
+          1.5824999809265137
+        ],
+        "bounds_max_m": [
+          0.36000001430511475,
+          0.3100000023841858,
+          1.6375000476837158
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Feet",
+        "triangles": 176,
+        "dimensions_m": [
+          0.615,
+          0.535,
+          0.08
+        ],
+        "bounds_min_m": [
+          -0.3075000047683716,
+          -0.26750001311302185,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.3075000047683716,
+          0.26750001311302185,
+          0.08000004291534424
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Shelf_1",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          0.2290000319480896
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          0.3604999780654907
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Shelf_2",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          0.5590000152587891
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          0.690500020980835
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Shelf_3",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          0.8889999985694885
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          1.0204999446868896
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_Fridge_Open_Shelf_4",
+        "triangles": 80,
+        "dimensions_m": [
+          0.623,
+          0.558,
+          0.1315
+        ],
+        "bounds_min_m": [
+          -0.31150001287460327,
+          -0.2849999964237213,
+          1.218999981880188
+        ],
+        "bounds_max_m": [
+          0.31150001287460327,
+          0.27300000190734863,
+          1.3504999876022339
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "visuals": {
+    "SM_Fridge_Door_Closed": {
+      "state": "Closed",
+      "visual_triangles": 392,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            0.0014999806880950928,
+            -0.12799999117851257,
+            4.470348358154297e-08
+          ],
+          "max": [
+            0.7224999666213989,
+            0.041999995708465576,
+            1.559999942779541
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.3605000078678131,
+            -0.4429999887943268,
+            0.08000004291534424
+          ],
+          "max": [
+            0.3604999780654907,
+            -0.27300000190734863,
+            1.6399999856948853
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Door_Closed_00",
+          "triangles": 58,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.001500000013038516,
+                -0.05999999865889549,
+                0.0
+              ],
+              "max": [
+                0.7225000262260437,
+                0.041999999433755875,
+                1.559999942779541
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3604999780654907,
+                -0.375,
+                0.07999999821186066
+              ],
+              "max": [
+                0.3605000376701355,
+                -0.27300000190734863,
+                1.6399999856948853
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 5.587935447692871e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.08558818653315307,
+            "triangles": 58,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Door_Closed_01",
+          "triangles": 34,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.5764999985694885,
+                -0.10249999910593033,
+                0.6600000262260437
+              ],
+              "max": [
+                0.6234999895095825,
+                -0.04749999940395355,
+                0.699999988079071
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.21450001001358032,
+                -0.41749998927116394,
+                0.7400000095367432
+              ],
+              "max": [
+                0.2615000009536743,
+                -0.36250001192092896,
+                0.7799999713897705
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 6.984919309616089e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 7.981322585387772e-05,
+            "triangles": 34,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Door_Closed_02",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.5764999985694885,
+                -0.10249999910593033,
+                1.059999942779541
+              ],
+              "max": [
+                0.6234999895095825,
+                -0.04749999940395355,
+                1.0999999046325684
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.21450001001358032,
+                -0.41749998927116394,
+                1.1399999856948853
+              ],
+              "max": [
+                0.2615000009536743,
+                -0.36250001192092896,
+                1.1799999475479126
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 8.245052363350686e-05,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Door_Closed_03",
+          "triangles": 52,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.5724999904632568,
+                -0.12800000607967377,
+                0.6499999761581421
+              ],
+              "max": [
+                0.6274999976158142,
+                -0.07199999690055847,
+                1.1100000143051147
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.21050000190734863,
+                -0.44300001859664917,
+                0.7299999594688416
+              ],
+              "max": [
+                0.265500009059906,
+                -0.3869999945163727,
+                1.190000057220459
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0010722081106976206,
+            "triangles": 52,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Back": {
+      "state": "Closed",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.36000001430511475,
+            0.28299999237060547,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3349999785423279,
+            1.6299999952316284
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.36000001430511475,
+            0.28299999237060547,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3349999785423279,
+            1.6299999952316284
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Back_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                0.28299999237060547,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.33500000834465027,
+                1.6299999952316284
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                0.28299999237060547,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.33500000834465027,
+                1.6299999952316284
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.862645149230957e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.05000657239827904,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_LeftWall": {
+      "state": "Closed",
+      "visual_triangles": 100,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.37699997425079346,
+            -0.3299999535083771,
+            0.08000004291534424
+          ],
+          "max": [
+            -0.3140000104904175,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.37699997425079346,
+            -0.3299999535083771,
+            0.08000004291534424
+          ],
+          "max": [
+            -0.3140000104904175,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_LeftWall_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                -0.3140000104904175,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                -0.3140000104904175,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.862645149230957e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.03803073045993209,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_LeftWall_01",
+          "triangles": 28,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                0.3199999928474426
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                0.38999998569488525
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                0.3199999928474426
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                0.38999998569488525
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 4.656612873077393e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 4.45477249223562e-05,
+            "triangles": 28,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_LeftWall_02",
+          "triangles": 28,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                1.3700000047683716
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                1.440000057220459
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                1.3700000047683716
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                1.440000057220459
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 4.454776285452104e-05,
+            "triangles": 28,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_RightWall": {
+      "state": "Closed",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            0.3140000104904175,
+            -0.3099999725818634,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        },
+        "world_m": {
+          "min": [
+            0.3140000104904175,
+            -0.3099999725818634,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_RightWall_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.3140000104904175,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.3140000104904175,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.862645149230957e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.03803073038556065,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Base": {
+      "state": "Closed",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            0.07350003719329834
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            0.12849998474121094
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            0.07350003719329834
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            0.12849998474121094
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Base_00",
+          "triangles": 34,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07349999994039536
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                0.12849999964237213
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07349999994039536
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                0.12849999964237213
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.8917489796876907e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.021495819009383656,
+            "triangles": 34,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Top": {
+      "state": "Closed",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            1.5824999809265137
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6375000476837158
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            1.5824999809265137
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6375000476837158
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Top_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                1.5824999809265137
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6375000476837158
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                1.5824999809265137
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6375000476837158
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.023699186743222824,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Feet": {
+      "state": "Closed",
+      "visual_triangles": 176,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.3075000047683716,
+            -0.26750001311302185,
+            0.0
+          ],
+          "max": [
+            0.3075000047683716,
+            0.26750001311302185,
+            0.08000004291534424
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.3075000047683716,
+            -0.26750001311302185,
+            0.0
+          ],
+          "max": [
+            0.3075000047683716,
+            0.26750001311302185,
+            0.08000004291534424
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Feet_00",
+          "triangles": 38,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3075000047683716,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3075000047683716,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003719280857021646,
+            "triangles": 38,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Feet_01",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3075000047683716,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3075000047683716,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00036499206812418627,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Feet_02",
+          "triangles": 38,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.23250000178813934,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.23250000178813934,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037192808570216487,
+            "triangles": 38,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Feet_03",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.23250000178813934,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.23250000178813934,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003649920681241864,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Shelf_1": {
+      "state": "Closed",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.2290000319480896
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.3604999780654907
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.2290000319480896
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.3604999780654907
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_1_00",
+          "triangles": 34,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.2290000021457672
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.25099998712539673
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.2290000021457672
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.25099998712539673
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 4.802132025361061e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0072828199715064814,
+            "triangles": 34,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_1_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601675,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_1_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601675,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_1_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.24549999833106995
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.3605000078678131
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.24549999833106995
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.3605000078678131
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0004222800307931002,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Shelf_2": {
+      "state": "Closed",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.5590000152587891
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.690500020980835
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.5590000152587891
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.690500020980835
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_2_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.5590000152587891
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.5809999704360962
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.5590000152587891
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.5809999704360962
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 4.802132025361061e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.007008874919915506,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_2_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767398617160145,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_2_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601545,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_2_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.5755000114440918
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.690500020980835
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.5755000114440918
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.690500020980835
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00042228003079310036,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Shelf_3": {
+      "state": "Closed",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.8889999985694885
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.0204999446868896
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.8889999985694885
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.0204999446868896
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_3_00",
+          "triangles": 38,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.8889999985694885
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.9110000133514404
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.8889999985694885
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.9110000133514404
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 2.3283064365386963e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.007291115311625319,
+            "triangles": 38,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_3_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767396664512893,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_3_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767396664512882,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_3_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.9054999947547913
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.0204999446868896
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.9054999947547913
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.0204999446868896
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0004222798119248467,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Closed_Shelf_4": {
+      "state": "Closed",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            1.218999981880188
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.3504999876022339
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            1.218999981880188
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.3504999876022339
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_4_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                1.218999981880188
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                1.2410000562667847
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                1.218999981880188
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                1.2410000562667847
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 3.4924596548080444e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.007565070550762636,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_4_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601437,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_4_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767398617160146,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Closed_Shelf_4_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                1.2354999780654907
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.3504999876022339
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                1.2354999780654907
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.3504999876022339
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0004222800307931,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Closed_Root"
+    },
+    "SM_Fridge_Door_Open": {
+      "state": "Open",
+      "visual_triangles": 392,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            0.0014999806880950928,
+            -0.12799999117851257,
+            4.470348358154297e-08
+          ],
+          "max": [
+            0.7224999666213989,
+            0.041999995708465576,
+            1.559999942779541
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.6726991534233093,
+            -1.0007476806640625,
+            0.08000004291534424
+          ],
+          "max": [
+            -0.33985498547554016,
+            -0.306692510843277,
+            1.6399999856948853
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Door_Open_00",
+          "triangles": 58,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.001500000013038516,
+                -0.05999999865889549,
+                0.0
+              ],
+              "max": [
+                0.7225000262260437,
+                0.041999999433755875,
+                1.559999942779541
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.6291908621788025,
+                -0.9993065595626831,
+                0.07999999821186066
+              ],
+              "max": [
+                -0.33985498547554016,
+                -0.30669254064559937,
+                1.6399999856948853
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 5.587935447692871e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.08558818653315307,
+            "triangles": 58,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Door_Open_01",
+          "triangles": 34,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.5764999985694885,
+                -0.10249999910593033,
+                0.6600000262260437
+              ],
+              "max": [
+                0.6234999895095825,
+                -0.04749999940395355,
+                0.699999988079071
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.6496832370758057,
+                -0.8908331990242004,
+                0.7400000095367432
+              ],
+              "max": [
+                -0.587795615196228,
+                -0.8340819478034973,
+                0.7799999713897705
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 6.984919309616089e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 7.981322585387772e-05,
+            "triangles": 34,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Door_Open_02",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.5764999985694885,
+                -0.10249999910593033,
+                1.059999942779541
+              ],
+              "max": [
+                0.6234999895095825,
+                -0.04749999940395355,
+                1.0999999046325684
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.6496832370758057,
+                -0.8908331990242004,
+                1.1399999856948853
+              ],
+              "max": [
+                -0.587795615196228,
+                -0.8340819478034973,
+                1.1799999475479126
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 8.245052363350686e-05,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Door_Open_03",
+          "triangles": 52,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.5724999904632568,
+                -0.12800000607967377,
+                0.6499999761581421
+              ],
+              "max": [
+                0.6274999976158142,
+                -0.07199999690055847,
+                1.1100000143051147
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.67173832654953,
+                -0.8836336135864258,
+                0.7299999594688416
+              ],
+              "max": [
+                -0.6123325824737549,
+                -0.8248698711395264,
+                1.190000057220459
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0010722081106976206,
+            "triangles": 52,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Back": {
+      "state": "Open",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.36000001430511475,
+            0.28299999237060547,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3349999785423279,
+            1.6299999952316284
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.36000001430511475,
+            0.28299999237060547,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3349999785423279,
+            1.6299999952316284
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Back_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                0.28299999237060547,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.33500000834465027,
+                1.6299999952316284
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                0.28299999237060547,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.33500000834465027,
+                1.6299999952316284
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.862645149230957e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.05000657239827904,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_LeftWall": {
+      "state": "Open",
+      "visual_triangles": 100,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.37699997425079346,
+            -0.3299999535083771,
+            0.08000004291534424
+          ],
+          "max": [
+            -0.3140000104904175,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.37699997425079346,
+            -0.3299999535083771,
+            0.08000004291534424
+          ],
+          "max": [
+            -0.3140000104904175,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_LeftWall_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                -0.3140000104904175,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                -0.3140000104904175,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.862645149230957e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.03803073045993209,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_LeftWall_01",
+          "triangles": 28,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                0.3199999928474426
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                0.38999998569488525
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                0.3199999928474426
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                0.38999998569488525
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 4.656612873077393e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 4.45477249223562e-05,
+            "triangles": 28,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_LeftWall_02",
+          "triangles": 28,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                1.3700000047683716
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                1.440000057220459
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.37700000405311584,
+                -0.33000001311302185,
+                1.3700000047683716
+              ],
+              "max": [
+                -0.34700000286102295,
+                -0.30000001192092896,
+                1.440000057220459
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 4.454776285452104e-05,
+            "triangles": 28,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_RightWall": {
+      "state": "Open",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            0.3140000104904175,
+            -0.3099999725818634,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        },
+        "world_m": {
+          "min": [
+            0.3140000104904175,
+            -0.3099999725818634,
+            0.08000004291534424
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6299999952316284
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_RightWall_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.3140000104904175,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.3140000104904175,
+                -0.3100000023841858,
+                0.07999999821186066
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6299999952316284
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.862645149230957e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.03803073038556065,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Base": {
+      "state": "Open",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            0.07350003719329834
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            0.12849998474121094
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            0.07350003719329834
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            0.12849998474121094
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Base_00",
+          "triangles": 34,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07349999994039536
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                0.12849999964237213
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                0.07349999994039536
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                0.12849999964237213
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 1.8917489796876907e-09,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.021495819009383656,
+            "triangles": 34,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Top": {
+      "state": "Open",
+      "visual_triangles": 44,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            1.5824999809265137
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6375000476837158
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.36000001430511475,
+            -0.3099999725818634,
+            1.5824999809265137
+          ],
+          "max": [
+            0.36000001430511475,
+            0.3100000023841858,
+            1.6375000476837158
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Top_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                1.5824999809265137
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6375000476837158
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.36000001430511475,
+                -0.3100000023841858,
+                1.5824999809265137
+              ],
+              "max": [
+                0.36000001430511475,
+                0.3100000023841858,
+                1.6375000476837158
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.023699186743222824,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Feet": {
+      "state": "Open",
+      "visual_triangles": 176,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.3075000047683716,
+            -0.26750001311302185,
+            0.0
+          ],
+          "max": [
+            0.3075000047683716,
+            0.26750001311302185,
+            0.08000004291534424
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.3075000047683716,
+            -0.26750001311302185,
+            0.0
+          ],
+          "max": [
+            0.3075000047683716,
+            0.26750001311302185,
+            0.08000004291534424
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Feet_00",
+          "triangles": 38,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3075000047683716,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3075000047683716,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003719280857021646,
+            "triangles": 38,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Feet_01",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3075000047683716,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3075000047683716,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                -0.23250000178813934,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00036499206812418627,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Feet_02",
+          "triangles": 38,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.23250000178813934,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.23250000178813934,
+                -0.26750001311302185,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                -0.19249999523162842,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037192808570216487,
+            "triangles": 38,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Feet_03",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.23250000178813934,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.23250000178813934,
+                0.19249999523162842,
+                0.0
+              ],
+              "max": [
+                0.3075000047683716,
+                0.26750001311302185,
+                0.07999999821186066
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 9.313225746154785e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003649920681241864,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Shelf_1": {
+      "state": "Open",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.2290000319480896
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.3604999780654907
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.2290000319480896
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.3604999780654907
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_1_00",
+          "triangles": 34,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.2290000021457672
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.25099998712539673
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.2290000021457672
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.25099998712539673
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 4.802132025361061e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0072828199715064814,
+            "triangles": 34,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_1_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601675,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_1_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.24549999833106995
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.3605000078678131
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601675,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_1_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.24549999833106995
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.3605000078678131
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.24549999833106995
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.3605000078678131
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0004222800307931002,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Shelf_2": {
+      "state": "Open",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.5590000152587891
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.690500020980835
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.5590000152587891
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            0.690500020980835
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_2_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.5590000152587891
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.5809999704360962
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.5590000152587891
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.5809999704360962
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 4.802132025361061e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.007008874919915506,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_2_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767398617160145,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_2_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.5755000114440918
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                0.690500020980835
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601545,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_2_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.5755000114440918
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.690500020980835
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.5755000114440918
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                0.690500020980835
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00042228003079310036,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Shelf_3": {
+      "state": "Open",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.8889999985694885
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.0204999446868896
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            0.8889999985694885
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.0204999446868896
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_3_00",
+          "triangles": 38,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.8889999985694885
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.9110000133514404
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                0.8889999985694885
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                0.9110000133514404
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 2.3283064365386963e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.007291115311625319,
+            "triangles": 38,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_3_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767396664512893,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_3_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                0.9054999947547913
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.0204999446868896
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767396664512882,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_3_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.9054999947547913
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.0204999446868896
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                0.9054999947547913
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.0204999446868896
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0004222798119248467,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    },
+    "SM_Fridge_Open_Shelf_4": {
+      "state": "Open",
+      "visual_triangles": 80,
+      "visual_bounds": {
+        "local_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            1.218999981880188
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.3504999876022339
+          ]
+        },
+        "world_m": {
+          "min": [
+            -0.31150001287460327,
+            -0.2849999964237213,
+            1.218999981880188
+          ],
+          "max": [
+            0.31150001287460327,
+            0.27300000190734863,
+            1.3504999876022339
+          ]
+        }
+      },
+      "parts": [
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_4_00",
+          "triangles": 36,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                1.218999981880188
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                1.2410000562667847
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.31150001287460327,
+                -0.2849999964237213,
+                1.218999981880188
+              ],
+              "max": [
+                0.31150001287460327,
+                0.27300000190734863,
+                1.2410000562667847
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 3.4924596548080444e-10,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.007565070550762636,
+            "triangles": 36,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_4_01",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.10700000077486038,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                -0.10100000351667404,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.00037673986171601437,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_4_02",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.10100000351667404,
+                -0.27900001406669617,
+                1.2354999780654907
+              ],
+              "max": [
+                0.10700000077486038,
+                0.2669999897480011,
+                1.3504999876022339
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0003767398617160146,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        },
+        {
+          "name": "UCX_SM_Fridge_Open_Shelf_4_03",
+          "triangles": 12,
+          "bounds": {
+            "local_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                1.2354999780654907
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.3504999876022339
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.3059999942779541,
+                0.0,
+                1.2354999780654907
+              ],
+              "max": [
+                0.3059999942779541,
+                0.006000000052154064,
+                1.3504999876022339
+              ]
+            }
+          },
+          "validation": {
+            "convex": true,
+            "max_plane_violation_m": 0.0,
+            "closed_manifold": true,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "zero_area_faces": 0,
+            "signed_volume_m3": 0.0004222800307931,
+            "triangles": 12,
+            "pass_validation": true
+          }
+        }
+      ],
+      "parent": "Fridge_Open_Root"
+    }
+  },
+  "state_objects": {
+    "Closed": [
+      "SM_Fridge_Door_Closed",
+      "SM_Fridge_Closed_Back",
+      "SM_Fridge_Closed_LeftWall",
+      "SM_Fridge_Closed_RightWall",
+      "SM_Fridge_Closed_Base",
+      "SM_Fridge_Closed_Top",
+      "SM_Fridge_Closed_Feet",
+      "SM_Fridge_Closed_Shelf_1",
+      "SM_Fridge_Closed_Shelf_2",
+      "SM_Fridge_Closed_Shelf_3",
+      "SM_Fridge_Closed_Shelf_4"
+    ],
+    "Open": [
+      "SM_Fridge_Door_Open",
+      "SM_Fridge_Open_Back",
+      "SM_Fridge_Open_LeftWall",
+      "SM_Fridge_Open_RightWall",
+      "SM_Fridge_Open_Base",
+      "SM_Fridge_Open_Top",
+      "SM_Fridge_Open_Feet",
+      "SM_Fridge_Open_Shelf_1",
+      "SM_Fridge_Open_Shelf_2",
+      "SM_Fridge_Open_Shelf_3",
+      "SM_Fridge_Open_Shelf_4"
+    ]
+  },
+  "collision_validation": "PASS",
+  "visual_objects": 22,
+  "ucx_parts": 62,
+  "blend": "C:\\Dev\\Game\\ArtSource\\Props\\FRIDGE-ASTRA-001\\G34_v02\\FRIDGE_ASTRA_001_v02.blend",
+  "fbx": "C:\\Dev\\Game\\ArtSource\\Props\\FRIDGE-ASTRA-001\\G34_v02\\FRIDGE_ASTRA_001_v02.fbx",
+  "textures": [
+    "C:\\Dev\\Game\\ArtSource\\Props\\FRIDGE-ASTRA-001\\G34_v02\\Textures\\FRIDGE_ASTRA_001_v02_Atlas_00.png"
+  ]
+}

@@ -8,7 +8,7 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
         private OperationTuning tuning;
         private OperationState state;
         private OperationRules rules;
-        [SetUp] public void Setup(){tuning=ScriptableObject.CreateInstance<OperationTuning>();state=OperationRules.Create("stable-fixture",tuning);rules=new OperationRules(state,tuning);}
+        [SetUp] public void Setup(){tuning=ScriptableObject.CreateInstance<OperationTuning>();tuning.torsoStrap=true;/* stage-1 torso-strap rules; round 3 four-strap mode: OperationRound3RulesTests */state=OperationRules.Create("stable-fixture",tuning);rules=new OperationRules(state,tuning);}
         [TearDown] public void Teardown()=>Object.DestroyImmediate(tuning);
         private void Ready(int organ){state.aligned=state.onTable=true;var o=state.organs[organ];o.cut=1;for(int c=0;c<o.connections.Length;c++)o.connections[c]=1;o.pull=tuning.pullDistance;}
         private void OnTable(){state.onTable=state.aligned=true;state.knockedOut=false;state.dazedRemaining=0;}
@@ -44,9 +44,18 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
         {OnTable();state.extracted=1;state.sleepRemaining=0.01f;rules.Tick(0.02f,0,false);rules.Tick(8,0,false);Assert.AreEqual(DeathCause.FailedEscape,state.deathCause);}
         [Test] public void OP17_UntouchedAwakePatientEscapesWithoutPostExtractionShock()
         {OnTable();rules.Tick(tuning.escapeSeconds+0.1f,0,false);Assert.False(state.onTable);Assert.True(state.alive);Assert.AreEqual(1,state.escapes);Assert.True(state.knockedOut);}
-        [TestCase(0,0.1f,0.2f,0.3f)] [TestCase(1,0.2f,0.3f,0.4f)] [TestCase(2,0.3f,0.4f,0.5f)]
-        public void OP18_KidneyOrderAndBloodModifiersAndOnceOnlyOutcomes(int blood,float first,float second,float liver)
-        {state.bloodPortions=blood;Ready(1);Assert.True(rules.Extract(1,0.99f));Assert.That(state.organs[1].deathChance,Is.EqualTo(first).Within(0.0001));Assert.False(rules.Extract(1,0));Assert.True(state.alive);Ready(0);rules.Extract(0,0.99f);Assert.That(state.organs[0].deathChance,Is.EqualTo(second).Within(0.0001));Ready(2);rules.Extract(2,0.99f);Assert.That(state.organs[2].deathChance,Is.EqualTo(liver).Within(0.0001));var loaded=JsonUtility.FromJson<OperationState>(JsonUtility.ToJson(state));Assert.False(new OperationRules(loaded,tuning).Extract(2,0));Assert.AreEqual(0.99f,loaded.organs[2].rolled);}
+        // Lead decision 2026-10-18 (Fedya's playtest): the first kidney keeps its roll (+10 points per blood portion); the
+        // second kidney and the liver are vital removals: death at once, chance 1, whatever the roll. Outcomes persist.
+        [TestCase(0,0.1f)] [TestCase(1,0.2f)] [TestCase(2,0.3f)]
+        public void OP18_FirstKidneyRollsSecondKidneyKillsAndOnceOnlyOutcomes(int blood,float first)
+        {state.bloodPortions=blood;Ready(1);Assert.True(rules.Extract(1,0.99f));Assert.That(state.organs[1].deathChance,Is.EqualTo(first).Within(0.0001));Assert.False(rules.Extract(1,0));Assert.True(state.alive);
+         Ready(0);Assert.True(rules.Extract(0,0.99f));Assert.AreEqual(1f,state.organs[0].deathChance);Assert.True(state.organs[0].fatal);Assert.False(state.alive);Assert.AreEqual(DeathCause.Extraction,state.deathCause);
+         var loaded=JsonUtility.FromJson<OperationState>(JsonUtility.ToJson(state));Assert.False(new OperationRules(loaded,tuning).Extract(0,0));Assert.AreEqual(0.99f,loaded.organs[0].rolled);Assert.False(loaded.alive);}
+        [TestCase(0)] [TestCase(2)]
+        public void OP18_LiverAloneIsAlwaysFatal(int blood)
+        {state.bloodPortions=blood;Ready(2);Assert.True(rules.Extract(2,1f));Assert.AreEqual(1f,state.organs[2].deathChance);Assert.True(state.organs[2].fatal);Assert.False(state.alive);Assert.AreEqual(DeathCause.Extraction,state.deathCause);}
+        [Test] public void OP18_FirstKidneyCanBeSurvivedAndTheOldChancesStayWhenTheRuleIsOff()
+        {Ready(0);Assert.True(rules.Extract(0,0.5f));Assert.True(state.alive);tuning.liverOrBothKidneysFatal=false;Ready(1);rules.Extract(1,0.99f);Assert.That(state.organs[1].deathChance,Is.EqualTo(0.2f).Within(0.0001));Assert.True(state.alive);Ready(2);rules.Extract(2,0.99f);Assert.That(state.organs[2].deathChance,Is.EqualTo(0.3f).Within(0.0001));Assert.True(state.alive);}
         [Test] public void OP18_DeathSerializesSimultaneousExtractionsWithoutRerolls()
         {Ready(0);Ready(2);Assert.True(rules.Extract(0,0));Assert.False(state.alive);Assert.True(rules.Extract(2,0));Assert.False(state.organs[2].rollCompleted);Assert.AreEqual(2,state.extracted);}
         [Test] public void OP19_EarlyOverdoseCostsAllOrgansTwoAndOrdinaryDecayStillApplies()

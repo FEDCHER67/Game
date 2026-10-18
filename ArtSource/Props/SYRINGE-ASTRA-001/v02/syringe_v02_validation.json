@@ -1,0 +1,89 @@
+{
+ "source": "C:\\Dev\\Game\\ArtSource\\Props\\SYRINGE-ASTRA-001\\SYRINGE-ASTRA-001.blend",
+ "frame_read": 61,
+ "axis": "Blender +Z = barrel axis (Unity +Y); needle tip at the root origin, pointing -Z",
+ "blood": {
+  "object": "BLOOD",
+  "origin_z_fill_plane": 0.0792,
+  "full_height_m": 0.04839,
+  "radius_m": 0.01466,
+  "rule": "BLOOD local scale Z (Unity local Y) = fill; hide the renderer below fill 0.01"
+ },
+ "plunger": {
+  "object": "PLUNGER",
+  "pivot": "centre of the stopper's lower face on the barrel axis",
+  "z_at_fill_0": 0.0797,
+  "z_at_fill_1": 0.12809,
+  "travel_m": 0.04839,
+  "rule": "PLUNGER local position Z (Unity Y) = z_at_fill_0 + fill * travel_m",
+  "stopper_to_blood_gap_mm": 0.5
+ },
+ "needle_tip": {
+  "object": "NEEDLE_TIP",
+  "position_z": -0.0,
+  "plus_z_points": "out of the tip (world -Z)"
+ },
+ "fbx_default_state": "FULL (fill = 1)",
+ "take": "DRAW_FILL frames 1..61 (30 fps): fill 0 -> 1, linear",
+ "objects": {
+  "SYRINGE_BODY": {
+   "tris": 365,
+   "materials": [
+    "01 | Soft matte ceramic plastic",
+    "02 | Deep slate plastic",
+    "07 | Satin needle metal"
+   ]
+  },
+  "NEEDLE": {
+   "tris": 32,
+   "materials": [
+    "07 | Satin needle metal"
+   ]
+  },
+  "BARREL": {
+   "tris": 64,
+   "materials": [
+    "06 | Tinted clear chamber"
+   ]
+  },
+  "BLOOD": {
+   "tris": 64,
+   "materials": [
+    "05 | Clean cartoon blood red"
+   ]
+  },
+  "PLUNGER": {
+   "tris": 352,
+   "materials": [
+    "01 | Soft matte ceramic plastic",
+    "04 | Charcoal rubber stopper"
+   ]
+  }
+ },
+ "total_tris": 877,
+ "checks": {
+  "fill_0.0": {
+   "frame": 1,
+   "blood_top_z": 0.0792,
+   "stopper_bottom_z": 0.0797,
+   "gap_mm": 0.5
+  },
+  "fill_0.5": {
+   "frame": 31,
+   "blood_top_z": 0.10339,
+   "stopper_bottom_z": 0.10389,
+   "gap_mm": 0.5
+  },
+  "fill_1.0": {
+   "frame": 61,
+   "blood_top_z": 0.12759,
+   "stopper_bottom_z": 0.12809,
+   "gap_mm": 0.5
+  }
+ },
+ "translucent_barrel": {
+  "material": "06 | Tinted clear chamber",
+  "alpha": 0.14,
+  "unity": "URP Lit Transparent, render after BLOOD (queue +1) or keep BLOOD opaque so sorting cannot flip"
+ }
+}

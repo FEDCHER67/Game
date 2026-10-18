@@ -1,0 +1,118 @@
+--- a/Assets/OnlyVolunteers/Buyers/Core/BuyerRules.cs
++++ b/Assets/OnlyVolunteers/Buyers/Core/BuyerRules.cs
+@@ -93,7 +93,7 @@
+             ids = ids == null ? null : (string[])ids.Clone();
+             if (ids == null || ids.Length == 0) throw new ArgumentException("At least one participant is required.", nameof(ids));
+             var unique = new HashSet<string>(StringComparer.Ordinal);
+-            foreach (string id in ids) if (string.IsNullOrWhiteSpace(id) || !unique.Add(id)) throw new ArgumentException("Distinct nonempty participant IDs required.", nameof(ids));
++            foreach (string id in ids) if (string.IsNullOrWhiteSpace(id) || id == TeamHolderId || !unique.Add(id)) throw new ArgumentException("Distinct nonempty participant IDs required.", nameof(ids));
+             lock (gate)
+             {
+                 Synchronize(state);
+@@ -138,7 +138,8 @@
+             lock (gate)
+             {
+                 Synchronize(state);
+-                if (Item(state, item.Id) != null || item.Sold || item.MeetingId != "" || item.StashOrderId != "" || !Present(state, item.HolderId)) return false;
++                if (Item(state, item.Id) != null || state.RemovedItemIds.Contains(item.Id) || item.Sold || item.MeetingId != "" || item.StashOrderId != "" ||
++                    item.HolderId != TeamHolderId && !Present(state, item.HolderId)) return false;
+                 state.Items.Add(item.Copy()); return true;
+             }
+         }
+--- a/Assets/OnlyVolunteers/Buyers/Core/BuyerState.cs
++++ b/Assets/OnlyVolunteers/Buyers/Core/BuyerState.cs
+@@ -205,6 +205,7 @@
+         public List<ParticipantState> Participants = new List<ParticipantState>();
+         public List<BuyerState> Buyers = new List<BuyerState>();
+         public List<BuyerItemState> Items = new List<BuyerItemState>();
++        public List<string> RemovedItemIds = new List<string>();
+         public List<ProductKind> FirstOrganTypes = new List<ProductKind>();
+         public List<string> UsedMeetingIds = new List<string>();
+         public List<string> OpenStashes = new List<string>();
+@@ -221,6 +222,7 @@
+             copy.Participants = Participants.ConvertAll(p => p.Copy());
+             copy.Buyers = Buyers.ConvertAll(b => b.Copy());
+             copy.Items = Items.ConvertAll(i => i.Copy());
++            copy.RemovedItemIds = RemovedItemIds == null ? new List<string>() : new List<string>(RemovedItemIds);
+             copy.FirstOrganTypes = new List<ProductKind>(FirstOrganTypes);
+             copy.UsedMeetingIds = new List<string>(UsedMeetingIds);
+             copy.OpenStashes = new List<string>(OpenStashes);
+--- /dev/null
++++ b/Assets/OnlyVolunteers/Buyers/Core/BuyerInventoryApi.cs
+@@ -0,0 +1,76 @@
++namespace OnlyVolunteers.Buyers
++{
++    public sealed partial class BuyerRules
++    {
++        // Host-only merchandise holder. Never a participant, negotiator or XP recipient.
++        public const string TeamHolderId = "@team";
++        public bool RegisterTeamItem(BuyerItemState item)
++        {
++            if (item == null) return false;
++            var copy = item.Copy(); copy.HolderId = TeamHolderId; return RegisterItem(copy);
++        }
++        /// <summary>Host reports an actual pickup/return. Reservations must be unloaded first.</summary>
++        public bool SetItemHolder(string itemId, string holderId)
++        {
++            lock (gate)
++            {
++                Synchronize(state); var item = Item(state, itemId);
++                if (item == null || item.Sold || item.MeetingId != "" || item.StashOrderId != "" ||
++                    holderId != TeamHolderId && !Present(state, holderId)) return false;
++                item.HolderId = holderId; return true;
++            }
++        }
++        /// <summary>Host reports the ledger's latch. Inspection never calls this with false.</summary>
++        public bool SetDeliveredCooled(string itemId, bool cooled)
++        {
++            lock (gate)
++            {
++                Synchronize(state); var item = Item(state, itemId);
++                if (item == null || item.Sold || !BuyerCatalog.IsOrgan(item.Kind)) return false;
++                item.DeliveredCooled = cooled; return true;
++            }
++        }
++        public bool SetPackaged(string itemId, bool packaged)
++        {
++            lock (gate)
++            {
++                Synchronize(state); var item = Item(state, itemId);
++                if (item == null || item.Sold || !BuyerCatalog.IsOrgan(item.Kind)) return false;
++                item.Packaged = packaged; return true;
++            }
++        }
++        public bool LoadItem(string buyerId, string itemId, string holderId, bool deliveredCooled, out SaleError error)
++        {
++            lock (gate)
++            {
++                if (!LoadItem(buyerId, itemId, holderId, out error)) return false;
++                var item = Item(state, itemId);
++                if (BuyerCatalog.IsOrgan(item.Kind)) item.DeliveredCooled = deliveredCooled;
++                return true;
++            }
++        }
++        public bool UnloadItem(string buyerId, string itemId) => UnloadItem(buyerId, itemId, TeamHolderId);
++        /// <summary>Any present teammate may take unsold case goods; negotiation history is retained.</summary>
++        public bool UnloadItem(string buyerId, string itemId, string recipientId)
++        {
++            lock (gate)
++            {
++                Synchronize(state);
++                var buyer = state.Buyers.Find(b => b.Id == buyerId); var item = Item(state, itemId);
++                if (buyer?.Meeting == null || item == null || item.Sold || item.MeetingId != buyer.Meeting.Id || item.StashOrderId != "" ||
++                    recipientId != TeamHolderId && !Present(state, recipientId)) return false;
++                item.MeetingId = ""; item.HolderId = recipientId; item.DeliveredCooled = false; return true;
++            }
++        }
++        /// <summary>Disposal/confiscation, not a sale. Retain a persistent tombstone to prevent resurrection.</summary>
++        public bool RemoveItem(string itemId)
++        {
++            lock (gate)
++            {
++                Synchronize(state); var item = Item(state, itemId);
++                if (item == null || item.Sold) return false;
++                state.Items.Remove(item); state.RemovedItemIds.Add(itemId); return true;
++            }
++        }
++    }
++}

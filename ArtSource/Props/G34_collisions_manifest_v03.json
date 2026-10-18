@@ -1,0 +1,307 @@
+{
+  "schema": "G34_UCX_MANIFEST_1",
+  "units": "metres",
+  "authoring_axes": {
+    "up": "+Z",
+    "front": "-Y"
+  },
+  "bbox_spaces": [
+    "mesh-local Blender metres",
+    "authoring-world Blender metres"
+  ],
+  "unity_note": "UCX is a naming convention only. Unity does not auto-convert these meshes. No import postprocessor or Unity integration is included.",
+  "revision": "v03",
+  "scope": "HAMMER only; all other approved packages remain at v02.",
+  "base_manifest": "C:\\Dev\\Game\\ArtSource\\Props\\G34_collisions_manifest_v02.json",
+  "validation": {
+    "result": "PASS",
+    "ucx_total": 5,
+    "fbx_roundtrip": "PASS"
+  },
+  "fbx_files": [
+    {
+      "asset": "HAMMER",
+      "fbx": "C:\\Dev\\Game\\ArtSource\\Props\\HAMMER-ASTRA-001\\G34_v03\\HAMMER_ASTRA_001_v03.fbx",
+      "blend": "C:\\Dev\\Game\\ArtSource\\Props\\HAMMER-ASTRA-001\\G34_v03\\HAMMER_ASTRA_001_v03.blend",
+      "state_objects": {
+        "Tools": [
+          "SM_SurgicalBoneMallet",
+          "SM_BoneOsteotome"
+        ]
+      },
+      "visuals": {
+        "SM_BoneOsteotome": {
+          "state": "Tools",
+          "visual_triangles": 184,
+          "visual_bounds": {
+            "local_m": {
+              "min": [
+                -0.017999999225139618,
+                -0.016167962923645973,
+                0.0
+              ],
+              "max": [
+                0.017999999225139618,
+                0.016167962923645973,
+                0.24300000071525574
+              ]
+            },
+            "world_m": {
+              "min": [
+                0.08699999749660492,
+                -0.016167962923645973,
+                0.0
+              ],
+              "max": [
+                0.12299999594688416,
+                0.016167962923645973,
+                0.24300000071525574
+              ]
+            }
+          },
+          "parts": [
+            {
+              "name": "UCX_SM_BoneOsteotome_00",
+              "triangles": 44,
+              "bounds": {
+                "local_m": {
+                  "min": [
+                    -0.017999999225139618,
+                    -0.006500000134110451,
+                    0.0
+                  ],
+                  "max": [
+                    0.017999999225139618,
+                    0.006500000134110451,
+                    0.1550000011920929
+                  ]
+                },
+                "world_m": {
+                  "min": [
+                    0.08699999749660492,
+                    -0.006500000134110451,
+                    0.0
+                  ],
+                  "max": [
+                    0.12299999594688416,
+                    0.006500000134110451,
+                    0.1550000011920929
+                  ]
+                }
+              },
+              "validation": {
+                "convex": true,
+                "max_plane_violation_m": 1.3969838619232178e-09,
+                "closed_manifold": true,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "zero_area_faces": 0,
+                "signed_volume_m3": 3.635602294106249e-05,
+                "triangles": 44,
+                "pass_validation": true
+              }
+            },
+            {
+              "name": "UCX_SM_BoneOsteotome_01",
+              "triangles": 48,
+              "bounds": {
+                "local_m": {
+                  "min": [
+                    -0.017000000923871994,
+                    -0.016168000176548958,
+                    0.14100000262260437
+                  ],
+                  "max": [
+                    0.017000000923871994,
+                    0.016168000176548958,
+                    0.24300000071525574
+                  ]
+                },
+                "world_m": {
+                  "min": [
+                    0.08799999952316284,
+                    -0.016168000176548958,
+                    0.14100000262260437
+                  ],
+                  "max": [
+                    0.12199999392032623,
+                    0.016168000176548958,
+                    0.24300000071525574
+                  ]
+                }
+              },
+              "validation": {
+                "convex": true,
+                "max_plane_violation_m": 9.313225746154785e-10,
+                "closed_manifold": true,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "zero_area_faces": 0,
+                "signed_volume_m3": 5.989708430101313e-05,
+                "triangles": 48,
+                "pass_validation": true
+              }
+            }
+          ],
+          "parent": "BoneOsteotome_Root"
+        },
+        "SM_SurgicalBoneMallet": {
+          "state": "Tools",
+          "visual_triangles": 356,
+          "visual_bounds": {
+            "local_m": {
+              "min": [
+                -0.056575000286102295,
+                -0.0340999998152256,
+                0.0
+              ],
+              "max": [
+                0.056575000286102295,
+                0.0340999998152256,
+                0.2939999997615814
+              ]
+            },
+            "world_m": {
+              "min": [
+                -0.1215749979019165,
+                -0.0340999998152256,
+                0.0
+              ],
+              "max": [
+                -0.008424997329711914,
+                0.0340999998152256,
+                0.2939999997615814
+              ]
+            }
+          },
+          "parts": [
+            {
+              "name": "UCX_SM_SurgicalBoneMallet_00",
+              "triangles": 52,
+              "bounds": {
+                "local_m": {
+                  "min": [
+                    -0.056575000286102295,
+                    -0.0340999998152256,
+                    0.22580000758171082
+                  ],
+                  "max": [
+                    0.056575000286102295,
+                    0.0340999998152256,
+                    0.2939999997615814
+                  ]
+                },
+                "world_m": {
+                  "min": [
+                    -0.1215749979019165,
+                    -0.0340999998152256,
+                    0.22580000758171082
+                  ],
+                  "max": [
+                    -0.008424997329711914,
+                    0.0340999998152256,
+                    0.2939999997615814
+                  ]
+                }
+              },
+              "validation": {
+                "convex": true,
+                "max_plane_violation_m": 1.862645149230957e-09,
+                "closed_manifold": true,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "zero_area_faces": 0,
+                "signed_volume_m3": 0.0003769118469775625,
+                "triangles": 52,
+                "pass_validation": true
+              }
+            },
+            {
+              "name": "UCX_SM_SurgicalBoneMallet_01",
+              "triangles": 32,
+              "bounds": {
+                "local_m": {
+                  "min": [
+                    -0.013000000268220901,
+                    -0.012363700196146965,
+                    0.16099999845027924
+                  ],
+                  "max": [
+                    0.013000000268220901,
+                    0.012363700196146965,
+                    0.25099998712539673
+                  ]
+                },
+                "world_m": {
+                  "min": [
+                    -0.07799999415874481,
+                    -0.012363700196146965,
+                    0.16099999845027924
+                  ],
+                  "max": [
+                    -0.05199999734759331,
+                    0.012363700196146965,
+                    0.25099998712539673
+                  ]
+                }
+              },
+              "validation": {
+                "convex": true,
+                "max_plane_violation_m": 4.656612873077393e-10,
+                "closed_manifold": true,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "zero_area_faces": 0,
+                "signed_volume_m3": 4.3562622494952944e-05,
+                "triangles": 32,
+                "pass_validation": true
+              }
+            },
+            {
+              "name": "UCX_SM_SurgicalBoneMallet_02",
+              "triangles": 58,
+              "bounds": {
+                "local_m": {
+                  "min": [
+                    -0.02199999988079071,
+                    -0.01902109943330288,
+                    0.0
+                  ],
+                  "max": [
+                    0.02199999988079071,
+                    0.01902109943330288,
+                    0.1850000023841858
+                  ]
+                },
+                "world_m": {
+                  "min": [
+                    -0.08699999749660492,
+                    -0.01902109943330288,
+                    0.0
+                  ],
+                  "max": [
+                    -0.0429999977350235,
+                    0.01902109943330288,
+                    0.1850000023841858
+                  ]
+                }
+              },
+              "validation": {
+                "convex": true,
+                "max_plane_violation_m": 6.111804395914078e-10,
+                "closed_manifold": true,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "zero_area_faces": 0,
+                "signed_volume_m3": 0.00020970885250192267,
+                "triangles": 58,
+                "pass_validation": true
+              }
+            }
+          ],
+          "parent": "SurgicalBoneMallet_Root"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,407 @@
+{
+  "marker": "INC_ABDOMEN",
+  "origin_table_blender": [
+    0.0,
+    -0.1295,
+    0.8889
+  ],
+  "outline": "organs_layout_v05.outline_xy(OPENING, 128) - identical to OperationAbdomen_v05 / the stencil zone",
+  "patch_boundary": "outline + 9 mm outward; ABDOMEN_MASK = outline + 3 mm",
+  "mask_ring_inside_patch_min_mm": 5.99,
+  "patch_height_above_skin_mm": [
+    -0.4,
+    2.94
+  ],
+  "seam_local_y": [
+    -0.1585,
+    0.1585
+  ],
+  "seam_length_m": 0.317,
+  "stitches": 20,
+  "stitch_pitch_m": 0.0159,
+  "thread_radius_m": 0.0011,
+  "stitch_vertices_deeper_than_1_2mm_under_skin": 0,
+  "objects": {
+    "SUTURE_SKIN": {
+      "tris": 7820,
+      "materials": [
+        "Buddy_Skin",
+        "MAT_Suture_Seam_v05",
+        "MAT_Suture_Cut_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ]
+    },
+    "SUTURE_STITCH_01": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 1,
+      "progress": [
+        0.0,
+        0.05
+      ]
+    },
+    "SUTURE_STITCH_02": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 2,
+      "progress": [
+        0.05,
+        0.1
+      ]
+    },
+    "SUTURE_STITCH_03": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 3,
+      "progress": [
+        0.1,
+        0.15
+      ]
+    },
+    "SUTURE_STITCH_04": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 4,
+      "progress": [
+        0.15,
+        0.2
+      ]
+    },
+    "SUTURE_STITCH_05": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 5,
+      "progress": [
+        0.2,
+        0.25
+      ]
+    },
+    "SUTURE_STITCH_06": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 6,
+      "progress": [
+        0.25,
+        0.3
+      ]
+    },
+    "SUTURE_STITCH_07": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 7,
+      "progress": [
+        0.3,
+        0.35
+      ]
+    },
+    "SUTURE_STITCH_08": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 8,
+      "progress": [
+        0.35,
+        0.4
+      ]
+    },
+    "SUTURE_STITCH_09": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 9,
+      "progress": [
+        0.4,
+        0.45
+      ]
+    },
+    "SUTURE_STITCH_10": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 10,
+      "progress": [
+        0.45,
+        0.5
+      ]
+    },
+    "SUTURE_STITCH_11": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 11,
+      "progress": [
+        0.5,
+        0.55
+      ]
+    },
+    "SUTURE_STITCH_12": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 12,
+      "progress": [
+        0.55,
+        0.6
+      ]
+    },
+    "SUTURE_STITCH_13": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 13,
+      "progress": [
+        0.6,
+        0.65
+      ]
+    },
+    "SUTURE_STITCH_14": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 14,
+      "progress": [
+        0.65,
+        0.7
+      ]
+    },
+    "SUTURE_STITCH_15": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 15,
+      "progress": [
+        0.7,
+        0.75
+      ]
+    },
+    "SUTURE_STITCH_16": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 16,
+      "progress": [
+        0.75,
+        0.8
+      ]
+    },
+    "SUTURE_STITCH_17": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 17,
+      "progress": [
+        0.8,
+        0.85
+      ]
+    },
+    "SUTURE_STITCH_18": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 18,
+      "progress": [
+        0.85,
+        0.9
+      ]
+    },
+    "SUTURE_STITCH_19": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 19,
+      "progress": [
+        0.9,
+        0.95
+      ]
+    },
+    "SUTURE_STITCH_20": {
+      "tris": 612,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ],
+      "order": 20,
+      "progress": [
+        0.95,
+        1.0
+      ]
+    },
+    "SUTURE_THREAD_ALL": {
+      "tris": 12240,
+      "materials": [
+        "MAT_Suture_Thread_v05",
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ]
+    },
+    "SUTURE_BLOOD": {
+      "tris": 648,
+      "materials": [
+        "MAT_Suture_DriedBlood_v05"
+      ],
+      "uv": [
+        "UVMap",
+        "Progress"
+      ]
+    }
+  },
+  "materials_srgb": {
+    "MAT_Suture_Seam_v05": [
+      0.9,
+      0.52,
+      0.47
+    ],
+    "MAT_Suture_Cut_v05": [
+      0.5,
+      0.12,
+      0.12
+    ],
+    "MAT_Suture_Thread_v05": [
+      0.12,
+      0.15,
+      0.34
+    ],
+    "MAT_Suture_DriedBlood_v05": [
+      0.4,
+      0.07,
+      0.07
+    ]
+  },
+  "unity": [
+    "Put OperationSutured_v05.fbx under INC_ABDOMEN (identity), exactly where OperationAbdomen_v05 was.",
+    "Closing: hide ABDOMEN_OPENING, ABDOMEN_INTESTINES, ABDOMEN_VESSELS, CORD_* and the organs; keep ABDOMEN_MASK + the Buddy_Skin stencil on (SUTURE_SKIN fills exactly the masked hole and overlaps the intact skin by 6 mm).",
+    "SUTURE_SKIN slot 0 'Buddy_Skin': give it the patient's ORIGINAL skin material (as OperationOpeningV02 does for the opening flap), never the stencil copy.",
+    "Stitching animation: either enable SUTURE_STITCH_01..N in 'order' (stitch k done at progress k/N), or render SUTURE_THREAD_ALL with a shader that clips UV1.x > _Progress (0 -> 1). SUTURE_BLOOD UV1.x = the same seam progress (optional reveal). Import with 'Generate Lightmap UVs' OFF so UV1 is kept."
+  ]
+}

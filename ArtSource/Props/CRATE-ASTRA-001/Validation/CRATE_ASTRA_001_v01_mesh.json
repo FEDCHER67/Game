@@ -1,0 +1,178 @@
+{
+  "description": "Simple reusable equipment delivery crate, open cavity and separately hinged lid; no invented electronics, logos or order system.",
+  "new": true,
+  "interfaces": {
+    "wall_base_overlap_m": 0.035,
+    "lid_wall_gap_m": -0.002
+  },
+  "mesh_audit": {
+    "Closed": [
+      {
+        "object": "SM_DeliveryCrate_Body_Closed",
+        "triangles": 572,
+        "dimensions_m": [
+          0.732856,
+          0.503,
+          0.395
+        ],
+        "bounds_min_m": [
+          -0.3664279878139496,
+          -0.2515000104904175,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.3664279878139496,
+          0.2515000104904175,
+          0.39500001072883606
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_DeliveryCrate_Lid_Closed",
+        "triangles": 284,
+        "dimensions_m": [
+          0.715,
+          0.5155,
+          0.11
+        ],
+        "bounds_min_m": [
+          -0.35749998688697815,
+          -0.26900002360343933,
+          0.35850000381469727
+        ],
+        "bounds_max_m": [
+          0.35749998688697815,
+          0.24650000035762787,
+          0.468500018119812
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.23800000548362732,
+          0.39500001072883606
+        ],
+        "pass": true
+      }
+    ],
+    "Open": [
+      {
+        "object": "SM_DeliveryCrate_Body_Open",
+        "triangles": 572,
+        "dimensions_m": [
+          0.732856,
+          0.503,
+          0.395
+        ],
+        "bounds_min_m": [
+          -0.3664279878139496,
+          -0.2515000104904175,
+          0.0
+        ],
+        "bounds_max_m": [
+          0.3664279878139496,
+          0.2515000104904175,
+          0.39500001072883606
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass": true
+      },
+      {
+        "object": "SM_DeliveryCrate_Lid_Open",
+        "triangles": 284,
+        "dimensions_m": [
+          0.715,
+          0.242134,
+          0.506621
+        ],
+        "bounds_min_m": [
+          -0.35749998688697815,
+          0.23970440030097961,
+          0.3698870539665222
+        ],
+        "bounds_max_m": [
+          0.35749998688697815,
+          0.48183852434158325,
+          0.8765077590942383
+        ],
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "zero_area_faces": 0,
+        "uv_layers": 1,
+        "material_slots": 1,
+        "finite": true,
+        "unit_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "origin_m": [
+          0.0,
+          0.23800000548362732,
+          0.39500001072883606
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "states": {
+    "Closed": {
+      "triangles": 856,
+      "dimensions_m": [
+        0.732856,
+        0.5205,
+        0.4685
+      ],
+      "pass_mesh": true
+    },
+    "Open": {
+      "triangles": 856,
+      "dimensions_m": [
+        0.732856,
+        0.733339,
+        0.876508
+      ],
+      "pass_mesh": true
+    }
+  }
+}

@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "id": "CAPTURE_CONSUMABLES_V01",
+  "status": "draft_authoring_data",
+  "sourceSpec": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+  "authoringNotes": [
+    "CamelCase and bilingual display fields follow Buyers/Data authoring JSON. This is not a runtime loader contract.",
+    "Numeric tuning values absent from the specs carry status proposed. Schema/version identifiers are structural; derived numbers are labelled derived.",
+    "A spec_reference price deliberately has no dollar amount: read the existing operations section/row instead of creating a competing price.",
+    "IDs here are authoring keys, not allocated numeric Inventory IDs. null inventoryItemId must not become item 0.",
+    "No consumable uses phone_order in this proposal. Operations §15.5 reserves that channel for large equipment; upgrades have their own catalog.",
+    "No new C#, .meta, Unity asset or gameplay binding is supplied."
+  ],
+  "items": [
+    {
+      "id": "ZIP_TIES",
+      "displayNameRu": "Стяжки",
+      "displayNameEn": "Zip ties",
+      "descriptionRu": "Связать руки или ноги. На каждую пару нужен отдельный расходник. Для полной гусеницы — обе пары.",
+      "descriptionEn": "Tie hands or feet. Each pair takes a separate use. Both pairs make the full caterpillar.",
+      "price": {
+        "kind": "fixed",
+        "dollars": 10,
+        "currency": "USD",
+        "unit": "application_to_hands_or_feet",
+        "status": "confirmed",
+        "source": {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D2",
+          "section": "5.1"
+        },
+        "note": "Fedya 2026-10-18: raised to $10."
+      },
+      "soldAt": [
+        {
+          "channel": "pharmacy",
+          "status": "proposed",
+          "sourceRefs": [
+            {
+              "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+              "section": "5.1"
+            },
+            {
+              "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+              "section": "15.5",
+              "row": "Pharmacy: blood bags and initial supplies."
+            }
+          ],
+          "note": "Specific initial-supply shelf allocation is proposed; no phone delivery."
+        }
+      ],
+      "stackSize": {
+        "value": 20,
+        "status": "proposed",
+        "unit": "uses"
+      },
+      "uses": {
+        "value": 1,
+        "status": "confirmed",
+        "unit": "one_hands_pair_or_one_feet_pair",
+        "source": {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D2",
+          "section": "5.1"
+        }
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D2"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D13"
+        }
+      ],
+      "buildStage": "A",
+      "inventoryItemId": null,
+      "removal": {
+        "matchingTableStrapRemovesTie": true,
+        "cutWith": "scalpel_or_knife",
+        "status": "confirmed",
+        "source": {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "section": "5.1"
+        }
+      },
+      "authoringNotes": [
+        "Hands and feet are separate requests and debits. Two successful applications cost twice the unit price (derived).",
+        "Proposed: removed/cut ties are not returned to stock. Separate field knife availability is unresolved; no new tool is created."
+      ]
+    },
+    {
+      "id": "HEAD_BAG",
+      "displayNameRu": "Мешок на голову",
+      "displayNameEn": "Head bag",
+      "descriptionRu": "Сбивает с толку, приглушает крики. Сам по себе не убивает. Игрок может снять в любой момент.",
+      "descriptionEn": "Disorients and muffles shouting. Never kills by itself. Players can remove it at any time.",
+      "price": {
+        "kind": "fixed",
+        "dollars": 10,
+        "currency": "USD",
+        "unit": "bag",
+        "status": "confirmed",
+        "source": {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "section": "5.1",
+          "note": "Proposed preset, not an approved interview price."
+        },
+        "note": "Fedya 2026-10-18: raised to $10."
+      },
+      "soldAt": [
+        {
+          "channel": "underground_seller",
+          "status": "proposed",
+          "sourceRefs": [
+            {
+              "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+              "section": "5.1"
+            },
+            {
+              "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+              "section": "11"
+            },
+            {
+              "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+              "section": "15.5",
+              "row": "Underground seller: specialist tools."
+            }
+          ],
+          "note": "Capture permits pharmacy/underground seller generally; exact bag shop is still open. Proposed underground shelf only."
+        }
+      ],
+      "stackSize": {
+        "value": 10,
+        "status": "proposed",
+        "unit": "bags"
+      },
+      "uses": {
+        "value": 1,
+        "status": "proposed",
+        "unit": "successful_application",
+        "note": "Consumable is specified; exact reuse/refund policy is not. Propose consuming on placement with no stock return on removal."
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D2"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D10"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D11"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D14"
+        }
+      ],
+      "buildStage": "B",
+      "inventoryItemId": null,
+      "authoringNotes": [
+        "Do not offer in the Stage A pool. Does not replace ties or anesthesia.",
+        "Removing a bag is always available to players; the consumption proposal does not prevent removal."
+      ]
+    },
+    {
+      "id": "ANESTHETIC_STOCK_INITIAL",
+      "displayNameRu": "Запас наркоза: начальный",
+      "displayNameEn": "Initial anesthetic stock",
+      "descriptionRu": "Запас игрового наркоза. Работает и до стола; новая порция прибавляется к остатку. Расход зависит от удержания.",
+      "descriptionEn": "Game anesthetic stock. Works before the table too; new input adds to the residual amount. Consumption follows the hold.",
+      "price": {
+        "kind": "spec_reference",
+        "status": "confirmed",
+        "currency": "USD",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "15.4",
+          "row": "Initial anesthetic stock, about ten nominal uses"
+        }
+      },
+      "soldAt": [
+        {
+          "channel": "pharmacy",
+          "status": "proposed",
+          "sourceRefs": [
+            {
+              "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+              "section": "15.5",
+              "row": "Pharmacy: blood bags and initial supplies."
+            }
+          ],
+          "note": "Exact formula-to-shop allocation is proposed; formula access still follows ops §16.3."
+        }
+      ],
+      "stackSize": {
+        "value": 1,
+        "status": "proposed",
+        "unit": "stock_container"
+      },
+      "uses": {
+        "kind": "variable_stock",
+        "status": "confirmed",
+        "nominalCapacityRef": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "10.2",
+          "row": "Initial"
+        },
+        "note": "Approximately ten nominal uses is only the source benchmark; actual depletion depends on administered abstract amount. No per-use dollar price or fixed activation count is authored here."
+      },
+      "access": {
+        "kind": "starting_access",
+        "formula": "initial",
+        "status": "confirmed",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "16.3",
+          "row": "Initial formula"
+        }
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D1"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D13"
+        }
+      ],
+      "buildStage": "A",
+      "inventoryItemId": null,
+      "authoringNotes": [
+        "Reference entry for the operations stock, not a second item or new price. Canonical stock catalog ID is unresolved; resolve by exact source section and row.",
+        "Field syringe stock/refill presentation remains open in capture §11 / operations T-06."
+      ]
+    },
+    {
+      "id": "ANESTHETIC_STOCK_IMPROVED",
+      "displayNameRu": "Запас наркоза: улучшенный",
+      "displayNameEn": "Improved anesthetic stock",
+      "descriptionRu": "Запас игрового наркоза. Работает и до стола; новая порция прибавляется к остатку. Расход зависит от удержания.",
+      "descriptionEn": "Game anesthetic stock. Works before the table too; new input adds to the residual amount. Consumption follows the hold.",
+      "price": {
+        "kind": "spec_reference",
+        "status": "confirmed",
+        "currency": "USD",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "15.4",
+          "row": "Improved anesthetic stock, about ten nominal uses"
+        }
+      },
+      "soldAt": [
+        {
+          "channel": "underground_seller",
+          "status": "proposed",
+          "sourceRefs": [
+            {
+              "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+              "section": "15.5",
+              "row": "Underground seller: specialist tools."
+            }
+          ],
+          "note": "Exact formula-to-shop allocation is proposed; formula access still follows ops §16.3."
+        }
+      ],
+      "stackSize": {
+        "value": 1,
+        "status": "proposed",
+        "unit": "stock_container"
+      },
+      "uses": {
+        "kind": "variable_stock",
+        "status": "confirmed",
+        "nominalCapacityRef": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "10.2",
+          "row": "Improved"
+        },
+        "note": "Approximately ten nominal uses is only the source benchmark; actual depletion depends on administered abstract amount. No per-use dollar price or fixed activation count is authored here."
+      },
+      "access": {
+        "kind": "shared_xp_formula_unlock",
+        "formula": "improved",
+        "status": "confirmed",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "16.3",
+          "row": "Improved formula"
+        }
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D1"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D13"
+        }
+      ],
+      "buildStage": "A",
+      "inventoryItemId": null,
+      "authoringNotes": [
+        "Reference entry for the operations stock, not a second item or new price. Canonical stock catalog ID is unresolved; resolve by exact source section and row.",
+        "Field syringe stock/refill presentation remains open in capture §11 / operations T-06."
+      ]
+    },
+    {
+      "id": "ANESTHETIC_STOCK_LATE",
+      "displayNameRu": "Запас наркоза: поздний",
+      "displayNameEn": "Late anesthetic stock",
+      "descriptionRu": "Запас игрового наркоза. Работает и до стола; новая порция прибавляется к остатку. Расход зависит от удержания.",
+      "descriptionEn": "Game anesthetic stock. Works before the table too; new input adds to the residual amount. Consumption follows the hold.",
+      "price": {
+        "kind": "spec_reference",
+        "status": "confirmed",
+        "currency": "USD",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "15.4",
+          "row": "Late anesthetic stock, about ten nominal uses"
+        }
+      },
+      "soldAt": [
+        {
+          "channel": "underground_seller",
+          "status": "proposed",
+          "sourceRefs": [
+            {
+              "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+              "section": "15.5",
+              "row": "Underground seller: specialist tools."
+            }
+          ],
+          "note": "Exact formula-to-shop allocation is proposed; formula access still follows ops §16.3."
+        }
+      ],
+      "stackSize": {
+        "value": 1,
+        "status": "proposed",
+        "unit": "stock_container"
+      },
+      "uses": {
+        "kind": "variable_stock",
+        "status": "confirmed",
+        "nominalCapacityRef": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "10.2",
+          "row": "Late"
+        },
+        "note": "Approximately ten nominal uses is only the source benchmark; actual depletion depends on administered abstract amount. No per-use dollar price or fixed activation count is authored here."
+      },
+      "access": {
+        "kind": "shared_xp_formula_unlock",
+        "formula": "late",
+        "status": "confirmed",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "16.3",
+          "row": "Late formula"
+        }
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D1"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D13"
+        }
+      ],
+      "buildStage": "A",
+      "inventoryItemId": null,
+      "authoringNotes": [
+        "Reference entry for the operations stock, not a second item or new price. Canonical stock catalog ID is unresolved; resolve by exact source section and row.",
+        "Field syringe stock/refill presentation remains open in capture §11 / operations T-06."
+      ]
+    },
+    {
+      "id": "EMPTY_BLOOD_BAG",
+      "displayNameRu": "Пустой пакет для крови",
+      "displayNameEn": "Empty blood bag",
+      "descriptionRu": "Для отдельной порции крови. После запечатывания не портится; у трупа кровь взять нельзя.",
+      "descriptionEn": "For one blood portion. Once sealed, it never spoils; corpses cannot provide blood.",
+      "price": {
+        "kind": "spec_reference",
+        "status": "confirmed",
+        "currency": "USD",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "15.4",
+          "row": "Empty blood bag"
+        }
+      },
+      "soldAt": [
+        {
+          "channel": "pharmacy",
+          "status": "confirmed",
+          "sourceRefs": [
+            {
+              "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+              "section": "15.5",
+              "row": "Pharmacy: blood bags and initial supplies."
+            }
+          ]
+        }
+      ],
+      "stackSize": {
+        "value": 20,
+        "status": "proposed",
+        "unit": "empty_bags"
+      },
+      "uses": {
+        "value": 1,
+        "status": "confirmed",
+        "unit": "sealed_blood_portion",
+        "source": {
+          "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+          "section": "5.2",
+          "row": "Portion limits and value"
+        }
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D7"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D10"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D13"
+        }
+      ],
+      "buildStage": "A",
+      "inventoryItemId": null,
+      "outputReference": {
+        "merchandiseId": "blood_bag",
+        "catalogPath": "Assets/OnlyVolunteers/Buyers/Data/Buyer_C01_v01.json",
+        "note": "Empty supply and sealed sale output are distinct states, not two sale rewards. Existing numeric Inventory ID is unresolved."
+      },
+      "authoringNotes": [
+        "No new purchase or resale price is copied here. Sealed sale value remains operations §15.2 and BUYERS v02.",
+        "Blood portion count remains on the NPC across transport; asleep or adequately restrained required, never a corpse."
+      ]
+    }
+  ]
+}

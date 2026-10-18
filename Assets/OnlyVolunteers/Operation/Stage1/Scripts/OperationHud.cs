@@ -22,17 +22,18 @@ namespace OnlyVolunteers.Operation.Stage1
         private Image[] sleepPills = new Image[3];
         private Image[] drops = new Image[3];
         private Image[] strapBars = new Image[5];
+        private const int ToolSlots = 5; // Hands, Anesthesia, Blood, Scalpel, Suture (round 3)
         private Text[] organChips = new Text[3];
         private Image[] organChipBg = new Image[3];
         // banners
         private RectTransform panic; private Text panicText; private Image panicRing; private Text panicSeconds;
         private RectTransform dead; private Text deadText;
         // hotbar
-        private readonly Image[] slotBg = new Image[4];
-        private readonly Image[] slotFrame = new Image[4];
-        private readonly Image[] slotFill = new Image[4];
-        private readonly Text[] slotOwner = new Text[4];
-        private readonly Text[] slotLabel = new Text[4];
+        private readonly Image[] slotBg = new Image[ToolSlots];
+        private readonly Image[] slotFrame = new Image[ToolSlots];
+        private readonly Image[] slotFill = new Image[ToolSlots];
+        private readonly Text[] slotOwner = new Text[ToolSlots];
+        private readonly Text[] slotLabel = new Text[ToolSlots];
         private RectTransform hotbar;
         // cursor
         private RectTransform reticle; private Image reticleImage;
@@ -48,7 +49,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private readonly List<(RectTransform rt, Text text, float born, Vector3 world, bool isWorld)> toasts = new();
         private string hint = ""; private HintTone hintTone;
         private OpHint serverHint; private int serverArg; private float serverAt = -10f;
-        private Sprite iconHand, iconAnesthesia, iconBlood, iconScalpel, ringSprite, dropSprite;
+        private Sprite iconHand, iconAnesthesia, iconBlood, iconScalpel, iconSuture, ringSprite, dropSprite;
 
         public string CurrentHint => hint;
         public HintTone CurrentTone => hintTone;
@@ -86,8 +87,8 @@ namespace OnlyVolunteers.Operation.Stage1
             BuildCard(tableRoot);
             BuildBanners(tableRoot);
             BuildHotbar(tableRoot);
-            help = Label(tableRoot, "E / Esc — отойти   ·   колесо — приблизить   ·   ПКМ — положить", 17, Muted, TextAnchor.UpperRight);
-            Place(help.rectTransform, new Vector2(1, 1), new Vector2(-24, -24), new Vector2(760, 30), new Vector2(1, 1));
+            help = Label(tableRoot, "", 19, Muted, TextAnchor.UpperRight);
+            Place(help.rectTransform, new Vector2(1, 1), new Vector2(-24, -24), new Vector2(1100, 64), new Vector2(1, 1));
 
             // remote cursors are created on demand under tableRoot
             reticle = PhoneUi.Rect("Reticle", tableRoot); reticle.sizeDelta = new Vector2(30, 30);
@@ -202,10 +203,10 @@ namespace OnlyVolunteers.Operation.Stage1
         private void BuildHotbar(RectTransform parent)
         {
             hotbar = PhoneUi.Rect("Hotbar", parent);
-            Place(hotbar, new Vector2(0.5f, 0), new Vector2(0, 24), new Vector2(4 * 104 + 3 * 12, 104), new Vector2(0.5f, 0));
-            string[] labels = { "Руки", "Наркоз", "Кровь", "Скальпель" };
-            Sprite[] icons = { iconHand, iconAnesthesia, iconBlood, iconScalpel };
-            for (int i = 0; i < 4; i++)
+            Place(hotbar, new Vector2(0.5f, 0), new Vector2(0, 24), new Vector2(ToolSlots * 104 + (ToolSlots - 1) * 12, 104), new Vector2(0.5f, 0));
+            string[] labels = { "Руки", "Наркоз", "Кровь", "Скальпель", "Нить" };
+            Sprite[] icons = { iconHand, iconAnesthesia, iconBlood, iconScalpel, iconSuture };
+            for (int i = 0; i < ToolSlots; i++)
             {
                 slotFrame[i] = PhoneUi.Panel(hotbar, "Frame" + i, new Color(1, 1, 1, 0), 21);
                 Place(slotFrame[i].rectTransform, new Vector2(0, 0), new Vector2(i * 116 + 52, 52), new Vector2(112, 112), new Vector2(0.5f, 0.5f));
@@ -271,6 +272,20 @@ namespace OnlyVolunteers.Operation.Stage1
                 float d = Mathf.Min(handle, blade);
                 Color c = Over(Fill(d - 0.022f, outline), Over(Fill(handle, C("#5D6B7A")), Fill(blade, steel)));
                 return c;
+            });
+            // Round 3: the needle holder with a curved needle and a dark thread.
+            iconSuture = Make(128, p =>
+            {
+                p = Rotate(p, 35f);
+                float jaws = RoundBox(p - new Vector2(0, 0.16f), new Vector2(0.03f, 0.14f), 0.02f);
+                float ringL = Mathf.Abs((p - new Vector2(-0.09f, -0.24f)).magnitude - 0.07f) - 0.022f;
+                float ringR = Mathf.Abs((p - new Vector2(0.09f, -0.24f)).magnitude - 0.07f) - 0.022f;
+                float shank = RoundBox(p - new Vector2(0, -0.06f), new Vector2(0.045f, 0.12f), 0.02f);
+                Vector2 n = p - new Vector2(0.1f, 0.33f);
+                float needle = Mathf.Max(Mathf.Abs(n.magnitude - 0.09f) - 0.014f, -n.x);
+                float steelPart = Mathf.Min(Mathf.Min(jaws, shank), Mathf.Min(ringL, ringR));
+                float d = Mathf.Min(steelPart, needle);
+                return Over(Fill(d - 0.022f, outline), Over(Fill(steelPart, steel), Fill(needle, C("#2E3A6E"))));
             });
         }
         private Sprite SyringeIcon(Color liquid, Color steel, Color glass, Color outline) => Make(128, p =>
@@ -380,6 +395,7 @@ namespace OnlyVolunteers.Operation.Stage1
             float f = Mathf.Clamp01(1f - (Time.unscaledTime - flashAt) / 0.45f);
             flash.color = new Color(flashColor.r, flashColor.g, flashColor.b, flashColor.a * f);
             if (!tableGroup.gameObject.activeSelf) return;
+            UpdateHelp();
             var state = table.State; var netView = table.View;
             if (state == null) return;
             UpdateCard(state, netView);
@@ -434,6 +450,20 @@ namespace OnlyVolunteers.Operation.Stage1
             tone = HintTone.Warn; return "Не спит";
         }
 
+        private int helpMode = -1;
+        /// <summary>The two table screens and the Tab toggle, always in the corner (v04 playtest: the wheel-out was not
+        /// discoverable).</summary>
+        private void UpdateHelp()
+        {
+            int mode = (int)view.CameraMode;
+            if (mode == helpMode) return;
+            helpMode = mode;
+            string on = "<color=#5BE07A><b>{0}</b></color>";
+            string prep = mode == (int)TableCamera.Prep ? string.Format(on, "ПОДГОТОВКА") : "подготовка";
+            string op = mode == (int)TableCamera.Operation ? string.Format(on, "ОПЕРАЦИЯ") : "операция";
+            help.text = "<b>[Tab]</b>  " + prep + "  /  " + op + "\n<size=16>E / Esc — отойти   ·   колесо — чуть ближе   ·   ПКМ — положить</size>";
+        }
+
         private void UpdateCard(OperationState s, OperationView v)
         {
             var tuning = table.Tuning;
@@ -444,8 +474,13 @@ namespace OnlyVolunteers.Operation.Stage1
             for (int i = 0; i < 3; i++) sleepPills[i].color = i < depth ? C("#7FB2FF") : new Color(1, 1, 1, 0.14f);
             for (int i = 0; i < 3; i++) drops[i].color = i < s.bloodPortions ? Bad : new Color(1, 1, 1, 0.18f);
             int closed = 0;
-            for (int i = 0; i < 5; i++) { strapBars[i].color = s.restraints[i] ? Good : new Color(1f, 0.32f, 0.36f, 0.55f); if (s.restraints[i]) closed++; }
-            strapLabel.text = "Ремни " + closed + "/5";
+            int straps = OperationStraps.Count(tuning);
+            for (int i = 0; i < 5; i++)
+            {
+                strapBars[i].gameObject.SetActive(i < straps); // round 3: no torso strap
+                strapBars[i].color = s.restraints[i] ? Good : new Color(1f, 0.32f, 0.36f, 0.55f); if (i < straps && s.restraints[i]) closed++;
+            }
+            strapLabel.text = "Ремни " + closed + "/" + straps;
             for (int i = 0; i < 3; i++)
             {
                 var o = s.organs[i]; string text; Color bg;
@@ -472,13 +507,15 @@ namespace OnlyVolunteers.Operation.Stage1
                 panicSeconds.text = Mathf.CeilToInt(s.panicRemaining).ToString();
             }
             dead.gameObject.SetActive(!s.alive);
-            if (!s.alive) deadText.text = "ПАЦИЕНТ МЁРТВ · " + OperationText.Death(s.deathCause) + "\n<size=20>органы ещё можно достать · F10 — новый пациент</size>";
+            if (!s.alive) deadText.text = "ПАЦИЕНТ МЁРТВ · " + OperationText.Death(s.deathCause) + (table.AdmissionMode
+                ? "\n<size=20>органы ещё можно достать · открой все ремни и выйди: ЛКМ по телу — снять со стола, R — в мешок</size>"
+                : "\n<size=20>органы ещё можно достать · F10 — новый пациент</size>");
         }
 
         private void UpdateHotbar(OperationView v)
         {
             ToolSlot mine = view.LocalSlot;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < ToolSlots; i++)
             {
                 var slot = (ToolSlot)i;
                 bool selected = slot == mine;
@@ -641,6 +678,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 case OpHint.StockEmpty: return "Наркоз кончился (F10 — новый набор)";
                 case OpHint.Refilled: tone = HintTone.Good; return "Шприц заправлен";
                 case OpHint.BagReady: tone = HintTone.Good; return "Пакет готов!";
+                case OpHint.SutureFirst: tone = HintTone.Warn; return "Живого не отпускают с открытым животом — сначала зашей разрез [5]";
+                case OpHint.NothingToSuture: tone = HintTone.Warn; return table.State != null && table.State.sutured ? "Уже зашито" : "Шить нечего — разреза нет";
+                case OpHint.StitchFromTop: tone = HintTone.Warn; return "Шей от верхнего края разреза, по линии";
             }
             return null;
         }
@@ -662,12 +702,14 @@ namespace OnlyVolunteers.Operation.Stage1
                 case TargetKind.Tool:
                 {
                     var tool = h.tool; if (tool == null) return "";
-                    string name = tool.Slot == ToolSlot.Anesthesia ? "шприц с наркозом" : tool.Slot == ToolSlot.Blood ? "шприц для крови" : "скальпель";
+                    string name = tool.Slot == ToolSlot.Anesthesia ? "шприц с наркозом" : tool.Slot == ToolSlot.Blood ? "шприц для крови"
+                        : tool.Slot == ToolSlot.Suture ? "иглодержатель с нитью" : "скальпель";
                     tone = HintTone.Good; return "ЛКМ — взять " + name + " [" + ((int)tool.Slot + 1) + "]";
                 }
                 case TargetKind.Strap:
                     tone = HintTone.Good;
                     if (!s.onTable || !s.aligned) { tone = HintTone.Warn; return "Ремень · сначала уложи пациента"; }
+                    if (s.restraints[t.index] && s.alive && s.CavityOpen) { tone = HintTone.Warn; return "Ремень не откроется: сначала зашей разрез [5]"; }
                     return "ЛКМ — " + (s.restraints[t.index] ? "расстегнуть" : "застегнуть") + " ремень (" + OperationText.Straps[t.index] + ")";
                 case TargetKind.BloodBag:
                     if (slot == ToolSlot.Blood && v != null && v.blood >= 1f) { tone = HintTone.Good; return "ЛКМ — перелить кровь в пакет"; }
@@ -691,6 +733,13 @@ namespace OnlyVolunteers.Operation.Stage1
                 }
                 case TargetKind.Incision:
                 {
+                    if (slot == ToolSlot.Suture)
+                    {
+                        if (!s.zoneOpened || s.sutured) { tone = HintTone.Warn; return s.sutured ? "Уже зашито" : "Шить нечего — разреза нет"; }
+                        if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
+                        if (view.Stroking) { tone = HintTone.Good; return "Шьём… стежок " + Mathf.FloorToInt(s.zoneSuture * tuning.sutureStitches) + "/" + tuning.sutureStitches; }
+                        tone = HintTone.Good; return s.zoneSuture > 0.01f ? "Зажми ЛКМ у точки и шей дальше по линии" : "Зажми ЛКМ у верхнего края и шей по линии вниз";
+                    }
                     float progress = table.GuideProgress(t.index);
                     if (slot != ToolSlot.Scalpel) { tone = HintTone.Warn; return "Разрез · возьми скальпель [4]"; }
                     if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
@@ -714,7 +763,7 @@ namespace OnlyVolunteers.Operation.Stage1
                         if (t.ArmSide < 0) { tone = HintTone.Warn; return "Кровь берут из руки"; }
                         if (v != null && v.blood >= 1f) { tone = HintTone.Warn; return "Шприц полный — кликни по пустому пакету"; }
                         if (s.bloodPortions >= tuning.fatalPortion) { tone = HintTone.Bad; return "Крови больше нет"; }
-                        bool ok = !s.alive || s.Sleeping || s.Torso || s.restraints[t.ArmSide];
+                        bool ok = !s.alive || s.Sleeping || OperationStraps.Held(s, tuning) || s.restraints[t.ArmSide];
                         if (!ok) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
                         tone = HintTone.Good; return "Зажми ЛКМ — набрать кровь (" + Mathf.RoundToInt(tuning.bloodSeconds) + " с)";
                     }
@@ -723,7 +772,8 @@ namespace OnlyVolunteers.Operation.Stage1
                     return "Пациент · наркоз [2] · кровь [3] · скальпель [4]";
                 }
             }
-            if (slot == ToolSlot.Hands && s.onTable && s.aligned && !s.Torso && s.alive && !s.Sleeping) { tone = HintTone.Warn; return "Пристегни ремни — кликни по ним"; }
+            if (slot == ToolSlot.Hands && s.onTable && s.aligned && !OperationStraps.Held(s, tuning) && s.alive && !s.Sleeping) { tone = HintTone.Warn; return "Пристегни ремни — кликни по ним"; }
+            if (s.alive && s.CavityOpen && s.organs != null && System.Array.TrueForAll(s.organs, o => o.removed || o.Opened)) { tone = HintTone.Neutral; return "Закончил? Зашей разрез — нить [5]"; }
             return "";
         }
     }

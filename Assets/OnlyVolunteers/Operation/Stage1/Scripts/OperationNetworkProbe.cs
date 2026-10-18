@@ -78,7 +78,7 @@ namespace OnlyVolunteers.Operation.Stage1
             var args = Environment.GetCommandLineArgs(); int i = Array.IndexOf(args, key);
             return i >= 0 && i + 1 < args.Length ? args[i + 1] : null;
         }
-        private OperationState S => table.IsServerInitialized ? table.ServerRules.State : table.State;
+        private OperationState S => table.IsServerInitialized ? table.ServerRules?.State : table.State;
         private Camera Cam => player != null ? player.ViewCamera : null;
 
         private void SetupDevices()
@@ -225,6 +225,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             started = Time.time;
             output = Argument("-ops-evidence");
+            if (string.IsNullOrEmpty(output) && !string.IsNullOrEmpty(EvidenceRoot)) output = Path.Combine(EvidenceRoot, "run_" + name);
             if (string.IsNullOrEmpty(output)) output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Working", "Reviews", "Operations", "stage1_v4", "run_" + name));
             output = FreshEvidenceFolder(output);
             Directory.CreateDirectory(output);
@@ -236,7 +237,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (manager != null && !manager.ServerManager.Started && !manager.ClientManager.Started && !name.StartsWith("net-"))
                 session.StartHost();
             float until = Time.time + 40f;
-            while (Time.time < until && (player == null || table == null || table.State == null || table.PatientObject == null))
+            while (Time.time < until && (player == null || table == null || (name != "g35-water" && (table.State == null || table.PatientObject == null))))
             {
                 if (table == null) table = FindAnyObjectByType<NetworkOperationTable>();
                 foreach (var p in FindObjectsByType<NetworkPlayer>()) if (p.IsOwner && p.IsClientInitialized) player = p;
@@ -249,7 +250,7 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return new WaitForSeconds(0.8f);
             SetupCapture();
             mPos = new Vector2(captureWidth * 0.5f, captureHeight * 0.5f); PushMouse();
-            Line($"START host={table.IsServerInitialized} client={player.OwnerId} patient={table.State.patientId} table={table.transform.position} rot={table.transform.eulerAngles}");
+            Line($"START host={table.IsServerInitialized} client={player.OwnerId} patient={table.State?.patientId ?? "empty"} table={table.transform.position} rot={table.transform.eulerAngles}");
             IEnumerator body = name switch
             {
                 "suite" => Suite(),
@@ -261,6 +262,15 @@ namespace OnlyVolunteers.Operation.Stage1
                 "v04-loop" => V04Loop(),
                 "v04-guide-edges" => V04GuideEdges(),
                 "v04-throw" => V04Throw(),
+                "capture-kidney" => CaptureKidney(),
+                "g35-straps" => G35Straps(),
+                "g35-brake" => G35Brake(),
+                "g35-corpse" => ClBag(),
+                "cl-bag" => ClBag(),
+                "cl-organ-scale" => ClOrganScale(),
+                "cl-art-v03" => ClArtV03(),
+                "g35-water" => G35Water(),
+                "cl-straps" => ClStraps(),
                 "net-host" => NetHost(),
                 "net-client" => NetClient(),
                 _ => null
@@ -268,7 +278,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (body == null) Check(false, "unknown scenario " + name);
             else
             {
-                recording = name == "loop" || name == "v04-loop" || name.StartsWith("net-");
+                recording = name == "loop" || name == "v04-loop" || name == "g35-corpse" || name == "g35-water" || name.StartsWith("cl-") || name.StartsWith("net-");
                 if (name == "net-client" && table.Tuning.sharedAbdomen) StartCoroutine(V04RemoteCarry());
                 if (recording) StartCoroutine(Record());
                 yield return body;
@@ -304,7 +314,7 @@ namespace OnlyVolunteers.Operation.Stage1
             finished = true;
             LastResult = failures == 0 ? "PASS" : "FAIL " + failures;
             Line("RESULT " + LastResult);
-            if (table != null && table.IsServerInitialized && output != null)
+            if (table != null && table.IsServerInitialized && table.ServerRules != null && output != null)
                 File.WriteAllText(Path.Combine(output, "final-state.json"), JsonUtility.ToJson(table.ServerRules.State, true));
             Teardown();
             Busy = false;
@@ -377,7 +387,8 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return Tap(Key.E);
             yield return WaitFor(() => view.Active && table.IsParticipant(player.OwnerId) || !table.IsServerInitialized && view.Active, 2f, "E -> table mode joined");
             yield return new WaitForSeconds(table.Tuning.cameraBlendSeconds + 0.15f);
-            Check(Vector3.Distance(Cam.transform.position, table.CameraPose.position) < 0.05f, "camera blended to CameraAnchor");
+            Check(view.CameraMode == TableCamera.Prep && Vector3.Distance(Cam.transform.position, view.ViewPose.position) < 0.05f,
+                "E opens the PREP view (camera blended to it)");
         }
 
         private IEnumerator Straps(bool all)
@@ -387,11 +398,12 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 if (!all && i != 4) continue;
                 if (S.restraints[i]) continue;
-                if (!wheeledOut && table.Tuning.minZoom < 0f && !StrapOnScreen(i))
+                if (!wheeledOut && view.CameraMode != TableCamera.Prep)
                 {
-                    // v04 close top framing: the leg straps are beyond the bottom edge, so wheel out like a player.
-                    for (int k = 0; k < 8; k++) yield return Scroll(-120f);
+                    // Two table screens (v04 playtest): straps are clicked in PREP; Tab there like a player.
+                    yield return Tap(Key.Tab);
                     yield return new WaitForSeconds(0.45f);
+                    Check(view.CameraMode == TableCamera.Prep, "Tab opens the PREP view for the straps");
                     wheeledOut = true;
                 }
                 Collider hit = null;
@@ -409,7 +421,7 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             if (wheeledOut)
             {
-                for (int k = 0; k < 6; k++) yield return Scroll(120f);
+                yield return Tap(Key.Tab);
                 yield return new WaitForSeconds(0.45f);
             }
         }
@@ -453,15 +465,41 @@ namespace OnlyVolunteers.Operation.Stage1
             Check(kept > 0.4f && kept < 0.6f, $"blood progress kept after early release ({kept:F2})");
             lmb = true; PushMouse();
             end = Time.time + 2.6f; bool shot = false;
-            while (Time.time < end) { PushMouse(); if (!shot && Time.time > end - 1.5f) { Shot("05_blood_filling"); shot = true; } yield return null; }
+            bool angled = false; string angleNote = "";
+            while (Time.time < end)
+            {
+                PushMouse();
+                if (!shot && Time.time > end - 1.5f)
+                {
+                    Shot("05_blood_filling"); shot = true;
+                    // Rework (Fedya 2026-10-18): the syringe is in the skin at ~30 deg while it draws.
+                    var syringe = table.ToolOf(ToolSlot.Blood);
+                    // The pose this frame shows (the tool's LateUpdate applies it after this coroutine step).
+                    if (syringe != null && view.Current.hit && table.TryHeldPose(syringe, syringe.Holder, out var shown))
+                    {
+                        float toSkin = 90f - Vector3.Angle(shown.rotation * Vector3.up, view.Current.normal);
+                        float tip = Vector3.Distance(shown.position, view.Current.point);
+                        angled = Mathf.Abs(toSkin - table.Tuning.syringeSkinAngle) < 8f && tip < 0.012f;
+                        angleNote = toSkin.ToString("F0") + " deg, tip " + (tip * 1000f).ToString("F0") + " mm from the skin point";
+                    }
+                }
+                yield return null;
+            }
             lmb = false; PushMouse(); yield return Frames(3);
+            Check(angled, "while drawing, the syringe sits in the skin at ~" + table.Tuning.syringeSkinAngle.ToString("F0") + " deg (" + angleNote + ")");
             Check(S.bloodPortions == before + 1, "one blood portion counted when the syringe filled (" + S.bloodPortions + ")");
             var pose = table.BagPose(bag);
             yield return AimAt(t => t.kind == TargetKind.BloodBag && t.index == bag, new[] { pose.position + pose.up * 0.02f, pose.position }, "empty bag " + bag);
             if (!aimed) { Check(false, "empty bag found under the cursor"); yield break; }
             int items = table.ServerItems.Count;
             yield return Click();
-            yield return WaitFor(() => table.ServerItems.Count == items + 1, 1.5f, "click empty bag -> sealed bag item spawned");
+            // Rework: the plunger goes down over bloodTransferSeconds; the syringe empties as the bag fills by the same amount.
+            yield return new WaitForSeconds(table.Tuning.bloodTransferSeconds * 0.5f);
+            float syringeHalf = table.View.blood, bagHalf = table.View.bagFill != null && bag < table.View.bagFill.Length ? table.View.bagFill[bag] : -1f;
+            Shot("06a_blood_transfer");
+            Check(syringeHalf > 0.15f && syringeHalf < 0.85f && Mathf.Abs(syringeHalf + bagHalf * Mathf.Max(1, table.Tuning.bloodPortionsPerBag) - 1f) < 0.12f,
+                "mid-transfer: syringe " + syringeHalf.ToString("F2") + " + bag " + bagHalf.ToString("F2") + " = one portion");
+            yield return WaitFor(() => table.ServerItems.Count == items + 1, table.Tuning.bloodTransferSeconds + 1.5f, "click empty bag -> sealed bag item spawned");
             if (table.ServerItems.Count > items)
             {
                 var bagItem = table.ServerItems[table.ServerItems.Count - 1];
@@ -513,11 +551,22 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 if (S.organs[organ].connections[c] >= 1f) continue;
                 OperationGeometry.Cord(table.Tuning, organ, c, out var a, out var r);
-                Vector3 mid = table.SitePoint(organ, (a + r) * 0.5f), rim = table.SitePoint(organ, Vector3.Lerp(a, r, 0.8f));
-                yield return AimAt(t => t.kind == TargetKind.Cord && t.index == organ && t.sub == c, new[] { mid, rim, table.SitePoint(organ, Vector3.Lerp(a, r, 0.3f)) }, $"cord {organ}/{c}");
+                // Follow the visible small cord while the awake patient moves; never enlarge its target.
+                aimed = false;
+                float aimEnd = Time.time + 0.65f;
+                while (Time.time < aimEnd)
+                {
+                    mPos = Scr(table.SitePoint(organ, (a + r) * 0.5f)); PushMouse(); yield return null;
+                    var target = view.Current.target;
+                    if (target.kind == TargetKind.Cord && target.index == organ && target.sub == c) { aimed = true; break; }
+                }
                 if (!aimed) { Check(false, $"cord {organ}/{c} found under the cursor"); continue; }
                 int damage = S.organs[organ].damage;
-                yield return Hold(0.42f);
+                yield return Button(true);
+                float holdEnd = Time.time + 0.42f;
+                while (Time.time < holdEnd)
+                { mPos = Scr(table.SitePoint(organ, (a + r) * 0.5f)); PushMouse(); yield return null; }
+                yield return Button(false);
                 yield return Settle();
                 Check(S.organs[organ].connections[c] >= 1f, $"cord {organ}/{c} snipped by a 0.42 s hold");
                 Check(S.organs[organ].damage == damage, $"snipping cord {organ}/{c} never counts as a direct cut");
@@ -622,7 +671,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 Check(o.removed && o.Grade == o.intrinsicGrade - o.damage, $"organ {i} extracted, grade {OperationText.Tier(o.Grade)}");
                 Check(o.rollCompleted || !S.alive, $"organ {i} death roll recorded (chance {o.deathChance:F2})");
             }
-            float[] expected = { 0.2f, 0.3f, 0.4f }; // one blood portion: +10 points each
+            // One blood portion: +10 points on the first kidney. Lead decision 2026-10-18: the second kidney (extracted here
+            // second) is a vital removal, chance 1, and kills; the liver then comes out of a corpse, which is never rolled.
+            float[] expected = table.Tuning.liverOrBothKidneysFatal ? new[] { 0.2f, 1f, 0f } : new[] { 0.2f, 0.3f, 0.4f };
             for (int i = 0; i < 3; i++) Check(Mathf.Abs(S.organs[i].deathChance - expected[i]) < 0.001f, $"organ {i} chance {S.organs[i].deathChance:F2} = {expected[i]:F2}");
             Check(S.extracted == 3 && table.ServerItems.Count == 4, $"three organs + one bag exist exactly once ({table.ServerItems.Count} items)");
             var pres = table.GetComponent<OperationPresentation>();
@@ -632,7 +683,8 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return MoveTo(Scr(table.OrganSlotPose(1).position + table.transform.up * 0.25f), 0.3f);
             yield return new WaitForSeconds(0.3f);
             Shot("13_tray_results");
-            // local zoom
+            // local zoom (a fine adjustment of the OPERATION view)
+            if (view.CameraMode != TableCamera.Operation) { yield return Tap(Key.Tab); yield return new WaitForSeconds(0.45f); }
             yield return MoveTo(Scr(table.SitePoint(2, Vector3.zero)), 0.2f);
             yield return Scroll(120f); yield return Scroll(120f);
             yield return new WaitForSeconds(0.5f);
@@ -726,7 +778,12 @@ namespace OnlyVolunteers.Operation.Stage1
             int d1 = S.organs[1].damage;
             yield return Select(Key.Digit4, ToolSlot.Scalpel);
             Vector3 c1 = table.OrganPosition(1);
-            yield return AimAt(t => t.kind == TargetKind.Organ && t.index == 1, Around(c1, table.transform.right, table.transform.forward, 0.006f), "organ 1 body (direct cut)");
+            var directPoints = new List<Vector3>(Around(c1, table.transform.right, table.transform.forward, 0.006f));
+            // v02's liver loop crosses the kidney's upper pole; deliberately click its visible lower bean.
+            if (table.Tuning.anatomicalLayout)
+                foreach (float y in new[] { -0.025f, -0.04f }) foreach (float x in new[] { 0f, -0.012f, 0.012f })
+                    directPoints.Add(table.SitePoint(1, new Vector3(x, y, 0.015f)));
+            yield return AimAt(t => t.kind == TargetKind.Organ && t.index == 1, directPoints, "organ 1 body (direct cut)");
             yield return Click();
             yield return new WaitForSeconds(0.3f);
             Check(S.organs[1].directCuts == 1 && S.organs[1].damage == d1 + 2, $"direct click on the organ: -2 (damage {d1}->{S.organs[1].damage})");
@@ -998,7 +1055,7 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return Tap(Key.E);
             yield return WaitFor(() => view.Active, 2f, "client: E -> table mode");
             yield return new WaitForSeconds(0.6f);
-            Check(Vector3.Distance(Cam.transform.position, table.CameraPose.position) < 0.05f, "client uses the same shared camera");
+            Check(Vector3.Distance(Cam.transform.position, view.ViewPose.position) < 0.05f, "client uses the same shared camera");
             yield return WaitFor(() => S.organs[0].Released && table.ToolOf(ToolSlot.Scalpel) != null && table.ToolOf(ToolSlot.Scalpel).Mode == ToolMode.Docked, 90f, "scalpel free for the client");
             yield return Cut(1);
             yield return Snip(1);

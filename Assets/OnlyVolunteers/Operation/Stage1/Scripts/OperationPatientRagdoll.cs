@@ -43,6 +43,9 @@ namespace OnlyVolunteers.Operation.Stage1
         public int BoneCount => ragdoll != null ? ragdoll.PartCount : 0;
         public Vector3 PlacementPoint => Active ? ragdoll.CenterOfMass : transform.position + Vector3.up * 0.1f;
         public float PoseReceivedAt { get; private set; }
+        /// <summary>Packed into a body bag: the same ragdoll, wrapped (OperationBodyBagWrap), stiff joints.</summary>
+        public bool Bagged { get; private set; }
+        private float baggedAt = -1f;
         public int PosesSent { get; private set; }
         /// <summary>The NPC wake blend (ragdoll pose -> animation) is still running after a hand-back.</summary>
         public bool Blending => ragdoll != null && ragdoll.Blending;
@@ -70,6 +73,50 @@ namespace OnlyVolunteers.Operation.Stage1
                 SendPose(false);
             }
         }
+
+        public void ServerCorpse()
+        {
+            if (!IsServerInitialized) return;
+            tableState = false;
+            if (!Active) { rig.SnapState(OperationPatientRig.StateDead); StartRagdoll(true); }
+            else LinkHandle();
+        }
+
+        /// <summary>Server: pack the corpse into a body bag. It is laid straight where it lies (the packing cloud hides
+        /// the snap), wrapped, its joints stiffened, and every client wraps its copy too.</summary>
+        public bool ServerBag(bool layStraight = true)
+        {
+            if (!IsServerInitialized || Bagged) return false;
+            if (!Active) ServerCorpse();
+            if (!Active) return false;
+            Vector3 hips = ragdoll.Landmark(NpcLandmark.Pelvis), head = ragdoll.Landmark(NpcLandmark.Head);
+            Vector3 along = head - hips; along.y = 0f;
+            if (along.sqrMagnitude < 1e-4f) along = transform.forward;
+            // The floor under the pelvis (road, shed floor, the van's cargo floor), never this body or another one.
+            Vector3 ground = hips + Vector3.down * 0.14f;
+            int mask = ~((1 << OnlyVolunteers.Map.OvLayers.Player) | (1 << OnlyVolunteers.Map.OvLayers.VehicleInterior) | OnlyVolunteers.Map.OvLayers.NpcMask | OnlyVolunteers.Map.OvLayers.NpcSlideMask);
+            float best = float.MaxValue;
+            foreach (var h in Physics.RaycastAll(hips + Vector3.up * 0.3f, Vector3.down, 3f, mask, QueryTriggerInteraction.Ignore))
+            {
+                if (h.collider == null || h.collider.transform.IsChildOf(transform) || h.distance >= best) continue;
+                if (h.collider.GetComponentInParent<NpcRagdoll>() != null) continue;
+                best = h.distance; ground = h.point;
+            }
+            if (handleJoint != null) { DestroyImmediate(handleJoint); handleJoint = null; }
+            // A restored bag keeps its saved pose (it is already the stiff sack); a fresh one is laid straight first.
+            if (layStraight) ragdoll.PlaceLying(ground, along, true);
+            if (handle.Body != null) { handle.Body.position = transform.position; handle.Body.rotation = transform.rotation; handle.Body.linearVelocity = Vector3.zero; }
+            var wrap = OperationBodyBagWrap.Apply(ragdoll, true);
+            if (wrap == null || !wrap.Applied) return false;
+            Bagged = true; baggedAt = Time.time;
+            SendPose(true);
+            ObserversBagged();
+            Debug.Log("[OPS RAGDOLL] packed into a body bag (wrapped ragdoll, bodies=" + ragdoll.PartCount + ")");
+            return true;
+        }
+
+        [ObserversRpc(BufferLast = true, ExcludeServer = true)]
+        private void ObserversBagged() { Bagged = true; baggedAt = Time.time; }
 
         private void StartRagdoll(bool server)
         {
@@ -175,6 +222,9 @@ namespace OnlyVolunteers.Operation.Stage1
             // The NPC wake blend has finished: the NPC's own per-frame tracking is not needed on the patient.
             if (!Active && ragdoll != null && ragdoll.enabled && !ragdoll.Blending) ragdoll.enabled = false;
             if (!IsServerInitialized && observedActive) ApplyRemote(1f - Mathf.Exp(-30f * Time.deltaTime));
+            // A client wraps its copy once a pose sent after the packing has arrived (the body lies straight then).
+            if (!IsServerInitialized && Bagged && observedActive && PoseReceivedAt > baggedAt && GetComponent<OperationBodyBagWrap>() == null)
+            { ApplyRemote(1f); OperationBodyBagWrap.Apply(ragdoll, false); }
         }
 
         private void IgnorePlayers(bool ignore)

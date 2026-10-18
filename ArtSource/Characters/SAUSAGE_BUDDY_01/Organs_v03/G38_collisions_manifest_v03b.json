@@ -1,0 +1,6391 @@
+{
+  "schema": "G38_collision_manifest_v03b/1",
+  "status": "BLOCKED_REVIEW_CANDIDATE",
+  "blockers": [
+    "Fixed patient body/neck surface intersections remain in rest, TABLE_REST and open35.",
+    "The tested neck-clearing horizontal sternum trim removes 84 mm (70%); it is not applied because it changes the approved overall look."
+  ],
+  "units": "metres; 1 Blender unit = 1 metre; export global_scale=1",
+  "source_blend": "C:\\Dev\\Game\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Organs_v03\\Organs_v03b.blend",
+  "inbody_fbx": "C:\\Dev\\Game\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Organs_v03\\Organs_InBody_v03b.fbx",
+  "ribcage_fbx": "C:\\Dev\\Game\\ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Organs_v03\\FBX\\RIBCAGE_v03b.fbx",
+  "coordinate_frames": {
+    "rest_blender": "Z up, patient anterior -Y, patient left +X",
+    "collider_vertices": "Target object local Blender coordinates; child local matrix is identity.",
+    "ribcage_fbx": "SOCKET_THORAX at identity as in v03. In-body export retains original hierarchy.",
+    "fbx_axes": "axis_forward=-Z, axis_up=Y; apply_unit_scale; FBX_SCALE_UNITS",
+    "table_rest_transform": [
+      [
+        -1.0,
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      [
+        -0.0,
+        0.0,
+        -1.0,
+        0.8199999928474426
+      ],
+      [
+        0.0,
+        -1.0,
+        -0.0,
+        0.7712000012397766
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "unity_handoff": {
+    "automatic_ucx_conversion": false,
+    "layer": "SurgicalBone",
+    "rib_tag": "SurgicalRib",
+    "sternum_tag": "SurgicalSternum",
+    "numeric_layer_index": "Assign an available project layer; no index assumed.",
+    "import": "Create one convex MeshCollider per listed UCX mesh, keep its local identity under the named target, disable its MeshRenderer, preserve BREAK empties. Do not add decorative cartilage or spine colliders.",
+    "mallet_osteotome_query": "Use only SurgicalBone in every tool sweep/raycast/contact query. Organs, vessels, diaphragm, lung, heart and body must be excluded from this tool mask. Physical contact filtering needs the same exclusion.",
+    "mass": "Approximate closed render-mesh volume x 1100 kg/m3, a gameplay hint in kilograms.",
+    "ready_for_runtime": false,
+    "unity_test": "NOT RUN; user prohibited Unity/Assets changes."
+  },
+  "objects": {
+    "RIB_L_01": {
+      "hinge_parent": "RIBCAGE_HALF_L",
+      "mass_kg": 0.0275,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.08799993991851807
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000524520874
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.04800000041723251
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.187999963760376
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_L_01",
+        "parent": "RIB_L_01",
+        "position_target_local_m": [
+          0.059999994933605194,
+          -0.01999998837709427,
+          0.1379999965429306
+        ],
+        "position_rest_world_m": [
+          0.07999999821186066,
+          -0.08999999612569809,
+          1.1679999828338623
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_L_01_01",
+          "vertex_count": 47,
+          "triangle_count": 90,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.04797999933362007,
+              -0.015448000282049179,
+              -0.035335998982191086
+            ],
+            [
+              0.10001400113105774,
+              0.005164000205695629,
+              0.005098000168800354
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.06798000633716583,
+              0.04290200024843216,
+              1.1725519895553589
+            ],
+            [
+              0.1200140044093132,
+              0.0833359956741333,
+              1.1931639909744263
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.17727504018694162,
+            "certified_upper_outside_mm": 1.1772750401869416,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 26353,
+            "worst_sample_rest_m": [
+              0.07193600386381149,
+              0.0833359956741333,
+              1.186743974685669
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 31.334638595581055,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 45,
+              "head_rest_min_sample_mm": 0.5285731167532504,
+              "head_table_inside_vertices": 22,
+              "head_table_min_sample_mm": 0.07632901542820036
+            },
+            "open35": {
+              "organ_min_mm": 35.2400504052639,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 26,
+              "head_rest_min_sample_mm": 4.088542424142361,
+              "head_table_inside_vertices": 26,
+              "head_table_min_sample_mm": 4.328048788011074
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_01_02",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.09180200099945068,
+              -0.029481999576091766,
+              0.000901999999769032
+            ],
+            [
+              0.10019800066947937,
+              0.0024480000138282776,
+              0.08958999812602997
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.11180200427770615,
+              -0.041589997708797455,
+              1.1585179567337036
+            ],
+            [
+              0.12019800394773483,
+              0.04709799960255623,
+              1.1904479265213013
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.1789984235074371,
+            "certified_upper_outside_mm": 1.178998423507437,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 72190,
+            "worst_sample_rest_m": [
+              0.11575331436149006,
+              0.010877860902712264,
+              1.1667846359055618
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 12.800526962700374,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 30,
+              "head_rest_min_sample_mm": 0.11045569408452138,
+              "head_table_inside_vertices": 25,
+              "head_table_min_sample_mm": 0.2024264249484986
+            },
+            "open35": {
+              "organ_min_mm": 46.694841960577754,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 10.941758751869202,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 21.63650095462799
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_01_03",
+          "vertex_count": 35,
+          "triangle_count": 66,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.05021199956536293,
+              -0.029457999393343925,
+              0.08641000092029572
+            ],
+            [
+              0.10012199729681015,
+              -0.010999999940395355,
+              0.1312360018491745
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.07021200656890869,
+              -0.08323600143194199,
+              1.1585419178009033
+            ],
+            [
+              0.12012200057506561,
+              -0.0384100042283535,
+              1.1769999265670776
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.2934937656391412,
+            "certified_upper_outside_mm": 1.2934937656391412,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 35430,
+            "worst_sample_rest_m": [
+              0.07340200245380402,
+              -0.08323600143194199,
+              1.1590019464492798
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 17.47931949203537,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 25,
+              "head_rest_min_sample_mm": 0.06823429430369288,
+              "head_table_inside_vertices": 35,
+              "head_table_min_sample_mm": 3.258706768974662
+            },
+            "open35": {
+              "organ_min_mm": 63.78630499084758,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 49.66534674167633,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 38.907986134290695
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_01_04",
+          "vertex_count": 33,
+          "triangle_count": 62,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.0004879999905824661,
+              -0.029001999646425247,
+              0.12570400536060333
+            ],
+            [
+              0.05431399866938591,
+              -0.010999999940395355,
+              0.1346060037612915
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.019512003287672997,
+              -0.08660600334405899,
+              1.1589980125427246
+            ],
+            [
+              0.07431399822235107,
+              -0.07770400494337082,
+              1.1769999265670776
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.27308863354846835,
+            "certified_upper_outside_mm": 1.2730886335484684,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 27039,
+            "worst_sample_rest_m": [
+              0.06991603630236708,
+              -0.07966219232632564,
+              1.1768992107648115
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 15.547623857855797,
+              "nearest_organ": "VESSELS_PULMONARY_ARTERY",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST",
+                "STERNUM_L"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.43788718176074326,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 33,
+              "head_rest_min_sample_mm": 3.702695481479168,
+              "head_table_inside_vertices": 33,
+              "head_table_min_sample_mm": 26.01853758096695
+            },
+            "open35": {
+              "organ_min_mm": 67.25838035345078,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [
+                "STERNUM_L"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 33.36283192038536,
+              "body_table_min_mm": 14.846205711364746,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 34.527529031038284,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 14.928148128092289
+            }
+          }
+        }
+      ]
+    },
+    "RIB_L_02": {
+      "hinge_parent": "RIBCAGE_HALF_L",
+      "mass_kg": 0.0314,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.06999993324279785
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000524520874
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.047999996691942215
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1699999570846558
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_L_02",
+        "parent": "RIB_L_02",
+        "position_target_local_m": [
+          0.07599999755620956,
+          -0.03849995881319046,
+          0.1379999965429306
+        ],
+        "position_rest_world_m": [
+          0.09600000083446503,
+          -0.09000000357627869,
+          1.131500005722046
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_L_02_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.048486001789569855,
+              -0.036956001073122025,
+              -0.035335998982191086
+            ],
+            [
+              0.12297400087118149,
+              -0.01568000018596649,
+              0.00546600017696619
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.06848600506782532,
+              0.0425339937210083,
+              1.1330440044403076
+            ],
+            [
+              0.14297400414943695,
+              0.0833359956741333,
+              1.1543200016021729
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.405351776862517,
+            "certified_upper_outside_mm": 1.405351776862517,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 41160,
+            "worst_sample_rest_m": [
+              0.07028200477361679,
+              0.08076399564743042,
+              1.1530100107192993
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 22.040553157949017,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.586885551456362,
+              "head_rest_inside_vertices": 9,
+              "head_rest_min_sample_mm": 0.41247133049182594,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 0.17518189270049334
+            },
+            "open35": {
+              "organ_min_mm": 19.998820680787052,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 16,
+              "head_rest_min_sample_mm": 0.3974326536990702,
+              "head_table_inside_vertices": 12,
+              "head_table_min_sample_mm": 0.04187727245152928
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_02_02",
+          "vertex_count": 41,
+          "triangle_count": 78,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.11500199884176254,
+              -0.05099400132894516,
+              0.0005339999916031957
+            ],
+            [
+              0.12339799851179123,
+              -0.019044000655412674,
+              0.08959600329399109
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.135002002120018,
+              -0.04159601032733917,
+              1.1190059185028076
+            ],
+            [
+              0.1433980017900467,
+              0.04746599495410919,
+              1.1509559154510498
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.15982583863660693,
+            "certified_upper_outside_mm": 1.159825838636607,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 69854,
+            "worst_sample_rest_m": [
+              0.14138799905776978,
+              0.04746599495410919,
+              1.135793924331665
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 9.185278922738341,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 7.066812831908464,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 7.066812831908464,
+              "body_table_min_mm": 7.580192293971777,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 24.139003828167915,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 24.52053502202034
+            },
+            "open35": {
+              "organ_min_mm": 47.75397779144661,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 48.12321066856384,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 54.96135726571083
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_02_03",
+          "vertex_count": 34,
+          "triangle_count": 64,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.06688400357961655,
+              -0.05097600072622299,
+              0.08640400320291519
+            ],
+            [
+              0.1232760027050972,
+              -0.02955400012433529,
+              0.13281600177288055
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.08688400685787201,
+              -0.08481600880622864,
+              1.1190239191055298
+            ],
+            [
+              0.14327600598335266,
+              -0.038404010236263275,
+              1.1404459476470947
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.35909388680011034,
+            "certified_upper_outside_mm": 1.3590938868001103,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 44207,
+            "worst_sample_rest_m": [
+              0.0985260009765625,
+              -0.07753200829029083,
+              1.1399040222167969
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 15.06117716579922,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4447812389116734,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 11.693420819938183,
+              "head_table_inside_vertices": 5,
+              "head_table_min_sample_mm": 0.0964865175774321
+            },
+            "open35": {
+              "organ_min_mm": 62.923983480345186,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 75.99799335002899,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 61.82915344834328
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_02_04",
+          "vertex_count": 34,
+          "triangle_count": 64,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.004852000158280134,
+              -0.04744600132107735,
+              0.12957799434661865
+            ],
+            [
+              0.07006800174713135,
+              -0.02060999907553196,
+              0.13851000368595123
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.015148002654314041,
+              -0.09051001071929932,
+              1.1225539445877075
+            ],
+            [
+              0.09006800502538681,
+              -0.08157800137996674,
+              1.1493899822235107
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.302224128972739,
+            "certified_upper_outside_mm": 1.302224128972739,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 48982,
+            "worst_sample_rest_m": [
+              0.087899264203359,
+              -0.08159868643708425,
+              1.140471246144543
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.07071848718575,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 16,
+              "head_rest_min_sample_mm": 7.818696089088917,
+              "head_table_inside_vertices": 23,
+              "head_table_min_sample_mm": 0.02965314888569992
+            },
+            "open35": {
+              "organ_min_mm": 61.92886456847191,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.4602956760209054,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 31.57840268514906,
+              "body_table_min_mm": 26.430154219269753,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 47.533340752124786,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 26.531033217906952
+            }
+          }
+        }
+      ]
+    },
+    "RIB_L_03": {
+      "hinge_parent": "RIBCAGE_HALF_L",
+      "mass_kg": 0.0327,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.05100000277161598
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000151991844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.04800000041723251
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1510000228881836
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_L_03",
+        "parent": "RIB_L_03",
+        "position_target_local_m": [
+          0.07999999821186066,
+          -0.0560000017285347,
+          0.1379999965429306
+        ],
+        "position_rest_world_m": [
+          0.10000000149011612,
+          -0.09000000357627869,
+          1.0950000286102295
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_L_03_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.048579998314380646,
+              -0.055955998599529266,
+              -0.035335998982191086
+            ],
+            [
+              0.12870800495147705,
+              -0.03467800095677376,
+              0.005543999839574099
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.06858000159263611,
+              0.042455997318029404,
+              1.0950440168380737
+            ],
+            [
+              0.1487080156803131,
+              0.0833359956741333,
+              1.1163220405578613
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.31301475246436894,
+            "certified_upper_outside_mm": 1.313014752464369,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 46042,
+            "worst_sample_rest_m": [
+              0.07128199934959412,
+              0.0833359956741333,
+              1.1110180616378784
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 14.905838944716818,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 4.034960642457008,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 4.373433068394661,
+              "body_table_min_mm": 4.034960642457008,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 8.822967298328876,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 8.973133750259876
+            },
+            "open35": {
+              "organ_min_mm": 13.740438149620026,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 1,
+              "head_rest_min_sample_mm": 0.1436214952263981,
+              "head_table_inside_vertices": 1,
+              "head_table_min_sample_mm": 0.24522922467440367
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_03_02",
+          "vertex_count": 51,
+          "triangle_count": 98,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.12080200016498566,
+              -0.06999800354242325,
+              0.0004560000088531524
+            ],
+            [
+              0.1289139986038208,
+              -0.038043998181819916,
+              0.08956599980592728
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.14080199599266052,
+              -0.04156600311398506,
+              1.0810019969940186
+            ],
+            [
+              0.14891400933265686,
+              0.04754399508237839,
+              1.1129560470581055
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.22362981690093875,
+            "certified_upper_outside_mm": 1.2236298169009387,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 93699,
+            "worst_sample_rest_m": [
+              0.14463600516319275,
+              0.046101994812488556,
+              1.095076084136963
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 3.7958817425435254,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 3.7958817425435254,
+              "nearest_other": "ORGAN_LUNG_L",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 4.330481868237257,
+              "body_table_min_mm": 3.997222986072302,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 45.47792673110962,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 45.512605458498
+            },
+            "open35": {
+              "organ_min_mm": 46.074409037828445,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 13.795104412308655,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 70.21687924861908,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 71.33469730615616
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_03_03",
+          "vertex_count": 37,
+          "triangle_count": 70,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.07349000126123428,
+              -0.06998199969530106,
+              0.08643399924039841
+            ],
+            [
+              0.1289139986038208,
+              -0.04720799997448921,
+              0.13586199283599854
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.09349000453948975,
+              -0.08786199986934662,
+              1.0810179710388184
+            ],
+            [
+              0.14891400933265686,
+              -0.03843400254845619,
+              1.1037920713424683
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3462635213509202,
+            "certified_upper_outside_mm": 1.3462635213509202,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 47212,
+            "worst_sample_rest_m": [
+              0.09408000111579895,
+              -0.08786199986934662,
+              1.086314082145691
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 11.462200466440805,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.08041420369409025,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4386302607599646,
+              "body_table_min_mm": 0.08041420369409025,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 32.61706233024597,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 33.14094990491867
+            },
+            "open35": {
+              "organ_min_mm": 60.88947285833223,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 30.637535688332925,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 98.37481379508972,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 90.02964943647385
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_03_04",
+          "vertex_count": 32,
+          "triangle_count": 60,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.005557999946177006,
+              -0.06479199975728989,
+              0.1320119947195053
+            ],
+            [
+              0.07729200273752213,
+              -0.025774000212550163,
+              0.14166800677776337
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.014442003332078457,
+              -0.09366800636053085,
+              1.0862079858779907
+            ],
+            [
+              0.09729200601577759,
+              -0.0840119943022728,
+              1.1252260208129883
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.302525790175423,
+            "certified_upper_outside_mm": 1.302525790175423,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 46677,
+            "worst_sample_rest_m": [
+              0.09453600645065308,
+              -0.08768600225448608,
+              1.0862079858779907
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 13.394716195762157,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "STERNUM_L"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 12,
+              "head_rest_min_sample_mm": 0.8288975805044174,
+              "head_table_inside_vertices": 12,
+              "head_table_min_sample_mm": 0.37355374661274254
+            },
+            "open35": {
+              "organ_min_mm": 58.98347124457359,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [
+                "STERNUM_L"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 31.101485832669095,
+              "body_table_min_mm": 31.09677987407072,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 61.4803321659565,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 39.37313333153725
+            }
+          }
+        }
+      ]
+    },
+    "RIB_L_04": {
+      "hinge_parent": "RIBCAGE_HALF_L",
+      "mass_kg": 0.0347,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.03199994936585426
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000151991844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.04800000041723251
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1319999694824219
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_L_04",
+        "parent": "RIB_L_04",
+        "position_target_local_m": [
+          0.07000000029802322,
+          -0.06599999219179153,
+          0.14299999177455902
+        ],
+        "position_rest_world_m": [
+          0.09000000357627869,
+          -0.0949999988079071,
+          1.065999984741211
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_L_04_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.048579998314380646,
+              -0.0749640017747879,
+              -0.035335998982191086
+            ],
+            [
+              0.1287740021944046,
+              -0.053677998483181,
+              0.005412000231444836
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.06858000159263611,
+              0.042587995529174805,
+              1.0570359230041504
+            ],
+            [
+              0.14877399802207947,
+              0.0833359956741333,
+              1.078321933746338
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3015881811734289,
+            "certified_upper_outside_mm": 1.301588181173429,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 45867,
+            "worst_sample_rest_m": [
+              0.07128199934959412,
+              0.0833359956741333,
+              1.073017954826355
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 13.253566808998585,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.05045779107604176,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.05789266651845537,
+              "body_table_min_mm": 0.05045779107604176,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 20.64487896859646,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 20.649567246437073
+            },
+            "open35": {
+              "organ_min_mm": 11.575233702086525,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 11.619058437645435,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 11.61914225667715
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_04_02",
+          "vertex_count": 48,
+          "triangle_count": 92,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.1212887242436409,
+              -0.08899999409914017,
+              0.0005880016251467168
+            ],
+            [
+              0.1289140284061432,
+              -0.05703603848814964,
+              0.09976799786090851
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.14128872752189636,
+              -0.05176800489425659,
+              1.0429999828338623
+            ],
+            [
+              0.14891403913497925,
+              0.04741199314594269,
+              1.074963927268982
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.21950920927338302,
+            "certified_upper_outside_mm": 1.219509209273383,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 102538,
+            "worst_sample_rest_m": [
+              0.1451483964920044,
+              -0.05023200809955597,
+              1.0429999828338623
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 3.4032489631110403,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.004681018253904767,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 57.69699066877365,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 57.710200548172
+            },
+            "open35": {
+              "organ_min_mm": 46.33595879462493,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 18.63121367752573,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 83.6712121963501,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 83.67913961410522
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_04_03",
+          "vertex_count": 38,
+          "triangle_count": 72,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.06742800027132034,
+              -0.08900000154972076,
+              0.09623199701309204
+            ],
+            [
+              0.1289139986038208,
+              -0.057454001158475876,
+              0.14666999876499176
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.0874280035495758,
+              -0.09867000579833984,
+              1.0429999828338623
+            ],
+            [
+              0.14891400933265686,
+              -0.048232004046440125,
+              1.074545979499817
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.2615376142784953,
+            "certified_upper_outside_mm": 1.2615376142784953,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 61092,
+            "worst_sample_rest_m": [
+              0.13656800985336304,
+              -0.055668000131845474,
+              1.0631139278411865
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.596584560181547,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 43.650154024362564,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 43.74793544411659
+            },
+            "open35": {
+              "organ_min_mm": 65.54368612600248,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 4.924907814711332,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 36.01988205290322,
+              "body_table_min_mm": 4.924907814711332,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 112.7251535654068,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 111.42090708017349
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_04_04",
+          "vertex_count": 34,
+          "triangle_count": 64,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.006053999997675419,
+              -0.07454600185155869,
+              0.13730399310588837
+            ],
+            [
+              0.0725720003247261,
+              -0.03095399960875511,
+              0.14726200699806213
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.013946003280580044,
+              -0.09926201403141022,
+              1.057453989982605
+            ],
+            [
+              0.09257200360298157,
+              -0.08930399268865585,
+              1.1010459661483765
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.17337754252366722,
+            "certified_upper_outside_mm": 1.1733775425236672,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 43613,
+            "worst_sample_rest_m": [
+              0.09240200370550156,
+              -0.09279601275920868,
+              1.0743919610977173
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.05829629302025,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "STERNUM_L"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 2.750954357907176,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 3.3418512903153896
+            },
+            "open35": {
+              "organ_min_mm": 59.85851709153568,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [
+                "STERNUM_L"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 33.39922765672012,
+              "body_table_min_mm": 33.461485608270785,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 75.14923810958862,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 58.10723826289177
+            }
+          }
+        }
+      ]
+    },
+    "RIB_L_05": {
+      "hinge_parent": "RIBCAGE_HALF_L",
+      "mass_kg": 0.0271,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.011999968439340591
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000151991844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.047999996691942215
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1119999885559082
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_L_05",
+        "parent": "RIB_L_05",
+        "position_target_local_m": [
+          0.11500000208616257,
+          -0.11699999123811722,
+          0.11299998313188553
+        ],
+        "position_rest_world_m": [
+          0.13500000536441803,
+          -0.06499999016523361,
+          0.9950000047683716
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_L_05_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.04857800155878067,
+              -0.08797399699687958,
+              -0.035335998982191086
+            ],
+            [
+              0.1268939971923828,
+              -0.06505200266838074,
+              0.005419999826699495
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.06857800483703613,
+              0.04257999360561371,
+              1.0240260362625122
+            ],
+            [
+              0.14689400792121887,
+              0.0833359882235527,
+              1.046947956085205
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.27790985768660903,
+            "certified_upper_outside_mm": 1.277909857686609,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 47960,
+            "worst_sample_rest_m": [
+              0.07134800404310226,
+              0.0833359882235527,
+              1.0291860103607178
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 22.186831888997265,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.38248569917221503,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.38248569917221503,
+              "body_table_min_mm": 0.38249162817755533,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 46.01692035794258,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 46.01703584194183
+            },
+            "open35": {
+              "organ_min_mm": 22.29506934224384,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 42.485546320676804,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 42.48567298054695
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_05_02",
+          "vertex_count": 51,
+          "triangle_count": 98,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.12080200016498566,
+              -0.10346399992704391,
+              0.0014380000066012144
+            ],
+            [
+              0.1289139986038208,
+              -0.06502600014209747,
+              0.09143000096082687
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.14080199599266052,
+              -0.043430011719465256,
+              1.0085359811782837
+            ],
+            [
+              0.14891400933265686,
+              0.046561989933252335,
+              1.0469739437103271
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.19832894031424075,
+            "certified_upper_outside_mm": 1.1983289403142408,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 101879,
+            "worst_sample_rest_m": [
+              0.14891400933265686,
+              0.03257999196648598,
+              1.0354379415512085
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 11.26619428396225,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.3575149981946995,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.3575149981946995,
+              "body_table_min_mm": 0.35752117408272915,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 69.61015611886978,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 69.61020827293396
+            },
+            "open35": {
+              "organ_min_mm": 53.77304597604237,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 21.186237526166376,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 92.48813986778259,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 92.48820692300797
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_05_03",
+          "vertex_count": 47,
+          "triangle_count": 90,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.11242599785327911,
+              -0.12520800530910492,
+              0.08456999808549881
+            ],
+            [
+              0.1289139986038208,
+              -0.0865359976887703,
+              0.11554799973964691
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.13242599368095398,
+              -0.06754801422357559,
+              0.9867919683456421
+            ],
+            [
+              0.14891400933265686,
+              -0.03657000884413719,
+              1.0254639387130737
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3987682284787297,
+            "certified_upper_outside_mm": 1.3987682284787297,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 16600,
+            "worst_sample_rest_m": [
+              0.13597801327705383,
+              -0.06275201588869095,
+              0.9867919683456421
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.741026914070748,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 1.013185945339501,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 1.0132610332220793,
+              "body_table_min_mm": 1.013185945339501,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 83.08181166648865,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 83.08190852403641
+            },
+            "open35": {
+              "organ_min_mm": 66.96712004179786,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 11.083520948886871,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 37.10894286632538,
+              "body_table_min_mm": 11.083520948886871,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 129.9123764038086,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 129.91243600845337
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_L_05_04",
+          "vertex_count": 41,
+          "triangle_count": 78,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.07790199667215347,
+              -0.12520800530910492,
+              0.11045199632644653
+            ],
+            [
+              0.11757399886846542,
+              -0.09974399954080582,
+              0.14106999337673187
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.09790199995040894,
+              -0.09307000786066055,
+              0.9867919683456421
+            ],
+            [
+              0.1375740021467209,
+              -0.062452007085084915,
+              1.0122560262680054
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.31660537933930755,
+            "certified_upper_outside_mm": 1.3166053793393075,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 18207,
+            "worst_sample_rest_m": [
+              0.13407308811491186,
+              -0.06533419340848923,
+              0.9867919683456421
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 27.566729113459587,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.3601092967907295,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.3601672941114594,
+              "body_table_min_mm": 0.3601092967907295,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 83.99458974599838,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 83.99470150470734
+            },
+            "open35": {
+              "organ_min_mm": 71.56907917727735,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 40.5316948890686,
+              "nearest_other": "RIB_L_04",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 40.61947426637211,
+              "body_table_min_mm": 40.61947918004991,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 137.69106566905975,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 137.69114017486572
+            }
+          }
+        }
+      ]
+    },
+    "RIB_R_01": {
+      "hinge_parent": "RIBCAGE_HALF_R",
+      "mass_kg": 0.0276,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.08799993991851807
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000524520874
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.04800000041723251
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.187999963760376
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_R_01",
+        "parent": "RIB_R_01",
+        "position_target_local_m": [
+          -0.059999994933605194,
+          -0.01999998837709427,
+          0.1379999965429306
+        ],
+        "position_rest_world_m": [
+          -0.07999999821186066,
+          -0.08999999612569809,
+          1.1679999828338623
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_R_01_01",
+          "vertex_count": 47,
+          "triangle_count": 90,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.10001400113105774,
+              -0.015448000282049179,
+              -0.035335998982191086
+            ],
+            [
+              -0.04797999933362007,
+              0.005164000205695629,
+              0.005098000168800354
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.1200140044093132,
+              0.04290200024843216,
+              1.1725519895553589
+            ],
+            [
+              -0.06798000633716583,
+              0.0833359956741333,
+              1.1931639909744263
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.22503054060507566,
+            "certified_upper_outside_mm": 1.2250305406050757,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 26276,
+            "worst_sample_rest_m": [
+              -0.07163400202989578,
+              0.0833359956741333,
+              1.1832640171051025
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 35.9888071538763,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 45,
+              "head_rest_min_sample_mm": 0.5285731167532504,
+              "head_table_inside_vertices": 19,
+              "head_table_min_sample_mm": 0.11238476872676983
+            },
+            "open35": {
+              "organ_min_mm": 39.36824947595596,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 26,
+              "head_rest_min_sample_mm": 4.088594112545252,
+              "head_table_inside_vertices": 26,
+              "head_table_min_sample_mm": 3.7402184680104256
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_01_02",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.10019800066947937,
+              -0.029481999576091766,
+              0.000901999999769032
+            ],
+            [
+              -0.09180200099945068,
+              0.0024480000138282776,
+              0.08958999812602997
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.12019800394773483,
+              -0.041589997708797455,
+              1.1585179567337036
+            ],
+            [
+              -0.11180200427770615,
+              0.04709799960255623,
+              1.1904479265213013
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.29474718030542135,
+            "certified_upper_outside_mm": 1.2947471803054214,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 72190,
+            "worst_sample_rest_m": [
+              -0.11581375574072202,
+              0.019124582642689347,
+              1.1681300352017085
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 17.547704208748335,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 30,
+              "head_rest_min_sample_mm": 0.11040337267331779,
+              "head_table_inside_vertices": 24,
+              "head_table_min_sample_mm": 0.29928595176897943
+            },
+            "open35": {
+              "organ_min_mm": 51.99386667062347,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 10.941753163933754,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 21.806132048368454
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_01_03",
+          "vertex_count": 29,
+          "triangle_count": 54,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.10012199729681015,
+              -0.029457999393343925,
+              0.08641000092029572
+            ],
+            [
+              -0.050689999014139175,
+              -0.010999999940395355,
+              0.13158799707889557
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.12012200057506561,
+              -0.08358799666166306,
+              1.1585419178009033
+            ],
+            [
+              -0.07069000601768494,
+              -0.0384100042283535,
+              1.1769999265670776
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4042108485009521,
+            "certified_upper_outside_mm": 1.4042108485009521,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 37884,
+            "worst_sample_rest_m": [
+              -0.08430400490760803,
+              -0.0802140012383461,
+              1.1589159965515137
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 20.492391660809517,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.389367196476087,
+              "head_rest_inside_vertices": 18,
+              "head_rest_min_sample_mm": 0.06824063166277483,
+              "head_table_inside_vertices": 29,
+              "head_table_min_sample_mm": 3.092059399932623
+            },
+            "open35": {
+              "organ_min_mm": 68.44571232795715,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 49.66534674167633,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 39.58873823285103
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_01_04",
+          "vertex_count": 31,
+          "triangle_count": 58,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.054482001811265945,
+              -0.029001999646425247,
+              0.12596000730991364
+            ],
+            [
+              0.00047599998652003706,
+              -0.010999999940395355,
+              0.1348239928483963
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.0744820088148117,
+              -0.08682399243116379,
+              1.1589980125427246
+            ],
+            [
+              -0.019524002447724342,
+              -0.07796000689268112,
+              1.1769999265670776
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4358592559583485,
+            "certified_upper_outside_mm": 1.4358592559583485,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 24713,
+            "worst_sample_rest_m": [
+              -0.020476004108786583,
+              -0.07796000689268112,
+              1.1679999828338623
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 21.1744102129316,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [
+                "STERNUM_R"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4311609372962266,
+              "body_table_min_mm": 0.42960193241015077,
+              "head_rest_inside_vertices": 31,
+              "head_rest_min_sample_mm": 3.273842390626669,
+              "head_table_inside_vertices": 31,
+              "head_table_min_sample_mm": 25.01617558300495
+            },
+            "open35": {
+              "organ_min_mm": 66.74571335315704,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [
+                "STERNUM_R"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 28.67950380699995,
+              "body_table_min_mm": 15.154239721596241,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 34.7566194832325,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 15.070878900587559
+            }
+          }
+        }
+      ]
+    },
+    "RIB_R_02": {
+      "hinge_parent": "RIBCAGE_HALF_R",
+      "mass_kg": 0.0316,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.06999993324279785
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000524520874
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.047999996691942215
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1699999570846558
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_R_02",
+        "parent": "RIB_R_02",
+        "position_target_local_m": [
+          -0.07599999755620956,
+          -0.03849995881319046,
+          0.1379999965429306
+        ],
+        "position_rest_world_m": [
+          -0.09600000083446503,
+          -0.09000000357627869,
+          1.131500005722046
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_R_02_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.12297400087118149,
+              -0.036956001073122025,
+              -0.035335998982191086
+            ],
+            [
+              -0.048486001789569855,
+              -0.01568000018596649,
+              0.00546600017696619
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14297400414943695,
+              0.0425339937210083,
+              1.1330440044403076
+            ],
+            [
+              -0.06848600506782532,
+              0.0833359956741333,
+              1.1543200016021729
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.35585908335633576,
+            "certified_upper_outside_mm": 1.3558590833563358,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 41160,
+            "worst_sample_rest_m": [
+              -0.07137800753116608,
+              0.0833359956741333,
+              1.148803949356079
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 26.481811955737214,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.17518636013846844,
+              "head_rest_inside_vertices": 9,
+              "head_rest_min_sample_mm": 0.4124660335946828,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 0.5868900334462523
+            },
+            "open35": {
+              "organ_min_mm": 22.746417671442032,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 16,
+              "head_rest_min_sample_mm": 0.3974326536990702,
+              "head_table_inside_vertices": 11,
+              "head_table_min_sample_mm": 0.16123072418849915
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_02_02",
+          "vertex_count": 41,
+          "triangle_count": 78,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.12339799851179123,
+              -0.05099400132894516,
+              0.0005339999916031957
+            ],
+            [
+              -0.11500199884176254,
+              -0.019044000655412674,
+              0.08959600329399109
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.1433980017900467,
+              -0.04159601032733917,
+              1.1190059185028076
+            ],
+            [
+              -0.135002002120018,
+              0.04746599495410919,
+              1.1509559154510498
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.16358928405679762,
+            "certified_upper_outside_mm": 1.1635892840567976,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 69854,
+            "worst_sample_rest_m": [
+              -0.1394599974155426,
+              0.04410599544644356,
+              1.1509559154510498
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 13.924554515217988,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 10.356900282204151,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 10.356900282204151,
+              "body_table_min_mm": 10.592147707939148,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 24.139057844877243,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 25.801558047533035
+            },
+            "open35": {
+              "organ_min_mm": 52.886555423336475,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 48.12321439385414,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 54.98233810067177
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_02_03",
+          "vertex_count": 35,
+          "triangle_count": 66,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1232760027050972,
+              -0.05097600072622299,
+              0.08640400320291519
+            ],
+            [
+              -0.06733199954032898,
+              -0.02955400012433529,
+              0.1330379992723465
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14327600598335266,
+              -0.08503800630569458,
+              1.1190239191055298
+            ],
+            [
+              -0.08733200281858444,
+              -0.038404010236263275,
+              1.1404459476470947
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3884807229042053,
+            "certified_upper_outside_mm": 1.3884807229042053,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 44316,
+            "worst_sample_rest_m": [
+              -0.08849800378084183,
+              -0.08503800630569458,
+              1.1226139068603516
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 17.43609294614764,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4262697184458375,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 12.291057966649532,
+              "head_table_inside_vertices": 4,
+              "head_table_min_sample_mm": 0.44854101724922657
+            },
+            "open35": {
+              "organ_min_mm": 67.47689998386078,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 76.58255100250244,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 62.41663917899132
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_02_04",
+          "vertex_count": 36,
+          "triangle_count": 68,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.07063599675893784,
+              -0.04744600132107735,
+              0.13002200424671173
+            ],
+            [
+              0.004852000158280134,
+              -0.02060999907553196,
+              0.13862599432468414
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.0906360000371933,
+              -0.09062600135803223,
+              1.1225539445877075
+            ],
+            [
+              -0.015148002654314041,
+              -0.08202201128005981,
+              1.1493899822235107
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4059003258589655,
+            "certified_upper_outside_mm": 1.4059003258589655,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 45069,
+            "worst_sample_rest_m": [
+              -0.08839035692484412,
+              -0.08203820292263815,
+              1.1404712722726065
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.305905012110472,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 16,
+              "head_rest_min_sample_mm": 7.71741010248661,
+              "head_table_inside_vertices": 24,
+              "head_table_min_sample_mm": 0.337370322085917
+            },
+            "open35": {
+              "organ_min_mm": 63.059256366949704,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.46029966324567795,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 25.729771703481674,
+              "body_table_min_mm": 26.652256026864052,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 47.652699053287506,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 26.550715789198875
+            }
+          }
+        }
+      ]
+    },
+    "RIB_R_03": {
+      "hinge_parent": "RIBCAGE_HALF_R",
+      "mass_kg": 0.0332,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.05100000277161598
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000151991844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.04800000041723251
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1510000228881836
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_R_03",
+        "parent": "RIB_R_03",
+        "position_target_local_m": [
+          -0.07999999821186066,
+          -0.0560000017285347,
+          0.1379999965429306
+        ],
+        "position_rest_world_m": [
+          -0.10000000149011612,
+          -0.09000000357627869,
+          1.0950000286102295
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_R_03_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.12870800495147705,
+              -0.055955998599529266,
+              -0.035335998982191086
+            ],
+            [
+              -0.048579998314380646,
+              -0.03467800095677376,
+              0.005543999839574099
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.1487080156803131,
+              0.042455997318029404,
+              1.0950440168380737
+            ],
+            [
+              -0.06858000159263611,
+              0.0833359956741333,
+              1.1163220405578613
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.347966852132231,
+            "certified_upper_outside_mm": 1.347966852132231,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 46036,
+            "worst_sample_rest_m": [
+              -0.07295600324869156,
+              0.0833359956741333,
+              1.107964038848877
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 19.14768902216553,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 4.21321951498886,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 4.220414989861002,
+              "body_table_min_mm": 4.21321951498886,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 8.822971023619175,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 9.02083795517683
+            },
+            "open35": {
+              "organ_min_mm": 15.99516179812311,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 1,
+              "head_rest_min_sample_mm": 0.1436214952263981,
+              "head_table_inside_vertices": 1,
+              "head_table_min_sample_mm": 0.2912745112553239
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_03_02",
+          "vertex_count": 51,
+          "triangle_count": 98,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1289139986038208,
+              -0.06999800354242325,
+              0.0004560000088531524
+            ],
+            [
+              -0.12080200016498566,
+              -0.038043998181819916,
+              0.08956599980592728
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14891400933265686,
+              -0.04156600311398506,
+              1.0810019969940186
+            ],
+            [
+              -0.14080199599266052,
+              0.04754399508237839,
+              1.1129560470581055
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.16837760631460696,
+            "certified_upper_outside_mm": 1.168377606314607,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 91702,
+            "worst_sample_rest_m": [
+              -0.14891400933265686,
+              0.03056199662387371,
+              1.1033120155334473
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 8.214542137367912,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 4.181061206377817,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 4.1882296324451875,
+              "body_table_min_mm": 4.181061206377817,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 45.47792673110962,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 45.512605458498
+            },
+            "open35": {
+              "organ_min_mm": 50.80513656139374,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 13.443798768332973,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 70.21693885326385,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 71.33469730615616
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_03_03",
+          "vertex_count": 42,
+          "triangle_count": 80,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1289139986038208,
+              -0.06998199969530106,
+              0.08643399924039841
+            ],
+            [
+              -0.0733880028128624,
+              -0.04720799997448921,
+              0.1357879936695099
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14891400933265686,
+              -0.08778800070285797,
+              1.0810179710388184
+            ],
+            [
+              -0.09338800609111786,
+              -0.03843400254845619,
+              1.1037920713424683
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3359265101607889,
+            "certified_upper_outside_mm": 1.335926510160789,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 51815,
+            "worst_sample_rest_m": [
+              -0.09400000423192978,
+              -0.08778800070285797,
+              1.086314082145691
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 13.334761373698711,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.435243098763749,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4352664400357753,
+              "body_table_min_mm": 0.435243098763749,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 33.114176243543625,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 33.64478424191475
+            },
+            "open35": {
+              "organ_min_mm": 64.82475856103117,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 27.582821334476243,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 98.83193671703339,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 90.6028226017952
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_03_04",
+          "vertex_count": 31,
+          "triangle_count": 58,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.0776899978518486,
+              -0.06479199975728989,
+              0.13234999775886536
+            ],
+            [
+              0.005557999946177006,
+              -0.025774000212550163,
+              0.14169999957084656
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.09769000113010406,
+              -0.09369999915361404,
+              1.0862079858779907
+            ],
+            [
+              -0.014442003332078457,
+              -0.08434999734163284,
+              1.1252260208129883
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.31586381373926997,
+            "certified_upper_outside_mm": 1.31586381373927,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 46752,
+            "worst_sample_rest_m": [
+              -0.09445600211620331,
+              -0.08761399984359741,
+              1.0862079858779907
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 17.849428579211235,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "STERNUM_R"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 12,
+              "head_rest_min_sample_mm": 0.8587263291701674,
+              "head_table_inside_vertices": 12,
+              "head_table_min_sample_mm": 0.3369118203409016
+            },
+            "open35": {
+              "organ_min_mm": 60.32027676701546,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [
+                "STERNUM_R"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 30.318885614635267,
+              "body_table_min_mm": 30.3107127292028,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 61.51214987039566,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 39.400614798069
+            }
+          }
+        }
+      ]
+    },
+    "RIB_R_04": {
+      "hinge_parent": "RIBCAGE_HALF_R",
+      "mass_kg": 0.0336,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.03199994936585426
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000151991844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.04800000041723251
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1319999694824219
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_R_04",
+        "parent": "RIB_R_04",
+        "position_target_local_m": [
+          -0.07000000029802322,
+          -0.06599999219179153,
+          0.14299999177455902
+        ],
+        "position_rest_world_m": [
+          -0.09000000357627869,
+          -0.0949999988079071,
+          1.065999984741211
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_R_04_01",
+          "vertex_count": 40,
+          "triangle_count": 76,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1287740021944046,
+              -0.0749640017747879,
+              -0.035335998982191086
+            ],
+            [
+              -0.048579998314380646,
+              -0.053677998483181,
+              0.005412000231444836
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14877399802207947,
+              0.042587995529174805,
+              1.0570359230041504
+            ],
+            [
+              -0.06858000159263611,
+              0.0833359956741333,
+              1.078321933746338
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.2704501384869218,
+            "certified_upper_outside_mm": 1.2704501384869218,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 45861,
+            "worst_sample_rest_m": [
+              -0.06973200291395187,
+              0.08122199773788452,
+              1.0629879236221313
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.3434514499597,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.5306234234012663,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.5306652747094631,
+              "body_table_min_mm": 0.5306234234012663,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 20.644916221499443,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 20.653866231441498
+            },
+            "open35": {
+              "organ_min_mm": 12.431252051650036,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 11.619058437645435,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 11.61914225667715
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_04_02",
+          "vertex_count": 48,
+          "triangle_count": 92,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1289139986038208,
+              -0.08900000154972076,
+              0.0005879999953322113
+            ],
+            [
+              -0.12080200016498566,
+              -0.05703600123524666,
+              0.09976799786090851
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14891400933265686,
+              -0.05176800489425659,
+              1.0429999828338623
+            ],
+            [
+              -0.14080199599266052,
+              0.04741199314594269,
+              1.074963927268982
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.21142080368008465,
+            "certified_upper_outside_mm": 1.2114208036800846,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 103469,
+            "worst_sample_rest_m": [
+              -0.14500001072883606,
+              -0.05000000074505806,
+              1.0609999895095825
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 6.4972848870724444,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.46784389996901155,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.46788575127720833,
+              "body_table_min_mm": 0.46784389996901155,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 57.32625350356102,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 57.33902379870415
+            },
+            "open35": {
+              "organ_min_mm": 49.67033118009567,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 18.38864001124811,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 83.31119269132614,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 83.31923186779022
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_04_03",
+          "vertex_count": 37,
+          "triangle_count": 70,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1289139986038208,
+              -0.08900000154972076,
+              0.09623199701309204
+            ],
+            [
+              -0.06506600230932236,
+              -0.057454001158475876,
+              0.14267399907112122
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14891400933265686,
+              -0.0946740061044693,
+              1.0429999828338623
+            ],
+            [
+              -0.08506600558757782,
+              -0.048232004046440125,
+              1.074545979499817
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.28533124714158475,
+            "certified_upper_outside_mm": 1.2853312471415848,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 60976,
+            "worst_sample_rest_m": [
+              -0.08523400127887726,
+              -0.0946740061044693,
+              1.0576080083847046
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.800895661115646,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.43453351872258345,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.43453351872258345,
+              "body_table_min_mm": 0.4346273319357963,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 41.94324463605881,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 42.08626598119736
+            },
+            "open35": {
+              "organ_min_mm": 67.99402007876311,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.12888365017715842,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 35.299906638464755,
+              "body_table_min_mm": 0.12888365017715842,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 111.00995540618896,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 109.60067808628082
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_04_04",
+          "vertex_count": 33,
+          "triangle_count": 62,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.07059799879789352,
+              -0.07454600185155869,
+              0.1371919959783554
+            ],
+            [
+              0.006056000012904406,
+              -0.03095399960875511,
+              0.14553199708461761
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.09059800207614899,
+              -0.0975319966673851,
+              1.057453989982605
+            ],
+            [
+              -0.013944003731012344,
+              -0.0891919955611229,
+              1.1010459661483765
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.24526461493223906,
+            "certified_upper_outside_mm": 1.245264614932239,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 36930,
+            "worst_sample_rest_m": [
+              -0.08545999974012375,
+              -0.09459801018238068,
+              1.0575319528579712
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 21.901872009038925,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [
+                "STERNUM_R"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4390805391944399,
+              "body_table_min_mm": 0.4391549551656792,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 2.6248283684253693,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 3.214482916519046
+            },
+            "open35": {
+              "organ_min_mm": 60.49141753252353,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [
+                "STERNUM_R"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 32.274205079392175,
+              "body_table_min_mm": 32.274268289311735,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 75.02736151218414,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 58.03142115473747
+            }
+          }
+        }
+      ]
+    },
+    "RIB_R_05": {
+      "hinge_parent": "RIBCAGE_HALF_R",
+      "mass_kg": 0.0271,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.08499999344348907
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.011999968439340591
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.03200000151991844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.020000003278255463
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          0.047999996691942215
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1119999885559082
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_RIB_R_05",
+        "parent": "RIB_R_05",
+        "position_target_local_m": [
+          -0.11500000208616257,
+          -0.11699999123811722,
+          0.11299998313188553
+        ],
+        "position_rest_world_m": [
+          -0.13500000536441803,
+          -0.06499999016523361,
+          0.9950000047683716
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_RIB_R_05_01",
+          "vertex_count": 38,
+          "triangle_count": 72,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.12699000537395477,
+              -0.08797399699687958,
+              -0.035335998982191086
+            ],
+            [
+              -0.04857800155878067,
+              -0.06505200266838074,
+              0.005419999826699495
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14699000120162964,
+              0.04257999360561371,
+              1.0240260362625122
+            ],
+            [
+              -0.06857800483703613,
+              0.0833359882235527,
+              1.046947956085205
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.2770397113636136,
+            "certified_upper_outside_mm": 1.2770397113636136,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 47835,
+            "worst_sample_rest_m": [
+              -0.07295800745487213,
+              0.0833359882235527,
+              1.0320520401000977
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 24.067385122179985,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.2168002829481074,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.2168002829481074,
+              "body_table_min_mm": 0.2168205992962938,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 46.01692408323288,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 46.01703584194183
+            },
+            "open35": {
+              "organ_min_mm": 16.59255288541317,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 42.485546320676804,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 42.48567298054695
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_05_02",
+          "vertex_count": 50,
+          "triangle_count": 96,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1289139986038208,
+              -0.10346399992704391,
+              0.0015539999585598707
+            ],
+            [
+              -0.12080200016498566,
+              -0.06502600014209747,
+              0.09143000096082687
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14891400933265686,
+              -0.043430011719465256,
+              1.0085359811782837
+            ],
+            [
+              -0.14080199599266052,
+              0.04644599184393883,
+              1.0469739437103271
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3414076054468751,
+            "certified_upper_outside_mm": 1.341407605446875,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 99582,
+            "worst_sample_rest_m": [
+              -0.14443671384028026,
+              0.043276132749659676,
+              1.028370440006256
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 3.6569073609658207,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.16516428308809622,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.16516428308809622,
+              "body_table_min_mm": 0.16518412542961694,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 69.61015611886978,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 69.61020827293396
+            },
+            "open35": {
+              "organ_min_mm": 55.85460650501039,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [
+                "BODY_TABLE_REST"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 20.825001344165493,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 92.48813986778259,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 92.48820692300797
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_05_03",
+          "vertex_count": 47,
+          "triangle_count": 90,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.1289139986038208,
+              -0.12520800530910492,
+              0.08456999808549881
+            ],
+            [
+              -0.11242599785327911,
+              -0.0865359976887703,
+              0.11554799973964691
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.14891400933265686,
+              -0.06754801422357559,
+              0.9867919683456421
+            ],
+            [
+              -0.13242599368095398,
+              -0.03657000884413719,
+              1.0254639387130737
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4969757283106446,
+            "certified_upper_outside_mm": 1.4969757283106446,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 16600,
+            "worst_sample_rest_m": [
+              -0.13585001230239868,
+              -0.06447801738977432,
+              0.9867919683456421
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 9.153818323047984,
+              "nearest_organ": "ORGAN_LIVER",
+              "other_min_mm": 1.4493524795398116,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 1.449431641958654,
+              "body_table_min_mm": 1.4493524795398116,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 83.08181166648865,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 83.08190852403641
+            },
+            "open35": {
+              "organ_min_mm": 65.02885806063988,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 6.702172104269266,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 36.625295877456665,
+              "body_table_min_mm": 6.702172104269266,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 129.9123764038086,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 129.91243600845337
+            }
+          }
+        },
+        {
+          "name": "UCX_RIB_R_05_04",
+          "vertex_count": 41,
+          "triangle_count": 78,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.11757399886846542,
+              -0.12520800530910492,
+              0.11045199632644653
+            ],
+            [
+              -0.07790199667215347,
+              -0.09974399954080582,
+              0.14125999808311462
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.1375740021467209,
+              -0.0932600125670433,
+              0.9867919683456421
+            ],
+            [
+              -0.09790199995040894,
+              -0.062452007085084915,
+              1.0122560262680054
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4624552093446255,
+            "certified_upper_outside_mm": 1.4624552093446255,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 18174,
+            "worst_sample_rest_m": [
+              -0.13599200546741486,
+              -0.06426601111888885,
+              0.9867919683456421
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 10.456740470667384,
+              "nearest_organ": "ORGAN_LIVER",
+              "other_min_mm": 0.46300108078867197,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.4631275369320065,
+              "body_table_min_mm": 0.46300108078867197,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 83.99458974599838,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 83.99470150470734
+            },
+            "open35": {
+              "organ_min_mm": 68.27250123023987,
+              "nearest_organ": "ORGAN_LIVER",
+              "other_min_mm": 39.00889679789543,
+              "nearest_other": "BODY_TABLE_REST",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 40.188708438422786,
+              "body_table_min_mm": 39.00889679789543,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 137.69106566905975,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 137.69114017486572
+            }
+          }
+        }
+      ]
+    },
+    "STERNUM_L": {
+      "hinge_parent": "RIBCAGE_HALF_L",
+      "mass_kg": 0.0131,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.10499999672174454
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.07799994200468063
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.1602635234594345
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          -0.08026351779699326
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1779999732971191
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_STERNUM_L",
+        "parent": "STERNUM_L",
+        "position_target_local_m": [
+          0.0,
+          -0.05999995023012161,
+          0.023833783343434334
+        ],
+        "position_rest_world_m": [
+          0.0,
+          -0.10409730672836304,
+          1.1180000305175781
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_STERNUM_L_01",
+          "vertex_count": 27,
+          "triangle_count": 50,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.11999999731779099,
+              0.013737999834120274
+            ],
+            [
+              0.011230000294744968,
+              -0.10285799950361252,
+              0.023792000487446785
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.10405552387237549,
+              1.0579999685287476
+            ],
+            [
+              0.011230000294744968,
+              -0.09400152415037155,
+              1.0751420259475708
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 1.1240075109526515,
+            "certified_upper_outside_mm": 1.3740075109526515,
+            "grid_cover_radius_mm": 0.25,
+            "samples": 87439,
+            "worst_sample_rest_m": [
+              0.008841059066574362,
+              -0.10069571321501451,
+              1.0707052581450518
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.24847236275673,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.19999999494757503,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 5.587480684704401,
+              "body_table_min_mm": 5.564395803958178,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 12.02072948217392,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 12.02083844691515
+            },
+            "open35": {
+              "organ_min_mm": 70.0542744326452,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 15.233958829077478,
+              "nearest_other": "RIB_L_04",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 38.7992188334465,
+              "body_table_min_mm": 38.82315009832382,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 82.71776139736176,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 74.31898266077042
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_L_02",
+          "vertex_count": 42,
+          "triangle_count": 80,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.10285799950361252,
+              0.011145999655127525
+            ],
+            [
+              0.014643999747931957,
+              -0.08571399748325348,
+              0.0213019996881485
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.10156552493572235,
+              1.0751420259475708
+            ],
+            [
+              0.014643999747931957,
+              -0.09140952676534653,
+              1.0922859907150269
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.11880826787091792,
+            "certified_upper_outside_mm": 1.118808267870918,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5266,
+            "worst_sample_rest_m": [
+              0.005248399979124466,
+              -0.09255485981702805,
+              1.0846667687098186
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 19.783497942014037,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_L_04",
+              "surface_intersections": [
+                "RIB_L_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 4.23566484823823,
+              "body_table_min_mm": 4.632904194295406,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 4.23566484823823,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 4.632904194295406
+            },
+            "open35": {
+              "organ_min_mm": 66.54086673586875,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_L_04",
+              "surface_intersections": [
+                "RIB_L_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 37.56118193268776,
+              "body_table_min_mm": 37.70570829510689,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 74.89524781703949,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 59.47370454668999
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_L_03",
+          "vertex_count": 35,
+          "triangle_count": 66,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.08571399748325348,
+              0.008547999896109104
+            ],
+            [
+              0.015106000006198883,
+              -0.06857199966907501,
+              0.018705999478697777
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.09896952658891678,
+              1.0922859907150269
+            ],
+            [
+              0.015106000006198883,
+              -0.08881152421236038,
+              1.1094279289245605
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.07793991971993819,
+            "certified_upper_outside_mm": 1.0779399197199382,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5042,
+            "worst_sample_rest_m": [
+              0.0018476923365736955,
+              -0.09797798498318745,
+              1.098353074147151
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.116287762699898,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "RIB_L_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 6,
+              "head_rest_min_sample_mm": 0.44616550439968705,
+              "head_table_inside_vertices": 6,
+              "head_table_min_sample_mm": 0.8802727679722011
+            },
+            "open35": {
+              "organ_min_mm": 66.50050488396414,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_L_04",
+              "surface_intersections": [
+                "RIB_L_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 36.78771108388901,
+              "body_table_min_mm": 37.05793246626854,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 66.3377195596695,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 45.53550481796265
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_L_04",
+          "vertex_count": 34,
+          "triangle_count": 64,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.06857199966907501,
+              0.005882000084966421
+            ],
+            [
+              0.01511599961668253,
+              -0.05142800137400627,
+              0.01604199968278408
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.09630551934242249,
+              1.1094279289245605
+            ],
+            [
+              0.01511599961668253,
+              -0.08614552021026611,
+              1.1265720129013062
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.1526651467429474,
+            "certified_upper_outside_mm": 1.1526651467429474,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 6182,
+            "worst_sample_rest_m": [
+              0.01156385721904891,
+              -0.0869023794574397,
+              1.1237144385065352
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 15.972515568137169,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "RIB_L_03"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 25,
+              "head_rest_min_sample_mm": 0.04616373189492151,
+              "head_table_inside_vertices": 24,
+              "head_table_min_sample_mm": 0.7874880102463067
+            },
+            "open35": {
+              "organ_min_mm": 67.13680582397996,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_L_03",
+              "surface_intersections": [
+                "RIB_L_03"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 36.328256130218506,
+              "body_table_min_mm": 33.72064521100034,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 56.43597990274429,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 33.72066468000412
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_L_05",
+          "vertex_count": 21,
+          "triangle_count": 38,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.05142800137400627,
+              0.0033660000190138817
+            ],
+            [
+              0.014658000320196152,
+              -0.034285999834537506,
+              0.013376000337302685
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.09363952279090881,
+              1.1265720129013062
+            ],
+            [
+              0.014658000320196152,
+              -0.08362951874732971,
+              1.1437139511108398
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4981872043572366,
+            "certified_upper_outside_mm": 1.4981872043572366,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 4247,
+            "worst_sample_rest_m": [
+              0.014456667006015778,
+              -0.0847955197095871,
+              1.1379999717076619
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.523422673344612,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.19999999494757503,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 3.7541757337749004,
+              "body_table_min_mm": 2.423368627205491,
+              "head_rest_inside_vertices": 21,
+              "head_rest_min_sample_mm": 3.754175966605544,
+              "head_table_inside_vertices": 21,
+              "head_table_min_sample_mm": 2.423315541818738
+            },
+            "open35": {
+              "organ_min_mm": 67.04719364643097,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.7369566010311246,
+              "nearest_other": "RIB_L_02",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 36.10343113541603,
+              "body_table_min_mm": 24.229202419519424,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 46.67440801858902,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 24.26597662270069
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_L_06",
+          "vertex_count": 31,
+          "triangle_count": 58,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.034285999834537506,
+              0.00011999999696854502
+            ],
+            [
+              0.01992199942469597,
+              -0.017141999676823616,
+              0.010859999805688858
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.09112352132797241,
+              1.1437139511108398
+            ],
+            [
+              0.01992199942469597,
+              -0.08038351684808731,
+              1.160857915878296
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.38968195440247655,
+            "certified_upper_outside_mm": 1.3896819544024765,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5184,
+            "worst_sample_rest_m": [
+              0.008234888651511734,
+              -0.0821804807141975,
+              1.1514157454172769
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 17.850695177912712,
+              "nearest_organ": "VESSELS_PULMONARY_ARTERY",
+              "other_min_mm": 0.19999999494757503,
+              "nearest_other": "STERNUM_R",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 5.370423663407564,
+              "body_table_min_mm": 4.910781048238277,
+              "head_rest_inside_vertices": 31,
+              "head_rest_min_sample_mm": 12.710867449641228,
+              "head_table_inside_vertices": 31,
+              "head_table_min_sample_mm": 16.7316235601902
+            },
+            "open35": {
+              "organ_min_mm": 67.00662523508072,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.530857068952173,
+              "nearest_other": "RIB_L_02",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 35.45176237821579,
+              "body_table_min_mm": 14.765375293791294,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 36.59804165363312,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 14.792014844715595
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_L_07",
+          "vertex_count": 33,
+          "triangle_count": 62,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              0.00019999999494757503,
+              -0.017141999676823616,
+              -0.0027600000612437725
+            ],
+            [
+              0.021083999425172806,
+              -0.0,
+              0.00803999975323677
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              0.00019999999494757503,
+              -0.08830352127552032,
+              1.160857915878296
+            ],
+            [
+              0.021083999425172806,
+              -0.0775035172700882,
+              1.1779999732971191
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.3198458580300212,
+            "certified_upper_outside_mm": 1.3198458580300212,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 6743,
+            "worst_sample_rest_m": [
+              0.005009374986002513,
+              -0.0803652685135603,
+              1.1620809510350227
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.729995608329773,
+              "nearest_organ": "VESSELS_PULMONARY_ARTERY",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_L_01",
+              "surface_intersections": [
+                "RIB_L_01"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 5.547366105020046,
+              "body_table_min_mm": 5.168542265892029,
+              "head_rest_inside_vertices": 33,
+              "head_rest_min_sample_mm": 22.57632464170456,
+              "head_table_inside_vertices": 33,
+              "head_table_min_sample_mm": 33.982645720243454
+            },
+            "open35": {
+              "organ_min_mm": 68.08075308799744,
+              "nearest_organ": "ORGAN_LUNG_L",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_L_01",
+              "surface_intersections": [
+                "RIB_L_01"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 27.346475049853325,
+              "body_table_min_mm": 5.8823530562222,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 27.346525341272354,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 6.110104266554117
+            }
+          }
+        }
+      ]
+    },
+    "STERNUM_R": {
+      "hinge_parent": "RIBCAGE_HALF_R",
+      "mass_kg": 0.0131,
+      "object_local_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.10499999672174454
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.07799994200468063
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.1602635234594345
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "object_rest_world_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          7.549790126404332e-08,
+          -1.0,
+          -0.08026351779699326
+        ],
+        [
+          0.0,
+          1.0,
+          7.549790126404332e-08,
+          1.1779999732971191
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "break_empty": {
+        "name": "BREAK_STERNUM_R",
+        "parent": "STERNUM_R",
+        "position_target_local_m": [
+          0.0,
+          -0.05999995023012161,
+          0.023833783343434334
+        ],
+        "position_rest_world_m": [
+          0.0,
+          -0.10409730672836304,
+          1.1180000305175781
+        ]
+      },
+      "ucx_parts": [
+        {
+          "name": "UCX_STERNUM_R_01",
+          "vertex_count": 23,
+          "triangle_count": 42,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.011230000294744968,
+              -0.11999999731779099,
+              0.013825999572873116
+            ],
+            [
+              -0.00019999999494757503,
+              -0.10285799950361252,
+              0.023816000670194626
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.011230000294744968,
+              -0.10407952964305878,
+              1.0579999685287476
+            ],
+            [
+              -0.00019999999494757503,
+              -0.09408952295780182,
+              1.0751420259475708
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 1.1254262644797564,
+            "certified_upper_outside_mm": 1.3754262644797564,
+            "grid_cover_radius_mm": 0.25,
+            "samples": 62087,
+            "worst_sample_rest_m": [
+              -0.008841059066574362,
+              -0.09530051140224231,
+              1.0707052581450518
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.264897669462496,
+              "nearest_organ": "DIAPHRAGM",
+              "other_min_mm": 0.19999999494757503,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 5.585978138299981,
+              "body_table_min_mm": 5.563359707593918,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 12.035360559821129,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 12.035469524562359
+            },
+            "open35": {
+              "organ_min_mm": 68.7565805227119,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 15.224841423332691,
+              "nearest_other": "RIB_R_04",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 38.73677924275398,
+              "body_table_min_mm": 38.73678669333458,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 82.73285627365112,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 74.32737946510315
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_R_02",
+          "vertex_count": 38,
+          "triangle_count": 72,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.014643999747931957,
+              -0.10285799950361252,
+              0.011222000233829021
+            ],
+            [
+              -0.00019999999494757503,
+              -0.08571399748325348,
+              0.021379999816417694
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.014643999747931957,
+              -0.10164352506399155,
+              1.0751420259475708
+            ],
+            [
+              -0.00019999999494757503,
+              -0.09148552268743515,
+              1.0922859907150269
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.30112353852018714,
+            "certified_upper_outside_mm": 1.3011235385201871,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 4228,
+            "worst_sample_rest_m": [
+              -0.006966999899304938,
+              -0.09284692443907261,
+              1.084335058927536
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 20.377879962325096,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_R_04",
+              "surface_intersections": [
+                "RIB_R_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 4.245176786228646,
+              "body_table_min_mm": 4.642507018774082,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 4.245191812515259,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 4.642510786652565
+            },
+            "open35": {
+              "organ_min_mm": 65.62986969947815,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_R_04",
+              "surface_intersections": [
+                "RIB_R_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 37.30599954724312,
+              "body_table_min_mm": 37.30601817369461,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 74.90471005439758,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 59.47977676987648
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_R_03",
+          "vertex_count": 27,
+          "triangle_count": 50,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.015106000006198883,
+              -0.08571399748325348,
+              0.008554000407457352
+            ],
+            [
+              -0.00019999999494757503,
+              -0.06857199966907501,
+              0.018758000805974007
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.015106000006198883,
+              -0.09902152419090271,
+              1.0922859907150269
+            ],
+            [
+              -0.00019999999494757503,
+              -0.0888175219297409,
+              1.1094279289245605
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.22006270592100918,
+            "certified_upper_outside_mm": 1.2200627059210092,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 4647,
+            "worst_sample_rest_m": [
+              -0.007421999871439766,
+              -0.0911945216357708,
+              1.0951039791107178
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.460961763081002,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "RIB_R_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 4,
+              "head_rest_min_sample_mm": 0.33047786564566195,
+              "head_table_inside_vertices": 4,
+              "head_table_min_sample_mm": 0.2752805012278259
+            },
+            "open35": {
+              "organ_min_mm": 65.62932580709457,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_R_04",
+              "surface_intersections": [
+                "RIB_R_04"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 36.492008715867996,
+              "body_table_min_mm": 36.4917516708374,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 66.34310632944107,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 45.539844781160355
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_R_04",
+          "vertex_count": 37,
+          "triangle_count": 70,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.01511599961668253,
+              -0.06857199966907501,
+              0.005878000054508448
+            ],
+            [
+              -0.00019999999494757503,
+              -0.05142800137400627,
+              0.01604600064456463
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.01511599961668253,
+              -0.09630952030420303,
+              1.1094279289245605
+            ],
+            [
+              -0.00019999999494757503,
+              -0.08614151924848557,
+              1.1265720129013062
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.19383399921935052,
+            "certified_upper_outside_mm": 1.1938339992193505,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5307,
+            "worst_sample_rest_m": [
+              -0.011321333314602573,
+              -0.08865552147229512,
+              1.1122852961222331
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.18475839495659,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "BODY_REST",
+              "surface_intersections": [
+                "BODY_REST",
+                "BODY_TABLE_REST",
+                "RIB_R_03"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 0.0,
+              "body_table_min_mm": 0.0,
+              "head_rest_inside_vertices": 25,
+              "head_rest_min_sample_mm": 0.10307962656952441,
+              "head_table_inside_vertices": 24,
+              "head_table_min_sample_mm": 0.7909663254395127
+            },
+            "open35": {
+              "organ_min_mm": 67.4680843949318,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_R_03",
+              "surface_intersections": [
+                "RIB_R_03"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 35.98569706082344,
+              "body_table_min_mm": 33.717092126607895,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 56.43239989876747,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 33.717092126607895
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_R_05",
+          "vertex_count": 26,
+          "triangle_count": 48,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.014658000320196152,
+              -0.05142800137400627,
+              0.0033579999580979347
+            ],
+            [
+              -0.00019999999494757503,
+              -0.034285999834537506,
+              0.013372000306844711
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.014658000320196152,
+              -0.09363552182912827,
+              1.1265720129013062
+            ],
+            [
+              -0.00019999999494757503,
+              -0.08362151682376862,
+              1.1437139511108398
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.4962243838235736,
+            "certified_upper_outside_mm": 1.4962243838235736,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5486,
+            "worst_sample_rest_m": [
+              -0.014456667006015778,
+              -0.08486351867516835,
+              1.1379999717076619
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 16.10089375629194,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.19999999494757503,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 3.8736399728804827,
+              "body_table_min_mm": 2.543813781812787,
+              "head_rest_inside_vertices": 26,
+              "head_rest_min_sample_mm": 3.8736762944608927,
+              "head_table_inside_vertices": 26,
+              "head_table_min_sample_mm": 2.543907379731536
+            },
+            "open35": {
+              "organ_min_mm": 66.18539779797055,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.7230398477986455,
+              "nearest_other": "RIB_R_02",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 35.56852787733078,
+              "body_table_min_mm": 24.262381717562675,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 46.6708280146122,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 24.225642904639244
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_R_06",
+          "vertex_count": 37,
+          "triangle_count": 70,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.01992199942469597,
+              -0.034285999834537506,
+              0.0002699999895412475
+            ],
+            [
+              -0.00019999999494757503,
+              -0.017141999676823616,
+              0.010855999775230885
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.01992199942469597,
+              -0.09111952036619186,
+              1.1437139511108398
+            ],
+            [
+              -0.00019999999494757503,
+              -0.08053351938724518,
+              1.160857915878296
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.2624400658532977,
+            "certified_upper_outside_mm": 1.2624400658532977,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5801,
+            "worst_sample_rest_m": [
+              -0.014705250272527337,
+              -0.083777517080307,
+              1.1446664482355118
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 18.885018303990364,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.19999999494757503,
+              "nearest_other": "STERNUM_L",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 5.361753981560469,
+              "body_table_min_mm": 4.907902795821428,
+              "head_rest_inside_vertices": 37,
+              "head_rest_min_sample_mm": 12.905146926641464,
+              "head_table_inside_vertices": 37,
+              "head_table_min_sample_mm": 16.802512109279633
+            },
+            "open35": {
+              "organ_min_mm": 65.94835221767426,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.4790347593370825,
+              "nearest_other": "RIB_R_02",
+              "surface_intersections": [],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 34.51763838529587,
+              "body_table_min_mm": 14.788488857448101,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 36.59435734152794,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 14.761839993298054
+            }
+          }
+        },
+        {
+          "name": "UCX_STERNUM_R_07",
+          "vertex_count": 36,
+          "triangle_count": 68,
+          "convex": true,
+          "bounds_target_local_m": [
+            [
+              -0.021083999425172806,
+              -0.017141999676823616,
+              -0.0028440000023692846
+            ],
+            [
+              -0.00019999999494757503,
+              -0.0,
+              0.00791999977082014
+            ]
+          ],
+          "bounds_rest_world_m": [
+            [
+              -0.021083999425172806,
+              -0.08818352222442627,
+              1.160857915878296
+            ],
+            [
+              -0.00019999999494757503,
+              -0.07741951942443848,
+              1.1779999732971191
+            ]
+          ],
+          "local_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "fit": {
+            "sample_max_outside_mm": 0.1184068969450891,
+            "certified_upper_outside_mm": 1.118406896945089,
+            "grid_cover_radius_mm": 1.0,
+            "samples": 5747,
+            "worst_sample_rest_m": [
+              -0.01616373291860024,
+              -0.0840855156381925,
+              1.1748891989390056
+            ],
+            "pass_2mm": true
+          },
+          "clearance": {
+            "closed": {
+              "organ_min_mm": 21.16824115348039,
+              "nearest_organ": "ORGAN_HEART",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_R_01",
+              "surface_intersections": [
+                "RIB_R_01"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 5.534415598958731,
+              "body_table_min_mm": 5.239491350948811,
+              "head_rest_inside_vertices": 36,
+              "head_rest_min_sample_mm": 22.82567508518696,
+              "head_table_inside_vertices": 36,
+              "head_table_min_sample_mm": 34.03496369719505
+            },
+            "open35": {
+              "organ_min_mm": 67.16299802064896,
+              "nearest_organ": "ORGAN_LUNG_R",
+              "other_min_mm": 0.0,
+              "nearest_other": "RIB_R_01",
+              "surface_intersections": [
+                "RIB_R_01"
+              ],
+              "anatomical_containment": [],
+              "body_rest_min_mm": 27.342822402715683,
+              "body_table_min_mm": 6.106614600867033,
+              "head_rest_inside_vertices": 0,
+              "head_rest_min_sample_mm": 27.342822402715683,
+              "head_table_inside_vertices": 0,
+              "head_table_min_sample_mm": 5.878742318600416
+            }
+          }
+        }
+      ]
+    }
+  }
+}

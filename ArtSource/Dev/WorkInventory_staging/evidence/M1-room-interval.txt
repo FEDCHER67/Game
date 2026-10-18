@@ -1,0 +1,92 @@
+  Buyers.Copy -> C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\buyers\bin\Release\netstandard2.1\Buyers.Copy.dll
+  WorkInventory.Core -> C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\src\bin\Release\netstandard2.1\WorkInventory.Core.dll
+  WorkInventory.Tests -> C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\bin\Release\net8.0\WorkInventory.Tests.dll
+Test run for C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\bin\Release\net8.0\WorkInventory.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Failed Spoilage_RoomBoundary_300 [3 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=4 actual=5
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c__DisplayClass10_0.<Storage>b__25() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 16
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Spoilage_RoomBoundary_600 [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=3 actual=4
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c__DisplayClass10_0.<Storage>b__25() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 16
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Spoilage_RoomBoundary_1200 [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=1 actual=2
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c__DisplayClass10_0.<Storage>b__25() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 16
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Spoilage_PoweredFridgeAndPowerLoss [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=4 actual=5
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c.<Storage>b__10_0() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 26
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Spoilage_FractionSurvivesRoomCoolerMove [1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=0,5 actual=0,4983388704318937
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.True(Boolean condition, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 20
+   at WorkInventory.Checks.Scenarios.Near(Double expected, Double actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 21
+   at WorkInventory.Checks.Scenarios.<>c.<Storage>b__10_1() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 31
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Spoilage_ExactEventTimesForLargeTick [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=300 actual=301
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.True(Boolean condition, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 20
+   at WorkInventory.Checks.Scenarios.Near(Double expected, Double actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 21
+   at WorkInventory.Checks.Scenarios.<>c.<Storage>b__10_2() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 36
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Spoilage_QueriesAndPackagingNeverRestoreTier [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=600 actual=301
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.True(Boolean condition, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 20
+   at WorkInventory.Checks.Scenarios.Near(Double expected, Double actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 21
+   at WorkInventory.Checks.Scenarios.<>c.<Storage>b__10_3() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\StorageChecks.cs:line 40
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Leave_OtherPlayersAndWorldKeepSpoiling [< 1 ms]
+  Error Message:
+   System.InvalidOperationException :  expected=4 actual=5
+  Stack Trace:
+     at WorkInventory.Checks.Scenarios.Equal[T](T expected, T actual, String detail) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\CheckSupport.cs:line 19
+   at WorkInventory.Checks.Scenarios.<>c.<Players>b__7_14() in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\checks\PlayerChecks.cs:line 87
+   at WorkInventory.Tests.AcceptanceTests.InventoryRule(Scenario scenario) in C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\tests\AcceptanceTests.cs:line 12
+   at InvokeStub_AcceptanceTests.InventoryRule(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+WARNING: Overwriting results file: C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\evidence\M1-room-interval.trx
+Results File: C:\Dev\Game\ArtSource\Dev\WorkInventory_staging\evidence\M1-room-interval.trx
+
+Failed!  - Failed:     8, Passed:   343, Skipped:     0, Total:   351, Duration: 289 ms - WorkInventory.Tests.dll (net8.0)

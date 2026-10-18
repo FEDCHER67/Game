@@ -1,0 +1,240 @@
+{
+  "marker": "INC_ABDOMEN",
+  "origin_table_blender": [
+    0.0,
+    -0.1295,
+    0.8889
+  ],
+  "mask_normals": "+Z (out of the belly): a Cull Back stencil-mask shader never writes from inside/behind",
+  "organs_vs_cavity_verts_inside": {
+    "VESSELS_VENA_CAVA": {
+      "verts": 388,
+      "inside_cavity": 315
+    },
+    "VESSELS_PULMONARY_VEINS": {
+      "verts": 136,
+      "inside_cavity": 136
+    },
+    "VESSELS_PULMONARY_ARTERY": {
+      "verts": 594,
+      "inside_cavity": 442
+    },
+    "VESSELS_AORTA": {
+      "verts": 808,
+      "inside_cavity": 243
+    },
+    "STERNUM_R": {
+      "verts": 190,
+      "inside_cavity": 180
+    },
+    "STERNUM_L": {
+      "verts": 190,
+      "inside_cavity": 180
+    },
+    "SPINE_THORACIC": {
+      "verts": 2340,
+      "inside_cavity": 0
+    },
+    "RIB_R_04": {
+      "verts": 310,
+      "inside_cavity": 125
+    },
+    "RIB_R_03": {
+      "verts": 320,
+      "inside_cavity": 127
+    },
+    "RIB_R_02": {
+      "verts": 320,
+      "inside_cavity": 125
+    },
+    "RIB_R_01": {
+      "verts": 320,
+      "inside_cavity": 100
+    },
+    "RIB_L_04": {
+      "verts": 310,
+      "inside_cavity": 150
+    },
+    "RIB_L_03": {
+      "verts": 320,
+      "inside_cavity": 133
+    },
+    "RIB_L_02": {
+      "verts": 320,
+      "inside_cavity": 129
+    },
+    "RIB_L_01": {
+      "verts": 320,
+      "inside_cavity": 102
+    },
+    "ORGAN_LUNG_R": {
+      "verts": 600,
+      "inside_cavity": 380
+    },
+    "ORGAN_LUNG_L": {
+      "verts": 466,
+      "inside_cavity": 291
+    },
+    "ORGAN_LIVER": {
+      "verts": 177,
+      "inside_cavity": 157
+    },
+    "ORGAN_KIDNEY_R": {
+      "verts": 139,
+      "inside_cavity": 98
+    },
+    "ORGAN_KIDNEY_L": {
+      "verts": 137,
+      "inside_cavity": 131
+    },
+    "ORGAN_HEART": {
+      "verts": 2444,
+      "inside_cavity": 2444
+    },
+    "DIAPHRAGM": {
+      "verts": 1442,
+      "inside_cavity": 1167
+    }
+  },
+  "objects": {
+    "ABDOMEN_OPENING": {
+      "tris": 7552,
+      "materials": [
+        "Buddy_Skin",
+        "MAT_Abdomen_Interior_v05"
+      ]
+    },
+    "ABDOMEN_MASK": {
+      "tris": 126,
+      "materials": [
+        "MAT_Abdomen_StencilMask_v05"
+      ]
+    },
+    "ABDOMEN_INTESTINES": {
+      "tris": 4560,
+      "materials": [
+        "MAT_Abdomen_Bowel_v05"
+      ]
+    },
+    "ABDOMEN_VESSELS": {
+      "tris": 1840,
+      "materials": [
+        "MAT_Vessel_Artery_v05",
+        "MAT_Vessel_Vein_v05"
+      ]
+    },
+    "CORD_KIDNEY_L_A": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Artery_v05"
+      ]
+    },
+    "CORD_KIDNEY_L_B": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Vein_v05"
+      ]
+    },
+    "CORD_KIDNEY_R_A": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Artery_v05"
+      ]
+    },
+    "CORD_KIDNEY_R_B": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Vein_v05"
+      ]
+    }
+  },
+  "flap_height_above_skin_mm": [
+    -0.7,
+    7.83
+  ],
+  "deepest_floor_marker_local_m": -0.155,
+  "min_body_left_behind_floor_m": 0.004,
+  "floor_points_without_body_behind": 0,
+  "gradient_png": "OperationAbdomen_v05_Gradient.png",
+  "vessel_bottom_minus_floor_mm": {
+    "aorta": [
+      0.3,
+      1.2
+    ],
+    "vena_cava": [
+      0.4,
+      1.4
+    ]
+  },
+  "bowel_vs_kidneys": {
+    "bowel_local_y_range": [
+      -0.1708,
+      -0.0957
+    ],
+    "bowel_local_z_range": [
+      -0.0893,
+      -0.0393
+    ],
+    "ORGAN_LIVER": {
+      "min_gap_to_bowel_mm": 4.5,
+      "verts_hidden_from_above_by_bowel_pct": 0.0,
+      "local_y_range": [
+        -0.1053,
+        0.0331
+      ],
+      "local_z_range": [
+        -0.1123,
+        -0.0372
+      ]
+    },
+    "ORGAN_KIDNEY_R": {
+      "min_gap_to_bowel_mm": 13.6,
+      "verts_hidden_from_above_by_bowel_pct": 43.9,
+      "local_y_range": [
+        -0.1707,
+        -0.0515
+      ],
+      "local_z_range": [
+        -0.1456,
+        -0.0922
+      ]
+    },
+    "ORGAN_KIDNEY_L": {
+      "min_gap_to_bowel_mm": 14.4,
+      "verts_hidden_from_above_by_bowel_pct": 31.4,
+      "local_y_range": [
+        -0.148,
+        -0.0292
+      ],
+      "local_z_range": [
+        -0.1506,
+        -0.0932
+      ]
+    },
+    "bowel_outside_cavity_min_depth_under_skin_mm": 19.0,
+    "bowel_outside_cavity_verts_without_skin_above": 0,
+    "cord_L_A": {
+      "min_gap_to_bowel_mm": 47.2,
+      "points_hidden_from_above_pct": 0.0
+    },
+    "cord_L_B": {
+      "min_gap_to_bowel_mm": 35.2,
+      "points_hidden_from_above_pct": 0.0
+    },
+    "cord_R_A": {
+      "min_gap_to_bowel_mm": 32.3,
+      "points_hidden_from_above_pct": 9.1
+    },
+    "cord_R_B": {
+      "min_gap_to_bowel_mm": 21.3,
+      "points_hidden_from_above_pct": 100.0
+    }
+  },
+  "bowel_verts_inside_cavity_pct": 62.2,
+  "outline": {
+    "half_width": 0.134,
+    "half_length_top": 0.1625,
+    "half_length_bottom": 0.1625,
+    "source": "organs_layout_v05.outline_xy (128 pts)"
+  }
+}

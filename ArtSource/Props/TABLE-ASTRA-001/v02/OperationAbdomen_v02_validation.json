@@ -1,0 +1,78 @@
+{
+  "marker": "INC_ABDOMEN",
+  "origin_table_blender": [
+    0.0,
+    -0.14,
+    0.8886
+  ],
+  "objects": {
+    "ABDOMEN_OPENING": {
+      "tris": 7296,
+      "materials": [
+        "Buddy_Skin",
+        "MAT_Abdomen_Interior_v02"
+      ]
+    },
+    "ABDOMEN_MASK": {
+      "tris": 126,
+      "materials": [
+        "MAT_Abdomen_StencilMask_v02"
+      ]
+    },
+    "ABDOMEN_INTESTINES": {
+      "tris": 4560,
+      "materials": [
+        "MAT_Abdomen_Bowel_v02"
+      ]
+    },
+    "ABDOMEN_VESSELS": {
+      "tris": 1840,
+      "materials": [
+        "MAT_Vessel_Artery_v02",
+        "MAT_Vessel_Vein_v02"
+      ]
+    },
+    "CORD_KIDNEY_L_A": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Artery_v02"
+      ]
+    },
+    "CORD_KIDNEY_L_B": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Vein_v02"
+      ]
+    },
+    "CORD_KIDNEY_R_A": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Artery_v02"
+      ]
+    },
+    "CORD_KIDNEY_R_B": {
+      "tris": 336,
+      "materials": [
+        "MAT_Vessel_Vein_v02"
+      ]
+    }
+  },
+  "flap_height_above_skin_mm": [
+    -0.7,
+    7.83
+  ],
+  "deepest_floor_marker_local_m": -0.1519,
+  "min_body_left_behind_floor_m": 0.0483,
+  "floor_points_without_body_behind": 0,
+  "gradient_png": "OperationAbdomen_v02_Gradient.png",
+  "vessel_bottom_minus_floor_mm": {
+    "aorta": [
+      -2.9,
+      -0.4
+    ],
+    "vena_cava": [
+      -0.9,
+      1.6
+    ]
+  }
+}

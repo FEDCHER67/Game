@@ -1,0 +1,4277 @@
+{
+ "version": "ORGANS_LAYOUT_v04",
+ "date": "2026-10-18",
+ "patient": "SAUSAGE_BUDDY_PATIENT_v04.fbx",
+ "frames": {
+  "rest": "patient model space, Blender metres, Z up, faces -Y, patient left = +X (all markers/sockets bone-parented to mixamorig:Spine; Hips/Spine/Spine1/Spine2 are rigid together in TABLE_REST)",
+  "socket_local": "organ frame: +X patient left, +Y head / organ long axis, +Z anterior (organ front). Organ meshes are authored in it: an organ placed at its socket with identity local transform sits in the body.",
+  "incision_marker_local": "INC_*: +Z skin normal = pull direction, +Y long axis toward the head, +X patient left (v02 convention)",
+  "unity_local": "after FBX import every marker/socket-local frame has X negated (Unity +X = patient RIGHT); *_unity values already have x negated and rotations mirrored (xyzw)",
+  "table_blender": "TABLE-ASTRA-001 v02 table-local Blender in the TABLE_REST pose (head end -Y, patient left -X)",
+  "table_unity": "OperatingTableAstra_v02 prefab-local Unity = (-x, z, -y) of table_blender"
+ },
+ "size_rule": {
+  "size_factor_vs_real": 0.9,
+  "note": "widths/depths x0.9 of a real adult; Buddy's trunk is short (x0.67 in height), so the lungs are ~15.5 cm tall instead of 25*0.9; every organ is 1:1 world scale, scale (1,1,1) - the same size in the body, in the hand and on the tray"
+ },
+ "organs": {
+  "ORGAN_HEART": {
+   "socket": "SOCKET_HEART",
+   "incision_marker": "INC_HEART",
+   "pivot": "organ centre = socket origin (mesh authored in socket space)",
+   "rest_socket": {
+    "rest_position": [
+     0.006,
+     -0.04,
+     1.07
+    ],
+    "rest_rotation_wxyz": [
+     0.70711,
+     0.70711,
+     0.0,
+     0.0
+    ],
+    "rest_x_axis": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "rest_y_axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "rest_z_axis": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   },
+   "local_bounds_min_m": [
+    -0.0498,
+    -0.0524,
+    -0.039
+   ],
+   "local_bounds_max_m": [
+    0.047,
+    0.0592,
+    0.033
+   ],
+   "size_m_xyz_local": [
+    0.0967,
+    0.1116,
+    0.0721
+   ],
+   "largest_dimension_m": 0.1116,
+   "tris": 4828,
+   "real_size_cm_long_wide_thick": [
+    12,
+    8.5,
+    6
+   ],
+   "materials": [
+    {
+     "name": "MAT_Organ_Heart_v03",
+     "base_color_srgb": [
+      0.74,
+      0.16,
+      0.19
+     ],
+     "smoothness": 0.67
+    },
+    {
+     "name": "MAT_Organ_Fat_v03",
+     "base_color_srgb": [
+      0.94,
+      0.8,
+      0.52
+     ],
+     "smoothness": 0.6
+    },
+    {
+     "name": "MAT_Vessel_Artery_v03",
+     "base_color_srgb": [
+      0.8,
+      0.16,
+      0.2
+     ],
+     "smoothness": 0.68
+    },
+    {
+     "name": "MAT_Vessel_Vein_v03",
+     "base_color_srgb": [
+      0.52,
+      0.36,
+      0.66
+     ],
+     "smoothness": 0.68
+    },
+    {
+     "name": "MAT_Vessel_Lumen_v03",
+     "base_color_srgb": [
+      0.3,
+      0.05,
+      0.08
+     ],
+     "smoothness": 0.4
+    }
+   ],
+   "source": "procedural (heart_v03.py)",
+   "fbx_alone": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/FBX/ORGAN_HEART_v04.fbx",
+   "pull": {
+    "direction": "INC_HEART +Z",
+    "depth_below_skin_m": 0.067,
+    "exit_distance_m": 0.133
+   }
+  },
+  "ORGAN_LUNG_L": {
+   "socket": "SOCKET_LUNG_L",
+   "incision_marker": "INC_LUNG_L",
+   "pivot": "organ centre = socket origin (mesh authored in socket space)",
+   "rest_socket": {
+    "rest_position": [
+     0.089,
+     -0.002,
+     1.068
+    ],
+    "rest_rotation_wxyz": [
+     0.70711,
+     0.70711,
+     0.0,
+     0.0
+    ],
+    "rest_x_axis": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "rest_y_axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "rest_z_axis": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   },
+   "local_bounds_min_m": [
+    -0.051,
+    -0.0777,
+    -0.051
+   ],
+   "local_bounds_max_m": [
+    0.0508,
+    0.0777,
+    0.051
+   ],
+   "size_m_xyz_local": [
+    0.1018,
+    0.1554,
+    0.1021
+   ],
+   "largest_dimension_m": 0.1554,
+   "tris": 920,
+   "real_size_cm_long_wide_thick": [
+    25,
+    11,
+    17
+   ],
+   "materials": [
+    {
+     "name": "MAT_Organ_Lung_v03",
+     "base_color_srgb": [
+      0.9,
+      0.52,
+      0.56
+     ],
+     "smoothness": 0.58
+    },
+    {
+     "name": "MAT_Organ_LungVein_v03",
+     "base_color_srgb": [
+      0.64,
+      0.22,
+      0.31
+     ],
+     "smoothness": 0.55
+    }
+   ],
+   "source": "LUNGS-ASTRA-001_recolour_v01: Lungs_Lobe_R + Lungs_BranchFront_R + Lungs_BranchRear_R (the model names its pair from the viewer; its +X lobe is the patient-left lung)",
+   "fbx_alone": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/FBX/ORGAN_LUNG_L_v04.fbx",
+   "pull": {
+    "direction": "INC_LUNG_L +Z",
+    "depth_below_skin_m": 0.0817,
+    "exit_distance_m": 0.163
+   }
+  },
+  "ORGAN_LUNG_R": {
+   "socket": "SOCKET_LUNG_R",
+   "incision_marker": "INC_LUNG_R",
+   "pivot": "organ centre = socket origin (mesh authored in socket space)",
+   "rest_socket": {
+    "rest_position": [
+     -0.085,
+     -0.004,
+     1.065
+    ],
+    "rest_rotation_wxyz": [
+     0.70711,
+     0.70711,
+     0.0,
+     0.0
+    ],
+    "rest_x_axis": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "rest_y_axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "rest_z_axis": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   },
+   "local_bounds_min_m": [
+    -0.0508,
+    -0.0723,
+    -0.0512
+   ],
+   "local_bounds_max_m": [
+    0.051,
+    0.0777,
+    0.0511
+   ],
+   "size_m_xyz_local": [
+    0.1018,
+    0.15,
+    0.1022
+   ],
+   "largest_dimension_m": 0.15,
+   "tris": 1188,
+   "real_size_cm_long_wide_thick": [
+    25,
+    12,
+    17
+   ],
+   "materials": [
+    {
+     "name": "MAT_Organ_Lung_v03",
+     "base_color_srgb": [
+      0.9,
+      0.52,
+      0.56
+     ],
+     "smoothness": 0.58
+    },
+    {
+     "name": "MAT_Organ_LungVein_v03",
+     "base_color_srgb": [
+      0.64,
+      0.22,
+      0.31
+     ],
+     "smoothness": 0.55
+    }
+   ],
+   "source": "LUNGS-ASTRA-001_recolour_v01: Lungs_Lobe_L + Lungs_BranchFront_L",
+   "fbx_alone": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/FBX/ORGAN_LUNG_R_v04.fbx",
+   "pull": {
+    "direction": "INC_LUNG_R +Z",
+    "depth_below_skin_m": 0.0822,
+    "exit_distance_m": 0.163
+   }
+  },
+  "ORGAN_LIVER": {
+   "socket": "SOCKET_LIVER",
+   "incision_marker": "INC_LIVER",
+   "pivot": "organ centre = socket origin (mesh authored in socket space)",
+   "rest_socket": {
+    "rest_position": [
+     -0.023,
+     -0.048,
+     0.947
+    ],
+    "rest_rotation_wxyz": [
+     0.70185,
+     0.70615,
+     -0.08603,
+     -0.03686
+    ],
+    "rest_x_axis": [
+     0.9825,
+     -0.1732,
+     0.0687
+    ],
+    "rest_y_axis": [
+     -0.0698,
+     0.0,
+     0.9976
+    ],
+    "rest_z_axis": [
+     -0.1728,
+     -0.9849,
+     -0.0121
+    ]
+   },
+   "local_bounds_min_m": [
+    -0.1105,
+    -0.0673,
+    -0.0359
+   ],
+   "local_bounds_max_m": [
+    0.1104,
+    0.0672,
+    0.0357
+   ],
+   "size_m_xyz_local": [
+    0.2209,
+    0.1346,
+    0.0716
+   ],
+   "largest_dimension_m": 0.2209,
+   "tris": 350,
+   "real_size_cm_long_wide_thick": [
+    25,
+    15,
+    8
+   ],
+   "materials": [
+    {
+     "name": "MAT_Organ_Liver_v03",
+     "base_color_srgb": [
+      0.62,
+      0.22,
+      0.2
+     ],
+     "smoothness": 0.68
+    }
+   ],
+   "source": "LIVER-ASTRA-001_recolour_v01 (mesh 'LIVER-ASTRA-001 | clean organ body')",
+   "fbx_alone": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/FBX/ORGAN_LIVER_v04.fbx",
+   "pull": {
+    "direction": "INC_LIVER +Z",
+    "depth_below_skin_m": 0.0678,
+    "exit_distance_m": 0.134
+   }
+  },
+  "ORGAN_KIDNEY_L": {
+   "socket": "SOCKET_KIDNEY_L",
+   "incision_marker": "INC_KIDNEY_L",
+   "pivot": "organ centre = socket origin (mesh authored in socket space)",
+   "rest_socket": {
+    "rest_position": [
+     0.08,
+     0.004,
+     0.863
+    ],
+    "rest_rotation_wxyz": [
+     0.76026,
+     0.60777,
+     0.06998,
+     0.21845
+    ],
+    "rest_x_axis": [
+     0.8948,
+     0.4172,
+     0.1591
+    ],
+    "rest_y_axis": [
+     -0.2471,
+     0.1658,
+     0.9547
+    ],
+    "rest_z_axis": [
+     0.372,
+     -0.8936,
+     0.2514
+    ]
+   },
+   "local_bounds_min_m": [
+    -0.0432,
+    -0.0966,
+    -0.0191
+   ],
+   "local_bounds_max_m": [
+    0.0294,
+    0.05,
+    0.0191
+   ],
+   "size_m_xyz_local": [
+    0.0725,
+    0.1465,
+    0.0383
+   ],
+   "largest_dimension_m": 0.1465,
+   "tris": 270,
+   "real_size_cm_long_wide_thick": [
+    11,
+    6,
+    3
+   ],
+   "materials": [
+    {
+     "name": "MAT_Organ_Kidney_v03",
+     "base_color_srgb": [
+      0.72,
+      0.31,
+      0.39
+     ],
+     "smoothness": 0.65
+    },
+    {
+     "name": "MAT_Organ_KidneyTube_v03",
+     "base_color_srgb": [
+      0.88,
+      0.6,
+      0.58
+     ],
+     "smoothness": 0.6
+    }
+   ],
+   "source": "KIDNEY-ASTRA-001_recolour_v01 (mesh 'R_Kidney and descending tube' = patient-left kidney)",
+   "fbx_alone": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/FBX/ORGAN_KIDNEY_L_v04.fbx",
+   "pull": {
+    "direction": "INC_KIDNEY_L +Z",
+    "depth_below_skin_m": 0.0909,
+    "exit_distance_m": 0.14
+   },
+   "hilum_rest": [
+    0.0597,
+    -0.0109,
+    0.8561
+   ],
+   "cords": {
+    "A_renal_artery": {
+     "rest_start": [
+      0.0595,
+      -0.0087,
+      0.8641
+     ],
+     "rest_end": [
+      0.0191,
+      -0.0015,
+      0.8721
+     ],
+     "rest_snip_point": [
+      0.0393,
+      -0.0051,
+      0.8681
+     ],
+     "marker_local_blender_start": [
+      -0.0226,
+      0.0066,
+      0.0053
+     ],
+     "marker_local_blender_end": [
+      -0.057,
+      0.0184,
+      -0.0153
+     ],
+     "marker_local_unity_start": [
+      0.0226,
+      0.0066,
+      0.0053
+     ],
+     "marker_local_unity_end": [
+      0.057,
+      0.0184,
+      -0.0153
+     ],
+     "length_m": 0.0418,
+     "radius_m": 0.005,
+     "colour": "artery red",
+     "ends_on": "aorta",
+     "direction_rest": [
+      -0.966,
+      0.1727,
+      0.1925
+     ],
+     "table_start": {
+      "table_blender": [
+       -0.0595,
+       -0.0441,
+       0.7799
+      ],
+      "table_unity": [
+       0.0595,
+       0.7799,
+       0.0441
+      ]
+     },
+     "table_end": {
+      "table_blender": [
+       -0.0191,
+       -0.0521,
+       0.7727
+      ],
+      "table_unity": [
+       0.0191,
+       0.7727,
+       0.0521
+      ]
+     }
+    },
+    "B_renal_vein": {
+     "rest_start": [
+      0.0634,
+      -0.0114,
+      0.8488
+     ],
+     "rest_end": [
+      0.0191,
+      -0.0015,
+      0.8441
+     ],
+     "rest_snip_point": [
+      0.0413,
+      -0.0064,
+      0.8465
+     ],
+     "marker_local_blender_start": [
+      -0.0226,
+      -0.0082,
+      0.0115
+     ],
+     "marker_local_blender_end": [
+      -0.0625,
+      -0.0087,
+      -0.0108
+     ],
+     "marker_local_unity_start": [
+      0.0226,
+      -0.0082,
+      0.0115
+     ],
+     "marker_local_unity_end": [
+      0.0625,
+      -0.0087,
+      -0.0108
+     ],
+     "length_m": 0.0457,
+     "radius_m": 0.006,
+     "colour": "vein purple",
+     "ends_on": "aorta",
+     "direction_rest": [
+      -0.971,
+      0.2162,
+      -0.1025
+     ],
+     "table_start": {
+      "table_blender": [
+       -0.0634,
+       -0.0288,
+       0.7826
+      ],
+      "table_unity": [
+       0.0634,
+       0.7826,
+       0.0288
+      ]
+     },
+     "table_end": {
+      "table_blender": [
+       -0.0191,
+       -0.0241,
+       0.7727
+      ],
+      "table_unity": [
+       0.0191,
+       0.7727,
+       0.0241
+      ]
+     }
+    }
+   }
+  },
+  "ORGAN_KIDNEY_R": {
+   "socket": "SOCKET_KIDNEY_R",
+   "incision_marker": "INC_KIDNEY_R",
+   "pivot": "organ centre = socket origin (mesh authored in socket space)",
+   "rest_socket": {
+    "rest_position": [
+     -0.08,
+     0.004,
+     0.84
+    ],
+    "rest_rotation_wxyz": [
+     0.76026,
+     0.60777,
+     -0.06998,
+     -0.21845
+    ],
+    "rest_x_axis": [
+     0.8948,
+     -0.4172,
+     -0.1591
+    ],
+    "rest_y_axis": [
+     0.2471,
+     0.1658,
+     0.9547
+    ],
+    "rest_z_axis": [
+     -0.372,
+     -0.8936,
+     0.2514
+    ]
+   },
+   "local_bounds_min_m": [
+    -0.0304,
+    -0.0957,
+    -0.0199
+   ],
+   "local_bounds_max_m": [
+    0.0419,
+    0.0502,
+    0.0199
+   ],
+   "size_m_xyz_local": [
+    0.0723,
+    0.1459,
+    0.0399
+   ],
+   "largest_dimension_m": 0.1459,
+   "tris": 274,
+   "real_size_cm_long_wide_thick": [
+    11,
+    6,
+    3
+   ],
+   "materials": [
+    {
+     "name": "MAT_Organ_Kidney_v03",
+     "base_color_srgb": [
+      0.72,
+      0.31,
+      0.39
+     ],
+     "smoothness": 0.65
+    },
+    {
+     "name": "MAT_Organ_KidneyTube_v03",
+     "base_color_srgb": [
+      0.88,
+      0.6,
+      0.58
+     ],
+     "smoothness": 0.6
+    }
+   ],
+   "source": "KIDNEY-ASTRA-001_recolour_v01 (mesh 'L_Kidney and descending tube')",
+   "fbx_alone": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/FBX/ORGAN_KIDNEY_R_v04.fbx",
+   "pull": {
+    "direction": "INC_KIDNEY_R +Z",
+    "depth_below_skin_m": 0.0843,
+    "exit_distance_m": 0.134
+   },
+   "hilum_rest": [
+    -0.0597,
+    -0.0109,
+    0.8331
+   ],
+   "cords": {
+    "A_renal_artery": {
+     "rest_start": [
+      -0.0595,
+      -0.0087,
+      0.8411
+     ],
+     "rest_end": [
+      -0.022,
+      0.0072,
+      0.8491
+     ],
+     "rest_snip_point": [
+      -0.0407,
+      -0.0008,
+      0.8451
+     ],
+     "marker_local_blender_start": [
+      0.0233,
+      0.0058,
+      0.0028
+     ],
+     "marker_local_blender_end": [
+      0.0501,
+      0.0127,
+      -0.0281
+     ],
+     "marker_local_unity_start": [
+      -0.0233,
+      0.0058,
+      0.0028
+     ],
+     "marker_local_unity_end": [
+      -0.0501,
+      0.0127,
+      -0.0281
+     ],
+     "length_m": 0.0415,
+     "radius_m": 0.005,
+     "colour": "artery red",
+     "ends_on": "vena_cava",
+     "direction_rest": [
+      0.903,
+      0.3835,
+      0.1938
+     ],
+     "table_start": {
+      "table_blender": [
+       0.0595,
+       -0.0211,
+       0.7799
+      ],
+      "table_unity": [
+       -0.0595,
+       0.7799,
+       0.0211
+      ]
+     },
+     "table_end": {
+      "table_blender": [
+       0.022,
+       -0.0291,
+       0.764
+      ],
+      "table_unity": [
+       -0.022,
+       0.764,
+       0.0291
+      ]
+     }
+    },
+    "B_renal_vein": {
+     "rest_start": [
+      -0.0634,
+      -0.0114,
+      0.8258
+     ],
+     "rest_end": [
+      -0.022,
+      0.0072,
+      0.8211
+     ],
+     "rest_snip_point": [
+      -0.0427,
+      -0.0021,
+      0.8235
+     ],
+     "marker_local_blender_start": [
+      0.0233,
+      -0.0086,
+      0.0098
+     ],
+     "marker_local_blender_end": [
+      0.0548,
+      -0.0144,
+      -0.0227
+     ],
+     "marker_local_unity_start": [
+      -0.0233,
+      -0.0086,
+      0.0098
+     ],
+     "marker_local_unity_end": [
+      -0.0548,
+      -0.0144,
+      -0.0227
+     ],
+     "length_m": 0.0456,
+     "radius_m": 0.006,
+     "colour": "vein purple",
+     "ends_on": "vena_cava",
+     "direction_rest": [
+      0.9077,
+      0.4069,
+      -0.1026
+     ],
+     "table_start": {
+      "table_blender": [
+       0.0634,
+       -0.0058,
+       0.7826
+      ],
+      "table_unity": [
+       -0.0634,
+       0.7826,
+       0.0058
+      ]
+     },
+     "table_end": {
+      "table_blender": [
+       0.022,
+       -0.0011,
+       0.764
+      ],
+      "table_unity": [
+       -0.022,
+       0.764,
+       0.0011
+      ]
+     }
+    }
+   }
+  }
+ },
+ "incision_markers": {
+  "INC_LIVER": {
+   "socket": "SOCKET_LIVER",
+   "depth_below_skin_m": 0.0678,
+   "skin_point_along_z": [
+    -0.0311,
+    -0.1153,
+    0.947
+   ],
+   "rest_position": [
+    -0.023,
+    -0.048,
+    0.947
+   ],
+   "rest_z_axis": [
+    -0.1192,
+    -0.9929,
+    -0.0005
+   ]
+  },
+  "INC_KIDNEY_L": {
+   "socket": "SOCKET_KIDNEY_L",
+   "depth_below_skin_m": 0.0909,
+   "skin_point_along_z": [
+    0.1083,
+    -0.0811,
+    0.8483
+   ],
+   "rest_position": [
+    0.08,
+    0.004,
+    0.863
+   ],
+   "rest_z_axis": [
+    0.3116,
+    -0.9364,
+    -0.1614
+   ]
+  },
+  "INC_KIDNEY_R": {
+   "socket": "SOCKET_KIDNEY_R",
+   "depth_below_skin_m": 0.0843,
+   "skin_point_along_z": [
+    -0.1141,
+    -0.0713,
+    0.8237
+   ],
+   "rest_position": [
+    -0.08,
+    0.004,
+    0.84
+   ],
+   "rest_z_axis": [
+    -0.4047,
+    -0.8938,
+    -0.1931
+   ]
+  },
+  "INC_HEART": {
+   "socket": "SOCKET_HEART",
+   "depth_below_skin_m": 0.067,
+   "skin_point_along_z": [
+    0.0085,
+    -0.1063,
+    1.0795
+   ],
+   "rest_position": [
+    0.006,
+    -0.04,
+    1.07
+   ],
+   "rest_z_axis": [
+    0.0379,
+    -0.9892,
+    0.1414
+   ]
+  },
+  "INC_LUNG_L": {
+   "socket": "SOCKET_LUNG_L",
+   "depth_below_skin_m": 0.0817,
+   "skin_point_along_z": [
+    0.1177,
+    -0.078,
+    1.0768
+   ],
+   "rest_position": [
+    0.089,
+    -0.002,
+    1.068
+   ],
+   "rest_z_axis": [
+    0.3508,
+    -0.9302,
+    0.1076
+   ]
+  },
+  "INC_LUNG_R": {
+   "socket": "SOCKET_LUNG_R",
+   "depth_below_skin_m": 0.0822,
+   "skin_point_along_z": [
+    -0.1146,
+    -0.0802,
+    1.0739
+   ],
+   "rest_position": [
+    -0.085,
+    -0.004,
+    1.065
+   ],
+   "rest_z_axis": [
+    -0.3602,
+    -0.9266,
+    0.1078
+   ]
+  }
+ },
+ "ribcage": {
+  "BREAK_RIB_L_01": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_L_01",
+   "socket_local_blender": {
+    "position": [
+     0.07519,
+     0.05527,
+     0.08829
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.07519,
+     0.05527,
+     0.08829
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.07519,
+    -0.08829,
+    1.11027
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_L_02": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_L_02",
+   "socket_local_blender": {
+    "position": [
+     0.08001,
+     0.01885,
+     0.09132
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.08001,
+     0.01885,
+     0.09132
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.08001,
+    -0.09132,
+    1.07385
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_L_03": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_L_03",
+   "socket_local_blender": {
+    "position": [
+     0.08156,
+     -0.01432,
+     0.09143
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.08156,
+     -0.01432,
+     0.09143
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.08156,
+    -0.09143,
+    1.04068
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_L_04": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_L_04",
+   "socket_local_blender": {
+    "position": [
+     0.08225,
+     -0.04265,
+     0.0911
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.08225,
+     -0.04265,
+     0.0911
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.08225,
+    -0.0911,
+    1.01235
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_R_01": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_R_01",
+   "socket_local_blender": {
+    "position": [
+     -0.0754,
+     0.05527,
+     0.08829
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.0754,
+     0.05527,
+     0.08829
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.0754,
+    -0.08829,
+    1.11027
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_R_02": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_R_02",
+   "socket_local_blender": {
+    "position": [
+     -0.08023,
+     0.01885,
+     0.09132
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.08023,
+     0.01885,
+     0.09132
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.08023,
+    -0.09132,
+    1.07385
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_R_03": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_R_03",
+   "socket_local_blender": {
+    "position": [
+     -0.08178,
+     -0.01432,
+     0.09143
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.08178,
+     -0.01432,
+     0.09143
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.08178,
+    -0.09143,
+    1.04068
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_RIB_R_04": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIB_R_04",
+   "socket_local_blender": {
+    "position": [
+     -0.08247,
+     -0.04265,
+     0.09111
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.08247,
+     -0.04265,
+     0.09111
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.08247,
+    -0.09111,
+    1.01235
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_STERNUM_L": {
+   "socket": "SOCKET_THORAX",
+   "parent": "STERNUM_L",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0165,
+     0.09515
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0165,
+     0.09515
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    -0.09515,
+    1.0715
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "BREAK_STERNUM_R": {
+   "socket": "SOCKET_THORAX",
+   "parent": "STERNUM_R",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0165,
+     0.09515
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0165,
+     0.09515
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    -0.09515,
+    1.0715
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "RIB_L_01": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_L",
+   "socket_local_blender": {
+    "position": [
+     0.02,
+     0.088,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.02,
+     0.088,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.02,
+    0.048,
+    1.143
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.0031,
+    -0.0381,
+    -0.0353
+   ],
+   "local_bounds_max": [
+    0.0996,
+    0.0052,
+    0.142
+   ],
+   "size_m_xyz": [
+    0.1028,
+    0.0432,
+    0.1772
+   ],
+   "largest_dimension_m": 0.1772,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0284,
+   "mass_hint": "approximate closed volume x 1100 kg/m3"
+  },
+  "RIB_L_02": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_L",
+   "socket_local_blender": {
+    "position": [
+     0.02,
+     0.07,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.02,
+     0.07,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.02,
+    0.048,
+    1.125
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.0093,
+    -0.0673,
+    -0.0353
+   ],
+   "local_bounds_max": [
+    0.1255,
+    -0.0298,
+    0.1437
+   ],
+   "size_m_xyz": [
+    0.1348,
+    0.0374,
+    0.179
+   ],
+   "largest_dimension_m": 0.179,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0333,
+   "mass_hint": "approximate closed volume x 1100 kg/m3"
+  },
+  "RIB_L_03": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_L",
+   "socket_local_blender": {
+    "position": [
+     0.02,
+     0.051,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.02,
+     0.051,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.02,
+    0.048,
+    1.106
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.0114,
+    -0.0992,
+    -0.0331
+   ],
+   "local_bounds_max": [
+    0.1286,
+    -0.0431,
+    0.145
+   ],
+   "size_m_xyz": [
+    0.14,
+    0.0561,
+    0.1781
+   ],
+   "largest_dimension_m": 0.1781,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0315,
+   "mass_hint": "approximate closed volume x 1100 kg/m3",
+   "v04_rib_trim": {
+    "tip_rings_removed": 0,
+    "rings_moved": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "max_translation_mm": 3.18,
+    "translation_mm_per_ring": [
+     2.5,
+     2.83,
+     3.02,
+     3.18,
+     3.18,
+     3.18,
+     3.02,
+     2.7,
+     2.22,
+     1.59,
+     1.01,
+     0.58,
+     0.28,
+     0.08,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "worst_skin_mm_after": 2.3,
+    "worst_organ_mm_after_closed_open35": 5.65,
+    "iterations": 6
+   }
+  },
+  "RIB_L_04": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_L",
+   "socket_local_blender": {
+    "position": [
+     0.02,
+     0.032,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.02,
+     0.032,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.02,
+    0.048,
+    1.087
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.0164,
+    -0.1449,
+    -0.028
+   ],
+   "local_bounds_max": [
+    0.1278,
+    -0.0552,
+    0.1479
+   ],
+   "size_m_xyz": [
+    0.1442,
+    0.0897,
+    0.1759
+   ],
+   "largest_dimension_m": 0.1759,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0331,
+   "mass_hint": "approximate closed volume x 1100 kg/m3",
+   "v04_rib_trim": {
+    "tip_rings_removed": 1,
+    "rings_moved": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "max_translation_mm": 6.77,
+    "translation_mm_per_ring": [
+     6.43,
+     6.77,
+     6.77,
+     6.77,
+     6.46,
+     6.07,
+     5.35,
+     4.39,
+     3.12,
+     2.16,
+     1.26,
+     0.6,
+     0.23,
+     0.08,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "worst_skin_mm_after": 2.3,
+    "worst_organ_mm_after_closed_open35": 6.77,
+    "iterations": 6
+   }
+  },
+  "RIB_R_01": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_R",
+   "socket_local_blender": {
+    "position": [
+     -0.02,
+     0.088,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.02,
+     0.088,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.02,
+    0.048,
+    1.143
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.0999,
+    -0.0381,
+    -0.0353
+   ],
+   "local_bounds_max": [
+    0.0031,
+    0.0052,
+    0.142
+   ],
+   "size_m_xyz": [
+    0.103,
+    0.0432,
+    0.1772
+   ],
+   "largest_dimension_m": 0.1772,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0285,
+   "mass_hint": "approximate closed volume x 1100 kg/m3"
+  },
+  "RIB_R_02": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_R",
+   "socket_local_blender": {
+    "position": [
+     -0.02,
+     0.07,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.02,
+     0.07,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.02,
+    0.048,
+    1.125
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.1225,
+    -0.0673,
+    -0.0353
+   ],
+   "local_bounds_max": [
+    0.0093,
+    -0.0298,
+    0.1437
+   ],
+   "size_m_xyz": [
+    0.1317,
+    0.0375,
+    0.179
+   ],
+   "largest_dimension_m": 0.179,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0331,
+   "mass_hint": "approximate closed volume x 1100 kg/m3"
+  },
+  "RIB_R_03": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_R",
+   "socket_local_blender": {
+    "position": [
+     -0.02,
+     0.051,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.02,
+     0.051,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.02,
+    0.048,
+    1.106
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.1274,
+    -0.0986,
+    -0.033
+   ],
+   "local_bounds_max": [
+    0.0113,
+    -0.0431,
+    0.145
+   ],
+   "size_m_xyz": [
+    0.1387,
+    0.0555,
+    0.178
+   ],
+   "largest_dimension_m": 0.178,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0314,
+   "mass_hint": "approximate closed volume x 1100 kg/m3",
+   "v04_rib_trim": {
+    "tip_rings_removed": 0,
+    "rings_moved": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "max_translation_mm": 3.15,
+    "translation_mm_per_ring": [
+     2.63,
+     2.94,
+     3.11,
+     3.15,
+     3.15,
+     3.15,
+     2.99,
+     2.67,
+     2.2,
+     1.57,
+     0.94,
+     0.52,
+     0.24,
+     0.07,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "worst_skin_mm_after": 2.3,
+    "worst_organ_mm_after_closed_open35": 6.75,
+    "iterations": 6
+   }
+  },
+  "RIB_R_04": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_R",
+   "socket_local_blender": {
+    "position": [
+     -0.02,
+     0.032,
+     -0.048
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.02,
+     0.032,
+     -0.048
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.02,
+    0.048,
+    1.087
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 636,
+   "local_bounds_min": [
+    -0.1282,
+    -0.1448,
+    -0.0281
+   ],
+   "local_bounds_max": [
+    0.0164,
+    -0.0552,
+    0.1479
+   ],
+   "size_m_xyz": [
+    0.1446,
+    0.0896,
+    0.176
+   ],
+   "largest_dimension_m": 0.176,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ],
+   "mass_kg": 0.0333,
+   "mass_hint": "approximate closed volume x 1100 kg/m3",
+   "v04_rib_trim": {
+    "tip_rings_removed": 1,
+    "rings_moved": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "max_translation_mm": 6.91,
+    "translation_mm_per_ring": [
+     6.56,
+     6.91,
+     6.91,
+     6.91,
+     6.61,
+     6.21,
+     5.47,
+     4.46,
+     3.17,
+     2.03,
+     1.18,
+     0.61,
+     0.29,
+     0.1,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "worst_skin_mm_after": 2.3,
+    "worst_organ_mm_after_closed_open35": 4.6,
+    "iterations": 6
+   }
+  },
+  "RIBCAGE": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "RIBCAGE_HALF_L": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE",
+   "socket_local_blender": {
+    "position": [
+     0.105,
+     0.0,
+     -0.08
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.105,
+     0.0,
+     -0.08
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.105,
+    0.08,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "RIBCAGE_HALF_R": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE",
+   "socket_local_blender": {
+    "position": [
+     -0.105,
+     0.0,
+     -0.08
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     0.105,
+     0.0,
+     -0.08
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    -0.105,
+    0.08,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "SPINE_THORACIC": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 4284,
+   "local_bounds_min": [
+    -0.0309,
+    -0.1184,
+    -0.0769
+   ],
+   "local_bounds_max": [
+    0.0309,
+    0.1078,
+    -0.0209
+   ],
+   "size_m_xyz": [
+    0.0617,
+    0.2262,
+    0.056
+   ],
+   "largest_dimension_m": 0.2262,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Cartilage_v03",
+     "base_color_srgb": [
+      0.8,
+      0.87,
+      0.9
+     ],
+     "smoothness": 0.65
+    }
+   ]
+  },
+  "STERNUM_L": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_L",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.078,
+     0.08026
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.078,
+     0.08026
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    -0.08026,
+    1.133
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 376,
+   "local_bounds_min": [
+    0.0,
+    -0.12,
+    -0.0028
+   ],
+   "local_bounds_max": [
+    0.0211,
+    -0.0,
+    0.0238
+   ],
+   "size_m_xyz": [
+    0.0211,
+    0.12,
+    0.0266
+   ],
+   "largest_dimension_m": 0.12,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Bone_Cut_v03",
+     "base_color_srgb": [
+      0.86,
+      0.45,
+      0.42
+     ],
+     "smoothness": 0.4
+    }
+   ],
+   "mass_kg": 0.0131,
+   "mass_hint": "approximate volume x 1100 kg/m3; gameplay hint"
+  },
+  "STERNUM_R": {
+   "socket": "SOCKET_THORAX",
+   "parent": "RIBCAGE_HALF_R",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.078,
+     0.08026
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.078,
+     0.08026
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    -0.08026,
+    1.133
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 376,
+   "local_bounds_min": [
+    -0.0211,
+    -0.12,
+    -0.0028
+   ],
+   "local_bounds_max": [
+    0.0,
+    -0.0,
+    0.0238
+   ],
+   "size_m_xyz": [
+    0.0211,
+    0.12,
+    0.0267
+   ],
+   "largest_dimension_m": 0.12,
+   "materials": [
+    {
+     "name": "MAT_Bone_v03",
+     "base_color_srgb": [
+      0.93,
+      0.88,
+      0.76
+     ],
+     "smoothness": 0.45
+    },
+    {
+     "name": "MAT_Bone_Cut_v03",
+     "base_color_srgb": [
+      0.86,
+      0.45,
+      0.42
+     ],
+     "smoothness": 0.4
+    }
+   ],
+   "mass_kg": 0.0131,
+   "mass_hint": "approximate volume x 1100 kg/m3; gameplay hint"
+  }
+ },
+ "ribcage_notes": {
+  "hierarchy": "SOCKET_THORAX > RIBCAGE > RIBCAGE_HALF_L|R (hinge pivot) > RIB_<L|R>_01..04 (+ UCX_* parts, BREAK_*), STERNUM_<L|R> (+ UCX_*, BREAK_*); SPINE_THORACIC under RIBCAGE",
+  "rib_pivot": "each rib's origin = its vertebral head (costovertebral joint); axes = SOCKET_THORAX axes",
+  "sternotomy": "the sternum is split on the midline into STERNUM_L / STERNUM_R (mallet + osteotome cut line = GUIDE_CHEST_START -> GUIDE_CHEST_END on the skin); the halves' midline faces use MAT_Bone_Cut_v03",
+  "open": "rotate RIBCAGE_HALF_L about its local +Y by +35 deg and RIBCAGE_HALF_R by -35 deg (Blender); in Unity (mirrored X) the signs flip: L -angle, R +angle about local Y",
+  "ribs_1_7": "true ribs (bone + costal cartilage to the sternum)",
+  "ribs_8_9": "false ribs (cartilage joins the rib above = costal arch)",
+  "ribs": "4 thick pairs (G38 v03c), colliders G38 v03d"
+ },
+ "chest_vessels": {
+  "AIRWAY_TRACHEA": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 1320,
+   "local_bounds_min": [
+    -0.0519,
+    0.0085,
+    -0.016
+   ],
+   "local_bounds_max": [
+    0.0558,
+    0.1238,
+    0.0104
+   ],
+   "size_m_xyz": [
+    0.1077,
+    0.1153,
+    0.0263
+   ],
+   "largest_dimension_m": 0.1153,
+   "materials": [
+    {
+     "name": "MAT_Airway_v03",
+     "base_color_srgb": [
+      0.93,
+      0.74,
+      0.74
+     ],
+     "smoothness": 0.6
+    }
+   ]
+  },
+  "DIAPHRAGM": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 2880,
+   "local_bounds_min": [
+    -0.138,
+    -0.1294,
+    -0.07
+   ],
+   "local_bounds_max": [
+    0.138,
+    -0.0356,
+    0.078
+   ],
+   "size_m_xyz": [
+    0.276,
+    0.0938,
+    0.148
+   ],
+   "largest_dimension_m": 0.276,
+   "materials": [
+    {
+     "name": "MAT_Diaphragm_v03",
+     "base_color_srgb": [
+      0.6,
+      0.16,
+      0.18
+     ],
+     "smoothness": 0.6
+    }
+   ]
+  },
+  "VESSELS_AORTA": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 1600,
+   "local_bounds_min": [
+    -0.0237,
+    -0.0844,
+    -0.0341
+   ],
+   "local_bounds_max": [
+    0.0355,
+    0.1222,
+    0.0562
+   ],
+   "size_m_xyz": [
+    0.0592,
+    0.2066,
+    0.0903
+   ],
+   "largest_dimension_m": 0.2066,
+   "materials": [
+    {
+     "name": "MAT_Vessel_Artery_v03",
+     "base_color_srgb": [
+      0.8,
+      0.16,
+      0.2
+     ],
+     "smoothness": 0.68
+    }
+   ]
+  },
+  "VESSELS_PULMONARY_ARTERY": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 1176,
+   "local_bounds_min": [
+    -0.0486,
+    0.0166,
+    -0.0117
+   ],
+   "local_bounds_max": [
+    0.0525,
+    0.081,
+    0.0628
+   ],
+   "size_m_xyz": [
+    0.1011,
+    0.0644,
+    0.0745
+   ],
+   "largest_dimension_m": 0.1011,
+   "materials": [
+    {
+     "name": "MAT_Vessel_Vein_v03",
+     "base_color_srgb": [
+      0.52,
+      0.36,
+      0.66
+     ],
+     "smoothness": 0.68
+    }
+   ]
+  },
+  "VESSELS_PULMONARY_VEINS": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 256,
+   "local_bounds_min": [
+    -0.05,
+    0.0238,
+    0.0005
+   ],
+   "local_bounds_max": [
+    0.0661,
+    0.0544,
+    0.0194
+   ],
+   "size_m_xyz": [
+    0.116,
+    0.0306,
+    0.019
+   ],
+   "largest_dimension_m": 0.116,
+   "materials": [
+    {
+     "name": "MAT_Vessel_Artery_v03",
+     "base_color_srgb": [
+      0.8,
+      0.16,
+      0.2
+     ],
+     "smoothness": 0.68
+    }
+   ]
+  },
+  "VESSELS_VENA_CAVA": {
+   "socket": "SOCKET_THORAX",
+   "parent": "SOCKET_THORAX",
+   "socket_local_blender": {
+    "position": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_wxyz": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "socket_local_unity": {
+    "position": [
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "rotation_xyzw": [
+     0.0,
+     -0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "rest_position": [
+    0.0,
+    0.0,
+    1.055
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "tris": 768,
+   "local_bounds_min": [
+    -0.0378,
+    -0.0842,
+    -0.0147
+   ],
+   "local_bounds_max": [
+    -0.0061,
+    0.118,
+    0.0444
+   ],
+   "size_m_xyz": [
+    0.0317,
+    0.2022,
+    0.059
+   ],
+   "largest_dimension_m": 0.2022,
+   "materials": [
+    {
+     "name": "MAT_Vessel_Vein_v03",
+     "base_color_srgb": [
+      0.52,
+      0.36,
+      0.66
+     ],
+     "smoothness": 0.68
+    }
+   ]
+  }
+ },
+ "connections": {
+  "VESSELS_AORTA": {
+   "heart_stub": "AORTA",
+   "start_rest": [
+    0.005,
+    -0.046,
+    1.122
+   ],
+   "abdominal_join_rest": [
+    0.014,
+    -0.0015,
+    0.973
+   ],
+   "radius_m": 0.0098,
+   "snip_point_rest": [
+    0.008,
+    -0.0329,
+    1.1396
+   ]
+  },
+  "VESSELS_VENA_CAVA": {
+   "heart_stubs": [
+    "SVC",
+    "IVC"
+   ],
+   "svc_start_rest": [
+    -0.027,
+    -0.036,
+    1.128
+   ],
+   "ivc_start_rest": [
+    -0.022,
+    -0.024,
+    1.05
+   ],
+   "abdominal_join_rest": [
+    -0.016,
+    0.0072,
+    0.973
+   ],
+   "snip_point_svc_rest": [
+    -0.0287,
+    -0.031,
+    1.1473
+   ],
+   "snip_point_ivc_rest": [
+    -0.0215,
+    -0.0195,
+    1.0392
+   ]
+  },
+  "VESSELS_PULMONARY_ARTERY": {
+   "heart_stub": "PULMONARY_TRUNK",
+   "start_rest": [
+    0.023,
+    -0.052,
+    1.117
+   ],
+   "lung_L_hilum_rest": [
+    0.0408,
+    -0.006,
+    1.084
+   ],
+   "lung_R_hilum_rest": [
+    -0.037,
+    -0.006,
+    1.079
+   ]
+  },
+  "VESSELS_PULMONARY_VEINS": {
+   "PV_L_SUP": {
+    "start_rest": [
+     0.052,
+     -0.014,
+     1.103
+    ],
+    "lung_surface_rest": [
+     0.0559,
+     -0.0135,
+     1.1036
+    ],
+    "end_inside_lung_rest": [
+     0.0648,
+     -0.0125,
+     1.1049
+    ]
+   },
+   "PV_L_INF": {
+    "start_rest": [
+     0.052,
+     -0.012,
+     1.085
+    ],
+    "lung_surface_rest": [
+     0.0559,
+     -0.0115,
+     1.0845
+    ],
+    "end_inside_lung_rest": [
+     0.0648,
+     -0.0105,
+     1.0835
+    ]
+   },
+   "PV_R_SUP": {
+    "start_rest": [
+     -0.036,
+     -0.008,
+     1.104
+    ],
+    "lung_surface_rest": [
+     -0.0399,
+     -0.0074,
+     1.1046
+    ],
+    "end_inside_lung_rest": [
+     -0.0487,
+     -0.0062,
+     1.1058
+    ]
+   },
+   "PV_R_INF": {
+    "start_rest": [
+     -0.036,
+     -0.006,
+     1.084
+    ],
+    "lung_surface_rest": [
+     -0.0399,
+     -0.0053,
+     1.0835
+    ],
+    "end_inside_lung_rest": [
+     -0.0487,
+     -0.0039,
+     1.0825
+    ]
+   }
+  },
+  "AIRWAY_TRACHEA": {
+   "carina_rest": [
+    -0.006,
+    0.004,
+    1.105
+   ],
+   "bronchus_L_hilum_rest": [
+    0.0445,
+    0.01,
+    1.074
+   ],
+   "bronchus_R_hilum_rest": [
+    -0.0405,
+    0.008,
+    1.071
+   ]
+  }
+ },
+ "heart_vessel_stubs_note": "ORGAN_HEART carries short cut stubs (aorta, pulmonary trunk, SVC, IVC, 4 pulmonary veins) with a dark lumen; each VESSELS_* tube starts 4 mm inside its stub. To 'cut' the heart free hide/shorten the VESSELS_* near their snip points; the stubs stay on the removed heart.",
+ "opening_abdomen": {
+  "marker": "INC_ABDOMEN",
+  "shape": "asymmetric lens: |x| = W (1 - |t|^p)^q, t = y / half_length (top or bottom); frames chest + belly; rim/flap/cut-face profiles identical to v03",
+  "centre_z": 0.958,
+  "half_length_top": 0.154,
+  "half_length_bottom": 0.15,
+  "half_width": 0.124,
+  "lens_p": 2.0,
+  "lens_q_top": 0.45,
+  "lens_q_bottom": 0.6,
+  "flap_limit_top_rest_z": "chin_z(x) - 0.004 (flaps squeezed under the chin)",
+  "flap_limit_bottom_rest_z": 0.801,
+  "rest": {
+   "centre_on_skin": [
+    0.0,
+    -0.1174,
+    0.958
+   ],
+   "z_axis_skin_normal": [
+    -0.038,
+    -0.9987,
+    0.0333
+   ]
+  },
+  "mesh": "ArtSource/Props/TABLE-ASTRA-001/v04/OperationAbdomen_v04.fbx (origin and axes = INC_ABDOMEN)"
+ },
+ "guide_belly": {
+  "start_marker": "GUIDE_BELLY_START",
+  "end_marker": "GUIDE_BELLY_END",
+  "rest_start": [
+   0.0,
+   -0.1033,
+   1.1
+  ],
+  "rest_end": [
+   0.0,
+   -0.1033,
+   0.822
+  ],
+  "length_m": 0.278,
+  "abdomen_local_start": [
+   -0.0005,
+   0.1424,
+   -0.0094
+  ],
+  "abdomen_local_end": [
+   -0.0005,
+   -0.1355,
+   -0.0186
+  ]
+ },
+ "chest": {
+  "marker": "INC_CHEST",
+  "rest_centre_on_skin": [
+   0.0,
+   -0.1088,
+   1.065
+  ],
+  "guide_start_marker": "GUIDE_CHEST_START",
+  "guide_end_marker": "GUIDE_CHEST_END",
+  "guide_rest_start": [
+   0.0,
+   -0.1026,
+   1.105
+  ],
+  "guide_rest_end": [
+   0.0,
+   -0.1146,
+   1.017
+  ],
+  "guide_length_m": 0.0888,
+  "note": "v04: the sternum lies inside the OperationAbdomen_v04 opening; the chin line of the lying patient is rest z ~1.12"
+ },
+ "great_vessels_abdominal_rest": {
+  "aorta": {
+   "x": 0.014,
+   "y": -0.0015,
+   "radius": 0.0085,
+   "z_head": 0.985,
+   "z_pubic": 0.8049999999999999,
+   "table_blender_head": [
+    -0.014,
+    -0.165,
+    0.7727
+   ],
+   "table_unity_head": [
+    0.014,
+    0.7727,
+    0.165
+   ],
+   "table_blender_pubic": [
+    -0.014,
+    0.015,
+    0.7727
+   ],
+   "table_unity_pubic": [
+    0.014,
+    0.7727,
+    -0.015
+   ]
+  },
+  "vena_cava": {
+   "x": -0.016,
+   "y": 0.0072,
+   "radius": 0.01,
+   "z_head": 0.985,
+   "z_pubic": 0.8049999999999999,
+   "table_blender_head": [
+    0.016,
+    -0.165,
+    0.764
+   ],
+   "table_unity_head": [
+    -0.016,
+    0.764,
+    0.165
+   ],
+   "table_blender_pubic": [
+    0.016,
+    0.015,
+    0.764
+   ],
+   "table_unity_pubic": [
+    -0.016,
+    0.764,
+    -0.015
+   ]
+  }
+ },
+ "stencil_zone": {
+  "material_kept_for_stencil": "Buddy_Skin (front torso zone only)",
+  "material_never_stencilled": "Patient_Skin_Closed",
+  "zone_rule": {
+   "rest_z": [
+    0.785,
+    1.18
+   ],
+   "max_abs_x": 0.16,
+   "face_normal_y_at_most": -0.12,
+   "all_vertices_dominated_by": [
+    "mixamorig:Hips",
+    "mixamorig:Spine",
+    "mixamorig:Spine1",
+    "mixamorig:Spine2"
+   ],
+   "island": "trunk only"
+  },
+  "faces": {
+   "zone_Buddy_Skin": 274,
+   "Buddy_Skin_Nose": 160,
+   "Patient_Skin_Closed": 4725,
+   "added_in_v04": 0,
+   "faces_under_v04_opening_plus_margin": 143
+  },
+  "v04_rule": "v03 zone + every front-facing trunk face within 0.025 m of the v04 opening outline (INC_ABDOMEN frame)"
+ },
+ "unity_integration": [
+  "1. Patient: point the patient prefab at SAUSAGE_BUDDY_PATIENT_v04.fbx (same 65-bone rig, avatar and clips as v02). The Body has THREE material slots now: [0] Buddy_Skin (front torso zone only), [1] Buddy_Skin_Nose, [2] Patient_Skin_Closed. Give slot 2 a copy of the skin material whose asset name does NOT start with 'Buddy_Skin' (e.g. 'Patient_Skin_Closed'): OperationOpeningV02 stencils every slot whose material name starts with 'Buddy_Skin', so only the front zone is cut and the back, arms and head can never be culled.",
+  "2. Recommended shader fix as well: OperationMaskStencil_v02 'Cull Off' -> 'Cull Back' in its passes (ABDOMEN_MASK normals face out of the belly, checked in OperationAbdomen_v04_validation.json), so the mask writes no stencil when the opening is seen from inside/behind (patient turned over, camera below the table).",
+  "3. Anchors: INC_LIVER, INC_KIDNEY_L, INC_KIDNEY_R moved (organ centres, see organs.*.rest_socket); new INC_HEART, INC_LUNG_L, INC_LUNG_R, INC_CHEST, GUIDE_CHEST_START/END and SOCKET_* (organ frames). All bone-parented to mixamorig:Spine.",
+  "4. Organs: every ORGAN_* mesh is authored in its SOCKET frame at 1:1 world scale. In the body: a child of SOCKET_<organ> with localPosition 0, localRotation identity, localScale 1, using the mesh (MeshFilter.sharedMesh) - the same recipe OperationOpeningV02 uses for ABDOMEN_* under INC_ABDOMEN. On the tray / in hand use the same mesh at scale 1 (FBX/ORGAN_*_v04.fbx): sizes in organs.*.size_m_xyz_local, largest_dimension_m. Do not rescale organs any more (drop worldModelSize / organItemScale fitting for these meshes, or set them to the largest dimension).",
+  "5. Opening: OperationAbdomen_v04.fbx under INC_ABDOMEN (v04 marker moved to rest z 0.950). abdomenCutLength = guide_belly.length_m; abdomenHalfSize = (half_width, (half_length_top + half_length_bottom)/2) or use the asymmetric values; kidney cords from organs.ORGAN_KIDNEY_*.cords (same format as v02, marker-local Unity values).",
+  "6. Chest (future): RIBCAGE_v04.fbx and CHEST_VESSELS_v04.fbx under SOCKET_THORAX (identity). The sternum splits into STERNUM_L/R along GUIDE_CHEST_START->END; open by rotating RIBCAGE_HALF_L/R about local Y (see ribcage_notes). The heart's VESSELS_* are separate meshes; hide them at their snip points to free the heart.",
+  "7. v04: patient prefab -> SAUSAGE_BUDDY_PATIENT_v04.fbx (same rig/avatar/clips; markers moved); opening -> OperationAbdomen_v04.fbx; organs/ribcage -> Organs_v04 FBX set; colliders per G38_collisions_manifest_v04.json."
+ ],
+ "table_rest_transform_rest_to_table_blender": [
+  [
+   -1.0,
+   -0.0,
+   0.0,
+   -0.0
+  ],
+  [
+   -0.0,
+   0.0,
+   -1.0,
+   0.82
+  ],
+  [
+   0.0,
+   -1.0,
+   -0.0,
+   0.7712
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "table_rest": {
+  "SOCKET_HEART": {
+   "table_blender": {
+    "position": [
+     -0.006,
+     -0.25,
+     0.8112
+    ],
+    "x_axis": [
+     -1.0,
+     -0.0,
+     0.0
+    ],
+    "y_axis": [
+     0.0,
+     -1.0,
+     -0.0
+    ],
+    "z_axis": [
+     0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "table_unity": {
+    "position": [
+     0.006,
+     0.8112,
+     0.25
+    ],
+    "z_axis_out": [
+     -0.0,
+     1.0,
+     0.0
+    ],
+    "y_axis": [
+     -0.0,
+     -0.0,
+     1.0
+    ],
+    "rotation_quat_xyzw": [
+     -0.0,
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "SOCKET_KIDNEY_L": {
+   "table_blender": {
+    "position": [
+     -0.08,
+     -0.043,
+     0.7672
+    ],
+    "x_axis": [
+     -0.8948,
+     -0.1591,
+     -0.4172
+    ],
+    "y_axis": [
+     0.2471,
+     -0.9547,
+     -0.1658
+    ],
+    "z_axis": [
+     -0.372,
+     -0.2514,
+     0.8935
+    ]
+   },
+   "table_unity": {
+    "position": [
+     0.08,
+     0.7672,
+     0.043
+    ],
+    "z_axis_out": [
+     0.372,
+     0.8935,
+     0.2514
+    ],
+    "y_axis": [
+     -0.2471,
+     -0.1658,
+     0.9547
+    ],
+    "rotation_quat_xyzw": [
+     0.20396,
+     0.96734,
+     0.10783,
+     0.10496
+    ]
+   }
+  },
+  "SOCKET_KIDNEY_R": {
+   "table_blender": {
+    "position": [
+     0.08,
+     -0.02,
+     0.7672
+    ],
+    "x_axis": [
+     -0.8948,
+     0.1591,
+     0.4172
+    ],
+    "y_axis": [
+     -0.2471,
+     -0.9547,
+     -0.1658
+    ],
+    "z_axis": [
+     0.372,
+     -0.2514,
+     0.8935
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.08,
+     0.7672,
+     0.02
+    ],
+    "z_axis_out": [
+     -0.372,
+     0.8935,
+     0.2514
+    ],
+    "y_axis": [
+     0.2471,
+     -0.1658,
+     0.9547
+    ],
+    "rotation_quat_xyzw": [
+     0.20396,
+     -0.96734,
+     -0.10783,
+     0.10496
+    ]
+   }
+  },
+  "SOCKET_LIVER": {
+   "table_blender": {
+    "position": [
+     0.023,
+     -0.127,
+     0.8192
+    ],
+    "x_axis": [
+     -0.9825,
+     -0.0687,
+     0.1732
+    ],
+    "y_axis": [
+     0.0698,
+     -0.9976,
+     0.0
+    ],
+    "z_axis": [
+     0.1728,
+     0.0121,
+     0.9849
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.023,
+     0.8192,
+     0.127
+    ],
+    "z_axis_out": [
+     -0.1728,
+     0.9849,
+     -0.0121
+    ],
+    "y_axis": [
+     -0.0698,
+     0.0,
+     0.9976
+    ],
+    "rotation_quat_xyzw": [
+     -0.08689,
+     0.99561,
+     -0.00304,
+     0.03477
+    ]
+   }
+  },
+  "SOCKET_LUNG_L": {
+   "table_blender": {
+    "position": [
+     -0.089,
+     -0.248,
+     0.7732
+    ],
+    "x_axis": [
+     -1.0,
+     -0.0,
+     0.0
+    ],
+    "y_axis": [
+     0.0,
+     -1.0,
+     -0.0
+    ],
+    "z_axis": [
+     0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "table_unity": {
+    "position": [
+     0.089,
+     0.7732,
+     0.248
+    ],
+    "z_axis_out": [
+     -0.0,
+     1.0,
+     0.0
+    ],
+    "y_axis": [
+     -0.0,
+     -0.0,
+     1.0
+    ],
+    "rotation_quat_xyzw": [
+     -0.0,
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "SOCKET_LUNG_R": {
+   "table_blender": {
+    "position": [
+     0.085,
+     -0.245,
+     0.7752
+    ],
+    "x_axis": [
+     -1.0,
+     -0.0,
+     0.0
+    ],
+    "y_axis": [
+     0.0,
+     -1.0,
+     -0.0
+    ],
+    "z_axis": [
+     0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.085,
+     0.7752,
+     0.245
+    ],
+    "z_axis_out": [
+     -0.0,
+     1.0,
+     0.0
+    ],
+    "y_axis": [
+     -0.0,
+     -0.0,
+     1.0
+    ],
+    "rotation_quat_xyzw": [
+     -0.0,
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "SOCKET_THORAX": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.235,
+     0.7712
+    ],
+    "x_axis": [
+     -1.0,
+     -0.0,
+     0.0
+    ],
+    "y_axis": [
+     0.0,
+     -1.0,
+     -0.0
+    ],
+    "z_axis": [
+     0.0,
+     -0.0,
+     1.0
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.7712,
+     0.235
+    ],
+    "z_axis_out": [
+     -0.0,
+     1.0,
+     0.0
+    ],
+    "y_axis": [
+     -0.0,
+     -0.0,
+     1.0
+    ],
+    "rotation_quat_xyzw": [
+     -0.0,
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "INC_LIVER": {
+   "table_blender": {
+    "position": [
+     0.023,
+     -0.127,
+     0.8192
+    ],
+    "x_axis": [
+     -0.9905,
+     -0.0688,
+     0.1189
+    ],
+    "y_axis": [
+     0.0684,
+     -0.9976,
+     -0.0077
+    ],
+    "z_axis": [
+     0.1192,
+     0.0005,
+     0.9929
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.023,
+     0.8192,
+     0.127
+    ],
+    "z_axis_out": [
+     -0.1192,
+     0.9929,
+     -0.0005
+    ],
+    "y_axis": [
+     -0.0684,
+     -0.0077,
+     0.9976
+    ],
+    "rotation_quat_xyzw": [
+     -0.05967,
+     0.99762,
+     0.00179,
+     0.0344
+    ]
+   }
+  },
+  "INC_KIDNEY_L": {
+   "table_blender": {
+    "position": [
+     -0.08,
+     -0.043,
+     0.7672
+    ],
+    "x_axis": [
+     -0.9402,
+     -0.1948,
+     -0.2793
+    ],
+    "y_axis": [
+     0.1373,
+     -0.9675,
+     0.2125
+    ],
+    "z_axis": [
+     -0.3116,
+     0.1614,
+     0.9364
+    ]
+   },
+   "table_unity": {
+    "position": [
+     0.08,
+     0.7672,
+     0.043
+    ],
+    "z_axis_out": [
+     0.3116,
+     0.9364,
+     -0.1614
+    ],
+    "y_axis": [
+     -0.1373,
+     0.2125,
+     0.9675
+    ],
+    "rotation_quat_xyzw": [
+     0.15068,
+     0.98032,
+     -0.09534,
+     0.08471
+    ]
+   }
+  },
+  "INC_KIDNEY_R": {
+   "table_blender": {
+    "position": [
+     0.08,
+     -0.02,
+     0.7672
+    ],
+    "x_axis": [
+     -0.9109,
+     0.1705,
+     0.3757
+    ],
+    "y_axis": [
+     -0.0798,
+     -0.9662,
+     0.2449
+    ],
+    "z_axis": [
+     0.4047,
+     0.1931,
+     0.8938
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.08,
+     0.7672,
+     0.02
+    ],
+    "z_axis_out": [
+     -0.4047,
+     0.8938,
+     -0.1931
+    ],
+    "y_axis": [
+     0.0798,
+     0.2449,
+     0.9662
+    ],
+    "rotation_quat_xyzw": [
+     0.20093,
+     -0.97095,
+     0.11279,
+     0.06446
+    ]
+   }
+  },
+  "INC_HEART": {
+   "table_blender": {
+    "position": [
+     -0.006,
+     -0.25,
+     0.8112
+    ],
+    "x_axis": [
+     -0.9993,
+     -0.0,
+     -0.0383
+    ],
+    "y_axis": [
+     0.0054,
+     -0.99,
+     -0.1413
+    ],
+    "z_axis": [
+     -0.0379,
+     -0.1414,
+     0.9892
+    ]
+   },
+   "table_unity": {
+    "position": [
+     0.006,
+     0.8112,
+     0.25
+    ],
+    "z_axis_out": [
+     0.0379,
+     0.9892,
+     0.1414
+    ],
+    "y_axis": [
+     -0.0054,
+     -0.1413,
+     0.99
+    ],
+    "rotation_quat_xyzw": [
+     0.0191,
+     0.9973,
+     0.07087,
+     0.00136
+    ]
+   }
+  },
+  "INC_LUNG_L": {
+   "table_blender": {
+    "position": [
+     -0.089,
+     -0.248,
+     0.7732
+    ],
+    "x_axis": [
+     -0.9357,
+     -0.0,
+     -0.3529
+    ],
+    "y_axis": [
+     0.038,
+     -0.9942,
+     -0.1007
+    ],
+    "z_axis": [
+     -0.3508,
+     -0.1076,
+     0.9302
+    ]
+   },
+   "table_unity": {
+    "position": [
+     0.089,
+     0.7732,
+     0.248
+    ],
+    "z_axis_out": [
+     0.3508,
+     0.9302,
+     0.1076
+    ],
+    "y_axis": [
+     -0.038,
+     -0.1007,
+     0.9942
+    ],
+    "rotation_quat_xyzw": [
+     0.17907,
+     0.98236,
+     0.05299,
+     0.00966
+    ]
+   }
+  },
+  "INC_LUNG_R": {
+   "table_blender": {
+    "position": [
+     0.085,
+     -0.245,
+     0.7752
+    ],
+    "x_axis": [
+     -0.9321,
+     -0.0,
+     0.3623
+    ],
+    "y_axis": [
+     -0.039,
+     -0.9942,
+     -0.1004
+    ],
+    "z_axis": [
+     0.3602,
+     -0.1078,
+     0.9266
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.085,
+     0.7752,
+     0.245
+    ],
+    "z_axis_out": [
+     -0.3602,
+     0.9266,
+     0.1078
+    ],
+    "y_axis": [
+     0.039,
+     -0.1004,
+     0.9942
+    ],
+    "rotation_quat_xyzw": [
+     0.18404,
+     -0.98144,
+     -0.05304,
+     0.00995
+    ]
+   }
+  },
+  "INC_ABDOMEN": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.138,
+     0.8886
+    ],
+    "x_axis": [
+     -0.9993,
+     -0.0,
+     0.038
+    ],
+    "y_axis": [
+     -0.0013,
+     -0.9994,
+     -0.0333
+    ],
+    "z_axis": [
+     0.038,
+     -0.0333,
+     0.9987
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.8886,
+     0.138
+    ],
+    "z_axis_out": [
+     -0.038,
+     0.9987,
+     0.0333
+    ],
+    "y_axis": [
+     0.0013,
+     -0.0333,
+     0.9994
+    ],
+    "rotation_quat_xyzw": [
+     0.019,
+     -0.99968,
+     -0.01664,
+     0.00032
+    ]
+   }
+  },
+  "GUIDE_BELLY_START": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.28,
+     0.8745
+    ],
+    "x_axis": [
+     -0.9998,
+     -0.0,
+     -0.0206
+    ],
+    "y_axis": [
+     0.0031,
+     -0.9884,
+     -0.1517
+    ],
+    "z_axis": [
+     -0.0204,
+     -0.1518,
+     0.9882
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.8745,
+     0.28
+    ],
+    "z_axis_out": [
+     0.0204,
+     0.9882,
+     0.1518
+    ],
+    "y_axis": [
+     -0.0031,
+     -0.1517,
+     0.9884
+    ],
+    "rotation_quat_xyzw": [
+     0.01028,
+     0.99705,
+     0.07611,
+     0.00078
+    ]
+   }
+  },
+  "GUIDE_BELLY_END": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.002,
+     0.8745
+    ],
+    "x_axis": [
+     -1.0,
+     -0.0,
+     -0.0006
+    ],
+    "y_axis": [
+     -0.0001,
+     -0.9708,
+     0.2399
+    ],
+    "z_axis": [
+     -0.0006,
+     0.2399,
+     0.9708
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.8745,
+     0.002
+    ],
+    "z_axis_out": [
+     0.0006,
+     0.9708,
+     -0.2399
+    ],
+    "y_axis": [
+     0.0001,
+     0.2399,
+     0.9708
+    ],
+    "rotation_quat_xyzw": [
+     -0.00031,
+     -0.99267,
+     0.12083,
+     4e-05
+    ]
+   }
+  },
+  "GUIDE_CHEST_START": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.285,
+     0.8738
+    ],
+    "x_axis": [
+     -0.9998,
+     -0.0,
+     -0.0206
+    ],
+    "y_axis": [
+     0.0031,
+     -0.9884,
+     -0.1517
+    ],
+    "z_axis": [
+     -0.0204,
+     -0.1518,
+     0.9882
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.8738,
+     0.285
+    ],
+    "z_axis_out": [
+     0.0204,
+     0.9882,
+     0.1518
+    ],
+    "y_axis": [
+     -0.0031,
+     -0.1517,
+     0.9884
+    ],
+    "rotation_quat_xyzw": [
+     0.01028,
+     0.99705,
+     0.07611,
+     0.00078
+    ]
+   }
+  },
+  "GUIDE_CHEST_END": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.197,
+     0.8858
+    ],
+    "x_axis": [
+     -0.9984,
+     -0.0,
+     0.0562
+    ],
+    "y_axis": [
+     -0.0039,
+     -0.9976,
+     -0.069
+    ],
+    "z_axis": [
+     0.0561,
+     -0.0691,
+     0.996
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.8858,
+     0.197
+    ],
+    "z_axis_out": [
+     -0.0561,
+     0.996,
+     0.0691
+    ],
+    "y_axis": [
+     0.0039,
+     -0.069,
+     0.9976
+    ],
+    "rotation_quat_xyzw": [
+     0.0281,
+     -0.99901,
+     -0.03454,
+     0.00097
+    ]
+   }
+  },
+  "INC_CHEST": {
+   "table_blender": {
+    "position": [
+     0.0,
+     -0.245,
+     0.88
+    ],
+    "x_axis": [
+     -0.9993,
+     -0.0,
+     -0.0383
+    ],
+    "y_axis": [
+     0.0054,
+     -0.99,
+     -0.1413
+    ],
+    "z_axis": [
+     -0.0379,
+     -0.1414,
+     0.9892
+    ]
+   },
+   "table_unity": {
+    "position": [
+     -0.0,
+     0.88,
+     0.245
+    ],
+    "z_axis_out": [
+     0.0379,
+     0.9892,
+     0.1414
+    ],
+    "y_axis": [
+     -0.0054,
+     -0.1413,
+     0.99
+    ],
+    "rotation_quat_xyzw": [
+     0.0191,
+     0.9973,
+     0.07087,
+     0.00136
+    ]
+   }
+  }
+ },
+ "v03d_to_v04": {
+  "rigid_shift_rest_m": [
+   0.0,
+   0.0,
+   -0.045
+  ],
+  "what_moved": "every organ socket and everything below it: organs, ribs, sternum halves, spine, RIBCAGE_HALF_L/R hinges, BREAK_* empties, 96 UCX colliders, vessels, airway, diaphragm; no relative change",
+  "why": "the lying patient's chin hid the chest from the top table camera (chin line rest z 1.120 at the midline)",
+  "organs_build": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/organs_v04_build.json",
+  "collisions_manifest": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/G38_collisions_manifest_v04.json",
+  "rigid_shift_check": {
+   "max_world_matrix_error": 5.960464477539063e-08,
+   "objects_moved": 139,
+   "organ_ucx_min_mm_v03d": {
+    "closed": [
+     5.0775,
+     "UCX_RIB_R_04_05",
+     "DIAPHRAGM"
+    ],
+    "open35": [
+     3.0892,
+     "UCX_RIB_R_04_01",
+     "DIAPHRAGM"
+    ]
+   },
+   "organ_ucx_min_mm_v04": {
+    "closed": [
+     5.0775,
+     "UCX_RIB_R_04_05",
+     "DIAPHRAGM"
+    ],
+    "open35": [
+     3.0892,
+     "UCX_RIB_R_04_01",
+     "DIAPHRAGM"
+    ]
+   },
+   "identical": true,
+   "g38_reported_v03d_mm": {
+    "closed": 4.899128,
+    "open35": 3.149244
+   },
+   "method": "vertex-to-surface both ways + triangle overlap (G38 used exact triangle distance; its values are the reference, this measure must not change under the shift)"
+  },
+  "rib_trim": {
+   "ribs": [
+    "RIB_L_03",
+    "RIB_R_03",
+    "RIB_L_04",
+    "RIB_R_04"
+   ],
+   "summary": "posterior tips bent inward >= 2 mm under the back skin; 12 UCX pieces rebuilt (G38 contract re-checked)",
+   "contract_pass": true
+  }
+ },
+ "ribcage_colliders": {
+  "count": 96,
+  "manifest": "ArtSource/Characters/SAUSAGE_BUDDY_01/Organs_v04/G38_collisions_manifest_v04.json",
+  "contract": "one convex MeshCollider per UCX_* under its rib/sternum (local identity), layer SurgicalBone, tags SurgicalRib / SurgicalSternum (G38 v03d contract, unchanged)"
+ }
+}

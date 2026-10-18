@@ -131,6 +131,9 @@ namespace OnlyVolunteers.Map
         // EscapeCrawlForce instead of away from the pawn. Cleared on standing up or sitting up.
         [System.NonSerialized] public bool CrawlToward;
         [System.NonSerialized] public Vector3 CrawlGoal;
+        // Capture -> delivery stage A (Capture/CaptureNpc): zip-tied hands. The hands' only action in this build is the
+        // knock on the van wall, which stops; a future grip on the world (GripAnchor) must check this too.
+        [System.NonSerialized] public bool HandsBound;
         // Set by a crowd walker (Crowd/CrowdWalker) that moves and animates this NPC while it is free and calm: UpdateFree
         // then only blinks. Fleeing, going down and everything after stay this script's.
         [System.NonSerialized] public bool ExternalLocomotion;
@@ -1047,6 +1050,7 @@ namespace OnlyVolunteers.Map
                 _knockHit++;
                 Sfx.PlayAt(SfxIds.ThudVan, KnockPoint, p.KnockVolume);
             }
+            if (HandsBound) return; // tied hands cannot knock
             if (Time.time < _nextKnock) return;
             _nextKnock = Time.time + Random.Range(p.KnockInterval.x, p.KnockInterval.y);
             bool slow = !CarrierAlive || Carrier.PointVelocity(Center).magnitude < p.KnockVanSpeed;

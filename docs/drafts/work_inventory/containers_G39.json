@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "notes": [
+    "Kit occupies one of six numbered slots, default index 5. Twelve internal entries are a G39 provisional bound.",
+    "Shelf and both cooler mounts use one purchased upgrade. Without it, cargo remains in World.",
+    "Return overflow uses additional 8-slot trays. No item is silently destroyed."
+  ],
+  "containers": [
+    {
+      "kind": "Pockets",
+      "idPattern": "pockets:{playerId}",
+      "capacity": 6,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "Kit",
+      "idPattern": "kit:{playerId}",
+      "capacity": 12,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "VanShelf",
+      "idPattern": "vanshelf:{vanId}",
+      "capacity": 12,
+      "requiresVanStorageUpgrade": true
+    },
+    {
+      "kind": "VanCoolerMount",
+      "idPattern": "vanmount:{vanId}:{0|1}",
+      "capacity": 1,
+      "requiresVanStorageUpgrade": true
+    },
+    {
+      "kind": "Cooler",
+      "idPattern": "{coolerItemId}",
+      "capacity": 8,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "Fridge",
+      "idPattern": "fridge:{baseId}:{n}",
+      "capacity": 24,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "Tray",
+      "idPattern": "tray:{tableId}",
+      "capacity": 6,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "BuyerCase",
+      "idPattern": "case:{meetingId}",
+      "capacity": 8,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "Stash",
+      "idPattern": "stash:{stashId}",
+      "capacity": 4,
+      "requiresVanStorageUpgrade": false
+    },
+    {
+      "kind": "ReturnTray",
+      "idPattern": "return:{pointId}:{n}",
+      "capacity": 8,
+      "requiresVanStorageUpgrade": false
+    }
+  ]
+}

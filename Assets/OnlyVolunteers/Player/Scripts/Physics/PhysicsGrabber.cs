@@ -426,8 +426,8 @@ namespace OnlyVolunteers.Player.Physics
                 GrabPhysicsSolver.ApplyForce(grabbedBody, worldGrabPoint, force);
             LastPointForce = force;
             LimitVelocitiesRelative(grabbedBody, frameVelocity, pointProfile);
-            if (speedInput != null)
-                speedInput.ExternalSpeedScale = Mathf.Clamp(1f - (error.magnitude - 0.6f) / 1.0f, 0.35f, 1f);
+            if (speedInput != null) // through the one speed arbiter (OperationPlayerSpeed; round-2 review: no second writer)
+                OnlyVolunteers.Operation.Stage1.OperationPlayerSpeed.RequestScale(speedInput, this, Mathf.Clamp(1f - (error.magnitude - 0.6f) / 1.0f, 0.35f, 1f));
         }
 
         // Velocity of whatever the player stands on (or rides in) at that point; zero on plain ground.
@@ -463,7 +463,7 @@ namespace OnlyVolunteers.Player.Physics
             if (grabbedBody != null)
                 grabbedBody.WakeUp();
             if (speedInput != null)
-                speedInput.ExternalSpeedScale = 1f;
+                OnlyVolunteers.Operation.Stage1.OperationPlayerSpeed.Clear(speedInput, this);
 
             grabbedBody = null;
             grabbedColliders = null;

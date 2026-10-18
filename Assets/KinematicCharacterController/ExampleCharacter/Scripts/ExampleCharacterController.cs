@@ -65,6 +65,10 @@ namespace KinematicCharacterController.Examples
 
         [Header("Misc")]
         public List<Collider> IgnoredColliders = new List<Collider>();
+        // OV push policy (Fedya 2026-10-18): a project-wide filter on what the motor may collide with, stand on or be pushed
+        // by. OnlyVolunteers.Player.Physics.PlayerPushPolicy installs it: only allow-listed heavy movers (vehicles, other
+        // characters) are solid movers; held, carried or loose physics objects never move the player. Null = no filter.
+        public static System.Func<Collider, bool> ColliderPolicy;
         public BonusOrientationMethod BonusOrientationMethod = BonusOrientationMethod.None;
         public float BonusOrientationSharpness = 10f;
         public Vector3 Gravity = new Vector3(0, -30f, 0);
@@ -554,6 +558,11 @@ namespace KinematicCharacterController.Examples
 
         public bool IsColliderValidForCollisions(Collider coll)
         {
+            if (ColliderPolicy != null && !ColliderPolicy(coll))
+            {
+                return false;
+            }
+
             if (IgnoredColliders.Count == 0)
             {
                 return true;

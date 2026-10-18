@@ -9,7 +9,7 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
     /// <summary>PlayMode acceptance with real input: the dev scene's scenario driver adds virtual Mouse/Keyboard devices
     /// and plays through the real OperationTableView / NetworkGrabber / HUD as a host. These tests only start a scenario
     /// and assert on its authoritative-state checks (the driver lives in Assembly-CSharp, reached through the Core hook).</summary>
-    public sealed class OperationRealInputPlayTests
+    public sealed partial class OperationRealInputPlayTests
     {
         private const string ScenePath = "Assets/OnlyVolunteers/Scenes/Dev/Operation_Net_Stage1_v02.unity";
         private static bool loaded;

@@ -56,7 +56,11 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             if (!aimed) { Check(false, "shared guide " + guide + " start dot is under the cursor"); yield break; }
             if (capture) Shot(loop ? (begin > 0f ? "v04_12b_liver_loop_resume" : "v04_12_liver_loop_start") : "v04_06_belly_start");
+            // Keep the blade on the moving resume dot through the real input/network tick before advancing.
+            mPos = Scr(abdomen.ResumePoint(guide)); PushMouse(); yield return Frames(2);
             yield return Button(true);
+            float startUntil = Time.time + 0.12f;
+            while (Time.time < startUntil) { mPos = Scr(abdomen.ResumePoint(guide)); PushMouse(); yield return null; }
             float end = loop ? Mathf.Min(1.04f, until + (until >= 1f ? 0.04f : 0f)) : 1.03f;
             float r = Mathf.Min(table.Tuning.liverLoopRadius.x, table.Tuning.liverLoopRadius.y);
             float seconds = loop ? 1.5f * (end - begin) : 0.95f * (end - begin);
@@ -69,7 +73,8 @@ namespace OnlyVolunteers.Operation.Stage1
                 if (loop)
                 {
                     float wobble = 1f + (sloppy ? 0.025f / r : 0f) + 0.09f * Mathf.Sin(along * 23f) + 0.05f * Mathf.Sin(along * 7f + 1f);
-                    local.x *= wobble; local.y *= wobble;
+                    Vector3 center = table.Tuning.anatomicalLayout ? OperationAnatomyV02.LiverLoopCenter : Vector3.zero;
+                    local = center + new Vector3((local.x - center.x) * wobble, (local.y - center.y) * wobble, local.z - center.z);
                 }
                 else local.x += sloppy ? 0.032f : 0.004f * Mathf.Sin(along * 19f);
                 mPos = Scr(table.SitePoint(guide, local)); PushMouse();
@@ -154,7 +159,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 rb.position = tableHome.position; rb.rotation = tableHome.rotation;
                 table.transform.SetPositionAndRotation(tableHome.position, tableHome.rotation);
                 rb.linearVelocity = Vector3.zero; rb.angularVelocity = Vector3.zero;
-                Teleport(TableFoot(new Vector3(-1.25f, 0f, 0.45f)));
+                Teleport(TableFoot(new Vector3(-2.4f, 0f, 0.9f))); // clear of the fresh patient's floor collider before F10
                 yield return new WaitForSeconds(0.3f);
             }
         }
@@ -178,8 +183,26 @@ namespace OnlyVolunteers.Operation.Stage1
             Check(Vector3.Distance(table.PatientBody.transform.position, table.RestPose.position) < 0.015f &&
                 Quaternion.Angle(table.PatientBody.transform.rotation, table.RestPose.rotation) < 0.5f,
                 "ragdoll snaps into the exact approved PatientRest pose");
-            yield return EnterTable(); Shot("v04_03_snapped_top_camera");
+            yield return EnterTable(); Shot("v04_03a_prep_view");
             Check(Vector3.Dot(Cam.transform.forward, -table.transform.up) > 0.9999f, "real table camera is straight top-down");
+            // PREP (default on E): the whole patient, all five straps and the tray, clickable without zooming.
+            Check(view.CameraMode == TableCamera.Prep, "E opens the PREP view");
+            for (int i = 0; i < 5; i++) Check(StrapOnScreen(i), "PREP: strap " + i + " (" + OperationText.Straps[i] + ") on screen");
+            Check(InFrame(table.PatientRig.HeadTop.position, 0.02f) && InFrame(table.PatientRig.transform.position, 0.02f), "PREP: the whole patient is on screen");
+            for (int i = 0; i < 3; i++) Check(InFrame(table.OrganSlotPose(i).position, 0.02f), "PREP: tray organ slot " + i + " on screen");
+            Check(InFrame(table.BagPose(0).position, 0.02f) && InFrame(table.DockPose(table.ToolOf(ToolSlot.Anesthesia)).position, 0.02f),
+                "PREP: bags and syringes on the tray are on screen");
+            yield return Straps(true); Shot("v04_04_straps");
+            Check(view.CameraMode == TableCamera.Prep, "straps were clicked in the PREP view");
+            Check(S.restraints[0] && S.restraints[1] && S.restraints[2] && S.restraints[3] && S.restraints[4], "all five straps closed with real clicks");
+            yield return Inject(2f, "v04 main"); Shot("v04_05_anesthesia");
+            Check(S.Sleeping && S.alive, "patient asleep with the existing dose rules");
+            Check(view.CameraMode == TableCamera.Prep, "anesthesia given in the PREP view");
+            // Taking the scalpel opens the OPERATION view (the approved close v04 framing).
+            yield return Select(Key.Digit4, ToolSlot.Scalpel);
+            yield return WaitFor(() => view.CameraMode == TableCamera.Operation, 1f, "taking the scalpel opens the OPERATION view");
+            yield return new WaitForSeconds(0.5f);
+            Shot("v04_03_snapped_top_camera");
             float headY = Cam.WorldToViewportPoint(table.PatientRig.HeadTop.position).y;
             var zonePose = table.Abdomen.ZonePose;
             float bellyY = Cam.WorldToViewportPoint(zonePose.position + zonePose.rotation * new Vector3(0f, -table.Tuning.abdomenHalfSize.y, 0f)).y;
@@ -190,23 +213,21 @@ namespace OnlyVolunteers.Operation.Stage1
                 Check(InFrame(table.OrganSlotPose(i).position, 0.03f), "tray organ slot " + i + " is on screen in the close framing");
             Check(InFrame(table.BagPose(0).position, 0.03f) && InFrame(table.DockPose(table.ToolOf(ToolSlot.Scalpel)).position, 0.03f),
                 "bags and tools on the tray are on screen in the close framing");
-            foreach (int i in new[] { 0, 1, 4 })
-                Check(StrapOnScreen(i), "strap " + i + " (" + OperationText.Straps[i] + ") is visible without zooming out");
-            // The leg straps lie beyond the feet end of the close framing: wheel out (local, documented), then back in.
+            // Tab toggles both ways with a short blend.
+            yield return Tap(Key.Tab); yield return new WaitForSeconds(0.45f);
+            Check(view.CameraMode == TableCamera.Prep && Vector3.Distance(Cam.transform.position, view.ViewPose.position) < 0.03f, "Tab: OPERATION -> PREP");
+            Shot("v04_04a_tab_prep");
+            yield return Tap(Key.Tab); yield return new WaitForSeconds(0.45f);
+            Check(view.CameraMode == TableCamera.Operation && Mathf.Abs(view.Zoom) < 0.02f &&
+                  Vector3.Distance(Cam.transform.position, table.CameraPose.position) < 0.03f, "Tab: PREP -> OPERATION (the close framing)");
+            // The wheel is only a fine adjustment now: out a little, never the wide view; back in stops at the close framing.
             for (int i = 0; i < 8; i++) yield return Scroll(-120f);
             yield return new WaitForSeconds(0.5f);
-            Check(view.Zoom < -0.95f, $"wheel out reaches the wide view ({view.Zoom:F2})");
-            Shot("v04_04a_wheel_out");
-            for (int i = 0; i < 5; i++) Check(StrapOnScreen(i), "strap " + i + " (" + OperationText.Straps[i] + ") is on screen after the wheel out");
-            yield return Straps(true); Shot("v04_04_straps");
-            Check(S.restraints[0] && S.restraints[1] && S.restraints[2] && S.restraints[3] && S.restraints[4], "all five straps closed with real clicks");
-            // Six notches back in: the wheel stops at the close framing (the next notch would zoom toward the cursor).
-            for (int i = 0; i < 6; i++) yield return Scroll(120f);
+            Check(view.Zoom > -0.32f && view.Zoom < -0.1f && view.CameraMode == TableCamera.Operation, $"wheel out is a fine adjustment only ({view.Zoom:F2})");
+            for (int i = 0; i < 2; i++) yield return Scroll(120f);
             yield return new WaitForSeconds(0.5f);
             Check(Mathf.Abs(view.Zoom) < 0.02f && Vector3.Distance(Cam.transform.position, table.CameraPose.position) < 0.03f,
                 $"wheel in returns to the close framing ({view.Zoom:F2})");
-            yield return Inject(2f, "v04 main"); Shot("v04_05_anesthesia");
-            Check(S.Sleeping && S.alive, "patient asleep with the existing dose rules");
             yield return CutShared(OperationAbdomenGeometry.ZoneGuide, false, true);
             int visible = 0;
             foreach (var t in table.PatientObject.GetComponentsInChildren<Transform>(true))
@@ -216,7 +237,15 @@ namespace OnlyVolunteers.Operation.Stage1
             for (int i = 0; i < 2; i++)
             {
                 OperationGeometry.Cord(table.Tuning, i, 0, out var attach, out var rim);
-                Check(attach.z < table.Tuning.organLift && rim.z < table.Tuning.organLift && rim.y < -table.Tuning.organHalfSize[i].y,
+                if (table.Tuning.anatomicalLayout)
+                {
+                    OperationAnatomyV02.Cord(table.Tuning, i, 0, out var expectedAttach, out var expectedEnd);
+                    OperationGeometry.Cord(table.Tuning, i, 1, out var veinAttach, out var veinEnd);
+                    Check(Vector3.Distance(attach, expectedAttach) < 0.001f && Vector3.Distance(rim, expectedEnd) < 0.001f &&
+                        Vector3.Distance((attach + rim) * 0.5f, (veinAttach + veinEnd) * 0.5f) > 0.015f && table.Tuning.cordHitRadius <= 0.0101f,
+                        "kidney " + i + " approved artery/vein endpoints and separate small snip targets");
+                }
+                else Check(attach.z < table.Tuning.organLift && rim.z < table.Tuning.organLift && rim.y < -table.Tuning.organHalfSize[i].y,
                     "kidney " + i + " cords originate underneath and expose a lower snip point");
                 yield return Snip(i, true); Shot("v04_09_kidney_" + i + "_cords_cut");
                 yield return Pull(i, 0.9f, true); Shot("v04_10_kidney_" + i + "_on_tray");
@@ -364,7 +393,9 @@ namespace OnlyVolunteers.Operation.Stage1
             { var p = adapter.Bone(i).position; finite &= OperationRules.Finite(p.x) && OperationRules.Finite(p.y) && OperationRules.Finite(p.z); }
             Check(finite, "ragdoll bones remain finite after the throw and landing");
             yield return new WaitForSeconds(1f);
-            int sent = adapter.PosesSent; yield return new WaitForSeconds(2f);
+            int sent = adapter.PosesSent; Vector3 gurney0 = table.transform.position, pelvis0 = adapter.PlacementPoint;
+            yield return new WaitForSeconds(2f);
+            Line($"INFO in those 2 s the gurney moved {(table.transform.position - gurney0).magnitude * 1000f:F1} mm, the body's centre {(adapter.PlacementPoint - pelvis0).magnitude * 1000f:F1} mm");
             Check(adapter.PosesSent - sent <= 6, $"a resting ragdoll sends a slow heartbeat, not the 20 Hz stream ({adapter.PosesSent - sent} poses in 2 s)");
             Shot("v04_throw_02_landed");
             Vector3 center = adapter.PlacementPoint;

@@ -168,7 +168,8 @@ namespace OnlyVolunteers.Player
             float moveRight = MovementLocked ? 0f : Input.GetAxisRaw("Horizontal");
             bool hasMovementInput = moveForward != 0f || moveRight != 0f;
             bool diagonalInput = moveForward != 0f && moveRight != 0f;
-            bool crouchHeld = Input.GetKey(KeyCode.LeftControl);
+            bool crouchHeld = Input.GetKey(KeyCode.LeftControl) ||
+                (UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.leftCtrlKey.isPressed);
             bool physicallyCrouched = IsPhysicallyCrouched();
             bool grounded = Character.Motor.GroundingStatus.IsStableOnGround;
             if (grounded && Character.JumpPostGroundingGraceTime == 0f)

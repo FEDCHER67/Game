@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "id": "VAN_CARGO_UPGRADES_V01",
+  "status": "draft_authoring_data",
+  "sourceSpec": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+  "stockCapacity": {
+    "value": 3,
+    "unit": "lying_npcs",
+    "status": "confirmed",
+    "decision": "D5"
+  },
+  "capacityPerLevel": {
+    "value": 1,
+    "status": "confirmed",
+    "decision": "D5"
+  },
+  "maximumCapacity": {
+    "value": 5,
+    "status": "confirmed",
+    "decision": "D5"
+  },
+  "buildStage": "B",
+  "soldAt": [
+    {
+      "channel": "phone_order",
+      "status": "proposed",
+      "source": {
+        "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+        "section": "15.5",
+        "row": "Phone ordering: large equipment, delivered as physical crates at the base."
+      },
+      "note": "Propose treating a cargo-body module as large equipment; exact vendor/menu/install procedure is open."
+    }
+  ],
+  "fulfillment": {
+    "mode": "physical_crate_at_base_then_install",
+    "status": "proposed",
+    "source": {
+      "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+      "section": "15.5",
+      "row": "Delivered equipment still requires unpacking and placement."
+    },
+    "installationTime": null
+  },
+  "funding": {
+    "pool": "shared_business_cash",
+    "status": "confirmed",
+    "source": {
+      "path": "docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md",
+      "section": "15.1",
+      "row": "Shared business funds"
+    }
+  },
+  "levels": [
+    {
+      "id": "VAN_CARGO_LEVEL_1",
+      "level": 1,
+      "displayNameRu": "Кузов: четвёртое место",
+      "displayNameEn": "Cargo bay: fourth space",
+      "descriptionRu": "Ещё одно место для лежащего NPC. Всего четыре.",
+      "descriptionEn": "One more space for a lying NPC. Four in total.",
+      "capacity": 4,
+      "capacityStatus": "derived_from_D5",
+      "requiresPreviousLevel": 0,
+      "prerequisiteStatus": "proposed",
+      "price": {
+        "dollars": 2500,
+        "currency": "USD",
+        "status": "proposed",
+        "unit": "one_level_increment"
+      },
+      "cumulativePrice": {
+        "dollars": 2500,
+        "status": "derived_from_proposed_prices"
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D5"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D14"
+        }
+      ]
+    },
+    {
+      "id": "VAN_CARGO_LEVEL_2",
+      "level": 2,
+      "displayNameRu": "Кузов: пятое место",
+      "displayNameEn": "Cargo bay: fifth space",
+      "descriptionRu": "Ещё одно место для лежащего NPC. Всего пять — предел.",
+      "descriptionEn": "One more space for a lying NPC. Five in total, the limit.",
+      "capacity": 5,
+      "capacityStatus": "confirmed_D5",
+      "requiresPreviousLevel": 1,
+      "prerequisiteStatus": "proposed",
+      "price": {
+        "dollars": 5000,
+        "currency": "USD",
+        "status": "proposed",
+        "unit": "one_level_increment"
+      },
+      "cumulativePrice": {
+        "dollars": 7500,
+        "status": "derived_from_proposed_prices"
+      },
+      "specDecisionRefs": [
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D5"
+        },
+        {
+          "path": "docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md",
+          "decision": "D14"
+        }
+      ]
+    }
+  ],
+  "authoringNotes": [
+    "These are lying-body spaces, not seated animations or passenger seats. No transform, collider or code change.",
+    "Level 2 is an additional price after level 1; cumulative total is derived, never charge the total again.",
+    "Sequential installation is proposed because ordering/unlocks were not specified. No new XP or district lock.",
+    "Data does not unlock Stage B or make a fourth NPC legal in the stock van.",
+    "No capacity above the confirmed maximum and no automatic money/XP multiplier.",
+    "For future integration: a failed installation must not consume the paid module; installation recovery and save binding remain open.",
+    "All levels and schemaVersion identifiers are structural. Capacity figures implement D5; only prices and procurement/installation policy are proposed."
+  ]
+}

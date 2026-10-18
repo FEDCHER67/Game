@@ -7,7 +7,7 @@ namespace OnlyVolunteers.Operation.Stage1
     public enum TargetKind : byte { None = 0, Strap = 1, Tool = 2, BloodBag = 3, Tray = 4, Incision = 5, Cord = 6, Organ = 7, Body = 8, Item = 9 }
     public enum BodyPart : byte { Head = 0, Neck = 1, Torso = 2, ShoulderL = 3, ShoulderR = 4, ArmL = 5, ArmR = 6, LegL = 7, LegR = 8 }
     /// <summary>Hotbar slots = keys 1..4.</summary>
-    public enum ToolSlot : byte { Hands = 0, Anesthesia = 1, Blood = 2, Scalpel = 3 }
+    public enum ToolSlot : byte { Hands = 0, Anesthesia = 1, Blood = 2, Scalpel = 3, Suture = 4 }
 
     [Serializable]
     public struct OpTarget : IEquatable<OpTarget>
@@ -42,7 +42,32 @@ namespace OnlyVolunteers.Operation.Stage1
     public enum OpHint : byte
     {
         None, Squirming, PatientDead, NotOnTable, ToolBusy, HandsFull, SyringeEmpty, SyringeFull, SyringeNotFull, NoBags,
-        StartAtDot, NeedScalpel, CutCordsFirst, NoBloodLeft, WrongSpot, StockEmpty, Refilled, BagReady
+        StartAtDot, NeedScalpel, CutCordsFirst, NoBloodLeft, WrongSpot, StockEmpty, Refilled, BagReady,
+        // Round 3: a living patient with an open belly keeps his straps; suturing before the opening / after the seam.
+        SutureFirst, NothingToSuture, StitchFromTop
+    }
+
+    /// <summary>Round 3 (Fedya): the straps in play. The torso strap is off for now (OperationTuning.torsoStrap); old saves
+    /// with it closed load with it open.</summary>
+    public static class OperationStraps
+    {
+        public static int Count(OperationTuning tuning) => tuning != null && tuning.torsoStrap ? 5 : 4;
+        public static bool Active(OperationTuning tuning, int index) => index >= 0 && index < Count(tuning);
+        /// <summary>Held down: the torso strap when it exists, otherwise all four limb straps.</summary>
+        public static bool Held(OperationState state, OperationTuning tuning) =>
+            state != null && (tuning != null && tuning.torsoStrap ? state.Torso : state.LimbsStrapped);
+        public static bool AllClosed(OperationState state, OperationTuning tuning)
+        {
+            if (state == null) return false;
+            for (int i = 0; i < Count(tuning); i++) if (!state.restraints[i]) return false;
+            return true;
+        }
+        public static bool AllOpen(OperationState state, OperationTuning tuning)
+        {
+            if (state == null) return true;
+            for (int i = 0; i < Count(tuning); i++) if (state.restraints[i]) return false;
+            return true;
+        }
     }
 
     /// <summary>Dev/test hooks living in the Core assembly so PlayMode tests (which cannot see Assembly-CSharp) can drive

@@ -1,0 +1,79 @@
+[
+  {
+    "Mutation": "M1-room-interval",
+    "Source": "src/ItemCoreTypes.cs",
+    "ExitCode": 1,
+    "Executed": 351,
+    "Failed": 8,
+    "FailingTests": [
+      "Spoilage_QueriesAndPackagingNeverRestoreTier",
+      "Spoilage_FractionSurvivesRoomCoolerMove",
+      "Spoilage_RoomBoundary_600",
+      "Spoilage_RoomBoundary_300",
+      "Spoilage_PoweredFridgeAndPowerLoss",
+      "Spoilage_ExactEventTimesForLargeTick",
+      "Spoilage_RoomBoundary_1200",
+      "Leave_OtherPlayersAndWorldKeepSpoiling"
+    ],
+    "OriginalHash": "F4395A773DD9D2E27DE7CBD13533F476B1941786291BA5A8173FA15C846E5A9F",
+    "RestoredHash": "F4395A773DD9D2E27DE7CBD13533F476B1941786291BA5A8173FA15C846E5A9F"
+  },
+  {
+    "Mutation": "M2-two-hands",
+    "Source": "src/PlayerInventory.cs",
+    "ExitCode": 1,
+    "Executed": 351,
+    "Failed": 1,
+    "FailingTests": [
+      "Carry_TwoHandsBlockSelectionAndSecondCarry"
+    ],
+    "OriginalHash": "9D590CFE9865EA801F1B035EF5B7EFC94934D6E43FCECC627E0E107D07F3877C",
+    "RestoredHash": "9D590CFE9865EA801F1B035EF5B7EFC94934D6E43FCECC627E0E107D07F3877C"
+  },
+  {
+    "Mutation": "M3-disconnected-freeze",
+    "Source": "src/ItemLedger.cs",
+    "ExitCode": 1,
+    "Executed": 351,
+    "Failed": 3,
+    "FailingTests": [
+      "Leave_WholeInventoryAndCarriedContentsRemainExact",
+      "Leave_OtherPlayersAndWorldKeepSpoiling",
+      "Save_JsonRoundTripExactAndNoOfflineSpoilage"
+    ],
+    "OriginalHash": "D55AE08127165E7769A896D05A27F4A81641F1C54FF8EDB5102463D38E7F6BEB",
+    "RestoredHash": "D55AE08127165E7769A896D05A27F4A81641F1C54FF8EDB5102463D38E7F6BEB"
+  },
+  {
+    "Mutation": "M4-cold-chain",
+    "Source": "src/ItemLedger.cs",
+    "ExitCode": 1,
+    "Executed": 351,
+    "Failed": 5,
+    "FailingTests": [
+      "ColdChain_StintGap_59,999_0",
+      "ColdChain_StintGap_60_60,001",
+      "ColdChain_WarmOnlyIsNeverCooled",
+      "ColdChain_StintGap_10_5",
+      "ColdChain_LatchSurvivesInspectionButClearsOnUnload"
+    ],
+    "OriginalHash": "D55AE08127165E7769A896D05A27F4A81641F1C54FF8EDB5102463D38E7F6BEB",
+    "RestoredHash": "D55AE08127165E7769A896D05A27F4A81641F1C54FF8EDB5102463D38E7F6BEB"
+  },
+  {
+    "Mutation": "M5-request-dedup",
+    "Source": "src/PlayerInventory.cs",
+    "ExitCode": 1,
+    "Executed": 351,
+    "Failed": 5,
+    "FailingTests": [
+      "Receipts_FailuresAreDeduplicated",
+      "Receipts_RepeatPayloadCannotMoveTwice",
+      "Receipts_EvictedRequestCannotReplay",
+      "Save_ReceiptsAndRetiredIdentitiesSurvive",
+      "Tool_DuplicateHoldDoesNotInjectTwice"
+    ],
+    "OriginalHash": "9D590CFE9865EA801F1B035EF5B7EFC94934D6E43FCECC627E0E107D07F3877C",
+    "RestoredHash": "9D590CFE9865EA801F1B035EF5B7EFC94934D6E43FCECC627E0E107D07F3877C"
+  }
+]

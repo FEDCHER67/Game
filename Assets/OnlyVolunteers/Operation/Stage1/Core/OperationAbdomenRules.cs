@@ -113,6 +113,40 @@ namespace OnlyVolunteers.Operation.Stage1
             return CutStep.Completed;
         }
 
+        // ---------- suturing (round 3: every operation ends with sewing the incision up) ----------
+        /// <summary>Stitches done (0..tuning.sutureStitches), from the seam progress.</summary>
+        public int Stitches => State.sutured ? Mathf.Max(1, tuning.sutureStitches) : Mathf.FloorToInt(State.zoneSuture * Mathf.Max(1, tuning.sutureStitches) + 0.0001f);
+
+        /// <summary>A suturing stroke starts on the incision line at the top (head) end, or near where the seam stopped. Only
+        /// after the opening was made, never twice.</summary>
+        public bool CanBeginSuture(float along, float offset)
+        {
+            if (!Finite(along) || !Finite(offset) || !State.zoneOpened || State.sutured) return false;
+            if (Mathf.Abs(offset) > OperationAbdomenGeometry.Tolerance(tuning, OperationAbdomenGeometry.ZoneGuide)) return false;
+            return along >= State.zoneSuture - tuning.cutStartSlack && along <= State.zoneSuture + tuning.cutResumeWindow;
+        }
+
+        /// <summary>Sews along the line like the cut (same coordinates: 0 head end .. 1 pubic end), at most sutureSpeed.
+        /// Each finished stitch emits Stitch, the last one Sutured; the belly is closed from then on (no organ access).</summary>
+        public CutStep Suture(float along, float offset, float seconds)
+        {
+            if (!Finite(along) || !Finite(offset) || !Finite(seconds) || seconds <= 0f || !State.zoneOpened || State.sutured) return CutStep.None;
+            if (Mathf.Abs(offset) > OperationAbdomenGeometry.Tolerance(tuning, OperationAbdomenGeometry.ZoneGuide)) return CutStep.OffLine;
+            float previous = State.zoneSuture;
+            float delta = Mathf.Min(Mathf.Clamp01(along) - previous,
+                seconds * tuning.sutureSpeed / OperationAbdomenGeometry.GuideLength(tuning, OperationAbdomenGeometry.ZoneGuide));
+            if (delta <= 0f) return CutStep.None;
+            int before = Stitches;
+            State.zoneSuture = Mathf.Min(1f, previous + delta);
+            if (State.zoneSuture >= 0.995f) State.zoneSuture = 1f;
+            int after = Mathf.FloorToInt(State.zoneSuture * Mathf.Max(1, tuning.sutureStitches) + 0.0001f);
+            for (int k = before; k < after; k++) Emit(PatientCue.Stitch);
+            if (State.zoneSuture < 1f) return CutStep.Advanced;
+            State.sutured = true; State.unbuckleProgress = 0f;
+            Emit(PatientCue.Sutured);
+            return CutStep.Completed;
+        }
+
         /// <summary>Old saves keep already released connections, grades and rolled outcomes. A partial old per-organ
         /// incision becomes shared progress; one completed old opening provides access to the shared zone.</summary>
         public void MigrateSharedOpening()
@@ -151,9 +185,12 @@ namespace OnlyVolunteers.Operation.Stage1
         /// <summary>Point at 'along' (0 = start dot); direction &gt;= 0 runs from the seam toward the marker's +X (counter-clockwise on the top camera, whose right is the marker's -X), negative the other way.</summary>
         public static Vector3 Point(OperationTuning tuning, int guide, float along, int direction = 1)
         {
-            if (guide == ZoneGuide) return new Vector3(0f, (0.5f - along) * tuning.abdomenCutLength, 0f);
+            if (guide == ZoneGuide) return tuning.anatomicalLayout
+                ? Vector3.LerpUnclamped(OperationAnatomyV02.Start(tuning), OperationAnatomyV02.End(tuning), along)
+                : new Vector3(0f, (0.5f - along) * tuning.abdomenCutLength, 0f);
             float angle = along * Mathf.PI * 2f * (direction < 0 ? -1f : 1f);
-            return new Vector3(Mathf.Sin(angle) * tuning.liverLoopRadius.x, Mathf.Cos(angle) * tuning.liverLoopRadius.y, LoopHeight);
+            return new Vector3(Mathf.Sin(angle) * tuning.liverLoopRadius.x, Mathf.Cos(angle) * tuning.liverLoopRadius.y, tuning.anatomicalLayout ? 0f : LoopHeight)
+                + (tuning.anatomicalLayout ? OperationAnatomyV02.LiverLoopCenter : Vector3.zero);
         }
         /// <summary>Loop plane above the liver marker: high enough that the whole (tilted) loop clears the opening's floor.</summary>
         public const float LoopHeight = 0.03f;
@@ -162,7 +199,10 @@ namespace OnlyVolunteers.Operation.Stage1
         /// from the seam (the rules unwrap it) and the radial distance from the loop.</summary>
         public static Vector2 Coordinates(OperationTuning tuning, int guide, Vector3 local)
         {
-            if (guide == ZoneGuide) return new Vector2(0.5f - local.y / tuning.abdomenCutLength, local.x);
+            if (guide == ZoneGuide) return tuning.anatomicalLayout
+                ? new Vector2((OperationAnatomyV02.Start(tuning).y - local.y) / (OperationAnatomyV02.Start(tuning).y - OperationAnatomyV02.End(tuning).y), local.x)
+                : new Vector2(0.5f - local.y / tuning.abdomenCutLength, local.x);
+            if (tuning.anatomicalLayout) local -= OperationAnatomyV02.LiverLoopCenter;
             float x = local.x / tuning.liverLoopRadius.x, y = local.y / tuning.liverLoopRadius.y;
             float along = Mathf.Repeat(Mathf.Atan2(x, y) / (Mathf.PI * 2f), 1f);
             float radius = Mathf.Sqrt(x * x + y * y);

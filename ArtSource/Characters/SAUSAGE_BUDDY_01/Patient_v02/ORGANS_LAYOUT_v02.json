@@ -1,0 +1,919 @@
+{
+  "version": "ORGANS_LAYOUT_v02",
+  "date": "2026-10-18",
+  "patient": "SAUSAGE_BUDDY_PATIENT_v02.fbx",
+  "frames": {
+    "rest": "patient model space, Blender metres, Z up, faces -Y, patient left = +X (bone-parented markers follow mixamorig:Spine)",
+    "table_blender": "TABLE-ASTRA-001 v02 table-local Blender in the TABLE_REST pose (head end -Y, patient left -X)",
+    "table_unity": "OperatingTableAstra_v02 prefab-local Unity = (-x, z, -y) of table_blender (head end +Z, patient left +X)",
+    "marker_local_blender": "marker axes in Blender: +X patient left, +Y head / long axis, +Z out of the body",
+    "marker_local_unity": "the same marker after FBX import into Unity: +X = patient RIGHT (X is negated), +Y and +Z unchanged. Every *_marker_local_unity value below already has x negated."
+  },
+  "size_factor_vs_real": 0.9,
+  "buddy_torso": {
+    "width_m": 0.333,
+    "depth_m": 0.212,
+    "belly_front_y": -0.116,
+    "back_y": 0.096,
+    "crotch_z": 0.78,
+    "shorts_waist_z": 0.8,
+    "armpit_z": 1.13,
+    "costal_margin_z_est": 0.99,
+    "xiphoid_z_est": 1.07
+  },
+  "organs": {
+    "INC_LIVER": {
+      "organ": "liver",
+      "marker": "INC_LIVER",
+      "rest": {
+        "centre": [
+          -0.03,
+          -0.052,
+          1.032
+        ],
+        "x_axis": [
+          0.9809,
+          -0.1198,
+          0.1532
+        ],
+        "y_axis": [
+          -0.1381,
+          0.1261,
+          0.9824
+        ],
+        "z_axis_skin_normal": [
+          -0.1371,
+          -0.9847,
+          0.1072
+        ],
+        "rotation_quat_wxyz": [
+          0.744,
+          0.661,
+          -0.0975,
+          0.0061
+        ],
+        "skin_point_along_z": [
+          -0.0379,
+          -0.1091,
+          1.0382
+        ]
+      },
+      "long_axis": "marker +X (toward the left lobe)",
+      "depth_below_skin_m": 0.058,
+      "real_size_cm_long_wide_thick": [
+        25,
+        15,
+        8
+      ],
+      "buddy_size_m_long_wide_thick": [
+        0.225,
+        0.135,
+        0.072
+      ],
+      "source_model": "ArtSource/Props/LIVER-ASTRA-001/LIVER-ASTRA-001_recolour_v01 (mesh \"LIVER-ASTRA-001 | clean organ body\")",
+      "source_bounds_m_xyz": [
+        0.2046,
+        0.0663,
+        0.1529
+      ],
+      "model_to_marker": "model up (Blender +Z) -> marker +Y, model front (Blender -Y) -> marker +Z, model +X -> marker +X (Blender rotation = Euler X -90 deg); first translate by -model_centre_offset",
+      "model_scale_xyz": [
+        1.08,
+        1.08,
+        0.88
+      ],
+      "model_centre_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pull": {
+        "direction": "marker +Z",
+        "exit_distance_m": 0.124
+      },
+      "loop": {
+        "centre_marker_local_blender": [
+          0.012,
+          -0.004,
+          0.045
+        ],
+        "centre_marker_local_unity": [
+          -0.012,
+          -0.004,
+          0.045
+        ],
+        "radius_xy_m": [
+          0.085,
+          0.056
+        ],
+        "note": "loop plane 4.5 cm above the liver centre = ~1 cm above its front face; centre nudged 1.2 cm toward the patient left and 0.4 cm down so the loop rings the part of the liver inside the opening"
+      }
+    },
+    "INC_KIDNEY_L": {
+      "organ": "kidney_left",
+      "marker": "INC_KIDNEY_L",
+      "rest": {
+        "centre": [
+          0.08,
+          0.01,
+          0.975
+        ],
+        "x_axis": [
+          0.9351,
+          0.2991,
+          0.1901
+        ],
+        "y_axis": [
+          -0.1913,
+          -0.0255,
+          0.9812
+        ],
+        "z_axis_skin_normal": [
+          0.2983,
+          -0.9539,
+          0.0333
+        ],
+        "rotation_quat_wxyz": [
+          0.6969,
+          0.6941,
+          0.0388,
+          0.1759
+        ],
+        "skin_point_along_z": [
+          0.1109,
+          -0.089,
+          0.9785
+        ]
+      },
+      "long_axis": "marker +Y (upper pole)",
+      "depth_below_skin_m": 0.1038,
+      "real_size_cm_long_wide_thick": [
+        11,
+        6,
+        3
+      ],
+      "buddy_size_m_long_wide_thick": [
+        0.099,
+        0.054,
+        0.027
+      ],
+      "source_model": "ArtSource/Props/KIDNEY-ASTRA-001/KIDNEY-ASTRA-001_recolour_v01 (mesh \"R_Kidney and descending tube\": the model names its pair from the viewer; its R mesh has the hilum toward model -X = the patient-left kidney)",
+      "source_bounds_m_xyz": [
+        0.0656,
+        0.0425,
+        0.111
+      ],
+      "model_to_marker": "model up (Blender +Z) -> marker +Y, model front (Blender -Y) -> marker +Z, model +X -> marker +X (Blender rotation = Euler X -90 deg); first translate by -model_centre_offset",
+      "model_scale_xyz": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "model_centre_offset": [
+        0.0702,
+        0.0,
+        -0.0008
+      ],
+      "pull": {
+        "direction": "marker +Z",
+        "exit_distance_m": 0.147
+      },
+      "hilum_rest": [
+        0.0586,
+        -0.0033,
+        0.9664
+      ],
+      "cords": {
+        "A_renal_artery": {
+          "rest_start": [
+            0.0589,
+            -0.0029,
+            0.9746
+          ],
+          "rest_end": [
+            0.0191,
+            -0.003,
+            0.9824
+          ],
+          "rest_snip_point": [
+            0.039,
+            -0.0029,
+            0.9785
+          ],
+          "marker_local_blender_start": [
+            -0.0237,
+            0.004,
+            0.006
+          ],
+          "marker_local_blender_end": [
+            -0.0594,
+            0.0192,
+            -0.0055
+          ],
+          "marker_local_unity_start": [
+            0.0237,
+            0.004,
+            0.006
+          ],
+          "marker_local_unity_end": [
+            0.0594,
+            0.0192,
+            -0.0055
+          ],
+          "length_m": 0.0406,
+          "radius_m": 0.005,
+          "colour": "artery red",
+          "ends_on": "aorta",
+          "direction_rest": [
+            -0.9815,
+            -0.0025,
+            0.1916
+          ],
+          "table_blender_start": [
+            -0.0589,
+            -0.1546,
+            0.7741
+          ],
+          "table_unity_start": [
+            0.0589,
+            0.7741,
+            0.1546
+          ],
+          "table_blender_end": [
+            -0.0191,
+            -0.1624,
+            0.7742
+          ],
+          "table_unity_end": [
+            0.0191,
+            0.7742,
+            0.1624
+          ]
+        },
+        "B_renal_vein": {
+          "rest_start": [
+            0.062,
+            -0.0025,
+            0.9589
+          ],
+          "rest_end": [
+            0.0191,
+            -0.003,
+            0.9544
+          ],
+          "rest_snip_point": [
+            0.0405,
+            -0.0027,
+            0.9567
+          ],
+          "marker_local_blender_start": [
+            -0.0237,
+            -0.012,
+            0.006
+          ],
+          "marker_local_blender_end": [
+            -0.0648,
+            -0.0082,
+            -0.0065
+          ],
+          "marker_local_unity_start": [
+            0.0237,
+            -0.012,
+            0.006
+          ],
+          "marker_local_unity_end": [
+            0.0648,
+            -0.0082,
+            -0.0065
+          ],
+          "length_m": 0.0431,
+          "radius_m": 0.006,
+          "colour": "vein purple",
+          "ends_on": "aorta",
+          "direction_rest": [
+            -0.9944,
+            -0.0118,
+            -0.1051
+          ],
+          "table_blender_start": [
+            -0.062,
+            -0.1389,
+            0.7737
+          ],
+          "table_unity_start": [
+            0.062,
+            0.7737,
+            0.1389
+          ],
+          "table_blender_end": [
+            -0.0191,
+            -0.1344,
+            0.7742
+          ],
+          "table_unity_end": [
+            0.0191,
+            0.7742,
+            0.1344
+          ]
+        }
+      }
+    },
+    "INC_KIDNEY_R": {
+      "organ": "kidney_right",
+      "marker": "INC_KIDNEY_R",
+      "rest": {
+        "centre": [
+          -0.08,
+          0.01,
+          0.955
+        ],
+        "x_axis": [
+          0.9213,
+          -0.3456,
+          -0.1784
+        ],
+        "y_axis": [
+          0.1742,
+          -0.0437,
+          0.9837
+        ],
+        "z_axis_skin_normal": [
+          -0.3478,
+          -0.9374,
+          0.02
+        ],
+        "rotation_quat_wxyz": [
+          0.6888,
+          0.6973,
+          -0.0615,
+          -0.1886
+        ],
+        "skin_point_along_z": [
+          -0.116,
+          -0.087,
+          0.9571
+        ]
+      },
+      "long_axis": "marker +Y (upper pole)",
+      "depth_below_skin_m": 0.1035,
+      "real_size_cm_long_wide_thick": [
+        11,
+        6,
+        3
+      ],
+      "buddy_size_m_long_wide_thick": [
+        0.099,
+        0.054,
+        0.027
+      ],
+      "source_model": "ArtSource/Props/KIDNEY-ASTRA-001/KIDNEY-ASTRA-001_recolour_v01 (mesh \"L_Kidney and descending tube\")",
+      "source_bounds_m_xyz": [
+        0.0676,
+        0.0443,
+        0.1115
+      ],
+      "model_to_marker": "model up (Blender +Z) -> marker +Y, model front (Blender -Y) -> marker +Z, model +X -> marker +X (Blender rotation = Euler X -90 deg); first translate by -model_centre_offset",
+      "model_scale_xyz": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "model_centre_offset": [
+        -0.0713,
+        0.0,
+        0.0012
+      ],
+      "pull": {
+        "direction": "marker +Z",
+        "exit_distance_m": 0.147
+      },
+      "hilum_rest": [
+        -0.0592,
+        -0.0043,
+        0.9466
+      ],
+      "cords": {
+        "A_renal_artery": {
+          "rest_start": [
+            -0.0596,
+            -0.004,
+            0.9548
+          ],
+          "rest_end": [
+            -0.022,
+            0.0045,
+            0.9626
+          ],
+          "rest_snip_point": [
+            -0.0408,
+            0.0003,
+            0.9587
+          ],
+          "marker_local_blender_start": [
+            0.0236,
+            0.004,
+            0.006
+          ],
+          "marker_local_blender_end": [
+            0.054,
+            0.0178,
+            -0.0149
+          ],
+          "marker_local_unity_start": [
+            -0.0236,
+            0.004,
+            0.006
+          ],
+          "marker_local_unity_end": [
+            -0.054,
+            0.0178,
+            -0.0149
+          ],
+          "length_m": 0.0393,
+          "radius_m": 0.005,
+          "colour": "artery red",
+          "ends_on": "vena_cava",
+          "direction_rest": [
+            0.9563,
+            0.2155,
+            0.1977
+          ],
+          "table_blender_start": [
+            0.0596,
+            -0.1348,
+            0.7752
+          ],
+          "table_unity_start": [
+            -0.0596,
+            0.7752,
+            0.1348
+          ],
+          "table_blender_end": [
+            0.022,
+            -0.1426,
+            0.7667
+          ],
+          "table_unity_end": [
+            -0.022,
+            0.7667,
+            0.1426
+          ]
+        },
+        "B_renal_vein": {
+          "rest_start": [
+            -0.0624,
+            -0.0033,
+            0.9391
+          ],
+          "rest_end": [
+            -0.022,
+            0.0045,
+            0.9346
+          ],
+          "rest_snip_point": [
+            -0.0422,
+            0.0006,
+            0.9369
+          ],
+          "marker_local_blender_start": [
+            0.0236,
+            -0.012,
+            0.006
+          ],
+          "marker_local_blender_end": [
+            0.059,
+            -0.0097,
+            -0.0154
+          ],
+          "marker_local_unity_start": [
+            -0.0236,
+            -0.012,
+            0.006
+          ],
+          "marker_local_unity_end": [
+            -0.059,
+            -0.0097,
+            -0.0154
+          ],
+          "length_m": 0.0414,
+          "radius_m": 0.006,
+          "colour": "vein purple",
+          "ends_on": "vena_cava",
+          "direction_rest": [
+            0.9762,
+            0.1879,
+            -0.1084
+          ],
+          "table_blender_start": [
+            0.0624,
+            -0.1191,
+            0.7745
+          ],
+          "table_unity_start": [
+            -0.0624,
+            0.7745,
+            0.1191
+          ],
+          "table_blender_end": [
+            0.022,
+            -0.1146,
+            0.7667
+          ],
+          "table_unity_end": [
+            -0.022,
+            0.7667,
+            0.1146
+          ]
+        }
+      }
+    }
+  },
+  "opening": {
+    "marker": "INC_ABDOMEN",
+    "shape": "lens (retracted midline laparotomy): |x| = W * (1 - |t|^p)^q, t = y / half_length, marker-local, plus a +-2 mm natural wobble in the mesh",
+    "half_length_m": 0.138,
+    "half_width_m": 0.122,
+    "p": 2.0,
+    "q": 0.6,
+    "rest": {
+      "centre_on_skin": [
+        0.0,
+        -0.1174,
+        0.96
+      ],
+      "z_axis_skin_normal": [
+        -0.0326,
+        -0.9991,
+        0.0265
+      ]
+    },
+    "mesh": "ArtSource/Props/TABLE-ASTRA-001/v02/OperationAbdomen_v02.fbx (origin and axes = INC_ABDOMEN)"
+  },
+  "guide": {
+    "kind": "belly midline (linea alba), head end -> pubic end",
+    "start_marker": "GUIDE_BELLY_START",
+    "end_marker": "GUIDE_BELLY_END",
+    "rest_start": [
+      0.0,
+      -0.1062,
+      1.082
+    ],
+    "rest_end": [
+      0.0,
+      -0.1076,
+      0.84
+    ],
+    "length_m": 0.242,
+    "abdomen_local_start": [
+      -0.0004,
+      0.1223,
+      -0.008
+    ],
+    "abdomen_local_end": [
+      -0.0003,
+      -0.1197,
+      -0.013
+    ]
+  },
+  "great_vessels_rest": {
+    "aorta": {
+      "x": 0.014,
+      "y": -0.003,
+      "radius": 0.0085,
+      "z_head": 1.05,
+      "z_pubic": 0.862,
+      "table_blender_head": [
+        -0.014,
+        -0.23,
+        0.7742
+      ],
+      "table_unity_head": [
+        0.014,
+        0.7742,
+        0.23
+      ],
+      "table_blender_pubic": [
+        -0.014,
+        -0.042,
+        0.7742
+      ],
+      "table_unity_pubic": [
+        0.014,
+        0.7742,
+        0.042
+      ]
+    },
+    "vena_cava": {
+      "x": -0.016,
+      "y": 0.0045,
+      "radius": 0.01,
+      "z_head": 1.05,
+      "z_pubic": 0.862,
+      "table_blender_head": [
+        0.016,
+        -0.23,
+        0.7667
+      ],
+      "table_unity_head": [
+        -0.016,
+        0.7667,
+        0.23
+      ],
+      "table_blender_pubic": [
+        0.016,
+        -0.042,
+        0.7667
+      ],
+      "table_unity_pubic": [
+        -0.016,
+        0.7667,
+        0.042
+      ]
+    }
+  },
+  "table_rest": {
+    "note": "markers evaluated in the TABLE_REST pose (Patient_TableRest_v01 clip); v01 marker check (mm): {\"INC_KIDNEY_L\": 0.0, \"INC_KIDNEY_R\": 0.0, \"INC_LIVER\": 0.0}",
+    "INC_LIVER": {
+      "table_blender": {
+        "position": [
+          0.03,
+          -0.212,
+          0.8232
+        ],
+        "x_axis": [
+          -0.9809,
+          -0.1532,
+          0.1198
+        ],
+        "y_axis": [
+          0.1381,
+          -0.9824,
+          -0.1261
+        ],
+        "z_axis": [
+          0.1371,
+          -0.1072,
+          0.9847
+        ]
+      },
+      "table_unity": {
+        "position": [
+          -0.03,
+          0.8232,
+          0.212
+        ],
+        "z_axis_out": [
+          -0.1371,
+          0.9847,
+          0.1072
+        ],
+        "y_axis": [
+          -0.1381,
+          -0.1261,
+          0.9824
+        ],
+        "rotation_quat_xyzw": [
+          -0.06465,
+          0.99348,
+          0.05871,
+          0.0733
+        ]
+      }
+    },
+    "INC_KIDNEY_L": {
+      "table_blender": {
+        "position": [
+          -0.08,
+          -0.155,
+          0.7612
+        ],
+        "x_axis": [
+          -0.9351,
+          -0.1901,
+          -0.2991
+        ],
+        "y_axis": [
+          0.1913,
+          -0.9812,
+          0.0255
+        ],
+        "z_axis": [
+          -0.2983,
+          -0.0333,
+          0.9539
+        ]
+      },
+      "table_unity": {
+        "position": [
+          0.08,
+          0.7612,
+          0.155
+        ],
+        "z_axis_out": [
+          0.2983,
+          0.9539,
+          0.0333
+        ],
+        "y_axis": [
+          -0.1913,
+          0.0255,
+          0.9812
+        ],
+        "rotation_quat_xyzw": [
+          0.15182,
+          0.98364,
+          0.00199,
+          0.09693
+        ]
+      }
+    },
+    "INC_KIDNEY_R": {
+      "table_blender": {
+        "position": [
+          0.08,
+          -0.135,
+          0.7612
+        ],
+        "x_axis": [
+          -0.9213,
+          0.1784,
+          0.3456
+        ],
+        "y_axis": [
+          -0.1742,
+          -0.9837,
+          0.0437
+        ],
+        "z_axis": [
+          0.3478,
+          -0.02,
+          0.9374
+        ]
+      },
+      "table_unity": {
+        "position": [
+          -0.08,
+          0.7612,
+          0.135
+        ],
+        "z_axis_out": [
+          -0.3478,
+          0.9374,
+          0.02
+        ],
+        "y_axis": [
+          0.1742,
+          0.0437,
+          0.9837
+        ],
+        "rotation_quat_xyzw": [
+          0.17685,
+          -0.9801,
+          0.00604,
+          0.08994
+        ]
+      }
+    },
+    "INC_ABDOMEN": {
+      "table_blender": {
+        "position": [
+          0.0,
+          -0.14,
+          0.8886
+        ],
+        "x_axis": [
+          -0.9995,
+          -0.0,
+          0.0326
+        ],
+        "y_axis": [
+          -0.0009,
+          -0.9997,
+          -0.0264
+        ],
+        "z_axis": [
+          0.0326,
+          -0.0265,
+          0.9991
+        ]
+      },
+      "table_unity": {
+        "position": [
+          -0.0,
+          0.8886,
+          0.14
+        ],
+        "z_axis_out": [
+          -0.0326,
+          0.9991,
+          0.0265
+        ],
+        "y_axis": [
+          0.0009,
+          -0.0264,
+          0.9997
+        ],
+        "rotation_quat_xyzw": [
+          0.0163,
+          -0.99978,
+          -0.01323,
+          0.00022
+        ]
+      }
+    },
+    "GUIDE_BELLY_START": {
+      "table_blender": {
+        "position": [
+          0.0,
+          -0.262,
+          0.8774
+        ],
+        "x_axis": [
+          -0.9995,
+          -0.0,
+          -0.0304
+        ],
+        "y_axis": [
+          0.0046,
+          -0.9886,
+          -0.1504
+        ],
+        "z_axis": [
+          -0.03,
+          -0.1505,
+          0.9882
+        ]
+      },
+      "table_unity": {
+        "position": [
+          -0.0,
+          0.8774,
+          0.262
+        ],
+        "z_axis_out": [
+          0.03,
+          0.9882,
+          0.1505
+        ],
+        "y_axis": [
+          -0.0046,
+          -0.1504,
+          0.9886
+        ],
+        "rotation_quat_xyzw": [
+          0.01514,
+          0.99703,
+          0.07544,
+          0.00115
+        ]
+      }
+    },
+    "GUIDE_BELLY_END": {
+      "table_blender": {
+        "position": [
+          0.0,
+          -0.02,
+          0.8788
+        ],
+        "x_axis": [
+          -1.0,
+          -0.0,
+          -0.0026
+        ],
+        "y_axis": [
+          -0.0005,
+          -0.9797,
+          0.2003
+        ],
+        "z_axis": [
+          -0.0025,
+          0.2003,
+          0.9797
+        ]
+      },
+      "table_unity": {
+        "position": [
+          -0.0,
+          0.8788,
+          0.02
+        ],
+        "z_axis_out": [
+          0.0025,
+          0.9797,
+          -0.2003
+        ],
+        "y_axis": [
+          0.0005,
+          0.2003,
+          0.9797
+        ],
+        "rotation_quat_xyzw": [
+          -0.00128,
+          -0.99492,
+          0.10068,
+          0.00013
+        ]
+      }
+    }
+  }
+}
