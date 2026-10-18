@@ -134,7 +134,7 @@ namespace OnlyVolunteers.Operation.Stage1
         public OperationState ServerDischargeLiving(out Vector3 pelvis, out Vector3 headDirection, out bool faceUp)
         {
             pelvis = Vector3.zero; headDirection = Vector3.forward; faceUp = true;
-            if (!IsServerInitialized || !admissionMode || !HasPatient || falling) return null;
+            if (!IsServerInitialized || !admissionMode || !HasPatient || (falling && !runOff)) return null;
             var s = rules.State;
             if (!s.alive || s.onTable || patient.HasHolder) return null;
             Transform hips = null, head = null;
@@ -150,6 +150,7 @@ namespace OnlyVolunteers.Operation.Stage1
             faceUp = hips == null || Vector3.Dot(hips.forward, Vector3.up) > -0.2f;
             s.onTable = false; s.aligned = false; s.knockedOut = false; s.escapeProgress = 0f; s.unbuckleProgress = 0f;
             Array.Clear(s.restraints, 0, s.restraints.Length);
+            falling = false; runOff = false; serverView.falling = false;
             fieldDose = 0f;
             GetComponent<OperationPresentation>()?.ReleasePatientVisuals();
             Abdomen?.ReleasePatientVisuals();
@@ -167,6 +168,11 @@ namespace OnlyVolunteers.Operation.Stage1
         private float noAlignUntil;
         private bool falling;
         private float fallEndsAt;
+        /// <summary>Round 4: the escape clips ended with him on his feet (HopRun) or face down (Stumble_Off): the root stays
+        /// on PatientRest holding the last clip pose until the capture bridge hands him to the field (fallback: Land).</summary>
+        private bool runOff;
+        public bool PatientRanOff => falling && runOff;
+        private float nextSideAt;
         // Capture -> delivery stage A (map scene, CAPTURE_DELIVERY_SPEC v01 D3/D4): the table starts empty and takes the
         // captured NPC's own OperationState when he is laid on it (ServerAdmit). It never writes the dev operation save.
         private bool admissionMode;
@@ -536,6 +542,7 @@ namespace OnlyVolunteers.Operation.Stage1
             foreach (bool closed in State.restraints) if (closed) return null;
             var body = patient;
             State.onTable = false; State.aligned = false; noAlignUntil = float.PositiveInfinity;
+            rules.PatchIfOpen(); // round 4: the plain skin patch is state now (a scalpel stroke reopens it on the table)
             ApplyPatientPhysics();
             GetComponent<OperationPresentation>()?.ReleasePatientVisuals();
             Abdomen?.ReleasePatientVisuals();
@@ -623,7 +630,8 @@ namespace OnlyVolunteers.Operation.Stage1
             CueReceived?.Invoke(cue, ctxOrgan, ctxClient);
             ObserversCue(cue, ctxOrgan, ctxClient);
             if (cue == PatientCue.FailedEscapeFall) FallOffTable();
-            if (cue == PatientCue.Extracted || cue == PatientCue.Death || cue == PatientCue.IncisionOpened) nextSnapshot = 0f;
+            if (cue == PatientCue.RanOff) RunOffTable();
+            if (cue == PatientCue.Extracted || cue == PatientCue.Death || cue == PatientCue.IncisionOpened || cue == PatientCue.Reopened) nextSnapshot = 0f;
             Debug.Log($"[OPS] CUE {cue} organ={ctxOrgan} client={ctxClient} patient={State.patientId}");
         }
         [ObserversRpc(ExcludeServer = true)]
@@ -654,8 +662,8 @@ namespace OnlyVolunteers.Operation.Stage1
             // The EscapeFall clip (Op_EscapeFall_Mirror_v01) carries the whole escape (sit up, swing the legs off the
             // patient's right side = the camera side, away from the stand, stumble, splat) relative to PatientRest, so the root stays there, kinematic, while the clip plays on every peer.
             // When it ends the root jumps under the landed body (Land) and the KnockedOut clip continues from there.
-            falling = true;
-            fallEndsAt = Time.time + tuning.escapeFallSeconds;
+            falling = true; runOff = false;
+            fallEndsAt = Time.time + tuning.EscapeFallDuration;
             ReleaseGrabs();
             var rest = RestPose;
             patient.transform.SetPositionAndRotation(rest.position, rest.rotation);
@@ -665,9 +673,47 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         /// <summary>End of the escape clip: the root goes to the KnockedOut root under the landed hips (same yaw as
         /// PatientRest, on the floor) and the body turns dynamic at rest, so nothing slides or snaps.</summary>
+        /// <summary>Round 4: end of the escape clips (PatientCue.RanOff): hold the last pose on PatientRest, kinematic, until
+        /// the capture bridge discharges him (admission mode, at once); the dev scene lands him after a moment.</summary>
+        private void RunOffTable()
+        {
+            if (patient == null) return;
+            alignStartSet = false;
+            falling = true; runOff = true;
+            fallEndsAt = Time.time + (admissionMode ? 3f : 0.3f);
+            ReleaseGrabs();
+            var rest = RestPose;
+            patient.transform.SetPositionAndRotation(rest.position, rest.rotation);
+            ApplyPatientPhysics();
+            noAlignUntil = fallEndsAt + 1f;
+            serverView.falling = true; nextSnapshot = 0f;
+        }
+        /// <summary>Round 4: where the field NPC takes over after HopRun (RUN0 / RUN0_L, on the floor) and his run direction.</summary>
+        public Vector3 RunOffPoint(int side, out Vector3 forward)
+        {
+            forward = transform.rotation * (Quaternion.Euler(0f, OperationEscape.Run0Yaw(side), 0f) * Vector3.forward);
+            return transform.TransformPoint(OperationEscape.Run0Local(side));
+        }
+        /// <summary>Round 4: the exit side away from the nearest player (his right = table-local -X).</summary>
+        private void UpdateEscapeSide()
+        {
+            if (Time.time < nextSideAt || rules == null) return;
+            nextSideAt = Time.time + 0.5f;
+            float best = float.PositiveInfinity; Vector3 nearest = Vector3.zero; bool any = false;
+            foreach (var player in FindObjectsByType<NetworkPlayer>(FindObjectsSortMode.None))
+            {
+                if (player == null) continue;
+                float d = (player.transform.position - transform.position).sqrMagnitude;
+                if (d < best) { best = d; nearest = player.transform.position; any = true; }
+            }
+            if (!any && Camera.main != null) { nearest = Camera.main.transform.position; any = true; }
+            if (!any) return;
+            float x = transform.InverseTransformPoint(nearest).x;
+            rules.PreferredEscapeSide = x < 0f ? -1 : 1;
+        }
         private void Land()
         {
-            falling = false; serverView.falling = false; nextSnapshot = 0f;
+            falling = false; runOff = false; serverView.falling = false; nextSnapshot = 0f;
             if (patient == null) return;
             var rest = RestPose;
             Vector3 p = rest.position + rest.rotation * tuning.escapeLandingOffset;
@@ -1106,6 +1152,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 ctxClient = -1;
             }
             dose += fieldDose; fieldDose = 0f; // round 3: the field syringe of a player by the table
+            UpdateEscapeSide();
             rules.Tick(dt, dose, false);
 
             // Patient pose: slide onto the rest pose, then follow the (possibly moving) gurney.
@@ -1294,7 +1341,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (p.strokeRejected || !AnatomyReady) return;
             var s = State;
-            if (!s.zoneOpened || s.sutured) { if (p.pressStart) Hint(p, OpHint.NothingToSuture); return; }
+            if (!s.zoneOpened || s.sutured || s.skinPatched) { if (p.pressStart) Hint(p, OpHint.NothingToSuture); return; }
             if (!rules.CanOperate(false)) { if (p.pressStart) Hint(p, OpHint.Squirming); return; }
             int guide = OperationAbdomenGeometry.ZoneGuide;
             Vector3 local = SiteLocal(guide, transform.TransformPoint(p.point));

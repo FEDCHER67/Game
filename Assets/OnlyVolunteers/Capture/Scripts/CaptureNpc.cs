@@ -181,6 +181,20 @@ namespace OnlyVolunteers.Capture
             Pin();
         }
 
+        /// <summary>Round 4: re-created on his feet where the HopRun clip ended (RUN0), facing his run; a free, scared NPC
+        /// (the player is right there), so he runs on at once instead of lying on the floor.</summary>
+        public void StandAt(Vector3 ground, Vector3 forward)
+        {
+            forward = Vector3.ProjectOnPlane(forward, Vector3.up);
+            Quaternion rotation = forward.sqrMagnitude > 1e-4f ? Quaternion.LookRotation(forward.normalized, Vector3.up) : transform.rotation;
+            var controller = GetComponent<CharacterController>();
+            bool was = controller != null && controller.enabled;
+            if (controller != null) controller.enabled = false;
+            transform.SetPositionAndRotation(ground, rotation);
+            if (controller != null) controller.enabled = was;
+            Physics.SyncTransforms();
+        }
+
         /// <summary>Sitting in the van, running for a door or rising from a get-up when the anesthesia takes: down where he
         /// is, through GreyboxNpc.Hit with no push and no condition cost (a sitter lies down along the bay).</summary>
         private void Slump()
