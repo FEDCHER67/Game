@@ -22,11 +22,11 @@ v52→v76 checklist source: `Tools/MapV76/data_src/v52_to_v76_changes.json` (48 
 - [x] 1 classes  - [x] 2 roads/water/border/features
 - [x] 3 terrain heightmap (hill B 50.7, Elite 44.0, NW ridge 94.5 m; serpentine VIEW B max grade 12 % — open question)  - [x] 4 district layouts (all 10)  - [x] 5 vegetation  - [x] 6 material map
 - [x] 7 splat (`s07_splat.py`) + C# `Assets/OnlyVolunteers/Map/W76Build/Editor/W76Builder.cs` (menu OnlyVolunteers/Map/W76 Build/Build Map_W76_Build_v01; Roslyn syntax-checked, NOT compiled in Unity) + Runtime W76Atmosphere / W76MapMarkers
-- [~] 8 bpy renders (`s08_render_bpy.py`; full-map top done `out/renders/map_top_vs_2d_v76.png`; district renders may be partial)
+- [x] 8 bpy renders: 85 renders in `Tools/MapV76/out/renders/` (full map + 12 views × top + 6 obliques, `*_top_vs_2d.png` side by side with the 2D map)
 - [ ] 9 checklist report  - [x] 10 draft PR https://github.com/FEDCHER67/Game/pull/30
 
 ## Next exact step (local agent)
-1. `cd Tools/MapV76 && python3 s08_render_bpy.py` (pip install bpy) — finish district top + 6 oblique renders in `out/renders/`.
+1. Renders done (rerun `s08_render_bpy.py` only after data changes).
 2. Write `s09_checklist.py`: tick each non-superseded item of `data_src/v52_to_v76_changes.json` against the data (build_key -> file/field), output `out/v52_to_v76_checklist.json`.
 3. Open Unity, run the menu, read `Generated/v01/W76_build_log.txt`; fix compile errors if any (APIs checked by grep only).
 4. Verify in Unity: roof ray check, tunnel glare, Rough fog / Construction bright, water v09 flow on rivers, arches passable, invisible wall.
