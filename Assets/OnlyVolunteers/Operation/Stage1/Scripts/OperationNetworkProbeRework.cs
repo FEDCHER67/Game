@@ -73,7 +73,7 @@ namespace OnlyVolunteers.Operation.Stage1
 
             // ---- the build failure itself ----
             var targets = table.GetComponent<OperationStrapTargets>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < OperationStraps.Count(table.Tuning); i++)
             {
                 var list = targets != null ? targets.Targets(i) : null;
                 bool safe = list != null && list.Count > 0;
@@ -100,7 +100,7 @@ namespace OnlyVolunteers.Operation.Stage1
             // ---- every strap: band click and buckle click, a different tool each, independent of the others ----
             var slots = new[] { ToolSlot.Hands, ToolSlot.Anesthesia, ToolSlot.Blood, ToolSlot.Scalpel };
             var hotkeys = new[] { Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4 };
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < OperationStraps.Count(table.Tuning); i++)
             {
                 int tool = i % 4;
                 yield return Select(hotkeys[tool], slots[tool]);
@@ -140,10 +140,10 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return Select(Key.Digit1, ToolSlot.Hands);
             for (int i = 0; i < 5; i++)
             {
-                if (S.restraints[i]) continue;
+                if (S.restraints[i] || !OperationStraps.Active(table.Tuning, i)) continue;
                 yield return ClAimStrap(i, StrapPart.Band); yield return Click(); yield return new WaitForSeconds(0.35f);
             }
-            Check(S.restraints[0] && S.restraints[1] && S.restraints[2] && S.restraints[3] && S.restraints[4], "all five straps closed by clicks");
+            Check(OperationStraps.AllClosed(S, table.Tuning), "all straps closed by clicks");
             Shot("cl_straps_04_all_closed");
             // Fixture: the anesthesia wears off (time passes).
             S.sleepRemaining = 0f; S.residual = 0f; S.dazedRemaining = 0f;
@@ -155,6 +155,21 @@ namespace OnlyVolunteers.Operation.Stage1
             Check(S.onTable && S.aligned && S.escapes == 0 && S.escapeProgress == 0f, "awake for " + wait.ToString("F0") + " s with the straps closed: he struggles but stays on the table");
             Check(limbsHeld, "strapped arms and legs never flail while he struggles");
             Shot("cl_straps_05_struggle_strapped");
+            if (!table.Tuning.torsoStrap)
+            {
+                // Round 3 (no torso strap): an open arm strap frees that hand, which starts unbuckling the next strap.
+                yield return ClAimStrap(0, StrapPart.Buckle); yield return Click();
+                yield return new WaitForSeconds(0.8f);
+                Check(!S.restraints[0] && S.unbuckleProgress > 0f && S.escapeProgress == 0f, "left arm strap open: his free hand starts on the next strap");
+                Check(rig != null && rig.LimbMotion[1] == 0f && rig.LimbMotion[2] == 0f && rig.LimbMotion[3] == 0f, "the strapped right arm and legs stay held while the free hand unbuckles");
+                Shot("cl_straps_06_torso_and_left_arm_open");
+                yield return ClAimStrap(0, StrapPart.Band); yield return Click();
+                yield return new WaitForSeconds(0.4f);
+                Check(OperationStraps.AllClosed(S, table.Tuning) && S.unbuckleProgress == 0f && S.escapeProgress == 0f && S.onTable, "arm strapped again in time: the unbuckling stops, he is still on the table");
+                S.sleepRemaining = 120f; // fixture: asleep again for whatever runs next
+                yield return Tap(Key.Escape); yield return new WaitForSeconds(table.Tuning.cameraBlendSeconds + 0.1f);
+                yield break;
+            }
             // Torso open: he starts wriggling free; an open arm strap lets that arm flail, the strapped one stays down.
             yield return ClAimStrap(4, StrapPart.Buckle); yield return Click();
             yield return new WaitForSeconds(1.5f);

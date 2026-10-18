@@ -394,8 +394,10 @@ namespace OnlyVolunteers.Operation.Stage1
         private IEnumerator Straps(bool all)
         {
             bool wheeledOut = false;
+            if (!table.Tuning.torsoStrap) all = true; // round 3: no torso strap, the four limb straps hold him down
             for (int i = 0; i < 5; i++)
             {
+                if (!OperationStraps.Active(table.Tuning, i)) continue;
                 if (!all && i != 4) continue;
                 if (S.restraints[i]) continue;
                 if (!wheeledOut && view.CameraMode != TableCamera.Prep)
@@ -578,6 +580,8 @@ namespace OnlyVolunteers.Operation.Stage1
             yield return Select(Key.Digit1, ToolSlot.Hands);
             Vector3 c = table.OrganPosition(organ);
             yield return AimAt(t => t.kind == TargetKind.Organ && t.index == organ, Around(c, table.transform.forward, table.transform.right, 0.012f), "organ " + organ);
+            // v05 layout: the liver overlaps the centre of the right kidney on screen; look a little further out like a player.
+            if (!aimed) yield return AimAt(t => t.kind == TargetKind.Organ && t.index == organ, Around(c, table.transform.forward, table.transform.right, 0.024f), "organ " + organ + " (wider)");
             if (!aimed) { Check(false, $"organ {organ} found under the cursor"); yield break; }
             yield return Button(true);
             Vector2 from = mPos; float dist = Cam.pixelHeight * table.Tuning.pullScreenFraction * 1.35f;
@@ -639,7 +643,7 @@ namespace OnlyVolunteers.Operation.Stage1
             Shot("01b_table_view");
             yield return Straps(true);
             Shot("03_straps_closed");
-            Check(S.Torso && S.restraints[0] && S.restraints[1] && S.restraints[2] && S.restraints[3], "all five straps closed");
+            Check(OperationStraps.AllClosed(S, table.Tuning), "all straps closed");
             yield return Inject(2.0f, "main");
             yield return WaitFor(() => S.Sleeping, 1f, "patient asleep after a 2 s hold");
             Check(S.alive && S.residual >= table.Tuning.suitableMinimum && S.residual <= table.Tuning.suitableMaximum, $"dose in the suitable range ({S.residual:F2})");
@@ -1047,7 +1051,7 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         private IEnumerator NetClient()
         {
-            yield return WaitFor(() => S != null && S.onTable && S.aligned && S.Sleeping && S.Torso, 120f, "client sees the host's prepared, sleeping patient");
+            yield return WaitFor(() => S != null && S.onTable && S.aligned && S.Sleeping && OperationStraps.Held(S, table.Tuning), 120f, "client sees the host's prepared, sleeping patient");
             Teleport(TableFoot(new Vector3(-1.2f, 0f, 1.0f)));
             yield return Frames(2);
             LookAt(table.transform.TransformPoint(new Vector3(0, 0.75f, 0.2f)));

@@ -24,10 +24,10 @@ namespace OnlyVolunteers.Operation.Stage1
             Check(table.AdmissionMode && table.HasPatient && S.onTable, "a captured patient lies on the base table (admission mode)");
             yield return WaitFor(() => S.aligned, 3f, "the magnet snap has aligned him");
             yield return EnterTable(); Shot("cd_09a_prep_view");
-            for (int i = 0; i < 5; i++) Check(StrapOnScreen(i), "PREP view: strap " + i + " (" + OperationText.Straps[i] + ") on screen");
+            for (int i = 0; i < OperationStraps.Count(table.Tuning); i++) Check(StrapOnScreen(i), "PREP view: strap " + i + " (" + OperationText.Straps[i] + ") on screen");
             yield return Straps(true); Shot("cd_09b_straps_closed");
             Check(view.CameraMode == TableCamera.Prep, "straps were clicked in the PREP view");
-            Check(S.restraints[0] && S.restraints[1] && S.restraints[2] && S.restraints[3] && S.restraints[4], "all five straps closed by clicks");
+            Check(OperationStraps.AllClosed(S, table.Tuning), "all straps closed by clicks");
             yield return CutShared(OperationAbdomenGeometry.ZoneGuide, false, true);
             Check(view.CameraMode == TableCamera.Operation, "the cut was made in the OPERATION view");
             yield return Snip(0, true);

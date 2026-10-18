@@ -51,7 +51,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 Shot("g35_straps_" + slots[tool]);
                 yield return Tap(Key.Tab); yield return new WaitForSeconds(0.45f);
             }
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < OperationStraps.Count(table.Tuning); i++)
             {
                 bool precise = false;
                 foreach (var tag in table.GetComponentsInChildren<OperationTargetTag>())

@@ -187,14 +187,14 @@ namespace OnlyVolunteers.Operation.Stage1
             Check(Vector3.Dot(Cam.transform.forward, -table.transform.up) > 0.9999f, "real table camera is straight top-down");
             // PREP (default on E): the whole patient, all five straps and the tray, clickable without zooming.
             Check(view.CameraMode == TableCamera.Prep, "E opens the PREP view");
-            for (int i = 0; i < 5; i++) Check(StrapOnScreen(i), "PREP: strap " + i + " (" + OperationText.Straps[i] + ") on screen");
+            for (int i = 0; i < OperationStraps.Count(table.Tuning); i++) Check(StrapOnScreen(i), "PREP: strap " + i + " (" + OperationText.Straps[i] + ") on screen");
             Check(InFrame(table.PatientRig.HeadTop.position, 0.02f) && InFrame(table.PatientRig.transform.position, 0.02f), "PREP: the whole patient is on screen");
             for (int i = 0; i < 3; i++) Check(InFrame(table.OrganSlotPose(i).position, 0.02f), "PREP: tray organ slot " + i + " on screen");
             Check(InFrame(table.BagPose(0).position, 0.02f) && InFrame(table.DockPose(table.ToolOf(ToolSlot.Anesthesia)).position, 0.02f),
                 "PREP: bags and syringes on the tray are on screen");
             yield return Straps(true); Shot("v04_04_straps");
             Check(view.CameraMode == TableCamera.Prep, "straps were clicked in the PREP view");
-            Check(S.restraints[0] && S.restraints[1] && S.restraints[2] && S.restraints[3] && S.restraints[4], "all five straps closed with real clicks");
+            Check(OperationStraps.AllClosed(S, table.Tuning), "all straps closed with real clicks");
             yield return Inject(2f, "v04 main"); Shot("v04_05_anesthesia");
             Check(S.Sleeping && S.alive, "patient asleep with the existing dose rules");
             Check(view.CameraMode == TableCamera.Prep, "anesthesia given in the PREP view");
