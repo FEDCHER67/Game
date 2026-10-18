@@ -123,6 +123,8 @@ def raster_roads(cls, cls_id, kind, known, min_w, exclude=None):
     m = ndimage.binary_opening(m, iterations=1)
     if exclude is not None:
         m &= ~exclude
+    xs_, ys_ = np.meshgrid(np.arange(m.shape[1]), np.arange(m.shape[0]))
+    m &= ~(((xs_ > 1440) & (ys_ < 145)) | ((xs_ < 440) & (ys_ > 900)))      # legend and title boxes
     dist = ndimage.distance_transform_edt(m)
     out = []
     for line in skeleton_polylines(m):
