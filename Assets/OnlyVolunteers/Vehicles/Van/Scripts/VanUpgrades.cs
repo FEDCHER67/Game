@@ -17,6 +17,11 @@ namespace OnlyVolunteers.Vehicles
         [Tooltip("Optional. Without it the built-in default levels are used.")]
         public VanUpgradeConfig Config;
 
+        // Vadim 2026-10-16 (TASK-000684): the van is always fully tuned from the very start (engine, brakes and
+        // handling at MaxLevel); a save or the debug keys cannot lower it while this is on.
+        [Tooltip("Start with every category at MaxLevel and never go below it.")]
+        public bool StartAtMax = true;
+
         // (category, new level), raised after the new values are applied.
         public event Action<VanUpgradeCategory, int> LevelChanged;
 
@@ -40,12 +45,19 @@ namespace OnlyVolunteers.Vehicles
 
         private void Awake() => CaptureStock();
 
+        private void Start()
+        {
+            if (!StartAtMax) return;
+            for (int c = 0; c < CategoryCount; c++) TrySetLevel((VanUpgradeCategory)c, MaxLevel);
+        }
+
         public int GetLevel(VanUpgradeCategory category) => IsValid(category) ? _levels[(int)category] : 0;
 
         // False for an unknown category or a level outside 0..MaxLevel. Setting the current level is a no-op.
         public bool TrySetLevel(VanUpgradeCategory category, int level)
         {
             if (!IsValid(category) || level < 0 || level > MaxLevel) return false;
+            if (StartAtMax) level = MaxLevel;
             if (_levels[(int)category] == level) return true;
             CaptureStock();
             _levels[(int)category] = level;

@@ -75,21 +75,21 @@ namespace OnlyVolunteers.Vehicles
         {
             new(1.12f, 10f, 2f),
             new(1.25f, 20f, 4f),
-            new(1.40f, 30f, 6f),
+            new(1.60f, 42f, 8f),                 // max (the van starts here): ~147 km/h, Vadim 2026-10-16
         };
 
         private static readonly VanBrakesLevel[] DefaultBrakes =
         {
             new(1.15f, 1.10f, 1.08f),
             new(1.30f, 1.20f, 1.16f),
-            new(1.50f, 1.30f, 1.25f),
+            new(1.60f, 1.35f, 1.32f),
         };
 
         private static readonly VanHandlingLevel[] DefaultHandling =
         {
             new(1.08f, 1.15f, 1f, 1.10f),
             new(1.16f, 1.30f, 2f, 1.20f),
-            new(1.25f, 1.50f, 3f, 1.30f),
+            new(1.38f, 1.70f, 5f, 1.50f),        // max: more grip, steadier, quicker steering
         };
 
         public VanEngineLevel[] Engine = (VanEngineLevel[])DefaultEngine.Clone();

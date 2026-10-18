@@ -1,0 +1,1981 @@
+{
+  "schema": "tramduro_island_spec_v06",
+  "date": "2026-10-15",
+  "units": "metres",
+  "axes": "x-east,y-north;rotation-CCW-from-east",
+  "planning_bbox_m": [
+    1204,
+    506,
+    1410,
+    670
+  ],
+  "source": "C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\ArtSource\\References\\Map\\World_v11\\WORLD_MAP_v11.json",
+  "source_coast_preserved": true,
+  "status": "Owner v06: equal-size adjacent cars north/east away from pad; larger stage and nearer explicit pedestal monument; dimensions proposed",
+  "open": [
+    "final_outdoor_appearance",
+    "detection_damage_pursuit_parameters",
+    "wanted_rules",
+    "vehicle_controls",
+    "speech_event_timing",
+    "final_transport_extraction"
+  ],
+  "objects": [
+    {
+      "id": "concrete_yard",
+      "kind": "continuous_concrete_base",
+      "polygon_m": [
+        [
+          1218,
+          581.0
+        ],
+        [
+          1225,
+          561.0
+        ],
+        [
+          1237,
+          536.0
+        ],
+        [
+          1250.0,
+          519.2857142857143
+        ],
+        [
+          1251,
+          518.0
+        ],
+        [
+          1275,
+          517.0
+        ],
+        [
+          1300,
+          510.0
+        ],
+        [
+          1320.0,
+          515.0
+        ],
+        [
+          1324,
+          516.0
+        ],
+        [
+          1345,
+          513.0
+        ],
+        [
+          1348.0,
+          513.1153846153846
+        ],
+        [
+          1370.0,
+          513.9615384615385
+        ],
+        [
+          1371,
+          514.0
+        ],
+        [
+          1377,
+          535.0
+        ],
+        [
+          1388,
+          555.0
+        ],
+        [
+          1398,
+          580.0
+        ],
+        [
+          1388,
+          604.0
+        ],
+        [
+          1388.421052631579,
+          606.2105263157895
+        ],
+        [
+          1370,
+          604
+        ],
+        [
+          1348,
+          603
+        ],
+        [
+          1320,
+          596
+        ],
+        [
+          1300,
+          597
+        ],
+        [
+          1275,
+          590
+        ],
+        [
+          1250,
+          588
+        ],
+        [
+          1218.0,
+          584.8
+        ]
+      ],
+      "rotation_deg": 0,
+      "notes": "Southern working concrete; shallow diagonal slightly irregular edge against northern lawn, not a ruler-straight horizontal split."
+    },
+    {
+      "id": "concrete_entry",
+      "kind": "concrete_entry_apron",
+      "centre_m": [
+        1211,
+        586
+      ],
+      "size_m": [
+        14,
+        8.8
+      ],
+      "rotation_deg": 0,
+      "notes": "Short direct transition from existing bridge into common concrete."
+    },
+    {
+      "id": "palace_lawn",
+      "kind": "coastal_presidential_lawn",
+      "rotation_deg": 0,
+      "notes": "Clean coastal presidential turf; gently angled, lightly irregular boundary with military concrete, same curve as concrete edge.",
+      "polygon_m": [
+        [
+          1196.4,
+          586.0
+        ],
+        [
+          1196.71,
+          589.38
+        ],
+        [
+          1197.57,
+          592.77
+        ],
+        [
+          1198.85,
+          596.15
+        ],
+        [
+          1200.43,
+          599.5
+        ],
+        [
+          1202.19,
+          602.79
+        ],
+        [
+          1204.0,
+          606.0
+        ],
+        [
+          1205.99,
+          609.05
+        ],
+        [
+          1208.27,
+          611.93
+        ],
+        [
+          1210.73,
+          614.75
+        ],
+        [
+          1213.24,
+          617.63
+        ],
+        [
+          1215.71,
+          620.68
+        ],
+        [
+          1218.0,
+          624.0
+        ],
+        [
+          1219.95,
+          627.77
+        ],
+        [
+          1221.63,
+          631.93
+        ],
+        [
+          1223.25,
+          636.25
+        ],
+        [
+          1225.04,
+          640.52
+        ],
+        [
+          1227.21,
+          644.51
+        ],
+        [
+          1230.0,
+          648.0
+        ],
+        [
+          1233.5,
+          650.93
+        ],
+        [
+          1237.56,
+          653.45
+        ],
+        [
+          1242.0,
+          655.7
+        ],
+        [
+          1246.67,
+          657.79
+        ],
+        [
+          1250.0,
+          659.2433474576271
+        ],
+        [
+          1251.39,
+          659.85
+        ],
+        [
+          1256.0,
+          662.0
+        ],
+        [
+          1260.55,
+          664.39
+        ],
+        [
+          1265.19,
+          666.95
+        ],
+        [
+          1269.88,
+          669.48
+        ],
+        [
+          1274.59,
+          671.76
+        ],
+        [
+          1275.0,
+          671.9206991525424
+        ],
+        [
+          1279.31,
+          673.61
+        ],
+        [
+          1284.0,
+          674.8
+        ],
+        [
+          1288.69,
+          675.04
+        ],
+        [
+          1293.41,
+          674.41
+        ],
+        [
+          1298.12,
+          673.35
+        ],
+        [
+          1300.0,
+          672.9090618336887
+        ],
+        [
+          1302.81,
+          672.25
+        ],
+        [
+          1307.45,
+          671.53
+        ],
+        [
+          1312.0,
+          671.6
+        ],
+        [
+          1316.43,
+          672.74
+        ],
+        [
+          1320.0,
+          674.3386310904872
+        ],
+        [
+          1320.74,
+          674.67
+        ],
+        [
+          1325.0,
+          676.98
+        ],
+        [
+          1329.26,
+          679.24
+        ],
+        [
+          1333.57,
+          681.06
+        ],
+        [
+          1338.0,
+          682.0
+        ],
+        [
+          1342.62,
+          682.11
+        ],
+        [
+          1347.41,
+          681.73
+        ],
+        [
+          1348.0,
+          681.6288223140496
+        ],
+        [
+          1352.25,
+          680.9
+        ],
+        [
+          1357.04,
+          679.64
+        ],
+        [
+          1361.66,
+          678.0
+        ],
+        [
+          1366.0,
+          676.0
+        ],
+        [
+          1370.0,
+          673.5980392156862
+        ],
+        [
+          1370.08,
+          673.55
+        ],
+        [
+          1374.0,
+          670.59
+        ],
+        [
+          1377.75,
+          667.25
+        ],
+        [
+          1381.33,
+          663.63
+        ],
+        [
+          1384.75,
+          659.84
+        ],
+        [
+          1388.0,
+          656.0
+        ],
+        [
+          1391.24,
+          652.01
+        ],
+        [
+          1394.5,
+          647.78
+        ],
+        [
+          1397.6,
+          643.38
+        ],
+        [
+          1400.34,
+          638.89
+        ],
+        [
+          1402.54,
+          634.4
+        ],
+        [
+          1404.0,
+          630.0
+        ],
+        [
+          1404.38,
+          625.67
+        ],
+        [
+          1403.76,
+          621.33
+        ],
+        [
+          1402.6,
+          617.0
+        ],
+        [
+          1401.35,
+          612.67
+        ],
+        [
+          1400.46,
+          608.33
+        ],
+        [
+          1400.4506338484316,
+          607.6540760618118
+        ],
+        [
+          1370,
+          604
+        ],
+        [
+          1348,
+          603
+        ],
+        [
+          1320,
+          596
+        ],
+        [
+          1300,
+          597
+        ],
+        [
+          1275,
+          590
+        ],
+        [
+          1250,
+          588
+        ],
+        [
+          1196.7385892116183,
+          582.6738589211618
+        ]
+      ],
+      "surface_exception": true
+    },
+    {
+      "id": "residence",
+      "kind": "closed_residence",
+      "centre_m": [
+        1332,
+        629
+      ],
+      "size_m": [
+        48,
+        22
+      ],
+      "rotation_deg": 0,
+      "notes": "Closed White House-like palace, carefully detailed outside; direct luxury/military contrast.",
+      "solid": true,
+      "height_m": 9.6
+    },
+    {
+      "id": "portico",
+      "kind": "portico_steps",
+      "centre_m": [
+        1332,
+        615
+      ],
+      "size_m": [
+        10,
+        4
+      ],
+      "rotation_deg": 0,
+      "notes": "Exterior detail; doors remain closed. Never infer indoor gameplay.",
+      "solid": true,
+      "parent": "residence"
+    },
+    {
+      "id": "statue_plaza",
+      "kind": "marble_plaza",
+      "centre_m": [
+        1326,
+        603
+      ],
+      "size_m": [
+        8,
+        8
+      ],
+      "rotation_deg": 0,
+      "notes": "Compact marble surround below monument; leaves clear physical gap to speech stage.",
+      "solid": false
+    },
+    {
+      "id": "statue",
+      "kind": "gold_statue",
+      "centre_m": [
+        1326,
+        603
+      ],
+      "size_m": [
+        2.8,
+        2.8
+      ],
+      "rotation_deg": 0,
+      "notes": "Gold heroic figure 3.7m on explicit 1.3m stone pedestal, total monument 5m. Moved west closer to stage, pose retained.",
+      "solid": true,
+      "height_m": 3.7,
+      "parent": "statue_pedestal",
+      "total_monument_height_m": 5
+    },
+    {
+      "id": "garage",
+      "kind": "large_three_tank_hangar",
+      "centre_m": [
+        1270,
+        558
+      ],
+      "size_m": [
+        44,
+        30
+      ],
+      "rotation_deg": 0,
+      "notes": "Strongly enlarged open arched hangar, 44x30m: 3.75 times v02 floor area. Three visible tanks, broad open front; no additional workshop.",
+      "solid": false,
+      "height_m": 8
+    },
+    {
+      "id": "canopy_post1",
+      "kind": "canopy_support",
+      "centre_m": [
+        1249,
+        544
+      ],
+      "size_m": [
+        0.45,
+        0.45
+      ],
+      "rotation_deg": 0,
+      "notes": "Open-side roof support.",
+      "solid": true,
+      "height_m": 7,
+      "parent": "garage"
+    },
+    {
+      "id": "canopy_post2",
+      "kind": "canopy_support",
+      "centre_m": [
+        1249,
+        558
+      ],
+      "size_m": [
+        0.45,
+        0.45
+      ],
+      "rotation_deg": 0,
+      "notes": "Open-side roof support.",
+      "solid": true,
+      "height_m": 7,
+      "parent": "garage"
+    },
+    {
+      "id": "canopy_post3",
+      "kind": "canopy_support",
+      "centre_m": [
+        1249,
+        572
+      ],
+      "size_m": [
+        0.45,
+        0.45
+      ],
+      "rotation_deg": 0,
+      "notes": "Open-side roof support.",
+      "solid": true,
+      "height_m": 7,
+      "parent": "garage"
+    },
+    {
+      "id": "canopy_post4",
+      "kind": "canopy_support",
+      "centre_m": [
+        1291,
+        544
+      ],
+      "size_m": [
+        0.45,
+        0.45
+      ],
+      "rotation_deg": 0,
+      "notes": "Open-side roof support.",
+      "solid": true,
+      "height_m": 7,
+      "parent": "garage"
+    },
+    {
+      "id": "canopy_post5",
+      "kind": "canopy_support",
+      "centre_m": [
+        1291,
+        558
+      ],
+      "size_m": [
+        0.45,
+        0.45
+      ],
+      "rotation_deg": 0,
+      "notes": "Open-side roof support.",
+      "solid": true,
+      "height_m": 7,
+      "parent": "garage"
+    },
+    {
+      "id": "canopy_post6",
+      "kind": "canopy_support",
+      "centre_m": [
+        1291,
+        572
+      ],
+      "size_m": [
+        0.45,
+        0.45
+      ],
+      "rotation_deg": 0,
+      "notes": "Open-side roof support.",
+      "solid": true,
+      "height_m": 7,
+      "parent": "garage"
+    },
+    {
+      "id": "tank1",
+      "kind": "tank",
+      "centre_m": [
+        1258,
+        557
+      ],
+      "size_m": [
+        3.4,
+        8
+      ],
+      "rotation_deg": 0,
+      "notes": "Parked under canopy, facing north. Driving mechanic not decided.",
+      "solid": true,
+      "height_m": 2.8,
+      "parent": "garage"
+    },
+    {
+      "id": "tank2",
+      "kind": "tank",
+      "centre_m": [
+        1270,
+        557
+      ],
+      "size_m": [
+        3.4,
+        8
+      ],
+      "rotation_deg": 0,
+      "notes": "Parked under canopy, facing north. Driving mechanic not decided.",
+      "solid": true,
+      "height_m": 2.8,
+      "parent": "garage"
+    },
+    {
+      "id": "garage_apron",
+      "kind": "clear_service_area",
+      "centre_m": [
+        1270,
+        581
+      ],
+      "size_m": [
+        44,
+        12
+      ],
+      "rotation_deg": 0,
+      "notes": "Open front manoeuvring space on shared southern concrete; no road markings.",
+      "solid": false
+    },
+    {
+      "id": "helipad",
+      "kind": "helipad",
+      "centre_m": [
+        1357,
+        543
+      ],
+      "size_m": [
+        24,
+        24
+      ],
+      "rotation_deg": 0,
+      "notes": "One flat concrete landing pad on raised hill/platform, proposed +3m. Broad graded access from west; one helicopter.",
+      "solid": false,
+      "elevation_m": 3
+    },
+    {
+      "id": "helicopter",
+      "kind": "helicopter",
+      "centre_m": [
+        1357,
+        543
+      ],
+      "size_m": [
+        12,
+        11
+      ],
+      "rotation_deg": 0,
+      "notes": "One helicopter including rotor envelope; no piloting mechanic inferred.",
+      "solid": true,
+      "height_m": 4,
+      "parent": "helipad",
+      "elevation_m": 3
+    },
+    {
+      "id": "checkpoint",
+      "kind": "guard_booth",
+      "centre_m": [
+        1226,
+        596
+      ],
+      "size_m": [
+        6.4,
+        5.2
+      ],
+      "rotation_deg": 0,
+      "notes": "Compact bridge guard booth; immediate attack at closed entry.",
+      "solid": true,
+      "height_m": 3.2
+    },
+    {
+      "id": "barrier",
+      "kind": "bridge_barrier",
+      "centre_m": [
+        1226,
+        586
+      ],
+      "size_m": [
+        0.25,
+        6.4
+      ],
+      "rotation_deg": 0,
+      "notes": "Single physical lane control; open/closed state uses existing rules.",
+      "solid": false,
+      "gate_crossing": true,
+      "parent": "checkpoint"
+    },
+    {
+      "id": "golf",
+      "kind": "three_short_hole_golf_area",
+      "polygon_m": [
+        [
+          1267,
+          617
+        ],
+        [
+          1299,
+          617
+        ],
+        [
+          1299,
+          645
+        ],
+        [
+          1267,
+          645
+        ]
+      ],
+      "rotation_deg": 0,
+      "notes": "Small three-hole joke lawn beside closed residence; decorative, not a sprawling golf estate."
+    },
+    {
+      "id": "green1",
+      "kind": "golf_green",
+      "centre_m": [
+        1273,
+        638
+      ],
+      "size_m": [
+        8,
+        7
+      ],
+      "rotation_deg": 0,
+      "notes": "Distinct short hole, flag and subtly raised turf.",
+      "solid": false,
+      "parent": "golf"
+    },
+    {
+      "id": "green2",
+      "kind": "golf_green",
+      "centre_m": [
+        1291,
+        636
+      ],
+      "size_m": [
+        8,
+        7
+      ],
+      "rotation_deg": 0,
+      "notes": "Distinct short hole, flag and subtly raised turf.",
+      "solid": false,
+      "parent": "golf"
+    },
+    {
+      "id": "green3",
+      "kind": "golf_green",
+      "centre_m": [
+        1281,
+        624
+      ],
+      "size_m": [
+        8,
+        7
+      ],
+      "rotation_deg": 0,
+      "notes": "Distinct short hole, flag and subtly raised turf.",
+      "solid": false,
+      "parent": "golf"
+    },
+    {
+      "id": "bridge",
+      "kind": "existing_bridge",
+      "polyline_m": [
+        [
+          1090.0,
+          588.0
+        ],
+        [
+          1092.65,
+          587.9
+        ],
+        [
+          1096.2,
+          587.77
+        ],
+        [
+          1100.44,
+          587.62
+        ],
+        [
+          1105.12,
+          587.45
+        ],
+        [
+          1110.05,
+          587.27
+        ],
+        [
+          1114.98,
+          587.1
+        ],
+        [
+          1119.71,
+          586.94
+        ],
+        [
+          1124.0,
+          586.8
+        ],
+        [
+          1127.94,
+          586.68
+        ],
+        [
+          1131.78,
+          586.55
+        ],
+        [
+          1135.54,
+          586.44
+        ],
+        [
+          1139.25,
+          586.33
+        ],
+        [
+          1142.93,
+          586.22
+        ],
+        [
+          1146.59,
+          586.13
+        ],
+        [
+          1150.28,
+          586.06
+        ],
+        [
+          1154.0,
+          586.0
+        ],
+        [
+          1157.82,
+          585.96
+        ],
+        [
+          1161.73,
+          585.94
+        ],
+        [
+          1165.69,
+          585.94
+        ],
+        [
+          1169.62,
+          585.95
+        ],
+        [
+          1173.48,
+          585.96
+        ],
+        [
+          1177.2,
+          585.98
+        ],
+        [
+          1180.73,
+          585.99
+        ],
+        [
+          1184.0,
+          586.0
+        ],
+        [
+          1187.12,
+          586.0
+        ],
+        [
+          1190.17,
+          586.0
+        ],
+        [
+          1193.11,
+          586.0
+        ],
+        [
+          1195.88,
+          586.0
+        ],
+        [
+          1198.4,
+          586.0
+        ],
+        [
+          1200.64,
+          586.0
+        ],
+        [
+          1202.53,
+          586.0
+        ],
+        [
+          1204.0,
+          586.0
+        ]
+      ],
+      "width_m": 8.8,
+      "road_width_m": 6.4,
+      "rotation_deg": 0,
+      "notes": "Preserve existing axis/abutments.",
+      "external_exception": true
+    },
+    {
+      "id": "perimeter",
+      "kind": "common_perimeter_fence",
+      "polyline_m": [
+        [
+          1218,
+          581
+        ],
+        [
+          1225,
+          561
+        ],
+        [
+          1237,
+          536
+        ],
+        [
+          1251,
+          518
+        ],
+        [
+          1275,
+          517
+        ],
+        [
+          1300,
+          510
+        ],
+        [
+          1324,
+          516
+        ],
+        [
+          1345,
+          513
+        ],
+        [
+          1371,
+          514
+        ],
+        [
+          1377,
+          535
+        ],
+        [
+          1388,
+          555
+        ],
+        [
+          1398,
+          580
+        ],
+        [
+          1388,
+          604
+        ],
+        [
+          1392,
+          625
+        ],
+        [
+          1387,
+          651
+        ],
+        [
+          1364,
+          666
+        ],
+        [
+          1334,
+          665
+        ],
+        [
+          1311,
+          660
+        ],
+        [
+          1286,
+          663
+        ],
+        [
+          1263,
+          653
+        ],
+        [
+          1246,
+          642
+        ],
+        [
+          1234,
+          623
+        ],
+        [
+          1224,
+          603
+        ],
+        [
+          1218,
+          591
+        ]
+      ],
+      "height_m": 4,
+      "rotation_deg": 0,
+      "notes": "Imposing 4m steel security fence with dense mesh, reinforced posts and visible razor wire. One bridge gate. Difficult physical obstacle, not invincible or an invisible wall."
+    },
+    {
+      "id": "guard_bridge",
+      "kind": "walking_military_patrol",
+      "polyline_m": [
+        [
+          1232,
+          596
+        ],
+        [
+          1236,
+          597
+        ],
+        [
+          1240,
+          580
+        ],
+        [
+          1248,
+          579
+        ],
+        [
+          1270,
+          589
+        ],
+        [
+          1240,
+          593
+        ],
+        [
+          1232,
+          596
+        ]
+      ],
+      "width_m": 1.5,
+      "rotation_deg": 0,
+      "notes": "Walking across concrete and presidential turf. Guide line is not a road; runtime navigation untested."
+    },
+    {
+      "id": "guard_luxury",
+      "kind": "walking_military_patrol",
+      "polyline_m": [
+        [
+          1300,
+          590
+        ],
+        [
+          1315,
+          590
+        ],
+        [
+          1347,
+          590
+        ],
+        [
+          1360,
+          609
+        ],
+        [
+          1360,
+          639
+        ],
+        [
+          1332,
+          653
+        ],
+        [
+          1300,
+          650
+        ],
+        [
+          1300,
+          590
+        ]
+      ],
+      "width_m": 1.5,
+      "rotation_deg": 0,
+      "notes": "Walking across concrete and presidential turf. Guide line is not a road; runtime navigation untested."
+    },
+    {
+      "id": "guard_service",
+      "kind": "walking_military_patrol",
+      "polyline_m": [
+        [
+          1240,
+          549
+        ],
+        [
+          1246,
+          549
+        ],
+        [
+          1261,
+          537
+        ],
+        [
+          1298,
+          539
+        ],
+        [
+          1312,
+          555
+        ],
+        [
+          1339,
+          563
+        ],
+        [
+          1380,
+          564
+        ],
+        [
+          1381.5,
+          547
+        ],
+        [
+          1374,
+          535
+        ],
+        [
+          1340,
+          530
+        ],
+        [
+          1298,
+          534
+        ],
+        [
+          1260,
+          535
+        ],
+        [
+          1240,
+          549
+        ]
+      ],
+      "width_m": 1.5,
+      "rotation_deg": 0,
+      "notes": "Walking across concrete and presidential turf. Guide line is not a road; runtime navigation untested."
+    },
+    {
+      "id": "boat_route1",
+      "kind": "patrol_boat_route",
+      "polyline_m": [
+        [
+          1220,
+          667
+        ],
+        [
+          1270,
+          715
+        ],
+        [
+          1380,
+          713
+        ],
+        [
+          1445,
+          654
+        ],
+        [
+          1440,
+          631
+        ],
+        [
+          1409,
+          650
+        ],
+        [
+          1368,
+          697
+        ],
+        [
+          1281,
+          697
+        ],
+        [
+          1226,
+          653
+        ],
+        [
+          1220,
+          667
+        ]
+      ],
+      "rotation_deg": 0,
+      "notes": "Offshore patrol, outside island bbox; no dock, bridge passage or navy ship.",
+      "external_exception": true
+    },
+    {
+      "id": "boat1",
+      "kind": "patrol_boat",
+      "centre_m": [
+        1220,
+        667
+      ],
+      "size_m": [
+        9,
+        3
+      ],
+      "rotation_deg": 0,
+      "notes": "One of two proposed moving patrol boats; use route of same index.",
+      "solid": false,
+      "external_exception": true,
+      "route_id": "boat_route1"
+    },
+    {
+      "id": "boat_route2",
+      "kind": "patrol_boat_route",
+      "polyline_m": [
+        [
+          1434,
+          600
+        ],
+        [
+          1450,
+          556
+        ],
+        [
+          1415,
+          493
+        ],
+        [
+          1374,
+          473
+        ],
+        [
+          1340,
+          468
+        ],
+        [
+          1330,
+          468
+        ],
+        [
+          1318,
+          455
+        ],
+        [
+          1348,
+          451
+        ],
+        [
+          1400,
+          465
+        ],
+        [
+          1445,
+          492
+        ],
+        [
+          1464,
+          544
+        ],
+        [
+          1456,
+          590
+        ],
+        [
+          1434,
+          600
+        ]
+      ],
+      "rotation_deg": 0,
+      "notes": "Offshore patrol, outside island bbox; no dock, bridge passage or navy ship.",
+      "external_exception": true
+    },
+    {
+      "id": "boat2",
+      "kind": "patrol_boat",
+      "centre_m": [
+        1434,
+        600
+      ],
+      "size_m": [
+        9,
+        3
+      ],
+      "rotation_deg": 0,
+      "notes": "One of two proposed moving patrol boats; use route of same index.",
+      "solid": false,
+      "external_exception": true,
+      "route_id": "boat_route2"
+    },
+    {
+      "id": "tank3",
+      "kind": "tank",
+      "centre_m": [
+        1282,
+        557
+      ],
+      "size_m": [
+        3.4,
+        8
+      ],
+      "rotation_deg": 0,
+      "notes": "Parked under canopy, facing north. Driving mechanic not decided.",
+      "solid": true,
+      "height_m": 2.8,
+      "parent": "garage"
+    },
+    {
+      "id": "aa1",
+      "kind": "stylized_air_defence",
+      "centre_m": [
+        1248,
+        631
+      ],
+      "size_m": [
+        6,
+        4
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 3.5,
+      "notes": "One of four conspicuous corner air-defence props; appearance only, weapons/targeting rules unresolved."
+    },
+    {
+      "id": "aa_plinth1",
+      "kind": "small_concrete_plinth",
+      "centre_m": [
+        1248,
+        631
+      ],
+      "size_m": [
+        8,
+        8
+      ],
+      "rotation_deg": 0,
+      "parent": "aa1",
+      "notes": "Local support slab; northern plinths do not convert presidential lawn to concrete."
+    },
+    {
+      "id": "aa2",
+      "kind": "stylized_air_defence",
+      "centre_m": [
+        1369,
+        654
+      ],
+      "size_m": [
+        6,
+        4
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 3.5,
+      "notes": "One of four conspicuous corner air-defence props; appearance only, weapons/targeting rules unresolved."
+    },
+    {
+      "id": "aa_plinth2",
+      "kind": "small_concrete_plinth",
+      "centre_m": [
+        1369,
+        654
+      ],
+      "size_m": [
+        8,
+        8
+      ],
+      "rotation_deg": 0,
+      "parent": "aa2",
+      "notes": "Local support slab; northern plinths do not convert presidential lawn to concrete."
+    },
+    {
+      "id": "aa3",
+      "kind": "stylized_air_defence",
+      "centre_m": [
+        1366,
+        524
+      ],
+      "size_m": [
+        6,
+        4
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 3.5,
+      "notes": "One of four conspicuous corner air-defence props; appearance only, weapons/targeting rules unresolved."
+    },
+    {
+      "id": "aa_plinth3",
+      "kind": "small_concrete_plinth",
+      "centre_m": [
+        1366,
+        524
+      ],
+      "size_m": [
+        8,
+        8
+      ],
+      "rotation_deg": 0,
+      "parent": "aa3",
+      "notes": "Local support slab; northern plinths do not convert presidential lawn to concrete."
+    },
+    {
+      "id": "aa4",
+      "kind": "stylized_air_defence",
+      "centre_m": [
+        1254,
+        529
+      ],
+      "size_m": [
+        6,
+        4
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 3.5,
+      "notes": "One of four conspicuous corner air-defence props; appearance only, weapons/targeting rules unresolved."
+    },
+    {
+      "id": "aa_plinth4",
+      "kind": "small_concrete_plinth",
+      "centre_m": [
+        1254,
+        529
+      ],
+      "size_m": [
+        8,
+        8
+      ],
+      "rotation_deg": 0,
+      "parent": "aa4",
+      "notes": "Local support slab; northern plinths do not convert presidential lawn to concrete."
+    },
+    {
+      "id": "missile_cluster",
+      "kind": "fictional_nuclear_missile_display",
+      "polygon_m": [
+        [
+          1366,
+          616
+        ],
+        [
+          1382,
+          616
+        ],
+        [
+          1382,
+          650
+        ],
+        [
+          1366,
+          650
+        ]
+      ],
+      "rotation_deg": 0,
+      "notes": "Replaces waterfall and basin entirely. Three exaggerated fictional missiles visibly protrude from separate open ground shafts beside the luxury residence. Stylized game silhouettes only; no real engineering or launch procedure."
+    },
+    {
+      "id": "missile1",
+      "kind": "fictional_nuclear_missile",
+      "centre_m": [
+        1374,
+        622
+      ],
+      "size_m": [
+        7,
+        7
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 11,
+      "notes": "Decorative open shaft rim and visibly protruding cartoon missile. Exact height is layout proposal; launching/interaction is not approved."
+    },
+    {
+      "id": "missile2",
+      "kind": "fictional_nuclear_missile",
+      "centre_m": [
+        1374,
+        633
+      ],
+      "size_m": [
+        7,
+        7
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 11,
+      "notes": "Decorative open shaft rim and visibly protruding cartoon missile. Exact height is layout proposal; launching/interaction is not approved."
+    },
+    {
+      "id": "missile3",
+      "kind": "fictional_nuclear_missile",
+      "centre_m": [
+        1374,
+        644
+      ],
+      "size_m": [
+        7,
+        7
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 11,
+      "notes": "Decorative open shaft rim and visibly protruding cartoon missile. Exact height is layout proposal; launching/interaction is not approved."
+    },
+    {
+      "id": "speech_platform",
+      "kind": "presidential_speech_stage",
+      "centre_m": [
+        1312,
+        603
+      ],
+      "size_m": [
+        16,
+        9
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 0.8,
+      "notes": "Further enlarged 16x9m white-and-gold speech stage left/west of monument, broad south stairs; no audience stands."
+    },
+    {
+      "id": "speech_lectern",
+      "kind": "presidential_lectern",
+      "centre_m": [
+        1312,
+        605
+      ],
+      "size_m": [
+        1.4,
+        0.8
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "parent": "speech_platform",
+      "height_m": 1.2,
+      "notes": "Lectern on larger left-side stage, facing south toward forecourt; microphones and fictional emblem. Event timing remains unresolved."
+    },
+    {
+      "id": "speech_steps",
+      "kind": "speech_platform_steps",
+      "centre_m": [
+        1312,
+        597.5
+      ],
+      "size_m": [
+        8,
+        2
+      ],
+      "rotation_deg": 0,
+      "parent": "speech_platform",
+      "notes": "Broad low steps, continuous with enlarged stage southern front."
+    },
+    {
+      "id": "military_jeep",
+      "kind": "military_utility_vehicle",
+      "centre_m": [
+        1348,
+        576
+      ],
+      "size_m": [
+        3,
+        7
+      ],
+      "rotation_deg": -90,
+      "solid": true,
+      "height_m": 2.8,
+      "notes": "One of two equally sized military vehicles, 3x7m, aligned east-facing side by side with 3m gap. Pair shifted north/east away from elevated helipad; perpendicular to tanks."
+    },
+    {
+      "id": "military_truck",
+      "kind": "military_cargo_truck",
+      "centre_m": [
+        1348,
+        570
+      ],
+      "size_m": [
+        3,
+        7
+      ],
+      "rotation_deg": -90,
+      "solid": true,
+      "height_m": 2.8,
+      "notes": "One of two equally sized military vehicles, 3x7m, aligned east-facing side by side with 3m gap. Pair shifted north/east away from elevated helipad; perpendicular to tanks."
+    },
+    {
+      "id": "statue_pedestal",
+      "kind": "stepped_monument_pedestal",
+      "centre_m": [
+        1326,
+        603
+      ],
+      "size_m": [
+        4.8,
+        4.8
+      ],
+      "rotation_deg": 0,
+      "solid": true,
+      "height_m": 1.3,
+      "parent": "statue_plaza",
+      "notes": "Clearly visible stepped square stone pedestal: wide lower plinth, narrower raised block with gold trim and front plaque. Gold figure mounted on top; total monument remains 5m."
+    }
+  ],
+  "terrain": [
+    {
+      "id": "palace_terrace",
+      "kind": "low_residence_rise",
+      "polygon_m": [
+        [
+          1302,
+          610
+        ],
+        [
+          1359,
+          610
+        ],
+        [
+          1359,
+          651
+        ],
+        [
+          1302,
+          651
+        ]
+      ],
+      "height_delta_m": 2,
+      "notes": "Presidential hill with grass, closed palace on top."
+    },
+    {
+      "id": "base_floor",
+      "kind": "level_military_working_ground",
+      "polygon_m": [
+        [
+          1218,
+          581.0
+        ],
+        [
+          1225,
+          561.0
+        ],
+        [
+          1237,
+          536.0
+        ],
+        [
+          1250.0,
+          519.2857142857143
+        ],
+        [
+          1251,
+          518.0
+        ],
+        [
+          1275,
+          517.0
+        ],
+        [
+          1300,
+          510.0
+        ],
+        [
+          1320.0,
+          515.0
+        ],
+        [
+          1324,
+          516.0
+        ],
+        [
+          1345,
+          513.0
+        ],
+        [
+          1348.0,
+          513.1153846153846
+        ],
+        [
+          1370.0,
+          513.9615384615385
+        ],
+        [
+          1371,
+          514.0
+        ],
+        [
+          1377,
+          535.0
+        ],
+        [
+          1388,
+          555.0
+        ],
+        [
+          1398,
+          580.0
+        ],
+        [
+          1388,
+          604.0
+        ],
+        [
+          1388.421052631579,
+          606.2105263157895
+        ],
+        [
+          1370,
+          604
+        ],
+        [
+          1348,
+          603
+        ],
+        [
+          1320,
+          596
+        ],
+        [
+          1300,
+          597
+        ],
+        [
+          1275,
+          590
+        ],
+        [
+          1250,
+          588
+        ],
+        [
+          1218.0,
+          584.8
+        ]
+      ],
+      "height_delta_m": 0.6,
+      "notes": "Southern poured concrete only."
+    },
+    {
+      "id": "helipad_hill",
+      "kind": "raised_landing_platform",
+      "centre_m": [
+        1357,
+        543
+      ],
+      "size_m": [
+        32,
+        32
+      ],
+      "rotation_deg": 0,
+      "height_delta_m": 3,
+      "notes": "Proposed raised flat cap, graded side slopes; west service ramp stays on existing yard, no street."
+    },
+    {
+      "id": "cliffs",
+      "kind": "sharp_natural_coastal_crags",
+      "source_geometry": "WORLD_MAP_v11.island_tramduro.polygon_m",
+      "height_range_m": [
+        4,
+        9
+      ],
+      "rotation_deg": 0,
+      "notes": "Replace rounded boulder decoration with tall irregular jagged rock spires and sharply fractured cliff faces around inherited coast. Natural geology, not wooden/metal stakes. Keep bridge opening and fence distinct; no expanded coast.",
+      "proposed_spire_height_m": [
+        5,
+        10
+      ]
+    }
+  ],
+  "security": {
+    "military_outside": [
+      20,
+      25
+    ],
+    "patrol_style": "mixed_2-3_and_single",
+    "entry_response": "immediate_attack_at_closed_entry",
+    "cover": "mostly_open_rare_cover",
+    "normal_van_ingress": "defeated_by_guard_fire_not_invisible_wall",
+    "final_extraction": "OPEN",
+    "boats": "patrol_and_intervene_on_detection"
+  },
+  "tramduro": {
+    "ordinary_world_presence": false,
+    "pre_final_visibility": "phone_app_Z_only",
+    "physical_appearance": "final_kidnapping_only",
+    "residence_interior_accessible": false,
+    "final_exit_scenario": "OPEN"
+  },
+  "clearance_checks": [
+    {
+      "id": "entry_to_hangar",
+      "polyline_m": [
+        [
+          1218,
+          586
+        ],
+        [
+          1270,
+          586
+        ],
+        [
+          1270,
+          581
+        ]
+      ],
+      "width_m": 3.5,
+      "notes": "Invisible service reservation; avoid stage, monument plinth and parked vehicles. Not a road."
+    },
+    {
+      "id": "entry_to_palace_forecourt",
+      "polyline_m": [
+        [
+          1218,
+          586
+        ],
+        [
+          1334,
+          586
+        ],
+        [
+          1334,
+          610
+        ],
+        [
+          1332,
+          610
+        ]
+      ],
+      "width_m": 3.5,
+      "notes": "Invisible service reservation; avoid stage, monument plinth and parked vehicles. Not a road."
+    },
+    {
+      "id": "hangar_to_helipad",
+      "polyline_m": [
+        [
+          1270,
+          581
+        ],
+        [
+          1318,
+          581
+        ],
+        [
+          1318,
+          565
+        ],
+        [
+          1318,
+          537
+        ],
+        [
+          1336,
+          537
+        ],
+        [
+          1347,
+          543
+        ]
+      ],
+      "width_m": 3.5,
+      "notes": "Invisible service reservation; avoid stage, monument plinth and parked vehicles. Not a road."
+    }
+  ],
+  "ground_transition_m": [
+    [
+      1190,
+      582
+    ],
+    [
+      1250,
+      588
+    ],
+    [
+      1275,
+      590
+    ],
+    [
+      1300,
+      597
+    ],
+    [
+      1320,
+      596
+    ],
+    [
+      1348,
+      603
+    ],
+    [
+      1370,
+      604
+    ],
+    [
+      1420,
+      610
+    ]
+  ],
+  "change_v06": "Equalise and relocate cars side by side away from helipad; enlarge stage to16x9m; move monument closer to stage and add distinct stepped pedestal."
+}
