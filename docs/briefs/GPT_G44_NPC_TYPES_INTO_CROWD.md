@@ -1,0 +1,13 @@
+G44 — GPT-6 Astra, reasoning MAX. Paste after G43 (operations on the new map) is done, or in parallel only if Unity is free (one Unity at a time).
+
+[G44] Vadim's NPC types into the game crowd — different characters running around, per district.
+
+Read: ArtSource/Characters/SAUSAGE_BUDDY_01/Types/ (≈45 types: BAD_*, BEACH_*, CITY_*, CONSTR_*, FOREST_*, HAMLET_*, JUNKIE…; lineups NPC_POOL_LINEUP_v0x.png; each type = our Buddy in an outfit, same skeleton as SAUSAGE_BUDDY_BASE v04 — Fedya: «очень важно»), ArtSource/Characters/SAUSAGE_BUDDY_01/README.md, WORK_SYNC TASK-000506…000564 (Vadim's NPC pool + beach pool), docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-18_v01.md §5 (who lives where) + §6, district specs, buyers spec (HAMLET_BODYBUILDER = special order target), the existing crowd/NPC code (CrowdWalker, GreyboxNpc, NPC spawner/appearance, KeepAppearance in CaptureTableBridge) and how the current crowd gets its look.
+Task:
+1. Import every type into Unity (new folder Assets/OnlyVolunteers/Characters/SausageBuddy/Types_v01/), same rig/avatar as the base so ALL existing clips (walk, run, flee, get-ups, cargo, operation clips) work; materials reuse existing Buddy materials where possible; check scale, bounds, LODs if heavy.
+2. Appearance system: a type = appearance preset applied to the crowd NPC (body/outfit meshes + materials), so ragdoll, capture, ties, table swap ("poof" → trunks), body bag, discharge back to the field all keep working with any type. The patient on the table still becomes the undressed patient model; when he escapes he stays in trunks (round-4 rule).
+3. Spawn tables per district (weights from Vadim's specs; beach types only on the beach; CONSTR_* at the construction site; BAD_* in Rough; HAMLET_* in the Hamlet; FOREST_* in the forest; CITY_* downtown). HAMLET_BODYBUILDER is a unique NPC (buyers special order; twin-brother rule from the sales decisions).
+4. Special types with props (BEACH_BURIED sand mound, BEACH_CASTLE, metal detector, etc.): simple idle placement, no new gameplay.
+5. Save/load keeps each NPC's type; capture facts record the type.
+Verification: run the capture/operations probes + NPC Loading + Ragdoll smoke on the new map scene with mixed types (counts vs before), screenshots of a lineup in Unity and of each district crowd into Working/Reviews/NPC_types_v01/, FPS note with ~60 NPCs.
+Rules: Unity lock -Id G44 (acquire/refresh/release -Done); never two Unity processes; no gameplay rule changes in Operation/** or Capture/** beyond appearance hooks (list any); new versions only; only C:\Dev\Game; nothing under C:\Users\Zeyo-ne\.codex; no commits; list changed files; short RU playtest note docs/reports/NPC_TYPES_PLAYTEST_RU.md.

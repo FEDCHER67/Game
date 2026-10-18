@@ -1,0 +1,717 @@
+{
+ "note": "reuse = existing asset referenced by the builder as-is (never modified); create = new asset in W76Build/Materials_v01",
+ "materials": {
+  "L01_meadow": {
+   "use": "terrain_layer",
+   "texture": "Assets/OnlyVolunteers/Art/Map/Textures/Detail/TL_meadow_albedo.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": "9bce1d24fc3e6c9418409347dd5134ab",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/V19_LegacyEndpoint_meadow.terrainlayer",
+   "asset_guid": "277b8bc669c78594cb46ce020a8849bf",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/V19_LegacyEndpoint_meadow.terrainlayer",
+    "Assets/OnlyVolunteers/Art/Map/TerrainLayers/TL_meadow.terrainlayer"
+   ]
+  },
+  "L02_worn_grass": {
+   "use": "terrain_layer",
+   "texture": "Assets/OnlyVolunteers/Art/Map/Textures/Detail/TL_worn_grass_albedo.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": "76e2867fe9fe9724b90cede697883019",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/V19_LegacyEndpoint_worn_grass.terrainlayer",
+   "asset_guid": "307f5aed1d961d24a827c85d6911e1a0",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/V19_LegacyEndpoint_worn_grass.terrainlayer",
+    "Assets/OnlyVolunteers/Art/Map/TerrainLayers/TL_worn_grass.terrainlayer"
+   ]
+  },
+  "L03_dirt_SK1b": {
+   "use": "terrain_layer",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/1b_dirt_road/1b_dirt_road_v07_albedo.png",
+   "tile_m": 6,
+   "texture_exists": true,
+   "texture_guid": "f845475fbcc501b4a99ab3ddf61a7529",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/TerrainLayers/TL17_dry_field.terrainlayer",
+   "asset_guid": "52824b73a7c288b4db89e10319922e10",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_1b_dirt_road_8F8064.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_1b_dirt_road.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_1b_dirt_road.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_1b_dirt_road.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_1b_dirt_road_8F8064.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/TerrainLayers/v18/TL17_dry_field.terrainlayer"
+   ]
+  },
+  "L04_forest_floor_p10": {
+   "use": "terrain_layer",
+   "texture": "Working/Reviews/Textures_2026-10-17/TL_forest_floor_albedo_v02_brighter.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_L04_forest_floor_p10.terrainlayer",
+   "note": "no existing terrainlayer uses this approved texture"
+  },
+  "L05_sand_white": {
+   "use": "terrain_layer",
+   "texture": "Assets/OnlyVolunteers/Art/Map/Textures/Detail/TL_sand_albedo.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": "4cde280f9908ac946b3291e730903382",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/V19_LegacyEndpoint_sand.terrainlayer",
+   "asset_guid": "c9d80226f20f5f34a9feb6cbc875a2ea",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/V19_LegacyEndpoint_sand.terrainlayer",
+    "Assets/OnlyVolunteers/Art/Map/TerrainLayers/TL_sand.terrainlayer"
+   ]
+  },
+  "L05b_sand_wet": {
+   "use": "terrain_layer",
+   "texture": "Working/Reviews/Textures_2026-10-17/own_textures_v01/TL_sand_wet_albedo_v01.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_L05b_sand_wet.terrainlayer",
+   "note": "no existing terrainlayer uses this approved texture"
+  },
+  "L06_gravel_SK1d": {
+   "use": "terrain_layer",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/1d_gravel/1d_gravel_v07_albedo.png",
+   "tile_m": 6,
+   "texture_exists": true,
+   "texture_guid": "4f09e6b746e3ae84194b05232a5bd882",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/TerrainLayers/TL17_gravel.terrainlayer",
+   "asset_guid": "e99fc49e0091a3a4e9e70b97b49bf48a",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_1d_gravel_9A907A.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_1d_gravel.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_1d_gravel.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_1d_gravel.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_1d_gravel_9A907A.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/TerrainLayers/v18/TL17_gravel.terrainlayer"
+   ]
+  },
+  "L07_rock_macro": {
+   "use": "terrain_layer",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Rock_Macro.png",
+   "tile_m": 12,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_L07_rock_macro.terrainlayer",
+   "note": "no existing terrainlayer uses this approved texture"
+  },
+  "L08_lawn_park": {
+   "use": "terrain_layer",
+   "texture": "Assets/OnlyVolunteers/Art/Map/Textures/Detail/TL_park_grass_albedo.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": "349e57b0345412644b02f3a6c57f824d",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/V19_LegacyEndpoint_park_grass.terrainlayer",
+   "asset_guid": "dafa287e56f50c0449eb2197f931c422",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/V19_LegacyEndpoint_park_grass.terrainlayer",
+    "Assets/OnlyVolunteers/Art/Map/TerrainLayers/TL_park_grass.terrainlayer"
+   ]
+  },
+  "L09_field_plowed": {
+   "use": "terrain_layer",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Field_plowed.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_L09_field_plowed.terrainlayer",
+   "note": "no existing terrainlayer uses this approved texture"
+  },
+  "L10_field_stubble": {
+   "use": "terrain_layer",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Field_stubble.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_L10_field_stubble.terrainlayer",
+   "note": "no existing terrainlayer uses this approved texture"
+  },
+  "asphalt_A5d12": {
+   "use": "road",
+   "texture": "Working/Reviews/Textures_2026-10-17/candidates_asphalt_v01/2a_asphalt_v07_A5d12_albedo.png",
+   "tile_m": 6,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_asphalt_A5d12.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "asphalt_old_SK2a": {
+   "use": "road",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/2a_asphalt/2a_asphalt_v01_albedo.png",
+   "tile_m": 6,
+   "texture_exists": true,
+   "texture_guid": "b0add271ce3b9e448a2e213e998fac89",
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_asphalt_old_SK2a.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "sidewalk_S1": {
+   "use": "road",
+   "texture": "Working/Reviews/Textures_2026-10-17/candidates_paving_v01/S1_sidewalk_oar_1p5m_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_sidewalk_S1.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "plaza_M3": {
+   "use": "road",
+   "texture": "Working/Reviews/Textures_2026-10-17/candidates_paving_v01/M3_plaza_1m_granite_bands_albedo.png",
+   "tile_m": 8,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_plaza_M3.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "cobble_SK2c": {
+   "use": "road",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/2c_cobblestone/2c_cobblestone_v07_albedo.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": "992847b6b7f72844b82559ab4425bd44",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_2c_cobblestone_8B8378.mat",
+   "asset_guid": "3294ac802d9ad904caa83376f6bd0a71",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_2c_cobblestone.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_2c_cobblestone.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_2c_cobblestone.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_2c_cobblestone_8B8378.mat",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_2c_cobblestone_v07.mat"
+   ]
+  },
+  "concrete_SK3c": {
+   "use": "road",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3c_concrete_panels/3c_concrete_panels_v07_albedo.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": "079221cf75fa9604e80cbccc0a0ae61a",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_857C6E.mat",
+   "asset_guid": "5740468d394f2f548b7e83b4c1b027ed",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_8E8A84.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_8F6E4E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_A8A69E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_B9B6AA.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_C9A27E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_D9D5CB.mat"
+   ]
+  },
+  "stucco_SK3b": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3b_plaster_stucco/3b_plaster_stucco_v01_albedo.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": "7b9a8113ca2424646a40c7f8cd181a16",
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_stucco_SK3b.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "stucco_SK3b_v07": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3b_plaster_stucco/3b_plaster_stucco_v07_albedo.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": "18e0674fa8b0bc54ab8f4dc7ca271c28",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_857C6E.mat",
+   "asset_guid": "4cc9d31b7355104408284bf5362eb0cd",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_8E8A84.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_8F6E4E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_A8A69E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_B9B6AA.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_C9A27E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3b_plaster_stucco_D9D5CB.mat"
+   ]
+  },
+  "brick_SK3a": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3a_brick/3a_brick_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "041a341d8dc3f15408bb0579cc534d9b",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3a_brick_B46A4F.mat",
+   "asset_guid": "d8ec1b0a87ecd9f4fb9cea1e0646d103",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_3a_brick.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_3a_brick.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_3a_brick.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_3a_brick_B46A4F.mat",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_3a_brick_v07.mat"
+   ]
+  },
+  "concrete_panel_SK3c": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3c_concrete_panels/3c_concrete_panels_v07_albedo.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": "079221cf75fa9604e80cbccc0a0ae61a",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_857C6E.mat",
+   "asset_guid": "5740468d394f2f548b7e83b4c1b027ed",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_8E8A84.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_8F6E4E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_A8A69E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_B9B6AA.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_C9A27E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3c_concrete_panels_D9D5CB.mat"
+   ]
+  },
+  "cinder_SK3d": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3d_cinder_blocks/3d_cinder_blocks_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "947d91439c932624cbc7b69642c0bb32",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3d_cinder_blocks_8E8A84.mat",
+   "asset_guid": "8ddea88645f6ca447bf935950920b489",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_3d_cinder_blocks_C9A27E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_3d_cinder_blocks.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_3d_cinder_blocks.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_3d_cinder_blocks.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_3d_cinder_blocks_8E8A84.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_3d_cinder_blocks_C9A27E.mat"
+   ]
+  },
+  "boards_SK5a": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "f4926e85d32e50d43b0dc53535fe238b",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_5a_wood_planks_fences_8C6B4A.mat",
+   "asset_guid": "7c769995f66247942a263fa5da8497c4",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_5a_wood_planks_fences_8F6E4E.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_5a_wood_planks_fences.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_5a_wood_planks_fences.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_5a_wood_planks_fences.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_5a_wood_planks_fences_8C6B4A.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_5a_wood_planks_fences_8F6E4E.mat"
+   ]
+  },
+  "boards_pier_SK5a_v02": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v02_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "284dd3878aaf38142afe1acd73fac51a",
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_boards_pier_SK5a_v02.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "logs_SK5b": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5b_logs/5b_logs_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "01defc3e28c48024c9b67f4795c567e2",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_5b_logs_8F6E4E.mat",
+   "asset_guid": "5005cf8ede17e1044be4010e3acea883",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_5b_logs.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_5b_logs.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_5b_logs.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_5b_logs_8F6E4E.mat",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_5b_logs_v07.mat"
+   ]
+  },
+  "KH1b": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/candidates_rough_soviet_v02/KH1b_panel_grey_shabby_albedo.png",
+   "tile_m": 12.8,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_KH1b.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "KH_windows_atlas": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/own_textures_v01/KH_windows_atlas_v01.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "facade_downtown_stucco": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Facade_DT_plaster.png",
+   "tile_m": 3.5,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_downtown_stucco.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "facade_downtown_brick": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Facade_DT_brick.png",
+   "tile_m": 3.5,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_downtown_brick.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "facade_storefront": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Facade_DT_shop.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_storefront.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "facade_hamlet": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Facade_Hamlet_wood.png",
+   "tile_m": 3.5,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_hamlet.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "facade_elite_villa": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Facade_Elite_villa.png",
+   "tile_m": 3.5,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_elite_villa.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "facade_warehouse": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Facade_Warehouse.png",
+   "tile_m": 3.5,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_warehouse.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "tower_glass": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/TowerGlass.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_tower_glass.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "facade_trim": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/FacadeTrim.png",
+   "tile_m": 2,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_facade_trim.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "roof_tile_SK4a": {
+   "use": "roof",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/4a_clay_roof_tiles/4a_clay_roof_tiles_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "4aa90b460cec6404e88a69f1f4ad7a9c",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4a_clay_roof_tiles_5F6260.mat",
+   "asset_guid": "90e7ef6fb29d87c408df44ac98768466",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4a_clay_roof_tiles_6C6E6B.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_4a_clay_roof_tiles.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_4a_clay_roof_tiles.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_4a_clay_roof_tiles.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_4a_clay_roof_tiles_5F6260.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v01/Materials/V19_V3S17_4a_clay_roof_tiles_6C6E6B.mat"
+   ]
+  },
+  "roof_slate_SK4b": {
+   "use": "roof",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/4b_slate_shingles/4b_slate_shingles_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "1cdc91c80b0c4ea489534cc528b03159",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4b_slate_shingles_5F6260.mat",
+   "asset_guid": "de70c13caceb72b4f99cee55f32cc51f",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4b_slate_shingles_6B6E70.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4b_slate_shingles_6C6E6B.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4b_slate_shingles_7A7268.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4b_slate_shingles_857A6C.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_4b_slate_shingles.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_4b_slate_shingles.mat"
+   ]
+  },
+  "roof_wavy_slate": {
+   "use": "roof",
+   "texture": "Assets/OnlyVolunteers/Art/Map/Textures/roofs/roof_slate_wavy_mask.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "112865bcf48072c4eb4f33b96ffd89b7",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__5B6D6A.mat",
+   "asset_guid": "e18de97cdd532dd42ad4d9696e275f1a",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__5E7270.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__5F6260.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__6C6E6B.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__6E6A64.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__778685.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_roof_sheet__7A7268.mat"
+   ]
+  },
+  "roof_flat_SK4d": {
+   "use": "roof",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/4d_flat_bitumen_roof/4d_flat_bitumen_roof_v03_albedo.png",
+   "tile_m": 4,
+   "texture_exists": true,
+   "texture_guid": "7dfe775e3531b71439f948095b028cf5",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S_4d_flat_bitumen_roof.mat",
+   "asset_guid": "ff50f3649e846e54e81189d406fac1c2",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_4d_flat_bitumen_roof_v03.mat"
+   ]
+  },
+  "roof_profsheet_SK4c": {
+   "use": "roof",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/4c_corrugated_metal/4c_corrugated_metal_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "95fdd12fa63b13243a294cf26ad3d9d5",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_5F6260.mat",
+   "asset_guid": "3ce6c030f81b5fe49bbb4f758c8321a6",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_6B6E70.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_6C6E6B.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_6E6A64.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_6E7478.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_7A7268.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Palette19/Test_v02/Materials/V19_V3S17_4c_corrugated_metal_857A6C.mat"
+   ]
+  },
+  "metal_rusty": {
+   "use": "roof",
+   "texture": "Assets/OnlyVolunteers/Art/Map/Textures/Detail/facade_corrugated_metal_albedo_detail.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "a557977e506750e49ab4290bc41ec5a8",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_wall_shed__857C6E.mat",
+   "asset_guid": "eb01fdf13fb3a91489426c75566f7e5d",
+   "in_i10_scene": false,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_wall_shed__8C9C99.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_wall_shed__8E9897.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_wall_shed__A28C68.mat",
+    "Assets/OnlyVolunteers/Map/Look/Materials/Look_mat_wall_shed__A79076.mat",
+    "Assets/OnlyVolunteers/Art/Map/Materials/Surfaces/Surf_wall_shed.mat"
+   ]
+  },
+  "metal_painted_SK6a": {
+   "use": "wall",
+   "texture": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6a_painted_metal_panels/6a_painted_metal_panels_v07_albedo.png",
+   "tile_m": 3,
+   "texture_exists": true,
+   "texture_guid": "fa8494b94377c5b48b1b5e5684c02812",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Map/LookV3/Materials/v19/V3S17_6a_painted_metal_panels.mat",
+   "asset_guid": "db66b66729504c445a2068d34bf22c41",
+   "in_i10_scene": true,
+   "also_referenced_by": [
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/V3S17_6a_painted_metal_panels.mat",
+    "Assets/OnlyVolunteers/Map/LookV3/Materials/v18/V3S17_6a_painted_metal_panels.mat",
+    "Assets/OnlyVolunteers/Art/StyleKit_v3/Materials/M3_6a_painted_metal_panels_v07.mat"
+   ]
+  },
+  "pool_tile": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/PoolTile.png",
+   "tile_m": 1,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_pool_tile.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "fence_net": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/FenceNet.png",
+   "tile_m": 1,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_fence_net.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "fabric_blue": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Fabric_blue.png",
+   "tile_m": 1.2,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_fabric_blue.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "fabric_red": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Fabric_red.png",
+   "tile_m": 1.2,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_fabric_red.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "fabric_green": {
+   "use": "wall",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/Fabric_green.png",
+   "tile_m": 1.2,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "create",
+   "asset": "Assets/OnlyVolunteers/Map/W76Build/Materials_v01/W76_fabric_green.mat",
+   "note": "no existing mat uses this approved texture"
+  },
+  "road_marks": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/RoadMarks.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "road_wear": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/RoadWear.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "street_utility": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/StreetUtility.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "oil_tar": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/OilTar.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "shore_foam": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/gpt_missing_v02_2026-10-18/Textures/WaterFX_shore_foam.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "waterfall": {
+   "use": "decal",
+   "texture": "Working/Reviews/Textures_2026-10-17/own_textures_v01/WaterFX_waterfall_v02_tileY.png",
+   "tile_m": 0,
+   "texture_exists": true,
+   "texture_guid": null,
+   "action": "texture_only",
+   "asset": null,
+   "note": "atlas/mask: assigned on decal/props material by the builder"
+  },
+  "water_sea": {
+   "use": "water",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Art/StyleKit_v3/WaterTests/WaterTest_v02_001/Sea_trial_calm_v09.mat",
+   "asset_guid": "96ec6639b7c3ce84ba1d4913f11a7923",
+   "texture_exists": true
+  },
+  "water_sea_alt_v10": {
+   "use": "water",
+   "action": "reuse",
+   "asset": "Assets/OnlyVolunteers/Art/StyleKit_v3/WaterTests/WaterTest_v02_001/Sea_trial_calm_v10.mat",
+   "asset_guid": "d71845173fe5bbe489c2f5a13a808173",
+   "texture_exists": true
+  },
+  "water_shader": {
+   "use": "water",
+   "action": "reuse",
+   "asset": "OnlyVolunteers/Uber Stylized Water v05",
+   "asset_guid": null,
+   "texture_exists": true
+  }
+ }
+}

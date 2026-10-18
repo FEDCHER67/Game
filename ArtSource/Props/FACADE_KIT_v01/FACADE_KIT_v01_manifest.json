@@ -1,0 +1,864 @@
+{
+ "kit": "FACADE_KIT_v01",
+ "units": "1 unit = 1 m",
+ "axes": "FBX -Z forward, Y up; Unity +Z = out of wall",
+ "floor_height": {
+  "Rough": 2.8,
+  "Downtown": 3.5
+ },
+ "rough_grid": {
+  "texture": "KH1b 12.8 x 11.2 m",
+  "bay_pitch_m": 3.2,
+  "bays_per_tile": 4,
+  "floors_per_tile": 4,
+  "window_sill_above_floor": 0.85,
+  "window_centre_in_bay": 1.6
+ },
+ "lod_rule": "pieces > 150 tris have _LOD0/_LOD1 children; others a single _Mesh",
+ "collider_rule": "UCX_<piece>_NN = convex hull meshes; Unity builder: MeshCollider(convex) + no renderer",
+ "pieces": [
+  {
+   "name": "FK_R_Balcony_Open",
+   "region": "Rough",
+   "attach": "wall",
+   "note": "slab at floor level; pivot = wall face, slab top centre-bottom",
+   "tris_lod0": 120,
+   "tris_lod1": null,
+   "colliders": 2,
+   "materials": [
+    "FK_Concrete",
+    "FK_Metal_Dark",
+    "FK_Metal_Paint"
+   ],
+   "size_m": [
+    2.64,
+    1.03,
+    1.22
+   ],
+   "bounds_min_blender": [
+    -1.32,
+    -1.03,
+    -0.16
+   ],
+   "bounds_max_blender": [
+    1.32,
+    0.0,
+    1.06
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Balcony_Open.fbx"
+  },
+  {
+   "name": "FK_R_Balcony_Glazed",
+   "region": "Rough",
+   "attach": "wall",
+   "note": "glazed loggia-style; frame up to next slab underside",
+   "tris_lod0": 180,
+   "tris_lod1": 90,
+   "colliders": 2,
+   "materials": [
+    "FK_Concrete",
+    "FK_Concrete_Dark",
+    "FK_Glass",
+    "FK_Metal_Galv",
+    "FK_Window_Frame"
+   ],
+   "size_m": [
+    2.7,
+    1.12,
+    2.85
+   ],
+   "bounds_min_blender": [
+    -1.35,
+    -1.12,
+    -0.16
+   ],
+   "bounds_max_blender": [
+    1.35,
+    0.0,
+    2.69
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Balcony_Glazed.fbx"
+  },
+  {
+   "name": "FK_R_Entrance_Canopy",
+   "region": "Rough",
+   "attach": "wall",
+   "note": "pivot = wall face, canopy underside centre; mount at 2.4 m",
+   "tris_lod0": 40,
+   "tris_lod1": null,
+   "colliders": 3,
+   "materials": [
+    "FK_Concrete",
+    "FK_Concrete_Dark",
+    "FK_Metal_Galv"
+   ],
+   "size_m": [
+    2.44,
+    1.42,
+    1.07
+   ],
+   "bounds_min_blender": [
+    -1.22,
+    -1.42,
+    -0.9
+   ],
+   "bounds_max_blender": [
+    1.22,
+    0.0,
+    0.17
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Entrance_Canopy.fbx"
+  },
+  {
+   "name": "FK_R_Entrance_Steps2",
+   "region": "Rough",
+   "attach": "wall+ground",
+   "note": "pivot = wall face at ground; top = door threshold (0.16 m/step)",
+   "tris_lod0": 36,
+   "tris_lod1": null,
+   "colliders": 2,
+   "materials": [
+    "FK_Concrete",
+    "FK_Concrete_Dark"
+   ],
+   "size_m": [
+    2.2,
+    1.22,
+    0.32
+   ],
+   "bounds_min_blender": [
+    -1.1,
+    -1.22,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.1,
+    0.0,
+    0.32
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Entrance_Steps2.fbx"
+  },
+  {
+   "name": "FK_R_Entrance_Steps3",
+   "region": "Rough",
+   "attach": "wall+ground",
+   "note": "pivot = wall face at ground; top = door threshold (0.16 m/step)",
+   "tris_lod0": 48,
+   "tris_lod1": null,
+   "colliders": 3,
+   "materials": [
+    "FK_Concrete",
+    "FK_Concrete_Dark"
+   ],
+   "size_m": [
+    2.2,
+    1.54,
+    0.48
+   ],
+   "bounds_min_blender": [
+    -1.1,
+    -1.54,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.1,
+    0.0,
+    0.48
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Entrance_Steps3.fbx"
+  },
+  {
+   "name": "FK_R_IronDoor",
+   "region": "Rough",
+   "attach": "wall",
+   "note": "door 1.2x2.2 m set 0.1 m into wall; pivot = wall face, sill centre",
+   "tris_lod0": 60,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Metal_Dark",
+    "FK_Metal_Galv",
+    "FK_Metal_Paint"
+   ],
+   "size_m": [
+    1.44,
+    0.17,
+    2.32
+   ],
+   "bounds_min_blender": [
+    -0.72,
+    -0.07,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.72,
+    0.1,
+    2.32
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_IronDoor.fbx"
+  },
+  {
+   "name": "FK_R_Window_Frame",
+   "region": "Rough",
+   "attach": "wall",
+   "note": "opening 1.5x1.45 m, sill at +0.85 above floor; pivot = wall face, opening bottom centre",
+   "tris_lod0": 84,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Glass",
+    "FK_Metal_Galv",
+    "FK_Window_Frame"
+   ],
+   "size_m": [
+    1.62,
+    0.24,
+    1.61
+   ],
+   "bounds_min_blender": [
+    -0.81,
+    -0.18,
+    -0.1
+   ],
+   "bounds_max_blender": [
+    0.81,
+    0.06,
+    1.51
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Window_Frame.fbx"
+  },
+  {
+   "name": "FK_R_Drainpipe_2m8",
+   "region": "Rough",
+   "attach": "wall",
+   "note": "one floor (2.8 m) stackable; pivot = wall face, bottom",
+   "tris_lod0": 52,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Metal_Dark",
+    "FK_Metal_Galv"
+   ],
+   "size_m": [
+    0.14,
+    0.195,
+    2.8
+   ],
+   "bounds_min_blender": [
+    -0.07,
+    -0.195,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.07,
+    0.0,
+    2.8
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Drainpipe_2m8.fbx"
+  },
+  {
+   "name": "FK_R_Parapet_3m2",
+   "region": "Rough",
+   "attach": "roof-edge",
+   "note": "one bay (3.2 m); pivot = roof edge top of wall, outer face",
+   "tris_lod0": 24,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Concrete",
+    "FK_Metal_Galv"
+   ],
+   "size_m": [
+    3.24,
+    0.28,
+    0.64
+   ],
+   "bounds_min_blender": [
+    -1.62,
+    -0.04,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.62,
+    0.24,
+    0.64
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Parapet_3m2.fbx"
+  },
+  {
+   "name": "FK_R_Roof_Vent",
+   "region": "Rough",
+   "attach": "roof",
+   "note": "brick vent stack with cap; pivot = roof surface centre",
+   "tris_lod0": 48,
+   "tris_lod1": null,
+   "colliders": 2,
+   "materials": [
+    "FK_Brick",
+    "FK_Concrete_Dark"
+   ],
+   "size_m": [
+    1.0,
+    0.8,
+    1.38
+   ],
+   "bounds_min_blender": [
+    -0.5,
+    -0.4,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.5,
+    0.4,
+    1.38
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_R_Roof_Vent.fbx"
+  },
+  {
+   "name": "FK_D_FireEscape_Landing",
+   "region": "Downtown",
+   "attach": "wall",
+   "note": "stack every 3.5 m; landing top at floor+1.0? no: top = pivot Z; pivot = wall face, landing top centre",
+   "tris_lod0": 312,
+   "tris_lod1": 240,
+   "colliders": 4,
+   "materials": [
+    "FK_Metal_Dark"
+   ],
+   "size_m": [
+    2.85,
+    1.345,
+    1.847
+   ],
+   "bounds_min_blender": [
+    -1.425,
+    -1.325,
+    -0.822
+   ],
+   "bounds_max_blender": [
+    1.425,
+    0.02,
+    1.025
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_FireEscape_Landing.fbx"
+  },
+  {
+   "name": "FK_D_FireEscape_Stair",
+   "region": "Downtown",
+   "attach": "wall",
+   "note": "flight between landings (3.5 m rise, 2.4 m run); pivot = wall face, bottom landing top; place at landing X",
+   "tris_lod0": 156,
+   "tris_lod1": 48,
+   "colliders": 1,
+   "materials": [
+    "FK_Metal_Dark"
+   ],
+   "size_m": [
+    2.466,
+    0.78,
+    4.534
+   ],
+   "bounds_min_blender": [
+    -1.233,
+    -1.29,
+    -0.023
+   ],
+   "bounds_max_blender": [
+    1.233,
+    -0.51,
+    4.511
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_FireEscape_Stair.fbx"
+  },
+  {
+   "name": "FK_D_FireEscape_Ladder",
+   "region": "Downtown",
+   "attach": "wall",
+   "note": "drop ladder under lowest landing, 3.0 m; pivot = wall face, top; hangs down to -3.0",
+   "tris_lod0": 132,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Metal_Dark"
+   ],
+   "size_m": [
+    0.48,
+    0.04,
+    3.0
+   ],
+   "bounds_min_blender": [
+    -0.24,
+    -1.22,
+    -3.0
+   ],
+   "bounds_max_blender": [
+    0.24,
+    -1.18,
+    0.0
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_FireEscape_Ladder.fbx"
+  },
+  {
+   "name": "FK_D_Window_Frame",
+   "region": "Downtown",
+   "attach": "wall",
+   "note": "opening 1.2x1.8 m, sill +0.9 above floor; stone sill + lintel; pivot = wall face, opening bottom centre",
+   "tris_lod0": 108,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Glass",
+    "FK_Stone",
+    "FK_Window_Frame"
+   ],
+   "size_m": [
+    1.5,
+    0.2,
+    2.26
+   ],
+   "bounds_min_blender": [
+    -0.75,
+    -0.12,
+    -0.14
+   ],
+   "bounds_max_blender": [
+    0.75,
+    0.08,
+    2.12
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_Window_Frame.fbx"
+  },
+  {
+   "name": "FK_D_Cornice_2m",
+   "region": "Downtown",
+   "attach": "roof-edge",
+   "note": "tiles every 2 m along the top of the wall; pivot = wall face, cornice bottom centre",
+   "tris_lod0": 68,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Stone"
+   ],
+   "size_m": [
+    2.0,
+    0.55,
+    0.55
+   ],
+   "bounds_min_blender": [
+    -1.0,
+    -0.55,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.0,
+    0.0,
+    0.55
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_Cornice_2m.fbx"
+  },
+  {
+   "name": "FK_D_AC_Unit",
+   "region": "Downtown",
+   "attach": "wall",
+   "note": "window AC box on bracket; pivot = wall face, bottom centre",
+   "tris_lod0": 72,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Metal_Dark",
+    "FK_Metal_Galv"
+   ],
+   "size_m": [
+    0.8,
+    0.571,
+    0.816
+   ],
+   "bounds_min_blender": [
+    -0.4,
+    -0.56,
+    -0.316
+   ],
+   "bounds_max_blender": [
+    0.4,
+    0.011,
+    0.5
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_AC_Unit.fbx"
+  },
+  {
+   "name": "FK_D_RoofWaterTank",
+   "region": "Downtown",
+   "attach": "roof",
+   "note": "wooden tank (D 2.6, H 2.8) on 4-leg stand 2.2 m; pivot = roof surface centre",
+   "tris_lod0": 282,
+   "tris_lod1": 126,
+   "colliders": 7,
+   "materials": [
+    "FK_Metal_Dark",
+    "FK_Wood"
+   ],
+   "size_m": [
+    2.9,
+    2.9,
+    6.0
+   ],
+   "bounds_min_blender": [
+    -1.45,
+    -1.45,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.45,
+    1.45,
+    6.0
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_RoofWaterTank.fbx"
+  },
+  {
+   "name": "FK_D_Parapet_2m",
+   "region": "Downtown",
+   "attach": "roof-edge",
+   "note": "brick parapet with stone coping; pivot = wall outer face, roof-edge top",
+   "tris_lod0": 24,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Brick",
+    "FK_Stone"
+   ],
+   "size_m": [
+    2.0,
+    0.4,
+    1.0
+   ],
+   "bounds_min_blender": [
+    -1.0,
+    -0.05,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.0,
+    0.35,
+    1.0
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_Parapet_2m.fbx"
+  },
+  {
+   "name": "FK_D_Storefront_Awning",
+   "region": "Downtown",
+   "attach": "wall",
+   "note": "fabric awning 3.0 m wide, 1.2 m projection; pivot = wall face, top centre; mount ~3.0 m",
+   "tris_lod0": 56,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Fabric",
+    "FK_Metal_Dark"
+   ],
+   "size_m": [
+    3.0,
+    1.222,
+    0.98
+   ],
+   "bounds_min_blender": [
+    -1.5,
+    -1.22,
+    -0.98
+   ],
+   "bounds_max_blender": [
+    1.5,
+    0.002,
+    0.0
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_Storefront_Awning.fbx"
+  },
+  {
+   "name": "FK_D_Dumpster",
+   "region": "Downtown",
+   "attach": "ground",
+   "note": "alley dumpster 1.9x1.1x1.3; pivot = ground, base centre; front = -Y",
+   "tris_lod0": 128,
+   "tris_lod1": null,
+   "colliders": 3,
+   "materials": [
+    "FK_Metal_Dark",
+    "FK_Plastic"
+   ],
+   "size_m": [
+    1.94,
+    1.18,
+    1.32
+   ],
+   "bounds_min_blender": [
+    -0.97,
+    -0.58,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.97,
+    0.6,
+    1.32
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_D_Dumpster.fbx"
+  },
+  {
+   "name": "FK_H_PorchRoof",
+   "region": "Hamlet",
+   "attach": "wall",
+   "note": "3.0 m wide, 1.8 m deep lean-to with 2 posts; pivot = wall face at ground, centre",
+   "tris_lod0": 72,
+   "tris_lod1": null,
+   "colliders": 3,
+   "materials": [
+    "FK_Roof_Metal",
+    "FK_Wood"
+   ],
+   "size_m": [
+    3.2,
+    1.95,
+    3.05
+   ],
+   "bounds_min_blender": [
+    -1.6,
+    -1.95,
+    0.0
+   ],
+   "bounds_max_blender": [
+    1.6,
+    0.0,
+    3.05
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_H_PorchRoof.fbx"
+  },
+  {
+   "name": "FK_H_Window_Shutters",
+   "region": "Hamlet",
+   "attach": "wall",
+   "note": "opening 1.0x1.2 m, carved trim + open shutters; pivot = wall face, opening bottom centre",
+   "tris_lod0": 152,
+   "tris_lod1": 64,
+   "colliders": 1,
+   "materials": [
+    "FK_Glass",
+    "FK_Window_Frame",
+    "FK_Wood",
+    "FK_Wood_Paint"
+   ],
+   "size_m": [
+    2.12,
+    0.2,
+    1.67
+   ],
+   "bounds_min_blender": [
+    -1.06,
+    -0.15,
+    -0.12
+   ],
+   "bounds_max_blender": [
+    1.06,
+    0.05,
+    1.55
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_H_Window_Shutters.fbx"
+  },
+  {
+   "name": "FK_H_Steps",
+   "region": "Hamlet",
+   "attach": "wall+ground",
+   "note": "wooden 3-step stoop, rise 0.18; pivot = wall face at ground, centre",
+   "tris_lod0": 52,
+   "tris_lod1": null,
+   "colliders": 3,
+   "materials": [
+    "FK_Wood",
+    "FK_Wood_Paint"
+   ],
+   "size_m": [
+    1.24,
+    0.9,
+    0.56
+   ],
+   "bounds_min_blender": [
+    -0.62,
+    -0.9,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.62,
+    0.0,
+    0.56
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_H_Steps.fbx"
+  },
+  {
+   "name": "FK_H_Chimney",
+   "region": "Hamlet",
+   "attach": "roof",
+   "note": "brick chimney 0.6x0.6x1.6 above ridge zone, base sunk 0.6 m into roof; pivot = roof surface centre",
+   "tris_lod0": 36,
+   "tris_lod1": null,
+   "colliders": 2,
+   "materials": [
+    "FK_Brick",
+    "FK_Metal_Dark"
+   ],
+   "size_m": [
+    0.72,
+    0.72,
+    2.2
+   ],
+   "bounds_min_blender": [
+    -0.36,
+    -0.36,
+    -0.6
+   ],
+   "bounds_max_blender": [
+    0.36,
+    0.36,
+    1.6
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_H_Chimney.fbx"
+  },
+  {
+   "name": "FK_H_Gutter_2m",
+   "region": "Hamlet",
+   "attach": "eave",
+   "note": "half-round (6-seg) gutter 2 m; pivot = eave line, centre",
+   "tris_lod0": 36,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Metal_Dark",
+    "FK_Metal_Galv"
+   ],
+   "size_m": [
+    2.0,
+    0.14,
+    0.07
+   ],
+   "bounds_min_blender": [
+    -1.0,
+    -0.14,
+    -0.06
+   ],
+   "bounds_max_blender": [
+    1.0,
+    0.0,
+    0.01
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_H_Gutter_2m.fbx"
+  },
+  {
+   "name": "FK_G_RidgeCap_Slate_2m",
+   "region": "Generic",
+   "attach": "ridge",
+   "note": "2 m segment; pivot = ridge line (roof apex), centre; X = along ridge",
+   "tris_lod0": 16,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Roof_Slate"
+   ],
+   "size_m": [
+    2.0,
+    0.4,
+    0.17
+   ],
+   "bounds_min_blender": [
+    -1.0,
+    -0.2,
+    -0.12
+   ],
+   "bounds_max_blender": [
+    1.0,
+    0.2,
+    0.05
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_G_RidgeCap_Slate_2m.fbx"
+  },
+  {
+   "name": "FK_G_RidgeCap_Metal_2m",
+   "region": "Generic",
+   "attach": "ridge",
+   "note": "2 m segment; pivot = ridge line (roof apex), centre; X = along ridge",
+   "tris_lod0": 16,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Roof_Metal"
+   ],
+   "size_m": [
+    2.0,
+    0.44,
+    0.13
+   ],
+   "bounds_min_blender": [
+    -1.0,
+    -0.22,
+    -0.1
+   ],
+   "bounds_max_blender": [
+    1.0,
+    0.22,
+    0.03
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_G_RidgeCap_Metal_2m.fbx"
+  },
+  {
+   "name": "FK_G_RidgeCap_Tile_2m",
+   "region": "Generic",
+   "attach": "ridge",
+   "note": "2 m segment; pivot = ridge line (roof apex), centre; X = along ridge",
+   "tris_lod0": 96,
+   "tris_lod1": null,
+   "colliders": 1,
+   "materials": [
+    "FK_Roof_Tile"
+   ],
+   "size_m": [
+    2.02,
+    0.3,
+    0.15
+   ],
+   "bounds_min_blender": [
+    -1.0,
+    -0.15,
+    -0.07
+   ],
+   "bounds_max_blender": [
+    1.02,
+    0.15,
+    0.08
+   ],
+   "pivot": "origin = attach plane (see attach); Blender -Y / Unity +Z = outward",
+   "fbx": "FBX/FK_G_RidgeCap_Tile_2m.fbx"
+  }
+ ]
+}
