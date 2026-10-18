@@ -57,9 +57,13 @@ namespace OnlyVolunteers.Capture
         public TieTarget AimedPart { get; private set; }
         /// <summary>The empty table bag under the crosshair (blood syringe), -1 when none.</summary>
         public int AimedBag { get; private set; } = -1;
+        /// <summary>Round 3 (Fedya): the table patient's body part (BodyPart) under the crosshair of a player standing by the
+        /// table (not in its E view), -1 when none. The kit works on him through the table's server rules.</summary>
+        public int AimedTablePart { get; private set; } = -1;
+        private bool holdTable;
         /// <summary>The field syringe is emptying into a table bag right now.</summary>
         public bool Transferring { get; private set; }
-        public float HoldProgress => holdTarget != null ? holdTime / CaptureRules.TieSeconds : 0f;
+        public float HoldProgress => holdTarget != null || holdTable ? holdTime / CaptureRules.TieSeconds : 0f;
         /// <summary>Set by the table bridge while the operation table view owns the screen and the mouse.</summary>
         public bool Suspended { get; set; }
         public LocalInventory Inventory => inventory;
@@ -189,6 +193,7 @@ namespace OnlyVolunteers.Capture
             Tool = tool;
             holdTime = 0f;
             holdTarget = null;
+            holdTable = false;
             if (Tool == FieldTool.Anesthesia) Refill(announce);
             viewModel?.Show(Tool);
             if (announce && Tool == FieldTool.Ties && Ties <= 0) Refuse("Стяжки кончились");
@@ -242,10 +247,12 @@ namespace OnlyVolunteers.Capture
             {
                 Using = false;
                 holdTarget = null;
+                holdTable = false;
                 holdTime = 0f;
                 Aimed = null;
                 AimedNpc = null;
                 AimedBag = -1;
+                AimedTablePart = -1;
                 UpdateHud(false);
                 return;
             }
@@ -259,6 +266,7 @@ namespace OnlyVolunteers.Capture
                 else
                 {
                     holdTarget = null;
+                    holdTable = false;
                     holdTime = 0f;
                 }
             }
@@ -272,8 +280,11 @@ namespace OnlyVolunteers.Capture
             AimedNpc = null;
             AimedPart = TieTarget.None;
             AimedBag = -1;
+            AimedTablePart = -1;
             Transform eye = pawn.ViewCamera.transform;
             if (Tool == FieldTool.Blood) AimedBag = FindBag(eye);
+            if (AimedBag < 0) AimedTablePart = FindTablePatient(eye);
+            if (AimedTablePart >= 0) return;
             int mask = OvLayers.ShootMask;
             if (!UnityEngine.Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, Reach, mask, QueryTriggerInteraction.Ignore)) return;
             var npc = hit.collider.GetComponentInParent<GreyboxNpc>();
@@ -300,6 +311,25 @@ namespace OnlyVolunteers.Capture
             return -1;
         }
 
+        /// <summary>Round 3: the table patient's body part (his OperationPatientRig hit triggers) under the crosshair,
+        /// nothing solid but his own body in front of it; -1 when none or when nobody is on the table.</summary>
+        private int FindTablePatient(Transform eye)
+        {
+            var table = CaptureDirector.Instance != null ? CaptureDirector.Instance.Table : null;
+            if (table == null || table.PatientObject == null || table.State == null) return -1;
+            Transform patient = table.PatientObject.transform;
+            var hits = UnityEngine.Physics.RaycastAll(eye.position, eye.forward, Reach, ~OperationSurgicalBones.Mask, QueryTriggerInteraction.Collide);
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            foreach (var hit in hits)
+            {
+                bool own = hit.collider.transform.IsChildOf(patient);
+                if (own && hit.collider.TryGetComponent(out OperationTargetTag tag) && tag.kind == TargetKind.Body) return tag.index;
+                if (own || hit.collider.isTrigger || hit.collider.transform.IsChildOf(pawn.transform)) continue;
+                return -1;
+            }
+            return -1;
+        }
+
         private static TieTarget PartOf(GreyboxNpc npc, Collider collider, Vector3 point)
         {
             NpcRagdoll rag = npc.Ragdoll;
@@ -321,6 +351,7 @@ namespace OnlyVolunteers.Capture
         private void Use(bool justPressed)
         {
             if (Tool == FieldTool.Blood && AimedBag >= 0) { if (justPressed) PourIntoBag(AimedBag); return; }
+            if (AimedTablePart >= 0) { UseOnTable((BodyPart)AimedTablePart, justPressed); return; }
             CaptureNpc target = Aimed;
             if (target == null)
             {
@@ -359,6 +390,7 @@ namespace OnlyVolunteers.Capture
             if (holdTarget != target || holdTie != tie)
             {
                 holdTarget = target;
+                holdTable = false;
                 holdTie = tie;
                 holdTime = 0f;
             }
@@ -414,6 +446,80 @@ namespace OnlyVolunteers.Capture
             }
         }
 
+        // ---------- round 3: the kit on the table patient ----------
+
+        /// <summary>A player by the table (not in its view) uses the kit on the strapped patient: ties on a limb, the
+        /// anaesthesia syringe on an injection site, the blood syringe on an arm. Dose and portions are the table's own
+        /// server rules (NetworkOperationTable.ServerFieldDose / ServerFieldDrawBlood); the barrel and the fill stay in this kit.</summary>
+        private void UseOnTable(BodyPart part, bool justPressed)
+        {
+            var d = CaptureDirector.Instance;
+            var table = d != null ? d.Table : null;
+            if (table == null || table.State == null) return;
+            OpHint why = OpHint.None;
+            switch (Tool)
+            {
+                case FieldTool.Ties:
+                {
+                    if (Ties <= 0) { if (justPressed) Refuse("Стяжки кончились"); return; }
+                    TieTarget tie = d.Bridge != null ? d.Bridge.TableTieFor(part) : TieTarget.None;
+                    if (tie == TieTarget.None) { if (justPressed) Refuse("Стяжку — на руку или ногу (или он уже связан)"); return; }
+                    if (!holdTable || holdTie != tie) { holdTable = true; holdTarget = null; holdTie = tie; holdTime = 0f; }
+                    Using = true;
+                    holdTime += Time.deltaTime;
+                    if (holdTime < CaptureRules.TieSeconds) return;
+                    holdTime = 0f;
+                    holdTable = false;
+                    if (!d.Bridge.TieTablePatient(tie)) return;
+                    Ties--;
+                    d.Toast(tie == TieTarget.Hands ? "Руки стянуты!" : "Ноги стянуты!", CaptureHud.Good);
+                    CaptureSounds.Zip(table.PatientObject != null ? table.PatientObject.transform.position : table.transform.position);
+                    return;
+                }
+                case FieldTool.Anesthesia:
+                {
+                    if (AnesthesiaBarrel <= 0.0001f) { if (justPressed) Refuse("Шприц пуст — возьми другой слот и снова этот, чтобы заправить"); return; }
+                    float amount = Mathf.Min(AnesthesiaBarrel, tuning.dosePerSecond * Time.deltaTime);
+                    float accepted = table.ServerFieldDose(part, amount, out why);
+                    if (why == OpHint.None) { AnesthesiaBarrel -= accepted; Using = accepted > 0f; return; }
+                    break;
+                }
+                case FieldTool.Blood:
+                {
+                    if (BloodFill >= 1f) { if (justPressed) Refuse("Шприц полон — перелей кровь в пустой пакет на столе"); return; }
+                    if (justPressed) bloodLatched = false;
+                    if (bloodLatched) return;
+                    why = table.ServerFieldDrawBlood(part, ref BloodFill, Time.deltaTime, out bool portion);
+                    if (why != OpHint.None) break;
+                    Using = true;
+                    if (!portion) return;
+                    BloodFill = 1f;
+                    bloodLatched = true;
+                    int portions = table.State.bloodPortions;
+                    d.Toast(portions >= tuning.fatalPortion ? "Третья порция… он не выжил" : "Шприц полон — перелей кровь в пустой пакет на столе",
+                        portions >= tuning.fatalPortion ? CaptureHud.Bad : CaptureHud.Good);
+                    return;
+                }
+                default: return;
+            }
+            if (justPressed || Time.time >= nextRefusalAt)
+            {
+                nextRefusalAt = Time.time + 1.2f;
+                Refuse(TableRefusal(why));
+            }
+        }
+
+        private string TableRefusal(OpHint why) => why switch
+        {
+            OpHint.WrongSpot => Tool == FieldTool.Anesthesia ? "Коли в руку, плечо или шею" : "Кровь берут из руки",
+            OpHint.PatientDead => "Он мёртв — наркоз уже не нужен",
+            OpHint.NotOnTable => "Он ещё не лёг на стол",
+            OpHint.SyringeFull => "Шприц полон — перелей кровь в пакет",
+            OpHint.NoBloodLeft => "Больше нельзя — он не выдержит",
+            OpHint.Squirming => "Дёргается! Усыпи его или пристегни эту руку",
+            _ => "Сейчас нельзя",
+        };
+
         private void Refuse(string text)
         {
             refusal = text;
@@ -437,15 +543,22 @@ namespace OnlyVolunteers.Capture
             CaptureNpc t = Aimed;
             if (t != null) hud.Card(CardTitle(t), CardBody(t));
             else hud.Card(null, null);
-            if (Tool == FieldTool.Ties && holdTarget != null) hud.Ring(HoldProgress, CaptureHud.Good, holdTie == TieTarget.Hands ? "стягиваю руки…" : "стягиваю ноги…");
+            if (Tool == FieldTool.Ties && (holdTarget != null || holdTable)) hud.Ring(HoldProgress, CaptureHud.Good, holdTie == TieTarget.Hands ? "стягиваю руки…" : "стягиваю ноги…");
             else if (Tool == FieldTool.Blood && Transferring) hud.Ring(1f - BloodFill, CaptureHud.Bad, "переливаю в пакет…");
             else if (Tool == FieldTool.Blood && Using) hud.Ring(BloodFill, CaptureHud.Bad, "набираю кровь…");
             else hud.Ring(-1f, Color.white, "");
-            hud.Dose(Tool == FieldTool.Anesthesia && t != null && t.Alive, t != null ? t.State.residual : 0f,
+            OperationState onTable = AimedTablePart >= 0 && CaptureDirector.Instance != null && CaptureDirector.Instance.Table != null ? CaptureDirector.Instance.Table.State : null;
+            OperationState dosed = t != null ? t.State : onTable;
+            hud.Dose(Tool == FieldTool.Anesthesia && dosed != null && dosed.alive, dosed != null ? dosed.residual : 0f,
                 tuning.suitableMinimum, tuning.suitableMaximum, tuning.overdoseAbove);
             string hint = Time.unscaledTime < refusalUntil ? refusal : null;
             if (hint == null && Tool == FieldTool.Blood && AimedBag >= 0)
                 hint = BloodFill >= 1f ? "ЛКМ — перелить кровь в пакет" : "Шприц не полон: сначала набери порцию";
+            if (hint == null && onTable != null && Tool != FieldTool.Hands)
+                hint = Tool == FieldTool.Ties ? $"ЛКМ (держать) — стяжка на пациента  ·  стяжек {Ties}"
+                     : Tool == FieldTool.Anesthesia ? $"ЛКМ (держать) — колоть наркоз в руку/шею · следи за шкалой  ·  шприц {AnesthesiaBarrel:0.0}"
+                     : BloodFill >= 1f ? "Шприц полон — перелей кровь в пустой пакет на столе"
+                     : "ЛКМ (держать) по руке — набрать кровь";
             if (hint == null && t != null && Tool != FieldTool.Hands)
                 hint = Tool == FieldTool.Ties ? "ЛКМ (держать) — стянуть " + (CaptureRules.ChooseTie(t.Ties, AimedPart) == TieTarget.Feet ? "ноги" : "руки") + $"  ·  стяжек {Ties}"
                      : Tool == FieldTool.Anesthesia ? $"ЛКМ (держать) — колоть наркоз · следи за шкалой  ·  шприц {AnesthesiaBarrel:0.0}, запас {AnesthesiaStock:0.0}"

@@ -61,6 +61,18 @@ namespace OnlyVolunteers.Inventory
             drop.Disable();
             cycle.Disable();
             foreach (InputAction action in selectSlot) action.Disable();
+            dropHeldSince = -1f;
+        }
+
+        // Charged throw (WORK_INVENTORY_SPEC decision 6): G held = charging, released = thrown with ThrowCharge.FromHold.
+        private float dropHeldSince = -1f;
+        /// <summary>The throw charge 0..1 while G is held (the indicator), -1 otherwise.</summary>
+        public float ThrowChargeShown => dropHeldSince >= 0f ? ThrowCharge.FromHold(Time.unscaledTime - dropHeldSince) : -1f;
+
+        private void OnGUI()
+        {
+            // A tap shows nothing; a held charge shows the small bar under the crosshair.
+            if (dropHeldSince >= 0f && Time.unscaledTime - dropHeldSince > 0.12f) ThrowChargeIndicator.Draw(ThrowChargeShown);
         }
 
         private void Update()
@@ -76,9 +88,17 @@ namespace OnlyVolunteers.Inventory
             if (scroll > 0.01f) inventory.RequestSelectNext(-1);
             else if (scroll < -0.01f) inventory.RequestSelectNext(1);
 
-            if (!TryViewRay(out Ray ray)) return;
+            if (drop.WasPressedThisFrame()) dropHeldSince = Time.unscaledTime;
+            bool released = drop.WasReleasedThisFrame();
+            if (!released && !drop.IsPressed()) dropHeldSince = -1f; // a release this script never saw
+            if (!TryViewRay(out Ray ray)) { if (released) dropHeldSince = -1f; return; }
             if (!externalPickup && pickup.WasPressedThisFrame()) inventory.RequestPickup(ray);
-            if (drop.WasPressedThisFrame()) inventory.RequestDropSelected(ray);
+            if (released && dropHeldSince >= 0f)
+            {
+                float charge = ThrowCharge.FromHold(Time.unscaledTime - dropHeldSince);
+                dropHeldSince = -1f;
+                inventory.RequestThrowSelected(ray, charge);
+            }
         }
 
         /// <summary>Picks up the nearest item now, as the pickup key would. False when nothing was (requested to be)

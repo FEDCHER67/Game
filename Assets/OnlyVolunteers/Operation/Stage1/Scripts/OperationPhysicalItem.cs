@@ -76,7 +76,8 @@ namespace OnlyVolunteers.Operation.Stage1
             transform.position = position; body.position = position; body.rotation = transform.rotation;
             body.isKinematic = false; body.useGravity = true;
             foreach (var c in colliders) if (c != null) c.enabled = true;
-            body.linearVelocity = Vector3.ClampMagnitude(velocity, 6f);
+            // Round 3: a charged throw (ThrowCharge, server-computed) may leave faster than the old 6 m/s cap.
+            body.linearVelocity = Vector3.ClampMagnitude(velocity, OnlyVolunteers.Inventory.ThrowCharge.MaxSpeedLight + OnlyVolunteers.Inventory.ThrowCharge.LiftFull);
             body.angularVelocity = Vector3.zero;
             nextImpact = Time.time + 0.4f; // a gentle placement never counts as a drop
         }

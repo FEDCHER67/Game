@@ -86,6 +86,77 @@ namespace OnlyVolunteers.Operation.Stage1
             Debug.Log($"[OPS] BLOOD TRANSFER (field syringe) start bag={bag}");
             return true;
         }
+
+        // ---------- round 3: the field kit on the table patient (a player standing by the table, not in its view) ----------
+        private float fieldDose;
+        /// <summary>Server, stage A (round 3): the field anaesthesia syringe on the table patient. The table syringe's own
+        /// rule (alive, on the table and aligned, an injection site: arm, shoulder or neck); the dose joins the next rules
+        /// tick exactly like the table syringe's (same residual, sleep and overdose model). Returns the amount accepted
+        /// (at most a tenth of a second's push per call); 'refusal' says why nothing was.</summary>
+        public float ServerFieldDose(BodyPart part, float amount, out OpHint refusal)
+        {
+            refusal = OpHint.None;
+            if (!IsServerInitialized || !admissionMode || !HasPatient) { refusal = OpHint.NotOnTable; return 0f; }
+            if (!State.alive) { refusal = OpHint.PatientDead; return 0f; }
+            if (!rules.CanInject) { refusal = OpHint.NotOnTable; return 0f; }
+            if (!new OpTarget(TargetKind.Body, (int)part).IsInjectionSite) { refusal = OpHint.WrongSpot; return 0f; }
+            if (!OperationRules.Finite(amount) || amount <= 0f) return 0f;
+            float accepted = Mathf.Min(amount, tuning.dosePerSecond * 0.1f);
+            fieldDose += accepted;
+            return accepted;
+        }
+        /// <summary>Server, stage A (round 3): the field blood syringe on the table patient's arm: the table's own rule
+        /// (OperationRules.CanDrawBlood: asleep, held down, that arm strapped, or dead; a portion left) and FillBlood
+        /// (portions, weakness, death cues), the fill living in the player's syringe. 'portion' is true when it filled.</summary>
+        public OpHint ServerFieldDrawBlood(BodyPart part, ref float fill, float seconds, out bool portion)
+        {
+            portion = false;
+            if (!IsServerInitialized || !admissionMode || !HasPatient) return OpHint.NotOnTable;
+            int arm = new OpTarget(TargetKind.Body, (int)part).ArmSide;
+            if (arm < 0) return OpHint.WrongSpot;
+            if (!State.onTable || !State.aligned) return OpHint.NotOnTable;
+            if (fill >= 1f) return OpHint.SyringeFull;
+            if (State.bloodPortions >= tuning.fatalPortion) return OpHint.NoBloodLeft;
+            if (!rules.CanDrawBlood(arm)) return OpHint.Squirming;
+            if (!OperationRules.Finite(seconds) || seconds <= 0f) return OpHint.None;
+            portion = rules.FillBlood(ref fill, Mathf.Min(seconds, 0.1f));
+            if (portion) nextSnapshot = 0f;
+            return OpHint.None;
+        }
+
+        /// <summary>The escape clip is playing (the root stays on PatientRest until it lands).</summary>
+        public bool PatientFalling => falling;
+
+        /// <summary>Server, admission mode, round 3 (Fedya's bug: a living patient off the table "stopped being a person"):
+        /// a LIVING patient who is off the table (the escape fall has landed, or he was taken off), held by nobody, leaves
+        /// the table's ownership with the same OperationState, so the caller makes him a field NPC again (he gets up and
+        /// runs, can be hit, tied, injected and bled). Returns his state and where his body lies, or null when he stays.</summary>
+        public OperationState ServerDischargeLiving(out Vector3 pelvis, out Vector3 headDirection, out bool faceUp)
+        {
+            pelvis = Vector3.zero; headDirection = Vector3.forward; faceUp = true;
+            if (!IsServerInitialized || !admissionMode || !HasPatient || falling) return null;
+            var s = rules.State;
+            if (!s.alive || s.onTable || patient.HasHolder) return null;
+            Transform hips = null, head = null;
+            foreach (Transform t in patient.GetComponentsInChildren<Transform>(true))
+            {
+                if (t.name == "mixamorig:Hips") hips = t;
+                else if (t.name == "mixamorig:Head") head = t;
+            }
+            pelvis = hips != null ? hips.position : patient.transform.position;
+            Vector3 toHead = head != null && hips != null ? head.position - hips.position : patient.transform.right;
+            toHead = Vector3.ProjectOnPlane(toHead, Vector3.up);
+            headDirection = toHead.sqrMagnitude > 1e-4f ? toHead.normalized : Vector3.forward;
+            faceUp = hips == null || Vector3.Dot(hips.forward, Vector3.up) > -0.2f;
+            s.onTable = false; s.aligned = false; s.knockedOut = false; s.escapeProgress = 0f; s.unbuckleProgress = 0f;
+            Array.Clear(s.restraints, 0, s.restraints.Length);
+            fieldDose = 0f;
+            GetComponent<OperationPresentation>()?.ReleasePatientVisuals();
+            Abdomen?.ReleasePatientVisuals();
+            string id = ServerRemovePatient(true);
+            Debug.Log($"[OPS] DISCHARGED living patient={id} at {pelvis} (back to the field)");
+            return s;
+        }
         private float nextSave;
         private bool frozen;
         private bool alignStartSet;
@@ -1034,6 +1105,7 @@ namespace OnlyVolunteers.Operation.Stage1
                 }
                 ctxClient = -1;
             }
+            dose += fieldDose; fieldDose = 0f; // round 3: the field syringe of a player by the table
             rules.Tick(dt, dose, false);
 
             // Patient pose: slide onto the rest pose, then follow the (possibly moving) gurney.

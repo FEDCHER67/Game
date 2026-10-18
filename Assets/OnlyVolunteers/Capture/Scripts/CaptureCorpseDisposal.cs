@@ -10,6 +10,8 @@ using OnlyVolunteers.Network;
 using OnlyVolunteers.Operation.Stage1;
 using OnlyVolunteers.Player;
 using UnityEngine;
+using ThrowCharge = OnlyVolunteers.Inventory.ThrowCharge;
+using ThrowChargeIndicator = OnlyVolunteers.Inventory.ThrowChargeIndicator;
 
 namespace OnlyVolunteers.Capture
 {
@@ -277,7 +279,9 @@ namespace OnlyVolunteers.Capture
 
     /// <summary>Hands-on corpse actions read before the grabbers (order -250): LMB on the dead, unstrapped table patient
     /// takes him off the table so the normal grab holds him; E lifts a body bag and carries it (the same server hold as
-    /// the LMB grab, on its middle, at carry height, held across the view), E/G puts it down, LMB throws it.</summary>
+    /// the LMB grab, on its middle, at carry height, held across the view), E/G puts it down, LMB throws it: round 3, a
+    /// charged throw (ThrowCharge: hold LMB longer = stronger, a tap is a gentle toss; the bag is heavy, so its top speed
+    /// is the old 4.5 m/s).</summary>
     [DefaultExecutionOrder(-250)]
     public sealed class CaptureCorpseHands : MonoBehaviour
     {
@@ -313,6 +317,10 @@ namespace OnlyVolunteers.Capture
         private KccFirstPersonInput input;
         private Vector3 target;
         public CaptureCorpse Carrying { get; private set; }
+        /// <summary>Round 3: when the LMB charge of a throw started (unscaled time), -1 while not charging.</summary>
+        private float chargeSince = -1f;
+        /// <summary>The throw charge 0..1 while LMB is held with a bag in the arms, -1 otherwise.</summary>
+        public float ThrowChargeShown => Carrying != null && chargeSince >= 0f ? ThrowCharge.FromHold(Time.unscaledTime - chargeSince) : -1f;
         public void Init(CaptureCorpseDisposal owner) => disposal = owner;
 
         private CaptureDirector D => disposal != null ? disposal.Director : null;
@@ -329,7 +337,13 @@ namespace OnlyVolunteers.Capture
                 if (input == null) input = d.Pawn.GetComponent<KccFirstPersonInput>();
                 OperationPlayerSpeed.Request(input, this, CarryCap);
                 if (key != null && (key.eKey.wasPressedThisFrame || key.gKey.wasPressedThisFrame)) { GreyboxInput.UseE(); Drop(false); }
-                else if (mouse != null && mouse.leftButton.wasPressedThisFrame) Drop(true);
+                else if (mouse != null)
+                {
+                    // Charged throw: LMB down starts the charge, LMB up throws with it.
+                    if (mouse.leftButton.wasPressedThisFrame) chargeSince = Time.unscaledTime;
+                    if (chargeSince >= 0f && mouse.leftButton.wasReleasedThisFrame) Drop(true, ThrowCharge.FromHold(Time.unscaledTime - chargeSince));
+                    else if (chargeSince >= 0f && !mouse.leftButton.isPressed) chargeSince = -1f;
+                }
                 return;
             }
             bool active = d.Pawn.Controlled && d.Pawn.ViewCamera != null && !d.Bridge.InTableMode && OpsInput.CursorLocked;
@@ -371,18 +385,24 @@ namespace OnlyVolunteers.Capture
             return true;
         }
 
-        public void Drop(bool throwIt)
+        public void Drop(bool throwIt, float charge = 0f)
         {
-            var corpse = Carrying; Carrying = null;
+            var corpse = Carrying; Carrying = null; chargeSince = -1f;
             if (corpse == null || corpse.Body == null) return;
             corpse.Body.Release(grabber, holdId);
             if (!throwIt) return;
             var eye = D.Pawn.ViewCamera.transform;
-            Vector3 velocity = eye.forward * ThrowSpeed + Vector3.up * ThrowLift;
             var ragdoll = corpse.GetComponent<NpcRagdoll>();
+            float mass = 0f;
+            for (int i = 0; i < ragdoll.PartCount; i++) { var b = ragdoll.BodyOf(i); if (b != null) mass += b.mass; }
+            // The shared rule (ThrowCharge): this host-side hold is the server, the charge is clamped there too. A body always
+            // counts as heavy (its full charge is the old, playtested 4.5 m/s), whatever the game masses of its ragdoll parts.
+            Vector3 aim = eye.forward;
+            ThrowCharge.Velocity(aim.x, aim.y, aim.z, ThrowCharge.Clamp(charge), Mathf.Max(mass, ThrowCharge.HeavyMass), out float vx, out float vy, out float vz);
+            Vector3 velocity = new Vector3(vx, vy, vz);
             for (int i = 0; i < ragdoll.PartCount; i++) { var b = ragdoll.BodyOf(i); if (b != null && !b.isKinematic) b.linearVelocity = velocity; }
             if (!corpse.Body.Body.isKinematic) corpse.Body.Body.linearVelocity = velocity;
-            Debug.Log("[CAPTURE] LMB: threw body bag " + corpse.PatientId);
+            Debug.Log($"[CAPTURE] LMB: threw body bag {corpse.PatientId} charge={charge:F2} speed={velocity.magnitude:F1} m/s");
         }
 
         private void FixedUpdate()
@@ -430,5 +450,11 @@ namespace OnlyVolunteers.Capture
         }
 
         private void OnDisable() { if (Carrying != null) Drop(false); }
+
+        private void OnGUI()
+        {
+            float charge = ThrowChargeShown;
+            if (charge >= 0f && Time.unscaledTime - chargeSince > 0.12f) ThrowChargeIndicator.Draw(charge);
+        }
     }
 }

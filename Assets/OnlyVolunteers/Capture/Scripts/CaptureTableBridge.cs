@@ -25,6 +25,8 @@ namespace OnlyVolunteers.Capture
     {
         public const float RemoveHoldSeconds = 1f;
         public const float BaseRadius = 14f;
+        /// <summary>Round 3: seconds a living patient lies off the table, held by nobody, before he is a field NPC again.</summary>
+        public const float DischargeSettleSeconds = 1.2f;
 
         public NetworkOperationTable Table { get; private set; }
         public OperationTableView View { get; private set; }
@@ -49,6 +51,11 @@ namespace OnlyVolunteers.Capture
         private float busyAt = -10f;
         private float removeHeld;
         private bool atBase;
+        private float offTableSince = -1f;
+        /// <summary>Patients whose hat / glasses already dropped (a discharged patient comes back in the crowd template's
+        /// clothes; his second admission drops nothing new).</summary>
+        private readonly HashSet<string> undressed = new HashSet<string>();
+        public int Discharges { get; private set; }
 
         public bool Busy => admitting != null;
         public bool InTableMode => tableMode;
@@ -82,7 +89,7 @@ namespace OnlyVolunteers.Capture
         private void FixedUpdate()
         {
             if (Table == null || !Table.IsServerInitialized) return;
-            if (admitting == null) TryAdmit();
+            if (admitting == null) { TryDischarge(); TryAdmit(); }
             else if (!swapped && cloud != null && cloud.Covered) Swap();
         }
 
@@ -145,7 +152,7 @@ namespace OnlyVolunteers.Capture
             c.Facts.condition = npc.Condition;
             c.State.conditionLoss = CaptureGrades.ConditionLoss(npc.Condition);
             KeepAppearance(npc);
-            SpawnTrash(npc);
+            if (undressed.Add(c.PatientId)) SpawnTrash(npc);
             director.BeforeAdmit(c);
             // Over the pad, alongside the gurney (the KnockedOut root lies along its X axis, head toward the head end).
             var tuning = Table.Tuning;
@@ -164,6 +171,72 @@ namespace OnlyVolunteers.Capture
             LastAdmittedId = c.PatientId;
             director.AfterAdmit(c, ok);
             Debug.Log($"[CAPTURE] admitted {c.PatientId} ok={ok} ties={c.Facts.restraints} conditionLoss={c.State.conditionLoss}");
+        }
+
+        // ---------- round 3: a living patient off the table is a field NPC again ----------
+
+        /// <summary>Fedya's round-3 bug: after the escape fall (or being taken off) a living patient lay as an inert table
+        /// ragdoll: no escape, no Q, no kit. Now, once he lies off the table held by nobody for DischargeSettleSeconds, the
+        /// table lets him go (ServerDischargeLiving) and he is re-created exactly like a loaded capture (CaptureSave.Respawn):
+        /// the same PatientId, OperationState (anesthesia, blood, grades, the opening/seam), facts and ties. Awake, he is
+        /// Groggy for a moment, then gets up and runs like any field NPC; asleep, he stays limp until the anesthesia wears
+        /// off. Laid on the pad again he is admitted again (same identity).</summary>
+        private void TryDischarge()
+        {
+            OperationState s = Table.State;
+            NetworkPhysicsBody patient = Table.PatientBody;
+            bool candidate = Table.HasPatient && s != null && s.alive && !s.onTable && !Table.PatientFalling && (patient == null || !patient.HasHolder);
+            if (!candidate) { offTableSince = -1f; return; }
+            if (offTableSince < 0f) { offTableSince = Time.time; return; }
+            if (Time.time - offTableSince < DischargeSettleSeconds) return;
+            offTableSince = -1f;
+            CaptureFacts facts = PatientFacts;
+            if (facts == null && director.Facts.TryGetValue(s.patientId, out CaptureFacts known)) facts = known;
+            OperationState state = Table.ServerDischargeLiving(out Vector3 pelvis, out Vector3 head, out bool faceUp);
+            if (state == null) return;
+            if (facts == null)
+            {
+                facts = new CaptureFacts { patientId = state.patientId, districtId = "village", visual = "SausageBuddy_A", npcTypeId = "SAUSAGE_BUDDY_A", rolled = true };
+                for (int i = 0; i < facts.intrinsic.Length && i < state.organs.Length; i++) facts.intrinsic[i] = state.organs[i].intrinsicGrade;
+            }
+            PatientFacts = null;
+            CaptureTieVisuals.Remove(ref bands, ref handLink, ref footLink);
+            bool asleep = state.Sleeping;
+            var save = new CaptureNpcSave
+            {
+                facts = facts, operation = state, npcState = (byte)NpcState.Down,
+                // Awake: past the Out share of the stun at once (Groggy: kicks), up and away in ~2 s. Asleep: CaptureNpc pins him.
+                stunLeft = asleep ? 4f : 2f, stunTotal = asleep ? 8f : 6f,
+                inCargo = false, pelvis = pelvis, headDirection = head, faceUp = faceUp,
+            };
+            CaptureNpc c = CaptureSave.Respawn(director, save);
+            Discharges++;
+            if (c == null) { Debug.LogWarning($"[CAPTURE] discharge of {state.patientId}: no crowd template, he is gone"); return; }
+            c.gameObject.name = "Escaped_" + state.patientId;
+            director.Toast(asleep ? "Он сполз со стола — спит на полу" : "Сбежал со стола! Лови его", asleep ? CaptureHud.Neutral : CaptureHud.Warn);
+            Debug.Log($"[CAPTURE] discharged {state.patientId} -> field NPC alive={state.alive} asleep={asleep} ties={facts.restraints} sutured={state.sutured}");
+        }
+
+        // ---------- round 3: zip ties on the table patient (the field kit by the table) ----------
+
+        /// <summary>The tie the kit would put on for an aimed body part of the table patient (None: not a limb, or done).</summary>
+        public TieTarget TableTieFor(BodyPart part)
+        {
+            if (PatientFacts == null || Table == null || !Table.HasPatient) return TieTarget.None;
+            TieTarget aimed = part == BodyPart.ArmL || part == BodyPart.ArmR || part == BodyPart.ShoulderL || part == BodyPart.ShoulderR ? TieTarget.Hands
+                : part == BodyPart.LegL || part == BodyPart.LegR ? TieTarget.Feet : TieTarget.None;
+            return aimed == TieTarget.None ? TieTarget.None : CaptureRules.ChooseTie(PatientFacts.restraints, aimed);
+        }
+
+        /// <summary>Server (the stage A host): a zip tie on the table patient. The ties travel with his facts (a discharged
+        /// patient keeps them); a closing strap still cuts the matching tie (OnCue).</summary>
+        public bool TieTablePatient(TieTarget tie)
+        {
+            if (tie == TieTarget.None || PatientFacts == null || Table == null || !Table.IsServerInitialized || !Table.HasPatient) return false;
+            PatientFacts.restraints = CaptureRules.Apply(PatientFacts.restraints, tie);
+            RefreshPatientTies();
+            Debug.Log($"[CAPTURE] tie {tie} on the table patient {Table.State.patientId}: {PatientFacts.restraints}");
+            return true;
         }
 
         private void KeepAppearance(GreyboxNpc npc)
@@ -363,7 +436,7 @@ namespace OnlyVolunteers.Capture
             {
                 if (pawn == null || pawn.ViewCamera == null || Table.PatientObject == null) return false;
                 Transform eye = pawn.ViewCamera.transform;
-                if (!UnityEngine.Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, 3f, OvLayers.ShootMask, QueryTriggerInteraction.Collide)) return false;
+                if (!UnityEngine.Physics.Raycast(eye.position, eye.forward, out RaycastHit hit, 3f, OvLayers.ShootMask & ~OperationSurgicalBones.Mask, QueryTriggerInteraction.Collide)) return false;
                 return hit.collider.transform.IsChildOf(Table.PatientObject.transform);
             }
         }

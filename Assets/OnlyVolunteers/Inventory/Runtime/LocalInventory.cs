@@ -78,7 +78,13 @@ namespace OnlyVolunteers.Inventory
             return true;
         }
 
-        public bool RequestDropSelected(Ray view)
+        public bool RequestDropSelected(Ray view) => DropSelected(view, -1f);
+
+        /// <summary>Charged throw (ThrowCharge, WORK_INVENTORY_SPEC decision 6): a tap tosses it, a full charge throws it
+        /// along the view. Offline items count as light (1 kg).</summary>
+        public bool RequestThrowSelected(Ray view, float charge) => DropSelected(view, ThrowCharge.Clamp(charge));
+
+        private bool DropSelected(Ray view, float charge)
         {
             if (model == null) return false;
             ItemStack selected = model.GetSlot(model.SelectedIndex);
@@ -89,8 +95,15 @@ namespace OnlyVolunteers.Inventory
             if (forward.sqrMagnitude < 1e-4f) forward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
             forward.Normalize();
             // From about hand height, tossed forward a little: it lands, bounces once and stays within pick-up reach.
+            Vector3 velocity = forward * dropThrowSpeed + Vector3.up * 0.5f;
+            if (charge >= 0f)
+            {
+                Vector3 aim = view.direction.sqrMagnitude > 1e-4f ? view.direction : forward;
+                ThrowCharge.Velocity(aim.x, aim.y, aim.z, charge, 1f, out float x, out float y, out float z);
+                velocity = new Vector3(x, y, z);
+            }
             OfflineWorldItem.Spawn(database.Get(taken.ItemId), 1, taken.UnitValue,
-                transform.position + forward + Vector3.up * 1.1f, forward * dropThrowSpeed + Vector3.up * 0.5f);
+                transform.position + forward + Vector3.up * 1.1f, velocity);
             return true;
         }
     }

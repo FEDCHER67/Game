@@ -238,12 +238,13 @@ namespace OnlyVolunteers.Operation.Stage1
             struggling = nowStruggling;
             bool awakeOnTable = State.onTable && State.aligned && !State.Sleeping && !State.Dazed && !held;
             // Round 3: a free hand unbuckles the other straps one by one (the per-strap escape steps; clips hook Unbuckled).
-            if (awakeOnTable && !tuning.torsoStrap && !MustSutureBeforeRelease && NextUnbuckle(out int strap, out _))
+            if (awakeOnTable && !tuning.torsoStrap && !MustSutureBeforeRelease && NextUnbuckle(out int strap, out int hand))
             {
                 State.unbuckleProgress += seconds / Mathf.Max(0.1f, tuning.unbuckleSeconds);
                 if (State.unbuckleProgress >= 1f)
                 {
                     State.unbuckleProgress = 0f; State.restraints[strap] = false;
+                    LastUnbuckledStrap = strap; LastUnbuckledHand = hand;
                     Emit(PatientCue.Unbuckled); Emit(PatientCue.StrapChanged);
                 }
             }
@@ -263,6 +264,11 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             else State.escapeProgress = 0;
         }
+
+        /// <summary>Escape-step hooks (server): the strap the free hand just opened and that hand (0 left, 1 right), valid
+        /// when PatientCue.Unbuckled fires; -1 before the first. The step in progress is NextUnbuckle + State.unbuckleProgress.</summary>
+        public int LastUnbuckledStrap { get; private set; } = -1;
+        public int LastUnbuckledHand { get; private set; } = -1;
 
         private bool AnyStrapClosed { get { for (int i = 0; i < OperationStraps.Count(tuning); i++) if (State.restraints[i]) return true; return false; } }
 

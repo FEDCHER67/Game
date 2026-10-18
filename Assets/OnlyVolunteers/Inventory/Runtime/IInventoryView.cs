@@ -21,5 +21,7 @@ namespace OnlyVolunteers.Inventory
         void RequestSelectNext(int direction);
         bool RequestPickup(Ray ray);
         bool RequestDropSelected(Ray view);
+        /// <summary>The selected thing thrown with a charge 0..1 (hold G longer = stronger; ThrowCharge). The server clamps it.</summary>
+        bool RequestThrowSelected(Ray view, float charge);
     }
 }

@@ -46,6 +46,7 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
             Assert.True(rules.NextUnbuckle(out int strap, out int hand)); Assert.AreEqual(1, strap); Assert.AreEqual(0, hand);
             for (int i = 0; i < 4 * 60; i++) rules.Tick(tuning.unbuckleSeconds / 50f, 0f, false);
             Assert.AreEqual(3, unbuckled, "right arm, left leg, right leg");
+            Assert.AreEqual(3, rules.LastUnbuckledStrap, "the right leg strap went last"); Assert.AreEqual(0, rules.LastUnbuckledHand, "with the free left hand");
             Assert.True(OperationStraps.AllOpen(state, tuning));
             for (int i = 0; i < 100 && state.onTable; i++) rules.Tick(0.1f, 0f, false);
             Assert.False(state.onTable, "all straps open: he slides off (escape)");

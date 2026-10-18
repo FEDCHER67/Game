@@ -148,6 +148,15 @@ namespace OnlyVolunteers.Inventory
             return true;
         }
 
+        /// <summary>Owner: charged throw (ThrowCharge; hold G). A held physical item (an organ) flies with the server's
+        /// velocity for the clamped charge and its mass; a pocket item has no physics (WorldItem) and is dropped as before.</summary>
+        public bool RequestThrowSelected(Ray view, float charge)
+        {
+            if (!IsOwner || !IsClientInitialized) return false;
+            if (PhysicalItem != null) { ServerThrowPhysical(view.direction, charge); return true; }
+            return RequestDropSelected(view);
+        }
+
         public void RequestSelect(int index)
         {
             if (!IsOwner || !IsClientInitialized || index < 0 || index >= SlotCount || index == SelectedIndex)
@@ -209,6 +218,16 @@ namespace OnlyVolunteers.Inventory
         private void ServerDropPhysical()
         {
             if (physicalItem.Value != null) ServerReleasePhysical(physicalItem.Value.transform.position, Vector3.zero);
+        }
+
+        [ServerRpc]
+        private void ServerThrowPhysical(Vector3 direction, float charge, NetworkConnection sender = null)
+        {
+            if (sender == null || sender != Owner || !sender.IsActive || physicalItem.Value == null || !IsFinite(direction)) return;
+            var item = physicalItem.Value;
+            float mass = item.TryGetComponent(out Rigidbody body) ? body.mass : 1f;
+            ThrowCharge.Velocity(direction.x, direction.y, direction.z, ThrowCharge.Clamp(charge), mass, out float x, out float y, out float z);
+            ServerReleasePhysical(item.transform.position, new Vector3(x, y, z));
         }
 
         [ServerRpc]
