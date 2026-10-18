@@ -1,0 +1,100 @@
+{
+  "clip": "Esc_Lie_TugArmL_Loop_v01",
+  "action": "Esc_Lie_TugArmL_Loop_v01",
+  "take": "Buddy_Rig_Mixamo65|Esc_Lie_TugArmL_Loop_v01",
+  "frames": [
+    1,
+    61
+  ],
+  "fps": 30,
+  "duration_s": 2.0,
+  "loop": true,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "LIE",
+  "end_pose_key": "LIE",
+  "preconditions": {
+    "closed": [
+      "STRAP_ARM_L"
+    ],
+    "open": [
+      "STRAP_ARM_R"
+    ],
+    "any": [
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ]
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [],
+  "next": [
+    "loop",
+    "Esc_Lie_UnbuckleArmL_ByR_v01"
+  ],
+  "beats": [
+    "0.12-0.42 looks at the strapped left wrist, free hand reaches over",
+    "0.52 grabs the strap band next to the buckle",
+    "0.62 / 1.12 two heaving pulls (forearm slides and twists in the strap, legs kick)",
+    "1.50-1.62 frustrated head shake, lets go",
+    "1.62-2.00 back to LIE (loop seam)"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0305,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {},
+    "contact_root_lift_max_m": 0.013,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightArm": 19,
+      "mixamorig:RightHand": 17
+    },
+    "inbetween_lift_max_m": 0.0
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.27,
+    "max_key_step_bone": "mixamorig:RightArm",
+    "pad_gap_min_mm": {
+      "head": 3.26,
+      "chest": 0.55,
+      "pelvis": 1.82,
+      "arm_Left": 0.42,
+      "leg_Left": 4.26,
+      "arm_Right": 0.88,
+      "leg_Right": 0.71
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.0,
+      "chest": 0.0,
+      "pelvis": 0.433,
+      "arm_Left": 1.6,
+      "leg_Left": 0.317,
+      "arm_Right": 1.95,
+      "leg_Right": 0.933
+    },
+    "floor_min_mm": 655.62,
+    "floor_min_at_s": 1.667,
+    "closed_strap_drift_mm": {
+      "arm_L": 25.7,
+      "leg_L": 3.0,
+      "leg_R": 4.5
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Lie_TugArmL_Loop_v01"
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend"
+}

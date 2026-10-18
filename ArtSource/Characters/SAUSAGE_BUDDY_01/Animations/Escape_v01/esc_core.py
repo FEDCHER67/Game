@@ -59,12 +59,14 @@ for _t in ('L', 'R'):
         'arail', 'lrail', 'klift', 'ftw',
         # hand IK: weight, grip-point target, finger direction, palm normal, elbow pole
         'ik', 'tx', 'ty', 'tz', 'fx', 'fy', 'fz', 'nx', 'ny', 'nz', 'qx', 'qy', 'qz',
+        # attach the hand target to a point of the OTHER forearm (bind-frame point gx gy gz)
+        'att', 'gx', 'gy', 'gz',
         # foot IK (ankle target, toe direction), weight
         'fik', 'ax', 'ay', 'az', 'ox', 'oy', 'oz')]
 CH = tuple(CH)
 MIRROR_NEG = {'px', 'yaw', 'roll', 'twist', 'bend', 'hyaw', 'htilt', 'lk_x'}
 for _t in ('L', 'R'):
-    MIRROR_NEG |= {c + '_' + _t for c in ('tx', 'fx', 'nx', 'qx', 'ax', 'ox')}
+    MIRROR_NEG |= {c + '_' + _t for c in ('tx', 'fx', 'nx', 'qx', 'ax', 'ox', 'gx')}
 
 
 def mirror_name(k):
@@ -207,6 +209,8 @@ class EscCtx:
         self._hand_geometry()
         self._face_geometry()
         self.stats = {'rail_slide_max': 0.0, 'rail_miss_max': 0.0, 'ik_over_max': {}, 'contact_lift_max': 0.0}
+        dom = np.array([B.deform[i] for i in B.sk_i[:, 0]])
+        self.uparm_mask = np.isin(dom, [P + 'LeftArm', P + 'RightArm', P + 'LeftShoulder', P + 'RightShoulder'])
         self.rail_log = []
 
     # -- hand / face reference points -----------------------------------------------------------
@@ -452,22 +456,39 @@ class EscCtx:
                 if c['toe_' + t]:
                     B.rotate_subtree(other, s + 'ToeBase', R(X, c['toe_' + t]))
                 B.blend_subtree(out, other, s + 'UpLeg', min(1.0, w))
-        # arms: hand IK, then rails ---------------------------------------------------------------
+        # arms: pass 1 closed straps (rail, exact); pass 2 free arms (IK, optional attach to the other
+        # forearm, then rail blend) ------------------------------------------------------------------
         for s, sgn in SIDES:
             t = s[0]
+            if closed.get('arm_' + t):
+                self.rail(out, s + 'Arm', s + 'ForeArm', s + 'Hand', 0.0, sgn * c['ftw_' + t], tag='arm_' + t)
+        for s, sgn in SIDES:
+            t = s[0]
+            if closed.get('arm_' + t):
+                continue
             w = c['ik_' + t]
-            if w > 1e-6 and not closed.get('arm_' + t):
+            if w > 1e-6:
+                tgt = Vector((c['tx_' + t], c['ty_' + t], c['tz_' + t]))
+                att = c['att_' + t]
+                if att > 1e-6:
+                    o = 'Right' if s == 'Left' else 'Left'
+                    fa = P + o + 'ForeArm'
+                    loc = Vector((c['gx_' + t], c['gy_' + t], c['gz_' + t]))     # point in the other forearm's bind frame
+                    cp = (out[fa] @ self.rest[fa].inverted() @ loc.to_4d()).to_3d()
+                    tgt = tgt.lerp(cp, min(1.0, att))
                 other = {kk: v.copy() for kk, v in out.items()}
-                self.hand_ik(other, s, Vector((c['tx_' + t], c['ty_' + t], c['tz_' + t])),
+                self.hand_ik(other, s, tgt,
                              Vector((c['fx_' + t], c['fy_' + t], c['fz_' + t])),
                              Vector((c['nx_' + t], c['ny_' + t], c['nz_' + t])),
                              Vector((c['qx_' + t], c['qy_' + t], c['qz_' + t])), tag='hand_' + t)
                 B.blend_subtree(out, other, s + 'Arm', min(1.0, w))
-            w = 1.0 if closed.get('arm_' + t) else c['arail_' + t]
+            w = c['arail_' + t]
             if w > 1e-6:
                 other = {kk: v.copy() for kk, v in out.items()}
                 self.rail(other, s + 'Arm', s + 'ForeArm', s + 'Hand', 0.0, sgn * c['ftw_' + t], tag='arm_' + t)
                 B.blend_subtree(out, other, s + 'Arm', min(1.0, w))
+        for s, sgn in SIDES:
+            t = s[0]
             if c['cu_' + t] or c['th_' + t]:
                 B.curl(out, s, c['cu_' + t], thumb=c['th_' + t] if c['th_' + t] else c['cu_' + t] * 0.6)
         # head ------------------------------------------------------------------------------------
@@ -479,16 +500,17 @@ class EscCtx:
         W = np.array(W_PR)
         return self.B.skin(out, world=False) @ W[:3, :3].T + W[:3, 3]
 
-    def pad_gap(self, out, regions=('pelvis', 'chest')):
+    def pad_gap(self, out, regions=('pelvis', 'chest', 'uparm')):
         pts = self.world_pts(out)
         g = pts[:, 2] - self.S.pad_top(pts)
         m = np.zeros(len(g), dtype=bool)
         for r in regions:
-            m |= self.B.region_mask[r]
-        gg = g[m & ~np.isnan(g)]
+            m |= (self.uparm_mask if r == 'uparm' else self.B.region_mask[r])
+        # points more than 6 cm under the pad top hang beside / below the pad, they are not inside it
+        gg = g[m & ~np.isnan(g) & (g > -0.06)]
         return (float(gg.min()) if len(gg) else 1.0), pts
 
-    def solve(self, c, closed, seat_target=0.002, margin=0.0006):
+    def solve(self, c, closed, seat_target=0.002, margin=0.0004):
         """Vertical root solve. seat (0..1): the pelvis rests on the pad (gap = seat_target);
         floor (0..1): the lowest vertex rests on the floor; always: chest/pelvis never under the
         pad top and nothing under the floor. Iterates on the root height (rails re-solve)."""
@@ -528,21 +550,76 @@ class EscCtx:
             dz += need + 1e-4
             out, g, zmin, cc = eval_(dz)
         self.stats['contact_lift_max'] = max(self.stats['contact_lift_max'], abs(dz))
-        return out, cc, {'dz': dz, 'pad_gap': g, 'zmin': zmin}
+        # free FK legs: extra hip flexion until the leg clears the pad
+        legfix = {}
+        for s, _ in SIDES:
+            t = s[0]
+            if closed.get('leg_' + t) or cc['lrail_' + t] > 0.999 or cc['fik_' + t] > 0.999:
+                continue
+            gl, _ = self.pad_gap(out, ('leg_' + s,))
+            if gl >= 0.004:
+                continue
+            lo, hi = 0.0, None
+            for x in (4.0, 8.0, 16.0, 30.0, 45.0):
+                c2 = dict(cc)
+                c2['fl_' + t] += x
+                if self.pad_gap(self.pose(c2, closed), ('leg_' + s,))[0] >= 0.004:
+                    hi = x
+                    break
+                lo = x
+            if hi is None:
+                hi = 45.0
+            for _ in range(8):
+                mid = 0.5 * (lo + hi)
+                c2 = dict(cc)
+                c2['fl_' + t] += mid
+                if self.pad_gap(self.pose(c2, closed), ('leg_' + s,))[0] >= 0.004:
+                    hi = mid
+                else:
+                    lo = mid
+            cc['fl_' + t] += hi
+            out = self.pose(cc, closed)
+            legfix[t] = hi
+            self.stats['leg_lift_max_deg'] = max(self.stats.get('leg_lift_max_deg', 0.0), hi)
+        # head on the pillow: lift the head (neck flexion about the chest X axis) if it sinks in
+        gh, _ = self.pad_gap(out, ('head',))
+        hfix = 0.0
+        if gh < 0.0015:
+            ax = (out[P + 'Spine2'].to_3x3() @ self.base[P + 'Spine2'].to_3x3().inverted() @ X).normalized()
+            base_out = out
+
+            def head_lift(x):
+                o = {k: v.copy() for k, v in base_out.items()}
+                self.B.rotate_subtree(o, 'Neck', R(ax, x))
+                return o
+            lo, hi = 0.0, 40.0
+            for _ in range(16):
+                mid = 0.5 * (lo + hi)
+                if self.pad_gap(head_lift(mid), ('head',))[0] >= 0.0015:
+                    hi = mid
+                else:
+                    lo = mid
+            out = head_lift(hi)
+            hfix = hi
+            self.stats['head_lift_max_deg'] = max(self.stats.get('head_lift_max_deg', 0.0), hi)
+        return out, cc, {'dz': dz, 'pad_gap': g, 'zmin': zmin, 'legfix': legfix, 'head_fix': hfix}
 
 
 # ----------------------------------------------------------------------------------------- keys
 def build_curves(keys, ctx):
     """keys: [(t, {channel: value})], each key inherits the previous one; returns {channel: Curve}."""
     cur = ctx.ch0()
+    merged = {}
+    for t, d in sorted(keys, key=lambda x: x[0]):          # stable: later keys at the same time win
+        tk = round(float(t), 6)
+        merged.setdefault(tk, {}).update(d)
     seq = []
-    for t, d in keys:
+    for t in sorted(merged):
         cur = dict(cur)
-        for k, v in d.items():
+        for k, v in merged[t].items():
             assert k in cur, ('unknown channel', k)
             cur[k] = float(v)
-        seq.append((float(t), cur))
-    seq.sort(key=lambda x: x[0])
+        seq.append((t, cur))
     curves = {}
     for ch in CH:
         vals = [(t, v[ch]) for t, v in seq]

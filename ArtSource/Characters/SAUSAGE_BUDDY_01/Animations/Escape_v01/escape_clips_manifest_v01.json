@@ -1,0 +1,944 @@
+{
+ "version": "escape_clips_manifest_v01",
+ "fps": 30,
+ "rig": "Buddy_Rig_Mixamo65 (65 bones, mixamorig, unchanged)",
+ "pose_keys": [
+  "LIE",
+  "SIT",
+  "EDGE_R",
+  "REACH_R",
+  "REACH_L",
+  "LEGS_REACH",
+  "RUN0"
+ ],
+ "run0_root": {
+  "position": [
+   1.6685,
+   -0.66,
+   1.1373
+  ],
+  "yaw_deg_about_up": 50.0,
+  "facing_unity": [
+   0.766,
+   0.0,
+   0.6428
+  ],
+  "note": "PatientRest-local Unity transform of the floor root that Flee_Run_v01 frame 1 expects (position (-x, z, -y) of armature space; rotation = -yaw about Unity +Y, sign flips with the handedness). Equivalently table-local: PatientRest @ this.",
+  "patientrest_armature": {
+   "position": [
+    -1.6685,
+    -1.1373,
+    -0.66
+   ],
+   "yaw_deg_about_z": -50.0
+  },
+  "speed_mps_at_end": 3.2
+ },
+ "clips": {
+  "Esc_HopRun_R_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_HopRun_R_v01",
+   "frames": [
+    1,
+    46
+   ],
+   "duration_s": 1.5,
+   "loop": false,
+   "start_pose_key": "EDGE_R",
+   "end_pose_key": "RUN0",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Land",
+     "t": 0.52,
+     "norm": 0.3467
+    },
+    {
+     "name": "RunStart",
+     "t": 0.98,
+     "norm": 0.6533
+    },
+    {
+     "name": "HandOffToRun",
+     "t": 1.5,
+     "note": "end pose = Flee_Run_v01 frame 1 at RUN0",
+     "norm": 1.0
+    }
+   ],
+   "next": [
+    "Flee_Run_v01 (loop) on the free NPC root placed at RUN0, moving 3.2 m/s along its facing"
+   ],
+   "root_motion": "hips leave the table (PatientRest-local); final hand-off root RUN0 (see esc_pose_keys_v01.json run0_root_patientrest_unity); speed at the end 3.2 m/s along the facing"
+  },
+  "Esc_Lie_TugArmL_Loop_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_TugArmL_Loop_v01",
+   "frames": [
+    1,
+    61
+   ],
+   "duration_s": 2.0,
+   "loop": true,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_L"
+    ],
+    "open": [
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "loop",
+    "Esc_Lie_UnbuckleArmL_ByR_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Lie_TugArmR_Loop_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_TugArmR_Loop_v01",
+   "frames": [
+    1,
+    61
+   ],
+   "duration_s": 2.0,
+   "loop": true,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_R"
+    ],
+    "open": [
+     "STRAP_ARM_L"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "loop",
+    "Esc_Lie_UnbuckleArmR_ByL_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Lie_UnbuckleArmL_ByR_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_UnbuckleArmL_ByR_v01",
+   "frames": [
+    1,
+    79
+   ],
+   "duration_s": 2.6,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_L"
+    ],
+    "open": [
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {
+    "STRAP_ARM_L": "open"
+   },
+   "strap_animation": {
+    "STRAP_ARM_L": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.4,
+       0.0
+      ],
+      [
+       1.52,
+       30.0
+      ],
+      [
+       1.7,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.5385,
+       0.0
+      ],
+      [
+       0.5846,
+       30.0
+      ],
+      [
+       0.6538,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 0.8,
+     "norm": 0.3077
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.06,
+     "norm": 0.4077
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.25,
+     "norm": 0.4808
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_ARM_L",
+     "t": 1.4,
+     "norm": 0.5385
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.52,
+     "norm": 0.5846
+    }
+   ],
+   "next": [
+    "Esc_SitUp_v01 (both arms now free)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Lie_UnbuckleArmR_ByL_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_UnbuckleArmR_ByL_v01",
+   "frames": [
+    1,
+    79
+   ],
+   "duration_s": 2.6,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_R"
+    ],
+    "open": [
+     "STRAP_ARM_L"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {
+    "STRAP_ARM_R": "open"
+   },
+   "strap_animation": {
+    "STRAP_ARM_R": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.4,
+       0.0
+      ],
+      [
+       1.52,
+       30.0
+      ],
+      [
+       1.7,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.5385,
+       0.0
+      ],
+      [
+       0.5846,
+       30.0
+      ],
+      [
+       0.6538,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 0.8,
+     "norm": 0.3077
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.06,
+     "norm": 0.4077
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.25,
+     "norm": 0.4808
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_ARM_R",
+     "t": 1.4,
+     "norm": 0.5385
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.52,
+     "norm": 0.5846
+    }
+   ],
+   "next": [
+    "Esc_SitUp_v01 (both arms now free)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Sit_TugLegs_Loop_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_TugLegs_Loop_v01",
+   "frames": [
+    1,
+    49
+   ],
+   "duration_s": 1.6,
+   "loop": true,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "note": "use while at least one leg strap is closed"
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "loop",
+    "Esc_Sit_UnbuckleLeg*_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Sit_UnbuckleLegL_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegL_v01",
+   "frames": [
+    1,
+    70
+   ],
+   "duration_s": 2.3,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "preconditions": {
+    "closed": [
+     "STRAP_LEG_L"
+    ],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {
+    "STRAP_LEG_L": "open"
+   },
+   "strap_animation": {
+    "STRAP_LEG_L": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.35,
+       0.0
+      ],
+      [
+       1.47,
+       40.0
+      ],
+      [
+       1.65,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.587,
+       0.0
+      ],
+      [
+       0.6391,
+       40.0
+      ],
+      [
+       0.7174,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.8,
+     "norm": 0.3478
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.0,
+     "norm": 0.4348
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.2,
+     "norm": 0.5217
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_L",
+     "t": 1.35,
+     "norm": 0.587
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.4700000000000002,
+     "norm": 0.6391
+    }
+   ],
+   "next": [
+    "Esc_Sit_UnbuckleLeg<other>_v01 if the other leg is still strapped",
+    "Esc_SwingOff_R_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Sit_UnbuckleLegR_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegR_v01",
+   "frames": [
+    1,
+    70
+   ],
+   "duration_s": 2.3,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "preconditions": {
+    "closed": [
+     "STRAP_LEG_R"
+    ],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L"
+    ]
+   },
+   "straps_after": {
+    "STRAP_LEG_R": "open"
+   },
+   "strap_animation": {
+    "STRAP_LEG_R": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.35,
+       0.0
+      ],
+      [
+       1.47,
+       40.0
+      ],
+      [
+       1.65,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.587,
+       0.0
+      ],
+      [
+       0.6391,
+       40.0
+      ],
+      [
+       0.7174,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.8,
+     "norm": 0.3478
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.0,
+     "norm": 0.4348
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.2,
+     "norm": 0.5217
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_R",
+     "t": 1.35,
+     "norm": 0.587
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.4700000000000002,
+     "norm": 0.6391
+    }
+   ],
+   "next": [
+    "Esc_Sit_UnbuckleLeg<other>_v01 if the other leg is still strapped",
+    "Esc_SwingOff_R_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Sit_UnbuckleLegsBoth_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegsBoth_v01",
+   "frames": [
+    1,
+    79
+   ],
+   "duration_s": 2.6,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "preconditions": {
+    "closed": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": []
+   },
+   "straps_after": {
+    "STRAP_LEG_L": "open",
+    "STRAP_LEG_R": "open"
+   },
+   "strap_animation": {
+    "STRAP_LEG_L": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.42,
+       0.0
+      ],
+      [
+       1.54,
+       40.0
+      ],
+      [
+       1.72,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.5462,
+       0.0
+      ],
+      [
+       0.5923,
+       40.0
+      ],
+      [
+       0.6615,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    },
+    "STRAP_LEG_R": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.08,
+       0.0
+      ],
+      [
+       1.2,
+       40.0
+      ],
+      [
+       1.38,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.4154,
+       0.0
+      ],
+      [
+       0.4615,
+       40.0
+      ],
+      [
+       0.5308,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.8,
+     "norm": 0.3077
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.8,
+     "norm": 0.3077
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.0,
+     "norm": 0.3846
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_R",
+     "t": 1.08,
+     "norm": 0.4154
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.2000000000000002,
+     "norm": 0.4615
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.28,
+     "norm": 0.4923
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_L",
+     "t": 1.42,
+     "norm": 0.5462
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.54,
+     "norm": 0.5923
+    }
+   ],
+   "next": [
+    "Esc_Sit_UnbuckleLeg<other>_v01 if the other leg is still strapped",
+    "Esc_SwingOff_R_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_SitUp_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_SitUp_v01",
+   "frames": [
+    1,
+    31
+   ],
+   "duration_s": 1.0,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "SIT",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "Esc_Sit_UnbuckleLegsBoth_v01 / _LegL_ / _LegR_ (a leg strap closed)",
+    "Esc_SwingOff_R_v01 (all open)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Slump_LieReachL_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Slump_LieReachL_v01",
+   "frames": [
+    1,
+    40
+   ],
+   "duration_s": 1.3,
+   "loop": false,
+   "start_pose_key": "REACH_L",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_L"
+    ],
+    "open": [
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.2,
+     "norm": 0.1538
+    }
+   ],
+   "next": [
+    "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Slump_LieReachR_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Slump_LieReachR_v01",
+   "frames": [
+    1,
+    40
+   ],
+   "duration_s": 1.3,
+   "loop": false,
+   "start_pose_key": "REACH_R",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_R"
+    ],
+    "open": [
+     "STRAP_ARM_L"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.2,
+     "norm": 0.1538
+    }
+   ],
+   "next": [
+    "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_Slump_Sit_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_Slump_Sit_v01",
+   "frames": [
+    1,
+    43
+   ],
+   "duration_s": 1.4,
+   "loop": false,
+   "start_pose_key": "LEGS_REACH",
+   "end_pose_key": "LIE",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.26,
+     "norm": 0.1857
+    },
+    {
+     "name": "BackHitsPad",
+     "t": 0.66,
+     "norm": 0.4714
+    }
+   ],
+   "next": [
+    "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit)"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  },
+  "Esc_SwingOff_R_v01": {
+   "take": "Buddy_Rig_Mixamo65|Esc_SwingOff_R_v01",
+   "frames": [
+    1,
+    37
+   ],
+   "duration_s": 1.2,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "EDGE_R",
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "next": [
+    "Esc_HopRun_R_v01"
+   ],
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)"
+  }
+ }
+}

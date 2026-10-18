@@ -493,3 +493,12 @@ Checks performed on this exact file with read-only PowerShell text/regex validat
 Files created/changed by G40:
 
 - C:/Dev/Game/docs/specs/OPERATIONS_STAGE2_SPEC_2026-10-18_v01.md
+
+---
+
+## Decisions (Fedya, 2026-10-18) — answers to review Q1–Q5 (docs/reviews/OPS_STAGE2_SPEC_REVIEW_v01.md §6, branch claude/ops2-review)
+1. **Straps:** 4 limb straps only. The patient cannot escape only when all 4 are closed; any open strap → combination-specific comic escape attempt (own animation per combination).
+2. **Suture:** needle and thread from the kit (like the syringes); hold and trace along the incision, ~5 s; two players faster (max ×2); can be abandoned, progress saved. Dead body: a one-action (~1 s) skin patch instead.
+3. **Opening = spoilage starts.** As soon as the body is opened (incision/chest), ALL remaining organs start spoiling. Keeping the patient alive after opening must be unprofitable, so nobody wants to. Closing the chest halves + suturing a living patient is still allowed (no rib penalty). The FIRST operation must clearly warn the player about this (tutorial hint).
+4. Patch body back on the table: one cut removes the patch, insides as they were, spoilage continues (accepted).
+5. Released/escaped living patient and police: removed from our spec — Vadim decides in his police spec (we only emit the hook).

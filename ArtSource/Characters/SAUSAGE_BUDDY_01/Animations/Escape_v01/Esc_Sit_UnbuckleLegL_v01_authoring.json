@@ -1,0 +1,180 @@
+{
+  "clip": "Esc_Sit_UnbuckleLegL_v01",
+  "action": "Esc_Sit_UnbuckleLegL_v01",
+  "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegL_v01",
+  "frames": [
+    1,
+    70
+  ],
+  "fps": 30,
+  "duration_s": 2.3,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "SIT",
+  "end_pose_key": "SIT",
+  "preconditions": {
+    "closed": [
+      "STRAP_LEG_L"
+    ],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R"
+    ],
+    "any": [
+      "STRAP_LEG_R"
+    ]
+  },
+  "straps_after": {
+    "STRAP_LEG_L": "open"
+  },
+  "strap_animation": {
+    "STRAP_LEG_L": {
+      "angle_keys_deg": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.35,
+          0.0
+        ],
+        [
+          1.47,
+          40.0
+        ],
+        [
+          1.65,
+          120.0
+        ]
+      ],
+      "angle_keys_norm": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.587,
+          0.0
+        ],
+        [
+          0.6391,
+          40.0
+        ],
+        [
+          0.7174,
+          120.0
+        ]
+      ],
+      "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+  },
+  "events": [
+    {
+      "name": "Grab",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 0.8,
+      "norm": 0.3478
+    },
+    {
+      "name": "Slip",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 1.0,
+      "norm": 0.4348
+    },
+    {
+      "name": "Grab",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 1.2,
+      "norm": 0.5217
+    },
+    {
+      "name": "StrapOpen",
+      "strap": "STRAP_LEG_L",
+      "t": 1.35,
+      "norm": 0.587
+    },
+    {
+      "name": "Release",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 1.4700000000000002,
+      "norm": 0.6391
+    }
+  ],
+  "next": [
+    "Esc_Sit_UnbuckleLeg<other>_v01 if the other leg is still strapped",
+    "Esc_SwingOff_R_v01"
+  ],
+  "beats": [
+    "0.12-0.28 looks at his feet",
+    "0.30-0.66 leans forward, hand(s) to the shin buckle(s)",
+    "0.80 grab",
+    "1.00 slip (left)",
+    "1.35 STRAP OPEN STRAP_LEG_L",
+    "1.65-2.30 sits back up to SIT"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0286,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "hand_L": 0.0007
+    },
+    "contact_root_lift_max_m": 0.0245,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:LeftArm": 10,
+      "mixamorig:LeftForeArm": 10,
+      "mixamorig:LeftHand": 10
+    },
+    "inbetween_lift_max_m": 0.0
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.95,
+    "max_key_step_bone": "mixamorig:LeftArm",
+    "pad_gap_min_mm": {
+      "head": 244.14,
+      "chest": 161.3,
+      "pelvis": 1.93,
+      "arm_Left": 3.03,
+      "leg_Left": 3.04,
+      "arm_Right": 6.38,
+      "leg_Right": 3.44
+    },
+    "pad_gap_min_at_s": {
+      "head": 1.1,
+      "chest": 0.95,
+      "pelvis": 0.608,
+      "arm_Left": 0.883,
+      "leg_Left": 1.867,
+      "arm_Right": 0.533,
+      "leg_Right": 2.083
+    },
+    "floor_min_mm": 657.19,
+    "floor_min_at_s": 0.667,
+    "closed_strap_drift_mm": {
+      "leg_L": 28.6,
+      "leg_R": 28.6
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 3e-06,
+    "fbx_bones": 65,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegL_v01"
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend"
+}

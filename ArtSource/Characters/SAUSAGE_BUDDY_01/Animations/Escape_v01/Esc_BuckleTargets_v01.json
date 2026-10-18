@@ -1,0 +1,608 @@
+{
+ "version": "Esc_BuckleTargets_v01",
+ "source": "ArtSource/Props/TABLE-ASTRA-001/v02/TABLE-ASTRA-001_v02.blend (strap meshes, buckle block = small mesh component, top-face centre)",
+ "frames": "table_blender = RIG_Table_Root space (head end -Y, patient left -X); unity_prefab = (-x, z, -y); patientrest_armature = authoring space (head +Y, patient left +X, pad ~0)",
+ "grip_rule": "hand palm-surface point (centre of the palm, 4.5-7.5 cm from the wrist) placed 4 mm along the buckle normal above the top-face centre; palm normal = -buckle normal",
+ "targets": {
+  "BUCKLE_ARM_L": {
+   "strap": "STRAP_ARM_L",
+   "table_blender": {
+    "pos": [
+     -0.2334,
+     -0.045,
+     0.7612
+    ],
+    "normal": [
+     -0.1835,
+     -0.0,
+     0.983
+    ]
+   },
+   "unity_prefab": {
+    "pos": [
+     0.2334,
+     0.7612,
+     0.045
+    ],
+    "normal": [
+     0.1835,
+     0.983,
+     0.0
+    ]
+   },
+   "patientrest_armature": {
+    "pos": [
+     0.2334,
+     0.045,
+     0.1012
+    ],
+    "normal": [
+     0.1835,
+     0.0,
+     0.983
+    ]
+   },
+   "hinge_pivot_table_blender": [
+    -0.2984,
+    -0.045,
+    0.6596
+   ],
+   "opening_path": [
+    {
+     "deg": 0,
+     "table_blender": [
+      -0.2334,
+      -0.045,
+      0.7612
+     ],
+     "unity_prefab": [
+      0.2334,
+      0.7612,
+      0.045
+     ]
+    },
+    {
+     "deg": 10,
+     "table_blender": [
+      -0.252,
+      -0.045,
+      0.771
+     ],
+     "unity_prefab": [
+      0.252,
+      0.771,
+      0.045
+     ]
+    },
+    {
+     "deg": 20,
+     "table_blender": [
+      -0.2721,
+      -0.045,
+      0.7773
+     ],
+     "unity_prefab": [
+      0.2721,
+      0.7773,
+      0.045
+     ]
+    },
+    {
+     "deg": 30,
+     "table_blender": [
+      -0.2929,
+      -0.045,
+      0.7801
+     ],
+     "unity_prefab": [
+      0.2929,
+      0.7801,
+      0.045
+     ]
+    },
+    {
+     "deg": 40,
+     "table_blender": [
+      -0.3139,
+      -0.045,
+      0.7792
+     ],
+     "unity_prefab": [
+      0.3139,
+      0.7792,
+      0.045
+     ]
+    },
+    {
+     "deg": 60,
+     "table_blender": [
+      -0.3539,
+      -0.045,
+      0.7667
+     ],
+     "unity_prefab": [
+      0.3539,
+      0.7667,
+      0.045
+     ]
+    },
+    {
+     "deg": 90,
+     "table_blender": [
+      -0.4,
+      -0.045,
+      0.7246
+     ],
+     "unity_prefab": [
+      0.4,
+      0.7246,
+      0.045
+     ]
+    },
+    {
+     "deg": 120,
+     "table_blender": [
+      -0.4189,
+      -0.045,
+      0.6651
+     ],
+     "unity_prefab": [
+      0.4189,
+      0.6651,
+      0.045
+     ]
+    }
+   ]
+  },
+  "BUCKLE_ARM_R": {
+   "strap": "STRAP_ARM_R",
+   "table_blender": {
+    "pos": [
+     0.2363,
+     -0.045,
+     0.7638
+    ],
+    "normal": [
+     0.0615,
+     -0.0,
+     0.9981
+    ]
+   },
+   "unity_prefab": {
+    "pos": [
+     -0.2363,
+     0.7638,
+     0.045
+    ],
+    "normal": [
+     -0.0615,
+     0.9981,
+     0.0
+    ]
+   },
+   "patientrest_armature": {
+    "pos": [
+     -0.2363,
+     0.045,
+     0.1038
+    ],
+    "normal": [
+     -0.0615,
+     -0.0,
+     0.9981
+    ]
+   },
+   "hinge_pivot_table_blender": [
+    0.3017,
+    -0.045,
+    0.6599
+   ],
+   "opening_path": [
+    {
+     "deg": 0,
+     "table_blender": [
+      0.2363,
+      -0.045,
+      0.7638
+     ],
+     "unity_prefab": [
+      -0.2363,
+      0.7638,
+      0.045
+     ]
+    },
+    {
+     "deg": 10,
+     "table_blender": [
+      0.2554,
+      -0.045,
+      0.7736
+     ],
+     "unity_prefab": [
+      -0.2554,
+      0.7736,
+      0.045
+     ]
+    },
+    {
+     "deg": 20,
+     "table_blender": [
+      0.2758,
+      -0.045,
+      0.7799
+     ],
+     "unity_prefab": [
+      -0.2758,
+      0.7799,
+      0.045
+     ]
+    },
+    {
+     "deg": 30,
+     "table_blender": [
+      0.297,
+      -0.045,
+      0.7825
+     ],
+     "unity_prefab": [
+      -0.297,
+      0.7825,
+      0.045
+     ]
+    },
+    {
+     "deg": 40,
+     "table_blender": [
+      0.3184,
+      -0.045,
+      0.7815
+     ],
+     "unity_prefab": [
+      -0.3184,
+      0.7815,
+      0.045
+     ]
+    },
+    {
+     "deg": 60,
+     "table_blender": [
+      0.359,
+      -0.045,
+      0.7684
+     ],
+     "unity_prefab": [
+      -0.359,
+      0.7684,
+      0.045
+     ]
+    },
+    {
+     "deg": 90,
+     "table_blender": [
+      0.4056,
+      -0.045,
+      0.7252
+     ],
+     "unity_prefab": [
+      -0.4056,
+      0.7252,
+      0.045
+     ]
+    },
+    {
+     "deg": 120,
+     "table_blender": [
+      0.4243,
+      -0.045,
+      0.6645
+     ],
+     "unity_prefab": [
+      -0.4243,
+      0.6645,
+      0.045
+     ]
+    }
+   ]
+  },
+  "BUCKLE_LEG_L": {
+   "strap": "STRAP_LEG_L",
+   "table_blender": {
+    "pos": [
+     -0.2124,
+     0.62,
+     0.682
+    ],
+    "normal": [
+     -0.0084,
+     -0.0,
+     1.0
+    ]
+   },
+   "unity_prefab": {
+    "pos": [
+     0.2124,
+     0.682,
+     -0.62
+    ],
+    "normal": [
+     0.0084,
+     1.0,
+     0.0
+    ]
+   },
+   "patientrest_armature": {
+    "pos": [
+     0.2124,
+     -0.62,
+     0.022
+    ],
+    "normal": [
+     0.0084,
+     0.0,
+     1.0
+    ]
+   },
+   "hinge_pivot_table_blender": [
+    -0.2973,
+    0.62,
+    0.6623
+   ],
+   "opening_path": [
+    {
+     "deg": 0,
+     "table_blender": [
+      -0.2124,
+      0.62,
+      0.682
+     ],
+     "unity_prefab": [
+      0.2124,
+      0.682,
+      -0.62
+     ]
+    },
+    {
+     "deg": 10,
+     "table_blender": [
+      -0.2171,
+      0.62,
+      0.6965
+     ],
+     "unity_prefab": [
+      0.2171,
+      0.6965,
+      -0.62
+     ]
+    },
+    {
+     "deg": 20,
+     "table_blender": [
+      -0.2242,
+      0.62,
+      0.7099
+     ],
+     "unity_prefab": [
+      0.2242,
+      0.7099,
+      -0.62
+     ]
+    },
+    {
+     "deg": 30,
+     "table_blender": [
+      -0.2336,
+      0.62,
+      0.7218
+     ],
+     "unity_prefab": [
+      0.2336,
+      0.7218,
+      -0.62
+     ]
+    },
+    {
+     "deg": 40,
+     "table_blender": [
+      -0.2449,
+      0.62,
+      0.732
+     ],
+     "unity_prefab": [
+      0.2449,
+      0.732,
+      -0.62
+     ]
+    },
+    {
+     "deg": 60,
+     "table_blender": [
+      -0.2719,
+      0.62,
+      0.7457
+     ],
+     "unity_prefab": [
+      0.2719,
+      0.7457,
+      -0.62
+     ]
+    },
+    {
+     "deg": 90,
+     "table_blender": [
+      -0.317,
+      0.62,
+      0.7472
+     ],
+     "unity_prefab": [
+      0.317,
+      0.7472,
+      -0.62
+     ]
+    },
+    {
+     "deg": 120,
+     "table_blender": [
+      -0.3568,
+      0.62,
+      0.7259
+     ],
+     "unity_prefab": [
+      0.3568,
+      0.7259,
+      -0.62
+     ]
+    }
+   ]
+  },
+  "BUCKLE_LEG_R": {
+   "strap": "STRAP_LEG_R",
+   "table_blender": {
+    "pos": [
+     0.2143,
+     0.62,
+     0.6825
+    ],
+    "normal": [
+     0.0066,
+     -0.0,
+     1.0
+    ]
+   },
+   "unity_prefab": {
+    "pos": [
+     -0.2143,
+     0.6825,
+     -0.62
+    ],
+    "normal": [
+     -0.0066,
+     1.0,
+     0.0
+    ]
+   },
+   "patientrest_armature": {
+    "pos": [
+     -0.2143,
+     -0.62,
+     0.0225
+    ],
+    "normal": [
+     -0.0066,
+     -0.0,
+     1.0
+    ]
+   },
+   "hinge_pivot_table_blender": [
+    0.2992,
+    0.62,
+    0.6629
+   ],
+   "opening_path": [
+    {
+     "deg": 0,
+     "table_blender": [
+      0.2143,
+      0.62,
+      0.6825
+     ],
+     "unity_prefab": [
+      -0.2143,
+      0.6825,
+      -0.62
+     ]
+    },
+    {
+     "deg": 10,
+     "table_blender": [
+      0.219,
+      0.62,
+      0.6969
+     ],
+     "unity_prefab": [
+      -0.219,
+      0.6969,
+      -0.62
+     ]
+    },
+    {
+     "deg": 20,
+     "table_blender": [
+      0.2261,
+      0.62,
+      0.7103
+     ],
+     "unity_prefab": [
+      -0.2261,
+      0.7103,
+      -0.62
+     ]
+    },
+    {
+     "deg": 30,
+     "table_blender": [
+      0.2355,
+      0.62,
+      0.7223
+     ],
+     "unity_prefab": [
+      -0.2355,
+      0.7223,
+      -0.62
+     ]
+    },
+    {
+     "deg": 40,
+     "table_blender": [
+      0.2467,
+      0.62,
+      0.7325
+     ],
+     "unity_prefab": [
+      -0.2467,
+      0.7325,
+      -0.62
+     ]
+    },
+    {
+     "deg": 60,
+     "table_blender": [
+      0.2737,
+      0.62,
+      0.7462
+     ],
+     "unity_prefab": [
+      -0.2737,
+      0.7462,
+      -0.62
+     ]
+    },
+    {
+     "deg": 90,
+     "table_blender": [
+      0.3188,
+      0.62,
+      0.7478
+     ],
+     "unity_prefab": [
+      -0.3188,
+      0.7478,
+      -0.62
+     ]
+    },
+    {
+     "deg": 120,
+     "table_blender": [
+      0.3586,
+      0.62,
+      0.7267
+     ],
+     "unity_prefab": [
+      -0.3586,
+      0.7267,
+      -0.62
+     ]
+    }
+   ]
+  }
+ }
+}

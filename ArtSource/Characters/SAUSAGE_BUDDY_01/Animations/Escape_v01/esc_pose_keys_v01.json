@@ -1,0 +1,4235 @@
+{
+ "version": "esc_pose_keys_v01",
+ "fps": 30,
+ "rig": "Buddy_Rig_Mixamo65",
+ "bones": [
+  "mixamorig:Hips",
+  "mixamorig:Spine",
+  "mixamorig:Spine1",
+  "mixamorig:Spine2",
+  "mixamorig:Neck",
+  "mixamorig:Head",
+  "mixamorig:HeadTop_End",
+  "mixamorig:RightShoulder",
+  "mixamorig:RightArm",
+  "mixamorig:RightForeArm",
+  "mixamorig:RightHand",
+  "mixamorig:RightHandThumb1",
+  "mixamorig:RightHandThumb2",
+  "mixamorig:RightHandThumb3",
+  "mixamorig:RightHandThumb4",
+  "mixamorig:RightHandIndex1",
+  "mixamorig:RightHandIndex2",
+  "mixamorig:RightHandIndex3",
+  "mixamorig:RightHandIndex4",
+  "mixamorig:RightHandMiddle1",
+  "mixamorig:RightHandMiddle2",
+  "mixamorig:RightHandMiddle3",
+  "mixamorig:RightHandMiddle4",
+  "mixamorig:RightHandRing1",
+  "mixamorig:RightHandRing2",
+  "mixamorig:RightHandRing3",
+  "mixamorig:RightHandRing4",
+  "mixamorig:RightHandPinky1",
+  "mixamorig:RightHandPinky2",
+  "mixamorig:RightHandPinky3",
+  "mixamorig:RightHandPinky4",
+  "mixamorig:LeftShoulder",
+  "mixamorig:LeftArm",
+  "mixamorig:LeftForeArm",
+  "mixamorig:LeftHand",
+  "mixamorig:LeftHandThumb1",
+  "mixamorig:LeftHandThumb2",
+  "mixamorig:LeftHandThumb3",
+  "mixamorig:LeftHandThumb4",
+  "mixamorig:LeftHandIndex1",
+  "mixamorig:LeftHandIndex2",
+  "mixamorig:LeftHandIndex3",
+  "mixamorig:LeftHandIndex4",
+  "mixamorig:LeftHandMiddle1",
+  "mixamorig:LeftHandMiddle2",
+  "mixamorig:LeftHandMiddle3",
+  "mixamorig:LeftHandMiddle4",
+  "mixamorig:LeftHandRing1",
+  "mixamorig:LeftHandRing2",
+  "mixamorig:LeftHandRing3",
+  "mixamorig:LeftHandRing4",
+  "mixamorig:LeftHandPinky1",
+  "mixamorig:LeftHandPinky2",
+  "mixamorig:LeftHandPinky3",
+  "mixamorig:LeftHandPinky4",
+  "mixamorig:RightUpLeg",
+  "mixamorig:RightLeg",
+  "mixamorig:RightFoot",
+  "mixamorig:RightToeBase",
+  "mixamorig:RightToe_End",
+  "mixamorig:LeftUpLeg",
+  "mixamorig:LeftLeg",
+  "mixamorig:LeftFoot",
+  "mixamorig:LeftToeBase",
+  "mixamorig:LeftToe_End"
+ ],
+ "note": "raw pose-bone values (quaternion w,x,y,z; Hips location) keyed at clip seams; rig object at PatientRest",
+ "run0_root_patientrest_unity": {
+  "position": [
+   1.6685,
+   -0.66,
+   1.1373
+  ],
+  "yaw_deg_about_up": 50.0,
+  "facing_unity": [
+   0.766,
+   0.0,
+   0.6428
+  ],
+  "note": "PatientRest-local Unity transform of the floor root that Flee_Run_v01 frame 1 expects (position (-x, z, -y) of armature space; rotation = -yaw about Unity +Y, sign flips with the handedness). Equivalently table-local: PatientRest @ this.",
+  "patientrest_armature": {
+   "position": [
+    -1.6685,
+    -1.1373,
+    -0.66
+   ],
+   "yaw_deg_about_z": -50.0
+  },
+  "speed_mps_at_end": 3.2
+ },
+ "keys": {
+  "LIE": {
+   "mixamorig:Hips": {
+    "q": [
+     0.70710683,
+     -0.70710683,
+     0.0,
+     0.0
+    ],
+    "loc": [
+     0.0,
+     -0.70880014,
+     0.0
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.94832373,
+     0.31730464,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.97534227,
+     -0.22069749,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.7318548,
+     0.65896511,
+     -0.12751931,
+     0.11786599
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.97437012,
+     -1.5e-07,
+     -0.00428395,
+     -0.22491032
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.99813479,
+     -4e-07,
+     0.00128493,
+     0.06103507
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14028595,
+     0.0208144,
+     0.31123048
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975643,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     0.99452198,
+     0.10452847,
+     0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     0.99756402,
+     0.06975643,
+     -0.0,
+     4.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     0.99452198,
+     0.10452847,
+     0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975643,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     0.99452198,
+     0.10452847,
+     0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975643,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     0.99452198,
+     0.10452847,
+     0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.7318548,
+     0.65896505,
+     0.12751934,
+     -0.11786653
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.97437012,
+     1e-08,
+     0.00428395,
+     0.22491032
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.99813479,
+     8e-08,
+     -0.00128493,
+     -0.06103503
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.93969268,
+     -0.14021632,
+     -0.02081445,
+     -0.31126186
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     0.99619472,
+     0.08715573,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     0.99452192,
+     0.10452846,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     0.99619472,
+     0.08715573,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     0.99452192,
+     0.10452846,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     0.99619472,
+     0.08715573,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     0.99452192,
+     0.10452846,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     0.99619472,
+     0.08715573,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     0.99452192,
+     0.10452846,
+     0.0,
+     1.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.99961019,
+     -0.02792165,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.98768836,
+     -0.15643445,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.99961019,
+     -0.02792165,
+     0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.98768836,
+     -0.15643445,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   }
+  },
+  "SIT": {
+   "mixamorig:Hips": {
+    "q": [
+     0.99452186,
+     -0.10452847,
+     0.0,
+     0.0
+    ],
+    "loc": [
+     0.0,
+     -0.72357166,
+     0.0
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     0.99971831,
+     0.02373426,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     0.99971831,
+     0.02373424,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     0.99975044,
+     0.02233832,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.95881981,
+     0.28401533,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.97534227,
+     -0.22069755,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     1.0,
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.67767942,
+     0.57310522,
+     -0.45622328,
+     -0.06450956
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.91101813,
+     0.00262652,
+     -0.00461184,
+     -0.41233224
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.69654298,
+     -0.66538584,
+     -0.26698944,
+     -0.02839417
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14028598,
+     0.02081437,
+     0.31123048
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     1.0,
+     1e-08,
+     -2e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     -1e-08,
+     2e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -4e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     0.99619478,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     0.99452192,
+     0.10452848,
+     -0.0,
+     6.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     -1e-08,
+     -0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     -0.0,
+     4.4e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     1e-08,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     0.99452192,
+     0.10452849,
+     0.0,
+     6.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     0.99619478,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     0.99452192,
+     0.10452848,
+     -0.0,
+     6.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     0.99619478,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     0.99452192,
+     0.10452848,
+     -0.0,
+     6.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     0.0,
+     -1e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     1.0,
+     -0.0,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.67759931,
+     0.57370883,
+     0.45545638,
+     0.06539824
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.91210926,
+     0.00259211,
+     0.00460849,
+     0.40991306
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.69653046,
+     -0.66571563,
+     0.26609823,
+     0.02932248
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14021635,
+     -0.02081444,
+     -0.31126186
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     -0.0,
+     0.0,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     0.99619478,
+     0.08715574,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975645,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     0.99619478,
+     0.08715573,
+     -0.0,
+     1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     0.99452192,
+     0.10452845,
+     0.0,
+     1.3e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     0.99619478,
+     0.08715574,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     0.99619478,
+     0.08715574,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     -1e-08,
+     -0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.76537669,
+     0.64358252,
+     -0.0,
+     1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     0.99892294,
+     -0.04639999,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.76537669,
+     0.64358252,
+     -0.0,
+     2.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     0.99892294,
+     -0.04639999,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   }
+  },
+  "EDGE_R": {
+   "mixamorig:Hips": {
+    "q": [
+     0.70613778,
+     -0.03700713,
+     -0.70613772,
+     -0.03700713
+    ],
+    "loc": [
+     -0.17,
+     -0.73326683,
+     0.30000001
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     0.99984157,
+     0.01780142,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     0.99984157,
+     0.01780142,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     0.99985963,
+     0.01675432,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.94832367,
+     0.31730467,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.97534227,
+     -0.22069754,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.67665684,
+     0.56545651,
+     -0.46854424,
+     -0.05348526
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.89764702,
+     0.0030352,
+     -0.0046473,
+     -0.44068024
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.67624509,
+     -0.68604004,
+     -0.26608837,
+     -0.0351953
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14028597,
+     0.02081436,
+     0.31123048
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     1.0,
+     -0.0,
+     -1e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     -1e-08,
+     1e-08,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -3e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     0.99619478,
+     0.08715571,
+     0.0,
+     5.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     0.99452186,
+     0.10452849,
+     -0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     -0.0,
+     4.4e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     0.99452186,
+     0.10452848,
+     0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     0.99452186,
+     0.10452849,
+     -0.0,
+     7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     0.0,
+     1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     0.0,
+     5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     0.99452186,
+     0.10452849,
+     -0.0,
+     7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.67540646,
+     0.57905972,
+     0.45061448,
+     0.07390991
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.92226821,
+     0.00225744,
+     0.00457594,
+     0.38651699
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.67608434,
+     -0.69245178,
+     0.24574253,
+     0.05505571
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14021634,
+     -0.02081443,
+     -0.31126189
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     1.0,
+     -0.0,
+     -1e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975645,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     0.99619478,
+     0.08715573,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975645,
+     0.0,
+     1.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     0.99619478,
+     0.08715573,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975645,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     0.99619478,
+     0.08715573,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     -1e-08,
+     -1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975645,
+     0.0,
+     1.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     0.99619478,
+     0.08715573,
+     -0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     0.99452186,
+     0.10452845,
+     1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     -1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.76153827,
+     0.64811999,
+     -0.0,
+     1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     0.71933979,
+     -0.69465846,
+     0.0,
+     -6e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     1.0,
+     -1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.76153827,
+     0.64811999,
+     0.0,
+     2.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     0.71933979,
+     -0.69465846,
+     -0.0,
+     -6e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   }
+  },
+  "REACH_R": {
+   "mixamorig:Hips": {
+    "q": [
+     0.70022523,
+     -0.70022529,
+     -0.09841029,
+     0.09841027
+    ],
+    "loc": [
+     0.0,
+     -0.70880014,
+     0.0
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     0.99741101,
+     0.07114536,
+     -0.00074504,
+     0.01044521
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     0.99288279,
+     0.06964846,
+     -0.09646098,
+     0.00531105
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     0.99316579,
+     0.06548888,
+     -0.09643789,
+     0.00571506
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.85957098,
+     0.50998694,
+     -0.03229763,
+     0.00282568
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.99786085,
+     0.04405356,
+     -0.04711001,
+     0.01065994
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     1.0,
+     0.0,
+     1e-08,
+     3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.73771709,
+     0.56479532,
+     -0.10337201,
+     -0.35509729
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.99486405,
+     0.02394472,
+     0.00194185,
+     -0.09832837
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.99813479,
+     -4e-07,
+     0.00128493,
+     0.06103507
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.88652676,
+     -0.18977575,
+     0.02815726,
+     0.42102569
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     0.99002367,
+     0.12833895,
+     -0.00928163,
+     0.0574118
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     0.0,
+     3e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -2e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     0.82313639,
+     0.56784368,
+     8e-08,
+     3.59e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     3e-08,
+     4.38e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     0.81664145,
+     0.57714534,
+     3e-08,
+     3.64e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     -0.0,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     0.82313639,
+     0.56784368,
+     4e-08,
+     3.57e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     7e-08,
+     4.37e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     0.81664151,
+     0.57714528,
+     5e-08,
+     3.62e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     0.82313639,
+     0.56784368,
+     8e-08,
+     3.59e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     4e-08,
+     4.38e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     0.81664145,
+     0.57714534,
+     3e-08,
+     3.64e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     0.82313639,
+     0.56784368,
+     8e-08,
+     3.59e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     4e-08,
+     4.38e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     0.81664145,
+     0.57714534,
+     3e-08,
+     3.64e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     -0.0,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     0.98162717,
+     -4e-08,
+     -0.00408787,
+     0.19076519
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.50180471,
+     0.00827624,
+     0.28867981,
+     0.81534499
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.9451099,
+     0.00141145,
+     0.00448109,
+     0.32671884
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.78598893,
+     -0.16278951,
+     -0.59616393,
+     0.01759764
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14021635,
+     -0.02081446,
+     -0.31126189
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     1.0,
+     0.0,
+     1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     -2e-08,
+     -1e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     -2e-08,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     0.99619472,
+     0.08715575,
+     -1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     0.99452186,
+     0.10452844,
+     0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     3e-08,
+     -2e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975643,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     0.99619472,
+     0.08715575,
+     -1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     0.99452186,
+     0.10452843,
+     1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     0.99619472,
+     0.08715575,
+     -1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     0.99452186,
+     0.10452844,
+     0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     1e-08,
+     -2e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     0.0,
+     1.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     0.99619472,
+     0.08715575,
+     -1e-08,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     0.99452186,
+     0.10452844,
+     0.0,
+     1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     1e-08,
+     2e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.99019092,
+     0.00997523,
+     -0.13931005,
+     -0.00388609
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     0.99929214,
+     -0.03725372,
+     -0.0,
+     0.00523861
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.98816127,
+     -0.06539341,
+     -0.13872933,
+     -0.00390239
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     0.99928617,
+     0.03741299,
+     -0.0,
+     -0.00523864
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   }
+  },
+  "REACH_L": {
+   "mixamorig:Hips": {
+    "q": [
+     0.70022523,
+     -0.70022529,
+     0.09841029,
+     -0.09841027
+    ],
+    "loc": [
+     0.0,
+     -0.70880014,
+     0.0
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     0.99741101,
+     0.07114536,
+     0.00074504,
+     -0.01044521
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     0.99288279,
+     0.06964846,
+     0.09646098,
+     -0.00531105
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     0.99316579,
+     0.06548888,
+     0.09643789,
+     -0.00571506
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.85903269,
+     0.51088089,
+     0.03248873,
+     -0.00284239
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.99777693,
+     0.04561783,
+     0.04738494,
+     -0.0107221
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     0.0,
+     -1e-08,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     0.98162717,
+     -1.6e-07,
+     0.00408787,
+     -0.1907652
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.50139338,
+     0.00916498,
+     -0.28902724,
+     -0.81546551
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.94272035,
+     0.00150713,
+     -0.00449275,
+     -0.33355036
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.79953313,
+     -0.16768917,
+     0.57668811,
+     -0.00761117
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.93969262,
+     -0.14028597,
+     0.02081437,
+     0.31123048
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     1.0,
+     -1e-08,
+     3e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     -1e-08,
+     1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     3e-08,
+     -2e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     0.99619472,
+     0.08715571,
+     1e-08,
+     5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     0.99452186,
+     0.10452851,
+     -1e-08,
+     7.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     -1e-08,
+     3e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     2e-08,
+     4.4e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     0.99619478,
+     0.08715571,
+     -0.0,
+     5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     0.99452186,
+     0.10452846,
+     0.0,
+     6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     2e-08,
+     1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     0.99619478,
+     0.08715568,
+     1e-08,
+     4.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     0.99452186,
+     0.10452851,
+     0.0,
+     7.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     0.99756408,
+     0.06975644,
+     1e-08,
+     4.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     0.99619478,
+     0.08715568,
+     1e-08,
+     4.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     0.99452186,
+     0.10452851,
+     0.0,
+     7.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     1e-08,
+     2e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.73771709,
+     0.56479561,
+     0.10337202,
+     0.35509682
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.99486405,
+     0.02394478,
+     -0.00194184,
+     0.09832836
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.99813479,
+     9e-08,
+     -0.00128493,
+     -0.06103504
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.88652676,
+     -0.18968152,
+     -0.0281573,
+     -0.42106822
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     0.99002367,
+     0.12833846,
+     0.00928163,
+     -0.05741287
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     -0.0,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     0.82313645,
+     0.56784368,
+     -2e-08,
+     8.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     -4e-08,
+     1.02e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     0.81664151,
+     0.57714528,
+     -0.0,
+     8.3e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     0.82313645,
+     0.56784368,
+     -0.0,
+     8.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     -3e-08,
+     1.01e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     0.81664145,
+     0.57714534,
+     -0.0,
+     8.2e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     -2e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     0.82313645,
+     0.56784368,
+     -2e-08,
+     8.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     -4e-08,
+     1.02e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     0.81664151,
+     0.57714528,
+     -0.0,
+     8.3e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     -2e-08,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     0.82313645,
+     0.56784368,
+     -2e-08,
+     8.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     0.71202606,
+     0.70215315,
+     -4e-08,
+     1.02e-06
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     0.81664151,
+     0.57714528,
+     -0.0,
+     8.3e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     -0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.98816127,
+     -0.06539341,
+     0.13872933,
+     0.00390235
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     0.99928617,
+     0.03741298,
+     0.0,
+     0.00523865
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.99019092,
+     0.00997523,
+     0.13931002,
+     0.0038861
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     0.99929214,
+     -0.03725372,
+     0.0,
+     -0.00523862
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   }
+  },
+  "LEGS_REACH": {
+   "mixamorig:Hips": {
+    "q": [
+     0.97437012,
+     0.22495109,
+     0.0,
+     0.0
+    ],
+    "loc": [
+     0.0,
+     -0.7287671,
+     0.0
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     0.99746567,
+     0.07114927,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     0.99746567,
+     0.07114926,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     0.99775499,
+     0.06697051,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.97778922,
+     0.20959079,
+     0.00011836,
+     -4.543e-05
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.97296786,
+     -0.23094043,
+     0.000183,
+     -5.161e-05
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     0.99254614,
+     -1.1e-07,
+     0.00261093,
+     -0.12184139
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.8460474,
+     -0.22441404,
+     -0.08647464,
+     -0.47577757
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.97016221,
+     0.00024005,
+     -0.00432089,
+     -0.24241826
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.89919108,
+     -0.30638781,
+     0.20477913,
+     0.23589696
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.95382184,
+     -0.12320358,
+     0.01827985,
+     0.27333248
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     0.99888992,
+     -0.04151256,
+     -0.01327435,
+     -0.01787508
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     0.0,
+     1e-08,
+     -3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     -1e-08,
+     -4e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     0.994151,
+     -0.10799937,
+     1e-08,
+     -6.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     0.98977619,
+     -0.14262901,
+     0.0,
+     -9.5e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     0.997859,
+     -0.06540311,
+     -1e-08,
+     -3.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     0.994151,
+     -0.10799938,
+     1e-08,
+     -6.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     0.98977619,
+     -0.14262901,
+     -2e-08,
+     -9.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     0.99785894,
+     -0.06540312,
+     -2e-08,
+     -3.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     -2e-08,
+     0.0,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     0.994151,
+     -0.10799937,
+     1e-08,
+     -6.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     0.98977619,
+     -0.14262901,
+     0.0,
+     -9.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     0.997859,
+     -0.06540311,
+     -1e-08,
+     -3.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     -2e-08,
+     1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     0.994151,
+     -0.10799937,
+     1e-08,
+     -6.7e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     0.98977619,
+     -0.14262901,
+     0.0,
+     -9.6e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     0.997859,
+     -0.06540311,
+     -1e-08,
+     -3.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     0.0,
+     1e-08,
+     2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     0.99254614,
+     -3e-08,
+     -0.00261094,
+     0.12184139
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.84442276,
+     -0.22479175,
+     0.08706953,
+     0.47836992
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.97063482,
+     0.00021418,
+     0.00431699,
+     0.24051894
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.8987847,
+     -0.30627844,
+     -0.20561883,
+     -0.23685546
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.95382184,
+     -0.12314245,
+     -0.01827989,
+     -0.27336007
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     0.99888986,
+     -0.0415124,
+     0.0132743,
+     0.01787548
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     -0.0,
+     -0.0,
+     -3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     0.994151,
+     -0.10799938,
+     -1e-08,
+     -1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     0.98977619,
+     -0.142629,
+     -1e-08,
+     -1.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     0.99785894,
+     -0.06540316,
+     1e-08,
+     -1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     0.994151,
+     -0.10799938,
+     -3e-08,
+     -1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     0.98977619,
+     -0.14262903,
+     1e-08,
+     -1.8e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     0.99785894,
+     -0.06540314,
+     1e-08,
+     -1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     -3e-08,
+     -0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     0.994151,
+     -0.10799938,
+     -1e-08,
+     -1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     0.98977619,
+     -0.142629,
+     -1e-08,
+     -1.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     0.99785894,
+     -0.06540316,
+     1e-08,
+     -1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     0.994151,
+     -0.10799938,
+     -1e-08,
+     -1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     0.98977619,
+     -0.142629,
+     -1e-08,
+     -1.9e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     0.99785894,
+     -0.06540316,
+     1e-08,
+     -1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     3e-08,
+     0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.50995588,
+     0.86020058,
+     -0.0,
+     1.3e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     0.99868459,
+     -0.0512746,
+     0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.50995588,
+     0.86020058,
+     -0.0,
+     3.3e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     0.99868459,
+     -0.0512746,
+     -0.0,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.9876883,
+     -0.15643446,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     -0.0,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     0.0
+    ],
+    "loc": null
+   }
+  },
+  "RUN0": {
+   "mixamorig:Hips": {
+    "q": [
+     0.87646627,
+     0.01571859,
+     -0.48115739,
+     -0.00687822
+    ],
+    "loc": [
+     -1.6757952,
+     -0.755,
+     1.12862778
+    ]
+   },
+   "mixamorig:Spine": {
+    "q": [
+     0.99965626,
+     0.01069802,
+     0.02287767,
+     0.00703639
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine1": {
+    "q": [
+     0.99829859,
+     -0.00159612,
+     0.05828776,
+     -9.319e-05
+    ],
+    "loc": null
+   },
+   "mixamorig:Spine2": {
+    "q": [
+     0.99883902,
+     -0.02061454,
+     0.04330431,
+     0.00452941
+    ],
+    "loc": null
+   },
+   "mixamorig:Neck": {
+    "q": [
+     0.99798203,
+     -0.05230244,
+     -0.03595493,
+     0.00188433
+    ],
+    "loc": null
+   },
+   "mixamorig:Head": {
+    "q": [
+     0.99494624,
+     -0.08624807,
+     -0.01194078,
+     0.05000656
+    ],
+    "loc": null
+   },
+   "mixamorig:HeadTop_End": {
+    "q": [
+     1.0,
+     1e-08,
+     2e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightShoulder": {
+    "q": [
+     0.99771523,
+     -0.05975468,
+     0.0314201,
+     0.00255842
+    ],
+    "loc": null
+   },
+   "mixamorig:RightArm": {
+    "q": [
+     0.56648815,
+     0.23905836,
+     0.47623613,
+     -0.62860268
+    ],
+    "loc": null
+   },
+   "mixamorig:RightForeArm": {
+    "q": [
+     0.83040076,
+     0.0233386,
+     0.22272985,
+     -0.51017767
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHand": {
+    "q": [
+     0.98946434,
+     0.1151206,
+     0.05766505,
+     -0.06619897
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb1": {
+    "q": [
+     0.98095512,
+     -0.07966886,
+     0.0118205,
+     0.17674884
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb2": {
+    "q": [
+     0.97814763,
+     0.16787213,
+     0.10053094,
+     0.07028345
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb3": {
+    "q": [
+     1.0,
+     -2e-08,
+     2e-08,
+     -3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandThumb4": {
+    "q": [
+     1.0,
+     4e-08,
+     -3e-08,
+     4e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex1": {
+    "q": [
+     1.0,
+     0.0,
+     -2e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex2": {
+    "q": [
+     1.0,
+     -1e-08,
+     -1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex3": {
+    "q": [
+     1.0,
+     0.0,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandIndex4": {
+    "q": [
+     1.0,
+     -2e-08,
+     -0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle1": {
+    "q": [
+     1.0,
+     -0.0,
+     -4e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle2": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle3": {
+    "q": [
+     1.0,
+     0.0,
+     -0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandMiddle4": {
+    "q": [
+     1.0,
+     -2e-08,
+     0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing1": {
+    "q": [
+     1.0,
+     -2e-08,
+     -1e-08,
+     3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing2": {
+    "q": [
+     1.0,
+     2e-08,
+     -2e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing3": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandRing4": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky1": {
+    "q": [
+     1.0,
+     -2e-08,
+     -1e-08,
+     3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky2": {
+    "q": [
+     1.0,
+     2e-08,
+     -2e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky3": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:RightHandPinky4": {
+    "q": [
+     1.0,
+     -4e-08,
+     -1e-08,
+     -3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftShoulder": {
+    "q": [
+     0.99884915,
+     -0.03614725,
+     0.0314718,
+     0.00181469
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftArm": {
+    "q": [
+     0.93495905,
+     0.33036858,
+     -0.03001815,
+     0.12572616
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftForeArm": {
+    "q": [
+     0.9601143,
+     -0.00385103,
+     -0.15249327,
+     0.23433219
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHand": {
+    "q": [
+     0.98946434,
+     0.1159696,
+     -0.01493157,
+     -0.08537219
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb1": {
+    "q": [
+     0.98095512,
+     -0.07962938,
+     -0.01182056,
+     -0.17676666
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb2": {
+    "q": [
+     0.97814763,
+     0.16787152,
+     -0.10053097,
+     -0.07028487
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb3": {
+    "q": [
+     1.0,
+     -1e-08,
+     0.0,
+     -1.1e-07
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandThumb4": {
+    "q": [
+     1.0,
+     -1e-08,
+     -4e-08,
+     4e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex1": {
+    "q": [
+     1.0,
+     2e-08,
+     -1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex2": {
+    "q": [
+     1.0,
+     0.0,
+     3e-08,
+     -4e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex3": {
+    "q": [
+     1.0,
+     3e-08,
+     0.0,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandIndex4": {
+    "q": [
+     1.0,
+     1e-08,
+     2e-08,
+     -0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle1": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle2": {
+    "q": [
+     1.0,
+     1e-08,
+     1e-08,
+     -3e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle3": {
+    "q": [
+     1.0,
+     0.0,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandMiddle4": {
+    "q": [
+     1.0,
+     -2e-08,
+     2e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing1": {
+    "q": [
+     1.0,
+     2e-08,
+     -1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing2": {
+    "q": [
+     1.0,
+     0.0,
+     3e-08,
+     -4e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing3": {
+    "q": [
+     1.0,
+     3e-08,
+     0.0,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandRing4": {
+    "q": [
+     1.0,
+     1e-08,
+     -1e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky1": {
+    "q": [
+     1.0,
+     2e-08,
+     -1e-08,
+     0.0
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky2": {
+    "q": [
+     1.0,
+     0.0,
+     3e-08,
+     -4e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky3": {
+    "q": [
+     1.0,
+     3e-08,
+     0.0,
+     -2e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftHandPinky4": {
+    "q": [
+     1.0,
+     1e-08,
+     -4e-08,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:RightUpLeg": {
+    "q": [
+     0.99271142,
+     0.04764314,
+     -0.0769806,
+     -0.07954985
+    ],
+    "loc": null
+   },
+   "mixamorig:RightLeg": {
+    "q": [
+     0.55039543,
+     -0.82894981,
+     1e-08,
+     0.09953456
+    ],
+    "loc": null
+   },
+   "mixamorig:RightFoot": {
+    "q": [
+     0.90917689,
+     0.41156295,
+     -0.06281047,
+     -0.00825435
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToeBase": {
+    "q": [
+     0.99951947,
+     0.03097845,
+     0.00017787,
+     -0.00106706
+    ],
+    "loc": null
+   },
+   "mixamorig:RightToe_End": {
+    "q": [
+     1.0,
+     -4e-08,
+     -2e-08,
+     1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftUpLeg": {
+    "q": [
+     0.91359806,
+     0.39545107,
+     0.00064103,
+     0.09463953
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftLeg": {
+    "q": [
+     0.89155811,
+     -0.44967633,
+     -1e-08,
+     -0.0539941
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftFoot": {
+    "q": [
+     0.9825502,
+     0.16898182,
+     -0.04929615,
+     0.06008476
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToeBase": {
+    "q": [
+     1.0,
+     1e-08,
+     0.0,
+     -1e-08
+    ],
+    "loc": null
+   },
+   "mixamorig:LeftToe_End": {
+    "q": [
+     1.0,
+     0.0,
+     1e-08,
+     3e-08
+    ],
+    "loc": null
+   }
+  }
+ }
+}

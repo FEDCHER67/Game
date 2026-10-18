@@ -1,0 +1,94 @@
+{
+  "clip": "Esc_Sit_TugLegs_Loop_v01",
+  "action": "Esc_Sit_TugLegs_Loop_v01",
+  "take": "Buddy_Rig_Mixamo65|Esc_Sit_TugLegs_Loop_v01",
+  "frames": [
+    1,
+    49
+  ],
+  "fps": 30,
+  "duration_s": 1.6,
+  "loop": true,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "SIT",
+  "end_pose_key": "SIT",
+  "preconditions": {
+    "closed": [],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R"
+    ],
+    "any": [
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ],
+    "note": "use while at least one leg strap is closed"
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [],
+  "next": [
+    "loop",
+    "Esc_Sit_UnbuckleLeg*_v01"
+  ],
+  "beats": [
+    "three alternating knee yanks against the shin straps (0.24 L, 0.62 R, 1.00 L)",
+    "trunk heaves back with each yank, palms push on the pad",
+    "loop seam = SIT"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0232,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {},
+    "contact_root_lift_max_m": 0.0168,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {},
+    "inbetween_lift_max_m": 0.0
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 6.43,
+    "max_key_step_bone": "mixamorig:LeftFoot",
+    "pad_gap_min_mm": {
+      "head": 398.91,
+      "chest": 220.88,
+      "pelvis": 2.0,
+      "arm_Left": 6.15,
+      "leg_Left": 3.44,
+      "arm_Right": 6.26,
+      "leg_Right": 0.42
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.15,
+      "chest": 0.717,
+      "pelvis": 1.058,
+      "arm_Left": 1.042,
+      "leg_Left": 0.717,
+      "arm_Right": 0.675,
+      "leg_Right": 1.1
+    },
+    "floor_min_mm": 659.27,
+    "floor_min_at_s": 1.042,
+    "closed_strap_drift_mm": {
+      "leg_L": 17.6,
+      "leg_R": 17.6
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Sit_TugLegs_Loop_v01"
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend"
+}

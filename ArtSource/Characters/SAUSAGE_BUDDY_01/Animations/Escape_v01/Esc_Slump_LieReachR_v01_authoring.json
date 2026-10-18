@@ -1,0 +1,117 @@
+{
+  "clip": "Esc_Slump_LieReachR_v01",
+  "action": "Esc_Slump_LieReachR_v01",
+  "take": "Buddy_Rig_Mixamo65|Esc_Slump_LieReachR_v01",
+  "frames": [
+    1,
+    40
+  ],
+  "fps": 30,
+  "duration_s": 1.3,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "REACH_R",
+  "end_pose_key": "LIE",
+  "preconditions": {
+    "closed": [
+      "STRAP_ARM_R"
+    ],
+    "open": [
+      "STRAP_ARM_L"
+    ],
+    "any": [
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ]
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [
+    {
+      "name": "Limp",
+      "t": 0.2,
+      "norm": 0.1538
+    }
+  ],
+  "next": [
+    "Op_Lie_Asleep_v01 (re-injected) or Op_Lie_Awake / Op_Panic (hit)"
+  ],
+  "beats": [
+    "0.00 = grab pose of Esc_Lie_UnbuckleArmR_ByL (crossfade in from any time of that clip)",
+    "0.07 jolt (head snaps back, fingers splay)",
+    "0.20-0.58 goes limp, unrolls, arm flops back to his side",
+    "0.58-0.82 small bounce, head lolls toward his left",
+    "1.30 LIE"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0195,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {},
+    "contact_root_lift_max_m": 0.0036,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 3.98,
+    "step_limiter_bones": {
+      "mixamorig:RightHandIndex1": 6,
+      "mixamorig:RightHandIndex2": 6,
+      "mixamorig:RightHandIndex3": 6,
+      "mixamorig:RightHandMiddle1": 6,
+      "mixamorig:RightHandMiddle2": 6,
+      "mixamorig:RightHandMiddle3": 6,
+      "mixamorig:RightHandRing1": 6,
+      "mixamorig:RightHandRing2": 6,
+      "mixamorig:RightHandRing3": 6,
+      "mixamorig:RightHandPinky1": 6,
+      "mixamorig:RightHandPinky2": 6,
+      "mixamorig:RightHandPinky3": 6,
+      "mixamorig:LeftArm": 9,
+      "mixamorig:LeftHand": 9
+    },
+    "inbetween_lift_max_m": 0.0
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.89,
+    "max_key_step_bone": "mixamorig:RightHandIndex2",
+    "pad_gap_min_mm": {
+      "head": 1.5,
+      "chest": 0.5,
+      "pelvis": 1.68,
+      "arm_Left": 2.2,
+      "leg_Left": 4.35,
+      "arm_Right": 0.44,
+      "leg_Right": 1.34
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.542,
+      "chest": 0.633,
+      "pelvis": 0.0,
+      "arm_Left": 0.9,
+      "leg_Left": 0.65,
+      "arm_Right": 0.233,
+      "leg_Right": 0.267
+    },
+    "floor_min_mm": 656.16,
+    "floor_min_at_s": 0.475,
+    "closed_strap_drift_mm": {
+      "arm_R": 19.6,
+      "leg_L": 2.6,
+      "leg_R": 0.6
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Slump_LieReachR_v01"
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend"
+}

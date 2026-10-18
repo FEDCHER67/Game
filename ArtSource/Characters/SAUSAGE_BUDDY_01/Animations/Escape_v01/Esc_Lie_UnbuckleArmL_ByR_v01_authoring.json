@@ -1,0 +1,190 @@
+{
+  "clip": "Esc_Lie_UnbuckleArmL_ByR_v01",
+  "action": "Esc_Lie_UnbuckleArmL_ByR_v01",
+  "take": "Buddy_Rig_Mixamo65|Esc_Lie_UnbuckleArmL_ByR_v01",
+  "frames": [
+    1,
+    79
+  ],
+  "fps": 30,
+  "duration_s": 2.6,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "LIE",
+  "end_pose_key": "LIE",
+  "preconditions": {
+    "closed": [
+      "STRAP_ARM_L"
+    ],
+    "open": [
+      "STRAP_ARM_R"
+    ],
+    "any": [
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ]
+  },
+  "straps_after": {
+    "STRAP_ARM_L": "open"
+  },
+  "strap_animation": {
+    "STRAP_ARM_L": {
+      "angle_keys_deg": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.4,
+          0.0
+        ],
+        [
+          1.52,
+          30.0
+        ],
+        [
+          1.7,
+          120.0
+        ]
+      ],
+      "angle_keys_norm": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.5385,
+          0.0
+        ],
+        [
+          0.5846,
+          30.0
+        ],
+        [
+          0.6538,
+          120.0
+        ]
+      ],
+      "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+  },
+  "events": [
+    {
+      "name": "Grab",
+      "strap": "STRAP_ARM_L",
+      "hand": "Right",
+      "t": 0.8,
+      "norm": 0.3077
+    },
+    {
+      "name": "Slip",
+      "strap": "STRAP_ARM_L",
+      "hand": "Right",
+      "t": 1.06,
+      "norm": 0.4077
+    },
+    {
+      "name": "Grab",
+      "strap": "STRAP_ARM_L",
+      "hand": "Right",
+      "t": 1.25,
+      "norm": 0.4808
+    },
+    {
+      "name": "StrapOpen",
+      "strap": "STRAP_ARM_L",
+      "t": 1.4,
+      "norm": 0.5385
+    },
+    {
+      "name": "Release",
+      "strap": "STRAP_ARM_L",
+      "hand": "Right",
+      "t": 1.52,
+      "norm": 0.5846
+    }
+  ],
+  "next": [
+    "Esc_SitUp_v01 (both arms now free)"
+  ],
+  "beats": [
+    "0.00 LIE",
+    "0.10-0.24 notices the strapped left wrist (head snaps to it)",
+    "0.24-0.66 right hand peels off the pad, rolls onto his left side, reaches across",
+    "0.80 grab #1, 0.98 tug, 1.06 fingers slip off (head shake)",
+    "1.25 grab #2, 1.40 STRAP OPEN (hand follows the buckle to 30 deg), 1.52 lets go",
+    "1.62-1.86 freed left arm yanks up out of the open strap, fists up",
+    "1.86-2.60 arms drop to the sides, unrolls to LIE"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0228,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "hand_R": 0.0128
+    },
+    "contact_root_lift_max_m": 0.0,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightArm": 19,
+      "mixamorig:RightHand": 19,
+      "mixamorig:RightHandIndex1": 8,
+      "mixamorig:RightHandIndex2": 9,
+      "mixamorig:RightHandMiddle1": 8,
+      "mixamorig:RightHandMiddle2": 9,
+      "mixamorig:RightHandRing1": 8,
+      "mixamorig:RightHandRing2": 9,
+      "mixamorig:RightHandPinky1": 8,
+      "mixamorig:RightHandPinky2": 9,
+      "mixamorig:LeftArm": 19,
+      "mixamorig:LeftHand": 19
+    },
+    "inbetween_lift_max_m": 0.0
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.69,
+    "max_key_step_bone": "mixamorig:RightHandIndex3",
+    "pad_gap_min_mm": {
+      "head": 3.26,
+      "chest": 0.55,
+      "pelvis": 1.82,
+      "arm_Left": -1.12,
+      "leg_Left": 4.26,
+      "arm_Right": 1.39,
+      "leg_Right": 1.42
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.0,
+      "chest": 0.0,
+      "pelvis": 0.667,
+      "arm_Left": 1.617,
+      "leg_Left": 1.8,
+      "arm_Right": 2.45,
+      "leg_Right": 0.0
+    },
+    "floor_min_mm": 652.39,
+    "floor_min_at_s": 1.617,
+    "closed_strap_drift_mm": {
+      "arm_L": 22.8,
+      "leg_L": 0.6,
+      "leg_R": 2.6
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 2e-06,
+    "fbx_bones": 65,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Lie_UnbuckleArmL_ByR_v01"
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend"
+}
