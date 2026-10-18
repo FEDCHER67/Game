@@ -20,11 +20,18 @@ v52→v76 checklist source: `Tools/MapV76/data_src/v52_to_v76_changes.json` (48 
 
 ## Status
 - [x] 1 classes  - [x] 2 roads/water/border/features
-- [x] 3 terrain heightmap (hill B 50.7, Elite 44.0, NW ridge 94.5 m; serpentine VIEW B max grade 12 % — open question)  - [~] 4 district layouts (west done; north/south in progress)  - [x] 5 vegetation  - [x] 6 material map
-- [ ] 7 C# W76Builder  - [ ] 8 bpy renders  - [ ] 9 checklist report  - [ ] 10 draft PR
+- [x] 3 terrain heightmap (hill B 50.7, Elite 44.0, NW ridge 94.5 m; serpentine VIEW B max grade 12 % — open question)  - [x] 4 district layouts (all 10)  - [x] 5 vegetation  - [x] 6 material map
+- [x] 7 splat (`s07_splat.py`) + C# `Assets/OnlyVolunteers/Map/W76Build/Editor/W76Builder.cs` (menu OnlyVolunteers/Map/W76 Build/Build Map_W76_Build_v01; Roslyn syntax-checked, NOT compiled in Unity) + Runtime W76Atmosphere / W76MapMarkers
+- [~] 8 bpy renders (`s08_render_bpy.py`; full-map top done `out/renders/map_top_vs_2d_v76.png`; district renders may be partial)
+- [ ] 9 checklist report  - [x] 10 draft PR https://github.com/FEDCHER67/Game/pull/30
 
-## Next exact step
-If `districts/{rough,construction,port,tramduro,downtown,elite,beach}_v76.json` are missing: write `s04_north.py` / `s04_south.py` per DISTRICT_SCHEMA.md and §District sources. Then the C# builder `Assets/OnlyVolunteers/Map/W76Build/Editor/W76Builder.cs`.
+## Next exact step (local agent)
+1. `cd Tools/MapV76 && python3 s08_render_bpy.py` (pip install bpy) — finish district top + 6 oblique renders in `out/renders/`.
+2. Write `s09_checklist.py`: tick each non-superseded item of `data_src/v52_to_v76_changes.json` against the data (build_key -> file/field), output `out/v52_to_v76_checklist.json`.
+3. Open Unity, run the menu, read `Generated/v01/W76_build_log.txt`; fix compile errors if any (APIs checked by grep only).
+4. Verify in Unity: roof ray check, tunnel glare, Rough fog / Construction bright, water v09 flow on rivers, arches passable, invisible wall.
+Open questions (handoff v02 §16): Downtown street width; water v09/v10; Elite trap timing; lifeguard towers 6 vs ≤2; Port shift 250 vs 190; AZS outside Construction clip; VIEW B serpentine grade 12 % (>8 %).
+Material reuse: see `materials_v76.json` (21 reused, 25 created + W76_water_flow/swamp/waterfall/steppe_far).
 
 ## District sources (v11 m → v76 = v11 + warp_m (build_world_v76.py l.206) + shift_m)
 Net offsets: west (forest/hamlet/valley) +70/0; Downtown/beach/Elite +160/−28; Rough v11 +110/+97; Tramduro +270/+45; Port: warp ≈+250/+45 then scale about PORT_C (1.25, 0.8).
