@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-14",
+  "status": "PASS",
+  "scope": "Local 2D proposal geometry; not art approval, Unity playtesting, road swept vehicle test, or river shared-world integration",
+  "ordinary_homes": 18,
+  "abandoned_homes": 1,
+  "grandfather_base": 1,
+  "total_dwelling_structures": 20,
+  "object_count": 438,
+  "tree_count": 114,
+  "utility_poles": 27,
+  "detail_families": 52,
+  "checks": {
+    "hard_footprints_vs_streets": "PASS",
+    "hard_footprints_vs_fields_and_pond": "PASS",
+    "hard_footprint_overlaps": "PASS",
+    "in_bounds_except_declared": "PASS",
+    "street_graph_and_external_endpoints": "PASS",
+    "offroad_corridors": "PASS",
+    "house_front_access": "PASS",
+    "Unity_playtesting": "NOT RUN",
+    "van_turning_swept_volume": "NOT RUN",
+    "shared_asphalt_and_river_bank": "NOT RUN",
+    "owner_answers_consistency": "PASS",
+    "embedded_JSON_matches_external": "PASS",
+    "base_furnishing_excluded": "PASS",
+    "few_gardens_and_required_rolled_bales": "PASS",
+    "daytime_population_target": "PASS"
+  },
+  "errors": [],
+  "warnings": [],
+  "declared_boundary_exceptions": [
+    "Existing locked church; explicit disclosed source contradiction.",
+    "Two retained asphalt connectors outside district bbox",
+    "Requested fishing access outside district bbox"
+  ],
+  "source_sha256_before": {
+    "C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\Working\\Reviews\\Hamlet_2026-10-14\\PROMPT_Astra_Hamlet_spec.md": "774a68dfa7fbe2303152031606274de57a17c2684c52ccb3c89b012502fb190a",
+    "C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\Working\\Reviews\\Hamlet_2026-10-14\\1_hamlet_v11_now.png": "2810173cb306cc1f2af9f459ed41230f754e9fd67eb16e7d52d895d57881f235",
+    "C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\Working\\Reviews\\Hamlet_2026-10-14\\2_hamlet_reference_concept.png": "55db660f5ce0e56f2fe0216d2008c3dcd40829e94c3c9286710ae8da4cbee135",
+    "C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\Working\\Reviews\\Hamlet_2026-10-14\\3_hamlet_draft_v02_claude.png": "5786e5424eb3aa9fa1aa48c88e537129914ea1bfb52728b36b0cb0b67af5aed1",
+    "C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\ArtSource\\References\\Map\\World_v11\\WORLD_MAP_v11.json": "24632272f7677d11dbf6f5bcc6307c13b2a8d287d912654b4c0c9e41175ef69f"
+  },
+  "source_files_unchanged": true,
+  "reproduce_command": "C:\\Users\\chern_0eqkb03\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe -X utf8 C:\\Users\\chern_0eqkb03\\.codex\\.chatgpt-projects\\g-p-6aadbaaa21c081918dcf9006013794cd\\work_hamlet_v03\\build_spec.py",
+  "semantic_check_command": "C:\\Users\\chern_0eqkb03\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe -X utf8 C:\\Users\\chern_0eqkb03\\.codex\\.chatgpt-projects\\g-p-6aadbaaa21c081918dcf9006013794cd\\work_hamlet_v03\\publish_spec.py"
+}

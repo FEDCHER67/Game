@@ -10,6 +10,7 @@
 - Preserve Unity .meta identities. Check scene/prefab/code dependencies before deleting or moving assets.
 - Movement tuning changes and subjective physics/visual acceptance require actual playtesting. Compilation is not proof of fun or network quality.
 - Do not create backups, duplicate projects, or speculative subsystem scaffolding during cleanup.
+- The van (бусик) is always at its maximum characteristics from the very start: top speed, acceleration, brakes and handling at the highest upgrade level (VanUpgrades.StartAtMax), in every scene and build. Never ship or test a weaker stock van; tune the max level instead (Vadim 2026-10-16).
 - Do not modify unrelated user changes. Do not commit or push without the user's request. Model routing and delegation follow "AI team" below.
 
 - Follow docs/TEAM_WORKFLOW.md: strictly sequential work on main; WORK_SYNC.md is the only handoff log. Record each working prompt verbatim in a globally numbered TASK; read and mark only unseen incoming tasks. In Vadim's chat NEVER stage, commit or push: Vadim does this himself; provide commands for all non-ignored changes from the repository root. This overrides the older conditional commit rule above.

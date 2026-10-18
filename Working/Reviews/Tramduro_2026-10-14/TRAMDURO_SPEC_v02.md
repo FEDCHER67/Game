@@ -1,0 +1,112 @@
+# Tramduro Island v02 — simple concrete base
+
+## Выжимка для Вадима
+
+1. Остров — простая военная база с одним общим бетонным двором.
+2. Внутренних улиц, асфальтовых петель и городских бордюров нет.
+3. Мост непосредственно входит в бетонную площадку через маленький КПП.
+4. Один небольшой арочный ангар/навес с двумя видимыми танками.
+5. Одна вертолётная площадка нарисована прямо на бетоне; на ней один вертолёт.
+6. Белый дворец, золотая статуя и большой водопад стоят среди военной среды.
+7. Рядом с дворцом небольшой гольф на три лунки — декоративная шутка.
+8. 20–25 военных ходят по открытой территории; укрытий мало.
+9. Один общий периметр, скалистые берега, 1–2 патрульных катера.
+10. Дворец закрыт; Трамдуро до финала только в Z. Финальный выход и вывоз открыты.
+
+## Authoritative correction
+
+The owner's latest military-base image is a composition reference, not a request to reproduce its many buildings/vehicles. Replace v01's internal street network and landscaped road loops with ONE continuous poured-concrete base courtyard. A small tank hangar and one helipad sit directly on it. The white presidential palace, gold statue, monumental waterfall and small joke golf lawn contradict the utilitarian military environment right beside them. Keep this simple; do not invent a town, resort campus or sprawling barracks compound.
+
+Preserve original island coast/bridge. New land placements stay in [1204,506,1410,670] AND existing land; the inherited source coast is larger and is not clipped. Bridge/boats are exterior exceptions. Exact dimensions and decoration counts below are reviewable build defaults.
+
+## Layout
+
+| Element | Centre / extent | Size / purpose |
+|---|---|---|
+| Shared concrete courtyard | Common perimeter polygon in JSON | Unified walkable/drivable base floor; low slab joints, no internal road borders. |
+| Entry apron | 1211,586 | 14×8.8m directly joins bridge to common concrete. |
+| Small tank hangar | 1265,557 | 22×16m arched/open structure, two visible tanks; clear northern apron. |
+| Helicopter pad | 1357,543 | One 24m painted circle on concrete, one helicopter. |
+| Closed white palace | 1332,629 | 48×22m; detailed wings/columns/windows/steps, permanently inaccessible interior. |
+| Gold statue | 1332,591 | Heroic raised arm, exaggerated chest; 6m with pedestal. Small expensive inset in military yard. |
+| Monumental waterfall | 1374,636 | 22×28m decorative rock cascade, expensive lit basin; proposed recirculation, no new river. |
+| Joke golf lawn | x1267–1299, y617–645 | Three short decorative greens beside palace; no golf minigame. |
+| Bridge guard booth | 1226,596 | Compact checkpoint; immediate attack at closed entrance. |
+
+Palace sits on a low inherited rise/terrace, proposed approximately 2m, with a broad concrete grade rather than a winding avenue. Concrete stays flat around hangar/helipad. Keep only a narrow ornamental lawn frame, four small flower beds and a few tidy trees/palms around luxury objects; most interior ground remains concrete. Empty yard space serves movement, military presence and manoeuvring, not future filler buildings.
+
+## Movement and defence
+
+There is no internal road graph. Military vehicles and pedestrians cross the shared slab directly. Maintain clear 3.5m service access and 1.5m walking passages between major objects; the JSON's clearance lines are invisible validation reservations, never painted/ribbon roads. Avoid curbs, roundabouts, medians, separate service-loop asphalt and pedestrian networks. Hangar side supports must leave visible tanks and practical access. Helipad is paint on this same ground, not another grassy paving island.
+
+20–25 military outside, mixed 2–3-person patrols and lone movement, visibly mingling with gold/white/green luxury. Mostly open exposed territory; useful cover is rare (tank/hangar supports, statue base, waterfall rocks). One outer perimeter and rocky coast; only bridge is a prepared entrance. Guards attack immediately at a closed entry, ordinarily defeating a player van before base arrival. Entry is physically possible in principle, without invincible defenders or invisible walls. Boats patrol nearby and intervene on detection; precise weapons/detection/damage/pursuit rules remain OPEN. No helicopter/tank piloting is approved.
+
+Tramduro does not walk/spawn on the ordinary map: before finale, phone app Z only. Residence interior is never accessible. Physical kidnapping happens at the island residence, but exactly how he emerges and how final transport/extraction works remain OPEN. Do not impose an evacuation cutscene, special costume, house-entry mission or automatic capture.
+
+## Readable details
+
+Small arched military roof and two tanks; a single H circle/helicopter; grey concrete slab joints; walking soldiers; stark white closed colonnade; absurd heroic gold statue; oversized lit rock waterfall/basin; tiny expensive green golf with three flags; sparse formal flowers/palms; compact gate and two offshore boats. No additional HQ, staff block, fleets, minefield or layered garden fences.
+
+## Change from v01
+
+Remove all four internal roads and their loops, staff building, extra lookout/flag furniture, golf cart, benches/planters and most park planting. Keep core objects and coast, shrink hangar 26×18 → 22×16m and golf to a small 32×28m rectangle. Replace separate garage/helipad approach surfaces with common concrete. Former palace lawn becomes a small local ornamental frame; its boundary is not a fence. The contrast must be visible immediately: utilitarian base ground and military hardware directly beside conspicuous presidential luxury.
+
+## Machine-readable data
+
+Coordinates in world metres, rotation CCW from east. Children intentionally overlap hosts; ground layers intentionally cover structural footprints. Source coast is unchanged. Precise heights and placements are proposals; patrol/boat behaviour is not implemented by this document. `TRAMDURO_LAYOUT_v02.json` is identical to this block.
+
+```json
+{"schema":"tramduro_island_spec_v02","date":"2026-10-14","units":"metres","axes":"x-east,y-north;rotation-CCW-from-east","planning_bbox_m":[1204,506,1410,670],"source":"C:\\Users\\chern_0eqkb03\\Desktop\\GAME\\ArtSource\\References\\Map\\World_v11\\WORLD_MAP_v11.json","source_coast_preserved":true,"status":"Revised to owner concrete-base reference; precise placements remain proposals","open":["final_outdoor_appearance","detection_damage_pursuit_parameters","wanted_rules","vehicle_controls"],"objects":[{"id":"concrete_yard","kind":"continuous_concrete_base","polygon_m":[[1218,581],[1225,561],[1237,536],[1251,518],[1275,517],[1300,510],[1324,516],[1345,513],[1371,514],[1377,535],[1388,555],[1398,580],[1388,604],[1392,625],[1387,651],[1364,666],[1334,665],[1311,660],[1286,663],[1263,653],[1246,642],[1234,623],[1224,603],[1218,591]],"rotation_deg":0,"notes":"One open poured-concrete base floor. No internal road network, asphalt ribbons, curbs or street islands."},
+{"id":"concrete_entry","kind":"concrete_entry_apron","centre_m":[1211,586],"size_m":[14,8.8],"rotation_deg":0,"notes":"Short direct transition from existing bridge into common concrete."},
+{"id":"palace_lawn","kind":"small_ornamental_lawn","centre_m":[1332,629],"size_m":[58,31],"rotation_deg":0,"notes":"Narrow luxury green frame around palace, surrounded by military concrete."},
+{"id":"residence","kind":"closed_residence","centre_m":[1332,629],"size_m":[48,22],"rotation_deg":0,"notes":"Closed White House-like palace, carefully detailed outside; direct luxury/military contrast.","solid":true,"height_m":9.6},
+{"id":"portico","kind":"portico_steps","centre_m":[1332,615],"size_m":[10,4],"rotation_deg":0,"notes":"Exterior detail; doors remain closed. Never infer indoor gameplay.","solid":true,"parent":"residence"},
+{"id":"statue_plaza","kind":"marble_plaza","centre_m":[1332,591],"size_m":[16,13],"rotation_deg":0,"notes":"Small expensive inset with gold statue amid utilitarian concrete.","solid":false},
+{"id":"statue","kind":"gold_statue","centre_m":[1332,591],"size_m":[3.4,3.4],"rotation_deg":0,"notes":"Heroic cartoon Tramduro: raised arm and exaggerated chest; statue plus pedestal totals 6m.","solid":true,"height_m":6,"parent":"statue_plaza"},
+{"id":"waterfall","kind":"monumental_waterfall","centre_m":[1374,636],"size_m":[22,28],"rotation_deg":0,"notes":"Showy decorative rocks, broad waterfall, expensive lit basin; recirculating water, no new river.","solid":true,"height_m":10},
+{"id":"waterfall_pool","kind":"water_basin","centre_m":[1374,628],"size_m":[18,10],"rotation_deg":0,"notes":"Child of waterfall; walking soldiers patrol beside water.","solid":false,"parent":"waterfall"},
+{"id":"waterfall_face","kind":"cascade_face","centre_m":[1374,640],"size_m":[16,6],"rotation_deg":0,"notes":"Broad visible falling water; parent owns collision.","solid":false,"height_m":9,"parent":"waterfall"},
+{"id":"garage","kind":"small_tank_hangar","centre_m":[1265,557],"size_m":[22,16],"rotation_deg":0,"notes":"One small arched open hangar; two visible tanks; concrete yard directly outside.","solid":false,"height_m":6},
+{"id":"canopy_post1","kind":"canopy_support","centre_m":[1255,550],"size_m":[0.45,0.45],"rotation_deg":0,"notes":"Open-side roof support.","solid":true,"height_m":5,"parent":"garage"},
+{"id":"canopy_post2","kind":"canopy_support","centre_m":[1255,557],"size_m":[0.45,0.45],"rotation_deg":0,"notes":"Open-side roof support.","solid":true,"height_m":5,"parent":"garage"},
+{"id":"canopy_post3","kind":"canopy_support","centre_m":[1255,564],"size_m":[0.45,0.45],"rotation_deg":0,"notes":"Open-side roof support.","solid":true,"height_m":5,"parent":"garage"},
+{"id":"canopy_post4","kind":"canopy_support","centre_m":[1275,550],"size_m":[0.45,0.45],"rotation_deg":0,"notes":"Open-side roof support.","solid":true,"height_m":5,"parent":"garage"},
+{"id":"canopy_post5","kind":"canopy_support","centre_m":[1275,557],"size_m":[0.45,0.45],"rotation_deg":0,"notes":"Open-side roof support.","solid":true,"height_m":5,"parent":"garage"},
+{"id":"canopy_post6","kind":"canopy_support","centre_m":[1275,564],"size_m":[0.45,0.45],"rotation_deg":0,"notes":"Open-side roof support.","solid":true,"height_m":5,"parent":"garage"},
+{"id":"tank1","kind":"tank","centre_m":[1260,556],"size_m":[3.4,8],"rotation_deg":0,"notes":"Parked under canopy, facing north. Driving mechanic not decided.","solid":true,"height_m":2.8,"parent":"garage"},
+{"id":"tank2","kind":"tank","centre_m":[1270,556],"size_m":[3.4,8],"rotation_deg":0,"notes":"Parked under canopy, facing north. Driving mechanic not decided.","solid":true,"height_m":2.8,"parent":"garage"},
+{"id":"garage_apron","kind":"clear_service_area","centre_m":[1265,573],"size_m":[28,12],"rotation_deg":0,"notes":"Unmarked manoeuvring clearance on the SAME concrete; no separate road or paving island.","solid":false},
+{"id":"helipad","kind":"helipad","centre_m":[1357,543],"size_m":[24,24],"rotation_deg":0,"notes":"Paint one landing circle directly on shared concrete; one helicopter, no separate road.","solid":false},
+{"id":"helicopter","kind":"helicopter","centre_m":[1357,543],"size_m":[12,11],"rotation_deg":0,"notes":"One helicopter including rotor envelope; no piloting mechanic inferred.","solid":true,"height_m":4,"parent":"helipad"},
+{"id":"checkpoint","kind":"guard_booth","centre_m":[1226,596],"size_m":[6.4,5.2],"rotation_deg":0,"notes":"Compact bridge guard booth; immediate attack at closed entry.","solid":true,"height_m":3.2},
+{"id":"barrier","kind":"bridge_barrier","centre_m":[1226,586],"size_m":[0.25,6.4],"rotation_deg":0,"notes":"Single physical lane control; open/closed state uses existing rules.","solid":false,"gate_crossing":true,"parent":"checkpoint"},
+{"id":"golf","kind":"three_short_hole_golf_area","polygon_m":[[1267,617],[1299,617],[1299,645],[1267,645]],"rotation_deg":0,"notes":"Small three-hole joke lawn beside closed residence; decorative, not a sprawling golf estate."},
+{"id":"green1","kind":"golf_green","centre_m":[1273,638],"size_m":[8,7],"rotation_deg":0,"notes":"Distinct short hole, flag and subtly raised turf.","solid":false,"parent":"golf"},
+{"id":"green2","kind":"golf_green","centre_m":[1291,636],"size_m":[8,7],"rotation_deg":0,"notes":"Distinct short hole, flag and subtly raised turf.","solid":false,"parent":"golf"},
+{"id":"green3","kind":"golf_green","centre_m":[1281,624],"size_m":[8,7],"rotation_deg":0,"notes":"Distinct short hole, flag and subtly raised turf.","solid":false,"parent":"golf"},
+{"id":"bridge","kind":"existing_bridge","polyline_m":[[1090.0,588.0],[1092.65,587.9],[1096.2,587.77],[1100.44,587.62],[1105.12,587.45],[1110.05,587.27],[1114.98,587.1],[1119.71,586.94],[1124.0,586.8],[1127.94,586.68],[1131.78,586.55],[1135.54,586.44],[1139.25,586.33],[1142.93,586.22],[1146.59,586.13],[1150.28,586.06],[1154.0,586.0],[1157.82,585.96],[1161.73,585.94],[1165.69,585.94],[1169.62,585.95],[1173.48,585.96],[1177.2,585.98],[1180.73,585.99],[1184.0,586.0],[1187.12,586.0],[1190.17,586.0],[1193.11,586.0],[1195.88,586.0],[1198.4,586.0],[1200.64,586.0],[1202.53,586.0],[1204.0,586.0]],"width_m":8.8,"road_width_m":6.4,"rotation_deg":0,"notes":"Preserve existing axis/abutments.","external_exception":true},
+{"id":"perimeter","kind":"common_perimeter_fence","polyline_m":[[1218,581],[1225,561],[1237,536],[1251,518],[1275,517],[1300,510],[1324,516],[1345,513],[1371,514],[1377,535],[1388,555],[1398,580],[1388,604],[1392,625],[1387,651],[1364,666],[1334,665],[1311,660],[1286,663],[1263,653],[1246,642],[1234,623],[1224,603],[1218,591]],"height_m":3,"rotation_deg":0,"notes":"Open gap between last/first points at bridge approach; only common perimeter, no lawn/base cages."},
+{"id":"tree01","kind":"ornamental_tree","centre_m":[1241,599],"size_m":[0.6,0.6],"rotation_deg":0,"notes":"Formal planting; trunk collision.","solid":true,"crown_diameter_m":5,"tree_type":"ornamental"},
+{"id":"tree04","kind":"ornamental_tree","centre_m":[1301,659],"size_m":[0.6,0.6],"rotation_deg":0,"notes":"Formal planting; trunk collision.","solid":true,"crown_diameter_m":5,"tree_type":"ornamental"},
+{"id":"tree05","kind":"ornamental_tree","centre_m":[1353,651],"size_m":[0.6,0.6],"rotation_deg":0,"notes":"Formal planting; trunk collision.","solid":true,"crown_diameter_m":5,"tree_type":"ornamental"},
+{"id":"tree06","kind":"ornamental_tree","centre_m":[1361,618],"size_m":[0.6,0.6],"rotation_deg":0,"notes":"Formal planting; trunk collision.","solid":true,"crown_diameter_m":5,"tree_type":"ornamental"},
+{"id":"tree08","kind":"ornamental_tree","centre_m":[1386,646],"size_m":[0.6,0.6],"rotation_deg":0,"notes":"Formal planting; trunk collision.","solid":true,"crown_diameter_m":5,"tree_type":"palm"},
+{"id":"tree10","kind":"ornamental_tree","centre_m":[1369,523],"size_m":[0.6,0.6],"rotation_deg":0,"notes":"Formal planting; trunk collision.","solid":true,"crown_diameter_m":5,"tree_type":"palm"},
+{"id":"flowers1","kind":"formal_flower_bed","centre_m":[1318,598],"size_m":[4,1.5],"rotation_deg":0,"notes":"Symmetrical luxury flower planting; passable, no hedge maze.","solid":false},
+{"id":"flowers2","kind":"formal_flower_bed","centre_m":[1347,599],"size_m":[4,1.5],"rotation_deg":0,"notes":"Symmetrical luxury flower planting; passable, no hedge maze.","solid":false},
+{"id":"flowers3","kind":"formal_flower_bed","centre_m":[1302,638],"size_m":[4,1.5],"rotation_deg":0,"notes":"Symmetrical luxury flower planting; passable, no hedge maze.","solid":false},
+{"id":"flowers4","kind":"formal_flower_bed","centre_m":[1359,651],"size_m":[4,1.5],"rotation_deg":0,"notes":"Symmetrical luxury flower planting; passable, no hedge maze.","solid":false},
+{"id":"guard_bridge","kind":"walking_military_patrol","polyline_m":[[1232,596],[1236,597],[1240,580],[1248,573],[1265,582],[1240,593],[1232,596]],"width_m":1.5,"rotation_deg":0,"notes":"Military walks across open concrete and luxury accents; dotted plan line is NOT a road."},
+{"id":"guard_luxury","kind":"walking_military_patrol","polyline_m":[[1290,601],[1305,601],[1321,602],[1353,602],[1360,621],[1360,640],[1332,653],[1300,650],[1290,601]],"width_m":1.5,"rotation_deg":0,"notes":"Military walks across open concrete and luxury accents; dotted plan line is NOT a road."},
+{"id":"guard_service","kind":"walking_military_patrol","polyline_m":[[1238,547],[1261,538],[1290,548],[1312,555],[1339,558],[1380,564],[1381.5,547],[1373,530],[1340,524],[1281,533],[1238,547]],"width_m":1.5,"rotation_deg":0,"notes":"Military walks across open concrete and luxury accents; dotted plan line is NOT a road."},
+{"id":"boat_route1","kind":"patrol_boat_route","polyline_m":[[1220,667],[1270,715],[1380,713],[1445,654],[1440,631],[1409,650],[1368,697],[1281,697],[1226,653],[1220,667]],"rotation_deg":0,"notes":"Offshore patrol, outside island bbox; no dock, bridge passage or navy ship.","external_exception":true},
+{"id":"boat1","kind":"patrol_boat","centre_m":[1220,667],"size_m":[9,3],"rotation_deg":0,"notes":"One of two proposed moving patrol boats; use route of same index.","solid":false,"external_exception":true,"route_id":"boat_route1"},
+{"id":"boat_route2","kind":"patrol_boat_route","polyline_m":[[1434,600],[1450,556],[1415,493],[1374,473],[1340,468],[1330,468],[1318,455],[1348,451],[1400,465],[1445,492],[1464,544],[1456,590],[1434,600]],"rotation_deg":0,"notes":"Offshore patrol, outside island bbox; no dock, bridge passage or navy ship.","external_exception":true},
+{"id":"boat2","kind":"patrol_boat","centre_m":[1434,600],"size_m":[9,3],"rotation_deg":0,"notes":"One of two proposed moving patrol boats; use route of same index.","solid":false,"external_exception":true,"route_id":"boat_route2"}],"terrain":[{"id":"palace_terrace","kind":"low_residence_rise","polygon_m":[[1302,610],[1359,610],[1359,651],[1302,651]],"height_delta_m":2,"rotation_deg":0,"notes":"Low inherited hill/terrace; broad concrete grade, not a winding road."},
+{"id":"base_floor","kind":"level_military_working_ground","polygon_m":[[1218,581],[1225,561],[1237,536],[1251,518],[1275,517],[1300,510],[1324,516],[1345,513],[1371,514],[1377,535],[1388,555],[1398,580],[1388,604],[1392,625],[1387,651],[1364,666],[1334,665],[1311,660],[1286,663],[1263,653],[1246,642],[1234,623],[1224,603],[1218,591]],"height_delta_m":0.6,"rotation_deg":0,"notes":"Flat common concrete around hangar and helipad; local levels are proposed."},
+{"id":"cliffs","kind":"existing_coastal_cliffs","source_geometry":"WORLD_MAP_v11.island_tramduro.polygon_m","height_range_m":[4,9],"rotation_deg":0,"notes":"Existing shore unchanged; replace east beach dressing with rocky edge. No prepared landing."}],"security":{"military_outside":[20,25],"patrol_style":"mixed_2-3_and_single","entry_response":"immediate_attack_at_closed_entry","cover":"mostly_open_rare_cover","normal_van_ingress":"defeated_by_guard_fire_not_invisible_wall","final_extraction":"OPEN","boats":"patrol_and_intervene_on_detection"},"tramduro":{"ordinary_world_presence":false,"pre_final_visibility":"phone_app_Z_only","physical_appearance":"final_kidnapping_only","residence_interior_accessible":false,"final_exit_scenario":"OPEN"},"change_v02":"Simple continuous concrete military courtyard; no internal streets; small hangar and directly adjacent ostentatious luxury.","clearance_checks":[{"id":"entry_to_hangar","polyline_m":[[1218,586],[1265,586],[1265,574]],"width_m":3.5,"notes":"Invisible validation reservation on continuous concrete; NEVER draw as a road or path."},
+{"id":"entry_to_palace_forecourt","polyline_m":[[1218,586],[1309,586],[1314,606],[1332,607]],"width_m":3.5,"notes":"Invisible validation reservation on continuous concrete; NEVER draw as a road or path."},
+{"id":"hangar_to_helipad","polyline_m":[[1265,574],[1320,574],[1320,560],[1328,548],[1347,548]],"width_m":3.5,"notes":"Invisible validation reservation on continuous concrete; NEVER draw as a road or path."}]}
+```
+
+Checks: `TRAMDURO_VALIDATION_v02.json`. 2D clearance is checked; runtime combat, van/capture physics, navigation and visual acceptance in Unity are NOT RUN.
