@@ -1,0 +1,1546 @@
+{
+ "district": "construction",
+ "sources": [
+  "ArtSource/References/Map/Desktop_Map_sources_2026-10-18/Интернациональная стройка/build_stroyka_v10.py",
+  "Легенда_v08.txt",
+  "build_world_v76.py CONSTR_*",
+  "handoff v02 §8.3"
+ ],
+ "transform": "v76 = (604 + 1.15 (lx - 410) / 5, 418 - 0.95 (ly - 393) / 5) for centres, sizes / 5 unscaled (relayout of build_world_v76); post_shift = 0 here",
+ "pad_height_m": null,
+ "lighting": "sunny_bright_no_fog",
+ "buildings": [
+  {
+   "id": "03-04-corpusA",
+   "kind": "concrete_frame",
+   "footprint": [
+    [
+     552.16,
+     435.18
+    ],
+    [
+     591.76,
+     435.18
+    ],
+    [
+     591.76,
+     457.18
+    ],
+    [
+     552.16,
+     457.18
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.2,
+   "height_m": 16.0,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c",
+    "open_frame": true
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "04 Building A: monolithic frame, 5 floors, slabs + columns, 2 stair/lift cores (x 220, 316 local), scaffold S and E, cargo hoist; walkable slabs"
+  },
+  {
+   "id": "03-04-core220",
+   "kind": "stair_lift_core",
+   "footprint": [
+    [
+     559.76,
+     441.98
+    ],
+    [
+     564.56,
+     441.98
+    ],
+    [
+     564.56,
+     449.98
+    ],
+    [
+     559.76,
+     449.98
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.2,
+   "height_m": 17.0,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c"
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "core of Building A"
+  },
+  {
+   "id": "03-04-core316",
+   "kind": "stair_lift_core",
+   "footprint": [
+    [
+     578.96,
+     441.98
+    ],
+    [
+     583.76,
+     441.98
+    ],
+    [
+     583.76,
+     449.98
+    ],
+    [
+     578.96,
+     449.98
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.2,
+   "height_m": 17.0,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c"
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "core of Building A"
+  },
+  {
+   "id": "03-04-scaffold-S",
+   "kind": "scaffold",
+   "footprint": [
+    [
+     552.16,
+     432.78
+    ],
+    [
+     594.16,
+     432.78
+    ],
+    [
+     594.16,
+     435.18
+    ],
+    [
+     552.16,
+     435.18
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.2,
+   "height_m": 16.0,
+   "roof": {
+    "type": "none"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "scaffold along the south face"
+  },
+  {
+   "id": "03-04-scaffold-E",
+   "kind": "scaffold",
+   "footprint": [
+    [
+     591.76,
+     435.18
+    ],
+    [
+     594.16,
+     435.18
+    ],
+    [
+     594.16,
+     457.18
+    ],
+    [
+     591.76,
+     457.18
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.2,
+   "height_m": 16.0,
+   "roof": {
+    "type": "none"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "scaffold along the east face"
+  },
+  {
+   "id": "03-04-hoist",
+   "kind": "cargo_hoist",
+   "footprint": [
+    [
+     594.16,
+     444.38
+    ],
+    [
+     596.96,
+     444.38
+    ],
+    [
+     596.96,
+     447.98
+    ],
+    [
+     594.16,
+     447.98
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.4,
+   "height_m": 17.0,
+   "roof": {
+    "type": "none"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "cargo hoist"
+  },
+  {
+   "id": "03-05-corpusB",
+   "kind": "foundation_slab",
+   "footprint": [
+    [
+     551.35,
+     391.47
+    ],
+    [
+     585.35,
+     391.47
+    ],
+    [
+     585.35,
+     411.47
+    ],
+    [
+     551.35,
+     411.47
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 1.2,
+   "height_m": 1.2,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c"
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "05 Building B: foundation slab, first columns (3 rows done, rest rebar starters), formwork"
+  },
+  {
+   "id": "03-08-dorm",
+   "kind": "old_dormitory",
+   "footprint": [
+    [
+     633.46,
+     453.63
+    ],
+    [
+     667.46,
+     453.63
+    ],
+    [
+     667.46,
+     464.83
+    ],
+    [
+     633.46,
+     464.83
+    ]
+   ],
+   "floors": 4,
+   "floor_h_m": 3.0,
+   "height_m": 12.0,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.5
+   },
+   "walls": "stucco_SK3b_v07",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      641.26,
+      453.15
+     ],
+     "facing_deg": 270,
+     "kind": "door",
+     "w_m": 1.4
+    },
+    {
+     "pos": [
+      659.66,
+      453.15
+     ],
+     "facing_deg": 270,
+     "kind": "door",
+     "w_m": 1.4
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "08 migrants dormitory, old 4-storey; yard in front"
+  },
+  {
+   "id": "03-07-cabin01",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     636.94,
+     441.98
+    ],
+    [
+     639.34,
+     441.98
+    ],
+    [
+     639.34,
+     447.98
+    ],
+    [
+     636.94,
+     447.98
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery S + stair"
+  },
+  {
+   "id": "03-07-cabin02",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     640.34,
+     441.98
+    ],
+    [
+     642.74,
+     441.98
+    ],
+    [
+     642.74,
+     447.98
+    ],
+    [
+     640.34,
+     447.98
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A47E62",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery S + stair"
+  },
+  {
+   "id": "03-07-cabin03",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     643.74,
+     441.98
+    ],
+    [
+     646.14,
+     441.98
+    ],
+    [
+     646.14,
+     447.98
+    ],
+    [
+     643.74,
+     447.98
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery S + stair"
+  },
+  {
+   "id": "03-07-cabin04",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     647.14,
+     441.98
+    ],
+    [
+     649.54,
+     441.98
+    ],
+    [
+     649.54,
+     447.98
+    ],
+    [
+     647.14,
+     447.98
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A9C0CC",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery S + stair"
+  },
+  {
+   "id": "03-07-cabin05",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     650.54,
+     441.98
+    ],
+    [
+     652.94,
+     441.98
+    ],
+    [
+     652.94,
+     447.98
+    ],
+    [
+     650.54,
+     447.98
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery S + stair"
+  },
+  {
+   "id": "03-07-cabin06",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     636.94,
+     416.14
+    ],
+    [
+     639.34,
+     416.14
+    ],
+    [
+     639.34,
+     422.14
+    ],
+    [
+     636.94,
+     422.14
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery N + stair"
+  },
+  {
+   "id": "03-07-cabin07",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     640.34,
+     416.14
+    ],
+    [
+     642.74,
+     416.14
+    ],
+    [
+     642.74,
+     422.14
+    ],
+    [
+     640.34,
+     422.14
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A47E62",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery N + stair"
+  },
+  {
+   "id": "03-07-cabin08",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     643.74,
+     416.14
+    ],
+    [
+     646.14,
+     416.14
+    ],
+    [
+     646.14,
+     422.14
+    ],
+    [
+     643.74,
+     422.14
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery N + stair"
+  },
+  {
+   "id": "03-07-cabin09",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     647.14,
+     416.14
+    ],
+    [
+     649.54,
+     416.14
+    ],
+    [
+     649.54,
+     422.14
+    ],
+    [
+     647.14,
+     422.14
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A9C0CC",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery N + stair"
+  },
+  {
+   "id": "03-07-cabin10",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     650.54,
+     416.14
+    ],
+    [
+     652.94,
+     416.14
+    ],
+    [
+     652.94,
+     422.14
+    ],
+    [
+     650.54,
+     422.14
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "block container 6 x 2.4 m, two storeys, ~1 m gaps, gallery N + stair"
+  },
+  {
+   "id": "03-07-cabin11",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     662.87,
+     417.45
+    ],
+    [
+     668.87,
+     417.45
+    ],
+    [
+     668.87,
+     419.85
+    ],
+    [
+     662.87,
+     419.85
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "two cabins across at the east fence"
+  },
+  {
+   "id": "03-07-cabin12",
+   "kind": "block_container_2storey",
+   "footprint": [
+    [
+     662.87,
+     414.06
+    ],
+    [
+     668.87,
+     414.06
+    ],
+    [
+     668.87,
+     416.45
+    ],
+    [
+     662.87,
+     416.45
+    ]
+   ],
+   "floors": 2,
+   "floor_h_m": 2.6,
+   "height_m": 5.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "two cabins across at the east fence"
+  },
+  {
+   "id": "03-07-service0",
+   "kind": "canteen",
+   "footprint": [
+    [
+     636.43,
+     400.94
+    ],
+    [
+     638.83,
+     400.94
+    ],
+    [
+     638.83,
+     406.94
+    ],
+    [
+     636.43,
+     406.94
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "canteen (2) / shower (1) containers"
+  },
+  {
+   "id": "03-07-service1",
+   "kind": "canteen",
+   "footprint": [
+    [
+     639.83,
+     400.94
+    ],
+    [
+     642.23,
+     400.94
+    ],
+    [
+     642.23,
+     406.94
+    ],
+    [
+     639.83,
+     406.94
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "canteen (2) / shower (1) containers"
+  },
+  {
+   "id": "03-07-service2",
+   "kind": "shower",
+   "footprint": [
+    [
+     643.23,
+     400.94
+    ],
+    [
+     645.63,
+     400.94
+    ],
+    [
+     645.63,
+     406.94
+    ],
+    [
+     643.23,
+     406.94
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A9C0CC",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "canteen (2) / shower (1) containers"
+  },
+  {
+   "id": "03-07-office",
+   "kind": "foreman_office",
+   "footprint": [
+    [
+     662.6,
+     441.98
+    ],
+    [
+     665.0,
+     441.98
+    ],
+    [
+     665.0,
+     447.98
+    ],
+    [
+     662.6,
+     447.98
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "foreman office at the east gate"
+  },
+  {
+   "id": "03-03-guard",
+   "kind": "guard_booth",
+   "footprint": [
+    [
+     614.94,
+     366.78
+    ],
+    [
+     619.74,
+     366.78
+    ],
+    [
+     619.74,
+     371.18
+    ],
+    [
+     614.94,
+     371.18
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "guard booth at the main gate (+ wheel wash)"
+  },
+  {
+   "id": "03-01-workshop",
+   "kind": "van_workshop",
+   "footprint": [
+    [
+     644.9,
+     370.39
+    ],
+    [
+     668.9,
+     370.39
+    ],
+    [
+     668.9,
+     382.39
+    ],
+    [
+     644.9,
+     382.39
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 4.5,
+   "height_m": 4.5,
+   "roof": {
+    "type": "flat",
+    "material": "roof_profsheet_SK4c"
+   },
+   "walls": "cinder_SK3d",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      648.62,
+      370.69
+     ],
+     "facing_deg": 270,
+     "kind": "rollshutter",
+     "w_m": 5.6
+    },
+    {
+     "pos": [
+      656.9,
+      370.69
+     ],
+     "facing_deg": 270,
+     "kind": "rollshutter",
+     "w_m": 5.6
+    },
+    {
+     "pos": [
+      665.18,
+      370.69
+     ],
+     "facing_deg": 270,
+     "kind": "rollshutter",
+     "w_m": 5.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "01 van upgrade workshop: tyres, scrap metal, rusty body in front"
+  },
+  {
+   "id": "03-02-fuel-canopy",
+   "kind": "fuel_canopy",
+   "footprint": [
+    [
+     547.86,
+     340.88
+    ],
+    [
+     559.86,
+     340.88
+    ],
+    [
+     559.86,
+     347.68
+    ],
+    [
+     547.86,
+     347.68
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 4.5,
+   "height_m": 4.5,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": null,
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "02 small gas station canopy outside the fence (columns only). OPEN: outside CONSTR_CLIP, not drawn on 2D v76 — handoff keeps the AZS; position = D03 v10 mapped, check next to the main road"
+  },
+  {
+   "id": "03-02-fuel-kiosk",
+   "kind": "kiosk",
+   "footprint": [
+    [
+     562.99,
+     340.15
+    ],
+    [
+     568.19,
+     340.15
+    ],
+    [
+     568.19,
+     345.75
+    ],
+    [
+     562.99,
+     345.75
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 2.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "concrete_panel_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "02 gas station cash kiosk"
+  },
+  {
+   "id": "03-03-transformer",
+   "kind": "transformer_booth",
+   "footprint": [
+    [
+     542.23,
+     372.1
+    ],
+    [
+     546.63,
+     372.1
+    ],
+    [
+     546.63,
+     376.5
+    ],
+    [
+     542.23,
+     376.5
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 2.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "transformer substation"
+  }
+ ],
+ "props": [
+  {
+   "id": "03-07-gallery-236",
+   "kind": "container_gallery",
+   "pos": [
+    644.94,
+    441.58
+   ],
+   "rot_deg": 0,
+   "size": [
+    16.0,
+    0.8,
+    2.6
+   ]
+  },
+  {
+   "id": "03-07-stair-236",
+   "kind": "container_stair",
+   "pos": [
+    653.94,
+    443.18
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.8,
+    2.8,
+    2.6
+   ]
+  },
+  {
+   "id": "03-07-gallery-372",
+   "kind": "container_gallery",
+   "pos": [
+    644.94,
+    422.54
+   ],
+   "rot_deg": 0,
+   "size": [
+    16.0,
+    0.8,
+    2.6
+   ]
+  },
+  {
+   "id": "03-07-stair-372",
+   "kind": "container_stair",
+   "pos": [
+    653.94,
+    420.94
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.8,
+    2.8,
+    2.6
+   ]
+  },
+  {
+   "id": "03-06-crane",
+   "kind": "tower_crane",
+   "pos": [
+    602.62,
+    435.67
+   ],
+   "rot_deg": 0,
+   "size": [
+    3.2,
+    3.2,
+    40
+   ],
+   "note": "jib reach = dashed circle on plan"
+  },
+  {
+   "id": "03-misc0",
+   "kind": "wheel_wash",
+   "pos": [
+    618.95,
+    369.17
+   ],
+   "rot_deg": 0,
+   "size": [
+    6,
+    3,
+    2
+   ]
+  },
+  {
+   "id": "03-misc1",
+   "kind": "skip_bin",
+   "pos": [
+    621.71,
+    376.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    6,
+    3,
+    2
+   ]
+  },
+  {
+   "id": "03-misc2",
+   "kind": "skip_bin",
+   "pos": [
+    659.43,
+    404.32
+   ],
+   "rot_deg": 0,
+   "size": [
+    6,
+    3,
+    2
+   ]
+  },
+  {
+   "id": "03-misc3",
+   "kind": "bio_toilets_row",
+   "pos": [
+    652.76,
+    404.32
+   ],
+   "rot_deg": 0,
+   "size": [
+    6,
+    3,
+    2
+   ]
+  },
+  {
+   "id": "03-misc4",
+   "kind": "materials_store",
+   "pos": [
+    567.2,
+    421.99
+   ],
+   "rot_deg": 0,
+   "size": [
+    6,
+    3,
+    2
+   ]
+  }
+ ],
+ "zones": [
+  {
+   "id": "03-fence",
+   "kind": "fence",
+   "poly": [
+    [
+     536.76,
+     466.0
+    ],
+    [
+     551.52,
+     473.0
+    ],
+    [
+     588.42,
+     473.0
+    ],
+    [
+     621.22,
+     481.0
+    ],
+    [
+     647.46,
+     488.0
+    ],
+    [
+     666.32,
+     480.0
+    ],
+    [
+     674.52,
+     454.0
+    ],
+    [
+     667.96,
+     426.0
+    ],
+    [
+     673.7,
+     400.0
+    ],
+    [
+     663.04,
+     376.0
+    ],
+    [
+     640.08,
+     364.0
+    ],
+    [
+     608.92,
+     361.0
+    ],
+    [
+     576.12,
+     366.0
+    ],
+    [
+     551.52,
+     375.0
+    ],
+    [
+     540.04,
+     395.0
+    ],
+    [
+     534.3,
+     430.0
+    ]
+   ],
+   "surface": "metal_painted_SK6a",
+   "height_m": 2.0,
+   "notes": "one blue profiled-sheet fence ~2 m around everything (contour CONSTR_SHAPE_W of build_world_v76.py); open gates main ~19 m, workshop ~18 m, east ~18 m + 4 van cuts ~12 m; no barriers"
+  },
+  {
+   "id": "03-gates",
+   "kind": "gates",
+   "items": [
+    {
+     "name": "main",
+     "centre_local": [
+      417,
+      690
+     ],
+     "centre_v76_estimate": [
+      605.61,
+      361.57
+     ],
+     "w_m": 19.2
+    },
+    {
+     "name": "workshop",
+     "centre_local": [
+      640,
+      690
+     ],
+     "centre_v76_estimate": [
+      656.9,
+      361.57
+     ],
+     "w_m": 18.0
+    },
+    {
+     "name": "east",
+     "centre_local": [
+      712,
+      328
+     ],
+     "centre_v76_estimate": [
+      673.46,
+      430.35
+     ],
+     "w_m": 18.0
+    },
+    {
+     "name": "cut0",
+     "centre_local": [
+      210,
+      690
+     ],
+     "centre_v76_estimate": [
+      558.0,
+      361.57
+     ],
+     "w_m": 12.0
+    },
+    {
+     "name": "cut1",
+     "centre_local": [
+      120,
+      440
+     ],
+     "centre_v76_estimate": [
+      537.3,
+      409.07
+     ],
+     "w_m": 12.0
+    },
+    {
+     "name": "cut2",
+     "centre_local": [
+      482,
+      126
+     ],
+     "centre_v76_estimate": [
+      620.56,
+      468.73
+     ],
+     "w_m": 12.0
+    },
+    {
+     "name": "cut3",
+     "centre_local": [
+      712,
+      532
+     ],
+     "centre_v76_estimate": [
+      673.46,
+      391.59
+     ],
+     "w_m": 12.0
+    }
+   ],
+   "notes": "v76 contour is not the D03 rectangle: snap each gate to the nearest point of the fence polygon; v76 gate to the main road at (600, 363) (build_world_v76 _gate)"
+  },
+  {
+   "id": "03-ground",
+   "kind": "ground",
+   "poly": [
+    [
+     536.76,
+     466.0
+    ],
+    [
+     551.52,
+     473.0
+    ],
+    [
+     588.42,
+     473.0
+    ],
+    [
+     621.22,
+     481.0
+    ],
+    [
+     647.46,
+     488.0
+    ],
+    [
+     666.32,
+     480.0
+    ],
+    [
+     674.52,
+     454.0
+    ],
+    [
+     667.96,
+     426.0
+    ],
+    [
+     673.7,
+     400.0
+    ],
+    [
+     663.04,
+     376.0
+    ],
+    [
+     640.08,
+     364.0
+    ],
+    [
+     608.92,
+     361.0
+    ],
+    [
+     576.12,
+     366.0
+    ],
+    [
+     551.52,
+     375.0
+    ],
+    [
+     540.04,
+     395.0
+    ],
+    [
+     534.3,
+     430.0
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "no concrete roads: dirt, ruts, puddles"
+  }
+ ],
+ "counts": {
+  "buildings": 29
+ }
+}

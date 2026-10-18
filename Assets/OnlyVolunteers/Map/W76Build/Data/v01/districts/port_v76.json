@@ -1,0 +1,1241 @@
+{
+ "district": "port",
+ "sources": [
+  "ArtSource/References/Map/World_v11/Districts/D06_Industrial_Port_layout_v03.json",
+  "ArtSource/References/Map/World_v11/WORLD_MAP_v11.json (district 06 buildings)",
+  "build_world_v76.py PORT_*"
+ ],
+ "transform": "v76 = post_shift(scale about PORT_C (1261, 636) by (1.25, 0.8) of warp_m(v11)) + fit (0.0, 0.0)",
+ "pad_height_m": 2.5,
+ "lighting": "sea_fog_cold",
+ "buildings": [
+  {
+   "id": "06_02_warehouse",
+   "kind": "warehouse",
+   "footprint": [
+    [
+     1197.25,
+     670.4
+    ],
+    [
+     1259.75,
+     670.4
+    ],
+    [
+     1259.75,
+     651.2
+    ],
+    [
+     1197.25,
+     651.2
+    ]
+   ],
+   "floors": 3,
+   "floor_h_m": 3.2,
+   "height_m": 9.6,
+   "roof": {
+    "type": "flat",
+    "material": "roof_profsheet_SK4c"
+   },
+   "walls": "facade_warehouse",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "notes": "02 warehouse, corrugated metal"
+  },
+  {
+   "id": "06_05_tank_1",
+   "kind": "storage_tank",
+   "footprint": [
+    [
+     1296.75,
+     662.4
+    ],
+    [
+     1296.29,
+     660.52
+    ],
+    [
+     1294.94,
+     658.82
+    ],
+    [
+     1292.84,
+     657.48
+    ],
+    [
+     1290.19,
+     656.62
+    ],
+    [
+     1287.25,
+     656.32
+    ],
+    [
+     1284.31,
+     656.62
+    ],
+    [
+     1281.66,
+     657.48
+    ],
+    [
+     1279.56,
+     658.82
+    ],
+    [
+     1278.21,
+     660.52
+    ],
+    [
+     1277.75,
+     662.4
+    ],
+    [
+     1278.21,
+     664.28
+    ],
+    [
+     1279.56,
+     665.98
+    ],
+    [
+     1281.66,
+     667.32
+    ],
+    [
+     1284.31,
+     668.18
+    ],
+    [
+     1287.25,
+     668.48
+    ],
+    [
+     1290.19,
+     668.18
+    ],
+    [
+     1292.84,
+     667.32
+    ],
+    [
+     1294.94,
+     665.98
+    ],
+    [
+     1296.29,
+     664.28
+    ]
+   ],
+   "floors": 4,
+   "floor_h_m": 3.2,
+   "height_m": 12.8,
+   "roof": {
+    "type": "dome_low",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "05 fuel/oil tank, round"
+  },
+  {
+   "id": "06_05_tank_2",
+   "kind": "storage_tank",
+   "footprint": [
+    [
+     1319.25,
+     662.4
+    ],
+    [
+     1318.79,
+     660.52
+    ],
+    [
+     1317.44,
+     658.82
+    ],
+    [
+     1315.34,
+     657.48
+    ],
+    [
+     1312.69,
+     656.62
+    ],
+    [
+     1309.75,
+     656.32
+    ],
+    [
+     1306.81,
+     656.62
+    ],
+    [
+     1304.16,
+     657.48
+    ],
+    [
+     1302.06,
+     658.82
+    ],
+    [
+     1300.71,
+     660.52
+    ],
+    [
+     1300.25,
+     662.4
+    ],
+    [
+     1300.71,
+     664.28
+    ],
+    [
+     1302.06,
+     665.98
+    ],
+    [
+     1304.16,
+     667.32
+    ],
+    [
+     1306.81,
+     668.18
+    ],
+    [
+     1309.75,
+     668.48
+    ],
+    [
+     1312.69,
+     668.18
+    ],
+    [
+     1315.34,
+     667.32
+    ],
+    [
+     1317.44,
+     665.98
+    ],
+    [
+     1318.79,
+     664.28
+    ]
+   ],
+   "floors": 4,
+   "floor_h_m": 3.2,
+   "height_m": 12.8,
+   "roof": {
+    "type": "dome_low",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "05 fuel/oil tank, round"
+  },
+  {
+   "id": "06_01_gate",
+   "kind": "checkpoint_booth",
+   "footprint": [
+    [
+     1183.75,
+     639.04
+    ],
+    [
+     1189.75,
+     639.04
+    ],
+    [
+     1189.75,
+     636.16
+    ],
+    [
+     1183.75,
+     636.16
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "concrete_panel_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "notes": "01 checkpoint without barrier"
+  },
+  {
+   "id": "06-pump-house",
+   "kind": "pump_house",
+   "footprint": [
+    [
+     1302.25,
+     604.0
+    ],
+    [
+     1314.75,
+     604.0
+    ],
+    [
+     1314.75,
+     609.6
+    ],
+    [
+     1302.25,
+     609.6
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.4,
+   "height_m": 3.4,
+   "roof": {
+    "type": "gable",
+    "material": "roof_tile_SK4a",
+    "ridge_h_m": 1.6,
+    "overhang_m": 0.3
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "ridge_cap": "tile"
+   },
+   "collider": "full_roof",
+   "notes": "brick pump house; roof type not given -> gable = OPEN"
+  }
+ ],
+ "props": [
+  {
+   "id": "06-cont00",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1198.94,
+    613.92
+   ],
+   "rot_deg": 0.0,
+   "tiers": 2,
+   "size": [
+    12.2,
+    2.44,
+    5.18
+   ],
+   "footprint": [
+    [
+     1191.31,
+     612.94
+    ],
+    [
+     1206.56,
+     612.94
+    ],
+    [
+     1206.56,
+     614.9
+    ],
+    [
+     1191.31,
+     614.9
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont01",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1214.56,
+    613.92
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    12.2,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1206.94,
+     612.94
+    ],
+    [
+     1222.19,
+     612.94
+    ],
+    [
+     1222.19,
+     614.9
+    ],
+    [
+     1206.94,
+     614.9
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont02",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1198.94,
+    616.0
+   ],
+   "rot_deg": 0.0,
+   "tiers": 3,
+   "size": [
+    12.2,
+    2.44,
+    7.77
+   ],
+   "footprint": [
+    [
+     1191.31,
+     615.02
+    ],
+    [
+     1206.56,
+     615.02
+    ],
+    [
+     1206.56,
+     616.98
+    ],
+    [
+     1191.31,
+     616.98
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont03",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1198.94,
+    618.08
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    12.2,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1191.31,
+     617.1
+    ],
+    [
+     1206.56,
+     617.1
+    ],
+    [
+     1206.56,
+     619.06
+    ],
+    [
+     1191.31,
+     619.06
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont04",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1214.56,
+    618.08
+   ],
+   "rot_deg": 0.0,
+   "tiers": 2,
+   "size": [
+    12.2,
+    2.44,
+    5.18
+   ],
+   "footprint": [
+    [
+     1206.94,
+     617.1
+    ],
+    [
+     1222.19,
+     617.1
+    ],
+    [
+     1222.19,
+     619.06
+    ],
+    [
+     1206.94,
+     619.06
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont05",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1214.56,
+    620.16
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    12.2,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1206.94,
+     619.18
+    ],
+    [
+     1222.19,
+     619.18
+    ],
+    [
+     1222.19,
+     621.14
+    ],
+    [
+     1206.94,
+     621.14
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont06",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1239.19,
+    613.92
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1235.38,
+     612.94
+    ],
+    [
+     1243.0,
+     612.94
+    ],
+    [
+     1243.0,
+     614.9
+    ],
+    [
+     1235.38,
+     614.9
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont07",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1247.12,
+    613.92
+   ],
+   "rot_deg": 0.0,
+   "tiers": 2,
+   "size": [
+    6.1,
+    2.44,
+    5.18
+   ],
+   "footprint": [
+    [
+     1243.31,
+     612.94
+    ],
+    [
+     1250.94,
+     612.94
+    ],
+    [
+     1250.94,
+     614.9
+    ],
+    [
+     1243.31,
+     614.9
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont08",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1239.19,
+    616.0
+   ],
+   "rot_deg": 0.0,
+   "tiers": 2,
+   "size": [
+    6.1,
+    2.44,
+    5.18
+   ],
+   "footprint": [
+    [
+     1235.38,
+     615.02
+    ],
+    [
+     1243.0,
+     615.02
+    ],
+    [
+     1243.0,
+     616.98
+    ],
+    [
+     1235.38,
+     616.98
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont09",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1247.12,
+    616.0
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1243.31,
+     615.02
+    ],
+    [
+     1250.94,
+     615.02
+    ],
+    [
+     1250.94,
+     616.98
+    ],
+    [
+     1243.31,
+     616.98
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont10",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1255.06,
+    616.0
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1251.25,
+     615.02
+    ],
+    [
+     1258.88,
+     615.02
+    ],
+    [
+     1258.88,
+     616.98
+    ],
+    [
+     1251.25,
+     616.98
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont11",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1247.12,
+    618.08
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1243.31,
+     617.1
+    ],
+    [
+     1250.94,
+     617.1
+    ],
+    [
+     1250.94,
+     619.06
+    ],
+    [
+     1243.31,
+     619.06
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont12",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1269.12,
+    608.4
+   ],
+   "rot_deg": 0.42,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1265.32,
+     607.41
+    ],
+    [
+     1272.95,
+     607.44
+    ],
+    [
+     1272.93,
+     609.39
+    ],
+    [
+     1265.3,
+     609.36
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont13",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1286.0,
+    620.0
+   ],
+   "rot_deg": -0.12,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1282.18,
+     619.03
+    ],
+    [
+     1289.81,
+     619.02
+    ],
+    [
+     1289.82,
+     620.97
+    ],
+    [
+     1282.19,
+     620.98
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont14",
+   "kind": "shipping_container_20ft",
+   "pos": [
+    1247.25,
+    611.2
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    6.1,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1243.44,
+     610.22
+    ],
+    [
+     1251.06,
+     610.22
+    ],
+    [
+     1251.06,
+     612.18
+    ],
+    [
+     1243.44,
+     612.18
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-cont15",
+   "kind": "shipping_container_40ft",
+   "pos": [
+    1274.12,
+    626.08
+   ],
+   "rot_deg": 0.0,
+   "tiers": 1,
+   "size": [
+    12.2,
+    2.44,
+    2.59
+   ],
+   "footprint": [
+    [
+     1266.5,
+     625.1
+    ],
+    [
+     1281.75,
+     625.1
+    ],
+    [
+     1281.75,
+     627.06
+    ],
+    [
+     1266.5,
+     627.06
+    ]
+   ],
+   "material": "metal_painted_SK6a"
+  },
+  {
+   "id": "06-water-tower",
+   "kind": "water_tower",
+   "pos": [
+    1326.0,
+    610.4
+   ],
+   "rot_deg": 0,
+   "size": [
+    9.2,
+    9.2,
+    18
+   ]
+  },
+  {
+   "id": "06-reach-stacker",
+   "kind": "reach_stacker",
+   "pos": [
+    1247.25,
+    606.4
+   ],
+   "rot_deg": 0,
+   "size": [
+    11,
+    4,
+    5
+   ]
+  },
+  {
+   "id": "06-truck-40ft",
+   "kind": "truck_with_container",
+   "pos": [
+    1274.75,
+    626.08
+   ],
+   "rot_deg": 0,
+   "size": [
+    17,
+    2.5,
+    4
+   ]
+  },
+  {
+   "id": "06-forklift0",
+   "kind": "forklift",
+   "pos": [
+    1237.25,
+    641.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    3.2,
+    1.2,
+    2.2
+   ]
+  },
+  {
+   "id": "06-forklift1",
+   "kind": "forklift",
+   "pos": [
+    1256.62,
+    643.6
+   ],
+   "rot_deg": 0,
+   "size": [
+    3.2,
+    1.2,
+    2.2
+   ]
+  },
+  {
+   "id": "06-cable_reels",
+   "kind": "cable_reels",
+   "count": 3,
+   "pos": null,
+   "notes": "count only in layout v03 — place by logic (OPEN)"
+  },
+  {
+   "id": "06-pipe_stack",
+   "kind": "pipe_stack",
+   "footprint": [
+    [
+     1282.25,
+     601.04
+    ],
+    [
+     1293.5,
+     601.04
+    ],
+    [
+     1293.5,
+     603.2
+    ],
+    [
+     1282.25,
+     603.2
+    ]
+   ],
+   "pos": [
+    1287.88,
+    602.12
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums00",
+   "kind": "drum",
+   "pos": [
+    1264.88,
+    654.4
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums01",
+   "kind": "drum",
+   "pos": [
+    1265.62,
+    654.4
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums02",
+   "kind": "drum",
+   "pos": [
+    1266.62,
+    654.4
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums03",
+   "kind": "drum",
+   "pos": [
+    1267.62,
+    654.4
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums04",
+   "kind": "drum",
+   "pos": [
+    1268.5,
+    654.4
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums05",
+   "kind": "drum",
+   "pos": [
+    1264.75,
+    655.04
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums06",
+   "kind": "drum",
+   "pos": [
+    1265.75,
+    655.04
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums07",
+   "kind": "drum",
+   "pos": [
+    1266.5,
+    655.04
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums08",
+   "kind": "drum",
+   "pos": [
+    1267.5,
+    655.04
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums09",
+   "kind": "drum",
+   "pos": [
+    1268.62,
+    655.04
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums10",
+   "kind": "drum",
+   "pos": [
+    1264.75,
+    655.6
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums11",
+   "kind": "drum",
+   "pos": [
+    1265.62,
+    655.6
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums12",
+   "kind": "drum",
+   "pos": [
+    1266.62,
+    655.6
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-drums13",
+   "kind": "drum",
+   "pos": [
+    1267.62,
+    655.6
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-site_cabin",
+   "kind": "site_cabin",
+   "footprint": [
+    [
+     1186.62,
+     625.44
+    ],
+    [
+     1194.12,
+     625.44
+    ],
+    [
+     1194.12,
+     627.44
+    ],
+    [
+     1186.62,
+     627.44
+    ]
+   ],
+   "pos": [
+    1190.38,
+    626.44
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-toilet",
+   "kind": "toilet",
+   "pos": [
+    1195.12,
+    625.76
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-light_masts00",
+   "kind": "light_mast",
+   "pos": [
+    1186.62,
+    600.8
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-light_masts01",
+   "kind": "light_mast",
+   "pos": [
+    1262.25,
+    628.8
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-light_masts02",
+   "kind": "light_mast",
+   "pos": [
+    1339.75,
+    629.2
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-light_masts03",
+   "kind": "light_mast",
+   "pos": [
+    1252.25,
+    673.6
+   ],
+   "rot_deg": 0
+  },
+  {
+   "id": "06-boat_on_blocks",
+   "kind": "boat_on_blocks",
+   "pos": [
+    1330.38,
+    644.0
+   ],
+   "rot_deg": 0
+  }
+ ],
+ "zones": [
+  {
+   "id": "06-yard",
+   "kind": "yard",
+   "poly": [
+    [
+     1178.0,
+     672.0
+    ],
+    [
+     1176.0,
+     611.0
+    ],
+    [
+     1191.0,
+     599.0
+    ],
+    [
+     1320.0,
+     598.0
+    ],
+    [
+     1341.0,
+     609.0
+    ],
+    [
+     1352.0,
+     637.0
+    ],
+    [
+     1344.0,
+     664.0
+    ],
+    [
+     1325.0,
+     677.0
+    ],
+    [
+     1191.0,
+     679.0
+    ]
+   ],
+   "surface": "concrete_SK3c",
+   "fence": true,
+   "notes": "PORT_SHAPE of build_world_v76.py; quay with bollards/fenders, pier into the bay; checkpoint without barrier"
+  }
+ ],
+ "counts": {
+  "buildings": 5,
+  "containers": 16
+ }
+}
