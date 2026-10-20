@@ -33,7 +33,7 @@ Where this spec conflicts with older drafts or code (`ClinicDropOff`, the single
 | D7 | Blood outside the base | Blood can be drawn anywhere (ground, van, table). The portion count is stored ON THE NPC and travels with him, so the extraction death risk (ops §11, +10 points per portion) counts blood taken in the field. Drawing is impossible while he struggles: he must be asleep or restrained. A corpse gives no blood (D10). |
 | D8 | Condition → organ quality | Condition (0–100) removes grades from ALL organs at extraction time: ≥75 no loss; 50–74 −1; 25–49 −2; <25 −3. The floor is «Убитое»/Damaged. |
 | D9 | Intrinsic quality by district and type | The district sets the intrinsic organ-grade distribution (table §6). The NPC type shifts specific organs. Condition loss (D8) applies on top. |
-| D10 | Death outside the table | A dead NPC is a corpse. Organs start the ops-spec decay at once: 45 s grace, then −1 grade per 40 s. A corpse does not resist; no blood can be drawn from it. Causes: overdose, being hit by the van at speed, a fall from a height, the 3rd blood portion. The head bag alone never kills. |
+| D10 | Death outside the table | A dead NPC is a corpse. Organs start the ops-spec decay at once: 45 s grace, then −1 grade per 40 s, continuing from Damaged to the unsellable Ruined state. A corpse does not resist; no blood can be drawn from it. Causes: overdose, being hit by the van at speed, a fall from a height, the 3rd blood portion. The head bag alone never kills. |
 | D11 | Witnesses at the base | Any NPC or passer-by who sees players carrying a person toward the base: district suspicion +5 per episode, +10 if the carried NPC is screaming. Carrying a bagged body ("someone hauling a sack"): +2. Night lowers detection (§7). A van parked in the garage or right at the door: no witnesses. |
 | D12 | Clothes on the table | When the NPC lands on the table, a short cartoon CLOUD («пуф») fully covers him; when it clears he is undressed. His own head, face and body build (thin/fat/muscle) stay; only the clothes become the patient shorts. Hats and glasses drop to the floor next to the table as small trash (cleanup evidence, ops §18). No pocket items or money. |
 | D13 | Save and quit | Everything persists: position, condition, blood portions, anesthesia residual and sleep, restraints, bag, timers. Time is frozen while the session is closed: nobody wakes and nothing decays. A client leaving mid-carry: the NPC drops where he was. |
@@ -125,6 +125,7 @@ This replaces the current single `PatientRecord.Quality` from condition with thr
 - The server owns the NPC body. Restraints, bag, injections and blood are requests validated by the server, the same pattern as the operations table.
 - The ragdoll carry is server-simulated; clients receive the pose (as in the ops v04 ragdoll).
 - Persistence follows D13. Closing the session freezes all timers. Offline time is never charged.
+- Capture and delivery do not duplicate a sale reward: the buyer system credits the final sale amount once to the shared team fund, regardless of party size. Any cash penalty triggered by a later police outcome follows `NETWORK_MAP_PLAN_v01.md` §3.9; body/item losses retain their own rules.
 
 ## 9. Build stages
 

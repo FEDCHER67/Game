@@ -127,7 +127,7 @@ Paths are under `Assets/OnlyVolunteers`.
 
    No second inventory, spoilage clock or cash store (ops §20, sales §10).
 2. **Every item has exactly one place:** a container slot, the world (a loose physical object) or a two-handed carry by one player.
-3. **Instances, not counts, for anything with state.** Organs, blood bags, syringes, vials and coolers are one record each. Only stateless consumables stack: zip ties, empty organ pouches, empty blood bags, body bags.
+3. **Instances, not counts, for anything with state.** Organs, blood bags, syringes, vials and coolers are one record each. Full organ output is seven records: kidneys separate, eyes/lungs each one indivisible paired item from one donor. No organ stacking or automatic refrigerator transfer is introduced. Only stateless consumables stack: zip ties, empty organ pouches, empty blood bags, body bags.
 4. **Ids:**
    - Organs keep the deterministic extraction id that the table already mints (`P-xxxxxxxxxx/kidney/0`), so a repeated extraction cannot make a second organ.
    - Everything else gets `I-000123` from a saved counter.
@@ -187,8 +187,9 @@ The pose of a `World` item lives on its NetworkObject and in the save's pose tab
 
 | Field | Meaning |
 |---|---|
-| `Kind` | Kidney, Liver, Lungs (the paired item), Heart, Eye, Brain |
-| `Tier` | 1–5 |
+| `Kind` | Kidney (one per item), Liver, Lungs (paired), Heart, Eye (indivisible paired eyes), Brain |
+| `Tier` | 1–5; Ruined is a separate irreversible flag, not tier 6 |
+| Ruined, ErroneousCutCount | Persistent: first erroneous organ cut sets Damaged, second Ruined. Ruined value zero, rejected by every buyer. |
 | `Progress` | 0..1 toward the next one-grade loss. It is **kept across moves** (ops T-05). |
 | `SettledAt` | Active seconds when tier and progress were last brought up to date. Spoilage is evaluated lazily (§7.2). |
 | `DonorPatientId` | `PatientId` minted at knockdown |
@@ -200,6 +201,8 @@ The pose of a `World` item lives on its NetworkObject and in the save's pose tab
 | `ColdSince`, `LastColdStint`, `WarmSince` | Cold-chain history (§7.3) |
 | `CaseColdLatch` | Set when loaded into a buyer case if the cold chain held; it is the `DeliveredCooled` reported to the buyers core |
 | `LastImpactAt` | Impact cooldown |
+
+Ruined stays in its physical/container location, cannot satisfy any sale or special order, and uses ordinary waste disposal. Cooling pauses but never reverses decay; extraction and moves do not reset it.
 
 **The special-order tag is derived, not stored.** The HUD and the buyers core compare the provenance (role key, kind, tier, packaging) with the active order. When an order changes, nothing on the item needs rewriting. The card shows «Подходит к заказу ✓» or the missing requirement (sales §8.3).
 
@@ -381,7 +384,7 @@ The body bag as a packed corpse stays what G35 built: an NPC ragdoll in a bag, n
 | Element | Content | Replaces |
 |---|---|---|
 | **Hotbar,** bottom centre | 6 slots of about 52 px. Each shows an icon (or the short label), a count badge, the organ's tier colour stripe and freshness bar, and a fill bar for syringes and bags. The selected slot is raised and outlined; empty hands show a small hand icon. It stays visible while it holds anything (no 3 s fade). | `InventoryHud` strip and the `CaptureHud` Z/X/C cards |
-| **Item card,** above the hotbar | The selected or aimed item (table §4.5). The tier colours are the ops §12.1 palette. | `OperationHud` organ card (outside table mode) |
+| **Item card,** above the hotbar | The selected or aimed item (table §4.5). Only Damaged/Ruined and subtle gold on Perfect+ are explicit quality appearances; no freshness countdown. | `OperationHud` organ card (outside table mode) |
 | **Hint line** | «ЛКМ (держать) — связать руки · G — положить» | Capture hint |
 | **Crosshair ring** | Hold progress; anesthesia dose bar | Same as today |
 | **Container label** | «Холодильник 5/8 · E — закрыть» | – |
@@ -392,7 +395,7 @@ The body bag as a packed corpse stays what G35 built: an NPC ragdoll in a bag, n
 
 | Case | Behaviour |
 |---|---|
-| **Arrest** (canon §80, ordinary street arrest) | The most valuable item in pockets or carry is confiscated (`MostValuableOf`), plus 10% from the shared fund (NETWORK Q4). The ops §19 inspection arrest stays separate. |
+| **Arrest** (ordinary street arrest) | Police spec controls the outcome: one random eligible carried item is confiscated; the solo-equivalent cash penalty per affected player is divided by active team size `N` and debited from the shared fund under `NETWORK_MAP_PLAN_v01.md` §3.9. The ops §19 inspection arrest stays separate. |
 | **Knocked out** (future) | The item in hands drops; the pockets stay. |
 | **Phone, table camera, buyer negotiation camera, driving** | The hotbar is inactive; the selection is remembered. |
 
@@ -457,7 +460,7 @@ Clients extrapolate the freshness bar from the anchor and the rate class, the sa
 | Data | Who receives it |
 |---|---|
 | Own pockets (all 6 slots, full detail) | The owner only (owner-only SyncList) |
-| A teammate's held item (def, tier colour, fill) and his active slot | Everyone; it drives the third-person hand model and the aim label |
+| A teammate's held item (def, approved quality appearance, fill) and his active slot | Everyone; it drives the third-person hand model and the aim label |
 | A teammate's other pockets | Nobody (not needed; less UI noise) |
 | Container contents and open state | Observers of the container (FishNet distance range of 200 m). The cooler, case and tray show their socket models. |
 | Loose items | Observers, as `WorldItemNet` NetworkObjects (a NetworkTransform while moving, nothing at rest) |
@@ -508,7 +511,7 @@ Clients extrapolate the freshness bar from the anchor and the rate class, the sa
       { "Id": "P-3f9a1c0b2e/kidney/0", "DefId": 102, "Count": 1, "Place": 1,
         "ContainerId": "I-000031", "Slot": 2, "CarrierId": "",
         "HasOrgan": true,
-        "Organ": { "Kind": 0, "Tier": 3, "Progress": 0.41, "SettledAt": 18432.5,
+        "Organ": { "Kind": 0, "Tier": 3, "Ruined": false, "ErroneousCutCount": 0, "Progress": 0.41, "SettledAt": 18432.5,
                    "DonorPatientId": "P-3f9a1c0b2e", "DonorPersonId": "NPC-KHUTOR-BODYBUILDER-01",
                    "DonorRoleKey": "HAMLET_BODYBUILDER", "DonorNpcType": "HAMLET_BODYBUILDER",
                    "ExtractedAtGameSeconds": 113400, "Packaged": true,
@@ -582,7 +585,7 @@ Clients extrapolate the freshness bar from the anchor and the rate class, the sa
 | Powered fridge | Paused | – | ops §13.2 |
 | Unpowered fridge (electricity expired) | Room rate; settled at the moment power changes | 300 s | ops §13.2, §14 |
 | Fractional progress across moves | Kept; only the rate changes | – | ops T-05 |
-| Floor | Damaged (tier 1); no sixth tier | – | ops §12.2 |
+| Damage floor / decay terminal | Ordinary impacts/pulls stop at Damaged; decay below Damaged becomes irreversible Ruined, not tier 6. | – | ops §12.2–12.3 |
 | Impact | −1 tier per event above 2.4 m/s, cooldown 0.6 s | existing `OperationTuning` | ops §12.2 |
 | Thrown cooler | Each organ inside −1 when the cooler hits above 4 m/s | 4 m/s | Proposed (Q2) |
 | Packaging | No effect on spoilage | – | ops §13.1 |
@@ -591,15 +594,15 @@ Clients extrapolate the freshness bar from the anchor and the rate class, the sa
 | Organ taken from a corpse | Keeps its current tier. Progress = the elapsed fraction of the current 40 s corpse interval (0 during the 45 s grace), then the item rates apply. | – | ops §12.3, §9; the conversion is Proposed |
 | Intrinsic tier, condition loss, table damage | Applied before minting (capture §6, ops §12.2) | – | Existing rules |
 | Cooled delivery | See §7.3 | 60 s / 60 s | BUYERS v02, sales review S4; Proposed |
-| Value for the UI and arrest | `base × tier multiplier` (0.3/1/1.6/2.6/4.2). Real sale prices come from the buyers core. | – | ops §15.2 |
+| Value for the UI and arrest | `base × tier multiplier` (0.5/1/1.5/2.6/6); Ruined = 0. Real sale prices come from the buyers core. | – | ops §15.2 |
 
 ### 7.2 Evaluation
 
 - **Lazy settling.** Each organ stores `Tier`, `Progress` and `SettledAt`. On any move, power change, impact, query or 1 Hz tick, the server settles it:
   - `Progress += Δt / secondsPerGrade(storage)`;
-  - while `Progress ≥ 1` and the tier is above Damaged: drop one tier and subtract 1.
-- **Every drop raises `TierChanged`,** stamped with its exact time. `ItemServer` updates the view, calls `BuyerRules.UpdateQuality`, and the live deal card re-quotes (SG-32).
-- **`NextGradeLossAt`** gives the exact next loss time for UI anchors and scheduling.
+  - while `Progress ≥ 1` and not Ruined: drop a tier if above Damaged; otherwise set Ruined. Subtract the elapsed interval and retain the physical item for disposal.
+- **Every grade/condition transition raises a state change,** stamped with its exact time. `ItemServer` updates the view, calls `BuyerRules.UpdateQuality`, and the live deal card re-quotes (SG-32).
+- **`NextGradeLossAt`** supports authoritative scheduling, not a new visible countdown. Only Damaged, Ruined and subtle gold on Perfect+ are explicit quality appearances.
 
 ### 7.3 Cold chain → `DeliveredCooled`
 
@@ -614,6 +617,8 @@ Clients extrapolate the freshness bar from the anchor and the rate class, the sa
 
 | Need | Why |
 |---|---|
+| Project Ruined and erroneous-cut state without inventing tier 6 | All sale/order validation must reject Ruined; impacts cannot create it. |
+| Define migration of historical singleton-eye records | New output is an indivisible donor-specific eye pair; no automatic combining of old eyes is approved. |
 | `UnloadItem(buyerId, itemId)` | A teammate takes an unsold organ out of the open case (SG-D71). There is a stash withdraw but no meeting unload. |
 | `SetDeliveredCooled(itemId, bool)`, or a cooled argument on `LoadItem` | The latch is known only at load time; `RegisterItem` happens much earlier, at extraction |
 | `RemoveItem(itemId)` | An unsold item destroyed outside a sale (disposal, confiscation) must leave the core's item list |
@@ -722,7 +727,7 @@ The other agent is moving the Z/X/C tools into hotbar items with LMB use. To kee
 | WI-18 | A late joiner sees the open cooler's contents, the loose organs and teammates' held items correctly |
 | WI-19 | The host sees each cue once; a client never writes a save |
 | WI-20 | A v1 save loads into v2: ties, syringes, bags and table organs exist as items with converted tiers; overflow lies at the player |
-| WI-21 | A street arrest confiscates the most valuable pocket or carried item and nothing else |
+| WI-21 | A street arrest confiscates one random eligible carried item; its placeholder cash penalty is divided by active team size `N` per affected player and follows the shared-fund transaction in NETWORK §3.9 |
 
 ### 9.2 Explicit non-goals (v1)
 
