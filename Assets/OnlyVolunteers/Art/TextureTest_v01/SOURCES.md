@@ -21,4 +21,13 @@ Approved materials reused unchanged: V19 brick / stucco v07 / concrete / boards 
 
 New materials exist only in `Built/` (v01) and `Built_v02/` (v02). The `*_v02` house materials are URP Lit, because the FBX UVs are 1 UV = 1 m and the house has no vertex colours.
 
-If CC0 sets (ambientCG, Poly Haven) are added later, record each one here: asset ID, URL, licence (CC0), the date it was downloaded, and how it was adapted (palette, contrast, scale).
+## v03: ambientCG (CC0 1.0)
+
+The lead downloaded these on 21.10.2026 with Fedya's OK; originals and their own SOURCES.md are in `ArtSource/Textures/ambientCG_2026-10-21/`. Licence: CC0 1.0 (https://docs.ambientcg.com/license/). Only the adapted results are copied into `Source_v03/`, all at 1024 px.
+
+| ambientCG set | Used for | Adapted files (`Source_v03/`) | Adaptation |
+|---|---|---|---|
+| Plaster001 (https://ambientcg.com/view?id=Plaster001) | Downtown plaster (D4) | `TT_acg_Plaster001_neutral_albedo.png`, `TT_acg_Plaster001_normal.png` | Luminance only, normalised to 0.86 with 45 % of the original contrast. Colour per building comes from the material (vertex tint). Normal map at 0.35. |
+| Facade001 (https://ambientcg.com/view?id=Facade001) | Tower curtain-wall glass (T1 / G-T) | `TT_acg_Facade001_glass_albedo.png`, `TT_acg_Facade001_glass_metal_smooth.png`, `TT_acg_Facade001_normal.png` | Neutral grey panel-tone variation (55 % contrast). Dark-blue tint comes from the material. Metallic = 0.6 × metalness; smoothness = 0.97 − 0.3 × roughness. Normal map at 0.45. One tile = 16 × 10 panels = 22.54 × 18 m, which is 8 tower facets × 5 floors. |
+
+The other nine downloaded sets (Facade002/006/009, PaintedPlaster006/017, Bricks106A/113A, Logs001, WoodSiding008) were reviewed and are not used. Bricks106A/113A are stone blocks rather than brick; Logs001 is a firewood stack; the others were not needed for this pass.
