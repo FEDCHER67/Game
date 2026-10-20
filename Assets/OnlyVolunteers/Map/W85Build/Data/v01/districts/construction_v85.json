@@ -1,0 +1,5215 @@
+{
+ "district": "construction",
+ "version": "v85 from plan v11",
+ "sources": [
+  "ArtSource/References/Map/World_v78/Districts/build_stroyka_v11.py",
+  "ArtSource/References/Map/World_v78/Districts/Интернациональная_стройка_v11.svg",
+  "ArtSource/References/Map/World_v11/Districts/D03_International_Construction_legend_v08_ru.txt",
+  "ArtSource/References/Map/World_v85/build_world_v85.py",
+  "ArtSource/References/Map/World_v85/VOLUNTEERS_MAP_MASTER_v85.svg",
+  "docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-20_v10.md §7.3",
+  "docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-18_v02.md §8.3"
+ ],
+ "transform": "plan v11 local units (0.2 m, y down) -> master SVG units by the D03 group transform translate(2670 1410) translate(-410 -393) and the per-element relayout translate of build_world_v85 (clusters spread x1.15 / y0.95 about local (410, 393), sizes unscaled) -> world = common.u2w (post_shift = 0 here). Fit on VOLUNTEERS_MAP_FINAL_v85.png: 19 drawn footprints, drawn fill edge vs footprint edge median 0.20 m, max 0.36 m per side; moved by logic: workshop (np.float64(-16.5), np.float64(2.5)) m, transformer, 2 east cabins (see fixed_by_logic)",
+ "fit": {
+  "buildings_checked": 19,
+  "max_side_residual_m": 0.36,
+  "median_side_residual_m": 0.2,
+  "note": "drawn fill (inside a 0.3 m outline) vs footprint edges; ~0.2 m = outline half width",
+  "worst": [
+   [
+    "03-08-dorm",
+    0.36,
+    -0.24,
+    0.28,
+    -0.32
+   ],
+   [
+    "03-07-cabin05",
+    0.28,
+    -0.12,
+    0.2,
+    -0.2
+   ],
+   [
+    "03-07-canteen0",
+    0.28,
+    -0.12,
+    0.26,
+    -0.14
+   ]
+  ]
+ },
+ "pad_height_m": null,
+ "pad_rel_m": 8.0,
+ "pad_note": "the site stands on a hill pad +8 m (v10 §3.1); the lead terrain step makes the pad from zone 03-ground (flat yard). NOTE: the gate is only ~14 m from ROAD_H (y 348): an 8 m rise needs ~100 m at 8 %% - let ROAD_H climb along the hill foot and / or ramp the yard from the gate band (~+2 m) to the full +8 m within ~40 m north of the gate",
+ "abs_heights": false,
+ "lighting": "sunny_bright_no_fog",
+ "lighting_notes": "bright, sunny, cheerful (v10 §7.3, §10): no fog",
+ "buildings": [
+  {
+   "id": "03-04-A",
+   "kind": "concrete_frame",
+   "material_slot": "construction_frame",
+   "footprint": [
+    [
+     558.18,
+     441.84
+    ],
+    [
+     582.18,
+     441.84
+    ],
+    [
+     582.18,
+     455.84
+    ],
+    [
+     558.18,
+     455.84
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.0,
+   "height_m": 15.0,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c",
+    "open_frame": true,
+    "top_floor_open": true,
+    "top_floor_slab_poly": [
+     [
+      570.18,
+      448.84
+     ],
+     [
+      582.18,
+      448.84
+     ],
+     [
+      582.18,
+      455.84
+     ],
+     [
+      570.18,
+      455.84
+     ]
+    ]
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "04 building A (plan v11 \"небольшой недострой\" 24 x 14 m): monolithic frame, slabs on 18 columns (columns_xy), floors 1-4 slabs + edge railings, top floor (5th) open: columns + slab only over top_floor_slab_poly (drawn lighter on the plan); walkable slabs; unfinished: bare grey concrete frame, no glazing",
+   "columns_xy": [
+    [
+     560.18,
+     453.84
+    ],
+    [
+     560.18,
+     448.84
+    ],
+    [
+     560.18,
+     443.84
+    ],
+    [
+     564.18,
+     453.84
+    ],
+    [
+     564.18,
+     448.84
+    ],
+    [
+     564.18,
+     443.84
+    ],
+    [
+     568.18,
+     453.84
+    ],
+    [
+     568.18,
+     448.84
+    ],
+    [
+     568.18,
+     443.84
+    ],
+    [
+     572.18,
+     453.84
+    ],
+    [
+     572.18,
+     448.84
+    ],
+    [
+     572.18,
+     443.84
+    ],
+    [
+     576.18,
+     453.84
+    ],
+    [
+     576.18,
+     448.84
+    ],
+    [
+     576.18,
+     443.84
+    ],
+    [
+     580.18,
+     453.84
+    ],
+    [
+     580.18,
+     448.84
+    ],
+    [
+     580.18,
+     443.84
+    ]
+   ],
+   "column_m": 0.6,
+   "core_id": "03-04-A-core",
+   "crane_id": "03-06-crane",
+   "floors_note": "floor count not on plan v11: 5 from legend v08 / handoff v02 §8.3"
+  },
+  {
+   "id": "03-04-A-core",
+   "kind": "stair_lift_core",
+   "material_slot": "construction_frame",
+   "footprint": [
+    [
+     567.38,
+     445.84
+    ],
+    [
+     571.38,
+     445.84
+    ],
+    [
+     571.38,
+     451.44
+    ],
+    [
+     567.38,
+     451.44
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.0,
+   "height_m": 16.0,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c"
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "stair / lift core of building A (one core on plan v11), up to the open top floor + 1 m"
+  },
+  {
+   "id": "03-04-A-scaffold",
+   "kind": "scaffold",
+   "material_slot": "construction_frame",
+   "footprint": [
+    [
+     558.18,
+     439.84
+    ],
+    [
+     582.18,
+     439.84
+    ],
+    [
+     582.18,
+     441.84
+    ],
+    [
+     558.18,
+     441.84
+    ]
+   ],
+   "floors": 5,
+   "floor_h_m": 3.0,
+   "height_m": 15.5,
+   "roof": {
+    "type": "none"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "scaffolding along the south face of A (2 m deep, diagonal braces, planks every floor), climbable, collider per deck"
+  },
+  {
+   "id": "03-04-A-hoist",
+   "kind": "cargo_hoist",
+   "material_slot": "construction_frame",
+   "footprint": [
+    [
+     582.18,
+     447.04
+    ],
+    [
+     584.58,
+     447.04
+    ],
+    [
+     584.58,
+     450.64
+    ],
+    [
+     582.18,
+     450.64
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 17.0,
+   "height_m": 17.0,
+   "roof": {
+    "type": "none"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      584.58,
+      448.84
+     ],
+     "facing_deg": 0.0,
+     "kind": "gate",
+     "w_m": 2.0
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "cargo hoist mast on the east face of A with the cage at the ground"
+  },
+  {
+   "id": "03-05-B",
+   "kind": "foundation_slab",
+   "material_slot": "construction_frame",
+   "footprint": [
+    [
+     558.18,
+     397.84
+    ],
+    [
+     578.18,
+     397.84
+    ],
+    [
+     578.18,
+     409.84
+    ],
+    [
+     558.18,
+     409.84
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 0.6,
+   "height_m": 0.6,
+   "roof": {
+    "type": "flat",
+    "material": "concrete_SK3c"
+   },
+   "walls": "concrete_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "05 building B (20 x 12 m): foundation slab 0.6 m, first 6 columns 3 m high (columns_xy) and rebar starters (rebar_xy), formwork",
+   "columns_xy": [
+    [
+     560.18,
+     407.84
+    ],
+    [
+     560.18,
+     403.84
+    ],
+    [
+     560.18,
+     399.84
+    ],
+    [
+     564.18,
+     407.84
+    ],
+    [
+     564.18,
+     403.84
+    ],
+    [
+     564.18,
+     399.84
+    ]
+   ],
+   "column_m": 0.7,
+   "column_h_m": 3.0,
+   "rebar_xy": [
+    [
+     568.18,
+     407.84
+    ],
+    [
+     568.18,
+     403.84
+    ],
+    [
+     568.18,
+     399.84
+    ],
+    [
+     572.18,
+     407.84
+    ],
+    [
+     572.18,
+     403.84
+    ],
+    [
+     572.18,
+     399.84
+    ],
+    [
+     576.18,
+     407.84
+    ],
+    [
+     576.18,
+     403.84
+    ],
+    [
+     576.18,
+     399.84
+    ]
+   ]
+  },
+  {
+   "id": "03-08-dorm",
+   "kind": "old_dormitory",
+   "material_slot": "construction_dorm",
+   "footprint": [
+    [
+     633.44,
+     453.92
+    ],
+    [
+     667.44,
+     453.92
+    ],
+    [
+     667.44,
+     465.12
+    ],
+    [
+     633.44,
+     465.12
+    ]
+   ],
+   "floors": 4,
+   "floor_h_m": 3.0,
+   "height_m": 12.0,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.5
+   },
+   "walls": "stucco_SK3b_v07",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      642.44,
+      453.92
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 1.4,
+     "canopy": true
+    },
+    {
+     "pos": [
+      658.44,
+      453.92
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 1.4,
+     "canopy": true
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "08 migrants dormitory: old 4-storey block 34 x 11.2 m, two entrances with canopies to the yard in front (south)"
+  },
+  {
+   "id": "03-07-cabin01",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     637.64,
+     441.52
+    ],
+    [
+     640.04,
+     441.52
+    ],
+    [
+     640.04,
+     447.52
+    ],
+    [
+     637.64,
+     447.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [
+    {
+     "pos": [
+      638.84,
+      441.52
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row A (doors S)"
+  },
+  {
+   "id": "03-07-cabin02",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     643.04,
+     441.52
+    ],
+    [
+     645.44,
+     441.52
+    ],
+    [
+     645.44,
+     447.52
+    ],
+    [
+     643.04,
+     447.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A47E62",
+   "entrances": [
+    {
+     "pos": [
+      644.24,
+      441.52
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row A (doors S)"
+  },
+  {
+   "id": "03-07-cabin03",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     648.44,
+     441.52
+    ],
+    [
+     650.84,
+     441.52
+    ],
+    [
+     650.84,
+     447.52
+    ],
+    [
+     648.44,
+     447.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [
+    {
+     "pos": [
+      649.64,
+      441.52
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row A (doors S)"
+  },
+  {
+   "id": "03-07-cabin04",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     653.84,
+     441.52
+    ],
+    [
+     656.24,
+     441.52
+    ],
+    [
+     656.24,
+     447.52
+    ],
+    [
+     653.84,
+     447.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A9C0CC",
+   "entrances": [
+    {
+     "pos": [
+      655.04,
+      441.52
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row A (doors S)"
+  },
+  {
+   "id": "03-07-cabin05",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     635.92,
+     422.2
+    ],
+    [
+     638.32,
+     422.2
+    ],
+    [
+     638.32,
+     428.2
+    ],
+    [
+     635.92,
+     428.2
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [
+    {
+     "pos": [
+      637.12,
+      428.2
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row B (doors N)"
+  },
+  {
+   "id": "03-07-cabin06",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     642.12,
+     422.2
+    ],
+    [
+     644.52,
+     422.2
+    ],
+    [
+     644.52,
+     428.2
+    ],
+    [
+     642.12,
+     428.2
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A47E62",
+   "entrances": [
+    {
+     "pos": [
+      643.32,
+      428.2
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row B (doors N)"
+  },
+  {
+   "id": "03-07-cabin07",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     648.34,
+     422.2
+    ],
+    [
+     650.74,
+     422.2
+    ],
+    [
+     650.74,
+     428.2
+    ],
+    [
+     648.34,
+     428.2
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [
+    {
+     "pos": [
+      649.54,
+      428.2
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row B (doors N)"
+  },
+  {
+   "id": "03-07-cabin08",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     654.56,
+     422.2
+    ],
+    [
+     656.96,
+     422.2
+    ],
+    [
+     656.96,
+     428.2
+    ],
+    [
+     654.56,
+     428.2
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A9C0CC",
+   "entrances": [
+    {
+     "pos": [
+      655.76,
+      428.2
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9,
+     "steps": 1
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container 6 x 2.4 m, one storey, porch step, row B (doors N)"
+  },
+  {
+   "id": "03-07-cabin09",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     662.41,
+     414.32
+    ],
+    [
+     668.41,
+     414.32
+    ],
+    [
+     668.41,
+     416.72
+    ],
+    [
+     662.41,
+     416.72
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [
+    {
+     "pos": [
+      662.41,
+      415.52
+     ],
+     "facing_deg": 180.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container across, at the east fence"
+  },
+  {
+   "id": "03-07-cabin10",
+   "kind": "site_cabin",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     663.41,
+     409.2
+    ],
+    [
+     669.41,
+     409.2
+    ],
+    [
+     669.41,
+     411.6
+    ],
+    [
+     663.41,
+     411.6
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#8FA9B8",
+   "entrances": [
+    {
+     "pos": [
+      663.41,
+      410.4
+     ],
+     "facing_deg": 180.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "block container across, at the east fence"
+  },
+  {
+   "id": "03-07-canteen0",
+   "kind": "canteen",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     635.92,
+     404.74
+    ],
+    [
+     638.32,
+     404.74
+    ],
+    [
+     638.32,
+     410.74
+    ],
+    [
+     635.92,
+     410.74
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [
+    {
+     "pos": [
+      637.12,
+      410.74
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "canteen container 6 x 2.4 m"
+  },
+  {
+   "id": "03-07-canteen1",
+   "kind": "canteen",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     642.12,
+     404.74
+    ],
+    [
+     644.52,
+     404.74
+    ],
+    [
+     644.52,
+     410.74
+    ],
+    [
+     642.12,
+     410.74
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#C8BFA8",
+   "entrances": [
+    {
+     "pos": [
+      643.32,
+      410.74
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "canteen container 6 x 2.4 m"
+  },
+  {
+   "id": "03-07-shower2",
+   "kind": "shower",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     648.34,
+     404.74
+    ],
+    [
+     650.74,
+     404.74
+    ],
+    [
+     650.74,
+     410.74
+    ],
+    [
+     648.34,
+     410.74
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#A9C0CC",
+   "entrances": [
+    {
+     "pos": [
+      649.54,
+      410.74
+     ],
+     "facing_deg": 90.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "shower container 6 x 2.4 m"
+  },
+  {
+   "id": "03-07-office",
+   "kind": "foreman_office",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     663.24,
+     441.52
+    ],
+    [
+     665.64,
+     441.52
+    ],
+    [
+     665.64,
+     447.52
+    ],
+    [
+     663.24,
+     447.52
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": "#DDE2E5",
+   "entrances": [
+    {
+     "pos": [
+      664.44,
+      441.52
+     ],
+     "facing_deg": 270.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "foreman office container at the east end of row A"
+  },
+  {
+   "id": "03-03-guard",
+   "kind": "guard_booth",
+   "material_slot": "construction_cabin",
+   "footprint": [
+    [
+     614.94,
+     366.78
+    ],
+    [
+     619.74,
+     366.78
+    ],
+    [
+     619.74,
+     371.18
+    ],
+    [
+     614.94,
+     371.18
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.6,
+   "height_m": 2.6,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "metal_painted_SK6a",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      614.94,
+      368.98
+     ],
+     "facing_deg": 180.0,
+     "kind": "door",
+     "w_m": 0.9
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "03 guard booth at the main gate (no barrier, gates open)"
+  },
+  {
+   "id": "03-03-transformer",
+   "kind": "transformer_booth",
+   "material_slot": "generic_concrete",
+   "footprint": [
+    [
+     552.2,
+     383.18
+    ],
+    [
+     556.6,
+     383.18
+    ],
+    [
+     556.6,
+     387.58
+    ],
+    [
+     552.2,
+     387.58
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 2.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "brick_SK3a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "transformer substation 4.4 x 4.4 m, \"do not enter\" sign"
+  },
+  {
+   "id": "03-02-fuel-canopy",
+   "kind": "fuel_canopy",
+   "material_slot": "generic_concrete",
+   "footprint": [
+    [
+     547.86,
+     336.34
+    ],
+    [
+     559.86,
+     336.34
+    ],
+    [
+     559.86,
+     343.14
+    ],
+    [
+     547.86,
+     343.14
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 4.6,
+   "height_m": 4.6,
+   "roof": {
+    "type": "flat",
+    "material": "metal_painted_SK6a"
+   },
+   "walls": null,
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": false
+   },
+   "collider": "full_roof",
+   "disabled": true,
+   "notes": "02 small fuel station: canopy on 4 columns, one pump island; DISABLED until Vadim answers (v10 §7.3)"
+  },
+  {
+   "id": "03-02-fuel-kiosk",
+   "kind": "kiosk",
+   "material_slot": "generic_concrete",
+   "footprint": [
+    [
+     563.0,
+     335.62
+    ],
+    [
+     568.2,
+     335.62
+    ],
+    [
+     568.2,
+     341.22
+    ],
+    [
+     563.0,
+     341.22
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 2.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d"
+   },
+   "walls": "concrete_panel_SK3c",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": true,
+   "notes": "02 fuel station cash kiosk; DISABLED"
+  },
+  {
+   "id": "03-01-workshop",
+   "kind": "van_workshop",
+   "material_slot": "construction_workshop",
+   "footprint": [
+    [
+     628.62,
+     373.02
+    ],
+    [
+     652.62,
+     373.02
+    ],
+    [
+     652.62,
+     385.02
+    ],
+    [
+     628.62,
+     385.02
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 4.8,
+   "height_m": 4.8,
+   "roof": {
+    "type": "flat",
+    "material": "roof_profsheet_SK4c"
+   },
+   "walls": "cinder_SK3d",
+   "tint": null,
+   "entrances": [
+    {
+     "pos": [
+      633.42,
+      385.02
+     ],
+     "facing_deg": 90,
+     "kind": "rollshutter",
+     "w_m": 5.6
+    },
+    {
+     "pos": [
+      640.62,
+      385.02
+     ],
+     "facing_deg": 90,
+     "kind": "rollshutter",
+     "w_m": 5.6
+    },
+    {
+     "pos": [
+      647.82,
+      385.02
+     ],
+     "facing_deg": 90,
+     "kind": "rollshutter",
+     "w_m": 5.6
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "01 van upgrade workshop 24 x 12 m: 3 roller doors 5.6 m (to the yard, north), pit inside, tyres / scrap / rusty body / a van beside it; reached through the main gate",
+   "apron": [
+    [
+     628.62,
+     385.02
+    ],
+    [
+     652.62,
+     385.02
+    ],
+    [
+     652.62,
+     399.02
+    ],
+    [
+     628.62,
+     399.02
+    ]
+   ],
+   "apron_note": "14 m loading / turning apron in front of the doors (v10 §4): keep free"
+  }
+ ],
+ "props": [
+  {
+   "id": "03-05-formwork0",
+   "kind": "formwork_panels",
+   "pos": [
+    563.38,
+    401.64
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    4.8,
+    2.0,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-05-formwork1",
+   "kind": "formwork_panels",
+   "pos": [
+    569.38,
+    401.64
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    4.8,
+    2.0,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-wheelwash",
+   "kind": "wheel_wash",
+   "pos": [
+    605.62,
+    370.12
+   ],
+   "rot_deg": -90.0,
+   "size": [
+    7.6,
+    5.2,
+    0.4
+   ],
+   "grip_anchor": false,
+   "note": "drive-over grate + low pump box, on the van path behind the gate"
+  },
+  {
+   "id": "03-03-watertank",
+   "kind": "water_tank",
+   "pos": [
+    554.6,
+    377.98
+   ],
+   "rot_deg": 0,
+   "size": [
+    3.6,
+    3.6,
+    2.4
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-02-fuel-pump",
+   "kind": "fuel_pump_island",
+   "pos": [
+    553.86,
+    339.74
+   ],
+   "rot_deg": 0,
+   "size": [
+    5.6,
+    1.2,
+    1.8
+   ],
+   "grip_anchor": false,
+   "disabled": true
+  },
+  {
+   "id": "03-06-crane",
+   "kind": "tower_crane",
+   "pos": [
+    587.38,
+    436.64
+   ],
+   "rot_deg": 150.9,
+   "size": [
+    3.2,
+    3.2,
+    32.0
+   ],
+   "grip_anchor": true,
+   "jib_len_m": 30.0,
+   "counter_jib_len_m": 9.2,
+   "slew_radius_m": 30.0,
+   "note": "06 tower crane at building A: mast 3.2 m (base 3.2 x 3.2 with ballast), hook height ~30 m over the 5-storey frame, jib over A; rot_deg = jib heading; dashed circle on the plan = jib reach 30 m"
+  },
+  {
+   "id": "03-03-pallet_bricks0",
+   "kind": "pallet_bricks",
+   "pos": [
+    608.95,
+    460.77
+   ],
+   "rot_deg": 6.5,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_bricks1",
+   "kind": "pallet_bricks",
+   "pos": [
+    609.34,
+    456.74
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_bricks2",
+   "kind": "pallet_bricks",
+   "pos": [
+    613.78,
+    461.06
+   ],
+   "rot_deg": -0.7,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_bricks3",
+   "kind": "pallet_bricks",
+   "pos": [
+    613.5,
+    456.7
+   ],
+   "rot_deg": 2.1,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_bricks4",
+   "kind": "pallet_bricks",
+   "pos": [
+    617.99,
+    460.69
+   ],
+   "rot_deg": -3.9,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_bricks5",
+   "kind": "pallet_bricks",
+   "pos": [
+    617.44,
+    456.5
+   ],
+   "rot_deg": 6.8,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_blocks0",
+   "kind": "pallet_blocks",
+   "pos": [
+    608.99,
+    450.13
+   ],
+   "rot_deg": -1.8,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_blocks1",
+   "kind": "pallet_blocks",
+   "pos": [
+    613.51,
+    450.78
+   ],
+   "rot_deg": -5.0,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pallet_blocks2",
+   "kind": "pallet_blocks",
+   "pos": [
+    616.9,
+    450.89
+   ],
+   "rot_deg": -3.2,
+   "size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-rebar",
+   "kind": "rebar_bundles",
+   "pos": [
+    613.62,
+    444.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    13.0,
+    3.0,
+    0.5
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-formwork-stack0",
+   "kind": "formwork_stack",
+   "pos": [
+    613.64,
+    411.04
+   ],
+   "rot_deg": 3.9,
+   "size": [
+    12.4,
+    1.6,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-formwork-stack1",
+   "kind": "formwork_stack",
+   "pos": [
+    612.92,
+    408.64
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    12.4,
+    1.6,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-formwork-stack2",
+   "kind": "formwork_stack",
+   "pos": [
+    614.25,
+    406.24
+   ],
+   "rot_deg": 0.6,
+   "size": [
+    12.4,
+    1.6,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pipes0",
+   "kind": "pipe_stack",
+   "pos": [
+    617.44,
+    402.98
+   ],
+   "rot_deg": -0.9,
+   "size": [
+    12.4,
+    0.8,
+    0.8
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pipes1",
+   "kind": "pipe_stack",
+   "pos": [
+    617.01,
+    401.66
+   ],
+   "rot_deg": -0.6,
+   "size": [
+    12.4,
+    0.8,
+    0.8
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-pipes2",
+   "kind": "pipe_stack",
+   "pos": [
+    617.13,
+    400.32
+   ],
+   "rot_deg": -0.7,
+   "size": [
+    12.4,
+    0.8,
+    0.8
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-sand_pile",
+   "kind": "sand_pile",
+   "pos": [
+    617.35,
+    388.66
+   ],
+   "rot_deg": 0,
+   "size": [
+    7.2,
+    6.0,
+    1.8
+   ],
+   "grip_anchor": false,
+   "footprint": [
+    [
+     620.72,
+     390.06
+    ],
+    [
+     619.82,
+     391.34
+    ],
+    [
+     618.1,
+     391.72
+    ],
+    [
+     616.56,
+     391.24
+    ],
+    [
+     615.16,
+     390.86
+    ],
+    [
+     614.12,
+     389.92
+    ],
+    [
+     613.84,
+     388.66
+    ],
+    [
+     614.04,
+     387.36
+    ],
+    [
+     614.86,
+     386.16
+    ],
+    [
+     616.52,
+     385.92
+    ],
+    [
+     618.0,
+     385.92
+    ],
+    [
+     619.76,
+     386.06
+    ],
+    [
+     620.56,
+     387.34
+    ],
+    [
+     620.86,
+     388.66
+    ]
+   ]
+  },
+  {
+   "id": "03-03-gravel_pile",
+   "kind": "gravel_pile",
+   "pos": [
+    622.88,
+    383.48
+   ],
+   "rot_deg": 0,
+   "size": [
+    5.2,
+    4.4,
+    1.5
+   ],
+   "grip_anchor": false,
+   "footprint": [
+    [
+     624.84,
+     384.42
+    ],
+    [
+     624.38,
+     385.7
+    ],
+    [
+     622.86,
+     386.02
+    ],
+    [
+     621.72,
+     385.14
+    ],
+    [
+     620.6,
+     384.56
+    ],
+    [
+     620.4,
+     383.46
+    ],
+    [
+     620.28,
+     382.2
+    ],
+    [
+     621.58,
+     381.58
+    ],
+    [
+     622.86,
+     381.46
+    ],
+    [
+     624.38,
+     381.24
+    ],
+    [
+     624.84,
+     382.48
+    ],
+    [
+     625.86,
+     383.46
+    ]
+   ]
+  },
+  {
+   "id": "03-03-shields0",
+   "kind": "formwork_shields",
+   "pos": [
+    590.18,
+    429.84
+   ],
+   "rot_deg": -12,
+   "size": [
+    6.8,
+    1.4,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-shields1",
+   "kind": "formwork_shields",
+   "pos": [
+    549.74,
+    411.26
+   ],
+   "rot_deg": 8,
+   "size": [
+    6.8,
+    1.4,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-shields2",
+   "kind": "formwork_shields",
+   "pos": [
+    591.7,
+    386.34
+   ],
+   "rot_deg": -20,
+   "size": [
+    6.8,
+    1.4,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-shields3",
+   "kind": "formwork_shields",
+   "pos": [
+    557.08,
+    386.28
+   ],
+   "rot_deg": 14,
+   "size": [
+    6.8,
+    1.4,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-03-mixer-truck",
+   "kind": "concrete_mixer_truck",
+   "pos": [
+    572.58,
+    421.44
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    9.6,
+    4.0,
+    3.4
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-dump-truck",
+   "kind": "dump_truck",
+   "pos": [
+    592.5,
+    384.34
+   ],
+   "rot_deg": 8,
+   "size": [
+    8.8,
+    3.6,
+    3.2
+   ],
+   "grip_anchor": false,
+   "note": ""
+  },
+  {
+   "id": "03-wheel-loader",
+   "kind": "wheel_loader",
+   "pos": [
+    569.96,
+    380.58
+   ],
+   "rot_deg": -20,
+   "size": [
+    4.4,
+    2.8,
+    3.0
+   ],
+   "grip_anchor": false,
+   "note": ""
+  },
+  {
+   "id": "03-paz-bus",
+   "kind": "paz_bus",
+   "pos": [
+    665.64,
+    435.68
+   ],
+   "rot_deg": 2,
+   "size": [
+    8.0,
+    2.8,
+    3.0
+   ],
+   "grip_anchor": false,
+   "note": "PAZ bus of the workers at the cabin town"
+  },
+  {
+   "id": "03-skip-bin0",
+   "kind": "skip_bin",
+   "pos": [
+    621.72,
+    376.2
+   ],
+   "rot_deg": 0,
+   "size": [
+    6.8,
+    3.6,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-skip-bin1",
+   "kind": "skip_bin",
+   "pos": [
+    660.8,
+    400.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.4,
+    2.8,
+    1.6
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-watertank",
+   "kind": "water_tank",
+   "pos": [
+    667.94,
+    400.32
+   ],
+   "rot_deg": 0,
+   "size": [
+    3.2,
+    3.2,
+    2.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-biotoilet0",
+   "kind": "bio_toilet",
+   "pos": [
+    648.4,
+    400.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.2,
+    1.2,
+    2.3
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-biotoilet1",
+   "kind": "bio_toilet",
+   "pos": [
+    650.7,
+    400.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.2,
+    1.2,
+    2.3
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-biotoilet2",
+   "kind": "bio_toilet",
+   "pos": [
+    653.0,
+    400.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.2,
+    1.2,
+    2.3
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-biotoilet3",
+   "kind": "bio_toilet",
+   "pos": [
+    655.3,
+    400.52
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.2,
+    1.2,
+    2.3
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-clothesline0",
+   "kind": "clothes_line",
+   "pos": [
+    644.44,
+    436.72
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    12.0,
+    0.1,
+    1.8
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "03-07-clothesline1",
+   "kind": "clothes_line",
+   "pos": [
+    643.56,
+    433.04
+   ],
+   "rot_deg": 0.0,
+   "size": [
+    12.0,
+    0.1,
+    1.8
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "03-07-smoking",
+   "kind": "smoking_shelter",
+   "pos": [
+    652.84,
+    437.12
+   ],
+   "rot_deg": -2,
+   "size": [
+    4.4,
+    3.2,
+    2.4
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-07-bench0",
+   "kind": "bench",
+   "pos": [
+    650.44,
+    434.22
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.4,
+    1.0,
+    0.5
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "03-07-bench1",
+   "kind": "bench",
+   "pos": [
+    655.24,
+    434.22
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.4,
+    1.0,
+    0.5
+   ],
+   "grip_anchor": true
+  },
+  {
+   "id": "03-07-firebarrel",
+   "kind": "fire_barrel",
+   "pos": [
+    652.3,
+    432.24
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-01-van",
+   "kind": "van_on_jacks",
+   "pos": [
+    624.2,
+    394.45
+   ],
+   "rot_deg": 0,
+   "size": [
+    7.2,
+    3.2,
+    2.4
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-01-tyres0",
+   "kind": "tyre_stack",
+   "pos": [
+    654.12,
+    386.62
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.0,
+    1.0,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-01-tyres1",
+   "kind": "tyre_stack",
+   "pos": [
+    654.12,
+    388.62
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.0,
+    1.0,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-01-tyres2",
+   "kind": "tyre_stack",
+   "pos": [
+    654.08,
+    390.73
+   ],
+   "rot_deg": 0,
+   "size": [
+    1.0,
+    1.0,
+    1.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-01-scrap",
+   "kind": "scrap_metal_pile",
+   "pos": [
+    624.41,
+    388.25
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.8,
+    3.2,
+    1.4
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "03-01-rustybody",
+   "kind": "rusty_car_body",
+   "pos": [
+    656.64,
+    377.08
+   ],
+   "rot_deg": 0,
+   "size": [
+    6.0,
+    2.8,
+    1.6
+   ],
+   "grip_anchor": false
+  }
+ ],
+ "zones": [
+  {
+   "id": "03-02-fuel-pad",
+   "kind": "fuel_pad",
+   "poly": [
+    [
+     552.0,
+     328.06
+    ],
+    [
+     574.4,
+     328.06
+    ],
+    [
+     574.4,
+     344.14
+    ],
+    [
+     552.0,
+     344.14
+    ]
+   ],
+   "surface": "concrete_SK3c",
+   "disabled": true,
+   "notes": "apron of the fuel station, touching the south edge of the main road ROAD_H (two entries from the road)"
+  },
+  {
+   "id": "03-fence",
+   "kind": "fence",
+   "line": [
+    [
+     590.52,
+     363.8
+    ],
+    [
+     576.12,
+     366.0
+    ],
+    [
+     551.52,
+     375.0
+    ],
+    [
+     540.04,
+     395.0
+    ],
+    [
+     534.3,
+     430.0
+    ],
+    [
+     536.76,
+     466.0
+    ],
+    [
+     551.52,
+     473.0
+    ],
+    [
+     588.42,
+     473.0
+    ],
+    [
+     621.22,
+     481.0
+    ],
+    [
+     647.46,
+     488.0
+    ],
+    [
+     666.32,
+     480.0
+    ],
+    [
+     674.52,
+     454.0
+    ],
+    [
+     667.96,
+     426.0
+    ],
+    [
+     673.7,
+     400.0
+    ],
+    [
+     663.04,
+     376.0
+    ],
+    [
+     640.08,
+     364.0
+    ],
+    [
+     609.3,
+     361.04
+    ]
+   ],
+   "material": "profiled_sheet_blue",
+   "surface": "metal_painted_SK6a",
+   "tint": "#6E8AA6",
+   "height_m": 2.0,
+   "solid": true,
+   "posts_every_m": 3.0,
+   "notes": "the ONE fence of v85 (build_world_v85 _ring_gap(CONSTR_POLY, _gate, 9.5)): blue profiled sheet ~2 m along the site contour, open ring from gate post to gate post; no inner fences, no plan v11 fence, no stubs"
+  },
+  {
+   "id": "03-gate-main",
+   "kind": "gate",
+   "pos": [
+    599.91,
+    362.42
+   ],
+   "w_m": 18.98,
+   "open": true,
+   "barrier": false,
+   "posts": [
+    [
+     590.52,
+     363.8
+    ],
+    [
+     609.3,
+     361.04
+    ]
+   ],
+   "facing_deg": 270,
+   "guard_booth": "03-03-guard",
+   "wheel_wash": "03-03-wheelwash",
+   "connector": {
+    "line": [
+     [
+      600.0,
+      363.0
+     ],
+     [
+      600.0,
+      349.0
+     ]
+    ],
+    "surface": "asphalt_A5d12",
+    "width_m": 6.4,
+    "note": "ROAD_CONSTR of build_world_v85 (already in the world road network, R24) from the gate to ROAD_H"
+   },
+   "notes": "main gate ~19 m onto the main road, open, no barrier (v10 §7.3, v02 §8.3)"
+  },
+  {
+   "id": "03-ground",
+   "kind": "ground",
+   "poly": [
+    [
+     534.3,
+     430.0
+    ],
+    [
+     540.04,
+     395.0
+    ],
+    [
+     551.52,
+     375.0
+    ],
+    [
+     576.12,
+     366.0
+    ],
+    [
+     608.92,
+     361.0
+    ],
+    [
+     640.08,
+     364.0
+    ],
+    [
+     663.04,
+     376.0
+    ],
+    [
+     673.7,
+     400.0
+    ],
+    [
+     667.96,
+     426.0
+    ],
+    [
+     674.52,
+     454.0
+    ],
+    [
+     666.32,
+     480.0
+    ],
+    [
+     647.46,
+     488.0
+    ],
+    [
+     621.22,
+     481.0
+    ],
+    [
+     588.42,
+     473.0
+    ],
+    [
+     551.52,
+     473.0
+    ],
+    [
+     536.76,
+     466.0
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "flat": true,
+   "pad_rel_m": 8.0,
+   "notes": "site yard = hill pad +8 m above the surroundings (v10 §3.1); bare packed dirt with ruts and puddles, no concrete / slab roads (v02 §8.3); edges blend into the wooded slope 9..26 m outside the fence"
+  },
+  {
+   "id": "03-dirt_patch0",
+   "kind": "dirt_patch",
+   "poly": [
+    [
+     599.19,
+     379.38
+    ],
+    [
+     589.05,
+     379.97
+    ],
+    [
+     583.94,
+     380.67
+    ],
+    [
+     578.7,
+     381.59
+    ],
+    [
+     569.57,
+     383.58
+    ],
+    [
+     561.84,
+     381.99
+    ],
+    [
+     562.09,
+     378.89
+    ],
+    [
+     554.89,
+     376.76
+    ],
+    [
+     560.25,
+     374.38
+    ],
+    [
+     566.49,
+     372.98
+    ],
+    [
+     572.67,
+     372.26
+    ],
+    [
+     578.7,
+     372.05
+    ],
+    [
+     586.38,
+     371.0
+    ],
+    [
+     588.04,
+     373.87
+    ],
+    [
+     593.56,
+     374.86
+    ],
+    [
+     597.54,
+     376.76
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "darker churned dirt with deep ruts (decal / terrain layer), drivable"
+  },
+  {
+   "id": "03-dirt_patch1",
+   "kind": "dirt_patch",
+   "poly": [
+    [
+     626.54,
+     373.13
+    ],
+    [
+     621.66,
+     373.85
+    ],
+    [
+     618.9,
+     374.8
+    ],
+    [
+     615.5,
+     375.33
+    ],
+    [
+     612.74,
+     374.08
+    ],
+    [
+     608.37,
+     374.31
+    ],
+    [
+     605.77,
+     372.88
+    ],
+    [
+     608.25,
+     371.06
+    ],
+    [
+     605.68,
+     369.22
+    ],
+    [
+     610.05,
+     368.57
+    ],
+    [
+     612.81,
+     368.1
+    ],
+    [
+     615.5,
+     367.79
+    ],
+    [
+     619.41,
+     366.77
+    ],
+    [
+     621.6,
+     368.29
+    ],
+    [
+     622.03,
+     369.82
+    ],
+    [
+     622.01,
+     371.06
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "darker churned dirt with deep ruts (decal / terrain layer), drivable"
+  },
+  {
+   "id": "03-dirt_patch2",
+   "kind": "dirt_patch",
+   "poly": [
+    [
+     566.23,
+     425.17
+    ],
+    [
+     567.38,
+     426.73
+    ],
+    [
+     561.08,
+     426.24
+    ],
+    [
+     558.0,
+     427.07
+    ],
+    [
+     552.6,
+     427.72
+    ],
+    [
+     547.7,
+     426.98
+    ],
+    [
+     547.24,
+     425.44
+    ],
+    [
+     544.13,
+     424.26
+    ],
+    [
+     547.33,
+     423.08
+    ],
+    [
+     551.81,
+     422.63
+    ],
+    [
+     553.01,
+     421.09
+    ],
+    [
+     558.0,
+     421.22
+    ],
+    [
+     563.45,
+     420.78
+    ],
+    [
+     565.18,
+     422.36
+    ],
+    [
+     566.81,
+     423.29
+    ],
+    [
+     566.58,
+     424.26
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "darker churned dirt with deep ruts (decal / terrain layer), drivable"
+  },
+  {
+   "id": "03-dirt_patch3",
+   "kind": "dirt_patch",
+   "poly": [
+    [
+     625.62,
+     395.44
+    ],
+    [
+     624.79,
+     397.26
+    ],
+    [
+     620.7,
+     397.26
+    ],
+    [
+     617.8,
+     397.72
+    ],
+    [
+     613.96,
+     398.34
+    ],
+    [
+     612.26,
+     396.56
+    ],
+    [
+     610.07,
+     395.42
+    ],
+    [
+     609.27,
+     393.86
+    ],
+    [
+     611.94,
+     392.68
+    ],
+    [
+     610.92,
+     390.52
+    ],
+    [
+     614.1,
+     389.53
+    ],
+    [
+     617.8,
+     389.72
+    ],
+    [
+     620.4,
+     390.82
+    ],
+    [
+     624.38,
+     390.67
+    ],
+    [
+     625.6,
+     392.28
+    ],
+    [
+     625.94,
+     393.86
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "darker churned dirt with deep ruts (decal / terrain layer), drivable"
+  },
+  {
+   "id": "03-dirt_patch4",
+   "kind": "dirt_patch",
+   "poly": [
+    [
+     650.74,
+     411.57
+    ],
+    [
+     647.98,
+     413.75
+    ],
+    [
+     643.19,
+     414.68
+    ],
+    [
+     638.5,
+     413.98
+    ],
+    [
+     635.0,
+     413.24
+    ],
+    [
+     630.31,
+     413.13
+    ],
+    [
+     630.45,
+     410.71
+    ],
+    [
+     628.33,
+     409.06
+    ],
+    [
+     628.36,
+     406.97
+    ],
+    [
+     628.17,
+     403.95
+    ],
+    [
+     634.45,
+     404.22
+    ],
+    [
+     638.5,
+     402.05
+    ],
+    [
+     643.95,
+     402.54
+    ],
+    [
+     648.3,
+     404.2
+    ],
+    [
+     649.68,
+     406.76
+    ],
+    [
+     650.21,
+     409.06
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "darker churned dirt with deep ruts (decal / terrain layer), drivable"
+  },
+  {
+   "id": "03-dirt_patch5",
+   "kind": "dirt_patch",
+   "poly": [
+    [
+     662.49,
+     377.22
+    ],
+    [
+     662.49,
+     377.22
+    ],
+    [
+     660.39,
+     375.74
+    ],
+    [
+     655.82,
+     373.36
+    ],
+    [
+     652.05,
+     372.39
+    ],
+    [
+     648.46,
+     371.48
+    ],
+    [
+     640.87,
+     370.98
+    ],
+    [
+     640.98,
+     369.16
+    ],
+    [
+     642.25,
+     367.49
+    ],
+    [
+     644.99,
+     367.69
+    ],
+    [
+     647.11,
+     368.8
+    ],
+    [
+     653.6,
+     372.19
+    ],
+    [
+     658.08,
+     374.54
+    ],
+    [
+     660.39,
+     375.74
+    ],
+    [
+     662.49,
+     377.22
+    ],
+    [
+     662.49,
+     377.22
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "notes": "darker churned dirt with deep ruts (decal / terrain layer), drivable"
+  },
+  {
+   "id": "03-yard6",
+   "kind": "yard",
+   "poly": [
+    [
+     668.22,
+     447.52
+    ],
+    [
+     668.26,
+     450.86
+    ],
+    [
+     657.36,
+     450.71
+    ],
+    [
+     650.0,
+     451.91
+    ],
+    [
+     641.56,
+     451.51
+    ],
+    [
+     635.0,
+     449.83
+    ],
+    [
+     628.66,
+     447.91
+    ],
+    [
+     624.45,
+     445.16
+    ],
+    [
+     631.85,
+     442.82
+    ],
+    [
+     632.24,
+     439.61
+    ],
+    [
+     641.88,
+     439.04
+    ],
+    [
+     650.0,
+     439.57
+    ],
+    [
+     659.2,
+     438.23
+    ],
+    [
+     662.17,
+     441.36
+    ],
+    [
+     669.14,
+     442.69
+    ],
+    [
+     668.06,
+     445.16
+    ]
+   ],
+   "surface": "gravel_SK1d",
+   "notes": "compacted yard of the dormitory (08), NPC hang-out"
+  },
+  {
+   "id": "03-puddle8",
+   "kind": "puddle",
+   "poly": [
+    [
+     578.42,
+     369.77
+    ],
+    [
+     577.21,
+     370.17
+    ],
+    [
+     575.85,
+     369.86
+    ],
+    [
+     574.97,
+     369.6
+    ],
+    [
+     573.99,
+     369.16
+    ],
+    [
+     574.81,
+     368.69
+    ],
+    [
+     575.89,
+     368.53
+    ],
+    [
+     577.11,
+     368.27
+    ],
+    [
+     578.08,
+     368.65
+    ],
+    [
+     578.77,
+     369.16
+    ]
+   ],
+   "surface": "water_puddle",
+   "notes": "shallow puddle decal, no collider"
+  },
+  {
+   "id": "03-puddle9",
+   "kind": "puddle",
+   "poly": [
+    [
+     655.77,
+     398.29
+    ],
+    [
+     654.28,
+     398.4
+    ],
+    [
+     652.81,
+     398.78
+    ],
+    [
+     651.96,
+     398.17
+    ],
+    [
+     651.38,
+     397.66
+    ],
+    [
+     651.52,
+     397.01
+    ],
+    [
+     653.13,
+     396.96
+    ],
+    [
+     654.19,
+     397.01
+    ],
+    [
+     655.13,
+     397.22
+    ],
+    [
+     655.8,
+     397.66
+    ]
+   ],
+   "surface": "water_puddle",
+   "notes": "shallow puddle decal, no collider"
+  },
+  {
+   "id": "03-puddle10",
+   "kind": "puddle",
+   "poly": [
+    [
+     619.16,
+     413.28
+    ],
+    [
+     618.65,
+     413.94
+    ],
+    [
+     617.02,
+     413.87
+    ],
+    [
+     615.71,
+     413.49
+    ],
+    [
+     615.18,
+     412.86
+    ],
+    [
+     615.78,
+     412.25
+    ],
+    [
+     616.93,
+     411.74
+    ],
+    [
+     618.35,
+     412.16
+    ],
+    [
+     619.48,
+     412.35
+    ],
+    [
+     619.46,
+     412.86
+    ]
+   ],
+   "surface": "water_puddle",
+   "notes": "shallow puddle decal, no collider"
+  },
+  {
+   "id": "03-rut-main",
+   "kind": "track",
+   "line": [
+    [
+     599.91,
+     362.42
+    ],
+    [
+     599.91,
+     366.42
+    ],
+    [
+     599.9,
+     366.66
+    ],
+    [
+     599.88,
+     367.14
+    ],
+    [
+     599.85,
+     367.86
+    ],
+    [
+     599.81,
+     368.81
+    ],
+    [
+     599.97,
+     369.72
+    ],
+    [
+     600.32,
+     370.57
+    ],
+    [
+     600.88,
+     371.38
+    ],
+    [
+     601.62,
+     372.12
+    ],
+    [
+     602.19,
+     373.16
+    ],
+    [
+     602.56,
+     374.47
+    ],
+    [
+     602.75,
+     376.06
+    ],
+    [
+     602.75,
+     377.94
+    ],
+    [
+     602.94,
+     379.69
+    ],
+    [
+     603.31,
+     381.31
+    ],
+    [
+     603.88,
+     382.81
+    ],
+    [
+     604.62,
+     384.19
+    ],
+    [
+     604.81,
+     385.59
+    ],
+    [
+     604.44,
+     387.03
+    ],
+    [
+     603.5,
+     388.5
+    ],
+    [
+     602.0,
+     390.0
+    ],
+    [
+     600.88,
+     391.5
+    ],
+    [
+     600.12,
+     393.0
+    ],
+    [
+     599.75,
+     394.5
+    ],
+    [
+     599.75,
+     396.0
+    ],
+    [
+     599.59,
+     397.44
+    ],
+    [
+     599.28,
+     398.81
+    ],
+    [
+     598.81,
+     400.12
+    ],
+    [
+     598.19,
+     401.38
+    ],
+    [
+     597.12,
+     402.91
+    ],
+    [
+     595.62,
+     404.72
+    ],
+    [
+     593.69,
+     406.81
+    ],
+    [
+     591.31,
+     409.19
+    ],
+    [
+     588.97,
+     411.22
+    ],
+    [
+     586.66,
+     412.91
+    ],
+    [
+     584.38,
+     414.25
+    ],
+    [
+     582.12,
+     415.25
+    ],
+    [
+     580.31,
+     415.88
+    ],
+    [
+     578.94,
+     416.12
+    ],
+    [
+     578.0,
+     416.0
+    ],
+    [
+     577.5,
+     415.5
+    ],
+    [
+     576.41,
+     415.12
+    ],
+    [
+     574.72,
+     414.88
+    ],
+    [
+     572.44,
+     414.75
+    ],
+    [
+     569.56,
+     414.75
+    ],
+    [
+     566.81,
+     415.09
+    ],
+    [
+     564.19,
+     415.78
+    ],
+    [
+     561.69,
+     416.81
+    ],
+    [
+     559.31,
+     418.19
+    ],
+    [
+     557.53,
+     419.22
+    ],
+    [
+     556.34,
+     419.91
+    ],
+    [
+     555.75,
+     420.25
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 3.6,
+   "notes": "gate -> between buildings A and B -> west part (plan v11 rut 1); two wheel ruts with puddles, no gravel / concrete; no props on it"
+  },
+  {
+   "id": "03-rut-north",
+   "kind": "track",
+   "line": [
+    [
+     599.91,
+     362.42
+    ],
+    [
+     599.91,
+     366.42
+    ],
+    [
+     600.27,
+     366.78
+    ],
+    [
+     601.0,
+     367.51
+    ],
+    [
+     602.1,
+     368.61
+    ],
+    [
+     603.56,
+     370.06
+    ],
+    [
+     604.69,
+     372.19
+    ],
+    [
+     605.48,
+     374.98
+    ],
+    [
+     605.94,
+     378.44
+    ],
+    [
+     606.06,
+     382.56
+    ],
+    [
+     606.31,
+     385.97
+    ],
+    [
+     606.69,
+     388.66
+    ],
+    [
+     607.19,
+     390.62
+    ],
+    [
+     607.81,
+     391.88
+    ],
+    [
+     607.91,
+     393.19
+    ],
+    [
+     607.47,
+     394.56
+    ],
+    [
+     606.5,
+     396.0
+    ],
+    [
+     605.0,
+     397.5
+    ],
+    [
+     603.78,
+     399.34
+    ],
+    [
+     602.84,
+     401.53
+    ],
+    [
+     602.19,
+     404.06
+    ],
+    [
+     601.81,
+     406.94
+    ],
+    [
+     601.78,
+     409.41
+    ],
+    [
+     602.09,
+     411.47
+    ],
+    [
+     602.75,
+     413.12
+    ],
+    [
+     603.75,
+     414.38
+    ],
+    [
+     605.06,
+     415.34
+    ],
+    [
+     606.69,
+     416.03
+    ],
+    [
+     608.62,
+     416.44
+    ],
+    [
+     610.88,
+     416.56
+    ],
+    [
+     612.66,
+     416.53
+    ],
+    [
+     613.97,
+     416.34
+    ],
+    [
+     614.81,
+     416.0
+    ],
+    [
+     615.19,
+     415.5
+    ],
+    [
+     615.59,
+     416.06
+    ],
+    [
+     616.03,
+     417.69
+    ],
+    [
+     616.5,
+     420.38
+    ],
+    [
+     617.0,
+     424.12
+    ],
+    [
+     617.38,
+     426.94
+    ],
+    [
+     617.62,
+     428.81
+    ],
+    [
+     617.75,
+     429.75
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 3.6,
+   "notes": "gate -> past the materials store -> north (plan v11 rut 2, around the stacks); two wheel ruts with puddles, no gravel / concrete; no props on it"
+  },
+  {
+   "id": "03-rut-west",
+   "kind": "track",
+   "line": [
+    [
+     599.91,
+     362.42
+    ],
+    [
+     599.91,
+     366.42
+    ],
+    [
+     599.52,
+     366.78
+    ],
+    [
+     598.75,
+     367.51
+    ],
+    [
+     597.6,
+     368.61
+    ],
+    [
+     596.06,
+     370.06
+    ],
+    [
+     593.97,
+     371.56
+    ],
+    [
+     591.32,
+     373.1
+    ],
+    [
+     588.12,
+     374.69
+    ],
+    [
+     584.38,
+     376.31
+    ],
+    [
+     581.56,
+     377.53
+    ],
+    [
+     579.69,
+     378.34
+    ],
+    [
+     578.75,
+     378.75
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 3.6,
+   "notes": "gate -> machinery / west formwork (plan v11 rut 3, re-targeted); two wheel ruts with puddles, no gravel / concrete; no props on it"
+  },
+  {
+   "id": "03-rut-workshop",
+   "kind": "track",
+   "line": [
+    [
+     599.91,
+     362.42
+    ],
+    [
+     599.91,
+     366.42
+    ],
+    [
+     599.9,
+     366.63
+    ],
+    [
+     599.88,
+     367.04
+    ],
+    [
+     599.85,
+     367.67
+    ],
+    [
+     599.81,
+     368.5
+    ],
+    [
+     599.9,
+     369.25
+    ],
+    [
+     600.13,
+     369.92
+    ],
+    [
+     600.5,
+     370.5
+    ],
+    [
+     601.0,
+     371.0
+    ],
+    [
+     601.34,
+     373.84
+    ],
+    [
+     601.53,
+     379.03
+    ],
+    [
+     601.56,
+     386.56
+    ],
+    [
+     601.44,
+     396.44
+    ],
+    [
+     601.59,
+     404.16
+    ],
+    [
+     602.03,
+     409.72
+    ],
+    [
+     602.75,
+     413.12
+    ],
+    [
+     603.75,
+     414.38
+    ],
+    [
+     605.53,
+     415.38
+    ],
+    [
+     608.09,
+     416.12
+    ],
+    [
+     611.44,
+     416.62
+    ],
+    [
+     615.56,
+     416.88
+    ],
+    [
+     619.22,
+     416.5
+    ],
+    [
+     622.41,
+     415.5
+    ],
+    [
+     625.12,
+     413.88
+    ],
+    [
+     627.38,
+     411.62
+    ],
+    [
+     629.06,
+     409.56
+    ],
+    [
+     630.19,
+     407.69
+    ],
+    [
+     630.75,
+     406.0
+    ],
+    [
+     630.75,
+     404.5
+    ],
+    [
+     631.38,
+     402.75
+    ],
+    [
+     632.62,
+     400.75
+    ],
+    [
+     634.5,
+     398.5
+    ],
+    [
+     637.0,
+     396.0
+    ],
+    [
+     638.88,
+     394.12
+    ],
+    [
+     640.12,
+     392.88
+    ],
+    [
+     640.75,
+     392.25
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 3.6,
+   "notes": "gate -> workshop apron (replaces the workshop gate of plan v11); two wheel ruts with puddles, no gravel / concrete; no props on it"
+  },
+  {
+   "id": "03-rut-cabins",
+   "kind": "track",
+   "line": [
+    [
+     599.91,
+     362.42
+    ],
+    [
+     599.91,
+     366.42
+    ],
+    [
+     599.9,
+     366.63
+    ],
+    [
+     599.88,
+     367.04
+    ],
+    [
+     599.85,
+     367.67
+    ],
+    [
+     599.81,
+     368.5
+    ],
+    [
+     599.9,
+     369.25
+    ],
+    [
+     600.13,
+     369.92
+    ],
+    [
+     600.5,
+     370.5
+    ],
+    [
+     601.0,
+     371.0
+    ],
+    [
+     601.34,
+     373.84
+    ],
+    [
+     601.53,
+     379.03
+    ],
+    [
+     601.56,
+     386.56
+    ],
+    [
+     601.44,
+     396.44
+    ],
+    [
+     602.31,
+     404.88
+    ],
+    [
+     604.19,
+     411.88
+    ],
+    [
+     607.06,
+     417.44
+    ],
+    [
+     610.94,
+     421.56
+    ],
+    [
+     614.81,
+     425.09
+    ],
+    [
+     618.69,
+     428.03
+    ],
+    [
+     622.56,
+     430.38
+    ],
+    [
+     626.44,
+     432.12
+    ],
+    [
+     629.34,
+     433.44
+    ],
+    [
+     631.28,
+     434.31
+    ],
+    [
+     632.25,
+     434.75
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 3.6,
+   "notes": "gate -> cabin-town yard between rows A and B, from the west (replaces the east-gate drive); two wheel ruts with puddles, no gravel / concrete; no props on it"
+  },
+  {
+   "id": "03-path0",
+   "kind": "path",
+   "line": [
+    [
+     617.8,
+     412.86
+    ],
+    [
+     627.0,
+     420.46
+    ],
+    [
+     631.6,
+     429.96
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 1.2,
+   "notes": "trodden footpath of the workers (plan blue dashes)"
+  },
+  {
+   "id": "03-path1",
+   "kind": "path",
+   "line": [
+    [
+     627.46,
+     386.26
+    ],
+    [
+     620.1,
+     376.76
+    ],
+    [
+     617.8,
+     371.06
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 1.2,
+   "notes": "trodden footpath of the workers (plan blue dashes)"
+  },
+  {
+   "id": "03-path2",
+   "kind": "path",
+   "line": [
+    [
+     656.9,
+     453.52
+    ],
+    [
+     659.66,
+     450.48
+    ],
+    [
+     659.66,
+     440.22
+    ],
+    [
+     656.9,
+     429.96
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "width_m": 1.2,
+   "notes": "trodden footpath of the workers (plan blue dashes)"
+  },
+  {
+   "id": "03-store0",
+   "kind": "materials_store",
+   "poly": [
+    [
+     606.12,
+     441.5
+    ],
+    [
+     621.12,
+     441.5
+    ],
+    [
+     621.12,
+     463.68
+    ],
+    [
+     606.12,
+     463.68
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "material_slot": "construction_store",
+   "notes": "open materials store (склад, v10 §7.3): bricks / blocks on pallets, rebar, formwork, pipes, sand, gravel - slightly irregular but where they belong (legend); props 03-03-*; no store building on plan v11; keep the ruts free"
+  },
+  {
+   "id": "03-store1",
+   "kind": "materials_store",
+   "poly": [
+    [
+     605.72,
+     398.84
+    ],
+    [
+     624.64,
+     398.84
+    ],
+    [
+     624.64,
+     413.26
+    ],
+    [
+     605.72,
+     413.26
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "material_slot": "construction_store",
+   "notes": "open materials store (склад, v10 §7.3): bricks / blocks on pallets, rebar, formwork, pipes, sand, gravel - slightly irregular but where they belong (legend); props 03-03-*; no store building on plan v11; keep the ruts free"
+  },
+  {
+   "id": "03-store2",
+   "kind": "materials_store",
+   "poly": [
+    [
+     612.84,
+     380.24
+    ],
+    [
+     626.86,
+     380.24
+    ],
+    [
+     626.86,
+     392.72
+    ],
+    [
+     612.84,
+     392.72
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "material_slot": "construction_store",
+   "notes": "open materials store (склад, v10 §7.3): bricks / blocks on pallets, rebar, formwork, pipes, sand, gravel - slightly irregular but where they belong (legend); props 03-03-*; no store building on plan v11; keep the ruts free"
+  },
+  {
+   "id": "03-cabin-yard",
+   "kind": "yard",
+   "poly": [
+    [
+     634.92,
+     403.74
+    ],
+    [
+     670.41,
+     403.74
+    ],
+    [
+     670.41,
+     448.52
+    ],
+    [
+     634.92,
+     448.52
+    ]
+   ],
+   "surface": "dirt_SK1b",
+   "npc": "workers of different countries, brigades, foremen; smoking corner, clothes lines, fire barrel",
+   "notes": "07 cabin town: one-storey containers with ~3 m passages, a separate group by the east fence (v10 §7.3)"
+  },
+  {
+   "id": "03-veg-slope0",
+   "kind": "veg_zone",
+   "poly": [
+    [
+     678.94,
+     355.43
+    ],
+    [
+     684.81,
+     361.78
+    ],
+    [
+     688.66,
+     369.63
+    ],
+    [
+     692.13,
+     377.43
+    ],
+    [
+     695.53,
+     385.09
+    ],
+    [
+     698.69,
+     392.81
+    ],
+    [
+     699.67,
+     401.17
+    ],
+    [
+     698.17,
+     409.75
+    ],
+    [
+     696.39,
+     417.84
+    ],
+    [
+     694.7,
+     425.5
+    ],
+    [
+     696.34,
+     433.15
+    ],
+    [
+     698.24,
+     441.26
+    ],
+    [
+     700.21,
+     449.97
+    ],
+    [
+     700.09,
+     458.7
+    ],
+    [
+     697.71,
+     466.93
+    ],
+    [
+     695.07,
+     475.27
+    ],
+    [
+     692.34,
+     483.95
+    ],
+    [
+     688.99,
+     492.73
+    ],
+    [
+     683.17,
+     499.8
+    ],
+    [
+     675.15,
+     504.5
+    ],
+    [
+     666.69,
+     508.08
+    ],
+    [
+     658.54,
+     511.54
+    ],
+    [
+     650.08,
+     513.87
+    ],
+    [
+     640.76,
+     513.12
+    ],
+    [
+     631.7,
+     510.7
+    ],
+    [
+     623.51,
+     508.52
+    ],
+    [
+     615.96,
+     506.5
+    ],
+    [
+     608.87,
+     504.75
+    ],
+    [
+     602.08,
+     503.09
+    ],
+    [
+     595.47,
+     501.48
+    ],
+    [
+     588.94,
+     499.89
+    ],
+    [
+     582.12,
+     499.0
+    ],
+    [
+     574.6,
+     499.0
+    ],
+    [
+     566.43,
+     499.0
+    ],
+    [
+     557.4,
+     499.0
+    ],
+    [
+     547.46,
+     498.68
+    ],
+    [
+     538.68,
+     495.69
+    ],
+    [
+     530.08,
+     491.61
+    ],
+    [
+     521.24,
+     486.86
+    ],
+    [
+     514.75,
+     479.84
+    ],
+    [
+     511.25,
+     471.02
+    ],
+    [
+     510.38,
+     461.35
+    ],
+    [
+     509.75,
+     452.06
+    ],
+    [
+     509.13,
+     443.09
+    ],
+    [
+     508.53,
+     434.28
+    ],
+    [
+     508.69,
+     425.5
+    ],
+    [
+     510.11,
+     416.86
+    ],
+    [
+     511.51,
+     408.33
+    ],
+    [
+     512.91,
+     399.79
+    ],
+    [
+     514.33,
+     391.09
+    ],
+    [
+     517.12,
+     382.72
+    ],
+    [
+     521.51,
+     375.06
+    ],
+    [
+     525.9,
+     367.41
+    ],
+    [
+     530.48,
+     359.72
+    ],
+    [
+     536.88,
+     353.51
+    ],
+    [
+     549.52,
+     366.15
+    ],
+    [
+     543.59,
+     370.73
+    ],
+    [
+     539.88,
+     377.2
+    ],
+    [
+     536.23,
+     383.56
+    ],
+    [
+     532.58,
+     389.92
+    ],
+    [
+     530.59,
+     397.01
+    ],
+    [
+     529.41,
+     404.21
+    ],
+    [
+     528.25,
+     411.28
+    ],
+    [
+     527.09,
+     418.35
+    ],
+    [
+     525.92,
+     425.5
+    ],
+    [
+     525.47,
+     432.8
+    ],
+    [
+     525.97,
+     440.12
+    ],
+    [
+     526.48,
+     447.58
+    ],
+    [
+     527.01,
+     455.3
+    ],
+    [
+     527.56,
+     463.41
+    ],
+    [
+     529.5,
+     471.32
+    ],
+    [
+     536.79,
+     475.97
+    ],
+    [
+     544.41,
+     479.59
+    ],
+    [
+     552.37,
+     482.0
+    ],
+    [
+     561.46,
+     482.0
+    ],
+    [
+     569.31,
+     482.0
+    ],
+    [
+     576.25,
+     482.0
+    ],
+    [
+     582.52,
+     482.0
+    ],
+    [
+     588.23,
+     482.22
+    ],
+    [
+     593.34,
+     483.46
+    ],
+    [
+     598.43,
+     484.71
+    ],
+    [
+     603.58,
+     485.96
+    ],
+    [
+     608.87,
+     487.25
+    ],
+    [
+     614.39,
+     488.6
+    ],
+    [
+     620.25,
+     490.06
+    ],
+    [
+     626.62,
+     491.76
+    ],
+    [
+     633.67,
+     493.64
+    ],
+    [
+     641.63,
+     495.76
+    ],
+    [
+     649.95,
+     496.65
+    ],
+    [
+     656.73,
+     493.85
+    ],
+    [
+     663.73,
+     490.88
+    ],
+    [
+     671.03,
+     487.67
+    ],
+    [
+     675.35,
+     481.29
+    ],
+    [
+     677.74,
+     473.72
+    ],
+    [
+     679.99,
+     466.56
+    ],
+    [
+     682.17,
+     459.68
+    ],
+    [
+     683.42,
+     452.63
+    ],
+    [
+     681.66,
+     445.0
+    ],
+    [
+     680.03,
+     438.05
+    ],
+    [
+     678.51,
+     431.59
+    ],
+    [
+     677.29,
+     425.5
+    ],
+    [
+     678.63,
+     419.4
+    ],
+    [
+     680.06,
+     412.95
+    ],
+    [
+     681.59,
+     406.01
+    ],
+    [
+     682.6,
+     398.66
+    ],
+    [
+     680.12,
+     392.28
+    ],
+    [
+     677.32,
+     385.98
+    ],
+    [
+     674.47,
+     379.56
+    ],
+    [
+     671.52,
+     372.93
+    ],
+    [
+     666.64,
+     367.73
+    ]
+   ],
+   "density": "grove",
+   "species": "leafy",
+   "mix": {
+    "oak": 0.5,
+    "birch": 0.3,
+    "pine": 0.2
+   },
+   "notes": "wooded slope of the Construction hill 9..26 m outside the fence (build_world_v85 forest ring), groups and singles, glades; >= 2 m from roads"
+  },
+  {
+   "id": "03-notree-site",
+   "kind": "no_tree",
+   "poly": [
+    [
+     674.21,
+     425.5
+    ],
+    [
+     675.09,
+     430.13
+    ],
+    [
+     676.22,
+     434.97
+    ],
+    [
+     677.42,
+     440.07
+    ],
+    [
+     678.7,
+     445.52
+    ],
+    [
+     680.08,
+     451.42
+    ],
+    [
+     679.83,
+     457.1
+    ],
+    [
+     678.18,
+     462.35
+    ],
+    [
+     676.48,
+     467.75
+    ],
+    [
+     674.71,
+     473.34
+    ],
+    [
+     672.86,
+     479.2
+    ],
+    [
+     670.12,
+     484.65
+    ],
+    [
+     664.5,
+     487.29
+    ],
+    [
+     658.97,
+     489.63
+    ],
+    [
+     653.65,
+     491.89
+    ],
+    [
+     648.38,
+     493.93
+    ],
+    [
+     641.62,
+     492.65
+    ],
+    [
+     635.32,
+     490.97
+    ],
+    [
+     629.65,
+     489.46
+    ],
+    [
+     624.47,
+     488.08
+    ],
+    [
+     619.68,
+     486.8
+    ],
+    [
+     615.2,
+     485.71
+    ],
+    [
+     610.93,
+     484.67
+    ],
+    [
+     606.84,
+     483.67
+    ],
+    [
+     602.86,
+     482.7
+    ],
+    [
+     598.95,
+     481.74
+    ],
+    [
+     595.08,
+     480.8
+    ],
+    [
+     591.21,
+     479.86
+    ],
+    [
+     587.25,
+     479.0
+    ],
+    [
+     582.78,
+     479.0
+    ],
+    [
+     577.98,
+     479.0
+    ],
+    [
+     572.78,
+     479.0
+    ],
+    [
+     567.07,
+     479.0
+    ],
+    [
+     560.7,
+     479.0
+    ],
+    [
+     553.47,
+     479.0
+    ],
+    [
+     546.94,
+     477.47
+    ],
+    [
+     541.13,
+     474.71
+    ],
+    [
+     534.87,
+     471.74
+    ],
+    [
+     530.84,
+     466.99
+    ],
+    [
+     530.37,
+     460.45
+    ],
+    [
+     529.94,
+     454.23
+    ],
+    [
+     529.53,
+     448.25
+    ],
+    [
+     529.14,
+     442.45
+    ],
+    [
+     528.75,
+     436.76
+    ],
+    [
+     528.36,
+     431.13
+    ],
+    [
+     528.96,
+     425.5
+    ],
+    [
+     529.86,
+     419.98
+    ],
+    [
+     530.76,
+     414.52
+    ],
+    [
+     531.65,
+     409.09
+    ],
+    [
+     532.55,
+     403.62
+    ],
+    [
+     533.46,
+     398.05
+    ],
+    [
+     534.61,
+     392.44
+    ],
+    [
+     537.42,
+     387.51
+    ],
+    [
+     540.23,
+     382.61
+    ],
+    [
+     543.06,
+     377.69
+    ],
+    [
+     545.93,
+     372.69
+    ],
+    [
+     550.39,
+     369.03
+    ],
+    [
+     556.13,
+     366.93
+    ],
+    [
+     561.55,
+     364.94
+    ],
+    [
+     566.74,
+     363.04
+    ],
+    [
+     571.75,
+     361.21
+    ],
+    [
+     576.84,
+     359.82
+    ],
+    [
+     582.01,
+     359.03
+    ],
+    [
+     587.02,
+     358.27
+    ],
+    [
+     591.92,
+     357.52
+    ],
+    [
+     596.75,
+     356.79
+    ],
+    [
+     601.57,
+     356.05
+    ],
+    [
+     606.42,
+     355.31
+    ],
+    [
+     611.32,
+     355.2
+    ],
+    [
+     616.21,
+     355.67
+    ],
+    [
+     621.1,
+     356.14
+    ],
+    [
+     626.04,
+     356.62
+    ],
+    [
+     631.09,
+     357.11
+    ],
+    [
+     636.3,
+     357.61
+    ],
+    [
+     641.68,
+     358.22
+    ],
+    [
+     646.38,
+     360.52
+    ],
+    [
+     651.05,
+     362.96
+    ],
+    [
+     655.79,
+     365.44
+    ],
+    [
+     660.66,
+     367.98
+    ],
+    [
+     665.7,
+     370.62
+    ],
+    [
+     669.13,
+     374.93
+    ],
+    [
+     671.41,
+     380.06
+    ],
+    [
+     673.62,
+     385.04
+    ],
+    [
+     675.79,
+     389.92
+    ],
+    [
+     677.93,
+     394.75
+    ],
+    [
+     679.69,
+     399.72
+    ],
+    [
+     678.63,
+     405.5
+    ],
+    [
+     677.43,
+     410.93
+    ],
+    [
+     676.31,
+     416.02
+    ],
+    [
+     675.24,
+     420.86
+    ]
+   ],
+   "why": "site yard with function (ruts, store, cabins) + 6 m fence strip"
+  },
+  {
+   "id": "03-notree-gate",
+   "kind": "no_tree",
+   "poly": [
+    [
+     585.91,
+     343.0
+    ],
+    [
+     613.91,
+     343.0
+    ],
+    [
+     613.91,
+     364.42
+    ],
+    [
+     585.91,
+     364.42
+    ]
+   ],
+   "why": "gate approach and the connector to the main road (van, view of the gate)"
+  },
+  {
+   "id": "03-notree-fuel",
+   "kind": "no_tree",
+   "poly": [
+    [
+     552.0,
+     328.06
+    ],
+    [
+     574.4,
+     328.06
+    ],
+    [
+     574.4,
+     344.14
+    ],
+    [
+     552.0,
+     344.14
+    ]
+   ],
+   "why": "fuel station apron (disabled) + road verge"
+  }
+ ],
+ "fixed_by_logic": [
+  {
+   "id": "constr-01",
+   "where": [
+    544.4,
+    373.88
+   ],
+   "ru": "Трансформаторная и бак с водой перенесены внутрь забора на (10.0, 11.5) м",
+   "why_ru": "на карте v85 они остались снаружи контура площадки (у юго-западного угла забора) — так не бывает, хозяйство стройки внутри забора"
+  },
+  {
+   "id": "constr-02",
+   "where": [
+    553.86,
+    344.28
+   ],
+   "ru": "АЗС (выключена) сдвинута на 4.5 м к югу: навес и касса теперь в 1 м от южной кромки главной дороги, площадка примыкает к дороге",
+   "why_ru": "в мастере v85 (кластерный разнос) навес АЗС лёг на полотно главной дороги ROAD_H; на карте v85 АЗС не видна (за клипом стройки)"
+  },
+  {
+   "id": "constr-03",
+   "where": [
+    665.41,
+    415.52
+   ],
+   "ru": "Бытовка 03-07-cabin09 у восточного забора сдвинута на 2.75 м на запад",
+   "why_ru": "на карте v85 она частично за забором (контур площадки v85 режет восточный ряд); теперь >= 1.5 м от забора"
+  },
+  {
+   "id": "constr-04",
+   "where": [
+    666.41,
+    410.4
+   ],
+   "ru": "Бытовка 03-07-cabin10 у восточного забора сдвинута на 1.75 м на запад",
+   "why_ru": "на карте v85 она частично за забором (контур площадки v85 режет восточный ряд); теперь >= 1.5 м от забора"
+  },
+  {
+   "id": "constr-05",
+   "where": [
+    657.12,
+    376.52
+   ],
+   "ru": "Мастерская бусика сдвинута на (-16.5, 2.5) м внутрь площадки и развёрнута воротами (3 рольставни) во двор, на север, с свободным фартуком 14 м; бусик, шины, металлолом и ржавый кузов — рядом с ней по бокам фартука",
+   "why_ru": "на карте v85 её юго-восточный угол срезан контуром площадки (часть здания за забором), а ворота смотрели в забор: своих ворот мастерской в заборе v85 больше нет (один забор, одни главные ворота, v10 §7.3); бусику нужен фартук 12–15 м (v10 §4)"
+  },
+  {
+   "id": "constr-06",
+   "where": [
+    599.91,
+    362.42
+   ],
+   "ru": "Лужи и серые пятна старой главной улицы плана v11 за забором не переносятся; пятно грязи у мастерской обрезано по забору",
+   "why_ru": "это заливки плана v11 вокруг его прежней дороги — на карте v85 их обрезает контур площадки"
+  },
+  {
+   "id": "constr-07",
+   "where": [
+    558.46,
+    359.66
+   ],
+   "ru": "Колея 3 плана v11 начиналась у выреза под бусик в южном заборе (его в v85 нет) — теперь идёт от главных ворот к технике",
+   "why_ru": "колея не должна упираться в забор (v10 §1.3): в заборе v85 только главные ворота"
+  },
+  {
+   "id": "constr-08",
+   "where": [
+    615.5,
+    412.86
+   ],
+   "ru": "Колеи плана v11 проложены по точкам плана, но в обход штабелей опалубки и труб, бетономешалки и самосвала (не сквозь них)",
+   "why_ru": "на плане v11 пунктир колей нарисован поверх склада и техники; бусик через штабеля не ездит"
+  },
+  {
+   "id": "constr-09",
+   "where": [
+    640.62,
+    392.02
+   ],
+   "ru": "Добавлены колеи от главных ворот к фартуку мастерской и к двору бытовок (с запада)",
+   "why_ru": "в плане v11 туда вели свои ворота (мастерской и восточные) — в v85 их нет, а бусик должен доезжать до мастерской и до людей у бытовок"
+  },
+  {
+   "id": "constr-10",
+   "where": [
+    599.91,
+    362.42
+   ],
+   "ru": "Отдельные ворота мастерской (~18 м), восточные ворота и 4 выреза под бусик плана v11 не делаются; один забор по контуру с главными воротами ~19 м",
+   "why_ru": "карта v85 и v10 §7.3: «забор один — по контуру площадки, с главными воротами ~19 м на дорогу», двойного забора и обрывков нет"
+  },
+  {
+   "id": "constr-11",
+   "where": [
+    608.87,
+    425.5
+   ],
+   "ru": "Деревья плана v11 (круги) и одиночные деревья внутри забора не переносятся: внутри площадки деревьев нет, склон холма 9–26 м за забором — зона рощ (veg_zone)",
+   "why_ru": "v10 §1.2 и §7.3: деревья зонами, двор с функцией без деревьев"
+  }
+ ],
+ "questions_for_vadim": [
+  {
+   "id": "constr-q1",
+   "ru": "АЗС у Стройки (канон её сохраняет, в v85 её не видно, Федя отвечал «пока не ставить»). Ставить?",
+   "options_ru": [
+    "1 — пока не ставить (в данных есть, выключена \"disabled\": true)",
+    "2 — ставить у главной дороги к юго-западу от ворот, как в плане v11",
+    "3 — убрать совсем"
+   ],
+   "default": 1,
+   "applied": "вариант 1: 03-02-fuel-* в данных с \"disabled\": true, площадка у южной кромки дороги ROAD_H"
+  },
+  {
+   "id": "constr-q2",
+   "ru": "Мастерская улучшения бусика: в плане v11 у неё свои ворота ~18 м на главную дорогу, в v85 и v10 §7.3 — один забор с главными воротами. Как заезжать?",
+   "options_ru": [
+    "1 — через главные ворота, мастерская внутри площадки воротами во двор (сдвинута внутрь)",
+    "2 — вернуть вторые ворота ~18 м в заборе у мастерской, на главную дорогу, как в плане v11"
+   ],
+   "default": 1,
+   "applied": "вариант 1: 03-01-workshop сдвинута на (-16.5, 2.5) м, рольставни на север, фартук 14 м; колея 03-rut-workshop от главных ворот"
+  }
+ ],
+ "counts": {
+  "buildings": 25,
+  "buildings_active": 23,
+  "by_kind": {
+   "concrete_frame": 1,
+   "stair_lift_core": 1,
+   "scaffold": 1,
+   "cargo_hoist": 1,
+   "foundation_slab": 1,
+   "old_dormitory": 1,
+   "site_cabin": 10,
+   "canteen": 2,
+   "shower": 1,
+   "foreman_office": 1,
+   "guard_booth": 1,
+   "transformer_booth": 1,
+   "fuel_canopy": 1,
+   "kiosk": 1,
+   "van_workshop": 1
+  },
+  "props": 51,
+  "zones": 30,
+  "veg_zones": 1,
+  "no_tree_zones": 3,
+  "tracks": 5,
+  "fixes": 11,
+  "questions": 2
+ },
+ "checks": {
+  "fence_clearance_m": {
+   "03-04-A": 17.16,
+   "03-04-A-core": 21.56,
+   "03-04-A-scaffold": 23.02,
+   "03-04-A-hoist": 22.36,
+   "03-05-B": 17.15,
+   "03-08-dorm": 3.41,
+   "03-07-cabin01": 30.72,
+   "03-07-cabin02": 25.47,
+   "03-07-cabin03": 20.21,
+   "03-07-cabin04": 14.95,
+   "03-07-cabin05": 29.64,
+   "03-07-cabin06": 23.44,
+   "03-07-cabin07": 17.22,
+   "03-07-cabin08": 11.0,
+   "03-07-cabin09": 1.56,
+   "03-07-cabin10": 1.69,
+   "03-07-canteen0": 32.23,
+   "03-07-canteen1": 26.18,
+   "03-07-shower2": 20.1,
+   "03-07-office": 5.8,
+   "03-03-guard": 4.72,
+   "03-03-transformer": 4.66,
+   "03-01-workshop": 2.19
+  },
+  "overlaps": [],
+  "track_hits": [],
+  "cabin_gaps_m": [
+   [
+    "03-07-cabin01",
+    "03-07-cabin02",
+    3.0
+   ],
+   [
+    "03-07-cabin02",
+    "03-07-cabin01",
+    3.0
+   ],
+   [
+    "03-07-cabin03",
+    "03-07-cabin02",
+    3.0
+   ],
+   [
+    "03-07-cabin04",
+    "03-07-cabin03",
+    3.0
+   ],
+   [
+    "03-07-cabin05",
+    "03-07-cabin06",
+    3.8
+   ],
+   [
+    "03-07-cabin06",
+    "03-07-cabin05",
+    3.8
+   ],
+   [
+    "03-07-cabin07",
+    "03-07-cabin08",
+    3.82
+   ],
+   [
+    "03-07-cabin08",
+    "03-07-cabin07",
+    3.82
+   ],
+   [
+    "03-07-cabin09",
+    "03-07-cabin10",
+    2.72
+   ],
+   [
+    "03-07-cabin10",
+    "03-07-cabin09",
+    2.72
+   ],
+   [
+    "03-07-canteen0",
+    "03-07-canteen1",
+    3.8
+   ],
+   [
+    "03-07-canteen1",
+    "03-07-canteen0",
+    3.8
+   ],
+   [
+    "03-07-office",
+    "03-07-cabin04",
+    7.0
+   ],
+   [
+    "03-07-shower2",
+    "03-07-canteen1",
+    3.82
+   ]
+  ],
+  "min_building_fence_clearance_m": 1.56,
+  "min_cabin_gap_m": 2.72,
+  "props_outside_fence": []
+ }
+}
