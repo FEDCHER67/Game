@@ -31,3 +31,16 @@ The lead downloaded these on 21.10.2026 with Fedya's OK; originals and their own
 | Facade001 (https://ambientcg.com/view?id=Facade001) | Tower curtain-wall glass (T1 / G-T) | `TT_acg_Facade001_glass_albedo.png`, `TT_acg_Facade001_glass_metal_smooth.png`, `TT_acg_Facade001_normal.png` | Neutral grey panel-tone variation (55 % contrast). Dark-blue tint comes from the material. Metallic = 0.6 × metalness; smoothness = 0.97 − 0.3 × roughness. Normal map at 0.45. One tile = 16 × 10 panels = 22.54 × 18 m, which is 8 tower facets × 5 floors. |
 
 The other nine downloaded sets (Facade002/006/009, PaintedPlaster006/017, Bricks106A/113A, Logs001, WoodSiding008) were reviewed and are not used. Bricks106A/113A are stone blocks rather than brick; Logs001 is a firewood stack; the others were not needed for this pass.
+
+## v04 (round 4)
+
+| Texture (used for) | File | Made by | Licence |
+|---|---|---|---|
+| Weathered corrugated roof sheets (Hamlet roofs, tinted dark grey / dark rust / dark green-grey per house) | `Source_v04/TT_roof_corrugated_weathered_v01_albedo.png` | `ArtSource/Props/HAMLET_HOUSE_v01/gen_hamlet_textures_v02.py` | own, original |
+
+Dubai references for the T2 tower massing. These are links only: no photos were downloaded or committed.
+- Burj Khalifa: spiralling setbacks, tapering. https://www.som.com/projects/burj-khalifa/
+- Jumeirah Emirates Towers: a pair of unequal height with sloped, jagged tops. https://en.wikipedia.org/wiki/Emirates_Towers
+- Almas Tower: two offset volumes on one core. https://www.skyscrapercenter.com/dubai/almas-tower/298
+- Address Sky View: twins of unequal height with a sky bridge. https://www.skyscrapercenter.com/complex/895
+- Cayan Tower: 90° twist, 1.2° per floor (not used). https://en.wikipedia.org/wiki/Cayan_Tower
