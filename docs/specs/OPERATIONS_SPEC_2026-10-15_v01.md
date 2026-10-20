@@ -43,6 +43,10 @@ Current boundaries:
 - There is no temperature-management minigame or portable-cooler refrigerant resource.
 - The full city investigation simulation, complete XP tree and rare-trait catalog are outside this document.
 
+### Organ access and buyer progression
+
+Story introductions during district progression unlock kidneys/liver, then paired eyes/brain, then heart/paired lungs. Unopened categories are unavailable. Three organ buyers accept all unlocked types at minimum Damaged, Acceptable and Good respectively; each newer buyer pays substantially more. No compulsory advance harvest selection or automatic disposal of unselected organs is introduced: physical extraction, mortality and corpse decay govern the result.
+
 ## 3. Main player loop
 
 1. Obtain an adult game NPC through the existing capture and transport loop.
@@ -174,11 +178,11 @@ Anesthesia, awakening and spoilage timers continue when players leave table mode
 
 | Zone | Merchandise | Access and distinct actions |
 |---|---|---|
-| Head | Two separate eyes; one brain | Eyes have their own action and do not require opening the skull barrier. Brain access uses a prepared outer opening and saw-worked bone barrier. |
+| Head | One indivisible paired-eye item; one brain | Eyes have their own action and do not require opening the skull barrier. Brain access uses a prepared outer opening and saw-worked bone barrier. |
 | Chest | One heart; one paired-lung item | Prepared outer opening, hammer-worked bone barrier, removal of loose large pieces, then organ interactions. |
 | Abdomen | Two separate kidneys; one liver | Shared prepared opening, then individual organ connections and pulling. |
 
-There are **eight organ merchandise items** in a complete set. The lungs are one combined item, not two separately tradable lungs. Extracting that combined item removes both lungs for the mortality rule.
+There are **seven organ merchandise items**: two independent kidneys, liver, indivisible paired eyes, brain, heart and paired lungs. Eyes cannot be split or assembled from separately harvested eyes or different donors. The lungs are one combined item, not two separately tradable lungs. Extracting that combined item removes both lungs for the mortality rule.
 
 Blood is a separate procedure, not a ninth organ in a zone.
 
@@ -220,7 +224,7 @@ During pulling:
 
 On detachment, the organ remains a physical object in the player's grasp. It may be passed, placed in a tray, put into storage, packaged or thrown. It is not automatically sold or credited as cash.
 
-The organ's current quality is shown when inspecting the extracted item. Before extraction, appearance gives approximate information. Expensive assessment equipment reveals quality earlier.
+Item presentation distinguishes Damaged and Ruined; Perfect+ has a subtle golden aura. Acceptable, Good and Perfect have no additional grade-specific appearance or freshness countdown. Internal quality drives valuation and buyer requirements; assessment readouts must follow this presentation contract.
 
 There is no closing, stitching, tape or restorative step after extraction.
 
@@ -291,7 +295,7 @@ Friends can physically hold a patient. The exact strength and transition behavio
 | First kidney removed | 10% |
 | Second kidney removed | 20% |
 | Liver | 30% |
-| Eye | 0% |
+| Indivisible paired eyes | 0% |
 | Heart | 100% |
 | Brain | 100% |
 | Combined paired lungs | 100% |
@@ -328,30 +332,31 @@ The special early-overdose penalty must not be silently extended to every other 
 
 Each organ has its own initial quality. An NPC's category and condition give an approximate expectation, but do not force every organ in that NPC to have the same grade.
 
-Careful play preserves quality; it does not manufacture a higher intrinsic grade. Expensive assessment helps evaluate organs before extraction. Exact current quality is available when inspecting the extracted item.
+Careful play preserves intrinsic quality. Ordinary presentation distinguishes Damaged, Ruined and subtle gold on Perfect+; no additional grade-by-grade colors or countdown.
 
 | Level | Display name | Reference color family | Price multiplier |
 |---|---|---|---:|
-| 1 | Damaged | Muted gray/brown | 0.3x |
-| 2 | Acceptable | Muted yellow/olive | 1.0x |
-| 3 | Good | Green | 1.6x |
-| 4 | Perfect | Blue | 2.6x |
-| 5 | Perfect+ | Purple | 4.2x |
+| 1 | Damaged | Explicit damaged appearance | 0.5x |
+| 2 | Acceptable | Ordinary appearance | 1.0x |
+| 3 | Good | Ordinary appearance | 1.5x |
+| 4 | Perfect | Ordinary appearance | 2.6x |
+| 5 | Perfect+ | Subtle golden aura | 6.0x |
 
-Russian display names and percent labels (BUYERS_SPEC v02): Убитое 20%, Сойдёт 40%, Хорошее 60%, Отличное 80%, Идеальное 100%. The user's supplied five-level image is the visual reference for order and colors. Exact palette values were not specified. The old `Normal` display label becomes **Acceptable** without shifting its tier or multiplier.
+Russian display names and percent labels (BUYERS_SPEC v02): Убитое 20%, Сойдёт 40%, Хорошее 60%, Отличное 80%, Идеальное 100%. Percentages remain internal grade references, not an extra on-organ HUD; the appearance rules above replace the old five-color display. The old `Normal` display label becomes **Acceptable** without shifting its tier or multiplier.
 
 ### 12.2 Damage events
 
 | Event | Quality loss |
 |---|---:|
 | Predominantly sloppy local incision | 1 grade for associated nearby organs |
-| Direct blade cut into an organ | 2 grades |
+| First erroneous direct cut into a specific organ | Immediately Damaged; persist organ error count |
+| Second distinct erroneous direct cut into that organ | Irreversible Ruined; no sale value |
 | Abrupt extraction pull | 1 grade |
 | Strong drop or impact | 1 grade |
 | Ordinary gentle contact | None |
 | Early pre-extraction overdose death | 2 grades for all remaining organs |
 
-Different damage events can add together. The floor is **Damaged**. Do not introduce an unselected sixth, unsellable organ grade.
+Ordinary impact, throw, pull and non-direct-cut damage stop at Damaged. Ruined is a separate irreversible condition, not tier 6: no buyer accepts it, price zero. It occurs after the second distinct erroneous organ cut or after decay below Damaged. Required authored cuts are not errors. Persist the error count through extraction/loading. Ruined stays physical and uses existing waste disposal; damage cannot improve it.
 
 Small guide deviations are forgiven. A sloppy section affects nearby associated organs, not every organ in the whole opened zone. Author that association with the prepared zone geometry.
 
@@ -361,11 +366,11 @@ NPC movement does not directly lower quality. If it causes a held blade to conta
 
 ### 12.3 Decay inside a dead NPC
 
-**Confirmed:** there is a **45-second grace period** after death, then deterioration at **one grade per 40 seconds**. Appearance changes gradually to communicate worsening condition.
+**Confirmed:** there is a **45-second grace period** after death, then deterioration at **one grade per 40 seconds**. The same timeline continues through Damaged into Ruined. Only Damaged/Ruined get explicit deterioration appearances; Perfect+ gets slight gold.
 
 Opening a living NPC's zone does not start that timer. Death starts it once for the patient; opening another zone does not restart it.
 
-**Proposed boundary interpretation:** no grade is lost during the first 45 seconds; the first full deterioration interval then ends at 85 seconds after death. Further grade losses occur at 125, 165 seconds and so on, down to Damaged. This explicit boundary is a preset rather than an additional user decision.
+**Proposed boundary interpretation:** no grade is lost during the first 45 seconds; the first full deterioration interval then ends at 85 seconds after death. Further grade losses occur at 125, 165 seconds and so on, through Damaged and then Ruined. This explicit boundary is a preset rather than an additional user decision.
 
 Extracting an organ preserves the quality losses it has already received. It then uses the extracted-item storage rules.
 
@@ -388,7 +393,7 @@ Blood is different: the sealed $50 blood bag does not spoil or use organ quality
 | Powered stationary refrigerator | Paused | 24 items; paid base electricity |
 | Unpowered stationary refrigerator | 1 grade per 5 minutes | Contents remain physically stored |
 
-One organ or blood bag occupies one slot. A complete organ set occupies eight slots. A blood bag consumes capacity if stored, despite not needing cooling.
+One organ or blood bag occupies one slot. A complete organ set occupies seven slots. Kidneys are separate; paired eyes and lungs each take one slot and preserve a single donor identity. A blood bag consumes capacity if stored, despite not needing cooling.
 
 Preservation applies only to items actually accepted into the container's contents. Dropping an item near, on top of or through a refrigerator must not accidentally freeze its timer. The exact physical insertion/snap presentation is an implementation choice.
 
@@ -422,7 +427,7 @@ When the saved world is closed, simulation time stops: no offline organ decay, e
 
 ### 15.1 Shared business funds
 
-Operation income and spending use a shared business cash fund. Any player can make purchases. Equipment, consumables, staff, electricity, operation-inspection bribes and inspection fines use this fund.
+Operation income and spending use a shared business cash fund. Any player can make purchases. Equipment, consumables, staff, electricity, operation-inspection bribes and inspection fines use this fund. Every sale or reward credits its final team amount once, independent of party size. Cash penalties use the team-size rule in `NETWORK_MAP_PLAN_v01.md` §3.9; purchases, bills and voluntarily chosen bribes are charged once at full listed cost.
 
 Record each transaction once. Simultaneous purchases cannot spend the same balance twice, and a failed transaction must not create merchandise or consume money.
 
@@ -434,7 +439,7 @@ Record each transaction once. Simultaneous purchases cannot spend the same balan
 | Liver | 1 | $350 |
 | Paired lungs | 1 | $450 |
 | Heart | 1 | $1,000 |
-| Eye | 2 | $200 |
+| Paired eyes | 1 | $200 (placeholder; pair value unbalanced) |
 | Brain | 1 | $1,200 |
 | Sealed blood portion | Separate collection | $50 fixed |
 
@@ -500,7 +505,7 @@ Delivered equipment still requires unpacking and placement. Delivery timing and 
 | Organ | 20 |
 | Blood portion | 5 |
 
-XP is awarded at first sale, not at cutting, detachment, packaging, dropping or transferring ownership. Specialist-produced merchandise also earns sale XP. A complete organ set yields **160 XP**, and two sold blood portions yield another 10 XP.
+XP is awarded at first sale, not at cutting, detachment, packaging, dropping or transferring ownership. Specialist-produced merchandise also earns sale XP. A complete organ set yields **140 XP per participant**, and two sold blood portions yield another 10 XP.
 
 Each physical merchandise identity can reward XP once. Rebuying, reselling, reloading or moving an item between players cannot create repeated rewards.
 
@@ -645,9 +650,9 @@ Exact rounding and valuation against special-order bonuses are implementation pr
 
 The chosen outcome is a short scripted arrest of players present at the base, followed by transfer to the station. Players elsewhere are not automatically teleported into this inspection arrest.
 
-The financial and property consequences occur **once per inspection incident**, rather than once per arrested player:
+The financial and property consequences occur **once per inspection incident**, rather than once per arrested player. The solo-equivalent incident fine is divided by the active team size `N` and charged once to the shared fund (`X/N`); it is not repeated for each person at the base. The amount/rate remains a placeholder:
 
-1. Fine: **10% of the shared business cash fund**.
+1. Fine: solo-equivalent **10% of the shared business cash fund**, divided once by `N` for this incident.
 2. Confiscate all discovered organ and blood merchandise, including discovered refrigerator contents.
 3. Confiscate equipment and tools worth approximately **30% of their pre-incident purchase value**, preserving approximately 70%.
 4. Set the inspected district's suspicion to **30/100** after the punishment.
@@ -666,7 +671,7 @@ Because equipment is indivisible and protected items may make up most of a small
 
 After the station sequence, return players to the station exit under the existing station-release contract. No additional prison minigame, sentence timer or escape quest was chosen.
 
-The prior blanket protection against equipment seizure is explicitly superseded for this inspection scenario. The older ordinary-arrest rule of a 10% cash penalty plus the highest-value carried item must not be charged again on top of this package. Ordinary street arrests remain a separate integration contract.
+The prior blanket protection against equipment seizure is explicitly superseded for this inspection scenario. The older ordinary-arrest rule of a 10% cash penalty plus the highest-value carried item is superseded by the Police spec's random eligible carried-item seizure and team-scaled shared-fund deduction. That separate street-arrest penalty must not be charged again on top of this inspection package.
 
 ## 20. Persistence and authoritative state
 
@@ -758,7 +763,7 @@ Required content includes:
 - Knife, syringe, anesthetic stocks, saw, hammer, lamp, mop and bucket.
 - Reusable operation-capable NPC presentation with prepared head/chest/abdomen openings.
 - Large authored barrier pieces and removable debris; organ-local connection visuals.
-- Eight organ outputs with the paired lungs treated as one item.
+- Seven outputs: two kidneys, liver, paired eyes, brain, heart and paired lungs.
 - Filled syringes, blood bags, organ bags and garbage bags.
 - Portable cooler, stationary refrigerator and equipment-delivery crates.
 
@@ -788,7 +793,7 @@ Provide readable feedback for:
 - Reachable tools and who is holding an object.
 - Fastener state, especially whether the torso is secured.
 - Approximate NPC sleep/waking behavior and the urgent eight-second intervention.
-- Exact quality on inspected extracted organs, with the approved five names and colors.
+- Visible Damaged/Ruined and subtle gold on Perfect+; internal five-grade valuation.
 - Container occupancy, active cooling and loss of base power.
 - Shared funds, free/lifetime XP and skill cost/prerequisites.
 - Bills per base and electricity-expiry notifications.
@@ -821,7 +826,7 @@ These are requirements for future implementation verification. They were not exe
 | OP-15 | Apply anesthesia early or from two players | New amount adds to residual state; combined exposure can overdose; inputs cannot overwrite each other. |
 | OP-16 | Wake an operated, torso-restrained NPC | Eight-second rescue window works; successful re-anesthesia cancels pending shock; failure causes death. |
 | OP-17 | Wake an operated, unrestrained NPC | Escape/fall/death behavior follows the same intervention contract, without turning into permanent NPC invulnerability. |
-| OP-18 | Remove organs and test mortality | Kidney/liver probabilities include prior blood; heart/brain/paired lungs are terminal; results occur once and persist. |
+| OP-18 | Extract organs and test mortality | First-kidney roll retains prior-blood modifier; liver/second kidney/heart/brain/paired lungs always fatal; eye-pair interpretation follows the existing configurable rule. |
 | OP-19 | Cause pre-first-extraction overdose death | All remaining organs immediately lose two grades; later ordinary corpse decay still applies. |
 | OP-20 | Delay after death and extract later | Grace and post-grace deterioration operate; zone opening does not reset them; output retains existing losses. |
 | OP-21 | Move organs between storage states | Room: 5 minutes/grade; portable: 25; powered stationary: paused; no progress reset or quality restoration. |
@@ -836,9 +841,12 @@ These are requirements for future implementation verification. They were not exe
 | OP-30 | Refuse entry at suspicion 74 and 75 | Refusal available before entry at 74 without added suspicion; unavailable at 75; unavailable after entry at either level. |
 | OP-31 | Pass inspection with insufficient evidence | Suspicion decreases by 25, clamped to zero; smell alone does not convict; one incidental stain is insufficient. |
 | OP-32 | Pay a displayed inspection bribe | Correct district base plus 25% discovered merchandise value; one shared payment; no seizure or arrest; suspicion unchanged. |
-| OP-33 | Accept an inspection arrest with several players | One 10% incident fine; discovered merchandise confiscated; approximately 30% equipment seizure respecting protected kit/fridge; other bases unaffected; station release; suspicion 30. |
+| OP-33 | Accept an inspection arrest with several players | One solo-equivalent 10% incident fine divided once by active team size `N`; discovered merchandise confiscated; approximately 30% equipment seizure respecting protected kit/fridge; other bases unaffected; station release; suspicion 30. |
 | OP-34 | Save during work, bills and inspection | Identity, progress, outcomes, clocks and receipts survive; world closure causes no offline progression or duplicate penalties. |
 | OP-35 | Exit table mode or disconnect one client | Host simulation continues; remaining players keep the same patient and physical outputs; completed stages do not reset. |
+| OP-36 | Cut one organ erroneously twice | First distinct error sets Damaged, second Ruined; required cuts and continuous-contact frames are not extra errors. |
+| OP-37 | Decay to Ruined, extract, refrigerate and sell | Decay progress persists; refrigeration pauses but never restores; every buyer rejects Ruined. |
+| OP-38 | Throw a Damaged organ | Impact stops at Damaged; cannot produce Ruined. |
 
 Subjective acceptance requires actual playtesting: early organ timing, leg/arm adjustment, shared camera readability, tool reach, joint pulling, comedy and the cost of recovering from an inspection. A compile or scripted test cannot establish these qualities.
 
@@ -870,7 +878,7 @@ Additional integration work that does not require reopening the interview:
 - Author NPC-category quality distributions and visual hints; use known-grade fixtures for the first tests rather than inventing a claimed production distribution.
 - Define nominal stock consumption, input speed, tool tolerances and impact thresholds through the first playable slice.
 - Use the profit definition in section 17 as a documented preset; choose a deterministic allocation for shared consumables and partial daily payments.
-- Resolve street-arrest versus inspection-arrest fund attribution without stacking two penalty packages.
+- Implement separate police outcomes without stacking: street-arrest cash loss is scaled per affected player by active team size; the inspection arrest uses its one incident fine divided once by that team size.
 - Preserve the existing buyer contact progression and distinguish ordinary sales from packaging-required orders.
 - Define the exact rare-feature set and demanding orders in their own content specification; the $90,000 assessment purchase does not approve an invented catalog.
 - Map existing simple disposal points to game interactions; detailed waste rediscovery and later automatic disposal remain separate content work.
@@ -898,4 +906,3 @@ Document verification performed for this writing task:
 - **PASS:** arithmetic for complete/abdominal set values, the consumable-cost benchmark, all three abdominal mortality totals, skill costs, sale XP and cooler rate was checked.
 - **PASS:** final interview decisions were reviewed against their superseded variants; implementation presets remain labelled separately.
 - **NOT RUN:** Unity gameplay, multiplayer, performance and subjective acceptance. This task changed only the new specification file.
-
