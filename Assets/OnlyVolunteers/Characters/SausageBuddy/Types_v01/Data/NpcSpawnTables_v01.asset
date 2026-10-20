@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca992ab00e7d3a4aa43ff5f5a8ff1ff, type: 3}
+  m_Name: NpcSpawnTables_v01
+  m_EditorClassIdentifier: Assembly-CSharp::OnlyVolunteers.Characters.Types.NpcSpawnTables
+  Districts:
+  - Id: forest
+    Aliases: []
+    Entries:
+    - Type: {fileID: 11400000, guid: 9a7460ffbaa49674292abfb51d2c4219, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 8563e484b944f6f4681b8e61b9a60b83, type: 2}
+      Weight: 1
+      Unique: 0
+  - Id: hamlet
+    Aliases:
+    - village
+    Entries:
+    - Type: {fileID: 11400000, guid: b2d40c241890129449dcb7eecb2ce9a5, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 19c24d83dac0732478c1a37c6cfdc34a, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: af79ad8295f947f4f877ef3aa3cfd1ec, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: e0ba2dd4615f8b1468413d3f86fccecc, type: 2}
+      Weight: 1
+      Unique: 1
+  - Id: construction
+    Aliases:
+    - transition
+    Entries:
+    - Type: {fileID: 11400000, guid: 6d47af5ed3d0e5b4cb2d702871a9f38e, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 2c5652cda6002c44fb2785b39c04c3b4, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: dadb5d2b7fd9d8f4da80fc193da5f690, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: be4a2eb1181656547aeb5e833e9cdcf9, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: f38ddc89f5ee2b64d95d795eb4b93b4a, type: 2}
+      Weight: 1
+      Unique: 0
+  - Id: rough
+    Aliases:
+    - residential
+    Entries:
+    - Type: {fileID: 11400000, guid: 90ee2375c9aa93644a45d8929d3fb438, type: 2}
+      Weight: 1.5
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 590aa65329d0dc84eb563326c6019bbd, type: 2}
+      Weight: 1.5
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 858ea722741063c44bae1b949cc4620a, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 272667c11218c8b46ba0f9d418f45359, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 2a83ea06d0f680240a77c3b6382e1970, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 23578f04f6fe77a4d9de237695c40497, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 4392805eca895be41a6145ab5283fc7d, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 35d38085dbfd2a74fa77ceebc46088b5, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 66ab8dd6e6a2b86408b97dd4e36d4d97, type: 2}
+      Weight: 1
+      Unique: 0
+  - Id: downtown
+    Aliases:
+    - old_town
+    Entries:
+    - Type: {fileID: 11400000, guid: adbdb918de123bd42ac3bbff64c68fd6, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: de9b54d3d278b1049ba141ec52f3dd44, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 1b20b452679795f438e900c1a8ee635a, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 485015bdc893f974189c89c2778240f8, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: ebb7f4e743c514d4c9cea2662bf92f35, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 78714c514795fde41aeaabd3160393f3, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 79c4a88f207831d4fb30478ebf346465, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: e41899dc819a6cc48b93421bf82b0550, type: 2}
+      Weight: 1
+      Unique: 0
+  - Id: port
+    Aliases:
+    - industrial
+    Entries:
+    - Type: {fileID: 11400000, guid: 7a985f7e1a5a2ec4b859bc7de35b795d, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: bbdf292121054a549bfa1a97c5c95e29, type: 2}
+      Weight: 1
+      Unique: 0
+  - Id: beach
+    Aliases: []
+    Entries:
+    - Type: {fileID: 11400000, guid: 63d5643a687e7df45b379903d1d509b0, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 3c9b0103211f3734fa0defccdbec6f9b, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 8f2f407720df25e4a87e4ec855807bd7, type: 2}
+      Weight: 1
+      Unique: 0
+    - Type: {fileID: 11400000, guid: 325b6334d994d594c89b6091f5c38926, type: 2}
+      Weight: 1
+      Unique: 0
+  - Id: elite
+    Aliases: []
+    Entries: []
+  - Id: quiet_valley
+    Aliases: []
+    Entries: []
+  - Id: tramduro
+    Aliases: []
+    Entries: []
+  FallbackVisuals:
+  - SausageBuddy_A
+  - SausageBuddy_B
+  Placements:
+  - Type: {fileID: 11400000, guid: 94e7940758cee5142a28dc6dd9fac47b, type: 2}
+    District: beach
+    Activity: Idle
+    Prop: {fileID: 919132149155446097, guid: 79e7d2c2934c17248b096c2b642e5083, type: 3}
+    Hours: {x: 0, y: 24}
+    Count: 1
+    Note: 'Buried to the neck: stands in Idle at the centre of BEACH_BURIED_SandMound_v01
+      (the mound hides the body). No walking.'
+  - Type: {fileID: 11400000, guid: cd78da2d78921f7439af7524a654b7d8, type: 2}
+    District: beach
+    Activity: Idle
+    Prop: {fileID: 0}
+    Hours: {x: 0, y: 24}
+    Count: 1
+    Note: 'Builds sand pies by the water: bucket and spade are hand props (dropped
+      on danger).'
+  - Type: {fileID: 11400000, guid: 52e4b114766b0764d9a21c81e2e03e71, type: 2}
+    District: beach
+    Activity: Idle
+    Prop: {fileID: 0}
+    Hours: {x: 0, y: 24}
+    Count: 1
+    Note: 'Treasure hunter: the metal detector is a hand prop (dropped on danger).'
+  - Type: {fileID: 11400000, guid: 3c9b0103211f3734fa0defccdbec6f9b, type: 2}
+    District: beach
+    Activity: BeachLie
+    Prop: {fileID: 0}
+    Hours: {x: 0, y: 24}
+    Count: 1
+    Note: 'Lies on a lounger (BEACH_SPEC: part of the beach NPCs lie on loungers);
+      also walks (beach table).'
+  - Type: {fileID: 11400000, guid: e0ba2dd4615f8b1468413d3f86fccecc, type: 2}
+    District: hamlet
+    Activity: Idle
+    Prop: {fileID: 0}
+    Hours: {x: 6, y: 10}
+    Count: 1
+    Note: Unique (buyers' special order). At the pull-up bar on the Hamlet square
+      06:00-10:00 (SALES spec); walks the Hamlet otherwise. Twin-brother respawn
+      = sales logic, not here.
