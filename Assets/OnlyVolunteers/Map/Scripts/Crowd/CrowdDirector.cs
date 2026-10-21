@@ -30,6 +30,8 @@ namespace OnlyVolunteers.Map.Crowd
         public Transform PoolRoot;
         [Tooltip("Inactive NPCs cloned when the pool runs dry (never activated themselves).")]
         public GameObject[] Templates = new GameObject[0];
+        [Tooltip("G44: NPC types per district (Characters/SausageBuddy/Types_v01). Empty = the pool in its old order.")]
+        public OnlyVolunteers.Characters.Types.NpcSpawnTables TypeTable;
 
         [Header("Population")]
         [Tooltip("0 = day counts (walkers_day), 1 = evening counts (walkers_evening).")]
@@ -276,7 +278,7 @@ namespace OnlyVolunteers.Map.Crowd
         {
             CrowdSpawn s = Map.Spawns[spawn];
             s.LastUsed = Time.time;
-            CrowdWalker w = Take(s.World, Random.Range(0f, 360f), role);
+            CrowdWalker w = Take(s.World, Random.Range(0f, 360f), role, district);
             if (w == null) return null;
             w.BeginAtSpawn(this, role, district, spawn);
             if (LogSpawns) Debug.Log($"[Crowd] spawn {w.name} ({role}) at {s.Id} for {Map.Districts[district].Id}", w);
@@ -293,7 +295,7 @@ namespace OnlyVolunteers.Map.Crowd
                 for (int k = Target(d); k > 0; k--)
                 {
                     int route = district.Routes[Random.Range(0, district.Routes.Count)];
-                    if (HiddenRouteSpot(Map.Routes[route].Points, out int index, out Vector3 at) && Take(at, Random.Range(0f, 360f), CrowdRole.Walker) is CrowdWalker w)
+                    if (HiddenRouteSpot(Map.Routes[route].Points, out int index, out Vector3 at) && Take(at, Random.Range(0f, 360f), CrowdRole.Walker, d) is CrowdWalker w)
                     {
                         w.BeginOnRoute(this, CrowdRole.Walker, d, route, index);
                         placed++;
@@ -324,9 +326,10 @@ namespace OnlyVolunteers.Map.Crowd
         }
 
         // A pooled NPC (or a fresh clone of a template) placed at 'feet' and switched on, with its walker component.
-        private CrowdWalker Take(Vector3 feet, float yaw, CrowdRole role)
+        private CrowdWalker Take(Vector3 feet, float yaw, CrowdRole role, int district = -1)
         {
-            GameObject go = null;
+            // G44: the district's NPC type (a pooled NPC wearing it or a clone of its template); null = the pool as before.
+            GameObject go = TypeTable != null ? TypeTable.TakeFor(role == CrowdRole.Walker && district >= 0 ? Map.Districts[district].Id : null, _pool, Templates, PoolRoot != null ? PoolRoot : transform) : null;
             while (_pool.Count > 0 && go == null)
             {
                 go = _pool[_pool.Count - 1];

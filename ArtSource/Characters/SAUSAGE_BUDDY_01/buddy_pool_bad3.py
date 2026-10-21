@@ -29,7 +29,8 @@ TYPES = {
         colourways=[{'Coat': (70, 72, 78), 'Coat_Dark': (54, 56, 62), 'Hat': (120, 40, 40), 'Trousers': (90, 76, 60)},
                     {'Coat': (110, 104, 60), 'Coat_Dark': (88, 82, 46), 'Hat': (40, 60, 90), 'Patch': (200, 170, 60)}]),
     'BAD_ALTGIRL': dict(
-        label='Альтушка', group=GROUP, no_ears=True, body=dict(thin=0.8, bust=4.1, glutes=1.0), preserve_animation_revision=3, face=dict(Happy=0.35),
+        label='Свити Фокс (альтушка)', group='VIP Элиты', no_ears=True,   # only Elite, not the rough district (TASK-000883)
+        body=dict(thin=0.8, bust=4.1, glutes=1.0), preserve_animation_revision=3, face=dict(Happy=0.35),
         look=dict(skin=(250, 226, 214), nose=(246, 198, 186), brow=(40, 30, 30), rim=(40, 30, 34), mouth=(214, 120, 134)),
         eyes=dict(iris=(112, 150, 176), iris_r=0.037, lash=(22, 18, 20), pupil_in=0.0),
         slots={'Jacket': ((22, 22, 26), 0.6), 'Zip': ((96, 96, 104), 0.3, 'metal'), 'Band': ((244, 244, 240), 0.6),

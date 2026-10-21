@@ -88,7 +88,7 @@ The source review does not establish working network inspections, zone UI, share
 | C17 | Cuffing is visible and interruptible by a teammate knocking down the officer. No full convoy-rescue system required. |
 | C18 | Ordinary detention: small shared-money loss plus one random eligible carried item. Police-death: larger shared-money loss plus all carried inventory. |
 | C19 | Irreplaceable story items excluded from random confiscation. Non-detained teammates continue; no team teleport. |
-| C20 | Ordinary money deductions apply separately per detained/dead player, including mixed outcomes. All use team money. |
+| C20 | Ordinary money deductions apply separately per detained/dead player, including mixed outcomes, but each player's solo-equivalent cash penalty is divided by active team size `N` and deducted from the one shared fund (`Σ(Xᵢ/N)`). |
 | C21 | A concrete report, detected odor/signs or observed pursued return can trigger base inspection. District background alone cannot. |
 | C22 | Demand/knock, preparation interval, then entry or door breach. The old 75-point refusal/warrant gate no longer determines entry. |
 | C23 | Brief inspection of main accessible places; police never open closed storage, including the closed fridge. |
@@ -102,6 +102,7 @@ The source review does not establish working network inspections, zone UI, share
 | C31 | Early free capture of Tramduro unavailable; special story operation and prerequisites authorize the exception. |
 | C32 | Save zones, evidence, timers, active pursuit/inspection and applied consequences; loading cannot erase risk. |
 | C33 | Buyer meetings keep ordinary witness/police rules; no buyer betrayal or extra patrol generation. |
+| C34 | Team money rule (Vadim, 2026-10-19): sale/reward income is credited once at its full team amount; per-player cash penalties are divided by active team size, while one incident-level fine is divided once. |
 
 ### 3.2 Proposed defaults — not interview confirmations
 
@@ -216,15 +217,15 @@ Sufficient evidence: retain Operations' choice between displayed inspection brib
 | Police-caused death | Larger placeholder deduction for that player | All carried inventory lost. Base, van cargo and teammates are not remotely seized. Story-item recovery is Proposed P14. |
 | Rescue before cuffing completes | No detention deduction | Keep inventory; physical pursuit may continue. |
 
-The final interview explicitly selected per-player shared-fund deductions: two detentions cause two deductions; a detention plus a police-death causes both deductions. Each victim has one terminal outcome transaction; do not charge that same victim both detention and death for a single capture outcome.
+The final interview explicitly selected per-player shared-fund deductions: two detentions cause two deductions; a detention plus a police-death causes both deductions. Each victim's solo-equivalent amount is divided by active team size `N`; total debit is the sum of the affected players' amounts divided by `N`. Thus one affected player in a four-player team costs `X/4`; if all four each incur `X`, total debit is `X`. Each victim has one terminal outcome transaction; do not charge that same victim both detention and death for a single capture outcome. Snapshot `N` and affected player IDs with the incident outcome so disconnects or duplicate requests cannot change or repeat the amount.
 
-Random confiscation replaces most-valuable selection. No eligible item means no invented replacement loss. Money comes from the team fund, not a newly invented personal wallet. All percentages, fine caps and amounts are placeholders. Balancing must preserve a real choice: surrender limits losses; flight offers escape but risks worse losses. Do not force that balance by making ordinary flight automatically trigger gunfire.
+Random confiscation replaces most-valuable selection. No eligible item means no invented replacement loss. Money comes from the team fund, not a newly invented personal wallet. All percentages, fine caps and amounts are placeholders. Item confiscation remains per affected player and is not divided. Balancing must preserve a real choice: surrender limits losses; flight offers escape but risks worse losses. Do not force that balance by making ordinary flight automatically trigger gunfire.
 
 The whole-inventory rule here concerns police-caused death. It does not silently define generic environmental/PvP death. Exact respawn presentation is deferred.
 
 ### 9.2 Separate Operations inspection package
 
-Retain Operations' separate base-inspection punishment: confiscate discovered organ/blood merchandise; approximately 30% equipment purchase-value seizure while preserving the existing protected basic kit/stationary fridge; affect inspected base and detained players, not other owned bases; short station release; one financial/property package per inspection incident. Monetary amounts/rates are placeholders. The new closed-storage rule limits what is actually discovered.
+Retain Operations' separate base-inspection punishment: confiscate discovered organ/blood merchandise; approximately 30% equipment purchase-value seizure while preserving the existing protected basic kit/stationary fridge; affect inspected base and detained players, not other owned bases; short station release; one financial/property package per inspection incident. Its one incident-level fine is divided once by active team size `N`; do not stack ordinary street-arrest penalties. Voluntarily choosing the displayed bribe remains a full-price payment. Monetary amounts/rates are placeholders. The new closed-storage rule limits what is actually discovered.
 
 Do not stack an ordinary random-item seizure or ordinary per-player street detention fine on that same scripted inspection arrest. A genuine police-death is a separate outcome, but no victim receives duplicate terminal penalties. Equipment protection does not grant absent furniture or magically restore stock.
 
@@ -251,7 +252,7 @@ Do not back-port this into Stage A. Equip/remove actions, exact visual-awareness
 
 ## 11. Co-op and server authority
 
-For 1–4 players, server owns incident acceptance, witness random choices/call completion, caution contributions/decay, overlap, dispatch caps, sightings, search closure, cuff/rescue validation, discovered inspection evidence, outcome resolution, random confiscation, shared money and persistent state. Clients request actions and display authoritative results. This extends shared-world authority; it does not claim existing player movement is fully server-reconciled.
+For 1–4 players, server owns incident acceptance, witness random choices/call completion, caution contributions/decay, overlap, dispatch caps, sightings, search closure, cuff/rescue validation, discovered inspection evidence, outcome resolution, random confiscation, shared money and persistent state. For each monetary outcome it snapshots active team size `N` and affected player IDs, then applies `Σ(Xᵢ/N)` once to the shared fund; sale income elsewhere is credited once at its full team amount. Clients request actions and display authoritative results. This extends shared-world authority; it does not claim existing player movement is fully server-reconciled.
 
 Validate current state and physical reach for rescue, cleanup, storage, covering and detention. Give each cuff attempt and consequence transaction a stable identity. When rescue and completion race, exactly one authoritative terminal result wins. Late join/reconnect receives a full snapshot, not just subsequent events.
 
@@ -269,7 +270,7 @@ Disconnect is not escape or a random-confiscation reroll. Preserve pending outco
 | Police response | Origin service, committed roster, losses/replacement delays, crew/van knowledge, last-known positions, search/escape timers and firearm permission. |
 | Detention | Target/actor/attempt identity, cuff stage, rescue/completion outcome, pending processing and station release. |
 | Inspection | Base/cause identity, knock/breach/search stage, discovered evidence, outcome, grace remaining and clean-bonus-applied marker. |
-| Consequences | Cash deductions, chosen random item, confiscated IDs, applied-outcome keys and inspection equipment package. |
+| Consequences | Cash deductions, team-size snapshot `N`, affected player IDs, chosen random item, confiscated IDs, applied-outcome keys and inspection equipment package. |
 | Story access | Island prerequisites and operation authorization; no inferred unlock through ordinary police escalation. |
 
 Timers use active-world time and resume remaining duration. Saving during knock, cuffing, an odor episode or corpse reporting must neither reset risk nor duplicate it. Persist resolved random outcomes. Do not infer prior payment from current cash alone. Save migration belongs to the project's existing save system; no parallel format is required here.
@@ -322,12 +323,13 @@ Future implementation checks, **NOT RUN** in Unity for this document-only task. 
 | POL-40 | Early island approach / authorized finale | Early free capture unavailable; story prerequisites supply explicit exception. |
 | POL-41 | Playtest surrender versus escape | Surrender limits loss; flight can succeed; police-death worse; neither option dominates every situation. |
 | POL-42 | Vehicle balance review | Use actual maximum-start player van; do not assume weak stock-upgrade progression. |
+| POL-43 | Apply cash outcome to a party | Each affected player's solo-equivalent penalty is divided by the incident's active team size; one victim in a four-player party costs `X/4`, and duplicate outcomes never charge twice. |
 
 ## 14. Questions left open
 
 Core police interview is complete. These are source dependencies, explicitly deferred features or Proposed tuning, not silently approved decisions:
 
-1. Reconcile missing Capture, Sales, Inventory, Network, Stage A report and the Operations 2026-10-18 decision before implementation. Do not modify those sources in this task.
+1. Validate the 2026-10-19 shared-cash scaling rule against the connected capture, sales, inventory, operations and network implementations before release.
 2. Separate NPC caution/hiding spec: precise recognition, resistance modifiers, panic/voice timing, cover displacement, conditions/chances by NPC type and all animations. Owner explicitly deferred this work.
 3. Tune radii, durations, district coefficients, witness probabilities, staffing/gang cap, replacement delays and knock/search/grace/cuff timing. P01–P16 are starting proposals, not playtested values.
 4. Monetary values/rates remain placeholders. Carried stack selection needs inventory integration; P12 currently selects one eligible instance.
@@ -339,10 +341,10 @@ Core police interview is complete. These are source dependencies, explicitly def
 
 ## 15. Verification and file scope
 
-PASS — local project and target directory identified; target did not exist before creation. Available references and selected police source behavior inspected read-only.
+PASS — police rules now point to the shared-fund scaling contract in NETWORK §3.9; arrest inventory consequences align with the random eligible item rule.
 
-PASS — Confirmed decisions separated from Proposed defaults; missing references and superseded inspection/shooting/confiscation rules explicitly recorded.
+PASS — Confirmed decisions remain separate from Proposed defaults; arrest money, team-size snapshot and persistence are explicit. Runtime behavior remains unverified.
 
 NOT RUN — Unity compilation, Play mode, multiplayer and subjective balance checks. POL acceptance checks above are future checks, not reported results.
 
-File written: `C:\Users\chern_0eqkb03\Desktop\GAME\docs\specs\POLICE_SUSPICION_SPEC_2026-10-18_v01.md`.
+Updated in this documentation pass: shared-fund scaling and team-size persistence. No Unity or Assets changes and no commits were made.

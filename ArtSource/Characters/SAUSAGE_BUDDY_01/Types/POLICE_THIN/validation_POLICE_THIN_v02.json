@@ -1,0 +1,384 @@
+{
+  "asset": "SAUSAGE_BUDDY_POLICE_THIN_v02",
+  "variant": "POLICE_THIN",
+  "height_m": 1.787,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 8958,
+      "vertices": 4736,
+      "materials": [
+        "POLICE_THIN_Shirt",
+        "POLICE_THIN_Badge",
+        "POLICE_THIN_Plate",
+        "POLICE_THIN_Shirt_Dark",
+        "POLICE_THIN_Patch",
+        "POLICE_THIN_Patch_Core",
+        "POLICE_THIN_Letters",
+        "POLICE_THIN_Radio",
+        "POLICE_THIN_Radio_Light",
+        "POLICE_THIN_Belt",
+        "POLICE_THIN_Buckle",
+        "POLICE_THIN_Holster",
+        "POLICE_THIN_Gun",
+        "POLICE_THIN_Baton",
+        "POLICE_THIN_Trousers",
+        "POLICE_THIN_Socks",
+        "POLICE_THIN_Shoes",
+        "POLICE_THIN_Shoe_Sole",
+        "POLICE_THIN_Hair",
+        "POLICE_THIN_Mustache",
+        "POLICE_THIN_Cap",
+        "POLICE_THIN_CapBand",
+        "POLICE_THIN_Visor"
+      ],
+      "max_influences": 3,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.093
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0718,
+      "max": 0.093
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.093
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0424,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Полицейский США, худой",
+    "group": "Силовики",
+    "body": {
+      "thin": 1.0
+    },
+    "idle_arm_down_deg": 74.0,
+    "game_scale": 1.06,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {},
+    "face_baked": {
+      "Worried": 0.25,
+      "Blink": 0.2
+    },
+    "slots": {
+      "POLICE_THIN_Shirt": {
+        "default": "#222C4A",
+        "metal": false
+      },
+      "POLICE_THIN_Shirt_Dark": {
+        "default": "#182038",
+        "metal": false
+      },
+      "POLICE_THIN_Trousers": {
+        "default": "#1A2034",
+        "metal": false
+      },
+      "POLICE_THIN_Patch": {
+        "default": "#D6B450",
+        "metal": false
+      },
+      "POLICE_THIN_Patch_Core": {
+        "default": "#28468C",
+        "metal": false
+      },
+      "POLICE_THIN_Badge": {
+        "default": "#D6D8DE",
+        "metal": true
+      },
+      "POLICE_THIN_Plate": {
+        "default": "#D6D8DE",
+        "metal": true
+      },
+      "POLICE_THIN_Letters": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "POLICE_THIN_Belt": {
+        "default": "#101012",
+        "metal": false
+      },
+      "POLICE_THIN_Buckle": {
+        "default": "#D6D8DE",
+        "metal": true
+      },
+      "POLICE_THIN_Holster": {
+        "default": "#121214",
+        "metal": false
+      },
+      "POLICE_THIN_Gun": {
+        "default": "#28282C",
+        "metal": false
+      },
+      "POLICE_THIN_Cuffs": {
+        "default": "#D6D8DE",
+        "metal": true
+      },
+      "POLICE_THIN_Baton": {
+        "default": "#101012",
+        "metal": false
+      },
+      "POLICE_THIN_Radio": {
+        "default": "#161618",
+        "metal": false
+      },
+      "POLICE_THIN_Radio_Light": {
+        "default": "#E62828",
+        "metal": false
+      },
+      "POLICE_THIN_Socks": {
+        "default": "#101012",
+        "metal": false
+      },
+      "POLICE_THIN_Shoes": {
+        "default": "#0A0A0C",
+        "metal": false
+      },
+      "POLICE_THIN_Shoe_Sole": {
+        "default": "#161616",
+        "metal": false
+      },
+      "POLICE_THIN_Cap": {
+        "default": "#1A2034",
+        "metal": false
+      },
+      "POLICE_THIN_CapBand": {
+        "default": "#101012",
+        "metal": false
+      },
+      "POLICE_THIN_Visor": {
+        "default": "#0A0A0C",
+        "metal": false
+      },
+      "POLICE_THIN_Hair": {
+        "default": "#3C3028",
+        "metal": false
+      },
+      "POLICE_THIN_Mustache": {
+        "default": "#3C3028",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "POLICE_THIN_Shirt": "#5270A0",
+        "POLICE_THIN_Shirt_Dark": "#405C88"
+      },
+      {
+        "POLICE_THIN_Shirt": "#787870",
+        "POLICE_THIN_Shirt_Dark": "#60605A",
+        "POLICE_THIN_Trousers": "#464238"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 16510,
+  "part_triangles": {
+    "POLICE_THIN_Shirt": 1248,
+    "POLICE_THIN_Hair": 1152,
+    "Skin_Head": 1088,
+    "POLICE_THIN_Shoe_Upper": 1000,
+    "POLICE_THIN_Trousers": 816,
+    "POLICE_THIN_Patch": 704,
+    "POLICE_THIN_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "POLICE_THIN_Cap_Crown": 480,
+    "POLICE_THIN_Badge": 388,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "POLICE_THIN_Collar": 296,
+    "Skin_Nose": 288,
+    "POLICE_THIN_Socks": 288,
+    "POLICE_THIN_Belt": 260,
+    "POLICE_THIN_Mustache": 240,
+    "POLICE_THIN_Cap_Visor": 216,
+    "POLICE_THIN_Cap_Badge": 204,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "POLICE_THIN_Radio_Body": 108,
+    "POLICE_THIN_Holster": 108,
+    "POLICE_THIN_GunGrip": 108,
+    "POLICE_THIN_CuffCase": 108,
+    "POLICE_THIN_BeltRadio": 108,
+    "Prop_Phone": 108,
+    "POLICE_THIN_PatchStar": 96,
+    "POLICE_THIN_PocketFlap": 80,
+    "POLICE_THIN_Police": 64,
+    "POLICE_THIN_Plate": 48,
+    "POLICE_THIN_Radio_Led": 48,
+    "POLICE_THIN_Baton": 40,
+    "POLICE_THIN_BatonGrip": 40,
+    "POLICE_THIN_Radio_Antenna": 24,
+    "POLICE_THIN_Buckle": 12,
+    "POLICE_THIN_Placket": 2
+  }
+}

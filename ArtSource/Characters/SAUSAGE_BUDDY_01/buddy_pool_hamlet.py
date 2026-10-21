@@ -750,3 +750,132 @@ def _drop_slots(type_id, *slots):
 _drop_slots('HAMLET_BODYBUILDER', 'Hair')
 
 BUILDERS = {'HAMLET_GRANNY': hamlet_granny, 'HAMLET_SHEPHERD': hamlet_shepherd, 'HAMLET_BODYBUILDER': hamlet_bodybuilder, 'HAMLET_MUSHROOMER': hamlet_mushroomer, 'HAMLET_BOXERS_GRANDPA': hamlet_boxers_grandpa}
+
+
+# ------------------------------------------------------------------ HAMLET_MUZHIK (TASK-000891..000892: a funny old-style peasant)
+TYPES['HAMLET_MUZHIK'] = dict(
+    label='Сельский мужик (крестьянин)', group=GROUP, hand_props=True, body=dict(belly=0.7), arm_down=68.0,
+    face=dict(Happy=0.45, Blink=0.25), own_eyes=True,
+    look=dict(skin=(240, 182, 146), nose=(226, 104, 90), brow=(206, 160, 90), rim=(176, 116, 92)),
+    slots={'Linen': ((232, 220, 196), 0.95), 'Trim': ((196, 40, 52), 0.7), 'Trim_Dot': ((246, 240, 226), 0.7),
+           'Rope': ((176, 92, 52), 0.9), 'Trousers': ((112, 82, 62), 0.95), 'Wrap': ((156, 176, 162), 0.95),
+           'Cord': ((150, 120, 80), 0.9), 'Lapti': ((196, 160, 100), 0.95), 'Lapti_Weave': ((150, 116, 66), 0.95),
+           'Hair': ((222, 186, 110), 0.8), 'Beard': ((206, 140, 80), 0.9), 'Stick': ((128, 86, 48), 0.6),
+           'Basket': ((180, 132, 74), 0.9), 'Basket_Band': ((134, 94, 50), 0.9)},
+    colourways=[{'Linen': (210, 214, 200), 'Trousers': (80, 80, 76), 'Trim': (40, 70, 150)},
+                {'Linen': (226, 206, 176), 'Trousers': (70, 90, 70), 'Rope': (120, 120, 110)}])
+
+
+def bowl_cut(prefix, M):
+    """The pot haircut: straight bangs across the forehead, a level edge round the head just above the ears."""
+    lower = W.zprofile([(0, 1.625), (40, 1.615), (80, 1.540), (180, 1.520)])
+    off = lambda phi, u: 0.010 + 0.010 * math.sin(math.pi * min(1.0, u * 1.4))
+    cap, _ = W.shell(prefix, M['Hair'], lower, None, off=off, thick=0.008, seg=36, rows=6)
+    return [C.rigid(cap, 'Head')]
+
+
+def crook_stick(prefix, M, arm_down):
+    """Wooden walking stick held in the right fist, the curved handle on top."""
+    fist, _, _ = grip('Right', arm_down)
+    bottom = fist + Vector((0.0, -0.090, -0.760))
+    path = [bottom, fist + Vector((0.0, -0.010, -0.050)), fist + Vector((0.0, 0.0, 0.080)),
+            fist + Vector((0.0, -0.030, 0.140)), fist + Vector((0.0, -0.075, 0.120)), fist + Vector((0.0, -0.085, 0.080))]
+    return hold([G.tube(prefix, path, 0.013, M['Stick'], seg=8)], 'Right', arm_down)
+
+
+def bast_basket(prefix, M, arm_down):
+    """Bast basket hanging from its rope handle in the left fist: an open woven tub with darker bands."""
+    fist, _, _ = grip('Left', arm_down)
+    c = fist + Vector((0.040, 0.0, -0.230))
+    r, h = 0.115, 0.190
+    body = G.tube(prefix + '_Body', [c + Vector((0, 0, -h / 2)), c + Vector((0, 0, h / 2))], lambda i, n: (r * 0.88, r)[i], M['Basket'],
+                  seg=16, caps=False)
+    G.solidify(body, 0.008, offset=0.0)
+    bottom = G.ellipsoid(prefix + '_Bottom', c + Vector((0, 0, -h / 2)), (r * 0.88, r * 0.88, 0.006), M['Basket'], seg=16, rings=4)
+    parts = [body, bottom]
+    for k, z in enumerate((-0.060, 0.000, 0.060)):
+        ring = [c + Vector((0, 0, z)) + Vector((math.cos(a), math.sin(a), 0)) * (r * (0.94 + 0.06 * (z + h / 2) / h) + 0.004)
+                for a in [2 * math.pi * i / 20 for i in range(21)]]
+        parts.append(G.tube(f'{prefix}_Band_{k}', ring, 0.006, M['Basket_Band'], seg=5))
+    rim = [c + Vector((0, 0, h / 2)) + Vector((math.cos(a), math.sin(a), 0)) * r for a in [2 * math.pi * i / 20 for i in range(21)]]
+    parts.append(G.tube(prefix + '_Rim', rim, 0.010, M['Basket_Band'], seg=6))
+    parts.append(G.tube(prefix + '_Rope', [c + Vector((-r, 0, h / 2)), fist + Vector((-0.010, 0, -0.010)), fist + Vector((0.010, 0, 0.012)),
+                                           c + Vector((r, 0, h / 2))], 0.0045, M['Cord'], seg=5))
+    return hold(parts, 'Left', arm_down)
+
+
+def onuchi_lapti(prefix, M):
+    """Grey-green foot wraps to mid-shin bound with criss-cross cords, and woven bast shoes."""
+    prof = [(0.090, 0.0475), (0.120, 0.0470), (0.170, 0.0480), (0.220, 0.0490), (0.300, 0.0505)]
+    vs, fs, seg = [], [], 14
+    for sgn in (1, -1):
+        rings = []
+        for z, r in prof:
+            ring = []
+            for j in range(seg):
+                a = 2 * math.pi * j / seg
+                ring.append(len(vs)); vs.append(Vector((sgn * B.LEG_X + r * math.cos(a), r * math.sin(a), z)))
+            rings.append(ring)
+        for a_, b_ in zip(rings, rings[1:]):
+            G.bridge(fs, a_, b_)
+    wraps = G.from_data(prefix + '_Wrap', vs, fs, M['Wrap'], True)
+    out = [wraps]
+    for s in (1, -1):
+        cx = s * B.LEG_X
+        for k in range(2):
+            pts = []
+            for i in range(25):
+                u = i / 24
+                a = 2 * math.pi * 2.2 * u + k * math.pi
+                pts.append(Vector((cx + 0.050 * math.cos(a), 0.050 * math.sin(a), 0.110 + 0.180 * u)))
+            out.append(G.tube(f'{prefix}_Cord_{s}_{k}', pts, 0.0028, M['Cord'], seg=4))
+    shoes = W.shoes(prefix + '_Lapti', M['Lapti'], M['Lapti_Weave'])
+    out += shoes
+    return out, shoes
+
+
+def hamlet_muzhik(body, face, M, skin):
+    """Funny old-style village muzhik after Vadim's reference: a loose cream linen kosovorotka to the hips with red
+    embroidered trim down the collar slit, a rope belt with two tassels, baggy brown trousers gathered at the shins,
+    grey-green foot wraps bound with cords, woven bast shoes, a blond pot haircut, a scruffy ginger goatee, a red nose and
+    a dumb grin and a bast basket in the left hand."""
+    import buddy_pool_vip as V
+    import buddy_pool_construction as CN
+    pre = 'HAMLET_MUZHIK'
+    src = C.weight_source([body])
+    shirt = _t(W.top(pre + '_Shirt', W.JACKET, 7, W.JACKET_SLEEVE, (.716, .210, .145, -.012), [M['Linen']]), src, C.no_head)
+    ssrc = C.weight_source([shirt])
+    out = [shirt]
+    trim = []
+    for s in (1, -1):
+        x0 = s * 0.026
+        trim.append(W.front_decal(f'{pre}_Trim_{s}', [(x0 - 0.009, 1.120), (x0 + 0.009, 1.120), (x0 + 0.009, 1.255), (x0 - 0.009, 1.255)], shirt,
+                                  M['Trim'], 0.0035, step=0.008))
+        for k in range(5):
+            z = 1.135 + 0.026 * k
+            trim.append(W.front_decal(f'{pre}_TrimDot_{s}_{k}', C.ellipse(x0, z, 0.004, 0.004, 6), shirt, M['Trim_Dot'], 0.0050, step=0.004))
+    out += [_t(o, ssrc) for o in trim]
+    neck = [Vector((0.152 * math.sin(a), -0.148 * math.cos(a) + 0.002, 1.256)) for a in [2 * math.pi * i / 32 for i in range(33)]]
+    out.append(_t(G.tube(pre + '_NeckTrim', neck, 0.0070, M['Trim'], seg=6), ssrc, C.no_head))
+    raw = [Vector((0.230 * math.sin(a), -0.160 * math.cos(a) - 0.012, 0.860)) for a in [2 * math.pi * i / 40 for i in range(40)]]
+    ps, _ = CN.on_surface([shirt], raw, 0.010, step=0.015, smooth=2, closed=True)
+    out.append(_t(G.tube(pre + '_Belt', ps + [ps[0]], 0.0105, M['Rope'], seg=6), ssrc))
+    knot = min(ps, key=lambda p: (p - Vector((0.090, -0.30, 0.86))).length)
+    for k, dx in enumerate((-0.010, 0.016)):
+        tail = [knot, knot + Vector((dx, -0.010, -0.080)), knot + Vector((dx * 1.5, -0.012, -0.150))]
+        out.append(_t(G.tube(f'{pre}_Tassel_{k}', tail, lambda i, n: (0.010, 0.008, 0.016)[i], M['Rope'], seg=6), ssrc))
+    out.append(_t(G.ellipsoid(pre + '_Knot', knot + Vector((0, -0.006, 0)), (0.020, 0.014, 0.018), M['Rope'], seg=10, rings=6), ssrc))
+    baggy = [(.70, .098), (.60, .106), (.50, .108), (.42, .104), (.35, .090), (.320, .064), (.310, .056)]
+    out.append(_t(W.bottoms(pre + '_Trousers', baggy, [M['Trousers']]), src))
+    feet, shoes = onuchi_lapti(pre, M)
+    out += [_t(o, src) if o not in shoes else o for o in feet]
+    out += bowl_cut(pre + '_Hair', M)
+    out.append(V.jaw_beard(pre + '_Goatee', M['Beard'], top=[(0, 1.385), (18, 1.390), (30, 1.380)], bot=[(0, 1.315), (18, 1.322), (30, 1.350)],
+                           bulge=0.006, rows=3, base=0.004, thick=0.004, arc_deg=30.0, cols=12))
+    out += W.mustache(pre + '_Mustache', M['Beard'], droop=0.006, size=0.7)
+    # no walking stick (Vadim, TASK-000896)
+    out += bast_basket(pre + '_Basket', M, TYPES[pre]['arm_down'])
+    return out
+
+
+BUILDERS['HAMLET_MUZHIK'] = hamlet_muzhik

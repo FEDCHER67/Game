@@ -1,0 +1,328 @@
+{
+  "asset": "SAUSAGE_BUDDY_OLD_POPKING_v01",
+  "variant": "OLD_POPKING",
+  "height_m": 1.872,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 10549,
+      "vertices": 5570,
+      "materials": [
+        "OLD_POPKING_Jacket",
+        "OLD_POPKING_Shirt",
+        "OLD_POPKING_Lapel",
+        "OLD_POPKING_Button",
+        "OLD_POPKING_Gold",
+        "OLD_POPKING_Trousers",
+        "OLD_POPKING_Socks",
+        "OLD_POPKING_Shoes",
+        "OLD_POPKING_Shoe_Sole",
+        "OLD_POPKING_Armband",
+        "OLD_POPKING_Glove",
+        "OLD_POPKING_Hat",
+        "OLD_POPKING_HatBand",
+        "OLD_POPKING_Hair"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.1349
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.1349,
+      "max": 0.1349
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.1349
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Король попа (пародия)",
+    "group": "Даунтаун",
+    "body": {
+      "thin": 0.9
+    },
+    "idle_arm_down_deg": 74.0,
+    "game_scale": 1.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {},
+    "face_baked": {
+      "Happy": 0.15,
+      "Blink": 0.2
+    },
+    "slots": {
+      "OLD_POPKING_Jacket": {
+        "default": "#141418",
+        "metal": false
+      },
+      "OLD_POPKING_Lapel": {
+        "default": "#0A0A0C",
+        "metal": false
+      },
+      "OLD_POPKING_Shirt": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "OLD_POPKING_Button": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "OLD_POPKING_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "OLD_POPKING_Trousers": {
+        "default": "#141418",
+        "metal": false
+      },
+      "OLD_POPKING_Socks": {
+        "default": "#FCFCFC",
+        "metal": false
+      },
+      "OLD_POPKING_Shoes": {
+        "default": "#0C0C0E",
+        "metal": false
+      },
+      "OLD_POPKING_Shoe_Sole": {
+        "default": "#1E1C1C",
+        "metal": false
+      },
+      "OLD_POPKING_Hat": {
+        "default": "#16161A",
+        "metal": false
+      },
+      "OLD_POPKING_HatBand": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "OLD_POPKING_Hair": {
+        "default": "#0E0C0E",
+        "metal": false
+      },
+      "OLD_POPKING_Glove": {
+        "default": "#ECEEF6",
+        "metal": true
+      },
+      "OLD_POPKING_Armband": {
+        "default": "#C41C24",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "OLD_POPKING_Jacket": "#C41C24",
+        "OLD_POPKING_Lapel": "#96141C"
+      },
+      {
+        "OLD_POPKING_Jacket": "#F0EEE8",
+        "OLD_POPKING_Lapel": "#D4D0C8",
+        "OLD_POPKING_Trousers": "#F0EEE8",
+        "OLD_POPKING_Hat": "#F0EEE8",
+        "OLD_POPKING_HatBand": "#16161A"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 18101,
+  "part_triangles": {
+    "OLD_POPKING_Jacket": 1872,
+    "OLD_POPKING_Hair_Lock": 1680,
+    "Skin_Head": 1088,
+    "OLD_POPKING_Shoe_Upper": 1000,
+    "OLD_POPKING_Glove": 960,
+    "OLD_POPKING_Trousers": 688,
+    "OLD_POPKING_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "OLD_POPKING_Hair_Cap": 512,
+    "OLD_POPKING_Lapel": 504,
+    "Skin_Arm": 480,
+    "OLD_POPKING_ShirtV": 433,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "OLD_POPKING_Hat_Brim": 384,
+    "OLD_POPKING_Hat_Crown": 352,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "OLD_POPKING_ShirtCollar": 296,
+    "Skin_Nose": 288,
+    "OLD_POPKING_Socks": 288,
+    "OLD_POPKING_Fringe": 280,
+    "OLD_POPKING_Epaulette": 216,
+    "OLD_POPKING_Hair_ForeheadCurl": 180,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "OLD_POPKING_Flap": 88,
+    "OLD_POPKING_Row": 64,
+    "OLD_POPKING_Armband": 64,
+    "OLD_POPKING_Btn": 16
+  }
+}

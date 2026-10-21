@@ -1,0 +1,42 @@
+// W85 grass visibility: fork of ThirdParty/GrassInstancer_MB/GrassVisibility24.compute (MangoButtermilch, MIT).
+// One group per chunk: the CPU marks the chunks to draw (_ChunkMask: frustum, distance, terrain-horizon occlusion); per blade:
+// frustum + distance (as before) and the density falloff with distance.
+#pragma kernel ChunkRender
+struct Blade { float4 positionHeight; float4 shape; };
+struct Chunk { float3 centre; uint start; float3 extents; uint count; };
+StructuredBuffer<Blade> _Blades;
+StructuredBuffer<Chunk> _Chunks;
+AppendStructuredBuffer<uint> _Visible;
+StructuredBuffer<uint> _ChunkMask;
+float4 _Frustum[6];
+float3 _CameraPosition;
+float _ViewDistance;
+float4 _Falloff;              // near (full density), far (= view distance), kept fraction at far, occlusion on (1)
+uint _ChunkCount;
+
+uint Hash(uint x)
+{
+    x ^= x >> 16; x *= 0x7feb352d; x ^= x >> 15; x *= 0x846ca68b; x ^= x >> 16;
+    return x;
+}
+
+[numthreads(64, 1, 1)]
+void ChunkRender(uint3 group : SV_GroupID, uint thread : SV_GroupIndex)
+{
+    if (group.x >= _ChunkCount) return;
+    if (_ChunkMask[group.x] == 0) return;
+    Chunk chunk = _Chunks[group.x];
+    for (uint i = thread; i < chunk.count; i += 64)
+    {
+        uint index = chunk.start + i;
+        Blade blade = _Blades[index];
+        float3 centre = blade.positionHeight.xyz + float3(0, blade.positionHeight.w * .5, 0);
+        float radius = blade.positionHeight.w * .75 + .4;
+        float d = distance(centre, _CameraPosition);
+        bool visible = d < _ViewDistance + radius;
+        for (uint p = 0; p < 6; p++) visible = visible && dot(_Frustum[p].xyz, centre) + _Frustum[p].w >= -radius;
+        float keep = lerp(1.0, _Falloff.z, smoothstep(_Falloff.x, _Falloff.y, d));
+        visible = visible && (float)(Hash(index) & 0xffffu) < keep * 65535.0;
+        if (visible) _Visible.Append(index);
+    }
+}

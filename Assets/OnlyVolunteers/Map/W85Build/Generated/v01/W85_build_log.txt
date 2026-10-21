@@ -1,0 +1,59 @@
+facade kit: 28 pieces imported, 16 shared kit materials
+v04 rollout: on (13 surfaces, 28 kit pieces, 29 kit materials, HH house walls 7,24 x 8,74 m, eaves 3,50 m)
+terrain 1744x135x950 m, heightmap 2049, splat 2048 x 11 layers, 4763 trees, height probe 20,11 m (expected 20,12)
+ok: terrain
+bridge bridge_tramduro: 209 m, deck 8,8 m, 9 piers
+roads: 17 meshes (own grade-limited heights, mesh colliders), 2 bridges; dirt roads / sand ruts = splat
+ok: roads
+tunnel: 200 m, portals 5,9 / 6,2 m, cover min 14,9 m
+ok: tunnel
+water: dense sea grid 120098 quads + far plane, 6 inland bodies (flow mode), sea return zone 656 triangles all round; WaterData Assets/OnlyVolunteers/Map/W85Build/Generated/v01/W85_WaterData_v01.asset: River 474, Lake 3, Bog 1, Pond 1, Sea 1
+ok: water
+border: invisible wall 60 m along the border fence line (115 pts) + 7 segments past the ends; fence / KPP / towers built with the Rough district (scope north_border)
+ok: border
+beach: 4 buildings, 95 props, 3 zone surfaces, 0 fences, 0 walls, 0 district roads, 2 piers, 0 alley plugs, 0 hedged plots
+ok: district beach_v85
+construction: 23 buildings, 50 props, 1 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district construction_v85
+downtown: 140 buildings, 96 props, 10 zone surfaces, 79 street meshes (carriageway + 5 m sidewalks, kerbs, corners, 15 curb drops), 0 fences, 2 walls, 0 district roads, 0 piers, 4 alley plugs, 0 hedged plots
+ok: district downtown_v85
+elite: 10 buildings, 38 props, 10 zone surfaces, 1 fences, 0 walls, 2 district roads, 3 piers, 0 alley plugs, 4 hedged plots
+ok: district elite_v85
+forest: 1 buildings, 3 props, 0 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district forest_v85
+hamlet: 64 buildings, 128 props, 1 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district hamlet_v85
+port: 7 buildings, 68 props, 2 zone surfaces, 4 fences, 0 walls, 0 district roads, 1 piers, 0 alley plugs, 0 hedged plots
+ok: district port_v85
+quiet_valley: 2 buildings, 1 props, 4 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district quiet_valley_v85
+rough: 91 buildings, 96 props, 4 zone surfaces, 5 fences, 0 walls, 1 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district rough_v85
+tramduro: 3 buildings, 26 props, 5 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district tramduro_v85
+details by rules: 390 placed (downtown_lamps 80, hydrants 88, parked_cars 62, traffic_lights 24, rough_benches 58, rural_signs 8, total 390)
+ok: details
+texture sample T4: podium + connector depth x0,781 (4788 vertices), towers unchanged
+texture sample: moved 05-35-screen to (1028,0, 411,9) +12,0 m; T4: TT_Towers/T4 at (1028,0, 420,9) y 5,02 yaw 0 replaces 05-01, 05-02, 05-B023; 0 terrain trees removed at the samples
+ok: texture sample
+N-R3 night light: 142 urban street lamps (flicker point light in the head + shadowed spot; nearest 8 spots cast shadows), 0 rural lamps unlit
+ok: night lamps
+base 2 yard (grandpa): GY_RockingChair_Red (241,6, 518,4), GY_Barrel_Wood (241,4, 523,2), GY_PaintCan_Open_Green (242,0, 523,3), GY_PaintCan_Lid_Green (242,3, 523,0), GY_PaintBrush_Green (242,0, 522,8), GY_PaintCan_Ochre (241,6, 522,7), GY_PaintCan_Small_Blue (242,2, 522,5), GY_Drum_Rain (240,7, 515,9); downpipe on at (240,7, 516,3)
+ok: base 2 yard
+light: sun 37°, trilight, ACES, sat -15 / contrast +8, district zones (Rough overcast fog, Construction bright), tunnel exit glare
+ok: light
+roof test: 321 buildings, failing 0; ridge rays 2749 (missed 0), sweeps 722 (missed 0)
+floating check: 135 raised roof / canopy / awning / porch / shelter pieces, 0 floaters, 0 fixes (support posts / put down)
+validate: renderers without material 0, buildings without colliders 0, roof rays 216204 (missed 0) - details Assets/OnlyVolunteers/Map/W85Build/Generated/v01/W85_roof_test.txt
+ok: validate
+v04 rollout: Hamlet H5 24 houses (0 roof rays missed), Rough R2c 27 khrushchevkas, Downtown D4 122 blocks; issues: 02-H13: footprint 7,7 x 6,4 m, H5 scaled to its limit (1,07 / 0,80); 02-H18: footprint 9,6 x 7,6 m, H5 scaled to its limit (1,30 / 0,86); 02-H09: footprint 9,5 x 6,5 m, H5 scaled to its limit (1,30 / 0,80); 02-H05: footprint 7,3 x 6,1 m, H5 scaled to its limit (1,01 / 0,80); 02-H04: footprint 9,4 x 6,4 m, H5 scaled to its limit (1,29 / 0,80); 02-H08: footprint 8,2 x 6,2 m, H5 scaled to its limit (1,14 / 0,80); 02-H01: footprint 8,0 x 6,0 m, H5 scaled to its limit (1,11 / 0,80); 02-H16: footprint 8,0 x 6,0 m, H5 scaled to its limit (1,10 / 0,80)
+fog: terrainWorld (-120.00, -120.00, 1728.00, 1024.00) -> (0.00, 0.00, 1744.00, 950.00), 18 mist banks moved to W85 Rough / Forest
+fog x1,08: roughDensity 0,01933, forestDensity 0,0281, groundExtinction 0,0594, district linear fog end pulled in
+i10 look copied: palette/weather/fog/aerial + 11 light volumes, G22 sky, V19Wind, Sun, PostFX_v17; terrain material V3_Terrain, camera FOV 70 far 460
+grass: 1421495 blades in 2704 chunks (beach=13965; between_districts=1066414; elite=6530; fields=13152; forest=3632; industrial=1770; old_town=22590; residential=37387; tramduro=13914; transition=6048; village=236093; 20635 hard tris; rejectedHard=729216; seconds=10,5); W85GrassRenderer (draw distance High 60 / Med 50 / Low 40 m, density falloff, horizon occlusion, quality setting), mesh / material / compute: True
+ok: i10 look
+texture sample night: 142 N-R3 lamps on 1 night rig(s), fog halos on
+ok: texture sample night
+materials: 14 reused, 109 created, 11 V19 palette-field copies (field off), 62 slot materials
+terrain re-applied after the asset save: height probe 20,11 m (expected 20,12 m)
+built in 174 s

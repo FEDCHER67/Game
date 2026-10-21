@@ -574,7 +574,8 @@ def manifest(name):
 # The approved NPC pool by district lives in buddy_pool_*.py; each module adds its own TYPES and BUILDERS here.
 POOLS = ('buddy_pool_forest', 'buddy_pool_hamlet', 'buddy_pool_transit', 'buddy_pool_transit2', 'buddy_pool_bad',
          'buddy_pool_bad2', 'buddy_pool_oldtown', 'buddy_pool_oldtown2', 'buddy_pool_prom', 'buddy_pool_construction',
-         'buddy_pool_bad3', 'buddy_pool_oldtown3', 'buddy_pool_beach')
+         'buddy_pool_bad3', 'buddy_pool_oldtown3', 'buddy_pool_beach',
+         'buddy_pool_vip', 'buddy_pool_forces')        # TASK-000875/000875: VIP parodies, Tramduro, US police, FBI, army
 for _name in POOLS:
     try:
         _pool = importlib.import_module(_name)

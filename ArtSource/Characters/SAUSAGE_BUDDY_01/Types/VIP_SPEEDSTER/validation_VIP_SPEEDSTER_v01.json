@@ -1,0 +1,319 @@
+{
+  "asset": "SAUSAGE_BUDDY_VIP_SPEEDSTER_v01",
+  "variant": "VIP_SPEEDSTER",
+  "height_m": 1.825,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 15474,
+      "vertices": 8158,
+      "materials": [
+        "VIP_SPEEDSTER_Jersey",
+        "VIP_SPEEDSTER_Jersey_Trim",
+        "VIP_SPEEDSTER_Letters",
+        "VIP_SPEEDSTER_Gold",
+        "VIP_SPEEDSTER_Shorts",
+        "VIP_SPEEDSTER_Shorts_Stripe",
+        "VIP_SPEEDSTER_Socks",
+        "VIP_SPEEDSTER_Shoe_Upper",
+        "VIP_SPEEDSTER_Shoe_Sole",
+        "VIP_SPEEDSTER_Shoe_Lace",
+        "VIP_SPEEDSTER_Shoe_Accent",
+        "VIP_SPEEDSTER_Hair_Fade",
+        "VIP_SPEEDSTER_Hair"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0016,
+    "Panic_Run_Loop": 0.0723,
+    "Panic_TurnFlee": 0.0771,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.0495,
+      "max": 0.0771
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": 0.0002,
+      "max": 0.0729
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0729,
+      "max": 0.0817
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": 0.0005,
+      "max": 0.0729
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.046,
+      "max": 0.0771
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2719,
+      "max": 0.0016
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0283,
+      "max": 0.0796
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0256,
+      "max": 0.09
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.09,
+      "max": 0.09
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.1837,
+      "max": 0.0771
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Орущий стример ISHOWMEET (пародия)",
+    "group": "VIP Элиты",
+    "body": {
+      "thin": 0.5
+    },
+    "idle_arm_down_deg": 74.0,
+    "game_scale": 1.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {},
+    "face_baked": {
+      "Surprised": 1.0,
+      "Happy": 0.2
+    },
+    "slots": {
+      "VIP_SPEEDSTER_Jersey": {
+        "default": "#C61C28",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Jersey_Trim": {
+        "default": "#14703E",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Letters": {
+        "default": "#F6E696",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Shorts": {
+        "default": "#14703E",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Shorts_Stripe": {
+        "default": "#C61C28",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Socks": {
+        "default": "#F6F6F2",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Shoe_Upper": {
+        "default": "#F6F6F4",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Shoe_Sole": {
+        "default": "#F6F6F4",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Shoe_Accent": {
+        "default": "#F6F6F4",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Shoe_Lace": {
+        "default": "#F0F0EC",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Gold": {
+        "default": "#D6AE4C",
+        "metal": true
+      },
+      "VIP_SPEEDSTER_Hair": {
+        "default": "#14100E",
+        "metal": false
+      },
+      "VIP_SPEEDSTER_Hair_Fade": {
+        "default": "#181310",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "VIP_SPEEDSTER_Jersey": "#F6F6F2",
+        "VIP_SPEEDSTER_Jersey_Trim": "#14703E",
+        "VIP_SPEEDSTER_Letters": "#C61C28",
+        "VIP_SPEEDSTER_Shorts": "#F6F6F2"
+      },
+      {
+        "VIP_SPEEDSTER_Jersey": "#18181C",
+        "VIP_SPEEDSTER_Jersey_Trim": "#FCD228",
+        "VIP_SPEEDSTER_Letters": "#FCD228",
+        "VIP_SPEEDSTER_Shorts": "#18181C"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 23026,
+  "part_triangles": {
+    "VIP_SPEEDSTER_Hair_Twist": 8064,
+    "VIP_SPEEDSTER_Jersey": 1248,
+    "Skin_Head": 1088,
+    "VIP_SPEEDSTER_Chain": 1040,
+    "VIP_SPEEDSTER_Hair_Fade": 1024,
+    "VIP_SPEEDSTER_Shoe_Upper": 1000,
+    "VIP_SPEEDSTER_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "VIP_SPEEDSTER_Heel": 560,
+    "Skin_Arm": 480,
+    "VIP_SPEEDSTER_Shorts": 432,
+    "VIP_SPEEDSTER_Neckband": 396,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "VIP_SPEEDSTER_Hair_Top": 352,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "VIP_SPEEDSTER_Lace": 256,
+    "VIP_SPEEDSTER_Socks": 240,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "VIP_SPEEDSTER_Name": 98,
+    "VIP_SPEEDSTER_Side": 88,
+    "VIP_SPEEDSTER_Stripe": 4
+  }
+}

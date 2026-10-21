@@ -15,7 +15,7 @@ Status: design specification; implementation and gameplay acceptance have not be
 
 ## 1. Scope, authority and source contracts
 
-This document specifies the chest operation, its physical output and base cleanup. It extends the existing capture → table → organ → inventory → sale loop. All surgical actions are stylized game interactions with authored targets and abstract connections.
+This document specifies the chest operation, its physical output and base cleanup. It extends the existing capture → table → organ → inventory → sale loop. All surgical actions are stylized game interactions with authored targets and abstract connections. This stage creates no money or XP: merchandise income is credited once by the buyer sale transaction, and any cash penalty owned by another system follows the shared-fund rule in `NETWORK_MAP_PLAN_v01.md` §3.9.
 
 **Confirmed** means Fedya selected the behavior in G40 or it is an inherited confirmed requirement cited below. **Proposed** means an explicitly identified authoring, interaction or tuning preset that Fedya has not separately approved. Proposed values are suitable for a first implementation pass, remain configurable and are not validated balance results.
 
@@ -26,7 +26,7 @@ Later dated Decisions sections take precedence over superseded tables in their s
 | docs/specs/OPERATIONS_SPEC_2026-10-15_v01.md | Physical tools; shared camera and free roles; connections and pulling; quality; mortality; preservation; cleanup; authoritative persistence. Section 11 Decision 2026-10-18 overrides the old liver/second-kidney chance rows. |
 | docs/specs/CAPTURE_DELIVERY_SPEC_2026-10-18_v01.md | Stable patient identity and condition; blood history; corpse decay; clothes becoming trash; corpse removal and water disposal; no offline progression. |
 | docs/specs/BUYERS_SPEC_2026-10-15_v02.md | Five quality tiers; ordinary sales versus packaged special orders; organ provenance; sale-only rewards. |
-| docs/specs/SALES_GAMEPLAY_SPEC_2026-10-18_v01.md, including Decisions | Surgeon accepts ordinary heart/paired-lung merchandise at Good or better; physical delivery and current-quality checks; packaging is distinct from cooling. |
+| docs/specs/SALES_GAMEPLAY_SPEC_2026-10-18_v01.md, including Decisions | Three organ buyers accept all story-unlocked types at Damaged / Acceptable / Good minimum respectively; Ruined is rejected; physical delivery and current-quality checks; packaging is distinct from cooling. |
 | docs/specs/WORK_INVENTORY_SPEC_2026-10-18_v01.md, including Decisions | Six pockets and cycling kit slot; real item instances and containers; organ packaging; cooler restrictions; inventory retention on client departure. Earlier leave-drop text is superseded. |
 | docs/specs/NETWORK_MAP_PLAN_v01.md, including Decisions | FishNet host/server authority; co-op 1–4; validated intents; one patient identity; host departure ends the session without migration. |
 | docs/reports/CAPTURE_DELIVERY_STAGE_A_HOWTO_RU.md | Current playable solo flow, preparation/operation modes, shared chest/abdomen outer opening, corpse removal and prototype limitations. This report is not proof of multiplayer readiness. |
@@ -85,15 +85,15 @@ Q2 initially mentioned two mandatory points as an answer option; Fedya explicitl
 | I01 | One persistent PatientId, condition, intrinsic organ grades, blood history, anesthesia and death state travel from capture to table. | Confirmed — capture/operations |
 | I02 | Heart or combined paired-lung extraction kills a living NPC immediately, 100%. Liver and second-kidney extraction are also immediately fatal under the dated operations decision. | Confirmed — operations section 11 |
 | I03 | The first kidney retains its chance roll: 10% plus 10 percentage points per prior blood portion. Never repeat survival rolls for a dead patient. | Confirmed — operations section 11 |
-| I04 | Five quality tiers, floor Damaged; separate organ grades; condition loss; established incision, direct-cut, abrupt-pull, impact, early-overdose and decay rules. | Confirmed — operations/capture/buyers |
-| I05 | Paired lungs are one merchandise item, one organ bag and one storage slot. The complete eight-organ set remains unchanged. | Confirmed — operations/inventory/sales |
+| I04 | Five quality tiers plus irreversible Ruined; ordinary damage floor Damaged, first erroneous cut Damaged and second Ruined; condition loss; established incision, direct-cut, abrupt-pull, impact, early-overdose and decay rules. | Confirmed — operations/capture/buyers |
+| I05 | Paired lungs are one merchandise item, one organ bag and one storage slot. Full output is seven items: two kidneys, liver, indivisible paired eyes, brain, heart and paired lungs. | Confirmed — operations/inventory/sales |
 | I06 | Ordinary sales do not require an organ bag. Special orders may require sealed individual packing. Packing does not cool or restore an organ. | Confirmed — operations/buyers/sales |
 | I07 | Real reachable tools, shared fixed table camera, local magnifiers, no mandatory roles, joint pulling, persistent released connections and no world pause on camera exit. | Confirmed — operations |
 | I08 | Body removal frees the table for another patient. Stains and small debris do not mechanically block the next operation. Helper duties do not include cleaning or automatic final disposal. | Confirmed — operations |
 | I09 | Server-authoritative shared state; one item ledger, one body owner and one save path; no duplicate extraction, consumption or rewards. | Confirmed — operations/network/inventory |
 | I10 | A departing client retains all inventory possessions, including held items and carried cooler contents, in the host save. They are unavailable to the team until rejoin. | Confirmed — inventory Decisions 5 |
 | I11 | World closure freezes active-world time. Host departure ends the session; there is no host migration. | Confirmed — network/capture/operations |
-| I12 | Private surgeon ordinary purchases: heart and paired lungs at Good / Хорошее (60%) or better. Foreman retains ordinary acceptance of all five tiers. | Confirmed — sales/buyers |
+| I12 | Three organ buyers accept all unlocked types at Damaged / Acceptable / Good respectively. The medic is second, the elite mafioso third; later buyers pay substantially more. No one buys Ruined. | Confirmed — sales/buyers |
 
 ## 3. Existing content and required integration
 
@@ -168,25 +168,25 @@ Keep one quality history per organ. Initial quality comes from the saved intrins
 | Tier | English name | Player display |
 |---|---|---|
 | 1 | Damaged | Убитое · 20% |
-| 2 | Acceptable | Сойдёт · 40% |
-| 3 | Good | Хорошее · 60% |
-| 4 | Perfect | Отличное · 80% |
-| 5 | Perfect+ | Идеальное · 100% |
+| 2 | Acceptable | No separate quality appearance |
+| 3 | Good | No separate quality appearance |
+| 4 | Perfect | No separate quality appearance |
+| 5 | Perfect+ | Subtle golden aura |
 
-The percentage is a tier label, not a separate continuously varying condition. Preserve approved tier colors. Exact current quality appears on inspection after extraction; earlier appearance remains approximate unless existing assessment equipment provides the established evaluation.
+Percentages are internal grade labels. Visible presentation distinguishes Damaged, Ruined and subtle gold on Perfect+ only. Multipliers: 0.5 / 1 / 1.5 / 2.6 / 6; Ruined value zero.
 
 | Event | Inherited result |
 |---|---|
 | Predominantly sloppy local incision | −1 tier to associated nearby organs, not the entire patient |
-| Direct blade cut into an organ | −2 tiers to that organ |
+| Erroneous direct cut into an organ | First distinct error sets Damaged; second sets Ruined |
 | Abrupt extraction pull | −1 tier |
 | Strong organ drop/impact | −1 tier; gentle contact has no penalty |
 | Overdose death before the first extraction | −2 tiers to all remaining organs, followed by ordinary decay |
 | Missed mallet strike / bone contact alone | No organ quality loss |
 
-Different events add together down to Damaged. One continuous damaging action is one event, independent of frame count, collider-part count or number of observers. Distinct later actions may cause further loss. Patient movement alone does not lower quality; resulting actual blade contact can.
+Ordinary impacts/pulls add losses down to Damaged only; time decay and a second erroneous cut can cause Ruined. One continuous damaging action is one event, independent of frame count, collider-part count or number of observers. Distinct later actions may cause further loss. Patient movement alone does not lower quality; resulting actual blade contact can.
 
-Death starts the existing 45-second grace followed by one tier per 40 seconds inside the corpse. The existing proposed boundary convention places the first full loss at death +85 seconds; retain its Proposed status in P08. Opening a zone, packing a corpse or changing players cannot restart this timeline. Heart/lung death does not apply the special early-overdose penalty.
+Death starts the existing 45-second grace followed by one tier per 40 seconds inside the corpse, continuing below Damaged into Ruined. The existing proposed boundary convention places the first full loss at death +85 seconds; retain its Proposed status in P08. Opening a zone, packing a corpse or changing players cannot restart this timeline. Heart/lung death does not apply the special early-overdose penalty.
 
 ### 6.2 Individual organ bags
 
@@ -194,7 +194,7 @@ Use the work-inventory action: hold the secondary packing action on the owned ex
 
 The table adapter may use a physically reachable pouch from the tray; outside table mode use the established pocket/kit supply route. The selected source must be visible/readable and consumed only once. A failed/interrupted packing action does not consume a pouch; quality and time continue. The packing model does not mint replacement merchandise or discard donor/quality/cold-history fields.
 
-Ordinary surgeon sales require heart/lungs at Good or better at confirmation. They do not acquire a new ordinary-sale packaging requirement. Packaged special orders retain their own requirements. Below-Good goods remain valid merchandise for a buyer who accepts them; there is no new unsellable tier.
+Ordinary sales use the three buyers minimum grades for every unlocked organ type at confirmation. They do not acquire a new ordinary-sale packaging requirement. Packaged special orders retain their own requirements. Below-Good goods remain valid for an eligible buyer; Ruined is an unsellable irreversible state, not a sixth grade, and stays physical until ordinary waste disposal.
 
 ### 6.3 Containers, lamp and power
 
@@ -368,7 +368,7 @@ Persistent shared results replicate as state. Crack, thud, splash, zip, jam and 
 | Strong thrown impact against any object | One intact-to-ruptured transition; bag retired; same contents released; if a teammate is struck, one targeted temporary dirty-screen cue |
 | Disposal | Bag/body and relevant contained identities retired; their current sources removed |
 
-No cutting, bone work, cleaning, packing or disposal pays cash/XP. Merchandise rewards remain in the buyers' atomic sale flow. Duplicate requests or a saved already-completed state return the prior result rather than generating extra objects, bags, fines or rewards.
+No cutting, bone work, cleaning, packing or disposal pays cash/XP. Merchandise rewards remain in the buyers' atomic sale flow and are credited once to the shared fund regardless of party size. Duplicate requests or a saved already-completed state return the prior result rather than generating extra objects, bags, fines or rewards. Any monetary fine from another system uses `Σ(Xᵢ/N)` in `NETWORK_MAP_PLAN_v01.md` §3.9; cleanup, item loss, respect and XP are not divided by this cash rule.
 
 ### 11.2 State to persist
 
@@ -435,7 +435,7 @@ These are future verification requirements. They have not been executed in Unity
 | OPS2-15 | Extract heart or lungs from a living patient | Immediate guaranteed death once; table remains usable for further extraction; no automatic cash/disposal. |
 | OPS2-16 | Extract liver or second kidney, then heart/lungs later | Original guaranteed abdominal death remains; later extraction does not restart death/grace or roll survival again. First-kidney chance remains unchanged. |
 | OPS2-17 | Apply intrinsic/condition/operation damage at extraction | Saved organ-specific intrinsic result and one condition penalty; correct additive tier losses; floor Damaged. |
-| OPS2-18 | Cause one sloppy cut, direct cut, abrupt pull and strong impact | Inherited −1/−2/−1/−1 losses apply to proper organs/events, not per frame or UCX part; gentle contact has no loss. |
+| OPS2-18 | Cause one sloppy cut, direct cut, abrupt pull and strong impact | Local −1, direct-cut Damaged then Ruined, abrupt-pull −1 and impact −1 apply to proper organs/events, not per frame or UCX part; gentle contact has no loss. |
 | OPS2-19 | Kill by early overdose versus terminal organ extraction | Only pre-first-extraction overdose applies the two-tier all-remaining-organs penalty. |
 | OPS2-20 | Continue on a corpse, switch zones, bag body, save/load | Death age never resets; grace/decay continue from active-world state. Check the explicitly Proposed P08 boundary separately. |
 | OPS2-21 | Seal an organ; interrupt or race packing attempts | One pouch only on success; same organ id/provenance/grade; no fresh timer, free output or double consumption. |
