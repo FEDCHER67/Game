@@ -221,6 +221,12 @@ def main():
         hp = float(np.median(h[m]))
         w_ = sm(1 - ndimage.distance_transform_edt(~m) / 8.0)
         h = h * (1 - w_) + hp * w_
+    # grandpa's yard (base 2): the play-scene integrator (G43) puts the open operating shed and the paint table next to the hut
+    base2 = [(238.0, 502.0), (253.0, 502.0), (253.0, 528.0), (238.0, 528.0)]
+    m = poly_mask(base2, xs, ys)
+    hp = float(np.median(h[m]))
+    w_ = sm(1 - ndimage.distance_transform_edt(~m) / 10.0)
+    h = h * (1 - w_) + hp * w_
     for z in Dd['hamlet']['zones']:
         if z['kind'] in ('field', 'plaza', 'loading_pad', 'apron', 'cemetery') and len(z.get('poly') or []) >= 3:
             m = poly_mask(z['poly'], xs, ys)
@@ -293,8 +299,9 @@ def main():
     h = np.where(steppe & land, np.maximum(h, GROUND + 7.0 * sm((ys - 912) / 38.0)), h)
     # ---- roads: profile, grade limit, imprint with gentle side slopes
     sm6 = ndimage.gaussian_filter(h, 6)
-    road_h = np.full((H, W), np.nan, np.float32)
-    road_w = np.zeros((H, W), np.float32)
+    stamp_h = np.full((H, W), np.nan, np.float32)
+    stamp_hw = np.zeros((H, W), np.float32)
+    stamp_k = np.full((H, W), 0.45, np.float32)
     report = []
     bridges = []
     for rd in roads:
@@ -340,20 +347,31 @@ def main():
             continue                                                    # deck over the water: no terrain imprint
         hw = rd['width_m'] / 2
         slope_k = 0.30 if rd['kind'] == 'serpentine' else 0.9 if rd['kind'] == 'stone_serpentine' else 0.45
-        for p, z in zip(pts, prof):
+        fine = resample([tuple(p) for p in rd['points']], 0.5)
+        Lf = np.concatenate([[0], np.cumsum(np.hypot(np.diff([p[0] for p in fine]), np.diff([p[1] for p in fine])))])
+        zf = np.interp(Lf, L, prof)
+        for p, z in zip(fine, zf):
             if span and c.seg_dist(p, span[0], span[1])[0] < 3.0:
                 continue
-            dz = abs(float(sm6[int(min(H - 1, p[1])), int(min(W - 1, p[0]))]) - z)
-            reach = hw + 1.0 + max(5.0, min(70.0, dz / slope_k))
-            x0, x1 = int(max(0, p[0] - reach)), int(min(W, p[0] + reach + 1))
-            y0, y1 = int(max(0, p[1] - reach)), int(min(H, p[1] + reach + 1))
-            dd = np.hypot(xs[y0:y1, x0:x1] - p[0], ys[y0:y1, x0:x1] - p[1])
-            wgt = sm(1 - (dd - hw - 0.8) / (reach - hw - 0.8))
-            cur = road_w[y0:y1, x0:x1]
-            upd = wgt > cur
-            road_h[y0:y1, x0:x1] = np.where(upd, z, road_h[y0:y1, x0:x1])
-            road_w[y0:y1, x0:x1] = np.where(upd, wgt, cur)
-    h = np.where(np.isnan(road_h), h, h * (1 - road_w) + np.nan_to_num(road_h) * road_w)
+            ix, iy = int(p[0]), int(p[1])
+            if 0 <= ix < W and 0 <= iy < H:
+                stamp_h[iy, ix] = z
+                stamp_hw[iy, ix] = hw
+                stamp_k[iy, ix] = slope_k
+    # one smooth corridor field for all roads (v01 imprinted per sample point -> scalloped banks): nearest centre line -> its height,
+    # half width and slope; reach from the SMOOTHED height difference, so cut / fill slopes are even along the road
+    has = ~np.isnan(stamp_h)
+    dist, (iy_, ix_) = ndimage.distance_transform_edt(~has, return_indices=True)
+    rh = stamp_h[iy_, ix_]
+    rhw = stamp_hw[iy_, ix_]
+    rk = stamp_k[iy_, ix_]
+    dz = ndimage.gaussian_filter(np.abs(sm6 - rh), 5)
+    reach = rhw + 1.0 + np.clip(dz / rk, 5.0, 70.0)
+    flat = rhw + 1.7                                                        # asphalt + ~1.5 m flat shoulder (1 m grid / stamping error)
+    road_w = sm(1 - (dist - flat) / np.maximum(reach - flat, 0.5))
+    road_w = np.where(dist > reach, 0.0, road_w)
+    sink = np.where(dist < rhw + 0.7, 0.10, 0.0)                            # terrain 10 cm under the road mesh: no poking through
+    h = h * (1 - road_w) + (rh - sink) * road_w
     # VIEW B: low outer berm 1-1.5 m along the serpentine where it runs on a fill / along the pass (v10 §3.2), view stays open
     serp_pts = resample([tuple(p) for p in serp['points']], 2.0)
     d_s = dist_pl(serp['points'], xs, ys, 12)

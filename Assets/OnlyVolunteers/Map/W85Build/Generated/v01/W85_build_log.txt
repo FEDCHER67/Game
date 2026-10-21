@@ -1,0 +1,46 @@
+facade kit: 28 pieces imported, 16 shared kit materials
+terrain 1744x135x950 m, heightmap 2049, splat 2048 x 11 layers, 4763 trees, height probe 20,11 m (expected 20,12)
+ok: terrain
+bridge bridge_tramduro: 209 m, deck 8,8 m, 9 piers
+roads: 17 meshes (own grade-limited heights, mesh colliders), 2 bridges; dirt roads / sand ruts = splat
+ok: roads
+tunnel: 200 m, portals 5,9 / 6,2 m, cover min 14,9 m
+ok: tunnel
+water: dense sea grid 120098 quads + far plane, 6 inland bodies (flow mode), sea return zone 656 triangles all round; WaterData Assets/OnlyVolunteers/Map/W85Build/Generated/v01/W85_WaterData_v01.asset: River 474, Lake 3, Bog 1, Pond 1, Sea 1
+ok: water
+border: invisible wall 60 m along the border fence line (115 pts) + 7 segments past the ends; fence / KPP / towers built with the Rough district (scope north_border)
+ok: border
+beach: 4 buildings, 95 props, 3 zone surfaces, 0 fences, 0 walls, 0 district roads, 2 piers, 0 alley plugs, 0 hedged plots
+ok: district beach_v85
+construction: 23 buildings, 50 props, 1 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district construction_v85
+downtown: 144 buildings, 96 props, 10 zone surfaces, 79 street meshes (carriageway + 5 m sidewalks, kerbs, corners, 15 curb drops), 0 fences, 2 walls, 0 district roads, 0 piers, 4 alley plugs, 0 hedged plots
+ok: district downtown_v85
+elite: 10 buildings, 38 props, 10 zone surfaces, 1 fences, 0 walls, 2 district roads, 3 piers, 0 alley plugs, 4 hedged plots
+ok: district elite_v85
+forest: 1 buildings, 4 props, 0 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district forest_v85
+hamlet: 64 buildings, 180 props, 1 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district hamlet_v85
+port: 7 buildings, 68 props, 2 zone surfaces, 4 fences, 0 walls, 0 district roads, 1 piers, 0 alley plugs, 0 hedged plots
+ok: district port_v85
+quiet_valley: 2 buildings, 1 props, 4 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district quiet_valley_v85
+rough: 91 buildings, 96 props, 4 zone surfaces, 5 fences, 0 walls, 1 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district rough_v85
+tramduro: 3 buildings, 26 props, 5 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+ok: district tramduro_v85
+details by rules: 390 placed (downtown_lamps 80, hydrants 88, parked_cars 62, traffic_lights 24, rough_benches 58, rural_signs 8, total 390)
+ok: details
+light: sun 37°, trilight, ACES, sat -15 / contrast +8, district zones (Rough overcast fog, Construction bright), tunnel exit glare
+ok: light
+roof test: 349 buildings, failing 0; ridge rays 5359 (missed 0), sweeps 1592 (missed 0)
+validate: renderers without material 0, buildings without colliders 0, roof rays 233637 (missed 0) - details Assets/OnlyVolunteers/Map/W85Build/Generated/v01/W85_roof_test.txt
+ok: validate
+fog: terrainWorld (-120.00, -120.00, 1728.00, 1024.00) -> (0.00, 0.00, 1744.00, 950.00), 18 mist banks moved to W76 Rough / Forest
+i10 look copied: palette/weather/fog/aerial + 11 light volumes, G22 sky, V19Wind, Sun, PostFX_v17; terrain material V3_Terrain, camera FOV 70 far 460
+grass: 1372027 blades in 2559 chunks (beach=13965; between_districts=1066414; elite=6530; fields=13152; forest=3632; industrial=1770; old_town=10412; residential=23657; tramduro=13914; transition=6048; village=212533; 21121 hard tris; rejectedHard=884008; seconds=10,0); W85GrassRenderer (draw distance High 60 / Med 50 / Low 40 m, density falloff, horizon occlusion, quality setting), mesh / material / compute: True
+ok: i10 look
+materials: 14 reused, 118 created, 10 V19 palette-field copies (field off), 70 slot materials
+terrain re-applied after the asset save: height probe 20,11 m (expected 20,12 m)
+built in 143 s

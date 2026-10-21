@@ -257,6 +257,8 @@ namespace OnlyVolunteers.Map.W85
                 director.Sampler = sampler;
                 if (tables != null) Note($"NPC types: {NpcTypesImportV01.AddTypeTemplates(director, tables, true)} type templates added, spawn tables {NpcTypesImportV01.TablesPath}");
                 else Note("missing: " + NpcTypesImportV01.TablesPath);
+                // FPS (lead, 21.10): distance culling of far walkers (renderers + animator off beyond ~190 m, CullUpdateTransforms closer)
+                if (!director.GetComponent<W85CrowdCull>()) director.gameObject.AddComponent<W85CrowdCull>();
                 EditorUtility.SetDirty(director);
             }
 
@@ -299,6 +301,9 @@ namespace OnlyVolunteers.Map.W85
             {
                 cd.SaveFileName = $"capture_stageA_{mapTag}_v01.json";
                 EditorUtility.SetDirty(cd);
+                // editor sessions: own slot too (CaptureTestHooks.SaveSlot override, set before CaptureDirector starts) — lead, 21.10
+                var slot = dirGo.GetComponent<W85EditorSaveSlot>() ?? dirGo.AddComponent<W85EditorSaveSlot>();
+                slot.EditorSlot = $"capture_stageA_editor_{mapTag}.json";
                 Note($"capture director: table {Name(cd.TablePrefab)} at {(cd.TableSpawn ? F(cd.TableSpawn.position) : "missing: TableSpawn")}, pawn {Name(cd.PawnNetworkObject)}, tuning {Name(cd.Tuning)}, body bag {Name(cd.BodyBagPrefab)}, LoadOnStart {cd.LoadOnStart}, autosave {cd.AutosaveSeconds} s, save file {cd.SaveFileName}");
             }
 
@@ -326,123 +331,169 @@ namespace OnlyVolunteers.Map.W85
         }
 
         // ------------------------------------------------------------------ crowd file
+        // G44 phase 2 (lead, 21.10): the crowd walks in every inhabited district of the map, each with its district id = the id of the
+        // G44 spawn tables (hamlet, rough, downtown, construction, beach, port, forest), so Vadim's NPC types appear where they live.
+        // Densities = i10's per district (village 3/2, residential 14/14, old_town 12/14, transition 6/5, beach 8/4, industrial 5/3, forest 2/2).
+        sealed class CrowdSpec { public string Id, NameRu, Profile = "town_walker"; public int Day, Evening; public List<(string id, Vector2[] pts)> Lines = new(); }
+
         static TextAsset WriteCrowd(string sideDir, string mapTag, Dictionary<string, object> district, string dataDir, Vector2[] pad, TextAsset i10Crowd, NpcSpawnTables tables)
         {
-            var lines = new List<(string id, Vector2[] pts)>();
+            var specs = new List<CrowdSpec>();
+            var hamlet = new CrowdSpec { Id = CrowdDistrict, NameRu = "Хутор", Day = 3, Evening = 2 };
             foreach (var z in List(district, "zones").OfType<Dictionary<string, object>>())
             {
                 string kind = Str(z, "kind");
-                if ((kind == "street" || kind == "footpath" || kind == "path" || kind == "lane") && z.ContainsKey("line")) lines.Add((Str(z, "id"), Pts(z["line"])));
+                if ((kind == "street" || kind == "footpath" || kind == "path" || kind == "lane") && z.ContainsKey("line")) hamlet.Lines.Add((Str(z, "id"), Pts(z["line"])));
             }
-            string source = "zones";
-            if (lines.Count == 0 && dataDir != null && district != null)
+            specs.Add(hamlet);
+            Dictionary<string, object> Load(string name)
             {
-                // older data (W76): the Hamlet dirt roads of roads_*.json mostly inside the Hamlet buildings' box + 25 m
-                var fps = List(district, "buildings").OfType<Dictionary<string, object>>().SelectMany(b => Pts(b.TryGetValue("footprint", out var f) ? f : null)).ToArray();
-                string roads = Directory.GetFiles(dataDir, "roads_*.json").FirstOrDefault();
-                if (fps.Length > 0 && roads != null)
-                {
-                    var box = Rect.MinMaxRect(fps.Min(p => p.x) - 25f, fps.Min(p => p.y) - 25f, fps.Max(p => p.x) + 25f, fps.Max(p => p.y) + 25f);
-                    foreach (var r in List(MiniJson.Parse(File.ReadAllText(roads)) as Dictionary<string, object>, "roads").OfType<Dictionary<string, object>>())
+                if (dataDir == null) return null;
+                string f = Directory.Exists(dataDir + "/districts") ? Directory.GetFiles(dataDir + "/districts", name + "_*.json").FirstOrDefault() : null;
+                return f != null ? MiniJson.Parse(File.ReadAllText(f)) as Dictionary<string, object> : null;
+            }
+            void FromZones(CrowdSpec s, string file, params string[] kinds)
+            {
+                var d = Load(file);
+                if (d == null) return;
+                foreach (var z in List(d, "zones").OfType<Dictionary<string, object>>())
+                    if (kinds.Contains(Str(z, "kind")) && (z.ContainsKey("line") || z.ContainsKey("poly_line")))
+                        s.Lines.Add((Str(z, "id"), Pts(z.TryGetValue("line", out var l) ? l : z["poly_line"])));
+                if (s.Lines.Count > 0) specs.Add(s);
+            }
+            FromZones(new CrowdSpec { Id = "rough", NameRu = "Неблагополучный", Day = 14, Evening = 14 }, "rough", "track", "road");
+            FromZones(new CrowdSpec { Id = "construction", NameRu = "Стройка", Day = 6, Evening = 5 }, "construction", "track", "path");
+            FromZones(new CrowdSpec { Id = "beach", NameRu = "Пляж", Day = 8, Evening = 4, Profile = "beach_walker" }, "beach", "path", "boardwalk", "van_route");
+            FromZones(new CrowdSpec { Id = "port", NameRu = "Порт", Day = 5, Evening = 3 }, "port", "road");
+            FromZones(new CrowdSpec { Id = "forest", NameRu = "Лес", Day = 2, Evening = 2 }, "forest", "road");
+            var dt = Load("downtown");
+            if (dt != null)
+            {   // Downtown: walk lines on both sidewalks (axis +- 8.5 m), cut where they would cross another street's carriageway
+                var streets = List(dt, "zones").OfType<Dictionary<string, object>>().Where(z => Str(z, "kind") == "street" && z.ContainsKey("poly_line")).Select(z => (Str(z, "id"), Pts(z["poly_line"]))).ToList();
+                var s = new CrowdSpec { Id = "downtown", NameRu = "Даунтаун", Day = 12, Evening = 14 };
+                foreach (var (sid, pl) in streets)
+                    foreach (int sg in new[] { 1, -1 })
                     {
-                        string kind = Str(r, "kind");
-                        var pts = Pts(r.TryGetValue("points", out var p) ? p : null);
-                        if (pts.Length > 1 && (kind.Contains("dirt") || kind.Contains("path") || kind.Contains("track")) && pts.Count(box.Contains) * 2 >= pts.Length) lines.Add((Str(r, "id"), pts));
+                        var run = new List<Vector2>(); int k = 0;
+                        for (int i = 0; i + 1 < pl.Length; i++)
+                        {
+                            Vector2 a = pl[i], b = pl[i + 1], d = (b - a).normalized, nrm = new Vector2(-d.y, d.x) * sg;
+                            int n = Mathf.Max(1, Mathf.CeilToInt((b - a).magnitude / 2f));
+                            for (int j = 0; j <= n; j++)
+                            {
+                                Vector2 q = Vector2.Lerp(a, b, j / (float)n) + nrm * 8.5f;
+                                bool cross = streets.Any(o => o.Item1 != sid && DistToPolyline(o.Item2, q, out _) < 6.6f);
+                                if (!cross) { run.Add(q); continue; }
+                                if (run.Count > 6) s.Lines.Add(($"{sid}_{(sg > 0 ? "L" : "R")}{k++}", run.ToArray()));
+                                run = new List<Vector2>();
+                            }
+                        }
+                        if (run.Count > 6) s.Lines.Add(($"{sid}_{(sg > 0 ? "L" : "R")}{k++}", run.ToArray()));
                     }
-                    source = Path.GetFileName(roads);
-                }
+                if (s.Lines.Count > 0) specs.Add(s);
             }
             Vector2? padC = pad != null ? Centre(pad) : (Vector2?)null;
             bool NearPad(Vector2 p, float r) => padC.HasValue && Vector2.Distance(p, padC.Value) < r;
-            // every street feeds the walk graph; the long ones away from grandpa's pad become the crowd loops
-            var all = lines.Select(l => (l.id, pts: Clean(l.pts))).Where(l => l.pts.Length > 1).ToList();
-            var loops = all.Where(l => Length(l.pts) >= 25f && !NearPad(l.pts[0], 15f) && !NearPad(l.pts[l.pts.Length - 1], 15f)).ToList();
-            if (loops.Count == 0) return null;
-            var ends = new List<Vector2>();
-            for (int i = 0; i < all.Count; i++)
-                foreach (var e in new[] { all[i].pts[0], all[i].pts[all[i].pts.Length - 1] })
-                    if (!all.Where((l, j) => j != i).Any(l => DistToPolyline(l.pts, e, out _) < 4f) && !NearPad(e, 30f) && !ends.Any(x => Vector2.Distance(x, e) < 5f)) ends.Add(e);
-            // junction links: each street end to the nearest other street within 10 m (spliced into it by AttachLater)
-            var links = new List<Vector2[]>();
-            for (int i = 0; i < all.Count; i++)
-                foreach (var e in new[] { all[i].pts[0], all[i].pts[all[i].pts.Length - 1] })
-                {
-                    float best = 10f; Vector2 q = default; bool found = false;
-                    for (int j = 0; j < all.Count; j++)
+            var dists = new StringBuilder(); var routes = new StringBuilder(); var spawns = new StringBuilder(); var conns = new StringBuilder();
+            int nr = 0, ns = 0, nc = 0;
+            var summary = new List<string>();
+            foreach (var s in specs)
+            {
+                var all = s.Lines.Select(l => (l.id, pts: Clean(l.pts))).Where(l => l.pts.Length > 1).ToList();
+                var loops = all.Where(l => Length(l.pts) >= 25f && !NearPad(l.pts[0], 15f) && !NearPad(l.pts[l.pts.Length - 1], 15f)).ToList();
+                if (loops.Count == 0) continue;
+                var ends = new List<Vector2>();
+                for (int i = 0; i < all.Count; i++)
+                    foreach (var e in new[] { all[i].pts[0], all[i].pts[all[i].pts.Length - 1] })
+                        if (!all.Where((l, j) => j != i).Any(l => DistToPolyline(l.pts, e, out _) < 4f) && !NearPad(e, 30f) && !ends.Any(x => Vector2.Distance(x, e) < 5f)) ends.Add(e);
+                var links = new List<Vector2[]>();
+                for (int i = 0; i < all.Count; i++)
+                    foreach (var e in new[] { all[i].pts[0], all[i].pts[all[i].pts.Length - 1] })
                     {
-                        if (j == i) continue;
-                        float d = DistToPolyline(all[j].pts, e, out Vector2 p);
-                        if (d < best) { best = d; q = p; found = true; }
+                        float best = s.Id == "downtown" ? 18f : 10f; Vector2 q = default; bool found = false;
+                        for (int j = 0; j < all.Count; j++)
+                        {
+                            if (j == i) continue;
+                            float d = DistToPolyline(all[j].pts, e, out Vector2 p);
+                            if (d < best) { best = d; q = p; found = true; }
+                        }
+                        if (found) links.Add(new[] { e, q });
                     }
-                    if (found) links.Add(new[] { e, q });
+                Vector2 speed = s.Profile == "beach_walker" ? new Vector2(.8f, 1.2f) : new Vector2(1.0f, 1.5f);
+                if (s.Id == CrowdDistrict && i10Crowd != null)
+                {   // the Hamlet keeps i10's numbers exactly (G43)
+                    var i10 = CrowdData.Parse(i10Crowd.text);
+                    var ids = new HashSet<string> { CrowdDistrict };
+                    var row = tables != null ? tables.Find(CrowdDistrict) : null;
+                    if (row != null && row.Aliases != null) ids.UnionWith(row.Aliases);
+                    var d = i10.Districts.FirstOrDefault(x => ids.Contains(x.Id));
+                    if (d != null) { s.Day = d.Day; s.Evening = d.Evening; if (d.Routes.Count > 0) speed = i10.Routes[d.Routes[0]].Speed; }
                 }
-
-            // density and walking speed of the i10 Hamlet ("village" = alias of hamlet in the G44 spawn tables)
-            int day = 3, evening = 2; string nameRu = "Хутор"; Vector2 speed = new(1.0f, 1.5f);
-            if (i10Crowd != null)
-            {
-                var i10 = CrowdData.Parse(i10Crowd.text);
-                var ids = new HashSet<string> { CrowdDistrict };
-                var row = tables != null ? tables.Find(CrowdDistrict) : null;
-                if (row != null && row.Aliases != null) ids.UnionWith(row.Aliases);
-                var d = i10.Districts.FirstOrDefault(x => ids.Contains(x.Id));
-                if (d != null)
+                // walk graph of this district alone: keep loops / spawn points connected to its longest loop
+                string One(List<(string id, Vector2[] pts)> L, List<Vector2> E) => ComposeCrowd(mapTag, new[] { s }, L, E, all, links, speed);
+                var graph = CrowdData.Parse(One(loops, ends));
+                var prof = s.Profile == "beach_walker" ? CrowdProfile.Beach : CrowdProfile.Town;
+                int main = Enumerable.Range(0, loops.Count).OrderByDescending(i => Length(loops[i].pts)).First();
+                var tmp = new List<Vector2>();
+                bool Reaches(Vector2 p)
                 {
-                    day = d.Day; evening = d.Evening; if (!string.IsNullOrEmpty(d.Name)) nameRu = d.Name;
-                    if (d.Routes.Count > 0) speed = i10.Routes[d.Routes[0]].Speed;
-                    Note($"crowd density from i10 '{d.Id}': {day} by day / {evening} in the evening, speed {speed.x:0.0#}-{speed.y:0.0#} m/s");
+                    int a = graph.Graph.Nearest(p, prof), b = graph.Graph.Nearest(loops[main].pts[0], prof);
+                    tmp.Clear();
+                    return a >= 0 && b >= 0 && graph.Graph.FindPath(a, b, prof, tmp);
                 }
-            }
-
-            string Compose(List<(string id, Vector2[] pts)> useLoops, List<Vector2> useEnds)
-            {
-                var sb = new StringBuilder();
-                sb.Append("{\n  \"schema_version\": \"1.0\",\n  \"revision\": \"").Append(mapTag).Append("_play_v01_").Append(CrowdDistrict).Append("\",\n");
-                sb.Append("  \"generator\": \"W85PlayIntegrator: out-and-back loops on the ").Append(CrowdDistrict).Append(" streets of ").Append(source).Append("\",\n");
-                sb.Append("  \"coordinates\": {\"unit\": \"metre\", \"x\": \"east\", \"y\": \"north\", \"unity_mapping\": \"(x, terrain_height, y)\"},\n");
-                sb.Append("  \"districts\": [{\"id\": \"").Append(CrowdDistrict).Append("\", \"name_ru\": \"").Append(nameRu).Append("\", \"walkers_day\": ").Append(day).Append(", \"walkers_evening\": ").Append(evening).Append("}],\n");
-                sb.Append("  \"routes\": [");
-                for (int i = 0; i < useLoops.Count; i++)
+                var keepLoops = loops.Where(l => Reaches(l.pts[0])).ToList();
+                var keepEnds = ends.Where(Reaches).ToList();
+                if (keepEnds.Count == 0) keepEnds = keepLoops.SelectMany(l => new[] { l.pts[0], l.pts[l.pts.Length - 1] }).Where(e => !NearPad(e, 30f)).Take(4).ToList();
+                dists.Append(dists.Length > 0 ? ", " : "").Append($"{{\"id\": \"{s.Id}\", \"name_ru\": \"{s.NameRu}\", \"walkers_day\": {s.Day}, \"walkers_evening\": {s.Evening}}}");
+                for (int i = 0; i < keepLoops.Count; i++)
                 {
-                    var p = useLoops[i].pts;
-                    var there = p.Concat(p.Reverse().Skip(1).Take(p.Length - 2)).ToArray(); // there and back
-                    sb.Append(i > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"ROUTE_{CrowdDistrict}_{i + 1:00}\", \"source\": \"{useLoops[i].id}\", \"district_id\": \"{CrowdDistrict}\", \"profile\": \"town_walker\", \"closed\": true, \"speed_mps\": [{N(speed.x)}, {N(speed.y)}], \"polyline_m\": {Json(there)}}}");
+                    var p = keepLoops[i].pts;
+                    var there = p.Concat(p.Reverse().Skip(1).Take(p.Length - 2)).ToArray();
+                    routes.Append(nr++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"ROUTE_{s.Id}_{i + 1:00}\", \"source\": \"{keepLoops[i].id}\", \"district_id\": \"{s.Id}\", \"profile\": \"{s.Profile}\", \"closed\": true, \"speed_mps\": [{N(speed.x)}, {N(speed.y)}], \"polyline_m\": {Json(there)}}}");
                 }
-                sb.Append("\n  ],\n  \"spawn_despawn_points\": [");
-                for (int i = 0; i < useEnds.Count; i++)
-                    sb.Append(i > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"SPAWN_{CrowdDistrict}_{i + 1:00}\", \"district_id\": \"{CrowdDistrict}\", \"position_m\": [{N(useEnds[i].x)}, {N(useEnds[i].y)}], \"usage\": [\"spawn\", \"despawn\"], \"min_player_distance_m\": 25, \"visibility_grace_s\": 2}}");
-                sb.Append("\n  ],\n  \"connections\": [");
-                int n = 0;
-                foreach (var l in all) sb.Append(n++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"STREET_{l.id}\", \"profile\": \"town_walker\", \"purpose\": \"network_connection\", \"polyline_m\": {Json(l.pts)}}}");
-                foreach (var l in links) sb.Append(n++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"LINK_{CrowdDistrict}_{n:00}\", \"profile\": \"town_walker\", \"purpose\": \"network_connection\", \"polyline_m\": {Json(l)}}}");
-                sb.Append("\n  ]\n}\n");
-                return sb.ToString();
+                for (int i = 0; i < keepEnds.Count; i++)
+                    spawns.Append(ns++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"SPAWN_{s.Id}_{i + 1:00}\", \"district_id\": \"{s.Id}\", \"position_m\": [{N(keepEnds[i].x)}, {N(keepEnds[i].y)}], \"usage\": [\"spawn\", \"despawn\"], \"min_player_distance_m\": 25, \"visibility_grace_s\": 2}}");
+                foreach (var l in all) conns.Append(nc++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"STREET_{s.Id}_{l.id}\", \"profile\": \"{s.Profile}\", \"purpose\": \"network_connection\", \"polyline_m\": {Json(l.pts)}}}");
+                foreach (var l in links) conns.Append(nc++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"LINK_{s.Id}_{nc:000}\", \"profile\": \"{s.Profile}\", \"purpose\": \"network_connection\", \"polyline_m\": {Json(l)}}}");
+                summary.Add($"{s.Id} {keepLoops.Count} loops / {keepEnds.Count} spawns ({s.Day}/{s.Evening})");
             }
-
-            // keep only the loops and spawn points that reach the longest loop through the walk graph
-            var graph = CrowdData.Parse(Compose(loops, ends));
-            int main = Enumerable.Range(0, loops.Count).OrderByDescending(i => Length(loops[i].pts)).First();
-            var tmp = new List<Vector2>();
-            bool Reaches(Vector2 p)
-            {
-                int a = graph.Graph.Nearest(p, CrowdProfile.Town), b = graph.Graph.Nearest(loops[main].pts[0], CrowdProfile.Town);
-                tmp.Clear();
-                return a >= 0 && b >= 0 && graph.Graph.FindPath(a, b, CrowdProfile.Town, tmp);
-            }
-            var keepLoops = loops.Where(l => Reaches(l.pts[0])).ToList();
-            var keepEnds = ends.Where(Reaches).ToList();
-            if (keepEnds.Count == 0) keepEnds = keepLoops.SelectMany(l => new[] { l.pts[0], l.pts[l.pts.Length - 1] }).Where(e => !NearPad(e, 30f)).Take(4).ToList();
-            var dropped = loops.Where(l => !keepLoops.Contains(l)).Select(l => l.id).ToList();
-
+            var sbAll = new StringBuilder();
+            sbAll.Append("{\n  \"schema_version\": \"1.0\",\n  \"revision\": \"").Append(mapTag).Append("_play_v01_districts\",\n");
+            sbAll.Append("  \"generator\": \"W85PlayIntegrator: out-and-back loops on the streets / tracks / sidewalks of every inhabited district\",\n");
+            sbAll.Append("  \"coordinates\": {\"unit\": \"metre\", \"x\": \"east\", \"y\": \"north\", \"unity_mapping\": \"(x, terrain_height, y)\"},\n");
+            sbAll.Append("  \"districts\": [").Append(dists).Append("],\n  \"routes\": [").Append(routes).Append("\n  ],\n  \"spawn_despawn_points\": [").Append(spawns).Append("\n  ],\n  \"connections\": [").Append(conns).Append("\n  ]\n}\n");
             string path = $"{sideDir}/crowd_{mapTag}_play_v01.json";
-            File.WriteAllText(path, Compose(keepLoops, keepEnds), new UTF8Encoding(false));
+            File.WriteAllText(path, sbAll.ToString(), new UTF8Encoding(false));
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
             var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
             var check = asset != null ? CrowdData.Parse(asset.text) : null;
             Note(check == null ? "missing: crowd file did not import " + path
-                : $"crowd: {path} from {source}: {check.Routes.Count} loops ({string.Join(", ", keepLoops.Select(l => l.id))}), {check.Spawns.Count} spawn points, {all.Count} streets + {links.Count} junction links in the walk graph ({check.Graph.Count} nodes)" +
-                  (dropped.Count > 0 || keepEnds.Count < ends.Count ? $"; not connected, left out: loops [{string.Join(", ", dropped)}], {ends.Count - keepEnds.Count} spawn point(s)" : "; all connected"));
+                : $"crowd: {path}: {check.Districts.Count} districts, {check.Routes.Count} loops, {check.Spawns.Count} spawn points, {check.Graph.Count} graph nodes — " + string.Join("; ", summary));
             return asset;
+        }
+
+        static string ComposeCrowd(string mapTag, IEnumerable<CrowdSpec> specs, List<(string id, Vector2[] pts)> loops, List<Vector2> ends, List<(string id, Vector2[] pts)> all, List<Vector2[]> links, Vector2 speed)
+        {
+            var s = specs.First();
+            var sb = new StringBuilder();
+            sb.Append("{\n  \"schema_version\": \"1.0\",\n  \"revision\": \"").Append(mapTag).Append("_check\",\n  \"generator\": \"check\",\n");
+            sb.Append("  \"coordinates\": {\"unit\": \"metre\", \"x\": \"east\", \"y\": \"north\", \"unity_mapping\": \"(x, terrain_height, y)\"},\n");
+            sb.Append($"  \"districts\": [{{\"id\": \"{s.Id}\", \"name_ru\": \"{s.NameRu}\", \"walkers_day\": {s.Day}, \"walkers_evening\": {s.Evening}}}],\n  \"routes\": [");
+            for (int i = 0; i < loops.Count; i++)
+            {
+                var p = loops[i].pts;
+                var there = p.Concat(p.Reverse().Skip(1).Take(p.Length - 2)).ToArray();
+                sb.Append(i > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"R{i}\", \"source\": \"{loops[i].id}\", \"district_id\": \"{s.Id}\", \"profile\": \"{s.Profile}\", \"closed\": true, \"speed_mps\": [{N(speed.x)}, {N(speed.y)}], \"polyline_m\": {Json(there)}}}");
+            }
+            sb.Append("\n  ],\n  \"spawn_despawn_points\": [");
+            for (int i = 0; i < ends.Count; i++)
+                sb.Append(i > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"S{i}\", \"district_id\": \"{s.Id}\", \"position_m\": [{N(ends[i].x)}, {N(ends[i].y)}], \"usage\": [\"spawn\", \"despawn\"], \"min_player_distance_m\": 25, \"visibility_grace_s\": 2}}");
+            sb.Append("\n  ],\n  \"connections\": [");
+            int n = 0;
+            foreach (var l in all) sb.Append(n++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"C{n}\", \"profile\": \"{s.Profile}\", \"purpose\": \"network_connection\", \"polyline_m\": {Json(l.pts)}}}");
+            foreach (var l in links) sb.Append(n++ > 0 ? ",\n    " : "\n    ").Append($"{{\"id\": \"L{n}\", \"profile\": \"{s.Profile}\", \"purpose\": \"network_connection\", \"polyline_m\": {Json(l)}}}");
+            sb.Append("\n  ]\n}\n");
+            return sb.ToString();
         }
 
         // ------------------------------------------------------------------ placement helpers

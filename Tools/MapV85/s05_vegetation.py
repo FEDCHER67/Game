@@ -187,6 +187,7 @@ def main():
         if z['kind'] == 'veg_zone':
             el_veg |= poly_mask(z['poly'], xs, ys)
     excl |= elite_in & ~el_veg
+    excl |= (xs > 236) & (xs < 255) & (ys > 500) & (ys < 530)             # base 2 operating shed / paint table (G43 integrator)
     tun = F['tunnel_axis']
     for p in (tun[0], tun[-1]):
         excl |= np.hypot(xs - p[0], ys - p[1]) < 16
