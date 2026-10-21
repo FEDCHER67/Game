@@ -25,6 +25,7 @@ namespace OnlyVolunteers.Map.W85
         const string I10 = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity";
         const string Out = "Assets/OnlyVolunteers/Map/W85Build/Generated/v01_look";
         const float ChunkSize = 16f, Step = .5f;
+        const float FogBoost = 1.08f;                       // Fedya 21.10: fog +8 % relative to i10 / W85
 
         // i10 district ids (code keys: residential = Rough) on W76 rectangles (min x, min z, max x, max z)
         static readonly Dictionary<string, Vector4> Rects = new()
@@ -105,7 +106,11 @@ namespace OnlyVolunteers.Map.W85
                         b.position = new Vector3(x, ter.SampleHeight(new Vector3(x, 0, z)) + ter.transform.position.y + Mathf.Clamp(b.position.y, .8f, 2.5f), z);
                         return b;
                     }).ToArray();
-                    log.Add($"fog: terrainWorld {i10World} -> {fog.terrainWorld}, {fog.banks.Length} mist banks moved to W76 Rough / Forest");
+                    log.Add($"fog: terrainWorld {i10World} -> {fog.terrainWorld}, {fog.banks.Length} mist banks moved to W85 Rough / Forest");
+                    // Fedya 21.10: fog +8 % map-wide in the same systems (texture-test recipe: volumetric densities + district linear fog)
+                    fog.roughDensity *= FogBoost; fog.forestDensity *= FogBoost; fog.groundExtinction *= FogBoost;
+                    foreach (var dd in weather.districts) dd.fogEnd = dd.fogStart + (dd.fogEnd - dd.fogStart) / FogBoost;
+                    log.Add($"fog x{FogBoost}: roughDensity {fog.roughDensity:0.00000}, forestDensity {fog.forestDensity:0.0000}, groundExtinction {fog.groundExtinction:0.0000}, district linear fog end pulled in");
                 }
             }
             if (skyRig)

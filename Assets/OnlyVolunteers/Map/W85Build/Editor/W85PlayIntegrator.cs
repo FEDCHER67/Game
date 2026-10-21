@@ -236,7 +236,12 @@ namespace OnlyVolunteers.Map.W85
                     ClearInside(scene, vanGo.transform, new Bounds(vanGo.transform.InverseTransformPoint(b.center), b.size), carriedRoots, terrain, GroundNew, "van");
                 }
             }
-            Note("missing: grandpa's barrel and red rocking chair (handoff §5.2 'as in i09'): no such object in i09/i10 and no finished asset; not invented");
+            var yard = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Base2_GrandpaYard");
+            Note(yard ? $"grandpa's yard props (GRANDPA_YARD_v01): {yard.childCount} objects from the map build (rocking chair, barrel, paint cans + brush, rain drum + downpipe)"
+                      : "missing: Base2_GrandpaYard in the map build (grandpa's rocking chair / barrel / rain drum)");
+            // Fedya 21.10: no roof / canopy / porch in the air — the whole play scene (map + carried i10 objects), posts where something floats
+            Physics.SyncTransforms();
+            Note(W85FloatCheck.Run(scene, true).TrimEnd());
 
             // 4. One main camera / audio listener: the map's plain camera gives way to i10's (van rig) + the pawn's.
             foreach (var cam in mapCameras)

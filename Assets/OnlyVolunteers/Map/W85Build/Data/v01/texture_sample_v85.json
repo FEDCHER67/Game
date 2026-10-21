@@ -1,15 +1,48 @@
 {
- "note": "Texture SAMPLE of the approved texture test v04 (Fedya 21.10): H5 house scheme a, R2c khrushchevka section, D4 street face with G-D glazing, N-R3 night light on the urban lamps around the R2c / D4 spots. Copied from the test scene with its own isolated materials (Art/TextureTest_v01/Built_v04). Delete an item (or this file) and rebuild to take it out. Towers are not part of it (T4 in progress).",
+ "note": "Texture SAMPLE items of the approved texture test (copied groups with their own isolated Built_v04 / v06 materials). Since the v04 ROLLOUT (Fedya 21.10 \"raskatyvai\") the H5 / R2c / D4 houses are generated on every footprint by the builder (W85Rollout.cs), so their single-house samples (H5a 02-H01, R2c section of 04-H13, D4 face 05-B029..B032) are gone; only the T4 twin towers stay a copied group: they replace the old twins + podium on the Water-axis plaza, podium depth fitted to the plaza.",
  "source_scene": "Assets/OnlyVolunteers/Scenes/Map/TextureTest_Houses_v04.unity",
  "items": [
-  {"id": "H5a", "source": "TT_Hamlet/H5/HH_House_v03_a", "replace": ["02-H01"], "pos": [230.0, 562.0], "yaw_deg": 172,
-   "why": "Hamlet log house 02-H01 (8.8 x 7.1 m, door to the south-south-east), 60 m north of the base-2 spawn; no street lamps in the Hamlet (H5 decision)"},
-  {"id": "R2c", "source": "TT_Rough/R2c", "exclude": ["Props_i10"], "cut": {"building": "04-H13", "keep_x": [799.8, 822.4]}, "pos": [835.25, 743.4], "yaw_deg": 0,
-   "boxes": [{"centre": [0, 7.25, 0], "size": [25.6, 14.5, 12.8]}], "night_radius_m": 45,
-   "why": "east 25.6 m section of khrushchevka H13 (by the football box, entrances to the south), west part stays W85; Rough lamps within 45 m get N-R3"},
-  {"id": "D4", "source": "TT_Downtown/D4", "exclude": ["Props_i10"], "replace": ["05-B029", "05-B030", "05-B031", "05-B032"], "pos": [846.75, 381.0], "y": 5.06, "yaw_deg": 0,
-   "boxes": [{"centre": [-16.5, 14.4, 18], "size": [10.5, 28.5, 14]}, {"centre": [-6.0, 10.9, 18], "size": [10.5, 21.5, 14]},
-             {"centre": [2.75, 9.15, 18], "size": [7, 18, 14]}, {"centre": [16.5, 12.65, 18], "size": [10.5, 25, 14]}], "night_radius_m": 45,
-   "why": "north face of street Hnw between W1 and Vn (west Downtown, 60 m from the west entry); the 4 W85 houses of that face are replaced; Downtown lamps within 45 m get N-R3"}
+  {
+   "id": "T4",
+   "source_scene": "Assets/OnlyVolunteers/Scenes/Map/TextureTest_Houses_v06.unity",
+   "source": "TT_Towers/T4",
+   "replace": [
+    "05-01",
+    "05-02",
+    "05-B023"
+   ],
+   "pos": [
+    1028.0,
+    420.85
+   ],
+   "y": 5.02,
+   "yaw_deg": 0,
+   "fit_depth": {
+    "k": 0.781,
+    "podium_y": 8.6,
+    "connector_half_x": 6.4,
+    "connector_y": 16.6,
+    "tower_x": 16,
+    "tower_r": 12
+   },
+   "colliders": "mesh",
+   "lod": true,
+   "move_objects": [
+    {
+     "name": "05-35-screen",
+     "pos": [
+      1028.0,
+      411.9
+     ],
+     "lift_m": 12.0,
+     "size": [
+      9,
+      5,
+      0.4
+     ]
+    }
+   ],
+   "why": "T4 twins (130 m, 32 m apart) on the Water-axis plaza in place of the old twins 05-01 / 05-02 and their podium 05-B023; the 60 x 26 m podium is fitted to the 20.3 m between the plaza stair (y 410.7) and the street N3 facade line (y 431): depth x0.781, towers untouched; big screen 35 moved onto the connector facade above the entrance"
+  }
  ]
 }
