@@ -1,0 +1,117 @@
+{
+ "district": "forest",
+ "sources": [
+  "ArtSource/References/Map/World_v11/WORLD_MAP_v11.json (district 01)",
+  "handoff v02 §8.1"
+ ],
+ "transform": "v11 m -> warp_m -> post_shift (net +70, 0)",
+ "pad_height_m": null,
+ "buildings": [
+  {
+   "id": "01_B01",
+   "kind": "rail_wagon_base1",
+   "footprint": [
+    [
+     255.68,
+     166.87
+    ],
+    [
+     274.41,
+     178.78
+    ],
+    [
+     270.12,
+     185.53
+    ],
+    [
+     251.39,
+     173.62
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "flat",
+    "material": "metal_rusty",
+    "ridge_h_m": 0.4,
+    "overhang_m": 0.1
+   },
+   "walls": "metal_rusty",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": true,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": "1",
+   "notes": "wagon on a dead-end railway — BASE 1 | v02 §8.1: ~24 x 3.2 m at the end of a dead-end track; clearing, cold campfire"
+  },
+  {
+   "id": "01_B03",
+   "kind": "forest_structure",
+   "footprint": [
+    [
+     296.0,
+     162.8
+    ],
+    [
+     301.8,
+     162.8
+    ],
+    [
+     301.8,
+     164.2
+    ],
+    [
+     296.0,
+     164.2
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.2,
+   "height_m": 3.2,
+   "roof": {
+    "type": "shed",
+    "material": "metal_rusty",
+    "ridge_h_m": 0.3,
+    "overhang_m": 0.1
+   },
+   "walls": "boards_SK5a",
+   "tint": null,
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "balconies": "none",
+    "windows": false,
+    "ridge_cap": null
+   },
+   "collider": "full_roof",
+   "base": null,
+   "notes": ""
+  }
+ ],
+ "props": [],
+ "zones": [
+  {
+   "id": "01_railway",
+   "kind": "railway",
+   "polyline": [
+    [
+     201.0,
+     138.0
+    ],
+    [
+     273.0,
+     183.8
+    ]
+   ],
+   "surface": "gravel_SK1d",
+   "notes": "old single track ending at the wagon; overgrown, rusty"
+  }
+ ],
+ "notes": "Rail starts at the map edge with a rock-blocked tunnel mouth; swamp/lake/trees come from water_v76.json and vegetation masks. v11 gentle_hill_contour structures ignored (relief is in terrain_v76)."
+}

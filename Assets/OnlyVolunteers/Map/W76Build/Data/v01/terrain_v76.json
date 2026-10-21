@@ -1,0 +1,784 @@
+{
+ "heightmap": "Heightmap_v76_2049_r16.bytes",
+ "format": "RAW 16-bit little-endian, 2049 x 2049, row 0 = south (world y 0), column 0 = west",
+ "holes": "Holes_v76_2048_bits.bytes (packbits, 1 = solid, 2048 x 2048, row 0 = south)",
+ "size_m": [
+  1744,
+  135.0,
+  950
+ ],
+ "position_m": [
+  0,
+  -15.0,
+  0
+ ],
+ "sample_spacing_m": [
+  0.852,
+  0.464
+ ],
+ "sea_level_m": 0.0,
+ "ground_m": 5.0,
+ "pads": {
+  "downtown": {
+   "poly": [
+    [
+     790,
+     228
+    ],
+    [
+     1268,
+     228
+    ],
+    [
+     1268,
+     470
+    ],
+    [
+     790,
+     470
+    ]
+   ],
+   "height_m": 5.0
+  },
+  "rough": {
+   "poly": [
+    [
+     655,
+     668
+    ],
+    [
+     1006,
+     668
+    ],
+    [
+     1006,
+     905
+    ],
+    [
+     655,
+     905
+    ]
+   ],
+   "height_m": 5.0
+  },
+  "construction": {
+   "poly": [
+    [
+     528,
+     352
+    ],
+    [
+     700,
+     352
+    ],
+    [
+     700,
+     492
+    ],
+    [
+     528,
+     492
+    ]
+   ],
+   "height_m": 5.0
+  },
+  "port": {
+   "poly": [
+    [
+     1172,
+     596
+    ],
+    [
+     1356,
+     596
+    ],
+    [
+     1356,
+     684
+    ],
+    [
+     1172,
+     684
+    ]
+   ],
+   "height_m": 2.5
+  },
+  "quiet_valley_lab": {
+   "poly": [
+    [
+     560,
+     225
+    ],
+    [
+     620,
+     225
+    ],
+    [
+     620,
+     265
+    ],
+    [
+     560,
+     265
+    ]
+   ],
+   "height_m": 5.0
+  }
+ },
+ "tunnel": {
+  "axis": [
+   [
+    748.0,
+    645.42
+   ],
+   [
+    770.0,
+    614.63
+   ],
+   [
+    805.0,
+    568.49
+   ],
+   [
+    842.6,
+    525.56
+   ],
+   [
+    864.67,
+    502.47
+   ]
+  ],
+  "portal_heights_m": [
+   6.7,
+   10.14
+  ],
+  "clear_height_m": 5.5,
+  "width_m": 9.0,
+  "min_cover_m": 16.8,
+  "exit_glare": {
+   "kind": "post exposure flash + 1.5 s adaptation",
+   "strongest": "Rough -> Downtown (south portal)"
+  }
+ },
+ "road_grades": [
+  {
+   "id": "hamlet_to_downtown",
+   "max_grade_pct": 4.4,
+   "length_m": 313.4
+  },
+  {
+   "id": "to_quiet_valley",
+   "max_grade_pct": 3.5,
+   "length_m": 29.7
+  },
+  {
+   "id": "cornice_view_c",
+   "max_grade_pct": 8.0,
+   "length_m": 259.8
+  },
+  {
+   "id": "hamlet_to_rough",
+   "max_grade_pct": 8.0,
+   "length_m": 206.9
+  },
+  {
+   "id": "rough_west_link",
+   "max_grade_pct": 0.1,
+   "length_m": 134.0
+  },
+  {
+   "id": "hamlet_bypass",
+   "max_grade_pct": 3.2,
+   "length_m": 277.6
+  },
+  {
+   "id": "tunnel_north_approach",
+   "max_grade_pct": 3.6,
+   "length_m": 28.6
+  },
+  {
+   "id": "tunnel_south_approach",
+   "max_grade_pct": 8.0,
+   "length_m": 55.2
+  },
+  {
+   "id": "serpentine_view_b",
+   "max_grade_pct": 12.0,
+   "length_m": 312.7
+  },
+  {
+   "id": "border_checkpoint_road",
+   "max_grade_pct": 8.0,
+   "length_m": 76.0
+  },
+  {
+   "id": "elite_stone_serpentine",
+   "max_grade_pct": 6.2,
+   "length_m": 667.3
+  },
+  {
+   "id": "beach_van_track",
+   "max_grade_pct": 8.0,
+   "length_m": 390.1
+  },
+  {
+   "id": "asphalt_from_map_000",
+   "max_grade_pct": 0.0,
+   "length_m": 91.1
+  },
+  {
+   "id": "asphalt_from_map_001",
+   "max_grade_pct": 0.5,
+   "length_m": 15.7
+  },
+  {
+   "id": "asphalt_from_map_002",
+   "max_grade_pct": 0.7,
+   "length_m": 199.0
+  },
+  {
+   "id": "asphalt_from_map_003",
+   "max_grade_pct": 0.0,
+   "length_m": 49.4
+  },
+  {
+   "id": "asphalt_from_map_004",
+   "max_grade_pct": 0.5,
+   "length_m": 29.8
+  },
+  {
+   "id": "asphalt_from_map_005",
+   "max_grade_pct": 0.0,
+   "length_m": 66.0
+  },
+  {
+   "id": "asphalt_from_map_006",
+   "max_grade_pct": 0.0,
+   "length_m": 58.0
+  },
+  {
+   "id": "asphalt_from_map_007",
+   "max_grade_pct": 0.0,
+   "length_m": 76.0
+  },
+  {
+   "id": "asphalt_from_map_008",
+   "max_grade_pct": 0.0,
+   "length_m": 59.0
+  },
+  {
+   "id": "asphalt_from_map_009",
+   "max_grade_pct": 8.0,
+   "length_m": 58.0
+  },
+  {
+   "id": "asphalt_from_map_010",
+   "max_grade_pct": 0.0,
+   "length_m": 42.0
+  },
+  {
+   "id": "asphalt_from_map_011",
+   "max_grade_pct": 0.0,
+   "length_m": 24.1
+  },
+  {
+   "id": "asphalt_from_map_012",
+   "max_grade_pct": 0.0,
+   "length_m": 41.6
+  },
+  {
+   "id": "asphalt_from_map_013",
+   "max_grade_pct": 0.0,
+   "length_m": 22.0
+  },
+  {
+   "id": "asphalt_from_map_014",
+   "max_grade_pct": 0.0,
+   "length_m": 32.6
+  },
+  {
+   "id": "asphalt_from_map_015",
+   "max_grade_pct": 0.0,
+   "length_m": 127.8
+  },
+  {
+   "id": "asphalt_from_map_016",
+   "max_grade_pct": 0.0,
+   "length_m": 34.0
+  },
+  {
+   "id": "asphalt_from_map_017",
+   "max_grade_pct": 0.0,
+   "length_m": 59.0
+  },
+  {
+   "id": "asphalt_from_map_018",
+   "max_grade_pct": 1.0,
+   "length_m": 27.0
+  },
+  {
+   "id": "asphalt_from_map_019",
+   "max_grade_pct": 0.0,
+   "length_m": 83.0
+  },
+  {
+   "id": "asphalt_from_map_020",
+   "max_grade_pct": 0.0,
+   "length_m": 14.0
+  },
+  {
+   "id": "asphalt_from_map_021",
+   "max_grade_pct": 0.0,
+   "length_m": 55.0
+  },
+  {
+   "id": "asphalt_from_map_022",
+   "max_grade_pct": 0.0,
+   "length_m": 50.6
+  },
+  {
+   "id": "asphalt_from_map_023",
+   "max_grade_pct": 0.0,
+   "length_m": 11.0
+  },
+  {
+   "id": "asphalt_from_map_024",
+   "max_grade_pct": 1.4,
+   "length_m": 131.1
+  },
+  {
+   "id": "asphalt_from_map_025",
+   "max_grade_pct": 0.2,
+   "length_m": 18.8
+  },
+  {
+   "id": "asphalt_from_map_026",
+   "max_grade_pct": 1.0,
+   "length_m": 60.6
+  },
+  {
+   "id": "asphalt_from_map_027",
+   "max_grade_pct": 0.0,
+   "length_m": 130.8
+  },
+  {
+   "id": "asphalt_from_map_028",
+   "max_grade_pct": 0.0,
+   "length_m": 41.0
+  },
+  {
+   "id": "asphalt_from_map_029",
+   "max_grade_pct": 0.0,
+   "length_m": 19.2
+  },
+  {
+   "id": "asphalt_from_map_030",
+   "max_grade_pct": 0.3,
+   "length_m": 21.8
+  },
+  {
+   "id": "asphalt_from_map_031",
+   "max_grade_pct": 0.0,
+   "length_m": 65.0
+  },
+  {
+   "id": "asphalt_from_map_032",
+   "max_grade_pct": 0.0,
+   "length_m": 14.0
+  },
+  {
+   "id": "asphalt_from_map_033",
+   "max_grade_pct": 0.0,
+   "length_m": 49.6
+  },
+  {
+   "id": "asphalt_from_map_034",
+   "max_grade_pct": 0.1,
+   "length_m": 21.0
+  },
+  {
+   "id": "asphalt_from_map_035",
+   "max_grade_pct": 0.0,
+   "length_m": 57.0
+  },
+  {
+   "id": "asphalt_from_map_036",
+   "max_grade_pct": 1.0,
+   "length_m": 85.0
+  },
+  {
+   "id": "asphalt_from_map_037",
+   "max_grade_pct": 0.0,
+   "length_m": 16.0
+  },
+  {
+   "id": "asphalt_from_map_038",
+   "max_grade_pct": 0.0,
+   "length_m": 40.0
+  },
+  {
+   "id": "asphalt_from_map_039",
+   "max_grade_pct": 0.0,
+   "length_m": 53.0
+  },
+  {
+   "id": "asphalt_from_map_040",
+   "max_grade_pct": 0.0,
+   "length_m": 34.0
+  },
+  {
+   "id": "asphalt_from_map_041",
+   "max_grade_pct": 0.6,
+   "length_m": 20.1
+  },
+  {
+   "id": "asphalt_from_map_042",
+   "max_grade_pct": 0.0,
+   "length_m": 33.0
+  },
+  {
+   "id": "asphalt_from_map_043",
+   "max_grade_pct": 0.0,
+   "length_m": 64.0
+  },
+  {
+   "id": "asphalt_from_map_044",
+   "max_grade_pct": 0.0,
+   "length_m": 86.8
+  },
+  {
+   "id": "asphalt_from_map_045",
+   "max_grade_pct": 0.0,
+   "length_m": 64.0
+  },
+  {
+   "id": "asphalt_from_map_046",
+   "max_grade_pct": 0.1,
+   "length_m": 102.8
+  },
+  {
+   "id": "asphalt_from_map_047",
+   "max_grade_pct": 0.0,
+   "length_m": 67.0
+  },
+  {
+   "id": "asphalt_from_map_048",
+   "max_grade_pct": 0.0,
+   "length_m": 57.0
+  },
+  {
+   "id": "asphalt_from_map_049",
+   "max_grade_pct": 8.0,
+   "length_m": 325.0
+  },
+  {
+   "id": "asphalt_from_map_050",
+   "max_grade_pct": 0.0,
+   "length_m": 34.0
+  },
+  {
+   "id": "asphalt_from_map_051",
+   "max_grade_pct": 0.0,
+   "length_m": 121.3
+  },
+  {
+   "id": "asphalt_from_map_052",
+   "max_grade_pct": 0.1,
+   "length_m": 66.0
+  },
+  {
+   "id": "asphalt_from_map_053",
+   "max_grade_pct": 0.0,
+   "length_m": 35.3
+  },
+  {
+   "id": "asphalt_from_map_054",
+   "max_grade_pct": 0.0,
+   "length_m": 65.0
+  },
+  {
+   "id": "asphalt_from_map_055",
+   "max_grade_pct": 0.0,
+   "length_m": 49.6
+  },
+  {
+   "id": "asphalt_from_map_056",
+   "max_grade_pct": 0.0,
+   "length_m": 13.0
+  },
+  {
+   "id": "asphalt_from_map_057",
+   "max_grade_pct": 0.0,
+   "length_m": 91.3
+  },
+  {
+   "id": "asphalt_from_map_058",
+   "max_grade_pct": 0.0,
+   "length_m": 0.0
+  },
+  {
+   "id": "asphalt_from_map_059",
+   "max_grade_pct": 0.0,
+   "length_m": 42.0
+  },
+  {
+   "id": "asphalt_from_map_060",
+   "max_grade_pct": 0.0,
+   "length_m": 55.0
+  },
+  {
+   "id": "asphalt_from_map_061",
+   "max_grade_pct": 0.0,
+   "length_m": 13.0
+  },
+  {
+   "id": "asphalt_from_map_062",
+   "max_grade_pct": 0.0,
+   "length_m": 28.1
+  },
+  {
+   "id": "asphalt_from_map_063",
+   "max_grade_pct": 0.0,
+   "length_m": 58.0
+  },
+  {
+   "id": "asphalt_from_map_064",
+   "max_grade_pct": 0.0,
+   "length_m": 126.0
+  },
+  {
+   "id": "asphalt_from_map_065",
+   "max_grade_pct": 0.0,
+   "length_m": 24.0
+  },
+  {
+   "id": "asphalt_from_map_066",
+   "max_grade_pct": 0.0,
+   "length_m": 22.0
+  },
+  {
+   "id": "asphalt_from_map_067",
+   "max_grade_pct": 0.0,
+   "length_m": 77.0
+  },
+  {
+   "id": "asphalt_from_map_068",
+   "max_grade_pct": 0.6,
+   "length_m": 12.0
+  },
+  {
+   "id": "asphalt_from_map_069",
+   "max_grade_pct": 1.0,
+   "length_m": 293.1
+  },
+  {
+   "id": "asphalt_from_map_070",
+   "max_grade_pct": 0.0,
+   "length_m": 34.0
+  },
+  {
+   "id": "asphalt_from_map_071",
+   "max_grade_pct": 0.0,
+   "length_m": 14.7
+  },
+  {
+   "id": "asphalt_from_map_072",
+   "max_grade_pct": 0.0,
+   "length_m": 22.1
+  },
+  {
+   "id": "dirt_from_map_000",
+   "max_grade_pct": 0.4,
+   "length_m": 140.9
+  },
+  {
+   "id": "dirt_from_map_001",
+   "max_grade_pct": 1.0,
+   "length_m": 107.1
+  },
+  {
+   "id": "dirt_from_map_002",
+   "max_grade_pct": 0.0,
+   "length_m": 14.4
+  },
+  {
+   "id": "dirt_from_map_003",
+   "max_grade_pct": 5.3,
+   "length_m": 135.2
+  },
+  {
+   "id": "dirt_from_map_004",
+   "max_grade_pct": 0.5,
+   "length_m": 14.6
+  },
+  {
+   "id": "dirt_from_map_005",
+   "max_grade_pct": 1.5,
+   "length_m": 102.4
+  },
+  {
+   "id": "dirt_from_map_006",
+   "max_grade_pct": 2.3,
+   "length_m": 19.2
+  },
+  {
+   "id": "dirt_from_map_007",
+   "max_grade_pct": 1.7,
+   "length_m": 32.5
+  },
+  {
+   "id": "dirt_from_map_008",
+   "max_grade_pct": 2.6,
+   "length_m": 40.3
+  },
+  {
+   "id": "dirt_from_map_009",
+   "max_grade_pct": 0.7,
+   "length_m": 23.3
+  },
+  {
+   "id": "dirt_from_map_010",
+   "max_grade_pct": 0.0,
+   "length_m": 14.1
+  },
+  {
+   "id": "dirt_from_map_011",
+   "max_grade_pct": 0.3,
+   "length_m": 35.6
+  },
+  {
+   "id": "dirt_from_map_012",
+   "max_grade_pct": 8.0,
+   "length_m": 163.6
+  },
+  {
+   "id": "dirt_from_map_013",
+   "max_grade_pct": 0.0,
+   "length_m": 14.8
+  },
+  {
+   "id": "dirt_from_map_014",
+   "max_grade_pct": 4.6,
+   "length_m": 218.3
+  },
+  {
+   "id": "dirt_from_map_015",
+   "max_grade_pct": 2.3,
+   "length_m": 76.0
+  },
+  {
+   "id": "dirt_from_map_016",
+   "max_grade_pct": 0.2,
+   "length_m": 44.6
+  },
+  {
+   "id": "dirt_from_map_017",
+   "max_grade_pct": 3.7,
+   "length_m": 27.2
+  },
+  {
+   "id": "dirt_from_map_018",
+   "max_grade_pct": 1.1,
+   "length_m": 184.5
+  },
+  {
+   "id": "dirt_from_map_019",
+   "max_grade_pct": 4.7,
+   "length_m": 194.5
+  },
+  {
+   "id": "dirt_from_map_020",
+   "max_grade_pct": 0.0,
+   "length_m": 30.5
+  },
+  {
+   "id": "dirt_from_map_021",
+   "max_grade_pct": 0.0,
+   "length_m": 0.0
+  }
+ ],
+ "lakes": [
+  {
+   "id": "lake_00",
+   "name": "forest_lake",
+   "surface_m": 3.1
+  },
+  {
+   "id": "lake_01",
+   "name": "forest_lake",
+   "surface_m": -7.17
+  },
+  {
+   "id": "lake_02",
+   "name": "forest_lake",
+   "surface_m": 5.1
+  },
+  {
+   "id": "lake_03",
+   "name": "forest_lake",
+   "surface_m": 12.81
+  },
+  {
+   "id": "lake_04",
+   "name": "forest_lake",
+   "surface_m": 3.7
+  },
+  {
+   "id": "lake_07",
+   "name": "hamlet_pond",
+   "surface_m": 4.7
+  },
+  {
+   "id": "lake_08",
+   "name": "hamlet_pond",
+   "surface_m": 5.36
+  },
+  {
+   "id": "lake_10",
+   "name": "mountain_lake",
+   "surface_m": 18.7
+  },
+  {
+   "id": "swamp_130",
+   "name": null,
+   "surface_m": 5.35
+  }
+ ],
+ "river": {
+  "bed_m": [
+   1.5,
+   15.0
+  ],
+  "gorge_depth_m": [
+   6,
+   13
+  ],
+  "surface_above_bed_m": 1.2
+ },
+ "peaks_m": {
+  "hill_B": 50.7,
+  "elite": 44.0,
+  "nw_ridge": 94.5
+ },
+ "splat": {
+  "files": [
+   "masks/splat_0_v76.png",
+   "masks/splat_1_v76.png",
+   "masks/splat_2_v76.png"
+  ],
+  "layers": [
+   "L01_meadow",
+   "L02_worn_grass",
+   "L03_dirt_SK1b",
+   "L04_forest_floor_p10",
+   "L05_sand_white",
+   "L05b_sand_wet",
+   "L06_gravel_SK1d",
+   "L07_rock_macro",
+   "L08_lawn_park",
+   "L09_field_plowed",
+   "L10_field_stubble"
+  ],
+  "format": "RGBA 8-bit, 1 px = 1 m (1744 x 950), row 0 = NORTH; layer i = file i//4, channel i%4"
+ }
+}

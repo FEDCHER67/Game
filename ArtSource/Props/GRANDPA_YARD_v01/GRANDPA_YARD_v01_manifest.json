@@ -1,0 +1,387 @@
+{
+ "kit": "GRANDPA_YARD_v01",
+ "units": "1 unit = 1 m",
+ "axes": "FBX -Z forward, Y up; Unity +Z = prop front, +Y up",
+ "pivot": "centre of the base on the ground (rocking chair: rockers' ground contact point)",
+ "hierarchy": "<prop> (empty) -> <prop>_Mesh + UCX_<prop>_NN (convex hulls; builder: convex MeshCollider, no renderer)",
+ "look": "flat painted colours (materials GY_*, sRGB below), chamfers + weighted normals, no textures; UV0 box 1 UV = 1 m",
+ "source": "procedural bpy (build_grandpa_yard_v01.py); no external models",
+ "tri_budget": 1500,
+ "materials": {
+  "GY_Paint_Red": {
+   "srgb": "#C4342A",
+   "roughness": 0.5,
+   "metallic": 0
+  },
+  "GY_Cushion": {
+   "srgb": "#E8CE96",
+   "roughness": 0.9,
+   "metallic": 0
+  },
+  "GY_Wood_Stave_A": {
+   "srgb": "#AC7544",
+   "roughness": 0.75,
+   "metallic": 0
+  },
+  "GY_Wood_Stave_B": {
+   "srgb": "#946239",
+   "roughness": 0.75,
+   "metallic": 0
+  },
+  "GY_Wood_Lid": {
+   "srgb": "#BA8854",
+   "roughness": 0.75,
+   "metallic": 0
+  },
+  "GY_Metal_Dark": {
+   "srgb": "#464242",
+   "roughness": 0.55,
+   "metallic": 0.3
+  },
+  "GY_Drum_Blue": {
+   "srgb": "#3A6E96",
+   "roughness": 0.5,
+   "metallic": 0.1
+  },
+  "GY_Rust": {
+   "srgb": "#A65A32",
+   "roughness": 0.85,
+   "metallic": 0
+  },
+  "GY_Drum_Inside": {
+   "srgb": "#2C363E",
+   "roughness": 0.8,
+   "metallic": 0
+  },
+  "GY_Water": {
+   "srgb": "#3A6870",
+   "roughness": 0.06,
+   "metallic": 0
+  },
+  "GY_Tin": {
+   "srgb": "#BEC2C4",
+   "roughness": 0.4,
+   "metallic": 0.35
+  },
+  "GY_Label_White": {
+   "srgb": "#F0ECE2",
+   "roughness": 0.6,
+   "metallic": 0
+  },
+  "GY_Paint_Green": {
+   "srgb": "#48783C",
+   "roughness": 0.22,
+   "metallic": 0
+  },
+  "GY_Paint_Ochre": {
+   "srgb": "#E2A634",
+   "roughness": 0.28,
+   "metallic": 0
+  },
+  "GY_Paint_Blue": {
+   "srgb": "#3A70BA",
+   "roughness": 0.28,
+   "metallic": 0
+  },
+  "GY_Brush_Handle": {
+   "srgb": "#B4743E",
+   "roughness": 0.5,
+   "metallic": 0
+  },
+  "GY_Bristle": {
+   "srgb": "#E6CE9A",
+   "roughness": 0.85,
+   "metallic": 0
+  }
+ },
+ "props": [
+  {
+   "name": "GY_RockingChair_Red",
+   "kind": "furniture",
+   "desc": "Grandpa's red wooden rocking chair (porch rocker), cream seat cushion. Pivot = rockers' ground contact point.",
+   "tris": 1396,
+   "verts": 744,
+   "size_m": [
+    0.639,
+    0.993,
+    1.053
+   ],
+   "bounds_min_blender": [
+    -0.319,
+    -0.397,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.319,
+    0.596,
+    1.053
+   ],
+   "materials": [
+    "GY_Paint_Red",
+    "GY_Cushion"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_RockingChair_Red_00",
+     "tris": 56
+    },
+    {
+     "name": "UCX_GY_RockingChair_Red_01",
+     "tris": 28
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_RockingChair_Red.fbx"
+  },
+  {
+   "name": "GY_Barrel_Wood",
+   "kind": "container",
+   "desc": "Old oak barrel with dark metal hoops and a wooden lid with a batten (rain/pickle barrel).",
+   "tris": 712,
+   "verts": 424,
+   "size_m": [
+    0.58,
+    0.58,
+    0.8
+   ],
+   "bounds_min_blender": [
+    -0.29,
+    -0.29,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.29,
+    0.29,
+    0.8
+   ],
+   "materials": [
+    "GY_Wood_Stave_A",
+    "GY_Wood_Stave_B",
+    "GY_Wood_Lid",
+    "GY_Metal_Dark"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_Barrel_Wood_00",
+     "tris": 68
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_Barrel_Wood.fbx"
+  },
+  {
+   "name": "GY_Drum_Rain",
+   "kind": "container",
+   "desc": "Old 200 L steel drum, open, used as a rainwater barrel: faded blue paint, worn rusty chimes/ribs, water inside.",
+   "tris": 676,
+   "verts": 340,
+   "size_m": [
+    0.596,
+    0.596,
+    0.885
+   ],
+   "bounds_min_blender": [
+    -0.298,
+    -0.298,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.298,
+    0.298,
+    0.885
+   ],
+   "materials": [
+    "GY_Drum_Blue",
+    "GY_Rust",
+    "GY_Drum_Inside",
+    "GY_Water"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_Drum_Rain_00",
+     "tris": 44
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_Drum_Rain.fbx"
+  },
+  {
+   "name": "GY_PaintCan_Open_Green",
+   "kind": "paint",
+   "desc": "Open 2.7 L can of green paint, drips down the front, small spill.",
+   "tris": 964,
+   "verts": 529,
+   "size_m": [
+    0.198,
+    0.222,
+    0.193
+   ],
+   "bounds_min_blender": [
+    -0.093,
+    -0.13,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.105,
+    0.093,
+    0.193
+   ],
+   "materials": [
+    "GY_Tin",
+    "GY_Paint_Green",
+    "GY_Label_White",
+    "GY_Metal_Dark"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_PaintCan_Open_Green_00",
+     "tris": 36
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_PaintCan_Open_Green.fbx"
+  },
+  {
+   "name": "GY_PaintCan_Ochre",
+   "kind": "paint",
+   "desc": "Closed 2.7 L can of ochre paint, one dried drip.",
+   "tris": 806,
+   "verts": 421,
+   "size_m": [
+    0.185,
+    0.177,
+    0.193
+   ],
+   "bounds_min_blender": [
+    -0.092,
+    -0.092,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.092,
+    0.084,
+    0.193
+   ],
+   "materials": [
+    "GY_Tin",
+    "GY_Paint_Ochre",
+    "GY_Label_White",
+    "GY_Metal_Dark"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_PaintCan_Ochre_00",
+     "tris": 36
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_PaintCan_Ochre.fbx"
+  },
+  {
+   "name": "GY_PaintCan_Small_Blue",
+   "kind": "paint",
+   "desc": "Closed 0.9 L can of blue paint, one dried drip.",
+   "tris": 694,
+   "verts": 365,
+   "size_m": [
+    0.125,
+    0.117,
+    0.123
+   ],
+   "bounds_min_blender": [
+    -0.062,
+    -0.062,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.062,
+    0.054,
+    0.123
+   ],
+   "materials": [
+    "GY_Tin",
+    "GY_Paint_Blue",
+    "GY_Label_White",
+    "GY_Metal_Dark"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_PaintCan_Small_Blue_00",
+     "tris": 36
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_PaintCan_Small_Blue.fbx"
+  },
+  {
+   "name": "GY_PaintCan_Lid_Green",
+   "kind": "paint",
+   "desc": "Lid of the open green can, lying upside down, paint side up.",
+   "tris": 236,
+   "verts": 120,
+   "size_m": [
+    0.169,
+    0.169,
+    0.011
+   ],
+   "bounds_min_blender": [
+    -0.084,
+    -0.084,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.084,
+    0.084,
+    0.011
+   ],
+   "materials": [
+    "GY_Tin",
+    "GY_Paint_Green"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_PaintCan_Lid_Green_00",
+     "tris": 56
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_PaintCan_Lid_Green.fbx"
+  },
+  {
+   "name": "GY_PaintBrush_Green",
+   "kind": "paint",
+   "desc": "Flat 70 mm paint brush lying flat, bristle tips dipped in green paint.",
+   "tris": 244,
+   "verts": 128,
+   "size_m": [
+    0.072,
+    0.275,
+    0.022
+   ],
+   "bounds_min_blender": [
+    -0.036,
+    -0.138,
+    0.0
+   ],
+   "bounds_max_blender": [
+    0.036,
+    0.138,
+    0.022
+   ],
+   "materials": [
+    "GY_Bristle",
+    "GY_Paint_Green",
+    "GY_Tin",
+    "GY_Brush_Handle"
+   ],
+   "colliders": [
+    {
+     "name": "UCX_GY_PaintBrush_Green_00",
+     "tris": 36
+    }
+   ],
+   "custom_normals": true,
+   "fbx": "FBX/GY_PaintBrush_Green.fbx"
+  }
+ ]
+}

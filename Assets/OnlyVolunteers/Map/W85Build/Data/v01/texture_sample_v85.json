@@ -1,0 +1,48 @@
+{
+ "note": "Texture SAMPLE items of the approved texture test (copied groups with their own isolated Built_v04 / v06 materials). Since the v04 ROLLOUT (Fedya 21.10 \"raskatyvai\") the H5 / R2c / D4 houses are generated on every footprint by the builder (W85Rollout.cs), so their single-house samples (H5a 02-H01, R2c section of 04-H13, D4 face 05-B029..B032) are gone; only the T4 twin towers stay a copied group: they replace the old twins + podium on the Water-axis plaza, podium depth fitted to the plaza.",
+ "source_scene": "Assets/OnlyVolunteers/Scenes/Map/TextureTest_Houses_v04.unity",
+ "items": [
+  {
+   "id": "T4",
+   "source_scene": "Assets/OnlyVolunteers/Scenes/Map/TextureTest_Houses_v06.unity",
+   "source": "TT_Towers/T4",
+   "replace": [
+    "05-01",
+    "05-02",
+    "05-B023"
+   ],
+   "pos": [
+    1028.0,
+    420.85
+   ],
+   "y": 5.02,
+   "yaw_deg": 0,
+   "fit_depth": {
+    "k": 0.781,
+    "podium_y": 8.6,
+    "connector_half_x": 6.4,
+    "connector_y": 16.6,
+    "tower_x": 16,
+    "tower_r": 12
+   },
+   "colliders": "mesh",
+   "lod": true,
+   "move_objects": [
+    {
+     "name": "05-35-screen",
+     "pos": [
+      1028.0,
+      411.9
+     ],
+     "lift_m": 12.0,
+     "size": [
+      9,
+      5,
+      0.4
+     ]
+    }
+   ],
+   "why": "T4 twins (130 m, 32 m apart) on the Water-axis plaza in place of the old twins 05-01 / 05-02 and their podium 05-B023; the 60 x 26 m podium is fitted to the 20.3 m between the plaza stair (y 410.7) and the street N3 facade line (y 431): depth x0.781, towers untouched; big screen 35 moved onto the connector facade above the entrance"
+  }
+ ]
+}
