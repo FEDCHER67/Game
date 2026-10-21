@@ -80,6 +80,7 @@ namespace OnlyVolunteers.Map.W85
             MatMap = mj["materials"] as Dictionary<string, object>;
             Slots = Obj(Get(mj, "slots")) ?? new Dictionary<string, object>();
             Sample = File.Exists(Data + "/texture_sample_v85.json") ? Obj(Json.Parse(File.ReadAllText(Data + "/texture_sample_v85.json"))) : new Dictionary<string, object>();
+            LoadSampleRules();
             Step("terrain", () => BuildTerrain(root));
             Step("roads", () => BuildRoads(root));
             Step("tunnel", () => BuildTunnel(root));
@@ -88,9 +89,11 @@ namespace OnlyVolunteers.Map.W85
             foreach (string f in Directory.GetFiles(Data + "/districts", "*_v85.json").OrderBy(s => s))
                 Step("district " + Path.GetFileNameWithoutExtension(f), () => BuildDistrict(root, f));
             Step("details", () => BuildDetails(root));
+            Step("texture sample", () => BuildSample(root));
             Step("light", () => BuildLight(root));
             Step("validate", () => Validate(root));
             Step("i10 look", () => Note(W85Look.Apply(root, Ter)));
+            Step("texture sample night", () => SampleNight(root));
             Note($"materials: {reused} reused, {created} created, {paletteFixed} V19 palette-field copies (field off), {SlotMats.Count} slot materials");
             EditorSceneManager.SaveScene(scene, ScenePath);
             AssetDatabase.SaveAssets();
@@ -1111,7 +1114,20 @@ namespace OnlyVolunteers.Map.W85
             var parent = new GameObject("District_" + district).transform; parent.SetParent(root, false);
             int nb = 0, np = 0, nz = 0;
             foreach (object o in Arr(Get(dj, "zones"))) if (Zone(parent, Obj(o))) nz++;
-            foreach (object o in Arr(Get(dj, "buildings"))) { if (Get(Obj(o), "disabled") is bool off && off) continue; if (Building(parent, Obj(o), district)) nb++; }
+            foreach (object o in Arr(Get(dj, "buildings")))
+            {
+                var bo = Obj(o);
+                if (Get(bo, "disabled") is bool off && off) continue;
+                string bid = S(Get(bo, "id"), "");
+                if (SampleSkip.Contains(bid)) continue;                                 // replaced by the texture sample
+                if (SampleCutX.TryGetValue(bid, out var keep))
+                {   // the texture sample takes one section of this house: keep the rest (footprint clamped, doors of the kept part only)
+                    bo = new Dictionary<string, object>(bo);
+                    bo["footprint"] = CutFootprint(bid, V2s(Get(bo, "footprint")).ToList()).Select(q => (object)new List<object> { (double)q.x, (double)q.y }).ToList();
+                    bo["entrances"] = Arr(Get(bo, "entrances")).Where(e => { var q = V2(Get(Obj(e), "pos")); return q.x >= keep.x - .1f && q.x <= keep.y + .1f; }).ToList();
+                }
+                if (Building(parent, bo, district)) nb++;
+            }
             var props = Arr(Get(dj, "props")).Select(Obj).Where(o => o != null && !(Get(o, "disabled") is bool off && off)).ToList();
             var towers = props.Where(o => S(Get(o, "kind")) == "lifeguard_tower").ToList();
             if (towers.Count > LifeguardTowers)
@@ -1866,7 +1882,13 @@ namespace OnlyVolunteers.Map.W85
             ["umbrella_3_loungers"] = "BEACH/beach_umbrella_red", ["beach_umbrella"] = "BEACH/beach_umbrella_red", ["umbrella_yellow"] = "BEACH/beach_umbrella_red",
             ["parked_tractor"] = "HEAVY/tractor_small", ["paz_bus"] = "HEAVY/bus_city", ["security_camera_pole"] = "SMALL/cctv_pole", ["wooden_crate"] = "SMALL/default_crate",
             ["rounded_rock"] = "SMALL/rock_02",
+            // Hamlet yard dressing -> the approved pilot kits (i09/i10 props, as in the texture test)
+            ["woodpile"] = PK1 + "WOODPILE_v01", ["round_hay_bale"] = PK1 + "HAY_BALE_ROUND_v01", ["old_well"] = PK1 + "WELL_RURAL_v01",
+            ["farm_trailer"] = PK1 + "CART_WOODEN_v01", ["handcart"] = PK1 + "CART_WOODEN_v01", ["clothesline"] = PK1 + "LAUNDRY_POLE_PAIR_v01",
+            ["watering_can"] = PK2 + "BUCKET_WATERING_v02", ["bucket"] = PK2 + "BUCKET_WATERING_v02", ["outdoor_table"] = PK2 + "PICNIC_TABLE_v02",
+            ["gathering_table"] = PK2 + "PICNIC_TABLE_v02", ["flower_pot"] = PK2 + "FLOWER_BED_v02", ["stump"] = PK2 + "AXE_STUMP_LOGS_v02",
         };
+        const string PK1 = "Assets/OnlyVolunteers/Art/StyleKit_v3/PilotKit_v01/Prefabs/", PK2 = "Assets/OnlyVolunteers/Art/StyleKit_v3/PilotKit_v02/Prefabs/";
         static readonly HashSet<string> Grip = new() { "street_lamp", "pole_lamp", "lamp_soviet", "lamp_oldtown_single", "lamp_oldtown_double", "lamp_tall", "bench", "bench_soviet",
             "bench_soviet_broken", "spectator_bench", "fire_hydrant", "sign_stop", "sign_giveway", "traffic_light", "flagpole", "pull_up_bar", "light_mast", "floodlight_mast", "bollard" };
         static readonly Dictionary<string, GameObject> PrefabCache = new();
@@ -1875,7 +1897,7 @@ namespace OnlyVolunteers.Map.W85
         {
             if (!PrefabOf.TryGetValue(kind, out string rel)) return null;
             if (PrefabCache.TryGetValue(rel, out var p)) return p;
-            return PrefabCache[rel] = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabLib + rel + ".prefab");
+            return PrefabCache[rel] = AssetDatabase.LoadAssetAtPath<GameObject>((rel.StartsWith("Assets/") ? rel : PrefabLib + rel) + ".prefab");
         }
 
         static bool Prop(Transform parent, Dictionary<string, object> p)
@@ -1907,6 +1929,7 @@ namespace OnlyVolunteers.Map.W85
                 if (kind == "leave_country_button") go.AddComponent<W76LeaveCountryButton>();
                 return true;
             }
+            if (Get(p, "dressing") is bool dr && dr) return false;                    // small yard clutter without a finished asset: no grey boxes
             var sz = Arr(Get(p, "size"));
             Vector3 size = sz.Count >= 3 ? new Vector3(F(sz[0]), F(sz[2]), F(sz[1])) : sz.Count == 2 ? new Vector3(F(sz[0]), 1f, F(sz[1])) : DefaultSize(kind);
             if (size.y <= 0f) size.y = DefaultSize(kind).y;
@@ -1948,9 +1971,154 @@ namespace OnlyVolunteers.Map.W85
             {
                 var p = Obj(o);
                 if (!p.ContainsKey("id")) p["id"] = S(Get(p, "kind"), "d") + "_" + k++;
+                string door = S(Get(p, "door"));
+                if (door != null && (SampleSkip.Contains(door) || (SampleCutX.TryGetValue(door, out var kx) && (V2(Get(p, "pos")).x < kx.x || V2(Get(p, "pos")).x > kx.y)))) continue;
                 if (Prop(parent, p)) n++;
             }
             Note($"details by rules: {n} placed ({string.Join(", ", Obj(Get(dj, "counts")).Select(kv => kv.Key + " " + kv.Value))})");
+        }
+
+        // ------------------------------------------------------------------ texture SAMPLE (Fedya 21.10: texture test v04 approved)
+        // Data/v01/texture_sample_v85.json: groups of the texture-test scene (H5 house scheme a, R2c khrushchevka section, D4 street face
+        // with G-D glazing) are copied onto chosen W85 spots, replacing (or cutting) the W85 buildings there. They keep the test's own
+        // isolated materials (Art/TextureTest_v01/Built_v04) — nothing shared with the rest of the map changes. The urban lamps around the
+        // spots get the N-R3 night light (i10 worn lamp light in the head + functional spot in the Rough, flicker, fog halo) and only
+        // those lamps are registered with the night sky rig. Remove the json line (or the file) and rebuild to take a sample out.
+        static readonly HashSet<string> SampleSkip = new();
+        static readonly Dictionary<string, Vector2> SampleCutX = new();
+        static readonly List<Light> SampleLamps = new();
+        static readonly List<(Vector2 c, float r)> SampleSpots = new();
+
+        static void LoadSampleRules()
+        {
+            SampleSkip.Clear(); SampleCutX.Clear(); SampleLamps.Clear(); SampleSpots.Clear();
+            foreach (var it in Arr(Get(Sample, "items")).Select(Obj))
+            {
+                foreach (var r in Arr(Get(it, "replace"))) SampleSkip.Add(S(r));
+                var cut = Obj(Get(it, "cut"));
+                if (cut != null) SampleCutX[S(Get(cut, "building"))] = V2(Get(cut, "keep_x"));
+            }
+        }
+
+        static List<Vector2> CutFootprint(string id, List<Vector2> fp)
+        {
+            if (!SampleCutX.TryGetValue(id, out var k)) return fp;
+            return fp.Select(q => new Vector2(Mathf.Clamp(q.x, k.x, k.y), q.y)).ToList();
+        }
+
+        static void BuildSample(Transform root)
+        {
+            var items = Arr(Get(Sample, "items")).Select(Obj).Where(o => o != null).ToList();
+            if (items.Count == 0) { Note("texture sample: none"); return; }
+            string src = S(Get(Sample, "source_scene"));
+            var parent = new GameObject("TextureSample_v04").transform; parent.SetParent(root, false);
+            var sc = EditorSceneManager.OpenScene(src, OpenSceneMode.Additive);
+            var log = new List<string>();
+            try
+            {
+                foreach (var it in items)
+                {
+                    string id = S(Get(it, "id")), path = S(Get(it, "source"));
+                    Transform t = null;
+                    foreach (var r in sc.GetRootGameObjects()) { t = r.transform.Find(path); if (t) break; }
+                    if (!t) { log.Add("missing source " + path); continue; }
+                    var copy = Object.Instantiate(t.gameObject);
+                    copy.name = "Sample_" + id + "_" + t.name;
+                    SceneManager.MoveGameObjectToScene(copy, root.gameObject.scene);
+                    copy.transform.SetParent(parent, false);
+                    foreach (var ex in Arr(Get(it, "exclude")).Select(e => S(e)))
+                    { var c = copy.transform.Find(ex); if (c) Object.DestroyImmediate(c.gameObject); }
+                    Vector2 at = V2(Get(it, "pos"));
+                    float y = Get(it, "y") != null ? F(Get(it, "y")) : Height(at.x, at.y);
+                    copy.transform.SetPositionAndRotation(new Vector3(at.x, y, at.y), Quaternion.Euler(0, F(Get(it, "yaw_deg")), 0));
+                    // colliders (the texture test is visual only): boxes given in the data (local frame), else convex hulls per mesh
+                    var boxes = Arr(Get(it, "boxes")).Select(Obj).Where(b => b != null).ToList();
+                    if (boxes.Count > 0)
+                        foreach (var bx in boxes)
+                        {
+                            var g = new GameObject("collider"); g.transform.SetParent(copy.transform, false);
+                            var bc = g.AddComponent<BoxCollider>();
+                            var cc = Arr(Get(bx, "centre")); var ss = Arr(Get(bx, "size"));
+                            bc.center = new Vector3(F(cc[0]), F(cc[1]), F(cc[2])); bc.size = new Vector3(F(ss[0]), F(ss[1]), F(ss[2]));
+                        }
+                    else
+                        foreach (var mf in copy.GetComponentsInChildren<MeshFilter>(true))
+                            if (mf.sharedMesh && !mf.name.Contains("atlas") && !mf.GetComponent<Collider>()) { var mc = mf.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mf.sharedMesh; mc.convex = true; }
+                    foreach (var tr in copy.GetComponentsInChildren<Transform>(true)) GameObjectUtility.SetStaticEditorFlags(tr.gameObject, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
+                    SampleSpots.Add((at, F(Get(it, "night_radius_m"), 0f)));
+                    log.Add($"{id}: {path} at ({at.x:0.0}, {at.y:0.0}) y {y:0.00} yaw {F(Get(it, "yaw_deg")):0}" + (Arr(Get(it, "replace")).Count > 0 ? " replaces " + string.Join(", ", Arr(Get(it, "replace")).Select(o => S(o))) : "") + (Get(it, "cut") != null ? " cuts " + S(Get(Obj(Get(it, "cut")), "building")) : ""));
+                }
+            }
+            finally { EditorSceneManager.CloseScene(sc, true); }
+            // no terrain tree inside a sample or within 2.5 m of it (the samples are a little larger than the W85 houses they replace)
+            var rects = parent.Cast<Transform>().Select(c => { var rs = c.GetComponentsInChildren<Renderer>(); var b = rs[0].bounds; foreach (var r in rs) b.Encapsulate(r.bounds); return Rect.MinMaxRect(b.min.x - 2.5f, b.min.z - 2.5f, b.max.x + 2.5f, b.max.z + 2.5f); }).ToList();
+            var td = Ter.terrainData;
+            var trees = td.treeInstances;
+            var kept = trees.Where(ti => { var w = new Vector2(ti.position.x * td.size.x, ti.position.z * td.size.z); return !rects.Any(r => r.Contains(w)); }).ToArray();
+            if (kept.Length != trees.Length) { td.SetTreeInstances(kept, true); EditorUtility.SetDirty(td); }
+            log.Add($"{trees.Length - kept.Length} terrain trees removed at the samples");
+            // N-R3 night light on the urban lamps around the spots (lamp prefabs of the map: Rough lamp_soviet, Downtown lamp_oldtown_*)
+            foreach (var lamp in root.GetComponentsInChildren<Transform>(true).Where(x => x.name.Contains("lamp") || x.name.Contains("Lamp")).ToList())
+            {
+                if (!lamp.GetComponentInChildren<MeshRenderer>() || lamp.GetComponentInChildren<Light>()) continue;
+                Vector2 p = new(lamp.position.x, lamp.position.z);
+                var spot = SampleSpots.FirstOrDefault(s => s.r > 0 && (s.c - p).magnitude < s.r);
+                if (spot.r <= 0) continue;
+                bool rough = p.y > 660f;                                          // the Rough district: functional spot with shadows (N-R3)
+                SampleLamps.Add(NightLamp(lamp.gameObject, rough));
+            }
+            Note("texture sample: " + string.Join("; ", log) + $"; N-R3 night light on {SampleLamps.Count} lamps around the spots");
+        }
+
+        // texture test v04 FlickerLamp (N-R3): point light in the lamp head (MP_Glass centroid), #BAC8D2, range 7, 0.4, off by day;
+        // in the Rough + a spot under the head (range 15, 95 deg, soft shadows) that follows the flicker (FlickerFollowerV01, on 140).
+        static Light NightLamp(GameObject pole, bool strong)
+        {
+            var light = new GameObject("Flicker").AddComponent<Light>();
+            light.transform.SetParent(pole.transform, false);
+            var pts = new List<Vector3>();
+            foreach (var r in pole.GetComponentsInChildren<MeshRenderer>())
+            {
+                var mf = r.GetComponent<MeshFilter>(); if (!mf || !mf.sharedMesh) continue;
+                var mesh = mf.sharedMesh; var vs = mesh.vertices; var mats = r.sharedMaterials;
+                for (int s = 0; s < Mathf.Min(mesh.subMeshCount, mats.Length); s++)
+                    if (mats[s] && mats[s].name == "MP_Glass") pts.AddRange(mesh.GetTriangles(s).Select(i => r.transform.TransformPoint(vs[i])));
+            }
+            if (pts.Count > 0) light.transform.position = pts.Aggregate(Vector3.zero, (a, c) => a + c) / pts.Count - Vector3.up * .07f;
+            else
+            {
+                var rs = pole.GetComponentsInChildren<Renderer>(); var bb = rs[0].bounds; foreach (var r in rs) bb.Encapsulate(r.bounds);
+                light.transform.position = new Vector3(bb.center.x, bb.max.y - .3f, bb.center.z);
+            }
+            ColorUtility.TryParseHtmlString("#BAC8D2", out Color col);
+            light.type = LightType.Point; light.color = col; light.range = 7f; light.intensity = .4f; light.shadows = LightShadows.None; light.enabled = false;
+            if (!strong) return light;
+            var spot = new GameObject("Flicker_Spot").AddComponent<Light>();
+            spot.transform.SetParent(light.transform, false); spot.transform.SetPositionAndRotation(light.transform.position - Vector3.up * .6f, Quaternion.Euler(90f, 0, 0));
+            spot.type = LightType.Spot; spot.color = col; spot.range = 15f; spot.spotAngle = 95f; spot.innerSpotAngle = 50f;
+            spot.shadows = LightShadows.Soft; spot.shadowStrength = .9f; spot.shadowNearPlane = .1f; spot.enabled = false;
+            var ad = new SerializedObject(spot.gameObject.AddComponent<UniversalAdditionalLightData>()); var tier = ad.FindProperty("m_AdditionalLightsShadowResolutionTier"); if (tier != null) { tier.intValue = 1; ad.ApplyModifiedPropertiesWithoutUndo(); }
+            var fol = spot.gameObject.AddComponent<OnlyVolunteers.Art.TextureTest.FlickerFollowerV01>(); fol.source = light; fol.target = spot; fol.sourceOn = .65f; fol.targetOn = 140f;
+            return light;
+        }
+
+        // after the i10 look (which empties the sky rig's lamp list): only the sample lamps turn on at night, flicker and get fog halos
+        static void SampleNight(Transform root)
+        {
+            if (SampleLamps.Count == 0) return;
+            var life = root.Find("TextureSample_v04").gameObject.AddComponent<OnlyVolunteers.Map.Look.V3.DistrictLife19V02>();
+            life.flyers = Array.Empty<OnlyVolunteers.Map.Look.V3.DistrictLife19V02.Flyer>(); life.wornLamps = SampleLamps.ToArray();
+            int rigs = 0;
+            foreach (var mb in root.GetComponentsInChildren<MonoBehaviour>(true).Where(m => m && m.GetType().Name == "SkyMapNight22I03"))
+            {
+                var so = new SerializedObject(mb);
+                var p = so.FindProperty("lamps");
+                if (p != null) { p.arraySize = SampleLamps.Count; for (int i = 0; i < SampleLamps.Count; i++) p.GetArrayElementAtIndex(i).objectReferenceValue = SampleLamps[i]; }
+                so.ApplyModifiedPropertiesWithoutUndo(); rigs++;
+            }
+            var fog = root.GetComponentsInChildren<OnlyVolunteers.Map.Look.V3.DistrictFog19V05>(true).FirstOrDefault();
+            if (fog) fog.halos = SampleLamps.Select(l => new OnlyVolunteers.Map.Look.V3.DistrictFog19V05.Halo { light = l, position = l.transform.position, size = 2.3f, colour = new Color(.78f, .86f, .91f, .36f) }).ToArray();
+            Note($"texture sample night: {SampleLamps.Count} N-R3 lamps on {rigs} night rig(s), fog halos {(fog ? "on" : "no fog")}");
         }
 
         // ------------------------------------------------------------------ light, atmosphere, tunnel glare (v02 §6)

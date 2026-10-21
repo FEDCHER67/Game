@@ -14,13 +14,13 @@ beach: 4 buildings, 95 props, 3 zone surfaces, 0 fences, 0 walls, 0 district roa
 ok: district beach_v85
 construction: 23 buildings, 50 props, 1 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
 ok: district construction_v85
-downtown: 144 buildings, 96 props, 10 zone surfaces, 79 street meshes (carriageway + 5 m sidewalks, kerbs, corners, 15 curb drops), 0 fences, 2 walls, 0 district roads, 0 piers, 4 alley plugs, 0 hedged plots
+downtown: 140 buildings, 96 props, 10 zone surfaces, 79 street meshes (carriageway + 5 m sidewalks, kerbs, corners, 15 curb drops), 0 fences, 2 walls, 0 district roads, 0 piers, 4 alley plugs, 0 hedged plots
 ok: district downtown_v85
 elite: 10 buildings, 38 props, 10 zone surfaces, 1 fences, 0 walls, 2 district roads, 3 piers, 0 alley plugs, 4 hedged plots
 ok: district elite_v85
-forest: 1 buildings, 4 props, 0 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+forest: 1 buildings, 3 props, 0 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
 ok: district forest_v85
-hamlet: 64 buildings, 180 props, 1 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+hamlet: 63 buildings, 132 props, 1 zone surfaces, 0 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
 ok: district hamlet_v85
 port: 7 buildings, 68 props, 2 zone surfaces, 4 fences, 0 walls, 0 district roads, 1 piers, 0 alley plugs, 0 hedged plots
 ok: district port_v85
@@ -30,17 +30,21 @@ rough: 91 buildings, 96 props, 4 zone surfaces, 5 fences, 0 walls, 1 district ro
 ok: district rough_v85
 tramduro: 3 buildings, 26 props, 5 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots
 ok: district tramduro_v85
-details by rules: 390 placed (downtown_lamps 80, hydrants 88, parked_cars 62, traffic_lights 24, rough_benches 58, rural_signs 8, total 390)
+details by rules: 387 placed (downtown_lamps 80, hydrants 88, parked_cars 62, traffic_lights 24, rough_benches 58, rural_signs 8, total 390)
 ok: details
+texture sample: H5a: TT_Hamlet/H5/HH_House_v03_a at (230,0, 562,0) y 5,08 yaw 172 replaces 02-H01; R2c: TT_Rough/R2c at (835,3, 743,4) y 5,00 yaw 0 cuts 04-H13; D4: TT_Downtown/D4 at (846,8, 381,0) y 5,06 yaw 0 replaces 05-B029, 05-B030, 05-B031, 05-B032; 3 terrain trees removed at the samples; N-R3 night light on 5 lamps around the spots
+ok: texture sample
 light: sun 37°, trilight, ACES, sat -15 / contrast +8, district zones (Rough overcast fog, Construction bright), tunnel exit glare
 ok: light
-roof test: 349 buildings, failing 0; ridge rays 5359 (missed 0), sweeps 1592 (missed 0)
-validate: renderers without material 0, buildings without colliders 0, roof rays 233637 (missed 0) - details Assets/OnlyVolunteers/Map/W85Build/Generated/v01/W85_roof_test.txt
+roof test: 344 buildings, failing 0; ridge rays 5254 (missed 0), sweeps 1557 (missed 0)
+validate: renderers without material 0, buildings without colliders 0, roof rays 229321 (missed 0) - details Assets/OnlyVolunteers/Map/W85Build/Generated/v01/W85_roof_test.txt
 ok: validate
 fog: terrainWorld (-120.00, -120.00, 1728.00, 1024.00) -> (0.00, 0.00, 1744.00, 950.00), 18 mist banks moved to W76 Rough / Forest
 i10 look copied: palette/weather/fog/aerial + 11 light volumes, G22 sky, V19Wind, Sun, PostFX_v17; terrain material V3_Terrain, camera FOV 70 far 460
-grass: 1372027 blades in 2559 chunks (beach=13965; between_districts=1066414; elite=6530; fields=13152; forest=3632; industrial=1770; old_town=10412; residential=23657; tramduro=13914; transition=6048; village=212533; 21121 hard tris; rejectedHard=884008; seconds=10,0); W85GrassRenderer (draw distance High 60 / Med 50 / Low 40 m, density falloff, horizon occlusion, quality setting), mesh / material / compute: True
+grass: 1374874 blades in 2565 chunks (beach=13965; between_districts=1066414; elite=6530; fields=13152; forest=3632; industrial=1770; old_town=10726; residential=24122; tramduro=13914; transition=6048; village=214601; 21109 hard tris; rejectedHard=879580; seconds=10,0); W85GrassRenderer (draw distance High 60 / Med 50 / Low 40 m, density falloff, horizon occlusion, quality setting), mesh / material / compute: True
 ok: i10 look
+texture sample night: 5 N-R3 lamps on 1 night rig(s), fog halos on
+ok: texture sample night
 materials: 14 reused, 118 created, 10 V19 palette-field copies (field off), 70 slot materials
 terrain re-applied after the asset save: height probe 20,11 m (expected 20,12 m)
-built in 143 s
+built in 145 s

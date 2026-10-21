@@ -17,7 +17,12 @@ W76 (scene, builder, data) untouched; everything W85 is new.
 5. Smoke: compiles, map loads, player walks (18 m in 4 s), capture of a Hamlet NPC records district + type, no Console errors.
 6. Reports: `docs/reports/MAP_W85_FIXED_BY_LOGIC.md`, `docs/reports/MAP_W85_FOR_VADIM.md`.
 
+## Texture sample (texture test v04, approved by Fedya 21.10) — applied
+- `Data/v01/texture_sample_v85.json` + builder step "texture sample" (copies from TextureTest_Houses_v04 with their own Built_v04 materials):
+  H5a log house (scheme a) at (230, 562) replacing 02-H01; R2c khrushchevka section = east 25.6 m of H13 at (835, 743) (west part stays W85);
+  D4 street face with G-D glazing, north side of Hnw x 825-868 (replaces 05-B029..B032); N-R3 night light on the 5 urban lamps within 45 m
+  of R2c / D4 (only these on the night rig). Towers untouched (T4 in progress). Fog +18 % not applied map-wide yet.
+- Shots: w85_sample_H5a / R2c / D4 / R2c_night.png. Hamlet yard clutter without an asset is no longer drawn as grey boxes (pilot-kit props where they exist).
+
 ## Left
-- Texture sample (one house / one street): waiting for Fedya's pick; hook ready — `Data/v01/texture_sample_v85.json`
-  {"buildings": {"<id>": {"walls": "<mat path>", "roof": "<mat path>"}}} or a slot's "texture_test" in materials_v85.json, then rebuild.
-- Vadim's answers (FOR_VADIM 1-18); low grass tufts / flowers; heavy NPC types have no LODs (BAD_ALTGIRL 99k tris).
+- Vadim's answers (FOR_VADIM 1-18); district-wide texture rollout after Fedya reviews the sample; low grass tufts / flowers; NPC type LODs.
