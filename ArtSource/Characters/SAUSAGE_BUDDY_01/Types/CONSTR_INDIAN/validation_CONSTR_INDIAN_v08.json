@@ -1,0 +1,355 @@
+{
+  "asset": "SAUSAGE_BUDDY_CONSTR_INDIAN_v08",
+  "variant": "CONSTR_INDIAN",
+  "height_m": 1.834,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 13380,
+      "vertices": 6998,
+      "materials": [
+        "CONSTR_INDIAN_Shirt",
+        "CONSTR_INDIAN_Pocket",
+        "CONSTR_INDIAN_Shirt_Button",
+        "CONSTR_INDIAN_Reflect",
+        "CONSTR_INDIAN_Cement",
+        "CONSTR_INDIAN_Lungi",
+        "CONSTR_INDIAN_Lungi_Check",
+        "CONSTR_INDIAN_Lungi_Line",
+        "CONSTR_INDIAN_Gamcha",
+        "CONSTR_INDIAN_Gamcha_Check",
+        "Buddy_Skin",
+        "CONSTR_INDIAN_Sole_Dirt",
+        "CONSTR_INDIAN_Thong",
+        "CONSTR_INDIAN_Turban",
+        "CONSTR_INDIAN_Turban_Fold",
+        "CONSTR_INDIAN_Hair",
+        "CONSTR_INDIAN_Mustache"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0852
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0718,
+      "max": 0.0852
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0852
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Индус",
+    "group": "Интернациональная стройка",
+    "body": {
+      "thin": 0.6
+    },
+    "idle_arm_down_deg": 74.0,
+    "game_scale": 1.0,
+    "hand_props": false,
+    "hand_props_note": "carries nothing in the hands",
+    "face_defaults": {},
+    "face_baked": {
+      "Surprised": 0.35,
+      "Worried": 0.35
+    },
+    "slots": {
+      "CONSTR_INDIAN_Shirt": {
+        "default": "#5696D6",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Shirt_Button": {
+        "default": "#E8BA46",
+        "metal": true
+      },
+      "CONSTR_INDIAN_Pocket": {
+        "default": "#427CBA",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Reflect": {
+        "default": "#CED2D8",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Lungi": {
+        "default": "#C42070",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Lungi_Check": {
+        "default": "#F2C034",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Lungi_Line": {
+        "default": "#16A8B4",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Turban": {
+        "default": "#FACC1E",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Turban_Fold": {
+        "default": "#E42E88",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Gamcha": {
+        "default": "#16A8B4",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Gamcha_Check": {
+        "default": "#F6D65A",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Cement": {
+        "default": "#A8A49C",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Sole_Dirt": {
+        "default": "#5C4634",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Thong": {
+        "default": "#E8BA46",
+        "metal": true
+      },
+      "CONSTR_INDIAN_Hair": {
+        "default": "#121012",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Mustache": {
+        "default": "#161416",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Phone": {
+        "default": "#18181C",
+        "metal": false
+      },
+      "CONSTR_INDIAN_Screen": {
+        "default": "#1E283C",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "CONSTR_INDIAN_Shirt": "#CEE228",
+        "CONSTR_INDIAN_Pocket": "#A0B41E",
+        "CONSTR_INDIAN_Turban": "#F6701A",
+        "CONSTR_INDIAN_Turban_Fold": "#16A8B4",
+        "CONSTR_INDIAN_Lungi": "#0E8260",
+        "CONSTR_INDIAN_Lungi_Line": "#E42E88",
+        "CONSTR_INDIAN_Gamcha": "#C42070"
+      },
+      {
+        "CONSTR_INDIAN_Shirt": "#FABE28",
+        "CONSTR_INDIAN_Pocket": "#D69614",
+        "CONSTR_INDIAN_Turban": "#F6701A",
+        "CONSTR_INDIAN_Turban_Fold": "#CED2D8",
+        "CONSTR_INDIAN_Lungi": "#602C9C",
+        "CONSTR_INDIAN_Lungi_Line": "#F6701A",
+        "CONSTR_INDIAN_Gamcha": "#D6242C",
+        "CONSTR_INDIAN_Gamcha_Check": "#F6F6F0"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 20932,
+  "part_triangles": {
+    "CONSTR_INDIAN_Turban_Wrap": 3072,
+    "CONSTR_INDIAN_Turban_Dome": 1920,
+    "CONSTR_INDIAN_Shirt": 1248,
+    "CONSTR_INDIAN_Hair": 1152,
+    "CONSTR_INDIAN_Lungi": 1120,
+    "Skin_Head": 1088,
+    "CONSTR_INDIAN_Foot_Upper": 1000,
+    "CONSTR_INDIAN_Toe": 1000,
+    "CONSTR_INDIAN_Foot_Sole": 672,
+    "CONSTR_INDIAN_Gamcha": 636,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "CONSTR_INDIAN_Thong": 408,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "CONSTR_INDIAN_Mustache": 320,
+    "Mouth": 312,
+    "CONSTR_INDIAN_Collar": 296,
+    "Skin_Nose": 288,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "CONSTR_INDIAN_BandF": 104,
+    "CONSTR_INDIAN_BandB": 104,
+    "CONSTR_INDIAN_Pocket": 92,
+    "CONSTR_INDIAN_FootDust": 82,
+    "CONSTR_INDIAN_Placket": 44,
+    "CONSTR_INDIAN_ShirtCement": 42,
+    "CONSTR_INDIAN_Button": 40,
+    "CONSTR_INDIAN_Turban_End": 28
+  }
+}

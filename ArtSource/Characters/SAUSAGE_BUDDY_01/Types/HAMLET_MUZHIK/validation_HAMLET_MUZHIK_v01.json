@@ -1,0 +1,336 @@
+{
+  "asset": "SAUSAGE_BUDDY_HAMLET_MUZHIK_v01",
+  "variant": "HAMLET_MUZHIK",
+  "height_m": 1.769,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 9360,
+      "vertices": 4869,
+      "materials": [
+        "HAMLET_MUZHIK_Linen",
+        "HAMLET_MUZHIK_Trim",
+        "HAMLET_MUZHIK_Trim_Dot",
+        "HAMLET_MUZHIK_Rope",
+        "HAMLET_MUZHIK_Trousers",
+        "HAMLET_MUZHIK_Wrap",
+        "HAMLET_MUZHIK_Cord",
+        "HAMLET_MUZHIK_Lapti",
+        "HAMLET_MUZHIK_Lapti_Weave",
+        "HAMLET_MUZHIK_Hair",
+        "HAMLET_MUZHIK_Beard"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_LeftHand": {
+      "triangles": 1146,
+      "vertices": 585,
+      "materials": [
+        "HAMLET_MUZHIK_Basket",
+        "HAMLET_MUZHIK_Basket_Band",
+        "HAMLET_MUZHIK_Cord"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.07
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.07,
+      "max": 0.07
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.07
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Сельский мужик (крестьянин)",
+    "group": "Хутор",
+    "body": {
+      "belly": 0.7
+    },
+    "idle_arm_down_deg": 68.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {
+      "Happy": 0.45,
+      "Blink": 0.25
+    },
+    "face_baked": {},
+    "slots": {
+      "HAMLET_MUZHIK_Linen": {
+        "default": "#E8DCC4",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Trim": {
+        "default": "#C42834",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Trim_Dot": {
+        "default": "#F6F0E2",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Rope": {
+        "default": "#B05C34",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Trousers": {
+        "default": "#70523E",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Wrap": {
+        "default": "#9CB0A2",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Cord": {
+        "default": "#967850",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Lapti": {
+        "default": "#C4A064",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Lapti_Weave": {
+        "default": "#967442",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Hair": {
+        "default": "#DEBA6E",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Beard": {
+        "default": "#CE8C50",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Stick": {
+        "default": "#805630",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Basket": {
+        "default": "#B4844A",
+        "metal": false
+      },
+      "HAMLET_MUZHIK_Basket_Band": {
+        "default": "#865E32",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "HAMLET_MUZHIK_Linen": "#D2D6C8",
+        "HAMLET_MUZHIK_Trousers": "#50504C",
+        "HAMLET_MUZHIK_Trim": "#284696"
+      },
+      {
+        "HAMLET_MUZHIK_Linen": "#E2CEB0",
+        "HAMLET_MUZHIK_Trousers": "#465A46",
+        "HAMLET_MUZHIK_Rope": "#78786E"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 18058,
+  "part_triangles": {
+    "HAMLET_MUZHIK_Shirt": 1632,
+    "Skin_Head": 1088,
+    "HAMLET_MUZHIK_Lapti_Shoe_Upper": 1000,
+    "HAMLET_MUZHIK_Belt": 972,
+    "HAMLET_MUZHIK_Hair": 864,
+    "HAMLET_MUZHIK_Cord": 800,
+    "HAMLET_MUZHIK_Trousers": 688,
+    "HAMLET_MUZHIK_Lapti_Shoe_Sole": 672,
+    "HAMLET_MUZHIK_Basket_Band": 630,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "HAMLET_MUZHIK_NeckTrim": 396,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "Skin_Nose": 288,
+    "HAMLET_MUZHIK_Basket_Rim": 252,
+    "HAMLET_MUZHIK_Mustache": 240,
+    "HAMLET_MUZHIK_Wrap": 224,
+    "HAMLET_MUZHIK_Goatee": 204,
+    "Brow": 168,
+    "Shine": 160,
+    "HAMLET_MUZHIK_Basket_Body": 128,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "Prop_Phone": 108,
+    "HAMLET_MUZHIK_Knot": 100,
+    "HAMLET_MUZHIK_Basket_Bottom": 96,
+    "HAMLET_MUZHIK_Tassel": 72,
+    "HAMLET_MUZHIK_Trim": 64,
+    "HAMLET_MUZHIK_Basket_Rope": 40,
+    "HAMLET_MUZHIK_TrimDot": 40
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "asset": "SAUSAGE_BUDDY_HAMLET_HUNTER_GRANDPA_v01",
+  "variant": "HAMLET_HUNTER_GRANDPA",
+  "height_m": 1.795,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 13460,
+      "vertices": 6980,
+      "materials": [
+        "HAMLET_HUNTER_GRANDPA_Jacket",
+        "HAMLET_HUNTER_GRANDPA_Stitch",
+        "HAMLET_HUNTER_GRANDPA_Collar",
+        "HAMLET_HUNTER_GRANDPA_Buttons",
+        "HAMLET_HUNTER_GRANDPA_Patch",
+        "HAMLET_HUNTER_GRANDPA_Bandolier",
+        "HAMLET_HUNTER_GRANDPA_Shells",
+        "HAMLET_HUNTER_GRANDPA_Shell_Brass",
+        "HAMLET_HUNTER_GRANDPA_Trousers",
+        "HAMLET_HUNTER_GRANDPA_Boots",
+        "HAMLET_HUNTER_GRANDPA_Boots_Sole",
+        "HAMLET_HUNTER_GRANDPA_Hat",
+        "HAMLET_HUNTER_GRANDPA_Fur",
+        "HAMLET_HUNTER_GRANDPA_Hair",
+        "HAMLET_HUNTER_GRANDPA_Beard"
+      ],
+      "max_influences": 4,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Props_RightHand": {
+      "triangles": 408,
+      "vertices": 216,
+      "materials": [
+        "HAMLET_HUNTER_GRANDPA_Gun_Metal",
+        "HAMLET_HUNTER_GRANDPA_Gun_Wood"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0899
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0899,
+      "max": 0.0899
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0899
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0574
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Дед-охотник (охрана хутора)",
+    "group": "Хутор",
+    "body": {
+      "thin": 0.7,
+      "belly": 0.35
+    },
+    "idle_arm_down_deg": 70.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Props_LeftHand / Props_RightHand meshes: dropped to the floor at the slightest danger (NpcHeldProps)",
+    "face_defaults": {
+      "Worried": 0.35,
+      "Blink": 0.45
+    },
+    "face_baked": {},
+    "slots": {
+      "HAMLET_HUNTER_GRANDPA_Jacket": {
+        "default": "#68684A",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Stitch": {
+        "default": "#505038",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Collar": {
+        "default": "#5C5C40",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Buttons": {
+        "default": "#28241E",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Patch": {
+        "default": "#4C4634",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Trousers": {
+        "default": "#545840",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Boots": {
+        "default": "#262C24",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Boots_Sole": {
+        "default": "#181816",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Hat": {
+        "default": "#604C38",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Fur": {
+        "default": "#967856",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Hair": {
+        "default": "#A8A49E",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Beard": {
+        "default": "#B0ACA6",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Bandolier": {
+        "default": "#64462A",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Shells": {
+        "default": "#B02824",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Shell_Brass": {
+        "default": "#C4A050",
+        "metal": true
+      },
+      "HAMLET_HUNTER_GRANDPA_Gun_Metal": {
+        "default": "#34363A",
+        "metal": false
+      },
+      "HAMLET_HUNTER_GRANDPA_Gun_Wood": {
+        "default": "#80522C",
+        "metal": false
+      }
+    },
+    "colourways": [
+      {
+        "HAMLET_HUNTER_GRANDPA_Jacket": "#464A3C",
+        "HAMLET_HUNTER_GRANDPA_Stitch": "#34382C",
+        "HAMLET_HUNTER_GRANDPA_Collar": "#3E4234",
+        "HAMLET_HUNTER_GRANDPA_Hat": "#3C3832"
+      },
+      {
+        "HAMLET_HUNTER_GRANDPA_Jacket": "#786040",
+        "HAMLET_HUNTER_GRANDPA_Stitch": "#604C32",
+        "HAMLET_HUNTER_GRANDPA_Collar": "#6C563A",
+        "HAMLET_HUNTER_GRANDPA_Trousers": "#3C3E34"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 21420,
+  "part_triangles": {
+    "HAMLET_HUNTER_GRANDPA_Jacket": 3344,
+    "HAMLET_HUNTER_GRANDPA_Beard": 1800,
+    "Skin_Head": 1088,
+    "HAMLET_HUNTER_GRANDPA_Boot_Shoe_Upper": 1000,
+    "HAMLET_HUNTER_GRANDPA_Bandolier_Strap": 948,
+    "HAMLET_HUNTER_GRANDPA_Trousers": 688,
+    "HAMLET_HUNTER_GRANDPA_Boot_Shoe_Sole": 672,
+    "HAMLET_HUNTER_GRANDPA_Ushanka_Band": 640,
+    "HAMLET_HUNTER_GRANDPA_Hair": 588,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "Skin_Arm": 480,
+    "HAMLET_HUNTER_GRANDPA_Ushanka_Crown": 480,
+    "HAMLET_HUNTER_GRANDPA_Boot_Shaft": 448,
+    "HAMLET_HUNTER_GRANDPA_Ushanka_Flap": 392,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "HAMLET_HUNTER_GRANDPA_Collar": 296,
+    "Skin_Nose": 288,
+    "HAMLET_HUNTER_GRANDPA_Bandolier_Shell": 264,
+    "HAMLET_HUNTER_GRANDPA_Bandolier_Cap": 264,
+    "HAMLET_HUNTER_GRANDPA_Mustache": 240,
+    "HAMLET_HUNTER_GRANDPA_Ushanka_FrontFlap": 224,
+    "Brow": 168,
+    "Shine": 160,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "HAMLET_HUNTER_GRANDPA_Shotgun_Receiver": 108,
+    "HAMLET_HUNTER_GRANDPA_Shotgun_Forend": 108,
+    "HAMLET_HUNTER_GRANDPA_Shotgun_Stock": 108,
+    "Prop_Phone": 108,
+    "HAMLET_HUNTER_GRANDPA_Patch": 70,
+    "HAMLET_HUNTER_GRANDPA_Shotgun_Barrel": 64,
+    "HAMLET_HUNTER_GRANDPA_Btn": 50,
+    "HAMLET_HUNTER_GRANDPA_Shotgun_Trigger": 20
+  }
+}

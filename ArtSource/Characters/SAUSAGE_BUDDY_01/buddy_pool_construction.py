@@ -34,9 +34,9 @@ METAL = 'metal'
 
 TYPES = {
     'CONSTR_INDIAN': dict(
-        label='Индус', group=GROUP, hand_props=True, body=dict(thin=0.6), face=dict(Surprised=0.35, Worried=0.35),
+        label='Индус', group=GROUP, body=dict(thin=0.6), face=dict(Surprised=0.35, Worried=0.35),
         look=dict(skin=(146, 92, 58), nose=(134, 80, 50), brow=(22, 18, 16), rim=(98, 58, 38), mouth=(66, 28, 24)),
-        slots={'Shirt': ((246, 112, 26), 0.75), 'Shirt_Button': ((232, 186, 70), 0.3, METAL), 'Pocket': ((206, 84, 18), 0.75),
+        slots={'Shirt': ((86, 150, 214), 0.75), 'Shirt_Button': ((232, 186, 70), 0.3, METAL), 'Pocket': ((66, 124, 186), 0.75),   # v08: not orange (Vadim, TASK-000876)
                'Reflect': ((206, 210, 216), 0.25),
                'Lungi': ((196, 32, 112), 0.6), 'Lungi_Check': ((242, 192, 52), 0.5), 'Lungi_Line': ((22, 168, 180), 0.5),
                'Turban': ((250, 204, 30), 0.6), 'Turban_Fold': ((228, 46, 136), 0.5),
@@ -359,8 +359,8 @@ def indian(body, face, M, skin):
     out += bare_feet(pre, skin, M['Sole_Dirt'], dirt_m=M['Cement'], thong_m=M['Thong'])
     out += wrapped_turban(pre + '_Turban', M)
     out.append(W.hair(pre + '_Hair', M['Hair'], 'slick', upper=lambda phi: TURBAN_LOW(phi) + 0.012))
-    out += W.mustache(pre + '_Mustache', M['Mustache'], droop=0.004, size=1.35)
-    out += O2._phone_in_hand(pre + '_Phone', M)
+    out += handlebar_moustache(pre + '_Mustache', M['Mustache'])              # v09: curled handlebar (TASK-000896)
+    # v08 (Vadim, TASK-000877): no phone in the hand any more
     return out
 
 
@@ -396,7 +396,7 @@ def uzbek(body, face, M, skin):
     cap, base = O2.baseball_cap(pre + '_Cap', M['Cap'], M['Cap_Peak'])
     out += cap
     out.append(W.hair(pre + '_Hair', M['Hair'], 'buzz', upper=lambda phi: base(phi) + 0.010))
-    out += W.mustache(pre + '_Mustache', M['Mustache'], droop=0.006, size=1.05)
+    out += droopy_moustache_goatee(pre + '_Mustache', M['Mustache'])          # v05: thin droopy + chin beard (TASK-000896)
     out += T._face(skin, lambda head: W.stubble(pre + '_Stubble', M['Stubble'], head, dots=150, seed=23))
     return out
 
@@ -476,7 +476,7 @@ def mexican(body, face, M, skin):
     out += TR2._shoe_pair(pre + '_Boot', M['Boots'], M['Boots_Sole'], point=0.9)
     out += sombrero(pre + '_Sombrero', M)
     out.append(W.hair(pre + '_Hair', M['Hair'], 'buzz', upper=lambda phi: SOMBRERO_BASE(phi) + 0.010))
-    out += W.mustache(pre + '_Mustache', M['Mustache'], droop=0.026, size=1.85)
+    out += horseshoe_moustache(pre + '_Mustache', M['Mustache'])              # v05: bushy horseshoe (TASK-000896)
     return out
 
 
@@ -750,3 +750,41 @@ def arab(body, face, M, skin):
 
 BUILDERS = {'CONSTR_INDIAN': indian, 'CONSTR_UZBEK': uzbek, 'CONSTR_MEXICAN': mexican, 'CONSTR_AFROAMERICAN': afroamerican,
             'CONSTR_ARAB': arab}
+
+
+# ------------------------------------------------------------------ national moustaches (TASK-000896, Vadim: not the same moustache on everybody)
+def _lip_tube(name, line, radii, material):
+    pts = [Vector((x, B.head_surface_y(x, z, 0.004 + radii[i]), z)) for i, (x, z) in enumerate(line)]
+    return C.rigid(G.tube(name, pts, lambda i, n: radii[i], material, seg=10), 'Head')
+
+
+def handlebar_moustache(prefix, material):
+    """Thick glossy handlebar moustache with the tips curled up (the Indian builder)."""
+    out = []
+    line = [(0.004, 1.447), (0.024, 1.448), (0.046, 1.441), (0.066, 1.432), (0.082, 1.438), (0.090, 1.455), (0.084, 1.470), (0.072, 1.466)]
+    radii = [0.0105, 0.0120, 0.0110, 0.0090, 0.0072, 0.0058, 0.0046, 0.0036]
+    for s in (1, -1):
+        out.append(_lip_tube(f'{prefix}_{s}', [(s * x, z) for x, z in line], radii, material))
+    return out
+
+
+def horseshoe_moustache(prefix, material):
+    """Huge bushy horseshoe moustache over the mouth, the ends hanging down to the chin (the Mexican builder)."""
+    out = []
+    line = [(0.004, 1.452), (0.030, 1.450), (0.056, 1.438), (0.074, 1.414), (0.080, 1.382), (0.080, 1.350), (0.077, 1.326)]
+    radii = [0.0140, 0.0150, 0.0145, 0.0130, 0.0115, 0.0100, 0.0075]
+    for s in (1, -1):
+        out.append(_lip_tube(f'{prefix}_{s}', [(s * x, z) for x, z in line], radii, material))
+    return out
+
+
+def droopy_moustache_goatee(prefix, material):
+    """Thin moustache drooping past the mouth corners and a short pointed chin beard (the Uzbek builder)."""
+    out = []
+    line = [(0.004, 1.446), (0.028, 1.443), (0.050, 1.432), (0.062, 1.410), (0.066, 1.386)]
+    radii = [0.0060, 0.0064, 0.0056, 0.0045, 0.0030]
+    for s in (1, -1):
+        out.append(_lip_tube(f'{prefix}_{s}', [(s * x, z) for x, z in line], radii, material))
+    chin = [Vector((0.0, B.head_surface_y(0.0, z, 0.006 + r), z)) for z, r in ((1.372, 0.012), (1.345, 0.014), (1.318, 0.011), (1.296, 0.004))]
+    out.append(C.rigid(G.tube(prefix + '_Goatee', chin, lambda i, n: (0.012, 0.014, 0.011, 0.004)[i], material, seg=10), 'Head'))
+    return out
