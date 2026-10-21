@@ -41,6 +41,11 @@ namespace OnlyVolunteers.Characters.Types
         private const string GrabProfilePath = "Assets/OnlyVolunteers/Map/Data/NpcGrabProfile.asset";
         private const string MoundFbx = "BEACH_BURIED_SandMound_v01.fbx";
         private const float HeavyTriangles = 20000f; // the crowd budget is 12-15k (handoff v02 §11)
+        // Lighter LOD0 derivatives of the heavy types (ArtSource/.../Types_opt_v01/build_types_opt_v01.py): same rig, object
+        // names and materials, hidden faces removed and the outfit decimated within 1.5 mm. A type with an opt FBX there is
+        // imported from it; the source revision stays in ArtSource (and its old copy in Models).
+        private const string OptDir = "ArtSource/Characters/SAUSAGE_BUDDY_01/Types_opt_v01";
+        private const string OptTag = "opt_v01";
 
         // Vadim's approved pool with current revisions (README of SAUSAGE_BUDDY_01, TASK-000506..000545).
         public static readonly (string id, int rev)[] Pool =
@@ -68,7 +73,7 @@ namespace OnlyVolunteers.Characters.Types
 
             // 1. Files (copied once).
             var copied = new List<string>();
-            foreach ((string id, int rev) in Pool) Copy(project, $"{SourceDir}/{id}/{FbxName(id, rev)}", $"{ModelsDir}/{FbxName(id, rev)}", copied);
+            foreach ((string id, int rev) in Pool) Copy(project, SourceFbx(project, id, rev), $"{ModelsDir}/{ModelName(project, id, rev)}", copied);
             Copy(project, $"{SourceDir}/BEACH_BURIED/{MoundFbx}", $"{ModelsDir}/{MoundFbx}", copied);
             foreach (string path in copied) AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
             log.AppendLine($"  copied {copied.Count} FBX into {ModelsDir}");
@@ -78,7 +83,7 @@ namespace OnlyVolunteers.Characters.Types
             foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(BuddyAFbx)) if (o is Avatar a) avatar = a;
             if (avatar == null) throw new InvalidOperationException("Buddy A v04 has no avatar: " + BuddyAFbx);
             int reimported = 0;
-            foreach ((string id, int rev) in Pool) if (ConfigureType($"{ModelsDir}/{FbxName(id, rev)}", avatar)) reimported++;
+            foreach ((string id, int rev) in Pool) if (ConfigureType($"{ModelsDir}/{ModelName(project, id, rev)}", avatar)) reimported++;
             if (ConfigureStatic($"{ModelsDir}/{MoundFbx}")) reimported++;
             log.AppendLine($"  importers set: {reimported} re-imported");
 
@@ -99,7 +104,7 @@ namespace OnlyVolunteers.Characters.Types
                 log.AppendLine("  type                    rev bones  dPos(m) dRot(deg) tris    height  feet(Idle) scale lift props");
                 foreach ((string id, int rev) in Pool)
                 {
-                    string fbx = $"{ModelsDir}/{FbxName(id, rev)}";
+                    string fbx = $"{ModelsDir}/{ModelName(project, id, rev)}";
                     var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbx);
                     if (model == null) { log.AppendLine($"  {id}: MISSING model {fbx}"); continue; }
                     Validation v = ReadValidation(project, id, rev);
@@ -119,7 +124,7 @@ namespace OnlyVolunteers.Characters.Types
                     float scale = v.npc_type != null && v.npc_type.game_scale > 0f ? v.npc_type.game_scale : 1f;
                     float lift = v.grounding_offset_m != null && v.grounding_offset_m.Idle > 0.02f ? v.grounding_offset_m.Idle : 0f;
                     GameObject prefab = BuildPrefab(model, scene, id, controller, avatar, props, scale);
-                    presets[id] = WritePreset(id, rev, v, prefab, fbx, tris, props, scale, lift);
+                    presets[id] = WritePreset(id, rev, v, prefab, SourceFbx(project, id, rev), tris, props, scale, lift);
                     log.AppendLine(Inv($"  {id,-23} v{rev:00} {matched,2}/{refBones.Count} {dPos,7:0.0000} {dRot,7:0.00}  {tris,6} {bounds.size.y,6:0.000} {feet - refFeet,8:+0.000;-0.000} {scale,5:0.00} {lift,4:0.00} {(props ? "hand" : "-")}") +
                                    (tris > HeavyTriangles ? "  HEAVY" : "") + (matched < refBones.Count || dPos > 0.01f || dRot > 1f ? "  RIG DIFFERS" : ""));
                 }
@@ -137,6 +142,106 @@ namespace OnlyVolunteers.Characters.Types
         }
 
         private static string FbxName(string id, int rev) => $"SAUSAGE_BUDDY_{id}_v{rev:00}.fbx";
+        private static string OptName(string id, int rev) => $"SAUSAGE_BUDDY_{id}_v{rev:00}_{OptTag}.fbx";
+        private static bool HasOpt(string project, string id, int rev) => File.Exists(Path.Combine(project, OptDir, OptName(id, rev)));
+        private static string ModelName(string project, string id, int rev) => HasOpt(project, id, rev) ? OptName(id, rev) : FbxName(id, rev);
+        private static string SourceFbx(string project, string id, int rev) =>
+            HasOpt(project, id, rev) ? $"{OptDir}/{OptName(id, rev)}" : $"{SourceDir}/{id}/{FbxName(id, rev)}";
+
+        [MenuItem("Tools/Only Volunteers/Characters/NPC Types v01: Use Optimized Meshes (opt_v01)")]
+        public static void ApplyOptimizedMenu() => Debug.Log(ApplyOptimized());
+
+        /// <summary>Points the existing type prefabs at the opt_v01 meshes without rebuilding them: copies and imports each
+        /// opt FBX like the source FBX, then swaps every SkinnedMeshRenderer's mesh, materials, bones (by name) and bounds
+        /// inside the prefab, so the prefab's objects, components, colliders and file IDs (the scene instances' overrides)
+        /// stay as they are; the preset gets the new source and triangle count. Spawn tables and placements are not touched.</summary>
+        public static string ApplyOptimized()
+        {
+            var log = new StringBuilder("[NpcTypesV01] opt_v01 meshes\n");
+            string project = Path.GetDirectoryName(Application.dataPath);
+            Avatar avatar = null;
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(BuddyAFbx)) if (o is Avatar a) avatar = a;
+            if (avatar == null) throw new InvalidOperationException("Buddy A v04 has no avatar: " + BuddyAFbx);
+            int done = 0, failed = 0;
+            foreach ((string id, int rev) in Pool)
+            {
+                if (!HasOpt(project, id, rev)) continue;
+                string target = $"{ModelsDir}/{OptName(id, rev)}";
+                var copied = new List<string>();
+                Copy(project, $"{OptDir}/{OptName(id, rev)}", target, copied);
+                foreach (string path in copied) AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+                ConfigureType(target, avatar);
+                var model = AssetDatabase.LoadAssetAtPath<GameObject>(target);
+                string prefabPath = $"{PrefabsDir}/SausageBuddy_{id}.prefab";
+                if (model == null || AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) == null)
+                {
+                    log.AppendLine($"  {id}: MISSING {(model == null ? target : prefabPath)}");
+                    failed++;
+                    continue;
+                }
+                var source = new Dictionary<string, SkinnedMeshRenderer>();
+                foreach (SkinnedMeshRenderer smr in model.GetComponentsInChildren<SkinnedMeshRenderer>(true)) source[smr.name] = smr;
+                GameObject root = PrefabUtility.LoadPrefabContents(prefabPath);
+                int before = 0, after = 0;
+                var errors = new List<string>();
+                try
+                {
+                    var byName = new Dictionary<string, Transform>();
+                    foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) if (!byName.ContainsKey(t.name)) byName.Add(t.name, t);
+                    var renderers = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+                    foreach (SkinnedMeshRenderer smr in renderers)
+                        if (!source.ContainsKey(smr.name)) errors.Add($"no {smr.name} in the opt model");
+                    if (renderers.Length != source.Count) errors.Add($"renderers {renderers.Length} vs {source.Count}");
+                    var bones = new Dictionary<SkinnedMeshRenderer, Transform[]>();
+                    foreach (SkinnedMeshRenderer smr in renderers)
+                    {
+                        if (!source.TryGetValue(smr.name, out SkinnedMeshRenderer src)) continue;
+                        var mapped = new Transform[src.bones.Length];
+                        for (int i = 0; i < mapped.Length; i++)
+                            if (src.bones[i] == null || !byName.TryGetValue(src.bones[i].name, out mapped[i])) errors.Add($"{smr.name}: bone {src.bones[i]?.name} missing");
+                        if (src.rootBone != null && !byName.ContainsKey(src.rootBone.name)) errors.Add($"{smr.name}: root bone {src.rootBone.name} missing");
+                        bones[smr] = mapped;
+                    }
+                    if (errors.Count == 0)
+                    {
+                        foreach (SkinnedMeshRenderer smr in renderers)
+                        {
+                            SkinnedMeshRenderer src = source[smr.name];
+                            before += smr.sharedMesh != null ? smr.sharedMesh.triangles.Length / 3 : 0;
+                            smr.sharedMesh = src.sharedMesh;
+                            smr.sharedMaterials = src.sharedMaterials;
+                            smr.bones = bones[smr];
+                            smr.rootBone = src.rootBone != null ? byName[src.rootBone.name] : null;
+                            smr.localBounds = src.localBounds;
+                            after += src.sharedMesh.triangles.Length / 3;
+                        }
+                        PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+                    }
+                }
+                finally
+                {
+                    PrefabUtility.UnloadPrefabContents(root);
+                }
+                if (errors.Count > 0)
+                {
+                    log.AppendLine($"  {id}: NOT CHANGED: {string.Join("; ", errors)}");
+                    failed++;
+                    continue;
+                }
+                var preset = AssetDatabase.LoadAssetAtPath<NpcTypePreset>($"{PresetsDir}/{id}.asset");
+                if (preset != null)
+                {
+                    preset.SourceFbx = SourceFbx(project, id, rev);
+                    preset.Triangles = after;
+                    EditorUtility.SetDirty(preset);
+                }
+                log.AppendLine(Inv($"  {id,-23} v{rev:00} {before,6} -> {after,6} tris  {OptName(id, rev)}"));
+                done++;
+            }
+            AssetDatabase.SaveAssets();
+            log.AppendLine($"  {done} prefabs on opt meshes, {failed} failed");
+            return log.ToString();
+        }
 
         private static void Copy(string project, string source, string target, List<string> copied)
         {
@@ -211,7 +316,7 @@ namespace OnlyVolunteers.Characters.Types
             preset.HandProps = props;
             preset.Triangles = tris;
             preset.HeightM = v.height_m;
-            preset.SourceFbx = $"{SourceDir}/{id}/{FbxName(id, rev)}";
+            preset.SourceFbx = fbx;
             EditorUtility.SetDirty(preset);
             return preset;
         }

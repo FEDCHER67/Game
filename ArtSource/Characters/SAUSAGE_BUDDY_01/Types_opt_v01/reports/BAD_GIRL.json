@@ -1,0 +1,180 @@
+{
+ "type": "BAD_GIRL",
+ "revision": 7,
+ "source": "ArtSource/Characters/SAUSAGE_BUDDY_01/Types/BAD_GIRL/SAUSAGE_BUDDY_BAD_GIRL_v07.blend",
+ "tris_before": {
+  "Body": 4848,
+  "Face": 2128,
+  "Outfit": 13456
+ },
+ "total_before": 20432,
+ "hidden_removed": {
+  "Body": {
+   "faces": 806,
+   "materials_kept_whole": [],
+   "tris_after": 3507
+  },
+  "Outfit": {
+   "faces": 1215,
+   "materials_kept_whole": [],
+   "tris_after": 11283
+  }
+ },
+ "decimation": {
+  "Outfit": {
+   "tris_before": 11283,
+   "tris_after": 11099,
+   "materials": {
+    "BAD_GIRL_Bolero": {
+     "tris": [
+      2070,
+      2068
+     ],
+     "dev_mm": {
+      "p99": 0.0,
+      "p999": 0.83,
+      "max": 1.13,
+      "posed_p99": 0.0,
+      "posed_p999": 0.83
+     },
+     "normal_mean_deg": 0.1,
+     "normal_p98_deg": 0.1,
+     "lost_mm2": 0.0
+    },
+    "BAD_GIRL_Boots": {
+     "tris": [
+      832,
+      764
+     ],
+     "dev_mm": {
+      "p99": 0.16,
+      "p999": 0.25,
+      "max": 0.25,
+      "posed_p99": 0.16,
+      "posed_p999": 0.25
+     },
+     "normal_mean_deg": 0.52,
+     "normal_p98_deg": 7.8,
+     "lost_mm2": 0.0
+    },
+    "BAD_GIRL_Top": {
+     "tris": [
+      750,
+      746
+     ],
+     "dev_mm": {
+      "p99": 0.51,
+      "p999": 1.85,
+      "max": 1.99,
+      "posed_p99": 0.51,
+      "posed_p999": 1.85
+     },
+     "normal_mean_deg": 0.06,
+     "normal_p98_deg": 0.8,
+     "lost_mm2": 0.0
+    },
+    "BAD_GIRL_Boot_Sole": {
+     "tris": [
+      704,
+      646
+     ],
+     "dev_mm": {
+      "p99": 0.25,
+      "p999": 0.36,
+      "max": 0.5,
+      "posed_p99": 0.25,
+      "posed_p999": 0.36
+     },
+     "normal_mean_deg": 0.64,
+     "normal_p98_deg": 7.7,
+     "lost_mm2": 0.0
+    },
+    "BAD_GIRL_Eyeshadow": {
+     "tris": [
+      330,
+      278
+     ],
+     "dev_mm": {
+      "p99": 0.26,
+      "p999": 0.31,
+      "max": 0.32,
+      "posed_p99": 0.26,
+      "posed_p999": 0.31
+     },
+     "normal_mean_deg": 0.27,
+     "normal_p98_deg": 4.5,
+     "lost_mm2": 0.0
+    }
+   }
+  }
+ },
+ "hem_verts": {
+  "Body": 0,
+  "Outfit": 1328
+ },
+ "shading": {
+  "Body": {
+   "corners": 7255,
+   "from_source": 7255
+  },
+  "Outfit": {
+   "corners": 33297,
+   "from_source": 33297
+  }
+ },
+ "weights": {
+  "Body": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 2
+  },
+  "Outfit": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 3
+  }
+ },
+ "tris_after": {
+  "Body": 3507,
+  "Face": 2128,
+  "Outfit": 11099
+ },
+ "total_after": 16734,
+ "seconds": 20.6,
+ "problems": [],
+ "result": "optimised",
+ "outputs": {
+  "blend": "SAUSAGE_BUDDY_BAD_GIRL_v07_opt_v01.blend",
+  "fbx": "SAUSAGE_BUDDY_BAD_GIRL_v07_opt_v01.fbx"
+ },
+ "settings": {
+  "budget_tris": 15000,
+  "tolerance_mm": {
+   "p99": 1.5,
+   "p999": 3.0
+  },
+  "min_gain": 0.1,
+  "normal_mean_deg": 2.0,
+  "normal_p98_deg": 8.0,
+  "small_part_faces": 40,
+  "poses": [
+   "rest",
+   "Idle:1",
+   "Idle:30",
+   "Panic_Run_Loop:1",
+   "Panic_Run_Loop:5",
+   "Panic_Run_Loop:10",
+   "Panic_Run_Loop:14",
+   "Panic_TurnFlee:20",
+   "Panic_TurnFlee:60",
+   "Panic_TurnFlee:120",
+   "TripFall:10",
+   "TripFall:30",
+   "PlayDead_Loop:1",
+   "Hide_Loop:1",
+   "PoliceCall:30",
+   "LookBack_Bonk:20",
+   "FakeSurrender_Flee:20"
+  ]
+ }
+}

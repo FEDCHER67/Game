@@ -1,0 +1,214 @@
+{
+ "type": "OLD_OFFICE",
+ "revision": 4,
+ "source": "ArtSource/Characters/SAUSAGE_BUDDY_01/Types/OLD_OFFICE/SAUSAGE_BUDDY_OLD_OFFICE_v04.blend",
+ "tris_before": {
+  "Body": 5424,
+  "Face": 2128,
+  "Outfit": 8188
+ },
+ "total_before": 15740,
+ "hidden_removed": {
+  "Body": {
+   "faces": 1209,
+   "materials_kept_whole": [],
+   "tris_after": 3358
+  },
+  "Outfit": {
+   "faces": 590,
+   "materials_kept_whole": [
+    "OLD_OFFICE_HairPart"
+   ],
+   "tris_after": 7171
+  }
+ },
+ "decimation": {
+  "Outfit": {
+   "tris_before": 7171,
+   "tris_after": 6757,
+   "materials": {
+    "OLD_OFFICE_Shirt": {
+     "tris": [
+      1684,
+      1658
+     ],
+     "dev_mm": {
+      "p99": 0.78,
+      "p999": 1.39,
+      "max": 1.6,
+      "posed_p99": 0.78,
+      "posed_p999": 1.39
+     },
+     "normal_mean_deg": 0.21,
+     "normal_p98_deg": 2.3,
+     "lost_mm2": 0.0
+    },
+    "OLD_OFFICE_Shoes": {
+     "tris": [
+      832,
+      764
+     ],
+     "dev_mm": {
+      "p99": 0.2,
+      "p999": 0.35,
+      "max": 0.38,
+      "posed_p99": 0.2,
+      "posed_p999": 0.35
+     },
+     "normal_mean_deg": 0.49,
+     "normal_p98_deg": 6.5,
+     "lost_mm2": 0.0
+    },
+    "OLD_OFFICE_Trousers": {
+     "tris": [
+      804,
+      780
+     ],
+     "dev_mm": {
+      "p99": 1.4,
+      "p999": 2.12,
+      "max": 2.14,
+      "posed_p99": 1.4,
+      "posed_p999": 2.12
+     },
+     "normal_mean_deg": 0.13,
+     "normal_p98_deg": 0.7,
+     "lost_mm2": 0.0
+    },
+    "OLD_OFFICE_Hair": {
+     "tris": [
+      766,
+      692
+     ],
+     "dev_mm": {
+      "p99": 0.22,
+      "p999": 0.29,
+      "max": 0.3,
+      "posed_p99": 0.22,
+      "posed_p999": 0.29
+     },
+     "normal_mean_deg": 0.41,
+     "normal_p98_deg": 6.8,
+     "lost_mm2": 0.0
+    },
+    "OLD_OFFICE_Shoe_Sole": {
+     "tris": [
+      584,
+      530
+     ],
+     "dev_mm": {
+      "p99": 0.4,
+      "p999": 0.47,
+      "max": 0.57,
+      "posed_p99": 0.4,
+      "posed_p999": 0.47
+     },
+     "normal_mean_deg": 0.78,
+     "normal_p98_deg": 6.9,
+     "lost_mm2": 0.0
+    },
+    "OLD_OFFICE_Badge": {
+     "tris": [
+      500,
+      436
+     ],
+     "dev_mm": {
+      "p99": 0.38,
+      "p999": 0.71,
+      "max": 0.78,
+      "posed_p99": 0.49,
+      "posed_p999": 0.87
+     },
+     "normal_mean_deg": 0.5,
+     "normal_p98_deg": 5.1,
+     "lost_mm2": 0.0
+    },
+    "OLD_OFFICE_Tie": {
+     "tris": [
+      384,
+      280
+     ],
+     "dev_mm": {
+      "p99": 0.61,
+      "p999": 1.23,
+      "max": 1.23,
+      "posed_p99": 0.61,
+      "posed_p999": 1.23
+     },
+     "normal_mean_deg": 0.88,
+     "normal_p98_deg": 7.7,
+     "lost_mm2": 0.0
+    }
+   }
+  }
+ },
+ "hem_verts": {
+  "Body": 0,
+  "Outfit": 824
+ },
+ "shading": {
+  "Body": {
+   "corners": 6940,
+   "from_source": 6940
+  },
+  "Outfit": {
+   "corners": 20271,
+   "from_source": 20271
+  }
+ },
+ "weights": {
+  "Body": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 2
+  },
+  "Outfit": {
+   "fixed_vertices": 1,
+   "unweighted": 0,
+   "max_influences": 3
+  }
+ },
+ "tris_after": {
+  "Body": 3358,
+  "Face": 2128,
+  "Outfit": 6757
+ },
+ "total_after": 12243,
+ "seconds": 13.8,
+ "problems": [],
+ "result": "optimised",
+ "outputs": {
+  "blend": "SAUSAGE_BUDDY_OLD_OFFICE_v04_opt_v01.blend",
+  "fbx": "SAUSAGE_BUDDY_OLD_OFFICE_v04_opt_v01.fbx"
+ },
+ "settings": {
+  "budget_tris": 15000,
+  "tolerance_mm": {
+   "p99": 1.5,
+   "p999": 3.0
+  },
+  "min_gain": 0.1,
+  "normal_mean_deg": 2.0,
+  "normal_p98_deg": 8.0,
+  "small_part_faces": 40,
+  "poses": [
+   "rest",
+   "Idle:1",
+   "Idle:30",
+   "Panic_Run_Loop:1",
+   "Panic_Run_Loop:5",
+   "Panic_Run_Loop:10",
+   "Panic_Run_Loop:14",
+   "Panic_TurnFlee:20",
+   "Panic_TurnFlee:60",
+   "Panic_TurnFlee:120",
+   "TripFall:10",
+   "TripFall:30",
+   "PlayDead_Loop:1",
+   "Hide_Loop:1",
+   "PoliceCall:30",
+   "LookBack_Bonk:20",
+   "FakeSurrender_Flee:20"
+  ]
+ }
+}
