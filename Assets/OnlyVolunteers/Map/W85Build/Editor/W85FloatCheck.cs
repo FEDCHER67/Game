@@ -176,10 +176,20 @@ namespace OnlyVolunteers.Map.W85
             return false;
         }
 
+        // W86: the map has a second, collider-less terrain (steppe backdrop) - the ground is the terrain with a collider under the point
         static float Ground(Vector3 p)
         {
-            var t = Terrain.activeTerrain;
-            return t ? t.SampleHeight(p) + t.transform.position.y : 0f;
+            Terrain best = null;
+            foreach (var t in Terrain.activeTerrains)
+            {
+                if (!t || !t.GetComponent<TerrainCollider>()) continue;
+                Vector3 o = t.transform.position, s = t.terrainData.size;
+                bool inside = p.x >= o.x && p.z >= o.z && p.x <= o.x + s.x && p.z <= o.z + s.z;
+                if (inside || best == null) best = t;
+                if (inside) break;
+            }
+            if (!best) best = Terrain.activeTerrain;
+            return best ? best.SampleHeight(p) + best.transform.position.y : 0f;
         }
 
         static Transform Building(Transform t)

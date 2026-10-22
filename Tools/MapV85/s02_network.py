@@ -12,6 +12,12 @@ Rules applied here (logged in fixes[] -> docs/reports/MAP_W85_FIXED_BY_LOGIC.md)
    with a straight approach over the last ~15 m; ends that meet nothing must be an approved dead end (gate, KPP, base, bridge);
  - widths: rural asphalt 6.4, village / forest dirt 5.4, Elite stone 4.5, lab drive 4.8, sand ruts 5.0 (v10 §6).
 Output: roads_v85.json, water_v85.json, border_v85.json, features_v85.json (Data/<REV>).
+
+Downtown plan v37 (Map W86, agent A3, 2026-10-22; active when downtown_v85.json is the W86 / v37 file): the city grew 52-60 m north and 54 m
+south, so the north roads meet the NEW top ring: the tunnel keeps its axis but its south portal moves ~74 m up the axis to the new hill foot
+(the old portal is inside block NW0), its approach bends (Bezier, R >= ~20 m) into a straight 26 m T-approach on N0w; the VIEW B serpentine
+and the VIEW C cornice are cut where they reach the ring and bent the same way into T's on N0c / N0e (smooth_join). The beach van track
+to the Elite beach comes from the moved beach file. Nothing else changes here.
 """
 import math
 import os
@@ -103,9 +109,78 @@ def straighten_end(pl, target, axis_dir, L=15.0):
 ROADS = []
 
 
+def smooth_join(pl, target, d, Ls=23.0, Lb=30.0, n=14):
+    """pl runs from its far end towards the city. Cut it at the first point P that comes within Lb of S = target - d * Ls, then a cubic
+    Bezier P -> S (tangent of pl at P, tangent d at S, handles |PS| / 3) and the straight S -> target (v10 §6: right angle, straight approach
+    10-20 m, axis to axis). Returns (kept far part ending at P, joined road P .. target, min radius of the bend m, P)."""
+    S = (target[0] - d[0] * Ls, target[1] - d[1] * Ls)
+    pts = resample([tuple(q) for q in pl], 0.5)
+    k = next((i for i, q in enumerate(pts) if math.dist(q, S) <= Lb), None)
+    if k is None:
+        k = min(range(len(pts)), key=lambda i: math.dist(pts[i], S))
+    P = pts[k]
+    a = pts[max(0, k - 4)]
+    t0 = ((P[0] - a[0]), (P[1] - a[1]))
+    L0 = math.hypot(*t0) or 1.0
+    t0 = (t0[0] / L0, t0[1] / L0)
+    h = math.dist(P, S) / 3.0
+    B = [P, (P[0] + t0[0] * h, P[1] + t0[1] * h), (S[0] - d[0] * h, S[1] - d[1] * h), S]
+    curve = []
+    for i in range(n + 1):
+        u = i / n
+        w = ((1 - u) ** 3, 3 * (1 - u) ** 2 * u, 3 * (1 - u) * u * u, u ** 3)
+        curve.append((sum(w[j] * B[j][0] for j in range(4)), sum(w[j] * B[j][1] for j in range(4))))
+    rmin = 1e9
+    for q0, q1, q2 in zip(curve[:-2], curve[1:-1], curve[2:]):
+        a_ = math.dist(q0, q1)
+        b_ = math.dist(q1, q2)
+        c_ = math.dist(q0, q2)
+        cr = abs((q1[0] - q0[0]) * (q2[1] - q0[1]) - (q1[1] - q0[1]) * (q2[0] - q0[0]))
+        if cr > 1e-9:
+            rmin = min(rmin, a_ * b_ * c_ / (2 * cr))
+    acc, far = 0.0, [tuple(pl[0])]                                         # original vertices up to P (no resampling of the kept part)
+    sP = 0.5 * k
+    for a_, b_ in zip(pl[:-1], pl[1:]):
+        L_ = math.dist(a_, b_)
+        if acc + L_ >= sP - 1e-6:
+            break
+        far.append(tuple(b_))
+        acc += L_
+    far.append(P)
+    return dedupe(far), curve + [tuple(target)], round(rmin, 1), P
+
+
 def add(rid, kind, pts, width, surface, src, **kw):
     pts = dedupe([tuple(map(float, p)) for p in pts])
     ROADS.append(dict(id=rid, kind=kind, surface=surface, width_m=width, source=src, points=[rnd2(p) for p in pts], **kw))
+
+
+VIEWB_POCKET_M = 46.0
+
+
+def view_b_spur(pass_pl):
+    """VIEW B spur polyline (T-join on the pass road near its top -> south shoulder -> one hairpin at the west end of the summit knob -> along
+    the summit ridge) and the turnaround pocket at its end (world m)."""
+    serp = [tuple(p) for p in pass_pl]
+    d, J, i, t = nearest_on(serp, (996.0, 606.0))
+    a, b = serp[i], serp[min(i + 1, len(serp) - 1)]
+    tx, ty = b[0] - a[0], b[1] - a[1]
+    L = math.hypot(tx, ty) or 1.0
+    tx, ty = tx / L, ty / L
+    n = (-ty, tx) if -ty < 0 else (ty, -tx)                                # normal pointing to the west side (the summit)
+    S1 = (J[0] + n[0] * 12.0, J[1] + n[1] * 12.0)                          # 12 m straight perpendicular approach (T-join)
+    sm_ = c.chaikin([S1, (962, 582), (930, 564), (900, 552), (872, 549), (853, 556), (840, 574)], 2)
+    C_, R_ = (840.0, 588.0), 14.0
+    arc = [(C_[0] + R_ * math.cos(a_), C_[1] + R_ * math.sin(a_)) for a_ in np.linspace(-math.pi / 2, -3 * math.pi / 2, 21)]
+    tail = [(854.0, 602.5), (862.0, 603.5)]
+    pl = [J] + sm_ + arc[1:] + tail
+    pc = (872.0, 604.5)
+    poly = [(pc[0] + 11.0 * math.cos(a_), pc[1] + 8.5 * math.sin(a_)) for a_ in np.linspace(0, 2 * math.pi, 28, endpoint=False)]
+    pocket = {'centre': rnd2(pc), 'poly': [rnd2(q) for q in poly], 'size_m': [22.0, 17.0], 'height_m': VIEWB_POCKET_M, 'surface': 'gravel_SK1d',
+              'view': 'open to the south / south-east (city, bay); low stone parapet on the south rim, VIEW B sign',
+              'turnaround': 'van 5.5 x 2.1 m: 3-point turn in 22 x 17 m', 'hairpin': {'centre': list(C_), 'radius_m': R_},
+              'spur_length_m': round(plen(pl), 1)}
+    return pl, pocket
 
 
 def snap_ends():
@@ -150,6 +225,7 @@ def snap_ends():
 def main():
     svg = svg_roads()
     E = {z['id']: z for z in D['downtown']['zones'] if z['kind'] == 'entry'}
+    V37 = str(D['downtown'].get('version', '')).startswith('W86')               # Downtown plan v37 (A3, 22.10)
 
     # 1 main road Hamlet -> Construction -> Downtown west entry (R24), joined to the carriageway edge of street W1
     pl = pick(svg, 'R24_roads', (496, 348), (813, 320))
@@ -191,27 +267,67 @@ def main():
         carriageway_m=6.4, pier_step_m=br.get('pier_step_m', 20.9), ends='fixed')
     # 7 tunnel under hill B with its approaches
     add('tunnel_north_approach', 'rural_asphalt', zline('rough', '04-exit-tunnel'), 6.4, 'asphalt_A5d12', 'rough 04-exit-tunnel (TUN_N)')
-    add('tunnel', 'tunnel', pick(svg, 'R33_tunnel', (748, 649), (872, 492)), 7.0, 'asphalt_A5d12', 'SVG R33_tunnel (TUN axis)', ends='fixed')
+    tun = pick(svg, 'R33_tunnel', (748, 649), (872, 492))
     e = E['05-entry-N-tunnel']
-    pl = pick(svg, 'R24_roads', (872, 492), (880, 442))
-    pl = clip_from(pl, (e['pos'][0], e['pos'][1] + 10), 'before')
-    pl = straighten_end(pl, tuple(e['axis_point']), (0.0, -1.0), 16.0)
-    add('tunnel_south_approach', 'rural_asphalt', pl, 6.4, 'asphalt_A5d12', 'SVG R24 TUN_S + Downtown entry N (tunnel)', dt_entry='05-entry-N-tunnel')
-    fix('tunnel_south_approach', e['axis_point'], 'Выезд из тоннеля приходил на 2,7 м западнее оси улицы Vn — последние 16 м выпрямлены по оси Vn.',
-        'v10 §6: ось боковой дороги доходит до оси главной, прямой подход 10–20 м.')
+    if V37:
+        far, appr, rmin, P = smooth_join(tun, tuple(e['axis_point']), (0.0, -1.0), Ls=26.0, Lb=22.0)
+        cut = plen(tun) - plen(far)
+        add('tunnel', 'tunnel', far, 7.0, 'asphalt_A5d12', 'SVG R33_tunnel (TUN axis), south portal moved up the axis (Downtown v37)', ends='fixed',
+            portal_south=rnd2(P), shortened_m=round(cut, 1))
+        add('tunnel_south_approach', 'rural_asphalt', appr, 6.4, 'asphalt_A5d12', 'tunnel portal -> Downtown v37 entry N-tunnel (T on N0w)',
+            dt_entry='05-entry-N-tunnel', bend_min_radius_m=rmin, straight_m=26.0)
+        fix('tunnel', P, 'Даунтаун v37 вырос на ~50 м на север: старый южный портал тоннеля (871.9, 492.3) внутри квартала NW0. Ось тоннеля та же, '
+                         'южный портал перенесён вверх по оси в (%.1f, %.1f), тоннель короче на %.0f м; выезд — плавный поворот (R мин. %.0f м) и прямой '
+                         'подход 26 м в Т-примыкание к верхней улице N0w (x %.0f).' % (P[0], P[1], cut, rmin, e['axis_point'][0]),
+            'v10 §6: примыкание под прямым углом, прямой подход 10–20 м; рельеф: портал у нового подножия холма B (A1).')
+    else:
+        add('tunnel', 'tunnel', tun, 7.0, 'asphalt_A5d12', 'SVG R33_tunnel (TUN axis)', ends='fixed')
+        pl = pick(svg, 'R24_roads', (872, 492), (880, 442))
+        pl = clip_from(pl, (e['pos'][0], e['pos'][1] + 10), 'before')
+        pl = straighten_end(pl, tuple(e['axis_point']), (0.0, -1.0), 16.0)
+        add('tunnel_south_approach', 'rural_asphalt', pl, 6.4, 'asphalt_A5d12', 'SVG R24 TUN_S + Downtown entry N (tunnel)', dt_entry='05-entry-N-tunnel')
+        fix('tunnel_south_approach', e['axis_point'], 'Выезд из тоннеля приходил на 2,7 м западнее оси улицы Vn — последние 16 м выпрямлены по оси Vn.',
+            'v10 §6: ось боковой дороги доходит до оси главной, прямой подход 10–20 м.')
     # 8 serpentine to VIEW B (12 %, Fedya 18.10) from the ring to the Downtown entry N3
     e = E['05-entry-N-viewB']
     pl = pick(svg, 'R24_roads', (945, 671), (1090, 442))
-    pl = clip_from(pl, (e['pos'][0], e['pos'][1] + 12), 'before')
-    pl = straighten_end(pl, tuple(e['axis_point']), (0.0, -1.0), 15.0)
+    if V37:
+        far, appr, rmin, P = smooth_join(pl, tuple(e['axis_point']), (0.0, -1.0), Ls=23.0, Lb=40.0)
+        pl = far[:-1] + appr
+        fix('serpentine_view_b', P, 'Даунтаун v37: серпантин VIEW B обрезан у нового верхнего кольца и плавно (R мин. %.0f м) заведён в Т-примыкание к N0c '
+                                    '(x %.0f), прямой подход 23 м; старый конец (N3 у OB1) теперь внутри города.' % (rmin, e['axis_point'][0]),
+            'v10 §6: примыкание под прямым углом, прямой подход 10–20 м.')
+    else:
+        pl = clip_from(pl, (e['pos'][0], e['pos'][1] + 12), 'before')
+        pl = straighten_end(pl, tuple(e['axis_point']), (0.0, -1.0), 15.0)
     vb = post((1010, 594))
     add('serpentine_view_b', 'serpentine', pl, 6.4, 'asphalt_A5d12', 'SVG R24 ROAD_S (v85: smooth start at the ring)', dt_entry='05-entry-N-viewB',
         viewpoint=rnd2(vb), max_grade=0.12, berm={'height_m': [1.0, 1.5], 'side': 'outer', 'note': 'v10 §3.2: low earth berm, view open, no 15 m cut'})
+    # 8b VIEW B viewpoint spur (W86, Fedya 22.10 "VIEW B ~+46 m, view to the city and the bay"): the pass road stays low over the saddle;
+    # a dead-end spur leaves it at the pass top (T-join, 12 m straight), climbs <= 12 % along the south shoulder of hill B, turns in ONE
+    # hairpin (R 12.5 m, van 5.5 x 2.1 m) at the west end of the summit knob (on the hill body, ~20 m above the tunnel axis, >= 26 m from
+    # the south portal) and runs east along the summit ridge into a 22 x 17 m turnaround pocket at ~45.5 m, open to the south (city, bay)
+    spur, pocket = view_b_spur(pl)
+    add('view_b_spur', 'serpentine', spur, 5.0, 'asphalt_A5d12', 'W86 VIEW B viewpoint spur (lead 22.10: pass road low, spur up to the crest)',
+        ends_dead='VIEW B viewpoint pocket (turnaround)', max_grade=0.12, climb_to_m=VIEWB_POCKET_M, pocket=pocket,
+        berm={'height_m': [1.0, 1.25], 'side': 'outer', 'note': 'low earth berm with stones on the outer (downhill) side only; none in the hairpin'},
+        notes='climb profile: pass-road height at the T-join + 11.5 % up to the pocket height, then flat (s03 climb_to_m); the hill is shaped to the road '
+              '(bench <= 2-3 m uphill, berm outside)')
+    fix('view_b_spur', pocket['centre'], 'Смотровая VIEW B: перевальная дорога осталась низкой (~17 м), от её верхней точки — тупиковый отворот %.0f м '
+                                         '(≤ 12 %%, один разворот R 12,5 м) на гребень холма B к смотровому карману 22 × 17 м на ~%.1f м с видом на город и бухту'
+        % (pocket['spur_length_m'], VIEWB_POCKET_M), 'Федя 22.10: VIEW B ~+46 м с видом на город и бухту; перевал на 46 м требовал ~700 м дороги и стен')
     # 9 cornice VIEW C: Downtown NE entry -> T into the port road
     e = E['05-entry-NE-viewC']
     pl = pick(svg, 'R24_roads', (1243, 403), (1263, 633))[::-1]                 # from the port T down to Downtown
-    pl = clip_from(pl, (e['pos'][0], e['pos'][1] + 12), 'before')
-    pl = straighten_end(pl, tuple(e['axis_point']), (0.0, -1.0), 15.0)
+    if V37:
+        far, appr, rmin, P = smooth_join(pl, tuple(e['axis_point']), (0.0, -1.0), Ls=23.0, Lb=25.0)
+        pl = far[:-1] + appr
+        fix('cornice_view_c', P, 'Даунтаун v37: начало карниза VIEW C (верх E1) теперь внутри города (квартал NEB / E1); дорога обрезана у верхнего '
+                                 'кольца и плавно (R мин. %.0f м) заведена в Т-примыкание к N0e (x %.0f), прямой подход 23 м.' % (rmin, e['axis_point'][0]),
+            'v10 §6: каждая дорога куда-то ведёт, примыкание под прямым углом.')
+    else:
+        pl = clip_from(pl, (e['pos'][0], e['pos'][1] + 12), 'before')
+        pl = straighten_end(pl, tuple(e['axis_point']), (0.0, -1.0), 15.0)
     cT = zline('port', '06-cornice-T')                                       # last 46 m straightened onto the port road (coast step)
     d0, q0, i0, t0 = nearest_on(pl, cT[0])
     pl = cT[::-1] + pl[i0 + 1:] if math.dist(cT[0], pl[0]) > math.dist(cT[-1], pl[0]) else pl
@@ -317,6 +433,7 @@ def border_and_features():
     feats = {
         'hill_B': {'crest': P([(752, 556), (840, 574), (920, 590), (1000, 586), (1080, 574), (1150, 562)]), 'half_width_m': 58, 'peak_m': 50},
         'view_B': rnd2(post((1010, 594))), 'view_C': rnd2(post((1194, 532))),
+        'view_B_pocket': next((r['pocket'] for r in ROADS if r['id'] == 'view_b_spur'), None),
         'tunnel_axis': next(r['points'] for r in ROADS if r['id'] == 'tunnel'),
         'land_bridges': [{'centre': rnd2(post(p)), 'rx_m': 14, 'ry_m': 15} for p in [(484, 349), (488, 572)]],
         'small_ridge': {'poly': P([(436, 826), (466, 818), (498, 822), (528, 836), (552, 856), (570, 878), (574, 896), (558, 906), (530, 904), (502, 896), (478, 886), (452, 877), (436, 872)]),

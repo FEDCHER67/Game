@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_JetSki",
+  "family": "Water",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    -0.0,
+    -0.0
+  ],
+  "lod0": {
+    "triangles": 408,
+    "vertices": 224,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -0.551,
+      -1.525,
+      0.0
+    ],
+    "bounds_max": [
+      0.551,
+      1.525,
+      1.179
+    ],
+    "size_xyz_m": [
+      1.103,
+      3.05,
+      1.179
+    ]
+  },
+  "lod1": {
+    "triangles": 176,
+    "vertices": 102,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -0.559,
+      -1.525,
+      0.0
+    ],
+    "bounds_max": [
+      0.559,
+      1.525,
+      1.175
+    ],
+    "size_xyz_m": [
+      1.118,
+      3.05,
+      1.175
+    ]
+  },
+  "lod1_ratio": 0.431,
+  "triangle_budget_lod0": 3000,
+  "data_box_target_xyz": [
+    1.2,
+    3.2,
+    1.1
+  ],
+  "material": "MW86_Water",
+  "textures": [
+    "MW86_Water_A.png",
+    "MW86_Water_B.png",
+    "MW86_Water_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_JetSki_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\jet_ski\\MW86_JetSki_v01.blend"
+  },
+  "notes": "Jet ski parked on the sand (kind jet_ski, data 3.2 x 1.2 x 1.1, long axis on data X).",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

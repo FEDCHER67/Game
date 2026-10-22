@@ -1,0 +1,212 @@
+{
+ "type": "VIP_SPEEDSTER",
+ "revision": 1,
+ "source": "ArtSource/Characters/SAUSAGE_BUDDY_01/Types/VIP_SPEEDSTER/SAUSAGE_BUDDY_VIP_SPEEDSTER_v01.blend",
+ "tris_before": {
+  "Body": 5424,
+  "Face": 2128,
+  "Outfit": 15474
+ },
+ "total_before": 23026,
+ "hidden_removed": {
+  "Body": {
+   "faces": 897,
+   "materials_kept_whole": [],
+   "tris_after": 3966
+  },
+  "Outfit": {
+   "faces": 1021,
+   "materials_kept_whole": [],
+   "tris_after": 13812
+  }
+ },
+ "decimation": {
+  "Outfit": {
+   "tris_before": 13812,
+   "tris_after": 13304,
+   "materials": {
+    "VIP_SPEEDSTER_Hair": {
+     "tris": [
+      8165,
+      8043
+     ],
+     "dev_mm": {
+      "p99": 0.38,
+      "p999": 0.95,
+      "max": 1.83,
+      "posed_p99": 0.38,
+      "posed_p999": 0.95
+     },
+     "normal_mean_deg": 0.61,
+     "normal_p98_deg": 1.0,
+     "lost_mm2": 0.0
+    },
+    "VIP_SPEEDSTER_Jersey": {
+     "tris": [
+      1088,
+      1054
+     ],
+     "dev_mm": {
+      "p99": 1.23,
+      "p999": 1.95,
+      "max": 2.41,
+      "posed_p99": 1.23,
+      "posed_p999": 1.95
+     },
+     "normal_mean_deg": 0.25,
+     "normal_p98_deg": 3.1,
+     "lost_mm2": 0.0
+    },
+    "VIP_SPEEDSTER_Shoe_Upper": {
+     "tris": [
+      840,
+      720
+     ],
+     "dev_mm": {
+      "p99": 0.57,
+      "p999": 0.8,
+      "max": 0.86,
+      "posed_p99": 0.57,
+      "posed_p999": 0.8
+     },
+     "normal_mean_deg": 0.72,
+     "normal_p98_deg": 7.7,
+     "lost_mm2": 0.0
+    },
+    "VIP_SPEEDSTER_Shoe_Sole": {
+     "tris": [
+      584,
+      492
+     ],
+     "dev_mm": {
+      "p99": 1.5,
+      "p999": 2.2,
+      "max": 2.21,
+      "posed_p99": 1.5,
+      "posed_p999": 2.2
+     },
+     "normal_mean_deg": 0.96,
+     "normal_p98_deg": 6.5,
+     "lost_mm2": 0.0
+    },
+    "VIP_SPEEDSTER_Hair_Fade": {
+     "tris": [
+      388,
+      382
+     ],
+     "dev_mm": {
+      "p99": 0.0,
+      "p999": 0.0,
+      "max": 0.0,
+      "posed_p99": 0.0,
+      "posed_p999": 0.0
+     },
+     "normal_mean_deg": 0.23,
+     "normal_p98_deg": 1.3,
+     "lost_mm2": 0.0
+    },
+    "VIP_SPEEDSTER_Shoe_Accent": {
+     "tris": [
+      365,
+      237
+     ],
+     "dev_mm": {
+      "p99": 0.53,
+      "p999": 0.93,
+      "max": 0.96,
+      "posed_p99": 0.53,
+      "posed_p999": 0.93
+     },
+     "normal_mean_deg": 0.71,
+     "normal_p98_deg": 5.2,
+     "lost_mm2": 0.0
+    },
+    "VIP_SPEEDSTER_Shorts": {
+     "tris": [
+      348,
+      342
+     ],
+     "dev_mm": {
+      "p99": 1.44,
+      "p999": 2.72,
+      "max": 2.77,
+      "posed_p99": 1.49,
+      "posed_p999": 2.72
+     },
+     "normal_mean_deg": 0.16,
+     "normal_p98_deg": 1.2,
+     "lost_mm2": 0.0
+    }
+   }
+  }
+ },
+ "hem_verts": {
+  "Body": 0,
+  "Outfit": 892
+ },
+ "shading": {
+  "Body": {
+   "corners": 8172,
+   "from_source": 8172
+  },
+  "Outfit": {
+   "corners": 39912,
+   "from_source": 39912
+  }
+ },
+ "weights": {
+  "Body": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 2
+  },
+  "Outfit": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 4
+  }
+ },
+ "tris_after": {
+  "Body": 3966,
+  "Face": 2128,
+  "Outfit": 13304
+ },
+ "total_after": 19398,
+ "seconds": 20.2,
+ "problems": [],
+ "result": "optimised",
+ "outputs": {
+  "blend": "SAUSAGE_BUDDY_VIP_SPEEDSTER_v01_opt_v01.blend",
+  "fbx": "SAUSAGE_BUDDY_VIP_SPEEDSTER_v01_opt_v01.fbx"
+ },
+ "settings": {
+  "budget_tris": 15000,
+  "tolerance_mm": {
+   "p99": 1.5,
+   "p999": 3.0
+  },
+  "min_gain": 0.1,
+  "normal_mean_deg": 2.0,
+  "normal_p98_deg": 8.0,
+  "small_part_faces": 40,
+  "poses": [
+   "rest",
+   "Idle:1",
+   "Idle:30",
+   "Panic_Run_Loop:1",
+   "Panic_Run_Loop:5",
+   "Panic_Run_Loop:10",
+   "Panic_Run_Loop:14",
+   "Panic_TurnFlee:20",
+   "Panic_TurnFlee:60",
+   "Panic_TurnFlee:120",
+   "TripFall:10",
+   "TripFall:30",
+   "PlayDead_Loop:1",
+   "Hide_Loop:1",
+   "PoliceCall:30",
+   "LookBack_Bonk:20",
+   "FakeSurrender_Flee:20"
+  ]
+ }
+}

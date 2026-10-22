@@ -48,11 +48,13 @@ namespace OnlyVolunteers.Characters.Types
         private const string OptTag = "opt_v01";
 
         // Vadim's approved pool with current revisions (README of SAUSAGE_BUDDY_01, TASK-000506..000545).
+        // W86 (Vadim 976100c7, TASK-000859..000897): CONSTR_INDIAN v08 / MEXICAN v05 / UZBEK v05 replace v07 / v04 / v04;
+        // new HAMLET_MUZHIK and OLD_POPKING walk (Hamlet / Downtown tables); the rest of that push is ImportOnly below.
         public static readonly (string id, int rev)[] Pool =
         {
             ("FOREST_OD_JUNKIE", 1), ("FOREST_STASHER", 3),
             ("HAMLET_GRANNY", 7), ("HAMLET_SHEPHERD", 6), ("HAMLET_BODYBUILDER", 4), ("HAMLET_BOXERS_GRANDPA", 5),
-            ("CONSTR_INDIAN", 7), ("CONSTR_UZBEK", 4), ("CONSTR_MEXICAN", 4), ("CONSTR_AFROAMERICAN", 5), ("CONSTR_ARAB", 5),
+            ("CONSTR_INDIAN", 8), ("CONSTR_UZBEK", 5), ("CONSTR_MEXICAN", 5), ("CONSTR_AFROAMERICAN", 5), ("CONSTR_ARAB", 5),
             ("BAD_GOPNIK", 5), ("BAD_RAPPER", 10), ("BAD_HUSTLER", 4), ("BAD_DRUNK", 4), ("BAD_GIRL", 7), ("BAD_BOMZH", 1),
             ("BAD_BOMZHIHA", 2), ("BAD_VAPER", 2), ("BAD_ALTGIRL", 14),
             ("OLD_RAPPER", 1), ("OLD_STREAMER", 9), ("OLD_STUDENT", 8), ("OLD_OFFICE", 4), ("OLD_FITNESS", 5), ("OLD_COURIER", 5),
@@ -60,6 +62,25 @@ namespace OnlyVolunteers.Characters.Types
             ("PROM_FOREMAN", 4), ("PROM_SAILOR", 3),
             ("BEACH_CORN", 3), ("BEACH_CASTLE", 1), ("BEACH_SUNBURN", 2), ("BEACH_LIFEGUARD", 3), ("BEACH_DETECTOR", 3),
             ("BEACH_NUDIST", 1), ("BEACH_BURIED", 1),
+            ("HAMLET_MUZHIK", 1), ("OLD_POPKING", 1),
+            ("HAMLET_HUNTER_GRANDPA", 1), ("POLICE_THIN", 2), ("POLICE_FAT", 2), ("FBI_AGENT", 1), ("ARMY_SOLDIER", 1),
+            ("TRAMDURO", 1), ("VIP_BEASTMAN", 1), ("VIP_SPEEDSTER", 1), ("VIP_BLINDFOLD", 1),
+        };
+
+        /// <summary>Types with a prefab and a preset but no spawn-table row (W86): their systems do not exist yet (hunter
+        /// responder, police crews, Elite gate trap / FBI, island garrison, Tramduro finale, VIP special orders). BAD_ALTGIRL
+        /// left the Rough table (Vadim TASK-000883: VIP only); her prefab and preset stay.</summary>
+        public static readonly string[] ImportOnly =
+        {
+            "HAMLET_HUNTER_GRANDPA", "POLICE_THIN", "POLICE_FAT", "FBI_AGENT", "ARMY_SOLDIER", "TRAMDURO",
+            "VIP_BEASTMAN", "VIP_SPEEDSTER", "VIP_BLINDFOLD", "BAD_ALTGIRL",
+        };
+
+        /// <summary>The 14 models of Vadim's commit 976100c7, imported by ImportW86 from their opt_v01 derivatives.</summary>
+        public static readonly string[] W86Types =
+        {
+            "CONSTR_INDIAN", "CONSTR_MEXICAN", "CONSTR_UZBEK", "HAMLET_MUZHIK", "OLD_POPKING", "HAMLET_HUNTER_GRANDPA",
+            "POLICE_THIN", "POLICE_FAT", "FBI_AGENT", "ARMY_SOLDIER", "TRAMDURO", "VIP_BEASTMAN", "VIP_SPEEDSTER", "VIP_BLINDFOLD",
         };
 
         [MenuItem("Tools/Only Volunteers/Characters/NPC Types v01: Import, Presets, Spawn Tables")]
@@ -104,29 +125,8 @@ namespace OnlyVolunteers.Characters.Types
                 log.AppendLine("  type                    rev bones  dPos(m) dRot(deg) tris    height  feet(Idle) scale lift props");
                 foreach ((string id, int rev) in Pool)
                 {
-                    string fbx = $"{ModelsDir}/{ModelName(project, id, rev)}";
-                    var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbx);
-                    if (model == null) { log.AppendLine($"  {id}: MISSING model {fbx}"); continue; }
-                    Validation v = ReadValidation(project, id, rev);
-                    var instance = (GameObject)PrefabUtility.InstantiatePrefab(model, scene);
-                    if (idle != null) idle.SampleAnimation(instance, 0f);
-                    Compare(refBones, Bones(instance), out int matched, out float dPos, out float dRot);
-                    int tris = 0;
-                    var bounds = new Bounds();
-                    bool any = false, props = false;
-                    foreach (SkinnedMeshRenderer smr in instance.GetComponentsInChildren<SkinnedMeshRenderer>(true))
-                    {
-                        if (smr.sharedMesh != null) tris += smr.sharedMesh.triangles.Length / 3;
-                        if (any) bounds.Encapsulate(smr.bounds); else { bounds = smr.bounds; any = true; }
-                        if (smr.name.StartsWith("Props_") && smr.name.EndsWith("Hand")) props = true;
-                    }
-                    float feet = FeetUnderIdle((GameObject)PrefabUtility.InstantiatePrefab(model, scene), idle);
-                    float scale = v.npc_type != null && v.npc_type.game_scale > 0f ? v.npc_type.game_scale : 1f;
-                    float lift = v.grounding_offset_m != null && v.grounding_offset_m.Idle > 0.02f ? v.grounding_offset_m.Idle : 0f;
-                    GameObject prefab = BuildPrefab(model, scene, id, controller, avatar, props, scale);
-                    presets[id] = WritePreset(id, rev, v, prefab, SourceFbx(project, id, rev), tris, props, scale, lift);
-                    log.AppendLine(Inv($"  {id,-23} v{rev:00} {matched,2}/{refBones.Count} {dPos,7:0.0000} {dRot,7:0.00}  {tris,6} {bounds.size.y,6:0.000} {feet - refFeet,8:+0.000;-0.000} {scale,5:0.00} {lift,4:0.00} {(props ? "hand" : "-")}") +
-                                   (tris > HeavyTriangles ? "  HEAVY" : "") + (matched < refBones.Count || dPos > 0.01f || dRot > 1f ? "  RIG DIFFERS" : ""));
+                    NpcTypePreset preset = ImportOne(project, id, rev, scene, refBones, refFeet, idle, controller, avatar, false, log);
+                    if (preset != null) presets[id] = preset;
                 }
             }
             finally
@@ -139,6 +139,179 @@ namespace OnlyVolunteers.Characters.Types
             AssetDatabase.SaveAssets();
             log.AppendLine($"  {presets.Count} presets in {PresetsDir}, spawn tables {TablesPath}");
             return log.ToString();
+        }
+
+        // One type: checks against Buddy A, prefab, preset; one log row. keepPrefab: an existing prefab is not rebuilt but
+        // pointed at the new model (UpdatePrefab: the prefab's objects and file IDs stay, so scene instances keep their
+        // overrides); only when the model's renderers cannot be matched is it rebuilt.
+        private static NpcTypePreset ImportOne(string project, string id, int rev, Scene scene, Dictionary<string, Transform> refBones, float refFeet,
+            AnimationClip idle, AnimatorController controller, Avatar avatar, bool keepPrefab, StringBuilder log)
+        {
+            string fbx = $"{ModelsDir}/{ModelName(project, id, rev)}";
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbx);
+            if (model == null) { log.AppendLine($"  {id}: MISSING model {fbx}"); return null; }
+            Validation v = ReadValidation(project, id, rev);
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(model, scene);
+            if (idle != null) idle.SampleAnimation(instance, 0f);
+            Compare(refBones, Bones(instance), out int matched, out float dPos, out float dRot);
+            int tris = 0;
+            var bounds = new Bounds();
+            bool any = false, props = false;
+            foreach (SkinnedMeshRenderer smr in instance.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                if (smr.sharedMesh != null) tris += smr.sharedMesh.triangles.Length / 3;
+                if (any) bounds.Encapsulate(smr.bounds); else { bounds = smr.bounds; any = true; }
+                if (smr.name.StartsWith("Props_") && smr.name.EndsWith("Hand")) props = true;
+            }
+            float feet = FeetUnderIdle((GameObject)PrefabUtility.InstantiatePrefab(model, scene), idle);
+            float scale = v.npc_type != null && v.npc_type.game_scale > 0f ? v.npc_type.game_scale : 1f;
+            float lift = v.grounding_offset_m != null && v.grounding_offset_m.Idle > 0.02f ? v.grounding_offset_m.Idle : 0f;
+            string prefabPath = $"{PrefabsDir}/SausageBuddy_{id}.prefab";
+            string how = "built";
+            GameObject prefab = null;
+            if (keepPrefab && AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) != null)
+            {
+                string error = UpdatePrefab(prefabPath, model, props, scale, out string changes);
+                if (error == null) { prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath); how = "updated in place" + changes; }
+                else how = "REBUILT (" + error + ")";
+            }
+            if (prefab == null) prefab = BuildPrefab(model, scene, id, controller, avatar, props, scale);
+            NpcTypePreset preset = WritePreset(id, rev, v, prefab, SourceFbx(project, id, rev), tris, props, scale, lift);
+            log.AppendLine(Inv($"  {id,-23} v{rev:00} {matched,2}/{refBones.Count} {dPos,7:0.0000} {dRot,7:0.00}  {tris,6} {bounds.size.y,6:0.000} {feet - refFeet,8:+0.000;-0.000} {scale,5:0.00} {lift,4:0.00} {(props ? "hand" : "-")}") +
+                           (tris > HeavyTriangles ? "  HEAVY" : "") + (matched < refBones.Count || dPos > 0.01f || dRot > 1f ? "  RIG DIFFERS" : "") +
+                           (keepPrefab ? "  prefab " + how : ""));
+            return preset;
+        }
+
+        [MenuItem("Tools/Only Volunteers/Characters/NPC Types v01: Import W86 additions (Vadim 976100c7)")]
+        public static void ImportW86Menu() => Debug.Log(ImportW86());
+
+        /// <summary>W86: only the 14 models of Vadim's commit 976100c7 (W86Types), from their opt_v01 derivatives: copied into
+        /// Models under their new names (the older revisions' files stay), importers set like the pool's, the CONSTR updates'
+        /// prefabs re-pointed in place, new prefabs and presets for the rest, then the spawn tables rewritten (WriteTables:
+        /// MUZHIK in the Hamlet, POPKING in Downtown, BAD_ALTGIRL out of Rough; ImportOnly types get no rows). The other 35
+        /// types' prefabs and presets are not touched.</summary>
+        public static string ImportW86()
+        {
+            var log = new StringBuilder("[NpcTypesV01] W86 additions (Vadim 976100c7)\n");
+            string project = Path.GetDirectoryName(Application.dataPath);
+            foreach (string dir in new[] { ModelsDir, PrefabsDir, PresetsDir }) EnsureFolder(dir);
+            var revs = new Dictionary<string, int>();
+            foreach ((string id, int rev) in Pool) revs[id] = rev;
+            var copied = new List<string>();
+            foreach (string id in W86Types)
+            {
+                if (!HasOpt(project, id, revs[id])) log.AppendLine($"  {id}: WARNING no opt_v01 FBX, the source revision is used");
+                Copy(project, SourceFbx(project, id, revs[id]), $"{ModelsDir}/{ModelName(project, id, revs[id])}", copied);
+            }
+            foreach (string path in copied) AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+            log.AppendLine($"  copied {copied.Count} FBX into {ModelsDir}");
+            Avatar avatar = null;
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(BuddyAFbx)) if (o is Avatar a) avatar = a;
+            if (avatar == null) throw new InvalidOperationException("Buddy A v04 has no avatar: " + BuddyAFbx);
+            int reimported = 0;
+            foreach (string id in W86Types) if (ConfigureType($"{ModelsDir}/{ModelName(project, id, revs[id])}", avatar)) reimported++;
+            log.AppendLine($"  importers set: {reimported} re-imported");
+
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
+            GameObject buddyA = AssetDatabase.LoadAssetAtPath<GameObject>(BuddyAFbx);
+            AnimationClip idle = null;
+            foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(BuddyAFbx)) if (o is AnimationClip c && c.name == "Idle") idle = c;
+            var presets = new Dictionary<string, NpcTypePreset>();
+            foreach ((string id, int _) in Pool)
+            {
+                var existing = AssetDatabase.LoadAssetAtPath<NpcTypePreset>($"{PresetsDir}/{id}.asset");
+                if (existing != null) presets[id] = existing;
+            }
+            Scene scene = EditorSceneManager.NewPreviewScene();
+            try
+            {
+                var refInstance = (GameObject)PrefabUtility.InstantiatePrefab(buddyA, scene);
+                if (idle != null) idle.SampleAnimation(refInstance, 0f);
+                Dictionary<string, Transform> refBones = Bones(refInstance);
+                float refFeet = FeetUnderIdle((GameObject)PrefabUtility.InstantiatePrefab(buddyA, scene), idle);
+                log.AppendLine(Inv($"  Buddy A v04 under its Idle: lowest vertex {refFeet:0.000} m"));
+                log.AppendLine("  type                    rev bones  dPos(m) dRot(deg) tris    height  feet(Idle) scale lift props");
+                foreach (string id in W86Types)
+                {
+                    NpcTypePreset preset = ImportOne(project, id, revs[id], scene, refBones, refFeet, idle, controller, avatar, true, log);
+                    if (preset != null) presets[id] = preset;
+                }
+            }
+            finally
+            {
+                EditorSceneManager.ClosePreviewScene(scene);
+            }
+            WriteTables(presets, AssetDatabase.LoadAssetAtPath<GameObject>($"{ModelsDir}/{MoundFbx}"));
+            AssetDatabase.SaveAssets();
+            var tables = AssetDatabase.LoadAssetAtPath<NpcSpawnTables>(TablesPath);
+            foreach (NpcSpawnTables.District d in tables.Districts)
+            {
+                var names = new List<string>();
+                foreach (NpcSpawnTables.Entry e in d.Entries) names.Add(e.Type != null ? e.Type.TypeId : "null");
+                log.AppendLine($"  table {d.Id}: {(names.Count > 0 ? string.Join(", ", names) : "-")}");
+            }
+            log.AppendLine($"  import only (no rows): {string.Join(", ", ImportOnly)}");
+            return log.ToString();
+        }
+
+        // Re-points an existing type prefab at a new revision's model without rebuilding it (as ApplyOptimized does):
+        // same-named skinned renderers get the new mesh, materials, bones (by name) and bounds; a Props_* renderer the new
+        // model no longer has is removed; NpcHeldProps follows the props; the root scale follows game_scale. Null = saved;
+        // otherwise the reason it could not (a renderer only the new model has, a bone missing) and nothing is saved.
+        private static string UpdatePrefab(string prefabPath, GameObject model, bool props, float scale, out string changes)
+        {
+            changes = "";
+            var source = new Dictionary<string, SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer smr in model.GetComponentsInChildren<SkinnedMeshRenderer>(true)) source[smr.name] = smr;
+            GameObject root = PrefabUtility.LoadPrefabContents(prefabPath);
+            try
+            {
+                var byName = new Dictionary<string, Transform>();
+                foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) if (!byName.ContainsKey(t.name)) byName.Add(t.name, t);
+                var renderers = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+                var have = new HashSet<string>();
+                var drop = new List<SkinnedMeshRenderer>();
+                var errors = new List<string>();
+                foreach (SkinnedMeshRenderer smr in renderers)
+                {
+                    have.Add(smr.name);
+                    if (source.ContainsKey(smr.name)) continue;
+                    if (smr.name.StartsWith("Props_")) drop.Add(smr); else errors.Add($"no {smr.name} in the new model");
+                }
+                foreach (string n in source.Keys) if (!have.Contains(n)) errors.Add($"{n} only in the new model");
+                var bones = new Dictionary<SkinnedMeshRenderer, Transform[]>();
+                foreach (SkinnedMeshRenderer smr in renderers)
+                {
+                    if (!source.TryGetValue(smr.name, out SkinnedMeshRenderer src)) continue;
+                    var mapped = new Transform[src.bones.Length];
+                    for (int i = 0; i < mapped.Length; i++)
+                        if (src.bones[i] == null || !byName.TryGetValue(src.bones[i].name, out mapped[i])) errors.Add($"{smr.name}: bone {src.bones[i]?.name} missing");
+                    if (src.rootBone != null && !byName.ContainsKey(src.rootBone.name)) errors.Add($"{smr.name}: root bone {src.rootBone.name} missing");
+                    bones[smr] = mapped;
+                }
+                if (errors.Count > 0) return string.Join("; ", errors);
+                foreach (SkinnedMeshRenderer smr in renderers)
+                {
+                    if (!source.TryGetValue(smr.name, out SkinnedMeshRenderer src)) continue;
+                    smr.sharedMesh = src.sharedMesh;
+                    smr.sharedMaterials = src.sharedMaterials;
+                    smr.bones = bones[smr];
+                    smr.rootBone = src.rootBone != null ? byName[src.rootBone.name] : null;
+                    smr.localBounds = src.localBounds;
+                }
+                foreach (SkinnedMeshRenderer smr in drop) { changes += $", removed {smr.name}"; Object.DestroyImmediate(smr.gameObject); }
+                bool hasHeld = root.TryGetComponent(out NpcHeldProps held);
+                if (props && !hasHeld) { root.AddComponent<NpcHeldProps>(); changes += ", + NpcHeldProps"; }
+                else if (!props && hasHeld) { Object.DestroyImmediate(held); changes += ", - NpcHeldProps"; }
+                if ((root.transform.localScale - Vector3.one * scale).sqrMagnitude > 1e-8f) { root.transform.localScale = Vector3.one * scale; changes += Inv($", scale {scale:0.00}"); }
+                PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+                return null;
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
         }
 
         private static string FbxName(string id, int rev) => $"SAUSAGE_BUDDY_{id}_v{rev:00}.fbx";
@@ -343,14 +516,16 @@ namespace OnlyVolunteers.Characters.Types
             tables.Districts = new List<NpcSpawnTables.District>
             {
                 D("forest", none, ("FOREST_OD_JUNKIE", 1f, false), ("FOREST_STASHER", 1f, false)),
+                // W86: + HAMLET_MUZHIK (README Hamlet row), + OLD_POPKING (Downtown street NPC, "not VIP", spec 5б),
+                // BAD_ALTGIRL out of Rough (Vadim TASK-000883: VIP only). ImportOnly types have no rows.
                 D("hamlet", new[] { "village" }, ("HAMLET_GRANNY", 1f, false), ("HAMLET_SHEPHERD", 1f, false), ("HAMLET_BOXERS_GRANDPA", 1f, false),
-                    ("HAMLET_BODYBUILDER", 1f, true)),
+                    ("HAMLET_BODYBUILDER", 1f, true), ("HAMLET_MUZHIK", 1f, false)),
                 D("construction", new[] { "transition" }, ("CONSTR_INDIAN", 1f, false), ("CONSTR_UZBEK", 1f, false), ("CONSTR_MEXICAN", 1f, false),
                     ("CONSTR_AFROAMERICAN", 1f, false), ("CONSTR_ARAB", 1f, false)),
                 D("rough", new[] { "residential" }, ("BAD_GOPNIK", 1.5f, false), ("BAD_DRUNK", 1.5f, false), ("BAD_RAPPER", 1f, false), ("BAD_HUSTLER", 1f, false),
-                    ("BAD_GIRL", 1f, false), ("BAD_BOMZH", 1f, false), ("BAD_BOMZHIHA", 1f, false), ("BAD_VAPER", 1f, false), ("BAD_ALTGIRL", 1f, false)),
+                    ("BAD_GIRL", 1f, false), ("BAD_BOMZH", 1f, false), ("BAD_BOMZHIHA", 1f, false), ("BAD_VAPER", 1f, false)),
                 D("downtown", new[] { "old_town" }, ("OLD_RAPPER", 1f, false), ("OLD_STREAMER", 1f, false), ("OLD_STUDENT", 1f, false), ("OLD_OFFICE", 1f, false),
-                    ("OLD_FITNESS", 1f, false), ("OLD_COURIER", 1f, false), ("OLD_BUSINESSMAN", 1f, false), ("OLD_KAREN", 1f, false)),
+                    ("OLD_FITNESS", 1f, false), ("OLD_COURIER", 1f, false), ("OLD_BUSINESSMAN", 1f, false), ("OLD_KAREN", 1f, false), ("OLD_POPKING", 1f, false)),
                 D("port", new[] { "industrial" }, ("PROM_FOREMAN", 1f, false), ("PROM_SAILOR", 1f, false)),
                 D("beach", none, ("BEACH_CORN", 1f, false), ("BEACH_SUNBURN", 1f, false), ("BEACH_LIFEGUARD", 1f, false), ("BEACH_NUDIST", 1f, false)),
                 D("elite", none),

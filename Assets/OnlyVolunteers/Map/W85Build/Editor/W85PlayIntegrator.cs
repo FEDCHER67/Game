@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using FishNet.Object;
 using OnlyVolunteers.Audio;
+using OnlyVolunteers.Buyers.Runtime;
 using OnlyVolunteers.Capture;
 using OnlyVolunteers.Characters.Types;
 using OnlyVolunteers.Map.Crowd;
@@ -38,6 +39,8 @@ namespace OnlyVolunteers.Map.W85
         public const string SourceScene = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity";
         const string MapScene = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Build_v01.unity";
         const string PlayScene = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_v01.unity";
+        public static string MapSceneOf(string ver) => $"Assets/OnlyVolunteers/Scenes/Map/Map_W85_Build_{ver}.unity";
+        public static string PlaySceneOf(string ver) => $"Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_{ver}.unity";
         const string HutName = "B_02-A-BASE", HutDistrict = "District_hamlet", I10Hut = "MapLook_v19_StyleV3/Buildings/B_02_B02";
         const string Shed = "[Capture] Base B02 — operating shed", PaintStation = "G20 Grandpa's paint station — B02 hut";
         const string CrowdDistrict = "hamlet";
@@ -57,6 +60,16 @@ namespace OnlyVolunteers.Map.W85
             Debug.Log(Make(MapScene, PlayScene, "W85"));
         }
 
+        // W86: the play scene of the data v02 map (Map_W85_Build_v02 -> Map_W85_Play_v02); same steps, own side files, own saves.
+        [MenuItem("OnlyVolunteers/Map/W86 Make Play scene (v02)")]
+        static void MakeMenuV02()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Debug.Log(Make(MapSceneOf("v02"), PlaySceneOf("v02"), "W85", "v02"));
+        }
+
+        public static string MakeV02() => Make(MapSceneOf("v02"), PlaySceneOf("v02"), "W85", "v02");
+
         sealed class Group
         {
             public string Name;
@@ -68,10 +81,13 @@ namespace OnlyVolunteers.Map.W85
             public Bounds Local;                          // colliders in the root's frame (overlap test)
         }
 
-        public static string Make(string mapScenePath, string playScenePath, string mapTag)
+        public static string Make(string mapScenePath, string playScenePath, string mapTag) => Make(mapScenePath, playScenePath, mapTag, "v01");
+
+        // ver = the map data / generated version (v01 W85, v02 W86): map data, WaterData and the side files of the play scene follow it.
+        public static string Make(string mapScenePath, string playScenePath, string mapTag, string ver)
         {
             Log.Clear();
-            Note($"[W85Play] {mapScenePath} -> {playScenePath} ({mapTag})");
+            Note($"[W85Play] {mapScenePath} -> {playScenePath} ({mapTag}, data {ver})");
             if (EditorApplication.isPlaying) return Fail("leave Play mode first");
             if (!File.Exists(mapScenePath)) return Fail("no map scene " + mapScenePath);
             if (!File.Exists(SourceScene)) return Fail("no source scene " + SourceScene);
@@ -85,11 +101,12 @@ namespace OnlyVolunteers.Map.W85
             if (!EditorSceneManager.SaveScene(scene, playScenePath)) return Fail("could not save " + playScenePath);
             var mapRoots = scene.GetRootGameObjects();
             Transform hut = FindHut(mapRoots);
-            Terrain terrain = mapRoots.SelectMany(g => g.GetComponentsInChildren<Terrain>(true)).FirstOrDefault();
+            // the map terrain = the one with a collider (W86: the steppe backdrop is a second, collider-less terrain)
+            Terrain terrain = mapRoots.SelectMany(g => g.GetComponentsInChildren<Terrain>(true)).OrderBy(t => t.GetComponent<TerrainCollider>() ? 0 : 1).FirstOrDefault();
             MapHeightSampler sampler = mapRoots.SelectMany(g => g.GetComponentsInChildren<MapHeightSampler>(true)).FirstOrDefault();
             if (sampler == null && terrain != null) { sampler = terrain.gameObject.AddComponent<MapHeightSampler>(); sampler.Terrain = terrain; Note("map had no MapHeightSampler: added one on " + terrain.name); }
             var mapCameras = mapRoots.SelectMany(g => g.GetComponentsInChildren<Camera>(true)).Where(c => c.CompareTag("MainCamera")).ToList();
-            string dataDir = DataDir(mapTag, out string districtFile);
+            string dataDir = DataDir(mapTag, ver, out string districtFile);
             var district = districtFile != null ? MiniJson.Parse(File.ReadAllText(districtFile)) as Dictionary<string, object> : null;
             Note(districtFile != null ? "map data: " + districtFile : "missing: Hamlet district JSON under Map/" + mapTag + "Build/Data (crowd loops and van pad need it)");
             Vector2[] pad = ZonePoly(district, "BASE-PAD"), apron = ZonePoly(district, "BASE-TURN");
@@ -227,6 +244,10 @@ namespace OnlyVolunteers.Map.W85
             }
             Physics.SyncTransforms();
             foreach (var grp in groups) ClearInside(scene, grp.Root, grp.Local, carriedRoots, terrain, GroundNew, grp.Name);
+            // W86 integration (T1 T23 a / T24 a): grandpa's operating shed + paint table in the T1 materials, cube UVs in metres / 2 m
+            foreach (string n in new[] { Shed, PaintStation }) if (carried.TryGetValue(n, out var tg)) Note(T1Retexture(tg, sideDir));
+            // W86: F1-F8 teleports (GreyboxTripMeter on the carried van) re-derived from the map data; i10's points were v19 places
+            if (vanGo != null) Note(W85Teleports.Apply(vanGo, dataDir, GroundNew, carriedRoots));
             if (vanGo != null)
             {
                 var vb = vanGo.GetComponentsInChildren<Collider>(true).Where(c => !c.isTrigger).Select(c => c.bounds).ToArray();
@@ -256,26 +277,29 @@ namespace OnlyVolunteers.Map.W85
             if (carried.TryGetValue("Crowd", out var crowd2) && crowd2.TryGetComponent(out CrowdDirector director))
             {
                 var tables = AssetDatabase.LoadAssetAtPath<NpcSpawnTables>(NpcTypesImportV01.TablesPath);
-                var data = WriteCrowd(sideDir, mapTag, district, dataDir, pad, i10Crowd, tables);
+                var data = WriteCrowd(sideDir, mapTag, ver, district, dataDir, pad, i10Crowd, tables);
                 if (data != null) director.Data = data;
                 else Note("missing: Hamlet streets in the map data; the crowd keeps the i10 file (v19 coordinates)");
                 director.Sampler = sampler;
                 if (tables != null) Note($"NPC types: {NpcTypesImportV01.AddTypeTemplates(director, tables, true)} type templates added, spawn tables {NpcTypesImportV01.TablesPath}");
                 else Note("missing: " + NpcTypesImportV01.TablesPath);
+                // W86: the tables' idle placements (buried / castle / detector / lounger / pull-up bar) have no spawner yet
+                if (tables != null && tables.Placements.Count > 0)
+                    Note($"not wired: {tables.Placements.Count} NPC placements in the tables ({string.Join(", ", tables.Placements.Select(p => p.Type != null ? p.Type.TypeId : "?"))}): no placement spawner exists (CrowdDirector reads only the district rows); their types walk via the tables or not at all");
                 // FPS (lead, 21.10): distance culling of far walkers (renderers + animator off beyond ~190 m, CullUpdateTransforms closer)
                 if (!director.GetComponent<W85CrowdCull>()) director.gameObject.AddComponent<W85CrowdCull>();
                 EditorUtility.SetDirty(director);
             }
 
             // 6. WaterQuery -> the map's WaterData (i10 wires it through the ambience player's scene data, WaterOverride).
-            var water = AssetDatabase.LoadAssetAtPath<WaterData>($"Assets/OnlyVolunteers/Map/{mapTag}Build/Generated/v01/{mapTag}_WaterData_v01.asset");
-            if (water == null)
+            var water = AssetDatabase.LoadAssetAtPath<WaterData>($"Assets/OnlyVolunteers/Map/{mapTag}Build/Generated/{ver}/{mapTag}_WaterData_{ver}.asset");
+            if (water == null && AssetDatabase.IsValidFolder($"Assets/OnlyVolunteers/Map/{mapTag}Build/Generated/{ver}"))
             {
-                string guid = AssetDatabase.FindAssets("t:WaterData", new[] { $"Assets/OnlyVolunteers/Map/{mapTag}Build" }).FirstOrDefault();
+                string guid = AssetDatabase.FindAssets("t:WaterData", new[] { $"Assets/OnlyVolunteers/Map/{mapTag}Build/Generated/{ver}" }).FirstOrDefault();
                 if (guid != null) water = AssetDatabase.LoadAssetAtPath<WaterData>(AssetDatabase.GUIDToAssetPath(guid));
             }
             if (water != null) Note($"water: {AssetDatabase.GetAssetPath(water)}: " + string.Join(", ", water.Areas.GroupBy(a => a.Kind).Select(g => g.Key + " " + g.Count())) + (water.Areas.Any(a => a.Kind == WaterKind.River || a.Kind == WaterKind.Lake || a.Kind == WaterKind.Canal) ? "" : " (WARNING: no River/Lake/Canal for body disposal)"));
-            else Note($"missing: map WaterData (Map/{mapTag}Build/Generated/v01/{mapTag}_WaterData_v01.asset); body disposal falls back to Resources Water_latest");
+            else Note($"missing: map WaterData (Map/{mapTag}Build/Generated/{ver}/{mapTag}_WaterData_{ver}.asset); body disposal falls back to Resources Water_latest");
             if (carried.TryGetValue(Ambience, out var ambGo) && ambGo.TryGetComponent(out AmbiencePlayer amb))
             {
                 var data = amb.SceneData != null ? Object.Instantiate(amb.SceneData) : ScriptableObject.CreateInstance<AmbienceData>();
@@ -284,7 +308,7 @@ namespace OnlyVolunteers.Map.W85
                 data.Districts = Array.Empty<AmbienceData.District>(); data.BlendBounds = Array.Empty<Vector4>(); data.DistrictBlendMetres = 0f;
                 data.Spots = Array.Empty<AmbienceData.Spot>(); data.Coastlines = Array.Empty<AmbienceData.Coastline>();
                 data.Fountains = Array.Empty<Vector3>(); data.Offices = Array.Empty<Vector3>();
-                string path = $"{sideDir}/Ambience_{mapTag}_play_v01.asset";
+                string path = $"{sideDir}/Ambience_{mapTag}_play_{ver}.asset";
                 AssetDatabase.DeleteAsset(path); AssetDatabase.CreateAsset(data, path);
                 amb.SceneData = data; ambGo.name = $"Ambience_{mapTag}_play (WaterQuery = map water)";
                 EditorUtility.SetDirty(amb);
@@ -304,11 +328,11 @@ namespace OnlyVolunteers.Map.W85
             // 8. Saves of this map apart from i10's (release builds; the editor slot is fixed in CaptureDirector).
             if (carried.TryGetValue("[Capture] Stage A director", out var dirGo) && dirGo.TryGetComponent(out CaptureDirector cd))
             {
-                cd.SaveFileName = $"capture_stageA_{mapTag}_v01.json";
+                cd.SaveFileName = $"capture_stageA_{mapTag}_{ver}.json";                 // per map data: v01 saves never load on v02
                 EditorUtility.SetDirty(cd);
                 // editor sessions: own slot too (CaptureTestHooks.SaveSlot override, set before CaptureDirector starts) — lead, 21.10
                 var slot = dirGo.GetComponent<W85EditorSaveSlot>() ?? dirGo.AddComponent<W85EditorSaveSlot>();
-                slot.EditorSlot = $"capture_stageA_editor_{mapTag}.json";
+                slot.EditorSlot = ver == "v01" ? $"capture_stageA_editor_{mapTag}.json" : $"capture_stageA_editor_{mapTag}_{ver}.json";
                 Note($"capture director: table {Name(cd.TablePrefab)} at {(cd.TableSpawn ? F(cd.TableSpawn.position) : "missing: TableSpawn")}, pawn {Name(cd.PawnNetworkObject)}, tuning {Name(cd.Tuning)}, body bag {Name(cd.BodyBagPrefab)}, LoadOnStart {cd.LoadOnStart}, autosave {cd.AutosaveSeconds} s, save file {cd.SaveFileName}");
             }
 
@@ -320,6 +344,15 @@ namespace OnlyVolunteers.Map.W85
                         try { removed += GameObjectUtility.RemoveMonoBehavioursWithMissingScript(t.gameObject); }
                         catch (Exception e) { Note("could not remove a missing script on " + PathOf(t) + ": " + e.Message); }
             if (removed > 0) Note($"removed {removed} missing-script component(s) carried from i10");
+
+            // 9b. W86 sale (toggle FirstBuyerCrate): the first buyer's wide wooden crate beside the operating shed (SALES SG-D27).
+            Physics.SyncTransforms();
+            if (!FirstBuyerCrate) Note("buyer crate: off (W85PlayIntegrator.FirstBuyerCrate = false)");
+            else if (carried.TryGetValue(Shed, out var shedGo)) Note(PlaceBuyerCrate(scene, shedGo.transform, pad, apron, GroundNew, sideDir));
+            else Note("missing: the operating shed; no buyer crate");
+
+            // 9c. W86: this play scene first in Build Settings (Shift+K "new game" reloads the active scene by its build index).
+            if (ver != "v01") Note(BuildSettingsFirst(playScenePath));
 
             // 10. Save, then FishNet scene ids for this scene path (force: unique, valid), save again.
             EditorSceneManager.MarkSceneDirty(scene);
@@ -335,13 +368,197 @@ namespace OnlyVolunteers.Map.W85
             return Log.ToString();
         }
 
+        static readonly Dictionary<string, string> T1Swap = new()
+        {
+            ["Capture_Shed_Concrete_v01"] = "T1_T23_floor", ["Capture_Shed_Plank_v01"] = "T1_T23a_planks", ["Capture_Shed_Roof_v01"] = "T1_T23a_roof",
+            ["Capture_Shed_Tile_v01"] = "T1_T23_tiles", ["Capture_Shed_Wood_v01"] = "T1_T23_wood", ["G20_OldWood"] = "T1_T24a_table", ["G20_Tin"] = "T1_T24_tin",
+        };
+        static string T1Retexture(GameObject root, string sideDir)
+        {
+            int n = 0, meshes = 0;
+            var cache = new Dictionary<string, Mesh>();
+            foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))
+            {
+                var mats = r.sharedMaterials; bool hit = false;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    if (!mats[i] || !T1Swap.TryGetValue(mats[i].name, out string t1)) continue;
+                    var m = AssetDatabase.LoadAssetAtPath<Material>("Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Materials/" + t1 + ".mat");
+                    if (m) { mats[i] = m; hit = true; }
+                }
+                if (!hit) continue;
+                r.sharedMaterials = mats; n++;
+                var mf = r.GetComponent<MeshFilter>();
+                if (mf && mf.sharedMesh && mf.sharedMesh.name == "Cube")
+                {   // the primitive stretches 0..1 over each face: metre UVs (2 m tile) for this box size
+                    Vector3 sc = r.transform.lossyScale;
+                    string key = $"{Mathf.Abs(sc.x):0.00}_{Mathf.Abs(sc.y):0.00}_{Mathf.Abs(sc.z):0.00}";
+                    if (!cache.TryGetValue(key, out var mesh))
+                    {
+                        mesh = Object.Instantiate(mf.sharedMesh); mesh.name = "T1box_" + key;
+                        var v = mesh.vertices; var nn = mesh.normals; var uv = new Vector2[v.Length];
+                        for (int i = 0; i < v.Length; i++)
+                        {
+                            Vector3 q = Vector3.Scale(v[i], new Vector3(Mathf.Abs(sc.x), Mathf.Abs(sc.y), Mathf.Abs(sc.z))) / 2f;
+                            uv[i] = Mathf.Abs(nn[i].y) > .5f ? new Vector2(q.x, q.z) : Mathf.Abs(nn[i].x) > .5f ? new Vector2(q.z, q.y) : new Vector2(q.x, q.y);
+                        }
+                        mesh.uv = uv;
+                        string path = $"{sideDir}/T1box_{key.Replace('.', 'p')}.asset";
+                        AssetDatabase.DeleteAsset(path); AssetDatabase.CreateAsset(mesh, path);
+                        cache[key] = mesh; meshes++;
+                    }
+                    mf.sharedMesh = mesh;
+                }
+            }
+            return $"T1 retexture {root.name}: {n} renderers, {meshes} metre-UV box meshes";
+        }
+
+        // ------------------------------------------------------------------ W86 sale: the first buyer's crate
+        /// <summary>W86 toggle (reversible): true = the play scene gets the first buyer's crate at base 2 (FirstBuyerCrateV01:
+        /// an organ laid on it is bought at the catalogue price into the inventory cash). false = the next Make leaves it
+        /// out; in an existing play scene switch the "[Sale] ..." object (or the component's SaleEnabled) off.</summary>
+        public static bool FirstBuyerCrate = true;
+        public const string CrateName = "[Sale] First buyer crate (SALES SG-D27, W86)";
+        static readonly Vector3 CrateSize = new(1.4f, 0.72f, 0.8f);          // a wide wooden crate: length, height, depth (m)
+
+        /// <summary>Re-places the crate in the open play scene (not saved): for a check without a full Make.</summary>
+        public static string PlaceBuyerCrateInOpenScene(string mapTag, string ver)
+        {
+            Log.Clear();
+            var scene = SceneManager.GetActiveScene();
+            var roots = scene.GetRootGameObjects();
+            var shed = roots.FirstOrDefault(g => g.name == Shed);
+            if (shed == null) return "missing: " + Shed + " in " + scene.path;
+            DataDir(mapTag, ver, out string districtFile);
+            var district = districtFile != null ? MiniJson.Parse(File.ReadAllText(districtFile)) as Dictionary<string, object> : null;
+            Terrain terrain = roots.SelectMany(g => g.GetComponentsInChildren<Terrain>(true)).OrderBy(t => t.GetComponent<TerrainCollider>() ? 0 : 1).FirstOrDefault();
+            MapHeightSampler sampler = roots.SelectMany(g => g.GetComponentsInChildren<MapHeightSampler>(true)).FirstOrDefault();
+            var skip = new HashSet<Transform>(roots.Where(g => Carry.Contains(g.name)).Select(g => g.transform));
+            string sideDir = scene.path.Substring(0, scene.path.Length - ".unity".Length);
+            Physics.SyncTransforms();
+            return PlaceBuyerCrate(scene, shed.transform, ZonePoly(district, "BASE-PAD"), ZonePoly(district, "BASE-TURN"),
+                (x, z) => Ground(scene, sampler, terrain, skip, x, z), sideDir);
+        }
+
+        // Outside a solid shed wall (a "*wall*" box collider at least crate-long), the wall facing the van pad first; the
+        // crate's long side along the wall, 0.2 m off it. A spot is taken when the crate stays off the van pad / turning
+        // apron (0.3 m), stands on ground no steeper than 0.25 m across, and its box hits no other collider above the ground.
+        static string PlaceBuyerCrate(Scene scene, Transform shed, Vector2[] pad, Vector2[] apron, Func<float, float, float> ground, string sideDir)
+        {
+            foreach (var old in scene.GetRootGameObjects().Where(g => g.name == CrateName).ToArray()) Object.DestroyImmediate(old);
+            var shedCols = shed.GetComponentsInChildren<Collider>(true).Where(c => !c.isTrigger).ToArray();
+            if (shedCols.Length == 0) return "missing: colliders on the shed; no buyer crate";
+            Bounds all = shedCols[0].bounds; foreach (var c in shedCols) all.Encapsulate(c.bounds);
+            Vector3 centre = new(all.center.x, 0f, all.center.z);
+            Vector3 toPad = pad != null ? Centre3(pad) - centre : shed.forward; toPad.y = 0f; toPad.Normalize();
+            var cands = new List<(float score, Vector3 pos, Quaternion rot, string wall)>();
+            foreach (var box in shedCols.OfType<BoxCollider>())
+            {
+                if (box.name.IndexOf("wall", StringComparison.OrdinalIgnoreCase) < 0) continue;
+                Vector3 s = Vector3.Scale(box.size, box.transform.lossyScale);
+                bool thinX = Mathf.Abs(s.x) < Mathf.Abs(s.z);
+                float length = Mathf.Abs(thinX ? s.z : s.x), thick = Mathf.Abs(thinX ? s.x : s.z);
+                if (length < CrateSize.x + .4f) continue;
+                Vector3 wc = box.transform.TransformPoint(box.center);
+                Vector3 across = box.transform.rotation * (thinX ? Vector3.right : Vector3.forward); across.y = 0f; across.Normalize();
+                if (Vector3.Dot(across, new Vector3(wc.x, 0f, wc.z) - centre) < 0f) across = -across;   // outward
+                Vector3 p = wc + across * (thick * .5f + .2f + CrateSize.z * .5f);
+                // along the wall: from its pad-side end (seen from the van) back to its middle, every 0.2 m
+                Vector3 along = Vector3.Cross(Vector3.up, across); if (Vector3.Dot(along, toPad) < 0f) along = -along;
+                float slack = (length - CrateSize.x) * .5f - .1f;
+                for (float o = slack; o >= -.01f; o -= .2f)
+                {
+                    Vector3 q = p + along * Mathf.Max(0f, o);
+                    cands.Add((Vector3.Dot(across, toPad) + o * .01f, new Vector3(q.x, 0f, q.z), Quaternion.LookRotation(across, Vector3.up), box.name));
+                }
+            }
+            var rejected = new List<string>();
+            var noted = new HashSet<string>();
+            foreach (var cand in cands.OrderByDescending(k => k.score))
+            {
+                var corners = new List<Vector3>();
+                for (int k = 0; k < 4; k++) corners.Add(cand.pos + cand.rot * new Vector3(((k & 1) == 0 ? -.5f : .5f) * CrateSize.x, 0f, ((k & 2) == 0 ? -.5f : .5f) * CrateSize.z));
+                if (corners.Concat(new[] { cand.pos }).Any(q => new[] { pad, apron }.Any(poly => poly != null && InsidePoly(poly, Plan(q), .3f)))) { if (noted.Add(cand.wall)) rejected.Add(cand.wall + ": on the van pad/apron"); continue; }
+                var gys = corners.Select(q => ground(q.x, q.z)).ToArray();
+                if (gys.Max() - gys.Min() > .25f) { if (noted.Add(cand.wall)) rejected.Add(cand.wall + $": ground slope {gys.Max() - gys.Min():0.00} m"); continue; }
+                Vector3 at = new(cand.pos.x, gys.Average() - .03f, cand.pos.z);
+                var hits = Physics.OverlapBox(at + Vector3.up * (CrateSize.y * .5f + .1f), CrateSize * .5f - new Vector3(.02f, .08f, .02f), cand.rot, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)
+                    .Where(c => c.gameObject.scene == scene && !(c is TerrainCollider) && !c.transform.IsChildOf(shed) && c.bounds.max.y > ground(c.bounds.center.x, c.bounds.center.z) + .3f).ToArray();
+                if (hits.Length > 0) { if (noted.Add(cand.wall)) rejected.Add(cand.wall + ": hits " + PathOf(hits[0].transform)); continue; }
+                var crate = BuildCrate(scene, at, cand.rot, sideDir);
+                return $"buyer crate: {CrateName} at {F(at)} yaw {cand.rot.eulerAngles.y:0.#}, outside the shed's {cand.wall}" +
+                       (rejected.Count > 0 ? " (skipped: " + string.Join("; ", rejected) + ")" : "") +
+                       $"; sale zone {F(crate.ZoneWorldCenter)}, FirstBuyerCrateV01 SaleEnabled {crate.SaleEnabled}";
+            }
+            return "WARNING: no clear spot for the buyer crate beside the shed walls" + (rejected.Count > 0 ? " (" + string.Join("; ", rejected) + ")" : " (no wall colliders)");
+        }
+
+        static FirstBuyerCrateV01 BuildCrate(Scene scene, Vector3 at, Quaternion rot, string sideDir)
+        {
+            const string T1 = "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Materials/";
+            var planks = AssetDatabase.LoadAssetAtPath<Material>(T1 + "T1_T23a_planks.mat");
+            var wood = AssetDatabase.LoadAssetAtPath<Material>(T1 + "T1_T23_wood.mat") ?? planks;
+            var root = new GameObject(CrateName);
+            SceneManager.MoveGameObjectToScene(root, scene);
+            root.transform.SetPositionAndRotation(at, rot);
+            Vector3 sz = CrateSize;
+            var cache = new Dictionary<string, Mesh>();
+            void Part(string name, Vector3 centre, Vector3 size, Material mat)
+            {
+                var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Object.DestroyImmediate(go.GetComponent<Collider>());
+                go.name = name;
+                go.transform.SetParent(root.transform, false);
+                go.transform.localPosition = centre; go.transform.localScale = size;
+                var mf = go.GetComponent<MeshFilter>();
+                string key = $"{size.x:0.00}_{size.y:0.00}_{size.z:0.00}";
+                if (!cache.TryGetValue(key, out var mesh))
+                {   // metre UVs (2 m tile), as the shed's T1 boxes
+                    mesh = Object.Instantiate(mf.sharedMesh); mesh.name = "CrateBox_" + key;
+                    var v = mesh.vertices; var nn = mesh.normals; var uv = new Vector2[v.Length];
+                    for (int i = 0; i < v.Length; i++)
+                    {
+                        Vector3 q = Vector3.Scale(v[i], size) / 2f;
+                        uv[i] = Mathf.Abs(nn[i].y) > .5f ? new Vector2(q.x, q.z) : Mathf.Abs(nn[i].x) > .5f ? new Vector2(q.z, q.y) : new Vector2(q.x, q.y);
+                    }
+                    mesh.uv = uv;
+                    string path = $"{sideDir}/CrateBox_{key.Replace('.', 'p')}.asset";
+                    AssetDatabase.DeleteAsset(path); AssetDatabase.CreateAsset(mesh, path);
+                    cache[key] = mesh;
+                }
+                mf.sharedMesh = mesh;
+                if (mat != null) go.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            }
+            Part("Body", new Vector3(0f, sz.y * .5f - .02f, 0f), new Vector3(sz.x - .06f, sz.y - .04f, sz.z - .06f), planks);
+            Part("Lid", new Vector3(0f, sz.y - .025f, 0f), new Vector3(sz.x, .05f, sz.z), wood);
+            for (int k = 0; k < 4; k++)
+                Part("Corner batten " + k, new Vector3(((k & 1) == 0 ? -.5f : .5f) * (sz.x - .08f), sz.y * .5f - .02f, ((k & 2) == 0 ? -.5f : .5f) * (sz.z - .08f)), new Vector3(.09f, sz.y - .04f, .09f), wood);
+            Part("Skid front", new Vector3(0f, .03f, -.5f * (sz.z - .14f)), new Vector3(sz.x - .02f, .06f, .1f), wood);
+            Part("Skid back", new Vector3(0f, .03f, .5f * (sz.z - .14f)), new Vector3(sz.x - .02f, .06f, .1f), wood);
+            var col = root.AddComponent<BoxCollider>();
+            col.center = new Vector3(0f, sz.y * .5f, 0f); col.size = sz;
+            var crate = root.AddComponent<FirstBuyerCrateV01>();
+            crate.ZoneCenter = new Vector3(0f, sz.y + .3f, 0f);
+            crate.ZoneSize = new Vector3(sz.x + .1f, .7f, sz.z + .1f);
+            EditorUtility.SetDirty(root);
+            return crate;
+        }
+
+        static string BuildSettingsFirst(string scenePath)
+        {
+            var list = EditorBuildSettings.scenes.Where(s => s.path != scenePath).ToList();
+            list.Insert(0, new EditorBuildSettingsScene(scenePath, true));
+            EditorBuildSettings.scenes = list.ToArray();
+            return "build settings: " + string.Join(", ", list.Select(s => Path.GetFileNameWithoutExtension(s.path) + (s.enabled ? "" : " (off)"))) + " (this play scene first)";
+        }
+
         // ------------------------------------------------------------------ crowd file
         // G44 phase 2 (lead, 21.10): the crowd walks in every inhabited district of the map, each with its district id = the id of the
         // G44 spawn tables (hamlet, rough, downtown, construction, beach, port, forest), so Vadim's NPC types appear where they live.
         // Densities = i10's per district (village 3/2, residential 14/14, old_town 12/14, transition 6/5, beach 8/4, industrial 5/3, forest 2/2).
         sealed class CrowdSpec { public string Id, NameRu, Profile = "town_walker"; public int Day, Evening; public List<(string id, Vector2[] pts)> Lines = new(); }
 
-        static TextAsset WriteCrowd(string sideDir, string mapTag, Dictionary<string, object> district, string dataDir, Vector2[] pad, TextAsset i10Crowd, NpcSpawnTables tables)
+        static TextAsset WriteCrowd(string sideDir, string mapTag, string ver, Dictionary<string, object> district, string dataDir, Vector2[] pad, TextAsset i10Crowd, NpcSpawnTables tables)
         {
             var specs = new List<CrowdSpec>();
             var hamlet = new CrowdSpec { Id = CrowdDistrict, NameRu = "Хутор", Day = 3, Evening = 2 };
@@ -463,11 +680,11 @@ namespace OnlyVolunteers.Map.W85
                 summary.Add($"{s.Id} {keepLoops.Count} loops / {keepEnds.Count} spawns ({s.Day}/{s.Evening})");
             }
             var sbAll = new StringBuilder();
-            sbAll.Append("{\n  \"schema_version\": \"1.0\",\n  \"revision\": \"").Append(mapTag).Append("_play_v01_districts\",\n");
+            sbAll.Append("{\n  \"schema_version\": \"1.0\",\n  \"revision\": \"").Append(mapTag).Append("_play_").Append(ver).Append("_districts\",\n");
             sbAll.Append("  \"generator\": \"W85PlayIntegrator: out-and-back loops on the streets / tracks / sidewalks of every inhabited district\",\n");
             sbAll.Append("  \"coordinates\": {\"unit\": \"metre\", \"x\": \"east\", \"y\": \"north\", \"unity_mapping\": \"(x, terrain_height, y)\"},\n");
             sbAll.Append("  \"districts\": [").Append(dists).Append("],\n  \"routes\": [").Append(routes).Append("\n  ],\n  \"spawn_despawn_points\": [").Append(spawns).Append("\n  ],\n  \"connections\": [").Append(conns).Append("\n  ]\n}\n");
-            string path = $"{sideDir}/crowd_{mapTag}_play_v01.json";
+            string path = $"{sideDir}/crowd_{mapTag}_play_{ver}.json";
             File.WriteAllText(path, sbAll.ToString(), new UTF8Encoding(false));
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
             var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
@@ -646,11 +863,17 @@ namespace OnlyVolunteers.Map.W85
         }
 
         // ------------------------------------------------------------------ data
-        static string DataDir(string mapTag, out string districtFile)
+        static string DataDir(string mapTag, string ver, out string districtFile)
         {
             districtFile = null;
             string root = $"Assets/OnlyVolunteers/Map/{mapTag}Build/Data";
             if (!Directory.Exists(root)) return null;
+            string own = root + "/" + ver;                                      // the version the map was built from
+            if (Directory.Exists(own + "/districts"))
+            {
+                string f0 = Directory.GetFiles(own + "/districts", "hamlet_*.json").FirstOrDefault();
+                if (f0 != null) { districtFile = f0.Replace('\\', '/'); return own; }
+            }
             foreach (string dir in Directory.GetDirectories(root, "v*").OrderByDescending(d => int.TryParse(Path.GetFileName(d).Substring(1), out int v) ? v : -1))
             {
                 string f = Directory.Exists(dir + "/districts") ? Directory.GetFiles(dir + "/districts", "hamlet_*.json").FirstOrDefault() : null;

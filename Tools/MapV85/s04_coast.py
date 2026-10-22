@@ -15,6 +15,11 @@ Authority (handoff v10 §0-§1, §5, §6, §7.6, §7.9, §7.10; v02 §5, §8.6, 
           Bridge = real bridge on piers (v10 §5): axis of the drawn bridge, cut to the shorelines measured on the render.
 Outputs: Data/<REV>/districts/{beach,port,tramduro}_v85.json (DISTRICT_SCHEMA.md), out_<REV>/check_{beach,port,tramduro}.png
 (preview v85 crop x3). Run: python s04_coast.py (deterministic, ~20 s).
+
+REV != v01 (Map W86, agent A3, 2026-10-22, Downtown plan v37, Vadim: "beach one-to-one from v85, only 54 m lower - the city grew up and
+down, beach the same size"): every beach object keeps its v85 layout and is moved by beach_dy(x): -54 m for world x 790-1280 (the city
+beach), smooth taper to 0 at x 700 (sand arc at the Quiet Valley rocks) and x 1400 (the Elite beach stays where it is; the van rut track
+runs diagonally between them, as drawn on v37). bpost = common.post + beach_dy. beach_outline / new_coast feed downtown_v37_land.json.
 """
 import json
 import math
@@ -24,7 +29,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage
 
-from common import (MAP_FULL, MAP_PREVIEW, REF, ROOT, WORK, area, ccw, chaikin, contour, h01, nearest_on, plen, points_of,
+from common import (MAP_FULL, MAP_PREVIEW, REF, REV, ROOT, WORK, area, ccw, chaikin, contour, h01, nearest_on, plen, points_of,
                     post, resample, rnd2, rrect, save_json, svg_tags, svg_text, u2w, attr)
 
 Image.MAX_IMAGE_PIXELS = None
@@ -224,15 +229,73 @@ UMB_KINDS = [('umbrella_towel', 12), ('lounger_1', 12), ('umbrella_2_loungers', 
              ('umbrella_3_loungers', 2)]                                 # layout v06 umbrella_sets kinds u0/l1/u2/l2/u1/u3 = 68
 
 
+BEACH_DY = 0.0 if REV == 'v01' else -54.0       # Downtown plan v37: the city beach 54 m further south (same layout)
+SHIFT_X = (700.0, 790.0, 1280.0, 1400.0)          # world x: taper in, full shift, taper out (Elite beach unchanged)
+
+
+def beach_dy(x):
+    """World dy of the v37 beach move at world x (0 for REV v01)."""
+    if not BEACH_DY:
+        return 0.0
+    a, b, c, d = SHIFT_X
+    if x <= a or x >= d:
+        return 0.0
+    if x < b:
+        t = (x - a) / (b - a)
+        return BEACH_DY * t * t * (3 - 2 * t)
+    if x <= c:
+        return BEACH_DY
+    t = (x - c) / (d - c)
+    return BEACH_DY * (1 - t * t * (3 - 2 * t))
+
+
+def bpost(p):
+    q = post(p)
+    return (q[0], q[1] + beach_dy(q[0]))
+
+
+post0 = post                                      # v85 position (render residuals are measured where the beach is DRAWN)
+
+
 def P(p):
-    return post(p)
+    return bpost(p)
 
 
 def PL(pts):
-    return [rnd2(post(p)) for p in pts]
+    return [rnd2(bpost(p)) for p in pts]
+
+
+def new_coast(step=4.0, x0=690.0, x1=1520.0):
+    """Sea edge of the beach after the move (world polyline, west -> east)."""
+    cb = chaikin(COAST_B, 3)
+    out = []
+    for q in cb:
+        w = bpost(q)
+        if x0 <= w[0] <= x1 and (not out or w[0] - out[-1][0] >= step):
+            out.append((round(w[0], 2), round(w[1], 2)))
+    return out
+
+
+def beach_outline():
+    """District 09 after the move: palm park + dunes + sand down to the waterline (world polygon, ccw)."""
+    cb = chaikin(COAST_B, 3)
+    top = [(X0B - 12, PARK_TOP)] + [(x, PARK_TOP) for x in np.arange(X0B, 1262.0, 8.0)] + SAND_TOP[1:]
+    dense = []
+    for a, b in zip(top[:-1], top[1:]):
+        n = max(1, int(math.hypot(b[0] - a[0], b[1] - a[1]) / 6.0))
+        dense += [(a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n) for k in range(n)]
+    dense.append(top[-1])
+    def coast_at(x):
+        for (ax, ay), (bx, by) in zip(cb[:-1], cb[1:]):
+            if ax <= x <= bx:
+                return ay + (by - ay) * (x - ax) / max(1e-6, bx - ax)
+        return cb[-1][1]
+    bottom = [(x, coast_at(x)) for x in np.arange(SAND_TOP[-1][0], X0B - 12.0, -6.0)] + [(X0B - 12, coast_at(X0B - 12))]
+    return Rccw([bpost(p) for p in dense + bottom])
 
 
 def beach():
+    post = bpost                                                         # v37: whole beach moved (beach_dy); v01: identity
     lg = Log('beach')
     src = load(BEACH_JSON)
     cb = chaikin(COAST_B, 3)
@@ -420,6 +483,29 @@ def beach():
         for j, off in enumerate((9.0, 17.0)):
             props.append(prop('09e-lounger-%02d-%d' % (k_, j), 'lounger_umbrella_elite', post((x + 4 * j, coast_at(x + 4 * j) + off)), 270, None,
                               umbrella=True, umbrella_color=('#1F3B57', '#FFFFFF', '#C9A86A')[(k_ + j) % 3], sub_area='elite_beach'))
+    if BEACH_DY:                                                         # Fedya 22.10 (W86 item 14): Elite beach - catching allowed, guard patrol
+        cab = rect(*CABANA)
+        lng = [pp['pos'] for pp in props if pp['kind'] == 'lounger_umbrella_elite']
+        sea_ = [(x, coast_at(x) + 5.0) for x in (1392.0, 1416.0, 1440.0, 1464.0, 1488.0)]
+        land_ = [(1488.0, min(coast_at(1488.0) + 22.0, 262.0))] + [(x, CABANA[3] + 4.0 + (2.0 if x > 1450 else 0.0)) for x in (1460.0, 1430.0, 1400.0)]
+        # landward leg behind the lounger rows and 4 m behind (north of) the cabana, along the van ruts
+        loop = [post(q) for q in sea_ + land_]
+        clr_cab = min(math.hypot(px_ - min(max(px_, post(cab[0])[0]), post(cab[2])[0]), py_ - min(max(py_, post(cab[0])[1]), post(cab[2])[1]))
+                      for px_, py_ in (q for a, b in zip(loop, loop[1:] + loop[:1]) for q in resample([a, b], 1.0)))
+        clr_lng = min(math.hypot(q[0] - l[0], q[1] - l[1]) for a, b in zip(loop, loop[1:] + loop[:1]) for q in resample([a, b], 1.0) for l in lng)
+        L = sum(math.dist(a, b) for a, b in zip(loop, loop[1:] + loop[:1]))
+        zones.append({'id': '09e-guard-patrol', 'kind': 'patrol_route', 'sub_area': 'elite_beach', 'loop': [rnd2(q) for q in loop], 'closed': True,
+                      'length_m': round(L, 1), 'guards': 2, 'guard_kind': 'elite_guard', 'phases': [0.0, 0.5], 'speed_mps': 1.3,
+                      'waits': [{'waypoint': 0, 's': 6}, {'waypoint': 4, 's': 6}, {'waypoint': 7, 's': 4}],
+                      'catching_allowed': True, 'clear_m': {'cabana': round(clr_cab, 1), 'loungers': round(clr_lng, 1)},
+                      'notes': 'Elite beach under the hill, outside the village fence (Fedya 22.10): NPC may be caught here, but 2 guards walk this loop '
+                               '(opposite phase, ~%.0f s per lap): seaward leg 5 m above the waterline, landward leg behind the lounger rows and behind '
+                               'the cabana (along the van ruts). Patrol behaviour (vision, alarm to the Elite gate guards) = gameplay code; this is the map data.' % (L / 1.3)})
+        for k_, q in enumerate((loop[0], loop[len(sea_)])):
+            props.append(prop('09e-guard-spawn%d' % (k_ + 1), 'npc_spot', q, 270, [0.6, 0.6, 1.8], role='elite_guard', patrol='09e-guard-patrol',
+                              sub_area='elite_beach', notes='patrol start (phase %.1f)' % (0.5 * k_)))
+        lg.fix(loop[0], 'Решение Феди 22.10 (W86 п. 14): на пляже Элиты ловить можно, но там ходит патруль охраны — маршрут 09e-guard-patrol '
+                        '(%d точек, %.0f м, 2 охранника в противофазе).' % (len(loop), L), 'Элита остаётся опасной: риск и награда.')
     # ---------------------------------------------------------------- vegetation rules
     zones.append({'id': '09-no-tree-sand', 'kind': 'no_tree', 'poly': Rccw(PL([(806, DUNE_BOT - 1)] + [(x, coast_at(x)) for x in range(806, 1229, 8)] + [(1228, DUNE_BOT - 1)])),
                   'why': 'sand: van drives, loungers, courts'})
@@ -437,6 +523,7 @@ def beach():
     strips = [z for z in zones if z['kind'] in ('van_route', 'van_entry_sand')]
     umb_strip = min(nearest_on(z['line'], p['pos'])[0] - z['width_m'] / 2 for z in strips for p in umb)
     pier_w = [post(p) for p in pier]
+    post = post0                                                         # residuals: where the beach is drawn on the v85 render
     meas = {
         'pier+head (drawn from y 161 pre)': resid(mprof([post(p) for p in rect(PIER_X - 15, 100, PIER_X + 15, 161)], post((PIER_X, 140)), 14, 0.15), bbox([post(p) for p in rect(PIER_X - 15, 100, PIER_X + 15, 161)])),
         'tower_W': resid(mprof([post(p) for p in rrect(TOWERS[0], 6, 6, 0)], post(TOWERS[0]), 20), bbox([post(p) for p in rrect(TOWERS[0], 6, 6, 0)])),
@@ -452,8 +539,16 @@ def beach():
         ys = [wy + d / 5.0 for d in range(-40, 41)]
         flips = [y for y in ys if is_water(px(wx, y)) and not is_water(px(wx, y + 0.2))]
         wl_meas.append(round(min((y - wy for y in flips), key=abs), 2) if flips else None)
-    fit = {'transform': 'world = common.post(pre-shift metres of build_world_v85.py) = pre + (20, -28) on the whole beach (x > 770, y < 470)',
+    post = bpost
+    fit = {'transform': 'world = common.post(pre-shift metres of build_world_v85.py) = pre + (20, -28) on the whole beach (x > 770, y < 470)'
+                        + ('' if not BEACH_DY else '; then plan v37 move: y += beach_dy(x) = %.0f m for x %.0f-%.0f, smooth taper to 0 at x %.0f / %.0f '
+                           '(residuals below are measured at the v85 drawn position, before the move)' % (BEACH_DY, SHIFT_X[1], SHIFT_X[2], SHIFT_X[0], SHIFT_X[3])),
            'residuals_m (max bbox edge diff, centre shift)': meas, 'waterline_drawn_minus_coast_b_m': wl_meas}
+    if BEACH_DY:
+        lg.fix(post((PIER_X, 200)), 'План Даунтауна v37 (Вадим 22.10): пляж один в один с карты v85, сдвинут на %.0f м к югу (город вырос вверх и вниз). '
+               'Сдвиг целиком для x %.0f-%.0f, плавный переход к 0 у скал Тихой долины (x %.0f) и у пляжа Элиты (x %.0f): колея бусика к Элите идёт '
+               'по песку наискосок, как на картинке v37.' % (-BEACH_DY, SHIFT_X[1], SHIFT_X[2], SHIFT_X[0], SHIFT_X[3]),
+               'Набережная SP Даунтауна v37 на 54 м южнее старой S1; суша на месте бывшего моря — land_override в out_v02/downtown_v37_land.json.')
     counts = {'buildings': len(blds), 'palms_park': sum(1 for p in pp if p.get('row', '').startswith('park')), 'palms_single': sum(1 for p in pp if p.get('row') == 'single'),
               'palms_elite_foot': sum(1 for p in pp if p.get('row') == 'elite_foot'), 'umbrella_sets': len(umb),
               'umbrella_sets_with_umbrella': sum(1 for p in umb if p['umbrella']), 'elite_loungers': sum(1 for p in props if p['kind'] == 'lounger_umbrella_elite'),
@@ -461,7 +556,8 @@ def beach():
               'parking_stalls': sum(z['stalls'] for z in zones if z['kind'] == 'parking'), 'zones': len(zones), 'props': len(props)}
     checks = {'min_palm_spacing_m': round(min_palm, 2), 'min_palm_to_track_edge_m': round(palm_track, 2), 'min_umbrella_set_to_van_strip_edge_m': round(umb_strip, 2),
               'pier_start_y': round(pier_w[3][1], 2), 'pier_start_on_coast': True}
-    return {'district': 'beach', 'version': 'v85 (placement: world v85 drawing; content: plan v06 + BEACH_SPEC)',
+    return {'district': 'beach', 'version': 'v85 (placement: world v85 drawing; content: plan v06 + BEACH_SPEC)' + (' + Downtown v37 move %.0f m' % BEACH_DY if BEACH_DY else ''),
+            'shift_v37': {'dy_m': BEACH_DY, 'x_taper_full_full_taper': list(SHIFT_X), 'rule': 'world y += beach_dy(x), smoothstep tapers'} if BEACH_DY else None,
             'sources': [rel(BUILD) + ' (R45_miami_beach, R38_ocean_drive, R74_elite_ring TRACK)', rel(BEACH_JSON), rel(BEACH_PNG), 'docs/specs/BEACH_SPEC_2026-10-15_v01.md',
                         'docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-20_v10.md §7.7 §7.9', 'docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-18_v02.md §8.9'],
             'transform': fit['transform'], 'fit': fit, 'pad_height_m': None, 'pad_note': 'sand slopes gently from the dunes (~+2.5 m) to the waterline (0 m)',
@@ -1030,7 +1126,8 @@ def main():
     b = beach()
     p, br = port(svg)
     t = tramduro(br)
-    for name, dist, box in (('beach', b, (775, 60, 1500, 255)), ('port', p, (1110, 585, 1400, 730)), ('tramduro', t, (1330, 625, 1675, 940))):
+    for name, dist, box in (('beach', b, (775, 60, 1500, 255) if not BEACH_DY else (690, 2, 1500, 250)), ('port', p, (1110, 585, 1400, 730)),
+                            ('tramduro', t, (1330, 625, 1675, 940))):
         save_json('districts/%s_v85.json' % name, dist)
         overlay(dist, name, box)
         print('%s_v85:' % name, json.dumps(dist['counts'], ensure_ascii=False))
