@@ -335,7 +335,15 @@ namespace OnlyVolunteers.Capture
         {
             foreach (var smr in npc.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
-                if (smr.sharedMesh == null || smr.name == "Body" || smr.name == "Face") continue;
+                // TASK-000900: the types' crowd LODs (X_LOD1 / X_LOD2) would drop the same hat again: LOD0 only ("X" or "X_LOD0").
+                string part = smr.name;
+                int lodAt = part.LastIndexOf("_LOD", System.StringComparison.Ordinal);
+                if (lodAt > 0 && int.TryParse(part.Substring(lodAt + 4), out int lod))
+                {
+                    if (lod > 0) continue;
+                    part = part.Substring(0, lodAt);
+                }
+                if (smr.sharedMesh == null || part == "Body" || part == "Face") continue;
                 var mats = smr.sharedMaterials;
                 var subs = new List<int>();
                 for (int i = 0; i < mats.Length && i < smr.sharedMesh.subMeshCount; i++)

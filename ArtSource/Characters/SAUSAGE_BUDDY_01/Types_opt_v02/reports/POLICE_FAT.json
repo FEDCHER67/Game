@@ -1,0 +1,817 @@
+{
+ "type": "POLICE_FAT",
+ "revision": 2,
+ "input": "Types_opt_v01/SAUSAGE_BUDDY_POLICE_FAT_v02_opt_v01.blend",
+ "tris_v01": {
+  "Body": 3528,
+  "Face": 2128,
+  "Outfit": 8482,
+  "Props_RightHand": 720
+ },
+ "total_v01": 14858,
+ "states": 137,
+ "seconds_hidden": 20.5,
+ "seconds_parts": 0.2,
+ "shading": {},
+ "weights_lod0": {
+  "Body": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 2
+  },
+  "Face": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 1
+  },
+  "Outfit": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 4
+  },
+  "Props_RightHand": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 1
+  }
+ },
+ "steps": {
+  "1_face_interior": {
+   "tris": 392,
+   "faces": 208,
+   "hidden_tris": 747,
+   "kept_for_normals_tris": 355,
+   "materials": {
+    "Buddy_Eye_White": 180,
+    "Buddy_Eye_Rim": 212
+   },
+   "materials_kept_whole": []
+  },
+  "2_head_skin_under_face": {
+   "tris": 0,
+   "faces": 0,
+   "candidates": 468
+  },
+  "3_cleanup": {
+   "Body": {
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "faces_removed": 0,
+    "loose_verts": 0,
+    "loose_edges": 0,
+    "tris": 0
+   },
+   "Face": {
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "faces_removed": 0,
+    "loose_verts": 0,
+    "loose_edges": 0,
+    "tris": 0
+   },
+   "Outfit": {
+    "zero_area_faces": 400,
+    "duplicate_faces": 0,
+    "faces_removed": 0,
+    "loose_verts": 0,
+    "loose_edges": 0,
+    "tris": 0
+   },
+   "Props_RightHand": {
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "faces_removed": 0,
+    "loose_verts": 0,
+    "loose_edges": 0,
+    "tris": 0
+   }
+  },
+  "4_rigid_parts": {
+   "Outfit": {
+    "parts": 81,
+    "candidates": 0,
+    "collapsed": 0,
+    "collapsed_skinned": 0,
+    "tris_saved": 0,
+    "tris_saved_skinned": 0,
+    "max_dev_mm": 0.0,
+    "max_shading_deg": 0.0,
+    "gap_limited_parts": 0,
+    "min_tol_mm": null,
+    "materials": {},
+    "skipped_tris": {
+     "small": 91,
+     "frozen": 0,
+     "skinned": 5698,
+     "large": 1286,
+     "open": 1407,
+     "face_zone": 0,
+     "layered": 0
+    },
+    "tris": 0
+   },
+   "Props_RightHand": {
+    "parts": 12,
+    "candidates": 8,
+    "collapsed": 0,
+    "collapsed_skinned": 0,
+    "tris_saved": 0,
+    "tris_saved_skinned": 0,
+    "max_dev_mm": 0.0,
+    "max_shading_deg": 0.0,
+    "gap_limited_parts": 0,
+    "min_tol_mm": null,
+    "materials": {},
+    "skipped_tris": {
+     "small": 0,
+     "frozen": 0,
+     "skinned": 0,
+     "large": 280,
+     "open": 280,
+     "face_zone": 0,
+     "layered": 32
+    },
+    "tris": 0
+   }
+  }
+ },
+ "tris_lod0": {
+  "Body": 3528,
+  "Face": 1736,
+  "Outfit": 8482,
+  "Props_RightHand": 720
+ },
+ "total_lod0": 14466,
+ "lods": {
+  "1": {
+   "Body": {
+    "tris": 1632,
+    "ok": true,
+    "p99_mm": 5.78,
+    "max_mm": 8.45,
+    "over_limit_verts": 0,
+    "locked_verts": 296,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "history": [
+     {
+      "ratio": 0.454,
+      "locked": 8,
+      "tris": 1602,
+      "p99_mm": 47.77,
+      "max_mm": 66.74,
+      "over_limit_verts": 133,
+      "ok": false
+     },
+     {
+      "ratio": 0.553,
+      "locked": 296,
+      "tris": 1949,
+      "p99_mm": 5.95,
+      "max_mm": 8.45,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.501,
+      "locked": 296,
+      "tris": 1768,
+      "p99_mm": 5.8,
+      "max_mm": 8.45,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.476,
+      "locked": 296,
+      "tris": 1677,
+      "p99_mm": 5.78,
+      "max_mm": 8.45,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.463,
+      "locked": 296,
+      "tris": 1632,
+      "p99_mm": 5.78,
+      "max_mm": 8.45,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 3758,
+     "from_source": 3750
+    },
+    "weights": {
+     "fixed_vertices": 71,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "Face": {
+    "tris": 787,
+    "ok": true,
+    "p99_mm": 2.81,
+    "max_mm": 4.15,
+    "over_limit_verts": 0,
+    "locked_verts": 24,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "history": [
+     {
+      "ratio": 0.48,
+      "locked": 24,
+      "tris": 833,
+      "p99_mm": 2.81,
+      "max_mm": 4.15,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.465,
+      "locked": 24,
+      "tris": 807,
+      "p99_mm": 2.81,
+      "max_mm": 4.15,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.458,
+      "locked": 24,
+      "tris": 793,
+      "p99_mm": 2.81,
+      "max_mm": 4.15,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.454,
+      "locked": 24,
+      "tris": 787,
+      "p99_mm": 2.81,
+      "max_mm": 4.15,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "Outfit": {
+    "tris": 3575,
+    "ok": true,
+    "p99_mm": 4.84,
+    "max_mm": 13.71,
+    "over_limit_verts": 0,
+    "locked_verts": 733,
+    "hem_locked_verts": 435,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "history": [
+     {
+      "ratio": 0.521,
+      "locked": 501,
+      "tris": 4420,
+      "p99_mm": 13.05,
+      "max_mm": 66.66,
+      "over_limit_verts": 84,
+      "ok": false
+     },
+     {
+      "ratio": 0.556,
+      "locked": 733,
+      "tris": 4714,
+      "p99_mm": 3.86,
+      "max_mm": 7.83,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.503,
+      "locked": 733,
+      "tris": 4264,
+      "p99_mm": 4.25,
+      "max_mm": 10.05,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.476,
+      "locked": 733,
+      "tris": 4040,
+      "p99_mm": 4.39,
+      "max_mm": 13.71,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.463,
+      "locked": 733,
+      "tris": 3929,
+      "p99_mm": 4.84,
+      "max_mm": 13.71,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 354,
+     "duplicate_faces": 0,
+     "faces_removed": 354,
+     "loose_verts": 4,
+     "loose_edges": 6
+    },
+    "shading": {
+     "corners": 10725,
+     "from_source": 10173
+    },
+    "weights": {
+     "fixed_vertices": 20,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "Props_RightHand": {
+    "tris": 333,
+    "ok": true,
+    "p99_mm": 4.75,
+    "max_mm": 5.46,
+    "over_limit_verts": 0,
+    "locked_verts": 132,
+    "hem_locked_verts": 120,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "history": [
+     {
+      "ratio": 0.659,
+      "locked": 132,
+      "tris": 474,
+      "p99_mm": 2.57,
+      "max_mm": 3.09,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.555,
+      "locked": 132,
+      "tris": 398,
+      "p99_mm": 3.56,
+      "max_mm": 4.16,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.502,
+      "locked": 132,
+      "tris": 360,
+      "p99_mm": 4.13,
+      "max_mm": 4.8,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.476,
+      "locked": 132,
+      "tris": 342,
+      "p99_mm": 4.75,
+      "max_mm": 5.46,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 9,
+     "faces_removed": 9,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 783,
+     "from_source": 783
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "2": {
+   "Body": {
+    "tris": 747,
+    "ok": true,
+    "p99_mm": 18.13,
+    "max_mm": 27.57,
+    "over_limit_verts": 0,
+    "locked_verts": 208,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "history": [
+     {
+      "ratio": 0.206,
+      "locked": 8,
+      "tris": 726,
+      "p99_mm": 54.59,
+      "max_mm": 81.19,
+      "over_limit_verts": 93,
+      "ok": false
+     },
+     {
+      "ratio": 0.296,
+      "locked": 208,
+      "tris": 1044,
+      "p99_mm": 12.03,
+      "max_mm": 17.18,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.248,
+      "locked": 208,
+      "tris": 875,
+      "p99_mm": 12.18,
+      "max_mm": 16.79,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.224,
+      "locked": 208,
+      "tris": 790,
+      "p99_mm": 15.24,
+      "max_mm": 21.81,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.212,
+      "locked": 208,
+      "tris": 747,
+      "p99_mm": 18.13,
+      "max_mm": 27.57,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1785,
+     "from_source": 1782
+    },
+    "weights": {
+     "fixed_vertices": 42,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "Face": {
+    "tris": 356,
+    "ok": true,
+    "p99_mm": 6.08,
+    "max_mm": 7.42,
+    "over_limit_verts": 0,
+    "locked_verts": 24,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "history": [
+     {
+      "ratio": 0.244,
+      "locked": 24,
+      "tris": 423,
+      "p99_mm": 5.01,
+      "max_mm": 6.73,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.222,
+      "locked": 24,
+      "tris": 385,
+      "p99_mm": 5.62,
+      "max_mm": 7.25,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.211,
+      "locked": 24,
+      "tris": 366,
+      "p99_mm": 6.08,
+      "max_mm": 7.42,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.206,
+      "locked": 24,
+      "tris": 356,
+      "p99_mm": 6.08,
+      "max_mm": 7.42,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "Outfit": {
+    "tris": 1878,
+    "ok": true,
+    "p99_mm": 15.72,
+    "max_mm": 32.7,
+    "over_limit_verts": 2,
+    "locked_verts": 422,
+    "hem_locked_verts": 146,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "history": [
+     {
+      "ratio": 0.254,
+      "locked": 212,
+      "tris": 2152,
+      "p99_mm": 28.06,
+      "max_mm": 82.74,
+      "over_limit_verts": 56,
+      "ok": false
+     },
+     {
+      "ratio": 0.301,
+      "locked": 422,
+      "tris": 2554,
+      "p99_mm": 9.2,
+      "max_mm": 16.24,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.251,
+      "locked": 422,
+      "tris": 2126,
+      "p99_mm": 20.3,
+      "max_mm": 32.75,
+      "over_limit_verts": 3,
+      "ok": false
+     },
+     {
+      "ratio": 0.276,
+      "locked": 422,
+      "tris": 2339,
+      "p99_mm": 13.89,
+      "max_mm": 32.7,
+      "over_limit_verts": 2,
+      "ok": true
+     },
+     {
+      "ratio": 0.263,
+      "locked": 422,
+      "tris": 2232,
+      "p99_mm": 15.72,
+      "max_mm": 32.7,
+      "over_limit_verts": 2,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 354,
+     "duplicate_faces": 0,
+     "faces_removed": 354,
+     "loose_verts": 7,
+     "loose_edges": 12
+    },
+    "shading": {
+     "corners": 5634,
+     "from_source": 5558
+    },
+    "weights": {
+     "fixed_vertices": 23,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "Props_RightHand": {
+    "tris": 147,
+    "ok": true,
+    "p99_mm": 12.92,
+    "max_mm": 15.14,
+    "over_limit_verts": 0,
+    "locked_verts": 52,
+    "hem_locked_verts": 40,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "history": [
+     {
+      "ratio": 0.338,
+      "locked": 52,
+      "tris": 242,
+      "p99_mm": 6.09,
+      "max_mm": 6.25,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.269,
+      "locked": 52,
+      "tris": 192,
+      "p99_mm": 8.82,
+      "max_mm": 10.3,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.234,
+      "locked": 52,
+      "tris": 168,
+      "p99_mm": 11.75,
+      "max_mm": 15.14,
+      "over_limit_verts": 0,
+      "ok": true
+     },
+     {
+      "ratio": 0.217,
+      "locked": 52,
+      "tris": 156,
+      "p99_mm": 12.92,
+      "max_mm": 15.14,
+      "over_limit_verts": 0,
+      "ok": true
+     }
+    ],
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 9,
+     "faces_removed": 9,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 399,
+     "from_source": 399
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  }
+ },
+ "hem_verts_lod0": {
+  "Body": 0,
+  "Outfit": 146,
+  "Props_RightHand": 40
+ },
+ "seconds_lods": 4.8,
+ "tris_lod1": {
+  "Body": 1632,
+  "Face": 787,
+  "Outfit": 3575,
+  "Props_RightHand": 333
+ },
+ "tris_lod2": {
+  "Body": 747,
+  "Face": 356,
+  "Outfit": 1878,
+  "Props_RightHand": 147
+ },
+ "total_lod1": 6327,
+ "total_lod2": 3128,
+ "problems": [],
+ "seconds": 25.7,
+ "result": "optimised",
+ "outputs": {
+  "blend": "SAUSAGE_BUDDY_POLICE_FAT_v02_opt_v02.blend",
+  "fbx": "SAUSAGE_BUDDY_POLICE_FAT_v02_opt_v02.fbx"
+ },
+ "settings": {
+  "state_step": 15,
+  "face_normal_deg": 1.0,
+  "island_tol_mm": 1.0,
+  "part_diag_m": 0.15,
+  "skinned_part_diag_m": 0.0,
+  "island_normal_deg": 1.5,
+  "island_gap_fraction": 0.45,
+  "rigid_l1": 0.02,
+  "face_zone": {
+   "z": [
+    1.3,
+    1.665
+   ],
+   "y_max": -0.05,
+   "x_abs": 0.16
+  },
+  "lod": {
+   "1": {
+    "ratio": 0.45,
+    "p99_mm": 8.0,
+    "max_mm": 16.0
+   },
+   "2": {
+    "ratio": 0.2,
+    "p99_mm": 20.0,
+    "max_mm": 43.0
+   }
+  },
+  "open_edge_factor": 0.5,
+  "lod_poses": [
+   "rest",
+   "Panic_Run_Loop:5",
+   "Panic_Run_Loop:12",
+   "TripFall:30",
+   "FakeSurrender_Flee:20",
+   "PlayDead_Loop:1",
+   "Hide_Loop:1",
+   "LookBack_Bonk:20",
+   "Panic_TurnFlee:60"
+  ],
+  "face_key_states": [
+   {},
+   {
+    "Blink": 1.0
+   },
+   {
+    "Surprised": 1.0
+   },
+   {
+    "Worried": 1.0
+   },
+   {
+    "Happy": 1.0
+   },
+   {
+    "Blink": 1.0,
+    "Surprised": 1.0
+   }
+  ],
+  "freeze": {
+   "VIP_BEASTMAN": [
+    "VIP_BEASTMAN_Logo"
+   ],
+   "CONSTR_INDIAN": [
+    "CONSTR_INDIAN_Hair"
+   ]
+  },
+  "hem_lock_rings": {
+   "1": 2,
+   "2": 0
+  },
+  "lod_normals": "source",
+  "lod_tighten": 3,
+  "lock_at": 0.8,
+  "lod_over": {
+   "share": 0.002,
+   "min": 3,
+   "factor": 1.5
+  },
+  "garment_area_per_edge_m": 0.015,
+  "lod_weight_seam": 0.0
+ }
+}
