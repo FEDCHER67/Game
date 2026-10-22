@@ -1,0 +1,2364 @@
+{
+ "version": "M1 vehicles v01, 2026-10-22",
+ "conventions": {
+  "units": "metres, 1 Unity unit = 1 m; FBX exported with FBX_SCALE_ALL + apply transform: import Scale Factor 1, Convert Units on, no rotation on the meshes",
+  "axes": "Unity Y up, model front (nose / bow / forks / gun) = local +Z",
+  "pivot": "centre of the footprint on the ground (min y = 0); WATER models: on the waterline (hull below y = 0) -> place at sea level 0.0",
+  "placement": "replace the W85 grey box: position = data pos (x, ground or sea level, y); rotation = Quaternion.Euler(0, unity_yaw_deg, 0) where unity_yaw_deg = -rot_deg + yaw_offset_deg (the boxes used Euler(0, -rot_deg, 0)); uniform scale only (1.0 except yachts)",
+  "lod": "each FBX holds <Name>_LOD0 and <Name>_LOD1 -> Unity builds the LODGroup on import (LOD1 ~31-48 % tris); suggested transitions 60 % / 15 % / cull 2 %",
+  "static": "all static (BatchingStatic) except patrol_boat (moves on its route)",
+  "materials": "one URP Lit material per family + colour variant: MW86_<Family>_<A|B|C> = same shader, _BaseMap = MW86_<Family>_<V>.png, _BaseColor white, Smoothness 0.1, Metallic 0; variants only swap the texture (SRP Batcher friendly)",
+  "texture_import": "sRGB, Wrap Clamp, Filter Bilinear, mipmaps ON, no compression (or High Quality), max size 512. Flat faces use one UV point per face (cell centre) so mips never bleed; camo / teak / hazard / wagon boards are projected patterns",
+  "vertex_colours": "none (URP Lit ignores them)"
+ },
+ "families": {
+  "Water": "yachts, boats, jet ski, SUP: white / teak / navy (A), navy hull (B), teal stripe (C)",
+  "Military": "Tramduro: olive camo (A, default), desert (B), parade grey-green low-contrast (C)",
+  "Machines": "construction yellow / orange, P3 blue stacker + forklift (A), alternates B / C; wagon rust-red (A, data tint #8C4A36), green (B), brown (C)"
+ },
+ "models": {
+  "MW86_AirDefence": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_AirDefence_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/air_defence/MW86_AirDefence_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1648,
+    "LOD1_tris": 576,
+    "LOD1_ratio": 0.35,
+    "meshes": [
+     "MW86_AirDefence_LOD0",
+     "MW86_AirDefence_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    3.26,
+    3.815,
+    5.872
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "convex_mesh",
+    "mesh": "LOD1",
+    "note": "MeshCollider convex on the LOD1 mesh"
+   },
+   "notes": "Tracked SAM launcher, 2x2 canisters at 24 deg + radar panel (kind stylized_air_defence, data 6 x 4 x 3.5, long axis on data X)."
+  },
+  "MW86_Boat_KeelBlocks": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Boat_KeelBlocks_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/boat_keel_blocks/MW86_Boat_KeelBlocks_v01.blend",
+   "family": "Water",
+   "material": "MW86_Water",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1236,
+    "LOD1_tris": 386,
+    "LOD1_ratio": 0.312,
+    "meshes": [
+     "MW86_Boat_KeelBlocks_LOD0",
+     "MW86_Boat_KeelBlocks_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.84,
+    4.516,
+    9.406
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       2.258,
+       -0.0
+      ],
+      "size": [
+       2.84,
+       4.516,
+       9.406
+      ]
+     }
+    ]
+   },
+   "notes": "Fishing boat laid up on keel blocks with jack stands (kind boat_on_keel_blocks, port yard)."
+  },
+  "MW86_DumpTruck": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_DumpTruck_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/dump_truck/MW86_DumpTruck_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1380,
+    "LOD1_tris": 532,
+    "LOD1_ratio": 0.386,
+    "meshes": [
+     "MW86_DumpTruck_LOD0",
+     "MW86_DumpTruck_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.92,
+    3.1,
+    8.34
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.55,
+       -0.0
+      ],
+      "size": [
+       2.92,
+       3.1,
+       8.34
+      ]
+     }
+    ]
+   },
+   "notes": "3-axle tipper with a sand load (kind dump_truck, data 8.8 x 3.6 x 3.2, long axis on data X)."
+  },
+  "MW86_FoodTruck": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_FoodTruck_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/food_truck/MW86_FoodTruck_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1076,
+    "LOD1_tris": 412,
+    "LOD1_ratio": 0.383,
+    "meshes": [
+     "MW86_FoodTruck_LOD0",
+     "MW86_FoodTruck_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    3.18,
+    3.35,
+    6.82
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.675,
+       -0.0
+      ],
+      "size": [
+       3.18,
+       3.35,
+       6.82
+      ]
+     }
+    ]
+   },
+   "notes": "Step-van food truck, serving window + propped awning on the kerb side (Blender -X = Unity +X), blank menu board, no text."
+  },
+  "MW86_Forklift": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Forklift_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/forklift/MW86_Forklift_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 812,
+    "LOD1_tris": 360,
+    "LOD1_ratio": 0.443,
+    "meshes": [
+     "MW86_Forklift_LOD0",
+     "MW86_Forklift_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    1.25,
+    2.27,
+    3.092
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.135,
+       -0.0
+      ],
+      "size": [
+       1.25,
+       2.27,
+       3.092
+      ]
+     }
+    ]
+   },
+   "notes": "Counterbalance forklift, forks lowered (kind forklift, data 3.2 x 1.2 x 2.2, long axis on data X)."
+  },
+  "MW86_Helicopter": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Helicopter_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/helicopter/MW86_Helicopter_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1356,
+    "LOD1_tris": 460,
+    "LOD1_ratio": 0.339,
+    "meshes": [
+     "MW86_Helicopter_LOD0",
+     "MW86_Helicopter_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    10.248,
+    3.805,
+    11.936
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.535,
+       0.018
+      ],
+      "size": [
+       2.8,
+       3.1,
+       11.1
+      ]
+     }
+    ],
+    "note": "fuselage + skids; no rotor collider"
+   },
+   "notes": "Utility helicopter on skids, rotor parked (kind helicopter, data 12 x 11 x 4, long axis on data X)."
+  },
+  "MW86_JetSki": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_JetSki_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/jet_ski/MW86_JetSki_v01.blend",
+   "family": "Water",
+   "material": "MW86_Water",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 408,
+    "LOD1_tris": 176,
+    "LOD1_ratio": 0.431,
+    "meshes": [
+     "MW86_JetSki_LOD0",
+     "MW86_JetSki_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    1.102,
+    1.179,
+    3.05
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       0.59,
+       -0.0
+      ],
+      "size": [
+       1.102,
+       1.179,
+       3.05
+      ]
+     }
+    ]
+   },
+   "notes": "Jet ski parked on the sand (kind jet_ski, data 3.2 x 1.2 x 1.1, long axis on data X)."
+  },
+  "MW86_MilJeep": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_MilJeep_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/mil_jeep/MW86_MilJeep_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 972,
+    "LOD1_tris": 424,
+    "LOD1_ratio": 0.436,
+    "meshes": [
+     "MW86_MilJeep_LOD0",
+     "MW86_MilJeep_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.4,
+    2.4,
+    5.07
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.2,
+       -0.0
+      ],
+      "size": [
+       2.4,
+       2.4,
+       5.07
+      ]
+     }
+    ]
+   },
+   "notes": "Military utility vehicle (kind military_utility_vehicle; real 4.9 x 2.2 m inside the 3 x 7 data box)."
+  },
+  "MW86_MilTruck": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_MilTruck_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/mil_truck/MW86_MilTruck_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1436,
+    "LOD1_tris": 624,
+    "LOD1_ratio": 0.435,
+    "meshes": [
+     "MW86_MilTruck_LOD0",
+     "MW86_MilTruck_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.66,
+    2.972,
+    7.1
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.486,
+       -0.0
+      ],
+      "size": [
+       2.66,
+       2.972,
+       7.1
+      ]
+     }
+    ]
+   },
+   "notes": "6x6 cargo truck with canvas canopy (kind military_cargo_truck, 3 x 7 data box)."
+  },
+  "MW86_MissileSilo": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_MissileSilo_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/missile_silo/MW86_MissileSilo_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 850,
+    "LOD1_tris": 370,
+    "LOD1_ratio": 0.435,
+    "meshes": [
+     "MW86_MissileSilo_LOD0",
+     "MW86_MissileSilo_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    6.572,
+    11.0,
+    6.572
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "boxes",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       5.5,
+       -0.0
+      ],
+      "size": [
+       2.1,
+       11.0,
+       2.1
+      ]
+     },
+     {
+      "center": [
+       0.0,
+       0.225,
+       0.0
+      ],
+      "size": [
+       6.57,
+       0.45,
+       6.57
+      ]
+     }
+    ],
+    "note": "missile column + low collar slab"
+   },
+   "notes": "Cartoon missile sticking out of an open shaft (kind fictional_nuclear_missile, 7 x 7 x 11). No symbols, no text."
+  },
+  "MW86_MixerTruck": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_MixerTruck_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/mixer_truck/MW86_MixerTruck_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1572,
+    "LOD1_tris": 724,
+    "LOD1_ratio": 0.461,
+    "meshes": [
+     "MW86_MixerTruck_LOD0",
+     "MW86_MixerTruck_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.87,
+    3.616,
+    9.498
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.808,
+       -0.0
+      ],
+      "size": [
+       2.87,
+       3.616,
+       9.498
+      ]
+     }
+    ]
+   },
+   "notes": "Concrete mixer truck, cab-over, banded drum (kind concrete_mixer_truck, data 9.6 x 4.0 x 3.4, long axis on data X)."
+  },
+  "MW86_PatrolBoat": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_PatrolBoat_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/patrol_boat/MW86_PatrolBoat_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 844,
+    "LOD1_tris": 374,
+    "LOD1_ratio": 0.443,
+    "meshes": [
+     "MW86_PatrolBoat_LOD0",
+     "MW86_PatrolBoat_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.96,
+    3.91,
+    8.88
+   ],
+   "pivot": "footprint centre on the WATERLINE (z=0); hull below",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.405,
+       -0.0
+      ],
+      "size": [
+       2.96,
+       3.91,
+       8.88
+      ]
+     }
+    ]
+   },
+   "notes": "Patrol boat, navy grey, bow MG, twin outboards (kind patrol_boat, 9 x 3, moves on a route). Pivot = waterline."
+  },
+  "MW86_RailWagon_Base1": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_RailWagon_Base1_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/rail_wagon_base1/MW86_RailWagon_Base1_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 2984,
+    "LOD1_tris": 1212,
+    "LOD1_ratio": 0.406,
+    "meshes": [
+     "MW86_RailWagon_Base1_LOD0",
+     "MW86_RailWagon_Base1_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    3.55,
+    4.51,
+    24.26
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "boxes",
+    "boxes": [
+     {
+      "center": [
+       -0.095,
+       0.8,
+       -0.0
+      ],
+      "size": [
+       3.2,
+       1.0,
+       23.0
+      ],
+      "note": "underframe + floor (walk on top at 1.3 m)"
+     },
+     {
+      "center": [
+       -1.655,
+       2.375,
+       -0.0
+      ],
+      "size": [
+       0.12,
+       2.15,
+       23.0
+      ],
+      "note": "wall +X (Blender) / -X (Unity)"
+     },
+     {
+      "center": [
+       1.465,
+       2.375,
+       6.225
+      ],
+      "size": [
+       0.12,
+       2.15,
+       10.55
+      ],
+      "note": "door-side wall, rear part"
+     },
+     {
+      "center": [
+       1.465,
+       2.375,
+       -6.225
+      ],
+      "size": [
+       0.12,
+       2.15,
+       10.55
+      ],
+      "note": "door-side wall, front part"
+     },
+     {
+      "center": [
+       1.465,
+       3.35,
+       -0.0
+      ],
+      "size": [
+       0.12,
+       0.2,
+       1.9
+      ],
+      "note": "lintel over the door"
+     },
+     {
+      "center": [
+       -0.095,
+       2.375,
+       11.45
+      ],
+      "size": [
+       3.2,
+       2.15,
+       0.1
+      ],
+      "note": "end wall"
+     },
+     {
+      "center": [
+       -0.095,
+       2.375,
+       -11.45
+      ],
+      "size": [
+       3.2,
+       2.15,
+       0.1
+      ],
+      "note": "end wall"
+     },
+     {
+      "center": [
+       -0.095,
+       3.7,
+       -0.0
+      ],
+      "size": [
+       3.36,
+       0.5,
+       23.24
+      ],
+      "note": "roof"
+     },
+     {
+      "center": [
+       1.635,
+       0.4,
+       -0.0
+      ],
+      "size": [
+       0.26,
+       0.1,
+       1.2
+      ],
+      "note": "step 1 (top 0.45)"
+     },
+     {
+      "center": [
+       1.635,
+       0.82,
+       -0.0
+      ],
+      "size": [
+       0.26,
+       0.1,
+       1.2
+      ],
+      "note": "step 2 (top 0.87)"
+     }
+    ],
+    "note": "hollow, enterable (Base 1). Step rises 0.45 / 0.42 / 0.43 m: if the character step offset is lower, add an invisible ramp at the door."
+   },
+   "notes": "Base 1: old 24 m boxcar on two bogies, enterable (hollow, floor 1.3 m over the rail), sliding door shifted open on Blender -X (Unity +X), steps, barred windows, barrel roof, stove pipe."
+  },
+  "MW86_ReachStacker": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_ReachStacker_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/reach_stacker/MW86_ReachStacker_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1376,
+    "LOD1_tris": 616,
+    "LOD1_ratio": 0.448,
+    "meshes": [
+     "MW86_ReachStacker_LOD0",
+     "MW86_ReachStacker_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    4.2,
+    4.514,
+    6.94
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "convex_mesh",
+    "mesh": "LOD1",
+    "note": "MeshCollider convex on the LOD1 mesh"
+   },
+   "notes": "Reach stacker, P3 blue (variant A), crane-yellow spreader (kind reach_stacker, data 4.2 x 7.5 x 5.0, long axis on data Y)."
+  },
+  "MW86_Rowboat_Upturned": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Rowboat_Upturned_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/rowboat_upturned/MW86_Rowboat_Upturned_v01.blend",
+   "family": "Water",
+   "material": "MW86_Water",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 274,
+    "LOD1_tris": 132,
+    "LOD1_ratio": 0.482,
+    "meshes": [
+     "MW86_Rowboat_Upturned_LOD0",
+     "MW86_Rowboat_Upturned_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    1.388,
+    0.888,
+    3.7
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       0.444,
+       -0.0
+      ],
+      "size": [
+       1.388,
+       0.888,
+       3.7
+      ]
+     }
+    ]
+   },
+   "notes": "Wooden rowing boat upside down on two logs + oars (kind upturned_boat, Hamlet river bank). Fishing nets = M2."
+  },
+  "MW86_SUP": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_SUP_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/sup_board/MW86_SUP_v01.blend",
+   "family": "Water",
+   "material": "MW86_Water",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 240,
+    "LOD1_tris": 92,
+    "LOD1_ratio": 0.383,
+    "meshes": [
+     "MW86_SUP_LOD0",
+     "MW86_SUP_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    0.76,
+    0.138,
+    3.184
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       0.069,
+       -0.0
+      ],
+      "size": [
+       0.76,
+       0.138,
+       3.184
+      ]
+     }
+    ]
+   },
+   "notes": "Stand-up paddle board lying flat (kind sup_board, 0.8 x 3.2, long axis on data Y)."
+  },
+  "MW86_SUV_Black": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_SUV_Black_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/suv_black/MW86_SUV_Black_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 904,
+    "LOD1_tris": 356,
+    "LOD1_ratio": 0.394,
+    "meshes": [
+     "MW86_SUV_Black_LOD0",
+     "MW86_SUV_Black_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.03,
+    1.777,
+    4.87
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       0.888,
+       -0.0
+      ],
+      "size": [
+       2.03,
+       1.777,
+       4.87
+      ]
+     }
+    ]
+   },
+   "notes": "Black SUV for kind black_suv (Elite 07-05 / FBI guard; currently mapped to the blue Soviet sedan prefab). Optional replacement, not a box."
+  },
+  "MW86_Tank": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Tank_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/tank/MW86_Tank_v01.blend",
+   "family": "Military",
+   "material": "MW86_Military",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Military_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 2024,
+    "LOD1_tris": 620,
+    "LOD1_ratio": 0.306,
+    "meshes": [
+     "MW86_Tank_LOD0",
+     "MW86_Tank_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    3.5,
+    2.54,
+    7.952
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.27,
+       -0.0
+      ],
+      "size": [
+       3.5,
+       2.54,
+       7.952
+      ]
+     }
+    ]
+   },
+   "notes": "Tramduro parade tank (kind tank, data box 3.4 x 8 x 2.8, long axis on data Y)."
+  },
+  "MW86_TruckContainer": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_TruckContainer_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/truck_container/MW86_TruckContainer_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 3492,
+    "LOD1_tris": 1084,
+    "LOD1_ratio": 0.31,
+    "meshes": [
+     "MW86_TruckContainer_LOD0",
+     "MW86_TruckContainer_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.87,
+    4.0,
+    16.354
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       2.0,
+       -0.048
+      ],
+      "size": [
+       2.5,
+       4.0,
+       16.27
+      ]
+     }
+    ],
+    "note": "mirrors left out"
+   },
+   "notes": "Cab-over tractor + skeletal chassis + 40 ft corrugated container (kind truck_with_container, 17 x 2.5 x 4.0, cab_end east). Mirrors stick out 0.25 m past the 2.5 m data box."
+  },
+  "MW86_VanOnJacks": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_VanOnJacks_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/van_on_jacks/MW86_VanOnJacks_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 860,
+    "LOD1_tris": 392,
+    "LOD1_ratio": 0.456,
+    "meshes": [
+     "MW86_VanOnJacks_LOD0",
+     "MW86_VanOnJacks_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.034,
+    2.6,
+    6.758
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.3,
+       -0.0
+      ],
+      "size": [
+       2.034,
+       2.6,
+       6.758
+      ]
+     }
+    ]
+   },
+   "notes": "High-roof panel van on jack stands, wheels off, hood open (kind van_on_jacks, workshop 03-01)."
+  },
+  "MW86_WheelLoader": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_WheelLoader_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/wheel_loader/MW86_WheelLoader_v01.blend",
+   "family": "Machines",
+   "material": "MW86_Machines",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Machines_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1220,
+    "LOD1_tris": 404,
+    "LOD1_ratio": 0.331,
+    "meshes": [
+     "MW86_WheelLoader_LOD0",
+     "MW86_WheelLoader_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    2.29,
+    3.17,
+    4.6
+   ],
+   "pivot": "footprint centre on the ground (z=0)",
+   "collider": {
+    "type": "convex_mesh",
+    "mesh": "LOD1",
+    "note": "MeshCollider convex on the LOD1 mesh"
+   },
+   "notes": "Compact wheel loader, bucket on the ground (kind wheel_loader, data 4.4 x 2.8 x 3.0, long axis on data X)."
+  },
+  "MW86_Yacht_Cruiser10": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Yacht_Cruiser10_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/yacht_cruiser10/MW86_Yacht_Cruiser10_v01.blend",
+   "family": "Water",
+   "material": "MW86_Water",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1012,
+    "LOD1_tris": 362,
+    "LOD1_ratio": 0.358,
+    "meshes": [
+     "MW86_Yacht_Cruiser10_LOD0",
+     "MW86_Yacht_Cruiser10_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    3.496,
+    3.52,
+    10.45
+   ],
+   "pivot": "footprint centre on the WATERLINE (z=0); hull below",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       1.16,
+       -0.0
+      ],
+      "size": [
+       3.496,
+       3.52,
+       10.45
+      ]
+     }
+    ]
+   },
+   "notes": "Sport cruiser with hardtop, 10 m (kind yacht 12 / 10 / 8 m -> scale 1.2 / 1.0 / 0.8). Pivot = waterline."
+  },
+  "MW86_Yacht_Motor22": {
+   "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/MW86_Yacht_Motor22_v01.fbx",
+   "blend": "ArtSource/Props/MAP_W86_v01/vehicles/yacht_motor22/MW86_Yacht_Motor22_v01.blend",
+   "family": "Water",
+   "material": "MW86_Water",
+   "textures": {
+    "A": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_A.png",
+    "B": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_B.png",
+    "C": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Vehicles/Textures/MW86_Water_C.png"
+   },
+   "lod": {
+    "LOD0_tris": 1504,
+    "LOD1_tris": 506,
+    "LOD1_ratio": 0.336,
+    "meshes": [
+     "MW86_Yacht_Motor22_LOD0",
+     "MW86_Yacht_Motor22_LOD1"
+    ],
+    "suggested_screen_heights": [
+     0.6,
+     0.15,
+     0.02
+    ]
+   },
+   "size_unity_xyz_m": [
+    5.792,
+    7.5,
+    22.124
+   ],
+   "pivot": "footprint centre on the WATERLINE (z=0); hull below",
+   "collider": {
+    "type": "box",
+    "boxes": [
+     {
+      "center": [
+       -0.0,
+       2.75,
+       -0.0
+      ],
+      "size": [
+       5.792,
+       7.5,
+       22.124
+      ]
+     }
+    ]
+   },
+   "notes": "Motor yacht with flybridge, 22 m (kind yacht 22 x 6; scale 0.68 for the 15 x 5 one). White / teak / navy stripe. Pivot = waterline."
+  }
+ },
+ "kinds": {
+  "tank": {
+   "model": "MW86_Tank",
+   "yaw_offset_deg": 0,
+   "notes": "long axis on data size[1]; gun faces box local +Z. Flip 180 if the parade should face the other way.",
+   "instances": [
+    {
+     "id": "10-tank1",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1502.2,
+      751.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.4,
+      8,
+      2.8
+     ],
+     "model": "MW86_Tank",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "10-tank2",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1514.2,
+      751.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.4,
+      8,
+      2.8
+     ],
+     "model": "MW86_Tank",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "10-tank3",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1526.2,
+      751.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.4,
+      8,
+      2.8
+     ],
+     "model": "MW86_Tank",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    }
+   ]
+  },
+  "stylized_air_defence": {
+   "model": "MW86_AirDefence",
+   "yaw_offset_deg": 90,
+   "notes": "long axis on data size[0]; launcher faces heading rot_deg.",
+   "instances": [
+    {
+     "id": "10-aa1",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1492.2,
+      825.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      6,
+      4,
+      3.5
+     ],
+     "model": "MW86_AirDefence",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "10-aa2",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1613.2,
+      848.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      6,
+      4,
+      3.5
+     ],
+     "model": "MW86_AirDefence",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "10-aa3",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1610.2,
+      718.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      6,
+      4,
+      3.5
+     ],
+     "model": "MW86_AirDefence",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "10-aa4",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1498.2,
+      723.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      6,
+      4,
+      3.5
+     ],
+     "model": "MW86_AirDefence",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "fictional_nuclear_missile": {
+   "model": "MW86_MissileSilo",
+   "yaw_offset_deg": 0,
+   "notes": "round, any yaw.",
+   "instances": [
+    {
+     "id": "10-missile1",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1618.2,
+      816.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7,
+      7,
+      11
+     ],
+     "model": "MW86_MissileSilo",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "10-missile2",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1618.2,
+      827.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7,
+      7,
+      11
+     ],
+     "model": "MW86_MissileSilo",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "10-missile3",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1618.2,
+      838.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7,
+      7,
+      11
+     ],
+     "model": "MW86_MissileSilo",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    }
+   ]
+  },
+  "military_utility_vehicle": {
+   "model": "MW86_MilJeep",
+   "yaw_offset_deg": 0,
+   "notes": "long axis on data size[1].",
+   "instances": [
+    {
+     "id": "10-military_jeep",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1592.2,
+      770.5
+     ],
+     "rot_deg": -90,
+     "data_size": [
+      3,
+      7,
+      2.8
+     ],
+     "model": "MW86_MilJeep",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "military_cargo_truck": {
+   "model": "MW86_MilTruck",
+   "yaw_offset_deg": 0,
+   "notes": "long axis on data size[1].",
+   "instances": [
+    {
+     "id": "10-military_truck",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1592.2,
+      764.5
+     ],
+     "rot_deg": -90,
+     "data_size": [
+      3,
+      7,
+      2.8
+     ],
+     "model": "MW86_MilTruck",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "helicopter": {
+   "model": "MW86_Helicopter",
+   "yaw_offset_deg": 90,
+   "notes": "long axis on data size[0]; add elevation_m to the ground height if the pad is raised.",
+   "instances": [
+    {
+     "id": "10-helicopter",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1601.2,
+      737.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      12,
+      11,
+      4
+     ],
+     "model": "MW86_Helicopter",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0,
+     "elevation_m": 3
+    }
+   ]
+  },
+  "patrol_boat": {
+   "model": "MW86_PatrolBoat",
+   "yaw_offset_deg": 90,
+   "notes": "WATER: pivot = waterline, place at sea level 0.0 (not terrain). Moves on route_id: bow = local +Z.",
+   "instances": [
+    {
+     "id": "10-boat1",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1464.2,
+      861.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      9,
+      3,
+      0
+     ],
+     "model": "MW86_PatrolBoat",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0,
+     "route_id": "10-boat_route1"
+    },
+    {
+     "id": "10-boat2",
+     "file": "tramduro_v85.json",
+     "pos": [
+      1678.2,
+      794.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      9,
+      3,
+      0
+     ],
+     "model": "MW86_PatrolBoat",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0,
+     "route_id": "10-boat_route2"
+    }
+   ]
+  },
+  "yacht": {
+   "model": [
+    "MW86_Yacht_Motor22",
+    "MW86_Yacht_Cruiser10"
+   ],
+   "yaw_offset_deg": 90,
+   "notes": "WATER: pivot = waterline, place at sea level 0.0 (the W85 boxes stood on terrain, some inside the cliff). Model + uniform scale per instance below.",
+   "instances": [
+    {
+     "id": "07-yacht0",
+     "file": "elite_v85.json",
+     "pos": [
+      1532.0,
+      298.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      22,
+      6,
+      4.0
+     ],
+     "model": "MW86_Yacht_Motor22",
+     "variant": "A",
+     "scale": 0.994,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "07-yacht1",
+     "file": "elite_v85.json",
+     "pos": [
+      1558.0,
+      284.0
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      15,
+      5,
+      4.0
+     ],
+     "model": "MW86_Yacht_Motor22",
+     "variant": "B",
+     "scale": 0.678,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "07-yacht2",
+     "file": "elite_v85.json",
+     "pos": [
+      1558.0,
+      272.0
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      12,
+      4,
+      3.0
+     ],
+     "model": "MW86_Yacht_Cruiser10",
+     "variant": "C",
+     "scale": 1.148,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "07-yacht3",
+     "file": "elite_v85.json",
+     "pos": [
+      1534.0,
+      285.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      10,
+      3.6,
+      3.0
+     ],
+     "model": "MW86_Yacht_Cruiser10",
+     "variant": "B",
+     "scale": 0.957,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "07-yacht4",
+     "file": "elite_v85.json",
+     "pos": [
+      1555.0,
+      242.0
+     ],
+     "rot_deg": 20,
+     "data_size": [
+      8,
+      3,
+      3.0
+     ],
+     "model": "MW86_Yacht_Cruiser10",
+     "variant": "A",
+     "scale": 0.766,
+     "unity_yaw_deg": 70.0
+    }
+   ]
+  },
+  "boat_on_keel_blocks": {
+   "model": "MW86_Boat_KeelBlocks",
+   "yaw_offset_deg": 90,
+   "notes": "stands on the yard (blocks + jack stands included).",
+   "instances": [
+    {
+     "id": "06-14-boat-on-blocks",
+     "file": "port_v85.json",
+     "pos": [
+      1330.33,
+      644.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      10.0,
+      3.0,
+      2.6
+     ],
+     "model": "MW86_Boat_KeelBlocks",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "upturned_boat": {
+   "model": "MW86_Rowboat_Upturned",
+   "yaw_offset_deg": 90,
+   "notes": "river bank; fishing_nets stay with M2 (static props).",
+   "instances": [
+    {
+     "id": "02-FISH-BOAT",
+     "file": "hamlet_v85.json",
+     "pos": [
+      474.0,
+      456.0
+     ],
+     "rot_deg": -18,
+     "data_size": [
+      3.8,
+      1.5,
+      0
+     ],
+     "model": "MW86_Rowboat_Upturned",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 108.0
+    }
+   ]
+  },
+  "jet_ski": {
+   "model": "MW86_JetSki",
+   "yaw_offset_deg": 90,
+   "notes": "on the sand.",
+   "instances": [
+    {
+     "id": "09-jetski0",
+     "file": "beach_v85.json",
+     "pos": [
+      1203.0,
+      99.84
+     ],
+     "rot_deg": 270,
+     "data_size": [
+      3.2,
+      1.2,
+      1.1
+     ],
+     "model": "MW86_JetSki",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": -180.0
+    },
+    {
+     "id": "09-jetski1",
+     "file": "beach_v85.json",
+     "pos": [
+      1209.0,
+      100.76
+     ],
+     "rot_deg": 270,
+     "data_size": [
+      3.2,
+      1.2,
+      1.1
+     ],
+     "model": "MW86_JetSki",
+     "variant": "B",
+     "scale": 1.0,
+     "unity_yaw_deg": -180.0
+    },
+    {
+     "id": "09-jetski2",
+     "file": "beach_v85.json",
+     "pos": [
+      1215.0,
+      101.67
+     ],
+     "rot_deg": 270,
+     "data_size": [
+      3.2,
+      1.2,
+      1.1
+     ],
+     "model": "MW86_JetSki",
+     "variant": "C",
+     "scale": 1.0,
+     "unity_yaw_deg": -180.0
+    }
+   ]
+  },
+  "sup_board": {
+   "model": "MW86_SUP",
+   "yaw_offset_deg": 0,
+   "notes": "lying flat on the sand.",
+   "instances": [
+    {
+     "id": "09-sup0",
+     "file": "beach_v85.json",
+     "pos": [
+      1214.5,
+      116.91
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      0.8,
+      3.2,
+      0.2
+     ],
+     "model": "MW86_SUP",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    },
+    {
+     "id": "09-sup1",
+     "file": "beach_v85.json",
+     "pos": [
+      1215.5,
+      116.91
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      0.8,
+      3.2,
+      0.2
+     ],
+     "model": "MW86_SUP",
+     "variant": "B",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    },
+    {
+     "id": "09-sup2",
+     "file": "beach_v85.json",
+     "pos": [
+      1216.5,
+      116.91
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      0.8,
+      3.2,
+      0.2
+     ],
+     "model": "MW86_SUP",
+     "variant": "C",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    },
+    {
+     "id": "09-sup3",
+     "file": "beach_v85.json",
+     "pos": [
+      1217.5,
+      116.91
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      0.8,
+      3.2,
+      0.2
+     ],
+     "model": "MW86_SUP",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    },
+    {
+     "id": "09-sup4",
+     "file": "beach_v85.json",
+     "pos": [
+      1218.5,
+      116.91
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      0.8,
+      3.2,
+      0.2
+     ],
+     "model": "MW86_SUP",
+     "variant": "B",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    },
+    {
+     "id": "09-sup5",
+     "file": "beach_v85.json",
+     "pos": [
+      1219.5,
+      116.91
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      0.8,
+      3.2,
+      0.2
+     ],
+     "model": "MW86_SUP",
+     "variant": "C",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    }
+   ]
+  },
+  "concrete_mixer_truck": {
+   "model": "MW86_MixerTruck",
+   "yaw_offset_deg": 90,
+   "notes": "",
+   "instances": [
+    {
+     "id": "03-03-mixer-truck",
+     "file": "construction_v85.json",
+     "pos": [
+      572.58,
+      421.44
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      9.6,
+      4.0,
+      3.4
+     ],
+     "model": "MW86_MixerTruck",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "dump_truck": {
+   "model": "MW86_DumpTruck",
+   "yaw_offset_deg": 90,
+   "notes": "",
+   "instances": [
+    {
+     "id": "03-dump-truck",
+     "file": "construction_v85.json",
+     "pos": [
+      592.5,
+      384.34
+     ],
+     "rot_deg": 8,
+     "data_size": [
+      8.8,
+      3.6,
+      3.2
+     ],
+     "model": "MW86_DumpTruck",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 82.0
+    }
+   ]
+  },
+  "wheel_loader": {
+   "model": "MW86_WheelLoader",
+   "yaw_offset_deg": 90,
+   "notes": "",
+   "instances": [
+    {
+     "id": "03-wheel-loader",
+     "file": "construction_v85.json",
+     "pos": [
+      569.96,
+      380.58
+     ],
+     "rot_deg": -20,
+     "data_size": [
+      4.4,
+      2.8,
+      3.0
+     ],
+     "model": "MW86_WheelLoader",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 110.0
+    }
+   ]
+  },
+  "van_on_jacks": {
+   "model": "MW86_VanOnJacks",
+   "yaw_offset_deg": 90,
+   "notes": "",
+   "instances": [
+    {
+     "id": "03-01-van",
+     "file": "construction_v85.json",
+     "pos": [
+      624.2,
+      394.45
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7.2,
+      3.2,
+      2.4
+     ],
+     "model": "MW86_VanOnJacks",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "reach_stacker": {
+   "model": "MW86_ReachStacker",
+   "yaw_offset_deg": 0,
+   "notes": "P3 blue = variant A (data tint #E2B13B yellow = variant B).",
+   "instances": [
+    {
+     "id": "06-03-reach-stacker",
+     "file": "port_v85.json",
+     "pos": [
+      1247.2,
+      604.15
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      4.2,
+      7.5,
+      5.0
+     ],
+     "model": "MW86_ReachStacker",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": -90.0
+    }
+   ]
+  },
+  "forklift": {
+   "model": "MW86_Forklift",
+   "yaw_offset_deg": 90,
+   "notes": "forks = local +Z.",
+   "instances": [
+    {
+     "id": "06-09-forklift0",
+     "file": "port_v85.json",
+     "pos": [
+      1237.2,
+      639.35
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      3.2,
+      1.2,
+      2.2
+     ],
+     "model": "MW86_Forklift",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 0.0
+    },
+    {
+     "id": "06-09-forklift1",
+     "file": "port_v85.json",
+     "pos": [
+      1256.58,
+      643.6
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.2,
+      1.2,
+      2.2
+     ],
+     "model": "MW86_Forklift",
+     "variant": "B",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "truck_with_container": {
+   "model": "MW86_TruckContainer",
+   "yaw_offset_deg": 90,
+   "notes": "cab_end east: with rot 0 the cab faces +X (heading) = local +Z after the 90 offset.",
+   "instances": [
+    {
+     "id": "06-07-truck",
+     "file": "port_v85.json",
+     "pos": [
+      1277.7,
+      623.08
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      17.0,
+      2.5,
+      4.0
+     ],
+     "model": "MW86_TruckContainer",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "food_truck": {
+   "model": "MW86_FoodTruck",
+   "yaw_offset_deg": 90,
+   "notes": "serving window on Blender -X = expected Unity local +X = right of the heading; add 180 to the yaw if it faces away from the square.",
+   "instances": [
+    {
+     "id": "05-04-foodtruck1",
+     "file": "downtown_v85.json",
+     "pos": [
+      1000.56,
+      320.79
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      6.5,
+      3.1,
+      3.0
+     ],
+     "model": "MW86_FoodTruck",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "05-04-foodtruck2",
+     "file": "downtown_v85.json",
+     "pos": [
+      1054.29,
+      320.79
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      6.5,
+      3.1,
+      3.0
+     ],
+     "model": "MW86_FoodTruck",
+     "variant": "B",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  },
+  "black_suv": {
+   "model": "MW86_SUV_Black",
+   "yaw_offset_deg": 90,
+   "notes": "OPTIONAL: kind is not a box today (builder maps it to CARS/car_sedan_blue); this replaces it with a real black SUV.",
+   "instances": [
+    {
+     "id": "07-05-suv0",
+     "file": "elite_v85.json",
+     "pos": [
+      1434.75,
+      317.8
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.9,
+      3.2,
+      1.9
+     ],
+     "model": "MW86_SUV_Black",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "07-05-suv1",
+     "file": "elite_v85.json",
+     "pos": [
+      1434.75,
+      321.9
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.9,
+      3.2,
+      1.9
+     ],
+     "model": "MW86_SUV_Black",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "07-05-suv2",
+     "file": "elite_v85.json",
+     "pos": [
+      1434.75,
+      326.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.9,
+      3.2,
+      1.9
+     ],
+     "model": "MW86_SUV_Black",
+     "variant": "A",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    },
+    {
+     "id": "07-guard-suv",
+     "file": "elite_v85.json",
+     "pos": [
+      1477.33,
+      328.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      4.8,
+      2.2,
+      1.9
+     ],
+     "model": "MW86_SUV_Black",
+     "variant": "C",
+     "scale": 1.0,
+     "unity_yaw_deg": 90.0
+    }
+   ]
+  }
+ },
+ "buildings": {
+  "rail_wagon_base1": {
+   "model": "MW86_RailWagon_Base1",
+   "data": "forest_v85.json buildings 01_B01 (kind rail_wagon_base1, material_slot forest_wagon)",
+   "placement": "position = footprint centre at the rail-top height (wheel bottoms = y 0); unity_yaw_deg = 90 - ridge_axis_deg (= 57.5 for v02); the sliding doorway (Blender -X, expected Unity local +X) then faces facing_deg 302.5 of the entrance; if it faces the other track side, add 180",
+   "variant": "A",
+   "collider": {
+    "type": "boxes",
+    "boxes": [
+     {
+      "center": [
+       -0.095,
+       0.8,
+       -0.0
+      ],
+      "size": [
+       3.2,
+       1.0,
+       23.0
+      ],
+      "note": "underframe + floor (walk on top at 1.3 m)"
+     },
+     {
+      "center": [
+       -1.655,
+       2.375,
+       -0.0
+      ],
+      "size": [
+       0.12,
+       2.15,
+       23.0
+      ],
+      "note": "wall +X (Blender) / -X (Unity)"
+     },
+     {
+      "center": [
+       1.465,
+       2.375,
+       6.225
+      ],
+      "size": [
+       0.12,
+       2.15,
+       10.55
+      ],
+      "note": "door-side wall, rear part"
+     },
+     {
+      "center": [
+       1.465,
+       2.375,
+       -6.225
+      ],
+      "size": [
+       0.12,
+       2.15,
+       10.55
+      ],
+      "note": "door-side wall, front part"
+     },
+     {
+      "center": [
+       1.465,
+       3.35,
+       -0.0
+      ],
+      "size": [
+       0.12,
+       0.2,
+       1.9
+      ],
+      "note": "lintel over the door"
+     },
+     {
+      "center": [
+       -0.095,
+       2.375,
+       11.45
+      ],
+      "size": [
+       3.2,
+       2.15,
+       0.1
+      ],
+      "note": "end wall"
+     },
+     {
+      "center": [
+       -0.095,
+       2.375,
+       -11.45
+      ],
+      "size": [
+       3.2,
+       2.15,
+       0.1
+      ],
+      "note": "end wall"
+     },
+     {
+      "center": [
+       -0.095,
+       3.7,
+       -0.0
+      ],
+      "size": [
+       3.36,
+       0.5,
+       23.24
+      ],
+      "note": "roof"
+     },
+     {
+      "center": [
+       1.635,
+       0.4,
+       -0.0
+      ],
+      "size": [
+       0.26,
+       0.1,
+       1.2
+      ],
+      "note": "step 1 (top 0.45)"
+     },
+     {
+      "center": [
+       1.635,
+       0.82,
+       -0.0
+      ],
+      "size": [
+       0.26,
+       0.1,
+       1.2
+      ],
+      "note": "step 2 (top 0.87)"
+     }
+    ],
+    "note": "hollow, enterable (Base 1). Step rises 0.45 / 0.42 / 0.43 m: if the character step offset is lower, add an invisible ramp at the door."
+   },
+   "notes": "replaces the W85 building box; interior is hollow (floor 1.3 m above the rail, inner height 2.15 m, doorway 1.9 x 1.95 m, door leaf slid open); stove pipe on the roof; the integrator keeps the door police_stop / base logic from the data"
+  }
+ },
+ "mapped_to_existing_prefabs_not_new_models": {
+  "parked_car (construction 03-02-fuel-car1 / car2, grey boxes today)": "use the existing VEHICLES_KIT prefabs: tint #8FA9C2 -> Art/Map/Prefabs/CARS/car_sedan_blue, tint #C9876F -> CARS/car_sedan_beige (prefab yaw 90 - rot_deg like the other cars); no new model needed"
+ },
+ "not_done_by_M1": {
+  "tower_crane (construction 03-06)": "big machine but part of the C2 roll-out (red crane chosen); left to that agent",
+  "fishing_nets (hamlet)": "static prop, M2",
+  "paz_bus, old_soviet_car, rusty_car_body, rusted_car, parked_tractor, farm_trailer": "already real prefabs (not boxes)"
+ }
+}

@@ -16,6 +16,10 @@ x the element's relayout translate (clusters spread by CONSTR_SXY (1.15, 0.95) a
 
 Outputs: Data/<REV>/districts/construction_v85.json, out_<REV>/check_construction.png (preview x3).
 Run: python s04_construction.py (deterministic, ~10 s).
+
+REV != v01 (Map W86, agent A3, Fedya 22.10 item 16): the small fuel station 02 is BUILT (was disabled): plan v11 canopy / pump island / cash
+kiosk where the v85 master puts them (1 m off the south edge of the main road ROAD_H, SW of the gate), an apron flush with the road with
+an IN and an OUT driveway, 3 parking stalls, NPC spots (cashier, driver, smoker, waiting driver) and small station props. Fence / gate unchanged.
 """
 import json
 import math
@@ -25,7 +29,7 @@ import re
 import numpy as np
 from PIL import Image, ImageDraw
 
-from common import (MAP_DIR, MAP_FULL, MAP_PREVIEW, REF, ROOT, WORK, apply, area, attr, ccw, centroid, inside, num, points_of,
+from common import (MAP_DIR, MAP_FULL, MAP_PREVIEW, REF, REV, ROOT, WORK, apply, area, attr, ccw, centroid, inside, num, points_of,
                     rnd2, rrect, save_json, seg_dist, svg_tags, svg_text, u2w)
 
 Image.MAX_IMAGE_PIXELS = None
@@ -37,6 +41,7 @@ U = 0.2                                   # plan unit, m
 FENCE_CLEAR = 1.5                         # building / prop clearance from the fence, m
 TRACK_W = 3.6                             # rut pair width (v10 §6 farm track)
 FIXES, QUESTIONS = [], []
+FUEL_ON = REV != 'v01'                    # Fedya 22.10 (W86 item 16): build the fuel station as in plan v11
 
 
 def fix(where, ru, why):
@@ -518,21 +523,73 @@ def build():
     sh = lambda poly: [(p[0], p[1] + fdy) for p in poly]
     fz2, fk2, pad2 = sh(fz), sh(fk), sh(pad)
     pad2 = [(p[0], min(p[1], edge) if p[1] < edge else edge) for p in pad2]
-    B('03-02-fuel-canopy', 'fuel_canopy', 'generic_concrete', fz2, 1, 4.6, flat('metal_painted_SK6a'), None,
-      '02 small fuel station: canopy on 4 columns, one pump island; DISABLED until Vadim answers (v10 §7.3)', extra={'disabled': True})
-    B('03-02-fuel-kiosk', 'kiosk', 'generic_concrete', fk2, 1, 2.8, flat(), 'concrete_panel_SK3c', '02 fuel station cash kiosk; DISABLED', extra={'disabled': True})
-    P('03-02-fuel-pump', 'fuel_pump_island', centroid(sh(d.place('d03_buildings', '#8E979B', rect_local(178, 778, 206, 784))[0])), 0, [5.6, 1.2, 1.8], disabled=True)
-    pad_poly = ccw([(min(p[0] for p in pad2), min(p[1] for p in pad2)), (max(p[0] for p in pad2), min(p[1] for p in pad2)),
-                    (max(p[0] for p in pad2), edge), (min(p[0] for p in pad2), edge)])
-    zones.append({'id': '03-02-fuel-pad', 'kind': 'fuel_pad', 'poly': R(pad_poly), 'surface': 'concrete_SK3c', 'disabled': True,
-                  'notes': 'apron of the fuel station, touching the south edge of the main road ROAD_H (two entries from the road)'})
+    if not FUEL_ON:
+        B('03-02-fuel-canopy', 'fuel_canopy', 'generic_concrete', fz2, 1, 4.6, flat('metal_painted_SK6a'), None,
+          '02 small fuel station: canopy on 4 columns, one pump island; DISABLED until Vadim answers (v10 §7.3)', extra={'disabled': True})
+        B('03-02-fuel-kiosk', 'kiosk', 'generic_concrete', fk2, 1, 2.8, flat(), 'concrete_panel_SK3c', '02 fuel station cash kiosk; DISABLED', extra={'disabled': True})
+        P('03-02-fuel-pump', 'fuel_pump_island', centroid(sh(d.place('d03_buildings', '#8E979B', rect_local(178, 778, 206, 784))[0])), 0, [5.6, 1.2, 1.8], disabled=True)
+        pad_poly = ccw([(min(p[0] for p in pad2), min(p[1] for p in pad2)), (max(p[0] for p in pad2), min(p[1] for p in pad2)),
+                        (max(p[0] for p in pad2), edge), (min(p[0] for p in pad2), edge)])
+        zones.append({'id': '03-02-fuel-pad', 'kind': 'fuel_pad', 'poly': R(pad_poly), 'surface': 'concrete_SK3c', 'disabled': True,
+                      'notes': 'apron of the fuel station, touching the south edge of the main road ROAD_H (two entries from the road)'})
+    else:
+        cx0, cy0, cx1, cy1 = (min(p[0] for p in fz2), min(p[1] for p in fz2), max(p[0] for p in fz2), max(p[1] for p in fz2))
+        kx0, ky0, kx1, ky1 = (min(p[0] for p in fk2), min(p[1] for p in fk2), max(p[0] for p in fk2), max(p[1] for p in fk2))
+        pump = centroid(sh(d.place('d03_buildings', '#8E979B', rect_local(178, 778, 206, 784))[0]))
+        ax0, ax1, ay0 = cx0 - 3.0, kx1 + 1.5 + 3 * 2.6 + 1.0, edge - 15.0             # apron: plan v11 pad + 3 stalls east of the kiosk
+        ey = edge + 0.3                                                    # apron / driveways run 0.3 m onto the road edge: flush seam, no gap
+        B('03-02-fuel-canopy', 'fuel_canopy', 'generic_concrete', fz2, 1, 4.6, flat('metal_painted_SK6a'), None,
+          '02 small fuel station (Fedya 22.10: build it, plan v11): flat canopy 12 x 6.8 m on 4 columns, clear height 4.6 m (the van fits), '
+          'white fascia with a coloured stripe, no text; LED panels underneath', tint='#F2F2EE')
+        B('03-02-fuel-kiosk', 'kiosk', 'generic_concrete', fk2, 1, 2.8, flat(), 'concrete_panel_SK3c',
+          '02 fuel station cash kiosk 5.2 x 5.6 m: glazed front to the pumps, door on the west, service window to the road, snacks shelves, '
+          'cigarette rack, counter; AC unit and a bin outside', tint='#DCE3E6',
+          ents=[ent((kx0, (ky0 + ky1) / 2), 180, 'door', 1.0, role='shop door (to the pumps)'),
+                ent(((kx0 + kx1) / 2, ky1), 90, 'window', 1.2, role='service window to the road')])
+        P('03-02-fuel-pump', 'fuel_pump_island', pump, 0, [5.6, 1.2, 1.8], grip=True,
+          note='one island, 2 dispensers (both sides), kerb 0.15 m, bollards at the ends; long axis E-W, cars stand N and S of it')
+        stalls = []
+        for k_ in range(3):
+            x0s = kx1 + 1.5 + k_ * 2.6
+            stalls.append(R(ccw([(x0s, ay0 + 0.5), (x0s + 2.6, ay0 + 0.5), (x0s + 2.6, ay0 + 5.5), (x0s, ay0 + 5.5)])))
+        pad_poly = ccw([(ax0, ay0), (ax1, ay0), (ax1, ey), (ax0, ey)])
+        zones.append({'id': '03-02-fuel-pad', 'kind': 'fuel_pad', 'poly': R(pad_poly), 'surface': 'concrete_SK3c', 'flat': True,
+                      'size_m': [round(ax1 - ax0, 1), 15.3], 'join': 'flush with the asphalt of ROAD_H along its south edge (no step, no kerb at the driveways)',
+                      'notes': 'apron of fuel station 02: pump lane under the canopy (E-W), kiosk east of it, 3 stalls behind the kiosk with a 9 m aisle'})
+        for nm_, (x0d, x1d) in (('in', (ax0, ax0 + 7.0)), ('out', (kx1 + 1.5, kx1 + 8.5))):
+            zones.append({'id': '03-02-fuel-drive-%s' % nm_, 'kind': 'driveway', 'poly': R(ccw([(x0d, edge - 2.0), (x1d, edge - 2.0), (x1d, ey), (x0d, ey)])),
+                          'surface': 'asphalt_A5d12', 'road': 'main_hamlet_downtown', 'w_m': 7.0,
+                          'notes': '%s driveway of the fuel station: road asphalt continues flush onto the apron (v10 §6)' % nm_.upper()})
+        zones.append({'id': '03-02-fuel-planter', 'kind': 'planter_strip', 'line': R([(ax0 + 7.5, edge - 0.5), (kx1 + 1.0, edge - 0.5)]), 'w_m': 0.8, 'h_m': 0.35,
+                      'notes': 'low kerbed planter along the road between the IN and OUT driveways (grass + 2 low shrubs): the station reads as in / out'})
+        zones.append({'id': '03-02-fuel-parking', 'kind': 'parking', 'poly': R(ccw([(kx1 + 1.5, ay0 + 0.5), (kx1 + 1.5 + 7.8, ay0 + 0.5),
+                                                                                (kx1 + 1.5 + 7.8, ay0 + 5.5), (kx1 + 1.5, ay0 + 5.5)])),
+                      'stalls': 3, 'stall_w_m': 2.6, 'stall_d_m': 5.0, 'stall_dir': 'perpendicular, nose south', 'stall_polys': stalls,
+                      'surface': 'concrete_SK3c', 'markings': 'white lines', 'notes': 'parking for 3 cars behind the kiosk (Fedya 22.10)'})
+        P('03-02-fuel-car1', 'parked_car', ((stalls[0][0][0] + stalls[0][1][0]) / 2, ay0 + 3.0), 270, [1.9, 4.5, 1.5], tint='#8FA9C2')
+        P('03-02-fuel-car2', 'parked_car', ((stalls[2][0][0] + stalls[2][1][0]) / 2, ay0 + 3.0), 270, [1.9, 4.5, 1.5], tint='#C9876F')
+        for pid, role, pos, rot in (('cashier', 'cashier (inside the kiosk, behind the counter)', ((kx0 + kx1) / 2 + 0.8, (ky0 + ky1) / 2), 180),
+                                    ('driver', 'driver fuelling a car at the pump (north side)', (pump[0] + 1.0, pump[1] + 1.6), 270),
+                                    ('smoker', 'customer smoking by the kiosk wall', (kx0 - 1.0, ky0 + 0.8), 0),
+                                    ('waiting', 'driver waiting by his parked car', (stalls[0][1][0] + 0.4, ay0 + 5.0), 90)):
+            P('03-02-fuel-npc-' + pid, 'npc_spot', pos, rot, [0.6, 0.6, 1.8], role=role, note='NPC spot (Fedya 22.10: one more NPC point on the road)')
+        for pid, kind, pos, rot, size in (('bin', 'bin', (kx0 - 0.6, ky1 - 0.8), 0, [0.6, 0.6, 1.0]),
+                                          ('air', 'air_water_post', (cx1 + 1.0, cy0 - 1.0), 0, [0.5, 0.5, 1.4]),
+                                          ('ice', 'ice_chest', (kx1 + 0.6, (ky0 + ky1) / 2), 90, [1.6, 0.8, 1.0]),
+                                          ('sign', 'price_pylon_blank', (ax0 - 1.5, edge - 1.0), 0, [1.2, 0.4, 4.0])):
+            P('03-02-fuel-' + pid, kind, pos, rot, size, grip=kind in ('bin', 'air_water_post', 'price_pylon_blank'),
+              **({'note': 'no text on signs (v02 §11)'} if kind == 'price_pylon_blank' else {}))
+        fix(centroid(fz2), 'АЗС 02 у Стройки построена (решение Феди 22.10, п. 16): навес 12 x 6,8 м с одной колонкой, касса 5,2 x 5,6 м, площадка %.0f x 15 м '
+                          'вровень с главной дорогой (въезд и выезд по 7 м, между ними низкий бордюр-клумба), 3 места для машин за кассой, 4 точки NPC.' % (ax1 - ax0),
+            'канон и план v11 (навес, колонка, будка-касса); забор и ворота Стройки не меняются.')
     if fdy:
         fix(centroid(fz), 'АЗС (выключена) сдвинута на %.1f м к югу: навес и касса теперь в 1 м от южной кромки главной дороги, площадка '
                           'примыкает к дороге' % (-fdy),
             'в мастере v85 (кластерный разнос) навес АЗС лёг на полотно главной дороги ROAD_H; на карте v85 АЗС не видна (за клипом стройки)')
-    question('АЗС у Стройки (канон её сохраняет, в v85 её не видно, Федя отвечал «пока не ставить»). Ставить?',
-             ['1 — пока не ставить (в данных есть, выключена "disabled": true)', '2 — ставить у главной дороги к юго-западу от ворот, как в плане v11',
-              '3 — убрать совсем'], 1, 'вариант 1: 03-02-fuel-* в данных с "disabled": true, площадка у южной кромки дороги ROAD_H')
+    if not FUEL_ON:
+        question('АЗС у Стройки (канон её сохраняет, в v85 её не видно, Федя отвечал «пока не ставить»). Ставить?',
+                 ['1 — пока не ставить (в данных есть, выключена "disabled": true)', '2 — ставить у главной дороги к юго-западу от ворот, как в плане v11',
+                  '3 — убрать совсем'], 1, 'вариант 1: 03-02-fuel-* в данных с "disabled": true, площадка у южной кромки дороги ROAD_H')
     # ---------------- 06 tower crane (next to A)
     Mc = d.find('d03_objects', '#E2B13B', rect_local(pc['CRANE'][0] - 8, pc['CRANE'][1] - 8, pc['CRANE'][0] + 8, pc['CRANE'][1] + 8))
     mast = W(Mc, pc['CRANE'])
@@ -648,7 +705,8 @@ def build():
             'свободным фартуком 14 м; бусик, шины, металлолом и ржавый кузов — рядом с ней по бокам фартука' % (wdx, wdy),
         'на карте v85 её юго-восточный угол срезан контуром площадки (часть здания за забором), а ворота смотрели в забор: своих ворот '
         'мастерской в заборе v85 больше нет (один забор, одни главные ворота, v10 §7.3); бусику нужен фартук 12–15 м (v10 §4)')
-    question('Мастерская улучшения бусика: в плане v11 у неё свои ворота ~18 м на главную дорогу, в v85 и v10 §7.3 — один забор с главными воротами. Как заезжать?',
+    (question if not FUEL_ON else (lambda ru, o, d_, a_: fix(centroid(site), 'Решение Феди 22.10 (W86 п. 17): мастерская — через главные ворота (вариант 1). ' + a_, ru)))(
+             'Мастерская улучшения бусика: в плане v11 у неё свои ворота ~18 м на главную дорогу, в v85 и v10 §7.3 — один забор с главными воротами. Как заезжать?',
              ['1 — через главные ворота, мастерская внутри площадки воротами во двор (сдвинута внутрь)',
               '2 — вернуть вторые ворота ~18 м в заборе у мастерской, на главную дорогу, как в плане v11'], 1,
              'вариант 1: 03-01-workshop сдвинута на (%.1f, %.1f) м, рольставни на север, фартук 14 м; колея 03-rut-workshop от главных ворот' % (wdx, wdy))
@@ -775,7 +833,10 @@ def build():
     gx = gate_c[0]
     zones.append({'id': '03-notree-gate', 'kind': 'no_tree', 'poly': R(ccw([(gx - 14, 343.0), (gx + 14, 343.0), (gx + 14, gate_c[1] + 2), (gx - 14, gate_c[1] + 2)])),
                   'why': 'gate approach and the connector to the main road (van, view of the gate)'})
-    zones.append({'id': '03-notree-fuel', 'kind': 'no_tree', 'poly': R(pad_poly), 'why': 'fuel station apron (disabled) + road verge'})
+    zones.append({'id': '03-notree-fuel', 'kind': 'no_tree', 'poly': R(ccw([(min(q[0] for q in pad_poly) - 2, min(q[1] for q in pad_poly) - 2), (max(q[0] for q in pad_poly) + 2, min(q[1] for q in pad_poly) - 2),
+                                                                 (max(q[0] for q in pad_poly) + 2, max(q[1] for q in pad_poly)), (min(q[0] for q in pad_poly) - 2, max(q[1] for q in pad_poly))])
+                                                            if FUEL_ON else pad_poly),
+                  'why': 'fuel station apron + 2 m' if FUEL_ON else 'fuel station apron (disabled) + road verge'})
     fix(centroid(site), 'Деревья плана v11 (круги) и одиночные деревья внутри забора не переносятся: внутри площадки деревьев нет, '
                         'склон холма 9–26 м за забором — зона рощ (veg_zone)', 'v10 §1.2 и §7.3: деревья зонами, двор с функцией без деревьев')
     return blds, props, zones, site, d, gate_c, moved
@@ -785,11 +846,17 @@ def build():
 def checks(blds, props, zones, site):
     out = {'fence_clearance_m': {}, 'overlaps': [], 'track_hits': [], 'cabin_gaps_m': []}
     fence = next(z for z in zones if z['id'] == '03-fence')
+    outside_ok = lambda i: i.startswith('03-02-fuel')                       # the fuel station stands OUTSIDE the fence by design (plan v11 "02")
     for b in blds:
-        if b.get('disabled'):
+        if b.get('disabled') or outside_ok(b['id']):
             continue
         c = poly_clear(b['footprint'], site)
         out['fence_clearance_m'][b['id']] = round(c, 2)
+    fz_ = [b for b in blds if outside_ok(b['id']) and not b.get('disabled')]
+    if fz_:                                                                # ... and must stay clear of the fence and of the road
+        pad_ = next(z['poly'] for z in zones if z['id'] == '03-02-fuel-pad')
+        out['fuel_station_min_gap_to_fence_m'] = round(min(pl_d(q, closed(site)) for q in [q for b in fz_ for q in b['footprint']] + pad_), 2)
+        out['fuel_station_inside_fence'] = any(inside(q, site) for q in pad_)
     act = [b for b in blds if not b.get('disabled') and b['kind'] not in ('stair_lift_core',)]
     for i in range(len(act)):
         for j in range(i + 1, len(act)):
@@ -821,7 +888,7 @@ def checks(blds, props, zones, site):
                 out['track_hits'].append([z['id'], p['id'], round(dmin, 2)])
     out['min_building_fence_clearance_m'] = round(min(out['fence_clearance_m'].values()), 2)
     out['min_cabin_gap_m'] = min(g[2] for g in out['cabin_gaps_m'])
-    out['props_outside_fence'] = [p['id'] for p in props if not p.get('disabled') and not inside(p['pos'], site)]
+    out['props_outside_fence'] = [p['id'] for p in props if not p.get('disabled') and not inside(p['pos'], site) and not outside_ok(p['id'])]
     return out
 
 

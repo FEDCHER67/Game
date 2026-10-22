@@ -9,6 +9,12 @@ namespace OnlyVolunteers.Operation.Stage1
     public sealed class OperationPatientRig : MonoBehaviour
     {
         public const int StateTableAwake = 0, StateTableAsleep = 1, StateStruggle = 2, StatePanic = 3, StateDead = 4, StateEscapeFall = 5, StateKnockedOut = 6;
+        /// <summary>Round 4: an Escape_v01 clip plays (OpState = 7 matches no transition of Patient_Operation; the clip state
+        /// is entered directly, and the next OpState is crossfaded into on the way out).</summary>
+        public const int StateEscape = 7;
+        private int escapeClip = -1;
+        private bool fadeOutOfEscape;
+        public int EscapeClipPlaying => opState == StateEscape ? escapeClip : -1;
         private static readonly int OpStateId = Animator.StringToHash("OpState");
         private static readonly int ShockDeathId = Animator.StringToHash("ShockDeath");
 
@@ -154,6 +160,37 @@ namespace OnlyVolunteers.Operation.Stage1
             if (animator == null || animator.runtimeAnimatorController == null || state == opState) return;
             opState = state;
             animator.SetInteger(OpStateId, state);
+            if (fadeOutOfEscape && state >= 0 && state < StateHashes.Length)
+            {
+                fadeOutOfEscape = false;
+                animator.CrossFadeInFixedTime(StateHashes[state], 0.25f, 0);
+            }
+        }
+
+        /// <summary>Round 4: plays escape clip 'clip' (state name OperationEscape.Clips[clip].name) from 'time' authored seconds
+        /// at 'speed'. False when the controller has no such state (clips not integrated yet): the caller falls back.</summary>
+        public bool PlayEscape(int clip, float time, float speed)
+        {
+            if (animator == null || animator.runtimeAnimatorController == null || !OperationEscape.Valid(clip)) return false;
+            int hash = Animator.StringToHash(OperationEscape.Clips[clip].name);
+            if (!animator.HasState(0, hash)) return false;
+            animator.speed = speed;
+            if (opState == StateEscape && escapeClip == clip) return true;
+            // Chained clips share exact seam poses (0.05 s is enough); slumps and the way in from the Op_* clips blend longer.
+            float fade = opState != StateEscape ? 0.25f : OperationEscape.Clips[clip].slump ? 0.2f : 0.05f;
+            opState = StateEscape; escapeClip = clip; fadeOutOfEscape = true;
+            animator.SetInteger(OpStateId, StateEscape);
+            animator.CrossFadeInFixedTime(hash, fade, 0, Mathf.Max(0f, time));
+            return true;
+        }
+        /// <summary>Round 4: keeps the last escape pose playing (the hand-off after HopRun / Stumble_Off).</summary>
+        public void HoldEscape(float speed) { if (animator != null && opState == StateEscape) animator.speed = speed; }
+        /// <summary>Round 4: leaves the escape state; the next SetOpState crossfades into its state.</summary>
+        public void EndEscape()
+        {
+            if (opState != StateEscape) return;
+            opState = -1; escapeClip = -1;
+            if (animator != null) animator.speed = 1f;
         }
         public void ShockDeath() { if (animator != null && animator.runtimeAnimatorController != null) animator.SetTrigger(ShockDeathId); }
 
@@ -168,7 +205,9 @@ namespace OnlyVolunteers.Operation.Stage1
             animator.Update(0f);
         }
         /// <summary>Holds the current pose still (a dead body on the floor does not breathe).</summary>
-        public void SetFrozen(bool frozen) { if (animator != null) animator.speed = frozen ? 0f : 1f; }
+        public void SetFrozen(bool frozen) { if (animator != null) animator.speed = frozen ? 0f : opState == StateEscapeFall ? FallSpeed : 1f; }
+        /// <summary>Round 4: playback speed of the EscapeFall clip (OperationTuning.escapeSpeed).</summary>
+        public float FallSpeed = 1f;
 
         /// <summary>Physics box along the lying body on the table (prefab box) or along the KnockedOut pose on the floor.</summary>
         public void SetFloorPose(bool floor)

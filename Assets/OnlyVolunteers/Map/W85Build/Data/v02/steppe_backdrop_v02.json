@@ -1,0 +1,57 @@
+{
+ "heightmap": "Steppe_backdrop_v02_1025_r16.bytes",
+ "format": "RAW 16-bit LE, 1025 x 1025, row 0 = south, column 0 = west",
+ "position_m": [
+  -2002.875,
+  -20.0,
+  942.0
+ ],
+ "size_m": [
+  6976.0,
+  300.0,
+  4096.0
+ ],
+ "cell_m": [
+  6.8125,
+  4.0
+ ],
+ "height_range_m": [
+  -20.0,
+  280.0
+ ],
+ "seam": {
+  "z_m": 950.0,
+  "row": 2,
+  "x_alignment": "backdrop column i <-> main RAW column 8 i - 2352 (exact vertex match for 0 <= 8 i - 2352 <= 2048)",
+  "skirt": "rows 0-1 (z 942 / 946) are 0.5 m under the main terrain: place the backdrop terrain BEFORE / UNDER the main one, its skirt hides LOD cracks at z = 950",
+  "main_top_rows": "the main RAW top 6 rows are piecewise linear between every 8th vertex (s03 seam_linear)"
+ },
+ "splat": "masks/steppe_backdrop_splat_v02.png (RGBA 513 x 513, row 0 = NORTH): R = L02 dry steppe grass, G = L07 rock, B = L01 meadow (greener swales), A = L05/L06 coast sand-gravel",
+ "unity": {
+  "collider": false,
+  "cast_shadows": false,
+  "pixel_error": 8,
+  "basemap_distance": 300,
+  "draw_trees_and_details": false,
+  "note": "seen only (beyond the invisible wall on the border fence); no grass details beyond ~150 m"
+ },
+ "haze": {
+  "fog": "linear",
+  "start_m": 250,
+  "end_m": 3800,
+  "colour_hint": "#D8D3B8 (steppe dust) blended to the sky horizon",
+  "note": "the far mountains (200+ m at 3-4 km) fade into haze; no hard horizon"
+ },
+ "design": {
+  "steppe": "~7.5 m at the seam (main map: soft +2.5 m rise beyond the fence) rising in long swells to ~45 m at 3 km, swells +-5 m (700 m) and +-2.5 m (260 m)",
+  "left_mountains": "NW ridge continues north from x ~548 and curves away west, 88 -> 118 m, the steppe goes on behind it",
+  "right_ridge": "rocky ridge from the Rough's east edge (1092, 952) north-north-east, 30 -> 80 m, sea east of it",
+  "far_mountains": "up to ~230 m from ~3 km north (horizon)",
+  "sea": "east of the right ridge and north-west of the island's NW corner"
+ },
+ "heights_m": {
+  "min": -12.5,
+  "max": 230.1,
+  "seam_max_abs_diff_m": 0.0
+ }
+}

@@ -1,0 +1,5424 @@
+{
+ "version": "v01",
+ "agent": "M2 (static props)",
+ "date": "2026-10-22",
+ "summary": "65 types, 86 FBX variants replacing 161 W85 placeholder boxes (of 226 box props in Data/v02; the rest are listed under not_mine).",
+ "data_source": "Assets/OnlyVolunteers/Map/W85Build/Data/v02/districts/*.json + details_v85.json (box props = W85Builder.Prop fallback, no PrefabOf entry)",
+ "conventions": {
+  "frame": "Every model is built in the frame of the placeholder box it replaces: Unity local X = data size[0], local Z = data size[1], +Y up; pivot = centre of the base on the ground (P(pos), y = terrain height).",
+  "fbx": "Blender Z up / front -Y exported with axis_forward -Z, axis_up Y, apply_unit_scale, FBX_SCALE_UNITS, bake_space_transform (same as GRANDPA_YARD_v01 / FACADE_KIT_v01): Blender -Y -> Unity +Z, root rotation identity, 1 unit = 1 m.",
+  "hierarchy": "root MW86_<Type>_<Var> -> <root>_LOD0 + <root>_LOD1 (Unity auto-creates the LODGroup; suggested screen heights 0.35 / 0.08 / cull 0.01) or a single <root>_Mesh when <= 1000 tris; plus UCX_<root>_NN convex collider meshes.",
+  "colliders": "UCX_* children -> convex MeshCollider on the child and remove its MeshRenderer (exactly what W85Builder Kit() already does for FACADE_KIT pieces). Without that step the UCX boxes RENDER. No other colliders needed.",
+  "components": "Keep W85Builder.Prop behaviour on the root: W76GripAnchor for grip kinds (bollard, ...), W76LeaveCountryButton for leave_country_button, static flags BatchingStatic | OccludeeStatic on all renderers."
+ },
+ "material": {
+  "name": "MW86_StaticPalette_v01 (one material for every M2 prop; FBX materials carry this name -> remap by name)",
+  "shader": "URP/Lit, Opaque, Workflow Metallic",
+  "base_map": "Textures/MW86_StaticPalette_v01_Albedo.png (sRGB)",
+  "metallic_map": "Textures/MW86_StaticPalette_v01_MetallicSmoothness.png (sRGB OFF; R = metallic, A = smoothness; Smoothness Source = Metallic Alpha, smoothness 1)",
+  "emission": "on; Emission Map = Textures/MW86_StaticPalette_v01_Emission.png (sRGB), colour white, HDR intensity ~1.5 (neon heart, lantern, screen, fire embers, beacons, displays; the other swatches are black)",
+  "texture_import": "256 px, Generate Mip Maps OFF (16 px flat swatches - mips would blend neighbours), Filter Point or Bilinear, Compression None, Wrap Clamp",
+  "palette_json": "ArtSource/Props/MAP_W86_v01/static/_common/palette_v01.json (swatch names, colours, UV centres)"
+ },
+ "types": {
+  "FormworkPanels": {
+   "kinds": [
+    "formwork_panels"
+   ],
+   "instances": 2,
+   "data_size": [
+    4.8,
+    2.0,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Two boxes (one per stack).",
+   "notes": "Two stacks of framed formwork panels (red steel frames, yellow plywood faces) on timber bearers.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FormworkPanels/MW86_FormworkPanels_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkPanels_A.fbx",
+     "tris_lod0": 960,
+     "tris_lod1": null,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      4.74,
+      1.07,
+      2.0
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-05-formwork0",
+     "district": "construction",
+     "kind": "formwork_panels",
+     "pos": [
+      563.38,
+      401.64
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      4.8,
+      2.0,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkPanels_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-05-formwork1",
+     "district": "construction",
+     "kind": "formwork_panels",
+     "pos": [
+      569.38,
+      401.64
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      4.8,
+      2.0,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkPanels_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "WheelWash": {
+   "kinds": [
+    "wheel_wash"
+   ],
+   "instances": 1,
+   "data_size": [
+    7.6,
+    5.2,
+    0.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Two ramp hulls + a grate box at 0.3 m (van drives over).",
+   "notes": "Drive-over wheel-wash grate with ramps at both ends (drive along X), yellow frame, spray pipes, low blue pump box on the side.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/WheelWash/MW86_WheelWash_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WheelWash_A.fbx",
+     "tris_lod0": 462,
+     "tris_lod1": null,
+     "ucx_colliders": 3,
+     "model_size_unity_xyz_m": [
+      7.6,
+      0.66,
+      4.53
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-wheelwash",
+     "district": "construction",
+     "kind": "wheel_wash",
+     "pos": [
+      605.62,
+      370.12
+     ],
+     "rot_deg": -90.0,
+     "data_size": [
+      7.6,
+      5.2,
+      0.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WheelWash_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "WaterTank": {
+   "kinds": [
+    "water_tank"
+   ],
+   "instances": 2,
+   "data_size": [
+    3.6,
+    3.6,
+    2.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "uniform = data size[0] / 3.6 (3.2 m tank -> 0.889)",
+   "variant_rule": "A blue (3.6 m), B white (3.2 m)",
+   "collider": "Hull of the tank (16-gon prism).",
+   "notes": "Vertical plastic water tank with ribs, top hatch, outlet valve, on a concrete pad.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/WaterTank/MW86_WaterTank_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTank_A.fbx",
+     "tris_lod0": 898,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      3.6,
+      2.38,
+      3.75
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTank_B.fbx",
+     "tris_lod0": 898,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      3.6,
+      2.38,
+      3.75
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-watertank",
+     "district": "construction",
+     "kind": "water_tank",
+     "pos": [
+      554.6,
+      377.98
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.6,
+      3.6,
+      2.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTank_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-07-watertank",
+     "district": "construction",
+     "kind": "water_tank",
+     "pos": [
+      667.94,
+      400.32
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.2,
+      3.2,
+      2.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTank_B.fbx",
+     "uniform_scale": 0.889
+    }
+   ]
+  },
+  "FuelPumpDouble": {
+   "kinds": [
+    "fuel_pump_island"
+   ],
+   "instances": 1,
+   "data_size": [
+    5.6,
+    1.2,
+    1.8
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "Construction station: A (red) to match C2; B / C spare",
+   "collider": "Island box + 2 dispenser boxes + 2 bollard boxes.",
+   "notes": "One long island, 2 dispensers serving both sides (cars N and S), kerb 0.15 m, bollards at the ends (data note). No text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FuelPumpDouble/MW86_FuelPumpDouble_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_A.fbx",
+     "tris_lod0": 1380,
+     "tris_lod1": 548,
+     "ucx_colliders": 5,
+     "model_size_unity_xyz_m": [
+      5.6,
+      1.99,
+      1.2
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_B.fbx",
+     "tris_lod0": 1380,
+     "tris_lod1": 548,
+     "ucx_colliders": 5,
+     "model_size_unity_xyz_m": [
+      5.6,
+      1.99,
+      1.2
+     ]
+    },
+    "C": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_C.fbx",
+     "tris_lod0": 1380,
+     "tris_lod1": 548,
+     "ucx_colliders": 5,
+     "model_size_unity_xyz_m": [
+      5.6,
+      1.99,
+      1.2
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-02-fuel-pump",
+     "district": "construction",
+     "kind": "fuel_pump_island",
+     "pos": [
+      553.86,
+      339.74
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.6,
+      1.2,
+      1.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "AirWaterPost": {
+   "kinds": [
+    "air_water_post"
+   ],
+   "instances": 1,
+   "data_size": [
+    0.5,
+    0.5,
+    1.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "display and hoses at Unity +Z (Blender -Y)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 0.38 x 0.3 x 1.35.",
+   "notes": "Fuel-station air / water post: cabinet, blank display, coiled air and water hoses. No text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/AirWaterPost/MW86_AirWaterPost_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_AirWaterPost_A.fbx",
+     "tris_lod0": 424,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.47,
+      1.28,
+      0.41
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-02-fuel-air",
+     "district": "construction",
+     "kind": "air_water_post",
+     "pos": [
+      560.86,
+      335.34
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      1.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_AirWaterPost_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "IceChest": {
+   "kinds": [
+    "ice_chest"
+   ],
+   "instances": 1,
+   "data_size": [
+    1.6,
+    0.8,
+    1.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "Unity +Z (Blender -Y)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 1.52 x 0.76 x 0.98.",
+   "notes": "Fuel-station ice chest / freezer: white body with a blue band, blue lid with handle, dark base. No text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/IceChest/MW86_IceChest_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_IceChest_A.fbx",
+     "tris_lod0": 200,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.54,
+      0.96,
+      0.82
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-02-fuel-ice",
+     "district": "construction",
+     "kind": "ice_chest",
+     "pos": [
+      568.8,
+      338.42
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      1.6,
+      0.8,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_IceChest_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PricePylonBlank": {
+   "kinds": [
+    "price_pylon_blank"
+   ],
+   "instances": 1,
+   "data_size": [
+    1.2,
+    0.4,
+    4.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Two leg boxes + cabinet box.",
+   "notes": "Fuel price pylon without text (v02 par. 11): double-sided cabinet with a red header, a round colour mark and blank dark price plates with colour tabs.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PricePylonBlank/MW86_PricePylonBlank_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PricePylonBlank_A.fbx",
+     "tris_lod0": 584,
+     "tris_lod1": null,
+     "ucx_colliders": 3,
+     "model_size_unity_xyz_m": [
+      1.22,
+      4.0,
+      0.38
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-02-fuel-sign",
+     "district": "construction",
+     "kind": "price_pylon_blank",
+     "pos": [
+      543.36,
+      343.14
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.2,
+      0.4,
+      4.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PricePylonBlank_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PalletBricks": {
+   "kinds": [
+    "pallet_bricks"
+   ],
+   "instances": 6,
+   "data_size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 2",
+   "collider": "One box per loaded pallet.",
+   "notes": "Four pallets of strapped red bricks; B has one pallet half emptied.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PalletBricks/MW86_PalletBricks_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_A.fbx",
+     "tris_lod0": 816,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      2.6,
+      0.97,
+      2.79
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_B.fbx",
+     "tris_lod0": 720,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      2.6,
+      0.97,
+      2.79
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-pallet_bricks0",
+     "district": "construction",
+     "kind": "pallet_bricks",
+     "pos": [
+      608.95,
+      460.77
+     ],
+     "rot_deg": 6.5,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_bricks1",
+     "district": "construction",
+     "kind": "pallet_bricks",
+     "pos": [
+      609.34,
+      456.74
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_bricks2",
+     "district": "construction",
+     "kind": "pallet_bricks",
+     "pos": [
+      613.78,
+      461.06
+     ],
+     "rot_deg": -0.7,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_bricks3",
+     "district": "construction",
+     "kind": "pallet_bricks",
+     "pos": [
+      613.5,
+      456.7
+     ],
+     "rot_deg": 2.1,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_bricks4",
+     "district": "construction",
+     "kind": "pallet_bricks",
+     "pos": [
+      617.99,
+      460.69
+     ],
+     "rot_deg": -3.9,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_bricks5",
+     "district": "construction",
+     "kind": "pallet_bricks",
+     "pos": [
+      617.44,
+      456.5
+     ],
+     "rot_deg": 6.8,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PalletBlocks": {
+   "kinds": [
+    "pallet_blocks"
+   ],
+   "instances": 3,
+   "data_size": [
+    3.2,
+    3.2,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 2",
+   "collider": "One box per loaded pallet.",
+   "notes": "Four pallets of strapped grey concrete blocks; B has one pallet emptied.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PalletBlocks/MW86_PalletBlocks_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_A.fbx",
+     "tris_lod0": 1104,
+     "tris_lod1": 816,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      2.61,
+      0.97,
+      2.81
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_B.fbx",
+     "tris_lod0": 936,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      2.61,
+      0.97,
+      2.8
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-pallet_blocks0",
+     "district": "construction",
+     "kind": "pallet_blocks",
+     "pos": [
+      608.99,
+      450.13
+     ],
+     "rot_deg": -1.8,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_blocks1",
+     "district": "construction",
+     "kind": "pallet_blocks",
+     "pos": [
+      613.51,
+      450.78
+     ],
+     "rot_deg": -5.0,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pallet_blocks2",
+     "district": "construction",
+     "kind": "pallet_blocks",
+     "pos": [
+      616.9,
+      450.89
+     ],
+     "rot_deg": -3.2,
+     "data_size": [
+      3.2,
+      3.2,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "RebarBundles": {
+   "kinds": [
+    "rebar_bundles"
+   ],
+   "instances": 1,
+   "data_size": [
+    13.0,
+    3.0,
+    0.5
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One low box 12.4 x 2.8 x 0.45.",
+   "notes": "Five tied bundles of rebar on three bearers, bar ends sticking out, a few loose bars on top.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/RebarBundles/MW86_RebarBundles_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RebarBundles_A.fbx",
+     "tris_lod0": 1328,
+     "tris_lod1": 132,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      13.45,
+      0.35,
+      3.0
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-rebar",
+     "district": "construction",
+     "kind": "rebar_bundles",
+     "pos": [
+      613.62,
+      444.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      13.0,
+      3.0,
+      0.5
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RebarBundles_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FormworkStack": {
+   "kinds": [
+    "formwork_stack"
+   ],
+   "instances": 3,
+   "data_size": [
+    12.4,
+    1.6,
+    1.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 12.4 x 1.5 x 1.0.",
+   "notes": "Stack of yellow timber formwork beams (H20-type) with red ends on three bearers.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FormworkStack/MW86_FormworkStack_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkStack_A.fbx",
+     "tris_lod0": 1320,
+     "tris_lod1": 744,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      12.27,
+      1.12,
+      1.6
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-formwork-stack0",
+     "district": "construction",
+     "kind": "formwork_stack",
+     "pos": [
+      613.64,
+      411.04
+     ],
+     "rot_deg": 3.9,
+     "data_size": [
+      12.4,
+      1.6,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkStack_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-formwork-stack1",
+     "district": "construction",
+     "kind": "formwork_stack",
+     "pos": [
+      612.92,
+      408.64
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      12.4,
+      1.6,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkStack_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-formwork-stack2",
+     "district": "construction",
+     "kind": "formwork_stack",
+     "pos": [
+      614.25,
+      406.24
+     ],
+     "rot_deg": 0.6,
+     "data_size": [
+      12.4,
+      1.6,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkStack_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PipeStackSite": {
+   "kinds": [
+    "pipe_stack"
+   ],
+   "instances": 3,
+   "data_size": [
+    12.4,
+    0.8,
+    0.8
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "A steel, B orange PVC sewer pipes (mix on site)",
+   "collider": "One box 12.4 x 0.8 x 0.8.",
+   "notes": "Pyramid of six pipes (3-2-1) on timber chocks; A dark steel, B orange PVC.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PipeStackSite/MW86_PipeStackSite_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_A.fbx",
+     "tris_lod0": 612,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      12.13,
+      0.81,
+      1.08
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_B.fbx",
+     "tris_lod0": 612,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      12.14,
+      0.81,
+      1.08
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-pipes0",
+     "district": "construction",
+     "kind": "pipe_stack",
+     "pos": [
+      617.44,
+      402.98
+     ],
+     "rot_deg": -0.9,
+     "data_size": [
+      12.4,
+      0.8,
+      0.8
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pipes1",
+     "district": "construction",
+     "kind": "pipe_stack",
+     "pos": [
+      617.01,
+      401.66
+     ],
+     "rot_deg": -0.6,
+     "data_size": [
+      12.4,
+      0.8,
+      0.8
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-pipes2",
+     "district": "construction",
+     "kind": "pipe_stack",
+     "pos": [
+      617.13,
+      400.32
+     ],
+     "rot_deg": -0.7,
+     "data_size": [
+      12.4,
+      0.8,
+      0.8
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_B.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "SandPile": {
+   "kinds": [
+    "sand_pile"
+   ],
+   "instances": 1,
+   "data_size": [
+    7.2,
+    6.0,
+    1.8
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Convex hull of the heap (walkable).",
+   "notes": "Heap of building sand with a shovel stuck in it.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/SandPile/MW86_SandPile_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SandPile_A.fbx",
+     "tris_lod0": 308,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      7.6,
+      2.31,
+      5.84
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-sand_pile",
+     "district": "construction",
+     "kind": "sand_pile",
+     "pos": [
+      617.35,
+      388.66
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7.2,
+      6.0,
+      1.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SandPile_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "GravelPile": {
+   "kinds": [
+    "gravel_pile"
+   ],
+   "instances": 1,
+   "data_size": [
+    5.2,
+    4.4,
+    1.5
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Convex hull of the heap (walkable).",
+   "notes": "Heap of crushed stone with a few larger stones at the foot.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/GravelPile/MW86_GravelPile_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GravelPile_A.fbx",
+     "tris_lod0": 358,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      5.24,
+      1.73,
+      4.46
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-gravel_pile",
+     "district": "construction",
+     "kind": "gravel_pile",
+     "pos": [
+      622.88,
+      383.48
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.2,
+      4.4,
+      1.5
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GravelPile_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FormworkShields": {
+   "kinds": [
+    "formwork_shields"
+   ],
+   "instances": 4,
+   "data_size": [
+    6.8,
+    1.4,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Three boxes (one per stack).",
+   "notes": "Three stacks of timber board shields (planks nailed on battens) on bearers.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FormworkShields/MW86_FormworkShields_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkShields_A.fbx",
+     "tris_lod0": 1128,
+     "tris_lod1": 288,
+     "ucx_colliders": 3,
+     "model_size_unity_xyz_m": [
+      6.65,
+      0.68,
+      1.4
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-03-shields0",
+     "district": "construction",
+     "kind": "formwork_shields",
+     "pos": [
+      590.18,
+      429.84
+     ],
+     "rot_deg": -12,
+     "data_size": [
+      6.8,
+      1.4,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkShields_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-shields1",
+     "district": "construction",
+     "kind": "formwork_shields",
+     "pos": [
+      549.74,
+      411.26
+     ],
+     "rot_deg": 8,
+     "data_size": [
+      6.8,
+      1.4,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkShields_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-shields2",
+     "district": "construction",
+     "kind": "formwork_shields",
+     "pos": [
+      591.7,
+      386.34
+     ],
+     "rot_deg": -20,
+     "data_size": [
+      6.8,
+      1.4,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkShields_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-03-shields3",
+     "district": "construction",
+     "kind": "formwork_shields",
+     "pos": [
+      557.08,
+      386.28
+     ],
+     "rot_deg": 14,
+     "data_size": [
+      6.8,
+      1.4,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkShields_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "BioToilet": {
+   "kinds": [
+    "bio_toilet",
+    "portable_toilet"
+   ],
+   "instances": 5,
+   "data_size": [
+    1.2,
+    1.2,
+    2.3
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "door at Unity +Z (Blender -Y)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "construction: A blue x2, C orange x1, B green x1; port portable_toilet: A",
+   "collider": "Box 1.12 x 1.12 x 2.3.",
+   "notes": "Portable plastic toilet: ribbed shell, translucent white roof, door with vents and latch, vent pipe. A blue, B green, C orange.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/BioToilet/MW86_BioToilet_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_A.fbx",
+     "tris_lod0": 704,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.16,
+      2.5,
+      1.21
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_B.fbx",
+     "tris_lod0": 704,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.16,
+      2.5,
+      1.21
+     ]
+    },
+    "C": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_C.fbx",
+     "tris_lod0": 704,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.16,
+      2.5,
+      1.21
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-07-biotoilet0",
+     "district": "construction",
+     "kind": "bio_toilet",
+     "pos": [
+      648.4,
+      400.52
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.2,
+      1.2,
+      2.3
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-07-biotoilet1",
+     "district": "construction",
+     "kind": "bio_toilet",
+     "pos": [
+      650.7,
+      400.52
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.2,
+      1.2,
+      2.3
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-07-biotoilet2",
+     "district": "construction",
+     "kind": "bio_toilet",
+     "pos": [
+      653.0,
+      400.52
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.2,
+      1.2,
+      2.3
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-07-biotoilet3",
+     "district": "construction",
+     "kind": "bio_toilet",
+     "pos": [
+      655.3,
+      400.52
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.2,
+      1.2,
+      2.3
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-13-toilet",
+     "district": "port",
+     "kind": "portable_toilet",
+     "pos": [
+      1195.08,
+      625.76
+     ],
+     "rot_deg": 270,
+     "data_size": [
+      1.2,
+      1.2,
+      2.3
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "ClothesLine": {
+   "kinds": [
+    "clothes_line"
+   ],
+   "instances": 2,
+   "data_size": [
+    12.0,
+    0.1,
+    1.8
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "None (thin posts and lines).",
+   "notes": "Workers' clothes line at the site huts: three T-posts, two sagging lines, overalls, shirts, towels.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/ClothesLine/MW86_ClothesLine_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ClothesLine_A.fbx",
+     "tris_lod0": 392,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      11.85,
+      1.85,
+      0.5
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-07-clothesline0",
+     "district": "construction",
+     "kind": "clothes_line",
+     "pos": [
+      644.44,
+      436.72
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      12.0,
+      0.1,
+      1.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ClothesLine_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-07-clothesline1",
+     "district": "construction",
+     "kind": "clothes_line",
+     "pos": [
+      643.56,
+      433.04
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      12.0,
+      0.1,
+      1.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ClothesLine_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "SmokingShelter": {
+   "kinds": [
+    "smoking_shelter"
+   ],
+   "instances": 1,
+   "data_size": [
+    4.4,
+    3.2,
+    2.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "open side at Unity +Z (Blender -Y)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "4 post boxes, back-wall box, roof box.",
+   "notes": "Workers' smoking shelter (kurilka): steel posts, red profiled mono-pitch roof, galvanised half-walls, bench, red ash bucket with sand.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/SmokingShelter/MW86_SmokingShelter_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SmokingShelter_A.fbx",
+     "tris_lod0": 552,
+     "tris_lod1": null,
+     "ucx_colliders": 6,
+     "model_size_unity_xyz_m": [
+      4.4,
+      2.33,
+      3.19
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-07-smoking",
+     "district": "construction",
+     "kind": "smoking_shelter",
+     "pos": [
+      652.84,
+      437.12
+     ],
+     "rot_deg": -2,
+     "data_size": [
+      4.4,
+      3.2,
+      2.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SmokingShelter_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FireBarrel": {
+   "kinds": [
+    "fire_barrel"
+   ],
+   "instances": 1,
+   "data_size": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 0.62 x 0.62 x 0.95.",
+   "notes": "Rusty steel drum used as a fire barrel on two bricks: glowing vent holes, charred wood sticking out, embers on top (emissive).",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FireBarrel/MW86_FireBarrel_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FireBarrel_A.fbx",
+     "tris_lod0": 642,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.6,
+      1.19,
+      0.61
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-07-firebarrel",
+     "district": "construction",
+     "kind": "fire_barrel",
+     "pos": [
+      652.3,
+      432.24
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FireBarrel_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "TyreStack": {
+   "kinds": [
+    "tyre_stack"
+   ],
+   "instances": 3,
+   "data_size": [
+    1.0,
+    1.0,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 2",
+   "collider": "Box 0.95 x 0.95 x 1.2 (A) / 0.95 x 0.95 x 0.75 (B).",
+   "notes": "A: five stacked truck tyres. B: three stacked plus one leaning.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/TyreStack/MW86_TyreStack_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_A.fbx",
+     "tris_lod0": 840,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.95,
+      1.14,
+      0.94
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_B.fbx",
+     "tris_lod0": 672,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.08,
+      0.87,
+      1.32
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-01-tyres0",
+     "district": "construction",
+     "kind": "tyre_stack",
+     "pos": [
+      654.12,
+      386.62
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.0,
+      1.0,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-01-tyres1",
+     "district": "construction",
+     "kind": "tyre_stack",
+     "pos": [
+      654.12,
+      388.62
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.0,
+      1.0,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "03-01-tyres2",
+     "district": "construction",
+     "kind": "tyre_stack",
+     "pos": [
+      654.08,
+      390.73
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.0,
+      1.0,
+      1.2
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_B.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "ScrapMetalPile": {
+   "kinds": [
+    "scrap_metal_pile"
+   ],
+   "instances": 1,
+   "data_size": [
+    4.8,
+    3.2,
+    1.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Convex hull of the base heap.",
+   "notes": "Heap of scrap: rusty base, bent sheets, pipes, an I-beam, a wheel with tyre, a painted panel.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/ScrapMetalPile/MW86_ScrapMetalPile_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ScrapMetalPile_A.fbx",
+     "tris_lod0": 422,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      4.35,
+      1.36,
+      2.84
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "03-01-scrap",
+     "district": "construction",
+     "kind": "scrap_metal_pile",
+     "pos": [
+      624.41,
+      388.25
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      4.8,
+      3.2,
+      1.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ScrapMetalPile_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "BigScreen": {
+   "kinds": [
+    "big_screen"
+   ],
+   "instances": 1,
+   "data_size": [
+    26.9,
+    0.6,
+    8.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, 90 - rot_deg, 0)  (prefab convention: model front +Z faces the data rot direction)",
+   "y_offset_m": 0.0,
+   "front": "Unity +Z (Blender -Y) must face the data rot direction (270 = south onto the plaza)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 26.9 x 0.6 x 8.4.",
+   "notes": "LED screen on the podium edge between the towers, abstract blue / yellow geometric picture as in the approved plaza reference (no text, no logo). The screen colours are emissive swatches. DATA NOTE: with the box convention the placeholder ran N-S across the stair; place with Euler(0, 90 - rot_deg, 0) so it runs E-W and faces south.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/BigScreen/MW86_BigScreen_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BigScreen_A.fbx",
+     "tris_lod0": 368,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      26.9,
+      8.43,
+      0.63
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-35-screen",
+     "district": "downtown",
+     "kind": "big_screen",
+     "pos": [
+      1028.0,
+      411.88
+     ],
+     "rot_deg": 270.0,
+     "data_size": [
+      26.9,
+      0.6,
+      8.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BigScreen_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "MonumentTramduro": {
+   "kinds": [
+    "monument_tramduro"
+   ],
+   "instances": 1,
+   "data_size": [
+    4.8,
+    4.8,
+    12.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, 90 - rot_deg, 0)  (prefab convention: model front +Z faces the data rot direction)",
+   "y_offset_m": 0.0,
+   "front": "figure faces Unity +Z (Blender -Y) = data rot direction (270 = the boulevard, south)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Round podium as 3 stacked boxes (walkable steps) + drum box + figure box (drum top -> crown top, body below the shoulders).",
+   "notes": "v02: TRAMDURO (Vadim's Sausage Buddy character, SAUSAGE_BUDDY_TRAMDURO_v01) as if cast in polished gold, wearing an oversized royal crown (band, 10 points with orbs, red / blue gem dots): right arm raised in a wave, left fist on the hip, chest out, chin up, feet planted; pupils / brows / mouth in the darker gold swatch so the face reads. Pose baked to a static mesh (no rig). Same v01 podium: low dark granite drum + round 3-step podium D 8.8 m, blank plaque. Figure 8.2 m (soles to hair) on the 2.1 m drum, 11.25 m total. One material MW86_StaticPalette_v01; no text / logos.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/MonumentTramduro/MW86_MonumentTramduro_v02.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MonumentTramduro_A.fbx",
+     "tris_lod0": 6858,
+     "tris_lod1": 2308,
+     "ucx_colliders": 5,
+     "model_size_unity_xyz_m": [
+      8.8,
+      11.25,
+      8.8
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-15-monument",
+     "district": "downtown",
+     "kind": "monument_tramduro",
+     "pos": [
+      1028.0,
+      329.64
+     ],
+     "rot_deg": 270.0,
+     "data_size": [
+      4.8,
+      4.8,
+      12.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MonumentTramduro_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PoliceBooth": {
+   "kinds": [
+    "police_booth"
+   ],
+   "instances": 1,
+   "data_size": [
+    3.2,
+    3.2,
+    3.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "door at Unity +Z (Blender -Y); data gives no facing",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 2.6 x 2.6 x 2.75.",
+   "notes": "Small glazed police booth: navy lower panels, white fascia with a blue band, blue roof beacon; no text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PoliceBooth/MW86_PoliceBooth_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PoliceBooth_A.fbx",
+     "tris_lod0": 688,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      2.85,
+      3.06,
+      3.0
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-36-booth",
+     "district": "downtown",
+     "kind": "police_booth",
+     "pos": [
+      1045.27,
+      332.32
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      3.2,
+      3.2,
+      3.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PoliceBooth_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "ATM": {
+   "kinds": [
+    "atm"
+   ],
+   "instances": 1,
+   "data_size": [
+    1.0,
+    1.0,
+    2.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "Unity +Z (Blender -Y); data gives no facing - check on the plaza",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 0.8 x 0.62 x 1.95.",
+   "notes": "Free-standing ATM pillar, blank top lightbox, no brand or text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/ATM/MW86_ATM_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ATM_A.fbx",
+     "tris_lod0": 420,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.92,
+      2.11,
+      0.88
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-08-atm",
+     "district": "downtown",
+     "kind": "atm",
+     "pos": [
+      1016.48,
+      339.62
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      1.0,
+      1.0,
+      2.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ATM_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "RoundBenchFlowerbed": {
+   "kinds": [
+    "round_bench_flowerbed"
+   ],
+   "instances": 6,
+   "data_size": [
+    5.2,
+    5.2,
+    0.5
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "alternate A/B along the plaza rows",
+   "collider": "Box 3.6 x 3.6 x 0.48 for the bed + 8 low boxes for the seat ring.",
+   "notes": "Round wooden bench ring around a raised flowerbed (no tree), as in the approved plaza reference. A red / yellow, B purple / white / pink.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/RoundBenchFlowerbed/MW86_RoundBenchFlowerbed_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_A.fbx",
+     "tris_lod0": 1438,
+     "tris_lod1": 894,
+     "ucx_colliders": 9,
+     "model_size_unity_xyz_m": [
+      5.0,
+      0.91,
+      5.0
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_B.fbx",
+     "tris_lod0": 1438,
+     "tris_lod1": 894,
+     "ucx_colliders": 9,
+     "model_size_unity_xyz_m": [
+      5.0,
+      0.92,
+      5.0
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-04-bench1",
+     "district": "downtown",
+     "kind": "round_bench_flowerbed",
+     "pos": [
+      1006.9,
+      391.52
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.2,
+      5.2,
+      0.5
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-04-bench2",
+     "district": "downtown",
+     "kind": "round_bench_flowerbed",
+     "pos": [
+      1049.1,
+      391.52
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.2,
+      5.2,
+      0.5
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-04-bench3",
+     "district": "downtown",
+     "kind": "round_bench_flowerbed",
+     "pos": [
+      1006.9,
+      368.44
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.2,
+      5.2,
+      0.5
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-04-bench4",
+     "district": "downtown",
+     "kind": "round_bench_flowerbed",
+     "pos": [
+      1049.1,
+      368.44
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.2,
+      5.2,
+      0.5
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-04-bench5",
+     "district": "downtown",
+     "kind": "round_bench_flowerbed",
+     "pos": [
+      1006.9,
+      349.24
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.2,
+      5.2,
+      0.5
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-04-bench6",
+     "district": "downtown",
+     "kind": "round_bench_flowerbed",
+     "pos": [
+      1049.1,
+      349.24
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.2,
+      5.2,
+      0.5
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_B.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "BollardYellow": {
+   "kinds": [
+    "bollard_yellow"
+   ],
+   "instances": 7,
+   "data_size": [
+    0.3,
+    0.3,
+    1.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 0.22 x 0.22 x 1.0 (blocks the van).",
+   "notes": "Steel plaza bollard, yellow, two white reflective bands, dome top, base flange.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/BollardYellow/MW86_BollardYellow_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "tris_lod0": 274,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.28,
+      1.02,
+      0.28
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-13-bollard1",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      1208.52,
+      261.86
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-13-bollard2",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      1208.52,
+      254.84
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-13-bollard3",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      1224.14,
+      268.54
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-42-bollard1",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      940.16,
+      357.08
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-42-bollard2",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      940.16,
+      343.92
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-43-bollard1",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      1150.36,
+      411.24
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-43-bollard2",
+     "district": "downtown",
+     "kind": "bollard_yellow",
+     "pos": [
+      1150.36,
+      403.52
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.3,
+      0.3,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PalletStack": {
+   "kinds": [
+    "pallet_stack"
+   ],
+   "instances": 1,
+   "data_size": [
+    2.2,
+    2.4,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Two boxes, one per stack.",
+   "notes": "Two stacks of empty wooden pallets (8 and 6 high), slightly uneven.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PalletStack/MW86_PalletStack_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletStack_A.fbx",
+     "tris_lod0": 792,
+     "tris_lod1": null,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      2.23,
+      1.15,
+      1.32
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-13-pallets",
+     "district": "downtown",
+     "kind": "pallet_stack",
+     "pos": [
+      1230.57,
+      257.84
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      2.2,
+      2.4,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletStack_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "CourtyardGate": {
+   "kinds": [
+    "courtyard_gate"
+   ],
+   "instances": 1,
+   "data_size": [
+    5.8,
+    0.25,
+    2.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 5.8 x 0.12 x 2.3 (closed gate).",
+   "notes": "Closed double gate of black wrought iron with an arched top, spear finials, scroll rings; no text. Sits between the two GatePier models.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/CourtyardGate/MW86_CourtyardGate_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CourtyardGate_A.fbx",
+     "tris_lod0": 1324,
+     "tris_lod1": 528,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      5.87,
+      2.6,
+      0.11
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-NEB-gate",
+     "district": "downtown",
+     "kind": "courtyard_gate",
+     "pos": [
+      1202.0,
+      482.6
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      5.8,
+      0.25,
+      2.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CourtyardGate_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "GatePier": {
+   "kinds": [
+    "gate_pier"
+   ],
+   "instances": 2,
+   "data_size": [
+    0.6,
+    0.6,
+    2.8
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 0.62 x 0.62 x 2.45.",
+   "notes": "Brick gate pier with corner pilasters, stone plinth and cap, iron lantern (emissive warm glass) on top.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/GatePier/MW86_GatePier_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GatePier_A.fbx",
+     "tris_lod0": 564,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.7,
+      2.98,
+      0.7
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-NEB-gate-pier1",
+     "district": "downtown",
+     "kind": "gate_pier",
+     "pos": [
+      1198.8,
+      482.6
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.6,
+      0.6,
+      2.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GatePier_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-NEB-gate-pier2",
+     "district": "downtown",
+     "kind": "gate_pier",
+     "pos": [
+      1205.2,
+      482.6
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      0.6,
+      0.6,
+      2.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GatePier_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "HedgeTrimmed_2p8": {
+   "kinds": [
+    "hedge_trimmed"
+   ],
+   "instances": 2,
+   "data_size": [
+    2.8,
+    0.8,
+    1.1
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 2.8 x 0.8 x 1.1.",
+   "notes": "Boxwood, flat top, near-sharp corners, low stone planter kerb.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/HedgeTrimmed_2p8/MW86_HedgeTrimmed_2p8_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_2p8_A.fbx",
+     "tris_lod0": 224,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      2.8,
+      1.11,
+      0.8
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-NEB-hedge-out1",
+     "district": "downtown",
+     "kind": "hedge_trimmed",
+     "pos": [
+      1197.1,
+      483.5
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      2.8,
+      0.8,
+      1.1
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_2p8_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-NEB-hedge-out2",
+     "district": "downtown",
+     "kind": "hedge_trimmed",
+     "pos": [
+      1206.9,
+      483.5
+     ],
+     "rot_deg": 0.0,
+     "data_size": [
+      2.8,
+      0.8,
+      1.1
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_2p8_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "HedgeTrimmed_29p4": {
+   "kinds": [
+    "hedge_trimmed"
+   ],
+   "instances": 2,
+   "data_size": [
+    29.4,
+    0.9,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 29.4 x 0.9 x 1.2.",
+   "notes": "Same hedge as HedgeTrimmed_2p8, built at the full 29.4 m length (no stretching).",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/HedgeTrimmed_29p4/MW86_HedgeTrimmed_29p4_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_29p4_A.fbx",
+     "tris_lod0": 1232,
+     "tris_lod1": 308,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      29.4,
+      1.21,
+      0.9
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-NEB-hedge-in1",
+     "district": "downtown",
+     "kind": "hedge_trimmed",
+     "pos": [
+      1199.05,
+      467.1
+     ],
+     "rot_deg": 90.0,
+     "data_size": [
+      29.4,
+      0.9,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_29p4_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-NEB-hedge-in2",
+     "district": "downtown",
+     "kind": "hedge_trimmed",
+     "pos": [
+      1204.95,
+      467.1
+     ],
+     "rot_deg": 90.0,
+     "data_size": [
+      29.4,
+      0.9,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_29p4_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FuelPumpSingle": {
+   "kinds": [
+    "fuel_pump_island"
+   ],
+   "instances": 3,
+   "data_size": [
+    1.2,
+    2.4,
+    1.9
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "one variant per station (all 3 Downtown pumps the same, e.g. B); A red, B blue, C green - no brand",
+   "collider": "Island box 1.2 x 2.4 x 0.15 + dispenser box 0.55 x 0.95 x 1.85 + 2 bollard boxes.",
+   "notes": "Fuel island (rounded kerb, yellow end bollards) with one double-sided dispenser: displays, nozzles, hoses. No text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FuelPumpSingle/MW86_FuelPumpSingle_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_A.fbx",
+     "tris_lod0": 948,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      1.2,
+      1.99,
+      2.4
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_B.fbx",
+     "tris_lod0": 948,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      1.2,
+      1.99,
+      2.4
+     ]
+    },
+    "C": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_C.fbx",
+     "tris_lod0": 948,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      1.2,
+      1.99,
+      2.4
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "05-41-pump1",
+     "district": "downtown",
+     "kind": "fuel_pump_island",
+     "pos": [
+      816.64,
+      301.72
+     ],
+     "rot_deg": 90.0,
+     "data_size": [
+      1.2,
+      2.4,
+      1.9
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-41-pump2",
+     "district": "downtown",
+     "kind": "fuel_pump_island",
+     "pos": [
+      822.76,
+      301.72
+     ],
+     "rot_deg": 90.0,
+     "data_size": [
+      1.2,
+      2.4,
+      1.9
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "05-41-pump3",
+     "district": "downtown",
+     "kind": "fuel_pump_island",
+     "pos": [
+      828.87,
+      301.72
+     ],
+     "rot_deg": 90.0,
+     "data_size": [
+      1.2,
+      2.4,
+      1.9
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_B.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "BlockedTunnelMouth": {
+   "kinds": [
+    "blocked_tunnel_mouth"
+   ],
+   "instances": 1,
+   "data_size": [
+    6.0,
+    3.0,
+    5.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "Unity +X (Blender -X): the cliff is on the -X side",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Portal wall box + rock-fill box + spill hull: no way through.",
+   "notes": "Old single-track rail tunnel portal (stone voussoir arch, concrete face, wing walls) completely filled with rocks; rails come out from under the rocks. Terrain check (heightmap v02): ground rises steeply toward local -X, so the face looks to local +X.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/BlockedTunnelMouth/MW86_BlockedTunnelMouth_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BlockedTunnelMouth_A.fbx",
+     "tris_lod0": 1382,
+     "tris_lod1": 894,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      4.3,
+      6.73,
+      7.7
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "01-tunnel-mouth",
+     "district": "forest",
+     "kind": "blocked_tunnel_mouth",
+     "pos": [
+      201.0,
+      138.0
+     ],
+     "rot_deg": 32.5,
+     "data_size": [
+      6.0,
+      3.0,
+      5.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BlockedTunnelMouth_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "CampfireCold": {
+   "kinds": [
+    "campfire_cold"
+   ],
+   "instances": 1,
+   "data_size": [
+    6.8,
+    6.8,
+    0.4
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Two stump seats only; stones / ash are walk-over (no collider).",
+   "notes": "Cold campfire in the wagon clearing: ring of 9 stones, ash, charred logs, two stump seats, kindling pile, two empty bottles (no labels).",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/CampfireCold/MW86_CampfireCold_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CampfireCold_A.fbx",
+     "tris_lod0": 1368,
+     "tris_lod1": 380,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      4.92,
+      0.44,
+      2.88
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "01-campfire",
+     "district": "forest",
+     "kind": "campfire_cold",
+     "pos": [
+      290.6,
+      167.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      6.8,
+      6.8,
+      0.4
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CampfireCold_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "LogBench": {
+   "kinds": [
+    "log_bench"
+   ],
+   "instances": 1,
+   "data_size": [
+    5.8,
+    1.4,
+    0.5
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box along the seat (5.2 x 0.5 x 0.48).",
+   "notes": "Fallen-log bench by the campfire: sawn flat seat, root plate at one end, branch stubs.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/LogBench/MW86_LogBench_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_LogBench_A.fbx",
+     "tris_lod0": 460,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      5.5,
+      1.03,
+      1.31
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "01_B03",
+     "district": "forest",
+     "kind": "log_bench",
+     "pos": [
+      298.9,
+      163.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.8,
+      1.4,
+      0.5
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_LogBench_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "Grave": {
+   "kinds": [
+    "grave"
+   ],
+   "instances": 12,
+   "data_size": [
+    1.0,
+    1.9,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "head end (cross / stone) at Blender +Y = Unity -Z",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 3",
+   "collider": "Low box over the mound/fence (1.0 x 1.9 x 0.5) + post box for the cross.",
+   "notes": "A: wooden Orthodox cross with a little roof, grass mound, wreath. B: dark granite headstone with stone kerb and flowers. C: blue-painted iron fence (ogradka) with a metal cross, small bench and table.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/Grave/MW86_Grave_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "tris_lod0": 580,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.8,
+      1.67,
+      1.69
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_B.fbx",
+     "tris_lod0": 712,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.95,
+      1.16,
+      1.79
+     ]
+    },
+    "C": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_C.fbx",
+     "tris_lod0": 1344,
+     "tris_lod1": 704,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.18,
+      1.25,
+      1.95
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "02-U-GRAVE-00",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      235.4,
+      583.2
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-01",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      239.9,
+      583.2
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-02",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      244.4,
+      583.2
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-03",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      248.9,
+      583.2
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-04",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      235.4,
+      586.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-05",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      239.9,
+      586.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-06",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      244.4,
+      586.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-07",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      248.9,
+      586.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-08",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      235.4,
+      589.8
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-09",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      239.9,
+      589.8
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-10",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      244.4,
+      589.8
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-GRAVE-11",
+     "district": "hamlet",
+     "kind": "grave",
+     "pos": [
+      248.9,
+      589.8
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1,
+      1.9,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "Standpipe": {
+   "kinds": [
+    "standpipe"
+   ],
+   "instances": 2,
+   "data_size": [
+    0.4,
+    0.4,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "spout to Blender -Y (Unity +Z)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "A green, B blue (stable hash of id % 2)",
+   "collider": "Thin box 0.2 x 0.2 x 1.1.",
+   "notes": "Soviet street water column (vodorazbornaya kolonka): cast-iron column, lever handle, spout with bucket hook, concrete pad.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/Standpipe/MW86_Standpipe_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Standpipe_A.fbx",
+     "tris_lod0": 494,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.4,
+      1.27,
+      0.81
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Standpipe_B.fbx",
+     "tris_lod0": 494,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.4,
+      1.27,
+      0.81
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "02-U-WATER1",
+     "district": "hamlet",
+     "kind": "standpipe",
+     "pos": [
+      309.0,
+      508.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.4,
+      0.4,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Standpipe_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-U-WATER2",
+     "district": "hamlet",
+     "kind": "standpipe",
+     "pos": [
+      391.0,
+      477.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.4,
+      0.4,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Standpipe_B.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FishingNets": {
+   "kinds": [
+    "fishing_nets"
+   ],
+   "instances": 1,
+   "data_size": [
+    2.2,
+    0.3,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "None (line visuals have no blocking collider per data).",
+   "notes": "Net hung between two leaning stakes on the river bank, cork floats on the head rope, lead line at the bottom, two torn holes.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FishingNets/MW86_FishingNets_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FishingNets_A.fbx",
+     "tris_lod0": 1012,
+     "tris_lod1": 354,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      2.54,
+      2.0,
+      0.15
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "02-FISH-NETS",
+     "district": "hamlet",
+     "kind": "fishing_nets",
+     "pos": [
+      475.0,
+      449.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      2.2,
+      0.3,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FishingNets_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "NetDryingRack": {
+   "kinds": [
+    "net_drying_rack"
+   ],
+   "instances": 1,
+   "data_size": [
+    2.5,
+    0.3,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Two thin boxes on the trestles; net has none.",
+   "notes": "Two X-trestles with a pole, net drying over it on both sides, cork floats, one float line hanging.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/NetDryingRack/MW86_NetDryingRack_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_NetDryingRack_A.fbx",
+     "tris_lod0": 1284,
+     "tris_lod1": 294,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      2.6,
+      1.77,
+      0.92
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "02-D-064",
+     "district": "hamlet",
+     "kind": "net_drying_rack",
+     "pos": [
+      419.09,
+      469.99
+     ],
+     "rot_deg": 110,
+     "data_size": [
+      2.5,
+      0.3,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_NetDryingRack_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "ReedClump": {
+   "kinds": [
+    "reed_clump"
+   ],
+   "instances": 7,
+   "data_size": [
+    1.5,
+    1.0,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 2",
+   "collider": "None (decorative, walk-through).",
+   "notes": "Pond-margin reeds with cattails; A green, B taller and drier.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/ReedClump/MW86_ReedClump_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_A.fbx",
+     "tris_lod0": 636,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      1.58,
+      1.58,
+      1.31
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+     "tris_lod0": 784,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      1.97,
+      1.98,
+      1.08
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "02-D-067",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      245.42,
+      478.44
+     ],
+     "rot_deg": 102,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-D-068",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      255.86,
+      486.56
+     ],
+     "rot_deg": 182,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-D-070",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      290.08,
+      472.32
+     ],
+     "rot_deg": 342,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-D-071",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      289.85,
+      458.14
+     ],
+     "rot_deg": 62,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-D-072",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      276.7,
+      447.95
+     ],
+     "rot_deg": 142,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-D-073",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      257.39,
+      448.21
+     ],
+     "rot_deg": 222,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "02-D-074",
+     "district": "hamlet",
+     "kind": "reed_clump",
+     "pos": [
+      244.18,
+      459.66
+     ],
+     "rot_deg": 302,
+     "data_size": [
+      1.5,
+      1,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "WaterTowerPort": {
+   "kinds": [
+    "water_tower"
+   ],
+   "instances": 1,
+   "data_size": [
+    9.2,
+    9.2,
+    18.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "4 leg boxes, riser box, tank hull (full, solid per data).",
+   "notes": "Old steel water tower on four braced legs: pale sage tank r 4.6 m with a catwalk and railing, conical roof, central riser pipe, ladder. Not the Hamlet Rozhnovsky tower (that is WATER-TOWER-ASTRA-001).",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/WaterTowerPort/MW86_WaterTowerPort_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTowerPort_A.fbx",
+     "tris_lod0": 2292,
+     "tris_lod1": 1254,
+     "ucx_colliders": 6,
+     "model_size_unity_xyz_m": [
+      10.6,
+      18.51,
+      10.6
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-06-water-tower",
+     "district": "port",
+     "kind": "water_tower",
+     "pos": [
+      1325.95,
+      610.4
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      9.2,
+      9.2,
+      18.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTowerPort_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PipeStackPort": {
+   "kinds": [
+    "pipe_stack"
+   ],
+   "instances": 1,
+   "data_size": [
+    9.0,
+    2.7,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Hull of the pyramid.",
+   "notes": "Pyramid of 15 large steel pipes (6-5-4) on timber chocks, some rusty, some galvanised.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PipeStackPort/MW86_PipeStackPort_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackPort_A.fbx",
+     "tris_lod0": 1332,
+     "tris_lod1": 636,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      9.0,
+      1.28,
+      2.88
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-10-pipe-stack",
+     "district": "port",
+     "kind": "pipe_stack",
+     "pos": [
+      1287.83,
+      602.12
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      9,
+      2.7000000000000455,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackPort_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "CableReel": {
+   "kinds": [
+    "cable_reel"
+   ],
+   "instances": 3,
+   "data_size": [
+    1.6,
+    1.0,
+    1.6
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 2",
+   "collider": "Box 1.6 x 1.0 x 1.6 (or a 16-gon hull).",
+   "notes": "Wooden cable drum on its edge; A black cable, B orange cable with a loose end.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/CableReel/MW86_CableReel_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_A.fbx",
+     "tris_lod0": 452,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.58,
+      1.6,
+      1.06
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_B.fbx",
+     "tris_lod0": 498,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      2.4,
+      1.6,
+      1.06
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-10-cable-reel0",
+     "district": "port",
+     "kind": "cable_reel",
+     "pos": [
+      1275.15,
+      604.19
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.6,
+      1.0,
+      1.6
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-10-cable-reel1",
+     "district": "port",
+     "kind": "cable_reel",
+     "pos": [
+      1277.75,
+      601.59
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.6,
+      1.0,
+      1.6
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-10-cable-reel2",
+     "district": "port",
+     "kind": "cable_reel",
+     "pos": [
+      1274.95,
+      601.59
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.6,
+      1.0,
+      1.6
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_B.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "OilDrum": {
+   "kinds": [
+    "oil_drum"
+   ],
+   "instances": 14,
+   "data_size": [
+    0.6,
+    0.6,
+    0.9
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "stable hash of id % 3",
+   "collider": "Box 0.58 x 0.58 x 0.9.",
+   "notes": "200 L steel drum with rolling hoops and bung caps. A blue, B red, C yellow.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/OilDrum/MW86_OilDrum_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "tris_lod0": 424,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.6,
+      0.89,
+      0.6
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_B.fbx",
+     "tris_lod0": 424,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.6,
+      0.89,
+      0.6
+     ]
+    },
+    "C": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "tris_lod0": 424,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.6,
+      0.89,
+      0.6
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-11-drum00",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1265.15,
+      654.26
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum01",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1265.75,
+      654.26
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum02",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1266.55,
+      654.26
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum03",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1267.35,
+      654.26
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum04",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1268.05,
+      654.26
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum05",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1265.05,
+      655.06
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum06",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1265.85,
+      655.06
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum07",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1266.45,
+      655.06
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum08",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1267.25,
+      655.06
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum09",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1268.15,
+      655.06
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum10",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1265.05,
+      655.76
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum11",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1265.75,
+      655.76
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum12",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1266.55,
+      655.76
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-11-drum13",
+     "district": "port",
+     "kind": "oil_drum",
+     "pos": [
+      1267.35,
+      655.76
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "Pallets": {
+   "kinds": [
+    "pallets"
+   ],
+   "instances": 1,
+   "data_size": [
+    3.6,
+    2.4,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box per stack.",
+   "notes": "Six stacks of empty pallets of different heights.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/Pallets/MW86_Pallets_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Pallets_A.fbx",
+     "tris_lod0": 1464,
+     "tris_lod1": 610,
+     "ucx_colliders": 6,
+     "model_size_unity_xyz_m": [
+      3.49,
+      0.86,
+      2.55
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-09-pallets",
+     "district": "port",
+     "kind": "pallets",
+     "pos": [
+      1256.2,
+      647.28
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.6,
+      2.4,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Pallets_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "BigBags": {
+   "kinds": [
+    "big_bags"
+   ],
+   "instances": 1,
+   "data_size": [
+    3.6,
+    1.2,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 3.5 x 1.15 x 1.15.",
+   "notes": "Three white woven bulk bags (FIBC) with corner lift loops and tied spouts, one with a blue band.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/BigBags/MW86_BigBags_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BigBags_A.fbx",
+     "tris_lod0": 1092,
+     "tris_lod1": 156,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      3.54,
+      1.2,
+      1.14
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-09-big_bags",
+     "district": "port",
+     "kind": "big_bags",
+     "pos": [
+      1269.58,
+      642.16
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      3.6,
+      1.2,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BigBags_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PipeManifold": {
+   "kinds": [
+    "pipe_manifold"
+   ],
+   "instances": 1,
+   "data_size": null,
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "built to the data polyline (U-run): legs at local x = +-11 m reaching 2.48 m toward the tanks (data +y = north), run along y = -2.48",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "None needed (low pipe, 0.65 m) or one box per straight run.",
+   "notes": "Low yellow product pipe on H-supports from the two tanks: polyline [[1287.45,655.2],[1287.45,650.24],[1309.45,650.24],[1309.45,655.2]] around pos (1298.45, 652.72); flanges, two gate valves with red handwheels near the tanks. Data has size null -> builder made a 1 m cube.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PipeManifold/MW86_PipeManifold_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeManifold_A.fbx",
+     "tris_lod0": 1384,
+     "tris_lod1": 664,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      22.7,
+      1.09,
+      5.31
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-05-manifold",
+     "district": "port",
+     "kind": "pipe_manifold",
+     "pos": [
+      1298.45,
+      652.72
+     ],
+     "rot_deg": 0,
+     "data_size": null,
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeManifold_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "MooringBollard": {
+   "kinds": [
+    "bollard"
+   ],
+   "instances": 10,
+   "data_size": [
+    0.5,
+    0.5,
+    0.7
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 0.36 x 0.36 x 0.7 (keeps W76GripAnchor).",
+   "notes": "Cast-iron mooring bollard on a bolted base plate, black with a yellow painted head rim.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/MooringBollard/MW86_MooringBollard_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "tris_lod0": 334,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.5,
+      0.68,
+      0.5
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-quay-bollard00",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1275.1,
+      681.81
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard01",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1276.1,
+      691.56
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard02",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1277.1,
+      701.31
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard03",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1278.1,
+      711.06
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard04",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1284.23,
+      717.95
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard05",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1294.66,
+      717.01
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard06",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1299.15,
+      709.41
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard07",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1298.65,
+      700.16
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard08",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1298.15,
+      690.91
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-bollard09",
+     "district": "port",
+     "kind": "bollard",
+     "pos": [
+      1297.65,
+      681.66
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.5,
+      0.5,
+      0.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "RubberFender": {
+   "kinds": [
+    "rubber_fender"
+   ],
+   "instances": 10,
+   "data_size": [
+    1.2,
+    0.4,
+    1.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": -1.0,
+   "front": "rubber face to Unity +Z (Blender -Y) = the water side (verified on all 10 data fenders: box convention local +Z points to the sea)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 1.2 x 0.4 x 1.0.",
+   "notes": "D-section rubber quay fender on steel back plates with a yellow-painted top angle. Intended to hang on the quay face: lower by ~1.0 m (top flush with the deck) and push ~0.2 m outward if it floats in front of the edge.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/RubberFender/MW86_RubberFender_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "tris_lod0": 192,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.2,
+      1.04,
+      0.39
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "06-quay-fender00",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1274.25,
+      681.9
+     ],
+     "rot_deg": 84.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender01",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1275.25,
+      691.65
+     ],
+     "rot_deg": 84.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender02",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1276.25,
+      701.4
+     ],
+     "rot_deg": 84.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender03",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1277.25,
+      711.15
+     ],
+     "rot_deg": 84.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender04",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1283.9,
+      718.73
+     ],
+     "rot_deg": 22.6,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender05",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1295.14,
+      717.7
+     ],
+     "rot_deg": -35.0,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender06",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1300.0,
+      709.36
+     ],
+     "rot_deg": -93.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender07",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1299.5,
+      700.11
+     ],
+     "rot_deg": -93.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender08",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1299.0,
+      690.86
+     ],
+     "rot_deg": -93.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "06-quay-fender09",
+     "district": "port",
+     "kind": "rubber_fender",
+     "pos": [
+      1298.5,
+      681.61
+     ],
+     "rot_deg": -93.1,
+     "data_size": [
+      1.2,
+      0.4,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "SlidingGateSteel": {
+   "kinds": [
+    "sliding_gate_steel"
+   ],
+   "instances": 1,
+   "data_size": [
+    8.4,
+    0.4,
+    3.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 8.4 x 0.2 x 3.2 (closed, blocks the road).",
+   "notes": "One heavy steel sliding gate: tube frame, vertical ribs proud on both faces, red / white striped infill, bottom rollers. Pairs with GateGuideRail to the east.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/SlidingGateSteel/MW86_SlidingGateSteel_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SlidingGateSteel_A.fbx",
+     "tris_lod0": 740,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      8.4,
+      3.29,
+      0.22
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "04-KPP-gate",
+     "district": "rough",
+     "kind": "sliding_gate_steel",
+     "pos": [
+      860.0,
+      932.97
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      8.4,
+      0.4,
+      3.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SlidingGateSteel_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "GateGuideRail": {
+   "kinds": [
+    "gate_guide_rail"
+   ],
+   "instances": 1,
+   "data_size": [
+    6.9,
+    0.3,
+    0.6
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Low box 6.9 x 0.3 x 0.2 (+ post box at the far end).",
+   "notes": "Ground guide rail for the sliding gate: concrete strip, steel rail with support rollers, end stop and a roller guide post.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/GateGuideRail/MW86_GateGuideRail_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GateGuideRail_A.fbx",
+     "tris_lod0": 468,
+     "tris_lod1": null,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      6.9,
+      0.6,
+      0.34
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "04-KPP-rail",
+     "district": "rough",
+     "kind": "gate_guide_rail",
+     "pos": [
+      869.05,
+      932.97
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      6.9,
+      0.3,
+      0.6
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GateGuideRail_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "LeaveCountryButton": {
+   "kinds": [
+    "leave_country_button"
+   ],
+   "instances": 1,
+   "data_size": [
+    0.4,
+    0.3,
+    1.3
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "button face looks along local +X (Unity +X, Blender -X) = data rot direction (270 = south, toward the arriving van)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 0.3 x 0.3 x 1.3. Keeps W76LeaveCountryButton on the root.",
+   "notes": "Hazard-striped steel post with a slanted control box and a big red mushroom button (slight glow). No text on the model.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/LeaveCountryButton/MW86_LeaveCountryButton_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_LeaveCountryButton_A.fbx",
+     "tris_lod0": 386,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      0.4,
+      1.29,
+      0.32
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "04-KPP-button",
+     "district": "rough",
+     "kind": "leave_country_button",
+     "pos": [
+      856.4,
+      928.46
+     ],
+     "rot_deg": 270,
+     "data_size": [
+      0.4,
+      0.3,
+      1.3
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_LeaveCountryButton_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "WatchTower": {
+   "kinds": [
+    "watch_tower"
+   ],
+   "instances": 2,
+   "data_size": [
+    5.0,
+    5.0,
+    9.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "ladder and door on Unity +Z (Blender -Y); data gives no facing",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "4 leg boxes, platform box (walkable) and cabin box.",
+   "notes": "Border watch tower at the Rough KPP: steel legs with X-bracing, timber cabin with a window band, pyramid roof, searchlight, ladder. Military green / dark grey, no insignia.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/WatchTower/MW86_WatchTower_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WatchTower_A.fbx",
+     "tris_lod0": 1436,
+     "tris_lod1": 832,
+     "ucx_colliders": 6,
+     "model_size_unity_xyz_m": [
+      5.0,
+      9.74,
+      5.23
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "04-border-tower1",
+     "district": "rough",
+     "kind": "watch_tower",
+     "pos": [
+      735.0,
+      927.22
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.0,
+      5.0,
+      9.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WatchTower_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "04-border-tower2",
+     "district": "rough",
+     "kind": "watch_tower",
+     "pos": [
+      975.0,
+      925.08
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      5.0,
+      5.0,
+      9.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WatchTower_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FootballGoalTornNet": {
+   "kinds": [
+    "football_goal_torn_net"
+   ],
+   "instances": 2,
+   "data_size": [
+    5.0,
+    1.2,
+    2.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "goal mouth opens to Blender +Y = Unity -Z (toward the pitch for both data goals, rot 90 / 270, box convention)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Boxes for the two posts and the crossbar only (net does not block).",
+   "notes": "Pipe goal, off-white paint with rusty feet, back stanchions, torn and sagging net with holes and a hanging flap.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FootballGoalTornNet/MW86_FootballGoalTornNet_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FootballGoalTornNet_A.fbx",
+     "tris_lod0": 1428,
+     "tris_lod1": 480,
+     "ucx_colliders": 3,
+     "model_size_unity_xyz_m": [
+      5.03,
+      2.06,
+      1.25
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "04-box-goal1",
+     "district": "rough",
+     "kind": "football_goal_torn_net",
+     "pos": [
+      810.3,
+      713.62
+     ],
+     "rot_deg": 90,
+     "data_size": [
+      5.0,
+      1.2,
+      2.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FootballGoalTornNet_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "04-box-goal2",
+     "district": "rough",
+     "kind": "football_goal_torn_net",
+     "pos": [
+      843.3,
+      713.62
+     ],
+     "rot_deg": 270,
+     "data_size": [
+      5.0,
+      1.2,
+      2.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FootballGoalTornNet_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "NeonHeartSign": {
+   "kinds": [
+    "neon_heart_sign"
+   ],
+   "instances": 1,
+   "data_size": [
+    1.0,
+    0.1,
+    1.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 2.3,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "None (wall decoration).",
+   "notes": "Pink neon heart tube (emissive) with wall stand-offs and a small transformer box; plane = X/Z, wall side Blender +Y. Data box stands on the ground: lift it ~2.3 m onto the club wall.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/NeonHeartSign/MW86_NeonHeartSign_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_NeonHeartSign_A.fbx",
+     "tris_lod0": 808,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      0.9,
+      0.81,
+      0.08
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "04-club-neon",
+     "district": "rough",
+     "kind": "neon_heart_sign",
+     "pos": [
+      923.1,
+      729.38
+     ],
+     "rot_deg": 180,
+     "data_size": [
+      1.0,
+      0.1,
+      1.0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_NeonHeartSign_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PorticoSteps": {
+   "kinds": [
+    "portico_steps"
+   ],
+   "instances": 1,
+   "data_size": [
+    10.0,
+    4.0,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "climbs toward Blender -Y = Unity +Z (north, to the palace door at y 812.5)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box per step (walkable).",
+   "notes": "White travertine stair of the palace portico: 5 steps (0.18 m) and a landing, cheek blocks with urns.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PorticoSteps/MW86_PorticoSteps_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PorticoSteps_A.fbx",
+     "tris_lod0": 592,
+     "tris_lod1": null,
+     "ucx_colliders": 7,
+     "model_size_unity_xyz_m": [
+      10.1,
+      1.82,
+      4.1
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-portico",
+     "district": "tramduro",
+     "kind": "portico_steps",
+     "pos": [
+      1576.2,
+      809.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      10,
+      4,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PorticoSteps_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "GoldStatue": {
+   "kinds": [
+    "gold_statue"
+   ],
+   "instances": 1,
+   "data_size": [
+    2.8,
+    2.8,
+    3.7
+   ],
+   "unity_rotation": "Quaternion.Euler(0, 90 - rot_deg, 0)  (prefab convention: model front +Z faces the data rot direction)",
+   "y_offset_m": 1.3,
+   "front": "figure faces Unity +Z (Blender -Y); facing convention gives east for rot 0 - suggest yaw 180 (Unity) so it faces the lawn / south",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Plinth box + figure box.",
+   "notes": "Same golden cartoon leader as the Downtown monument, 3.3 m on a 0.4 m dark plinth. Stands ON StepPedestal (same pos): lift by 1.3 m.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/GoldStatue/MW86_GoldStatue_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GoldStatue_A.fbx",
+     "tris_lod0": 2050,
+     "tris_lod1": 578,
+     "ucx_colliders": 2,
+     "model_size_unity_xyz_m": [
+      1.95,
+      3.8,
+      1.7
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-statue",
+     "district": "tramduro",
+     "kind": "gold_statue",
+     "pos": [
+      1570.2,
+      797.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      2.8,
+      2.8,
+      3.7
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GoldStatue_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "StepPedestal": {
+   "kinds": [
+    "stepped_monument_pedestal"
+   ],
+   "instances": 1,
+   "data_size": [
+    4.8,
+    4.8,
+    1.3
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Three stacked boxes (walkable steps).",
+   "notes": "Three square travertine steps with dark granite edge bands; carries GoldStatue.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/StepPedestal/MW86_StepPedestal_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_StepPedestal_A.fbx",
+     "tris_lod0": 168,
+     "tris_lod1": null,
+     "ucx_colliders": 3,
+     "model_size_unity_xyz_m": [
+      4.82,
+      1.3,
+      4.82
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-statue_pedestal",
+     "district": "tramduro",
+     "kind": "stepped_monument_pedestal",
+     "pos": [
+      1570.2,
+      797.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      4.8,
+      4.8,
+      1.3
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_StepPedestal_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "BridgeBarrier": {
+   "kinds": [
+    "bridge_barrier"
+   ],
+   "instances": 1,
+   "data_size": [
+    0.25,
+    6.4,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "boom along Blender Y (= data size[1] 6.4 m across the road); post at the Blender +Y end (Unity -Z)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "None (data solid = false); add a trigger if the KPP logic needs one.",
+   "notes": "Closed red / white striped boom barrier of the island KPP: post with motor box and counterweight, boom rest fork at the far end.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/BridgeBarrier/MW86_BridgeBarrier_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BridgeBarrier_A.fbx",
+     "tris_lod0": 612,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      0.4,
+      1.2,
+      7.0
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-barrier",
+     "district": "tramduro",
+     "kind": "bridge_barrier",
+     "pos": [
+      1470.2,
+      780.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      0.25,
+      6.4,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BridgeBarrier_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "FictionalNuclearMissile": {
+   "kinds": [
+    "fictional_nuclear_missile"
+   ],
+   "instances": 3,
+   "data_size": [
+    7.0,
+    7.0,
+    11.0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Missile body box + collar ring as 4 boxes.",
+   "notes": "Cartoon missile rising from an open silo: concrete collar with yellow / black hazard ring, two blast doors folded open, white body with red nose and fins, dark bands. No symbols or text.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/FictionalNuclearMissile/MW86_FictionalNuclearMissile_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FictionalNuclearMissile_A.fbx",
+     "tris_lod0": 1346,
+     "tris_lod1": 646,
+     "ucx_colliders": 5,
+     "model_size_unity_xyz_m": [
+      7.86,
+      10.75,
+      6.8
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-missile1",
+     "district": "tramduro",
+     "kind": "fictional_nuclear_missile",
+     "pos": [
+      1618.2,
+      816.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7,
+      7,
+      11
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FictionalNuclearMissile_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "10-missile2",
+     "district": "tramduro",
+     "kind": "fictional_nuclear_missile",
+     "pos": [
+      1618.2,
+      827.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7,
+      7,
+      11
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FictionalNuclearMissile_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "10-missile3",
+     "district": "tramduro",
+     "kind": "fictional_nuclear_missile",
+     "pos": [
+      1618.2,
+      838.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      7,
+      7,
+      11
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FictionalNuclearMissile_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PresidentialSpeechStage": {
+   "kinds": [
+    "presidential_speech_stage"
+   ],
+   "instances": 1,
+   "data_size": [
+    16.0,
+    9.0,
+    0.8
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "audience / steps side = Blender +Y = Unity -Z (south)",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box 16 x 9 x 0.8 (walkable top).",
+   "notes": "Stage platform: pleated red skirt with gold trim, light deck, red carpet runner from the steps to the lectern, two flag stands with plain red / gold flags at the back.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PresidentialSpeechStage/MW86_PresidentialSpeechStage_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PresidentialSpeechStage_A.fbx",
+     "tris_lod0": 1136,
+     "tris_lod1": 152,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      16.24,
+      4.31,
+      9.06
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-speech_platform",
+     "district": "tramduro",
+     "kind": "presidential_speech_stage",
+     "pos": [
+      1556.2,
+      797.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      16,
+      9,
+      0.8
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PresidentialSpeechStage_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "PresidentialLectern": {
+   "kinds": [
+    "presidential_lectern"
+   ],
+   "instances": 1,
+   "data_size": [
+    1.4,
+    0.8,
+    1.2
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.8,
+   "front": "front panel to Blender +Y = Unity -Z (south, the audience); speaker stands on the Blender -Y side",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "Box 1.1 x 0.7 x 1.2.",
+   "notes": "Dark wood lectern with a red front panel and gold trim, slanted reading desk, two microphones. No emblem. Stands ON the stage (same area): lift by 0.8 m.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/PresidentialLectern/MW86_PresidentialLectern_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PresidentialLectern_A.fbx",
+     "tris_lod0": 280,
+     "tris_lod1": null,
+     "ucx_colliders": 1,
+     "model_size_unity_xyz_m": [
+      1.4,
+      1.45,
+      0.8
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-speech_lectern",
+     "district": "tramduro",
+     "kind": "presidential_lectern",
+     "pos": [
+      1556.2,
+      799.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      1.4,
+      0.8,
+      1.2
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PresidentialLectern_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "SpeechPlatformSteps": {
+   "kinds": [
+    "speech_platform_steps"
+   ],
+   "instances": 1,
+   "data_size": [
+    8.0,
+    2.0,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": "climbs toward Blender -Y = Unity +Z (north, up onto the stage); top = 0.8 m",
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "single",
+   "collider": "One box per step (walkable).",
+   "notes": "Four steps up to the stage with the red carpet runner and brass rope posts.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/SpeechPlatformSteps/MW86_SpeechPlatformSteps_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SpeechPlatformSteps_A.fbx",
+     "tris_lod0": 728,
+     "tris_lod1": null,
+     "ucx_colliders": 4,
+     "model_size_unity_xyz_m": [
+      8.0,
+      1.76,
+      2.0
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-speech_steps",
+     "district": "tramduro",
+     "kind": "speech_platform_steps",
+     "pos": [
+      1556.2,
+      792.0
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      8,
+      2,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SpeechPlatformSteps_A.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  },
+  "GolfGreen": {
+   "kinds": [
+    "golf_green"
+   ],
+   "instances": 3,
+   "data_size": [
+    8.0,
+    7.0,
+    0
+   ],
+   "unity_rotation": "Quaternion.Euler(0, -rot_deg, 0)  (same as the W85 placeholder box: local X = data size[0], local Z = data size[1])",
+   "y_offset_m": 0.0,
+   "front": null,
+   "scale": "none (1:1, modelled at data size)",
+   "variant_rule": "one per data green (green1 A, green2 B, green3 C)",
+   "collider": "None (raised 8 cm; walkable). Flag pin optional thin box.",
+   "notes": "Joke mini-golf putting green: oval green on a fringe, cup, flag pin, balls; B with a small sand bunker, C with a little bridge-less water edge stone ring. Red flags, no numbers.",
+   "source_blend": "ArtSource/Props/MAP_W86_v01/static/GolfGreen/MW86_GolfGreen_v01.blend",
+   "variants": {
+    "A": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_A.fbx",
+     "tris_lod0": 452,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      8.01,
+      2.1,
+      7.02
+     ]
+    },
+    "B": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_B.fbx",
+     "tris_lod0": 546,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      8.01,
+      2.1,
+      7.04
+     ]
+    },
+    "C": {
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_C.fbx",
+     "tris_lod0": 652,
+     "tris_lod1": null,
+     "ucx_colliders": 0,
+     "model_size_unity_xyz_m": [
+      7.96,
+      2.19,
+      6.94
+     ]
+    }
+   },
+   "ids": [
+    {
+     "id": "10-green1",
+     "district": "tramduro",
+     "kind": "golf_green",
+     "pos": [
+      1517.2,
+      832.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      8,
+      7,
+      0
+     ],
+     "variant": "A",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_A.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "10-green2",
+     "district": "tramduro",
+     "kind": "golf_green",
+     "pos": [
+      1535.2,
+      830.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      8,
+      7,
+      0
+     ],
+     "variant": "B",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_B.fbx",
+     "uniform_scale": 1.0
+    },
+    {
+     "id": "10-green3",
+     "district": "tramduro",
+     "kind": "golf_green",
+     "pos": [
+      1525.2,
+      818.5
+     ],
+     "rot_deg": 0,
+     "data_size": [
+      8,
+      7,
+      0
+     ],
+     "variant": "C",
+     "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_C.fbx",
+     "uniform_scale": 1.0
+    }
+   ]
+  }
+ },
+ "optional_unused": {
+  "SiteBin": {
+   "fbx": [
+    "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SiteBin_A.fbx"
+   ],
+   "kinds": [
+    "bin"
+   ],
+   "why": "built for a box kind that W85Builder now maps to a prefab (PrefabOf changed during this pass) - use only if wanted"
+  }
+ },
+ "not_mine": {
+  "boat_on_keel_blocks": "M1",
+  "concrete_mixer_truck": "M1 (vehicles/machines)",
+  "dump_truck": "M1",
+  "food_truck": "M1",
+  "forklift": "M1",
+  "helicopter": "M1",
+  "jet_ski": "M1 (boats/water craft)",
+  "military_cargo_truck": "M1",
+  "military_utility_vehicle": "M1",
+  "npc_spot": "NPC marker, no visual - integrator should turn it into an empty marker (W85Builder makes a 0.6 x 1.8 box today)",
+  "parked_car": "M1",
+  "patrol_boat": "M1",
+  "police_post_npc": "NPC marker (grandpa policeman sits at the square table) - no visual",
+  "reach_stacker": "M1",
+  "shipping_container_20ft": "texture rollout P1 (T85: containers stay boxes, multicolour atlas) - not a model task",
+  "shipping_container_40ft": "texture rollout P1 (T85)",
+  "stylized_air_defence": "M1 (military vehicle, T118 with tanks) - doubt, confirm with M1",
+  "sup_board": "M1 (beach water craft, grouped with jet skis in T111) - doubt, confirm with M1",
+  "tank": "M1",
+  "tower_crane": "M1 (machine; 32 m crane, C2 red) - doubt, confirm with M1",
+  "truck_with_container": "M1",
+  "upturned_boat": "M1 (boat) - doubt, confirm with M1",
+  "van_on_jacks": "M1",
+  "waterfall_to_sea": "waterfall / relief agent (Vadim complaint 3; T106 suggests a Rock_Macro cliff, not a prop)",
+  "wheel_loader": "M1",
+  "yacht": "M1"
+ },
+ "not_mine_counts": {
+  "boat_on_keel_blocks": 1,
+  "concrete_mixer_truck": 1,
+  "dump_truck": 1,
+  "food_truck": 2,
+  "forklift": 2,
+  "helicopter": 1,
+  "jet_ski": 3,
+  "military_cargo_truck": 1,
+  "military_utility_vehicle": 1,
+  "npc_spot": 6,
+  "parked_car": 2,
+  "patrol_boat": 2,
+  "police_post_npc": 1,
+  "reach_stacker": 1,
+  "shipping_container_20ft": 9,
+  "shipping_container_40ft": 7,
+  "stylized_air_defence": 4,
+  "sup_board": 6,
+  "tank": 3,
+  "tower_crane": 1,
+  "truck_with_container": 1,
+  "upturned_boat": 1,
+  "van_on_jacks": 1,
+  "waterfall_to_sea": 1,
+  "wheel_loader": 1,
+  "yacht": 5
+ }
+}

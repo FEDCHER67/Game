@@ -1,0 +1,199 @@
+{
+ "type": "CONSTR_INDIAN",
+ "revision": 8,
+ "source": "ArtSource/Characters/SAUSAGE_BUDDY_01/Types/CONSTR_INDIAN/SAUSAGE_BUDDY_CONSTR_INDIAN_v08.blend",
+ "tris_before": {
+  "Body": 5424,
+  "Face": 2128,
+  "Outfit": 13380
+ },
+ "total_before": 20932,
+ "hidden_removed": {
+  "Body": {
+   "faces": 817,
+   "materials_kept_whole": [],
+   "tris_after": 4129
+  },
+  "Outfit": {
+   "faces": 1426,
+   "materials_kept_whole": [],
+   "tris_after": 10701
+  }
+ },
+ "decimation": {
+  "Outfit": {
+   "tris_before": 10701,
+   "tris_after": 9635,
+   "materials": {
+    "CONSTR_INDIAN_Turban": {
+     "tris": [
+      1635,
+      737
+     ],
+     "dev_mm": {
+      "p99": 1.48,
+      "p999": 2.05,
+      "max": 2.35,
+      "posed_p99": 1.48,
+      "posed_p999": 2.05
+     },
+     "normal_mean_deg": 1.01,
+     "normal_p98_deg": 4.7,
+     "lost_mm2": 0.0
+    },
+    "CONSTR_INDIAN_Shirt": {
+     "tris": [
+      1434,
+      1402
+     ],
+     "dev_mm": {
+      "p99": 1.31,
+      "p999": 2.53,
+      "max": 3.43,
+      "posed_p99": 1.31,
+      "posed_p999": 2.53
+     },
+     "normal_mean_deg": 0.3,
+     "normal_p98_deg": 4.1,
+     "lost_mm2": 0.0
+    },
+    "Buddy_Skin": {
+     "tris": [
+      1142,
+      1064
+     ],
+     "dev_mm": {
+      "p99": 0.2,
+      "p999": 0.33,
+      "max": 0.37,
+      "posed_p99": 0.2,
+      "posed_p999": 0.33
+     },
+     "normal_mean_deg": 0.5,
+     "normal_p98_deg": 6.5,
+     "lost_mm2": 0.0
+    },
+    "CONSTR_INDIAN_Sole_Dirt": {
+     "tris": [
+      584,
+      530
+     ],
+     "dev_mm": {
+      "p99": 0.4,
+      "p999": 0.47,
+      "max": 0.57,
+      "posed_p99": 0.4,
+      "posed_p999": 0.47
+     },
+     "normal_mean_deg": 0.78,
+     "normal_p98_deg": 6.9,
+     "lost_mm2": 0.0
+    },
+    "CONSTR_INDIAN_Thong": {
+     "tris": [
+      386,
+      386
+     ],
+     "dev_mm": {
+      "p99": 0.0,
+      "p999": 0.0,
+      "max": 0.0,
+      "posed_p99": 0.0,
+      "posed_p999": 0.0
+     },
+     "normal_mean_deg": 0.0,
+     "normal_p98_deg": 0.0,
+     "lost_mm2": 0.0
+    },
+    "CONSTR_INDIAN_Mustache": {
+     "tris": [
+      284,
+      280
+     ],
+     "dev_mm": {
+      "p99": 0.58,
+      "p999": 1.37,
+      "max": 1.53,
+      "posed_p99": 0.58,
+      "posed_p999": 1.37
+     },
+     "normal_mean_deg": 0.58,
+     "normal_p98_deg": 7.0,
+     "lost_mm2": 0.0
+    }
+   }
+  }
+ },
+ "hem_verts": {
+  "Body": 0,
+  "Outfit": 1092
+ },
+ "shading": {
+  "Body": {
+   "corners": 8495,
+   "from_source": 8495
+  },
+  "Outfit": {
+   "corners": 28905,
+   "from_source": 28905
+  }
+ },
+ "weights": {
+  "Body": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 2
+  },
+  "Outfit": {
+   "fixed_vertices": 0,
+   "unweighted": 0,
+   "max_influences": 4
+  }
+ },
+ "tris_after": {
+  "Body": 4129,
+  "Face": 2128,
+  "Outfit": 9635
+ },
+ "total_after": 15892,
+ "seconds": 17.9,
+ "problems": [],
+ "result": "optimised",
+ "outputs": {
+  "blend": "SAUSAGE_BUDDY_CONSTR_INDIAN_v08_opt_v01.blend",
+  "fbx": "SAUSAGE_BUDDY_CONSTR_INDIAN_v08_opt_v01.fbx"
+ },
+ "settings": {
+  "budget_tris": 15000,
+  "tolerance_mm": {
+   "p99": 1.5,
+   "p999": 3.0
+  },
+  "min_gain": 0.1,
+  "normal_mean_deg": 2.0,
+  "normal_p98_deg": 8.0,
+  "small_part_faces": 40,
+  "poses": [
+   "rest",
+   "Idle:1",
+   "Idle:30",
+   "Panic_Run_Loop:1",
+   "Panic_Run_Loop:5",
+   "Panic_Run_Loop:10",
+   "Panic_Run_Loop:14",
+   "Panic_TurnFlee:20",
+   "Panic_TurnFlee:60",
+   "Panic_TurnFlee:120",
+   "TripFall:10",
+   "TripFall:30",
+   "PlayDead_Loop:1",
+   "Hide_Loop:1",
+   "PoliceCall:30",
+   "LookBack_Bonk:20",
+   "FakeSurrender_Flee:20"
+  ]
+ },
+ "frozen_material_prefixes": [
+  "CONSTR_INDIAN_Hair"
+ ]
+}

@@ -64,7 +64,7 @@ def main():
     d_rg = ndimage.distance_transform_edt(~rg)
     fade = 40.0 + 40.0 * n1
     dry = np.where(rg, 1.0, sm(1 - d_rg / fade) ** 1.3 * (0.8 + 0.2 * n2))
-    dry = np.maximum(dry, sm((ys - 905) / 12.0) * (xs > 560) * (xs < 1110))
+    dry = np.maximum(dry, sm((ys - 905) / 12.0) * (xs > 30) * (xs < 1110))              # W86: the whole steppe band beyond the border
     w[1] = np.clip(dry, 0, 1)
     # sand
     sand = ndimage.binary_closing(cls == 3, iterations=2)
@@ -107,6 +107,8 @@ def main():
                 ruts = np.maximum(ruts, sm(1 - np.abs(d - 0.95) / 0.6))
     w[6] = np.maximum(shoulder * 0.85, ndimage.gaussian_filter((ndimage.binary_dilation(cls == 5, iterations=6) & ~(cls == 5) & (h > 8)).astype(np.float32), 1.5) * 0.6)
     w[5] = np.maximum(w[5], ruts)
+    if F.get('view_B_pocket'):                                               # W86: VIEW B viewpoint pocket = gravel turnaround
+        w[6] = np.maximum(w[6], ndimage.gaussian_filter(poly_mask(F['view_B_pocket']['poly'], xs, ys).astype(np.float32), 0.8))
     # rock: crags, high bare ridge, steep faces
     mt = cls == 5
     rock = (mt & (h > 24)) | (cls == 6) | (slope > 36)
@@ -114,8 +116,12 @@ def main():
     w[7] = np.clip(rock_soft * (0.7 + 0.3 * n2), 0, 1)
     # lawns
     lawn = np.zeros((H, W), bool)
-    el = F['elite']
-    lawn |= ((np.abs(xs - el['centre'][0]) / el['half'][0]) ** 4 + (np.abs(ys - el['centre'][1]) / el['half'][1]) ** 4) < 1
+    pz = next((z for z in D['elite']['zones'] if z['kind'] == 'plateau'), None)       # W86: lawn inside the village fence
+    if pz:
+        lawn |= poly_mask(pz['poly'], xs, ys)
+    else:
+        el = F['elite']
+        lawn |= ((np.abs(xs - el['centre'][0]) / el['half'][0]) ** 4 + (np.abs(ys - el['centre'][1]) / el['half'][1]) ** 4) < 1
     for n_, kinds in (('downtown', ('veg_zone', 'park')), ('quiet_valley', ('lawn', 'grounds')), ('tramduro', ('lawn', 'golf')), ('beach', ('palm_park',))):
         for z in D[n_]['zones']:
             if z['kind'] in kinds and z.get('poly'):
@@ -142,6 +148,21 @@ def main():
     for b in water:
         if b.get('outline'):
             wm |= poly_mask(b['outline'], xs, ys)
+    riv = next((b for b in water if b['kind'] == 'river'), None)              # W86: river / stream bed (clear water shows it) + gravel bars
+    if riv:
+        rb = np.zeros((H, W), bool)
+        for (a, b_), wa in zip(zip(riv['axis'][:-1], riv['axis'][1:]), riv['width_m'][1:]):
+            for p in resample([tuple(a), tuple(b_)], 1.0):
+                r_ = int(wa / 2 + 1.5)
+                ix_, iy_ = int(p[0]), int(p[1])
+                rb[max(0, iy_ - r_):iy_ + r_ + 1, max(0, ix_ - r_):ix_ + r_ + 1] = True
+        wm |= rb
+        w[6] = np.maximum(w[6], ndimage.gaussian_filter((ndimage.binary_dilation(rb, iterations=2) & ~rb).astype(np.float32), 1.0) * 0.7)
+    for b in water:                                                        # waterfall faces: rock
+        if b.get('kind') == 'waterfall' and b.get('top') and b.get('bottom'):
+            for q in (b['top'], b['bottom']):
+                rock |= np.hypot(xs - q[0], ys - q[1]) < 7.0
+    w[7] = np.maximum(w[7], ndimage.gaussian_filter(rock.astype(np.float32), 1.2) * 0.9)
     w[2] = np.maximum(w[2], ndimage.gaussian_filter(wm.astype(np.float32), 1.0))
     # priority: later layers override earlier where strong
     order = [0, 3, 1, 8, 2, 9, 10, 6, 4, 5, 7]

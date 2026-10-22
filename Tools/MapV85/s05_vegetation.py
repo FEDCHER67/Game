@@ -163,6 +163,10 @@ def main():
             ix, iy = int(p[0]), int(p[1])
             r_ = int(wa / 2 + 1)
             wmask[max(0, iy - r_):iy + r_ + 1, max(0, ix - r_):ix + r_ + 1] = True
+    for b in water:                                                        # W86 waterfalls: spray zone, no trees
+        if b.get('kind') == 'waterfall' and b.get('top') and b.get('bottom'):
+            for q in (b['top'], b['bottom']):
+                wmask |= np.hypot(xs - q[0], ys - q[1]) < float(b.get('spray_radius_m', 5.0))
     excl |= ndimage.binary_dilation(wmask, iterations=2)
     excl_zone |= ndimage.binary_dilation(wmask, iterations=2)
     excl |= (cls == 3) & ~dist_mask                                        # open sand: palms only from district rows
@@ -180,8 +184,12 @@ def main():
     excl |= ndimage.binary_dilation(dt_pad, iterations=2) & ~dt_veg
     cg = next(z for z in D['construction']['zones'] if z['kind'] == 'ground')
     excl |= poly_mask(cg['poly'], xs, ys)
-    el = F['elite']
-    elite_in = ((np.abs(xs - el['centre'][0]) / el['half'][0]) ** 4 + (np.abs(ys - el['centre'][1]) / el['half'][1]) ** 4) < 1
+    pz = next((z for z in D['elite']['zones'] if z['kind'] == 'plateau'), None)       # W86: the fence octagon (the hill is no superellipse)
+    if pz:
+        elite_in = poly_mask(pz['poly'], xs, ys)
+    else:
+        el = F['elite']
+        elite_in = ((np.abs(xs - el['centre'][0]) / el['half'][0]) ** 4 + (np.abs(ys - el['centre'][1]) / el['half'][1]) ** 4) < 1
     el_veg = np.zeros((H, W), bool)
     for z in D['elite']['zones']:
         if z['kind'] == 'veg_zone':

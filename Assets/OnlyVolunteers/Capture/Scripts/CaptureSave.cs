@@ -145,8 +145,11 @@ namespace OnlyVolunteers.Capture
             d.Facts[s.facts.patientId] = s.facts;
             PatientRecord record = d.Registry.Ensure(npc);
             record.Operation = s.operation;
+            // Round 4: a former patient keeps the patient look (trunks, his skin and face), in the field and after a load.
+            if (s.facts.undressed && d.Table != null && d.Table.PatientPrefab != null) CaptureUndress.Apply(go, d.Table.PatientPrefab.gameObject);
             CaptureNpc c = d.Ensure(npc);
-            c.PutDownAt(Ground(pelvis), head, s.faceUp, s.stunLeft, s.stunTotal);
+            if (s.standing && !s.inCargo) c.StandAt(Ground(pelvis), head);
+            else c.PutDownAt(Ground(pelvis), head, s.faceUp, s.stunLeft, s.stunTotal);
             Debug.Log($"[CAPTURE] restored {s.facts.patientId} at {pelvis} cargo={s.inCargo} sleep={s.operation.sleepRemaining:F1} blood={s.operation.bloodPortions} ties={s.facts.restraints}");
             return c;
         }

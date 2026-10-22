@@ -7,7 +7,10 @@ Master SVG v85 coordinates are BEFORE the raster shift: x = (X + 350)/5, y = (35
 `u2w(X, Y)` converts master-SVG units directly.
 Authority (handoff v10 §0-§1): buildings / key objects 1:1 from the district plans; trees, small details, road joins and
 surface transitions by logic (never copied point by point from the picture).
-Data revision: REV (env MAPV85_REV, default v01) -> Assets/OnlyVolunteers/Map/W85Build/Data/<REV>, work files Tools/MapV85/out_<REV>.
+Data revision: REV (env MAPV85_REV, default v02 since the W86 pass 2026-10-22; v01 = the W85 build, never overwritten)
+-> Assets/OnlyVolunteers/Map/W85Build/Data/<REV>, work files Tools/MapV85/out_<REV>.
+Scratch runs (parallel agents): env MAPV85_OUT / MAPV85_WORK redirect the outputs, MAPV85_ROOT the repo root used for reading sources
+(set it when the scripts are run from a copy outside the repo).
 """
 import json
 import math
@@ -16,15 +19,15 @@ import re
 
 import numpy as np
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+ROOT = os.environ.get('MAPV85_ROOT') or os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 REF = os.path.join(ROOT, 'ArtSource', 'References', 'Map')
 MAP_DIR = os.path.join(REF, 'World_v85')
 MAP_FULL = os.path.join(MAP_DIR, 'VOLUNTEERS_MAP_FINAL_v85.png')
 MAP_PREVIEW = os.path.join(MAP_DIR, 'VOLUNTEERS_MAP_PREVIEW_v85.png')     # same render at 1 px/m
 MAP_SVG = os.path.join(MAP_DIR, 'VOLUNTEERS_MAP_MASTER_v85.svg')
-REV = os.environ.get('MAPV85_REV', 'v01')
-OUT = os.path.join(ROOT, 'Assets', 'OnlyVolunteers', 'Map', 'W85Build', 'Data', REV)
-WORK = os.path.join(ROOT, 'Tools', 'MapV85', 'out_' + REV)                 # previews, checks, reports (git)
+REV = os.environ.get('MAPV85_REV', 'v02')
+OUT = os.environ.get('MAPV85_OUT') or os.path.join(ROOT, 'Assets', 'OnlyVolunteers', 'Map', 'W85Build', 'Data', REV)
+WORK = os.environ.get('MAPV85_WORK') or os.path.join(ROOT, 'Tools', 'MapV85', 'out_' + REV)   # previews, checks, reports (git)
 W, H = 1744, 950                                                          # world size, m (1 m grid)
 SEA_LEVEL = 0.0
 GROUND = 5.0                                                              # flat ground ~5 m (handoff v02 §4)
@@ -226,6 +229,47 @@ def save_json(name, obj):
 def load_json(name):
     with open(os.path.join(OUT, name), encoding='utf-8') as f:
         return json.load(f)
+
+
+DOWNTOWN_V37_LAND = 'downtown_v37_land.json'                            # written by s04_downtown (agent A3, W86) into WORK
+
+
+def downtown_v37_land():
+    """Downtown plan v37 land interface (W86): {'pad_poly': [[x, y], ...] new Downtown pad, 'land_override': [poly, ...] polygons that
+    must become land (the city grows ~54 m south into the sea), 'beach_poly': [[x, y], ...] the new beach} in world metres, or None
+    while the file does not exist (then the v85 Downtown pad / coast stay). Path: WORK/downtown_v37_land.json (env MAPV85_DT37 overrides)."""
+    p = os.environ.get('MAPV85_DT37') or os.path.join(WORK, DOWNTOWN_V37_LAND)
+    if not os.path.exists(p):
+        return None
+    with open(p, encoding='utf-8') as f:
+        d = json.load(f)
+    def polys(v):                                                       # one polygon or a list of polygons -> list of polygons
+        if not v:
+            return []
+        return [v] if isinstance(v[0][0], (int, float)) else list(v)
+    return {'pad_poly': d.get('pad_poly'), 'pad_height_m': d.get('pad_height_m', 5.0), 'land_override': polys(d.get('land_override')),
+            'beach_polys': polys(d.get('beach_poly')), 'new_coastline': d.get('new_coastline'), 'path': p}
+
+
+def apply_land_override(cls, xs=None, ys=None):
+    """Classes (row = y) with the Downtown v37 land interface applied: land_override + beach_poly -> sand (3) where they were sea / water,
+    the new pad -> meadow (0, surfaces come from the district) where it was sea or sand. No file -> cls unchanged."""
+    d = downtown_v37_land()
+    if d is None:
+        return cls
+    if xs is None:
+        xs, ys = grid()
+    out = cls.copy()
+    lo = np.zeros(cls.shape, bool)
+    for p in d['land_override']:
+        lo |= poly_mask(p, xs, ys)
+    for p in d['beach_polys']:
+        lo |= poly_mask(p, xs, ys)
+    out[lo & np.isin(out, (1, 2))] = 3
+    if d.get('pad_poly'):
+        pm = poly_mask(d['pad_poly'], xs, ys)
+        out[pm & np.isin(out, (1, 2, 3))] = 0
+    return out
 
 
 def rnd2(p):

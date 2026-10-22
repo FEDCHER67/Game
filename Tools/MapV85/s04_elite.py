@@ -37,6 +37,7 @@ WORLD_PY = os.path.join(MAP_DIR, 'build_world_v85.py')
 CLASSES = os.path.join(WORK, 'classes_v85.npy')
 X0_09, Y1_09, K09 = 1120.0, 450.0, 6.0          # build_elite_v09: P(x, y) = ((x - X0) K, (Y1 - y) K)
 ROAD_W, PARAPET_W, LAMP_STEP = 4.5, 0.5, 18.0     # v10 §6 stone road 4.5 m, stone parapet outside, lamps
+FENCE_GAP = 9.0                                   # W86 / plan v09: stone road edge >= 9 m from the village fence (except at the gate)
 RING_W, DRIVE_W, GATE_ROAD_W = 6.4, 3.8, 6.4      # plan v09: inner ring 6.4 m, drives 3.8 m, v11 gate road 6.4 m
 H_BOTTOM, H_GATE = GROUND, 44.0                   # v10 §7.7 / brief: +5 at the city -> +44 at the east gate
 PLATEAU = {'N': 44.0, 'W': 41.0, 'E': 43.0, 'S': 40.0, 'C': 42.0}   # plan v10 labels "+44 / +41 / +43 / +40" (uneven plateau)
@@ -94,6 +95,25 @@ def offset_line(pl, d):
         L = math.hypot(dx, dy) or 1.0
         out.append((p[0] - dy / L * d, p[1] + dx / L * d))
     return out
+
+
+def keep_off_fence(pl, fence_closed, dmin, win=4):
+    """push polyline points that are closer than dmin to the fence polyline straight away from it, smooth the push over +-win points."""
+    pts = [tuple(map(float, p)) for p in pl]
+    push = []
+    for p in pts:
+        best = min((seg_dist(p, a, b) for a, b in zip(fence_closed[:-1], fence_closed[1:])), key=lambda r_: r_[0])
+        d, q = best[0], best[1]
+        L = math.hypot(p[0] - q[0], p[1] - q[1]) or 1.0
+        push.append((max(0.0, dmin - d), ((p[0] - q[0]) / L, (p[1] - q[1]) / L)))
+    amt = [m for m, _ in push]
+    sm_amt = []
+    for i in range(len(pts)):                                  # running max then mean: never less than needed, no kinks
+        lo, hi = max(0, i - win), min(len(pts), i + win + 1)
+        sm_amt.append(max(amt[lo:hi]))
+    sm2 = [sum(sm_amt[max(0, i - win):i + win + 1]) / len(sm_amt[max(0, i - win):i + win + 1]) for i in range(len(pts))]
+    out = [(p[0] + d_[0] * max(a_, b_), p[1] + d_[1] * max(a_, b_)) for p, (a_, d_), b_ in zip(pts, push, sm2)]
+    return out, max(amt) if amt else 0.0
 
 
 def ellipse(c, rx, ry, n=72):
@@ -282,7 +302,7 @@ def build():
     zones.append({'id': '07-gate-east', 'kind': 'gate_trap', 'pos': rnd2(gate_c), 'w_m': round(gate_n[1] - gate_s[1], 2), 'posts': [rnd2(gate_n), rnd2(gate_s)],
                   'facing_deg': 0, 'abs_height_m': H_GATE, 'gate_kit': 'FN_Elite_Gate_v01', 'barrier': {'pos': rnd2((gate_c[0] + 1.5, gate_c[1])), 'kind': 'boom_red_yellow_black'},
                   'trap': {'close_after_s': 4.0, 'guards_after_s': 2.0, 'note': 'gate latches shut right behind the van; FBI-style guards beat the players '
-                           '(marker only - mechanics separate); timing = Fedya proposal 4 s + 2 s, OPEN for Vadim'},
+                           '(marker only - mechanics separate); timing 4 s + 2 s confirmed by Fedya 22.10 (item 13)'},
                   'notes': 'the only way in: stone road (outside) -> trap gate -> 6.4 m asphalt -> inner ring'})
     question('Ловушка у восточных ворот Элиты: время закрытия ворот за бусиком и появления охраны?',
              ['1 — 4 с до закрытия ворот + 2 с до охраны (предложение Феди)', '2 — другое время (назови)'], 1,
@@ -409,7 +429,14 @@ def build():
             rg = [u2w(*p) for p in points_of(at, M)]
     assert rg and len(rg) > 100, 'R74_elite_ring stone road not found in the master SVG'
     road = [rg[0], rg[1], rg[2]] + [p for p in rg[3:-3]]
-    east_x = rg[-3][0]
+    # W86 (Fedya 22.10, v09): the stone road edge stays >= FENCE_GAP m outside the fence everywhere (the SVG ring came within 4.5 m on the
+    # east leg / NE corner); points closer than the gap are pushed straight away from the fence, the push is smoothed along the road
+    road, pushed = keep_off_fence(road, closed(fence_poly), FENCE_GAP + ROAD_W / 2 + 0.25)
+    east_x = max(rg[-3][0], max(p[0] for p in fence_poly) + FENCE_GAP + ROAD_W / 2 + 0.25)
+    if pushed > 0.05:
+        fix(rg[-3], 'Каменная дорога отодвинута от забора: край полотна не ближе %.0f м к забору (было 4,5 м у восточной ветви и северо-восточного угла), '
+                    'максимальный сдвиг оси %.1f м, восточная ветвь x = %.1f' % (FENCE_GAP, pushed, east_x),
+            'Федя 22.10: вернуть отступ ~9 м от забора, как в плане v09 (AUDIT D7b); ось кольца SVG шла в 6,8 м от забора у угла')
     # west corner: the straight from the street meets the vertical west leg at rg[2] -> fillet R 12
     road, t_w = fillet(road, 2, 12.0)
     # east hook: down the east leg, then west into the gate -> corner (east_x, gate y), fillet R = east_x - fence x
@@ -467,7 +494,7 @@ def build():
                   'end': {'pos': rnd2(rs[-1]), 'joins': '07-gate-east (trap gate), then 07-gate-road'},
                   'notes': 'stone (cobbled) road 4.5 m, no markings, "not like in the city", stone parapet on the outer (downhill) side, lamps; half ring 180 deg over '
                            'the NORTH slope from the Downtown street around the village to the EAST gate (v10 §7.7, R74_elite_ring of build_world_v85); '
-                           'climb starts right at the city; offset from the fence 24 -> 9 m'})
+                           'climb starts right at the city; offset from the fence 24 -> 9 m (W86: edge >= 9 m everywhere except the gate mouth)'})
     # ---------------- Elite beach under the hill (master SVG: loungers, umbrellas, cabana, palm row FOOT_B); piers + yachts + east cove (plan)
     world_src = read(WORLD_PY)
     foot = [(x + 20.0, y - 28.0) for x, y in eval(re.search(r'\nFOOT_B = (\[[^\]]*\])', world_src).group(1))]

@@ -23,12 +23,14 @@ namespace OnlyVolunteers.Map.W85
     public static class W85Look
     {
         const string I10 = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity";
-        const string Out = "Assets/OnlyVolunteers/Map/W85Build/Generated/v01_look";
+        static string Out = "Assets/OnlyVolunteers/Map/W85Build/Generated/v01_look";
+        static string Ver = "v01";
         const float ChunkSize = 16f, Step = .5f;
         const float FogBoost = 1.08f;                       // Fedya 21.10: fog +8 % relative to i10 / W85
 
         // i10 district ids (code keys: residential = Rough) on W76 rectangles (min x, min z, max x, max z)
-        static readonly Dictionary<string, Vector4> Rects = new()
+        static Dictionary<string, Vector4> Rects;                                   // set by Apply (BaseRects + the version overrides)
+        static readonly Dictionary<string, Vector4> BaseRects = new()
         {
             ["forest"] = new(180, 60, 445, 330), ["village"] = new(185, 365, 470, 625), ["transition"] = new(525, 345, 705, 500),
             ["residential"] = new(655, 668, 1006, 905), ["old_town"] = new(790, 215, 1272, 472), ["industrial"] = new(1165, 595, 1360, 690),
@@ -38,8 +40,15 @@ namespace OnlyVolunteers.Map.W85
         // base 2 shed / paint table of the G43 play-scene integrator (W85PlayIntegrator): no grass inside
         static readonly Vector4[] NoGrass = { new(240f, 504f, 251f, 514f), new(242f, 520f, 247f, 527f) };
 
-        public static string Apply(Transform root, Terrain ter)
+        public static string Apply(Transform root, Terrain ter) => Apply(root, ter, "v01", null);
+
+        // W86: per data version (own output folder Generated/<ver>_look); rects = district rectangles that moved in that data (Downtown v37,
+        // beach 54 m south), the rest stay as W76
+        public static string Apply(Transform root, Terrain ter, string ver, Dictionary<string, Vector4> rects)
         {
+            Ver = ver; Out = "Assets/OnlyVolunteers/Map/W85Build/Generated/" + ver + "_look";
+            Rects = new Dictionary<string, Vector4>(BaseRects);
+            if (rects != null) foreach (var kv in rects) Rects[kv.Key] = kv.Value;
             var log = new List<string>();
             if (!Directory.Exists(Out)) { Directory.CreateDirectory(Out); AssetDatabase.Refresh(); }
             var scene = root.gameObject.scene;
@@ -280,7 +289,7 @@ namespace OnlyVolunteers.Map.W85
             AssetDatabase.ImportAsset(bin, ImportAssetOptions.ForceSynchronousImport);
             var data = ScriptableObject.CreateInstance<GrassPatchData24>();
             data.instanceCount = count; data.instances = AssetDatabase.LoadAssetAtPath<TextAsset>(bin); data.chunks = chunks.ToArray(); data.worldBounds = world;
-            data.sourceScene = "Map_W85_Build_v01";
+            data.sourceScene = "Map_W85_Build_" + Ver;
             data.placementSummary = string.Join("; ", perDistrict.Select(p => p.Key + "=" + p.Value)) + $"; {tris} hard tris; rejectedHard={rejected}; seconds={watch.Elapsed.TotalSeconds:0.0}";
             string dp = Out + "/GrassData_W85_v01.asset"; AssetDatabase.DeleteAsset(dp); AssetDatabase.CreateAsset(data, dp);
             var go = new GameObject("G24_TallGrass_W85_v01"); go.transform.SetParent(root, false);

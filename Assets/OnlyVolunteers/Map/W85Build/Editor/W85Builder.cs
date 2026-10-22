@@ -26,9 +26,18 @@ namespace OnlyVolunteers.Map.W85
     public static partial class W85Builder
     {
         const string Root = "Assets/OnlyVolunteers/Map/W85Build";
-        const string Data = Root + "/Data/v01";            // Tools/MapV85 (2D map v85 + handoff v10)
-        const string Gen = Root + "/Generated/v01";
-        const string ScenePath = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Build_v01.unity";
+        // Data version (W86, 22.10): v01 = the W85 build as playtested; v02 = Tools/MapV85 re-run of the W86 pass (relief, waterfalls,
+        // steppe backdrop, Rough replanning, Downtown v37, fuel station ...). Set by the menu entry; every output is per version.
+        static string Ver = "v01";
+        static string Data = Root + "/Data/v01";            // Tools/MapV85 (2D map v85 + handoff v10)
+        static string Gen = Root + "/Generated/v01";
+        static string ScenePath = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Build_v01.unity";
+        static bool IsV2 => Ver != "v01";
+        public static string ScenePathOf(string ver) => $"Assets/OnlyVolunteers/Scenes/Map/Map_W85_Build_{ver}.unity";
+        static void SetVersion(string ver)
+        {
+            Ver = ver; Data = Root + "/Data/" + ver; Gen = Root + "/Generated/" + ver; ScenePath = ScenePathOf(ver);
+        }
         const string SceneI10 = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity";
         const string KitSrc = "ArtSource/Props/FACADE_KIT_v01/FBX";
         const string TerrainMaterial = "Assets/OnlyVolunteers/Map/LookV3/Materials/V3_Terrain.mat";
@@ -53,13 +62,19 @@ namespace OnlyVolunteers.Map.W85
         static int created, reused;
 
         [MenuItem("OnlyVolunteers/Map/W85 Build/Build Map_W85_Build_v01 (2D map v85)")]
-        public static void Build() => Build(true);
+        public static void Build() => Build("v01", true);
 
         // Same build without dialogs (automation: agents / batch mode). The output is only our own Generated/v01 + scene.
-        public static void BuildSilent() => Build(false);
+        public static void BuildSilent() => Build("v01", false);
 
-        static void Build(bool interactive)
+        // W86 pass (lead brief 22.10): the same builder on Data/v02 -> Generated/v02 + Scenes/Map/Map_W85_Build_v02.unity (v01 untouched).
+        [MenuItem("OnlyVolunteers/Map/W86 Build (data v02)")]
+        public static void BuildV02() => Build("v02", true);
+        public static void BuildV02Silent() => Build("v02", false);
+
+        static void Build(string ver, bool interactive)
         {
+            SetVersion(ver);
             if (!File.Exists(Data + "/terrain_v85.json"))
             {
                 if (interactive) EditorUtility.DisplayDialog("W85", "No data in " + Data + ". Run Tools/MapV85 (s01 ... s07).", "OK");
@@ -70,43 +85,68 @@ namespace OnlyVolunteers.Map.W85
                 return;
             if (interactive && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             var t0 = DateTime.Now;
-            Log.Clear(); Mats.Clear(); MatTile.Clear(); Built.Clear(); SlotMats.Clear(); PrefabCache.Clear(); created = reused = paletteFixed = 0; poolWater = null;
+            Log.Clear(); Mats.Clear(); MatTile.Clear(); Built.Clear(); SlotMats.Clear(); PrefabCache.Clear(); LayerCache.Clear(); created = reused = paletteFixed = 0; poolWater = null;
             // (not inside Start/StopAssetEditing: a delete + re-create of the same folder in one batch left no folder on a rebuild)
             if (AssetDatabase.IsValidFolder(Gen)) AssetDatabase.DeleteAsset(Gen);
             foreach (string f in new[] { "Meshes", "Materials", "Textures", "FacadeKit", "Terrain" }) Folder(Gen + "/" + f);
             ImportKit();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            var root = new GameObject("Map_W85_v01").transform;
+            var root = new GameObject("Map_W85_" + Ver).transform;
+            Note($"[W85] data {Data} -> {Gen} + {ScenePath}");
             var mj = Obj(Json.Parse(File.ReadAllText(Data + "/materials_v85.json")));
             MatMap = mj["materials"] as Dictionary<string, object>;
             Slots = Obj(Get(mj, "slots")) ?? new Dictionary<string, object>();
-            Sample = File.Exists(Data + "/texture_sample_v85.json") ? Obj(Json.Parse(File.ReadAllText(Data + "/texture_sample_v85.json"))) : new Dictionary<string, object>();
+            Sample = LoadSample();
             LoadSampleRules();
             RolloutInit();
+            W86Init();
+            W86RolloutInit();                                                     // W86 integration (v07 / T1 / T2 / M1 / M2)
             Step("terrain", () => BuildTerrain(root));
+            Step("steppe backdrop", () => BuildBackdrop(root));
             Step("roads", () => BuildRoads(root));
             Step("tunnel", () => BuildTunnel(root));
             Step("water", () => BuildWater(root));
             Step("border", () => BuildBorder(root));
             foreach (string f in Directory.GetFiles(Data + "/districts", "*_v85.json").OrderBy(s => s))
                 Step("district " + Path.GetFileNameWithoutExtension(f), () => BuildDistrict(root, f));
+            Step("retaining walls", () => RetainingWalls(root));
+            Step("view pocket", () => ViewPocket(root));
+            Step("rock faces", () => RockFaces(root));
             Step("details", () => BuildDetails(root));
             Step("texture sample", () => BuildSample(root));
             Step("night lamps", () => UrbanLamps(root));
             Step("base 2 yard", () => Base2Yard(root));
             Step("light", () => BuildLight(root));
+            Step("W86 rollout post pass", () => { W86PostPass(root); EliteRoadLamps(root); CutPoolHoles(); W86DecalHooks(root); });
+            if (IsV2) Step("W86 decals", () => W86Decals(root));                 // W86 decals (B3): markings, wear, oil, foam into DecalHooks_W86
             Step("validate", () => Validate(root));
             Note(RolloutSummary());
-            Step("i10 look", () => Note(W85Look.Apply(root, Ter)));
+            Step("i10 look", () => Note(W85Look.Apply(root, Ter, Ver, LookRects())));
+            Step("far view", () => FarView(root));
             Step("texture sample night", () => SampleNight(root));
+            Note(W86Summary());
+            Note(ModelSummary());
+            Note(GreyBoxReport(root));
             Note($"materials: {reused} reused, {created} created, {paletteFixed} V19 palette-field copies (field off), {SlotMats.Count} slot materials");
             EditorSceneManager.SaveScene(scene, ScenePath);
             AssetDatabase.SaveAssets();
             ReapplyTerrain();
+            ReapplyBackdrop();
             Note($"built in {(DateTime.Now - t0).TotalSeconds:0} s");
             File.WriteAllText(Gen + "/W85_build_log.txt", Log.ToString());
             AssetDatabase.ImportAsset(Gen + "/W85_build_log.txt");
             Debug.Log("[W85] done\n" + Log);
+        }
+
+        // Texture sample (T4 twin towers): the data file of the version, else the builder's own default (W86: Data/v02 has none; the
+        // replaced tower / podium ids are found by kind near the sample, so a pipeline re-run that renames them does not break it).
+        const string SampleDefault = Root + "/Editor/W86_texture_sample_default.json";
+        static Dictionary<string, object> LoadSample()
+        {
+            string f = Data + "/texture_sample_v85.json";
+            if (File.Exists(f)) return Obj(Json.Parse(File.ReadAllText(f)));
+            if (IsV2 && File.Exists(SampleDefault)) { Note("texture sample: " + SampleDefault + " (no texture_sample_v85.json in " + Data + ")"); return Obj(Json.Parse(File.ReadAllText(SampleDefault))); }
+            return new Dictionary<string, object>();
         }
 
         // ------------------------------------------------------------------ helpers
@@ -239,7 +279,16 @@ namespace OnlyVolunteers.Map.W85
             return AssetDatabase.LoadAssetAtPath<Texture2D>(dst);
         }
 
+        static readonly Dictionary<string, TerrainLayer> LayerCache = new();
         static TerrainLayer Layer(string key, Dictionary<string, TerrainLayer> fromI10)
+        {
+            if (LayerCache.TryGetValue(key, out var cached) && cached) return cached;        // W86: the steppe backdrop asks for the same layers
+            var swapped = SwappedLayer(key);                                                  // W86 integration: T21 b field layers
+            if (swapped) return LayerCache[key] = swapped;
+            return LayerCache[key] = LayerNew(key, fromI10);
+        }
+
+        static TerrainLayer LayerNew(string key, Dictionary<string, TerrainLayer> fromI10)
         {
             var rec = Obj(Get(MatMap, key));
             string tex = S(Get(rec, "texture")), asset = S(Get(rec, "asset"));
@@ -284,6 +333,7 @@ namespace OnlyVolunteers.Map.W85
                     int k = (j * R + i) * 2;
                     heights[j, i] = (raw[k] | raw[k + 1] << 8) / 65535f;
                 }
+            if (IsV2) GradeFootprints(heights, R, F(size[1]), F(pos[1]));               // W86 ground fit: level the rare footprint > 1.5 m
             // layers first: they import textures, and an import during the build reverted the fresh TerrainData to its saved (flat) state
             var splat = Obj(Get(tj, "splat"));
             var keys = Arr(Get(splat, "layers")).Select(o => (string)o).ToList();
@@ -291,7 +341,7 @@ namespace OnlyVolunteers.Map.W85
             var layerArr = keys.Select(k => Layer(k, i10)).ToArray();
             var td = new TerrainData { heightmapResolution = R, alphamapResolution = AR };
             td.size = new Vector3(W, F(size[1]), Hh);
-            AssetDatabase.CreateAsset(td, Gen + "/Terrain/TerrainData_W85_v01.asset");
+            AssetDatabase.CreateAsset(td, Gen + "/Terrain/TerrainData_W85_" + Ver + ".asset");
             td.SetHeights(0, 0, heights);
             byte[] bits = File.ReadAllBytes(Data + "/Holes_v85_2048_bits.bytes");
             var holes = new bool[R - 1, R - 1];
@@ -321,6 +371,7 @@ namespace OnlyVolunteers.Map.W85
                     if (sum <= 0f) a[j, i, 0] = 1f;
                     else for (int l = 0; l < keys.Count; l++) a[j, i, l] /= sum;
                 }
+            if (IsV2) { a = W86BankBands(a, keys, ref layerArr); td.terrainLayers = layerArr; }   // W86 integration: bank bands
             td.SetAlphamaps(0, 0, a);
             foreach (var m in masks) Object.DestroyImmediate(m);
             Trees(td);
@@ -328,7 +379,7 @@ namespace OnlyVolunteers.Map.W85
             AssetDatabase.SaveAssets();
             lastHeights = heights; lastHoles = holes; lastAlpha = a;
             var go = Terrain.CreateTerrainGameObject(td);
-            go.name = "Terrain_W85_v01";
+            go.name = "Terrain_W85_" + Ver;
             go.transform.SetParent(root, false);
             go.transform.position = new Vector3(F(pos[0]), F(pos[1]), F(pos[2]));
             Ter = go.GetComponent<Terrain>();
@@ -375,7 +426,8 @@ namespace OnlyVolunteers.Map.W85
             ["birch"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_A_v04_04.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_B_v04_04.prefab" },
             ["oak"] = new[] { "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_A_v01_02.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_B_v01_02.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_C_v01_02.prefab" },
             ["leafy"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Apple_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Apple_B_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_C_v04_04.prefab" },
-            ["palm"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Palm_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Palm_B_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Palm_C_v04_03.prefab" },
+            // T114 b (W86 integration): the same palms with brighter leaves / bark (material copies only)
+            ["palm"] = new[] { "Assets/OnlyVolunteers/Art/MapTextures_W86/T2/Prefabs/Palm_A_v04_03_T114b.prefab", "Assets/OnlyVolunteers/Art/MapTextures_W86/T2/Prefabs/Palm_B_v04_03_T114b.prefab", "Assets/OnlyVolunteers/Art/MapTextures_W86/T2/Prefabs/Palm_C_v04_03_T114b.prefab" },
             ["bush"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Bush_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Bush_B_v04_03.prefab" },
             ["bare"] = new[] { "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/TREE_BARE_01_v19_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/TREE_BARE_02_v19_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/TREE_BARE_03_v19_Wind_v01.prefab" },
         };
@@ -735,12 +787,13 @@ namespace OnlyVolunteers.Map.W85
                 road.Quad(A0, B0, B1, A1, new Vector2(0, u0), new Vector2(0, u1), new Vector2(1, u1), new Vector2(1, u0));
                 shell.Quad(A0 + up, B0 + up, B0, A0, new Vector2(u0, 1), new Vector2(u1, 1), new Vector2(u1, 0), new Vector2(u0, 0));    // left wall
                 shell.Quad(A1, B1, B1 + up, A1 + up, new Vector2(u0, 0), new Vector2(u1, 0), new Vector2(u1, 1), new Vector2(u0, 1));    // right wall
-                shell.Quad(A1 + up, B1 + up, B0 + up, A0 + up, new Vector2(u0, 0), new Vector2(u1, 0), new Vector2(u1, 1), new Vector2(u0, 1));  // ceiling
+                shell.Quad(A1 + up, B1 + up, B0 + up, A0 + up, new Vector2(u0, .6f), new Vector2(u1, .6f), new Vector2(u1, 1), new Vector2(u0, 1));  // ceiling (T128: the concrete part of the shell texture)
                 acc += L;
             }
             var parent = new GameObject("Tunnel").transform; parent.SetParent(root, false);
             MeshGo("Tunnel_shell", parent, shell.Build("Tunnel_shell"), Mat("concrete_SK3c"), true);
             MeshGo("Tunnel_road", parent, road.Build("Tunnel_road"), Mat("asphalt_A5d12"), true);
+            TunnelExtrasT128(parent, pts, total, h0, h1, width, clear);
             for (int e = 0; e < 2; e++)
             {
                 Vector2 p0 = e == 0 ? pts[0] : pts[pts.Count - 1], p1 = e == 0 ? pts[1] : pts[pts.Count - 2];
@@ -789,8 +842,8 @@ namespace OnlyVolunteers.Map.W85
             for (float z = -200f; z < Hh + 200f; z += step)
                 for (float x = -200f; x < W + 200f; x += step)
                 {
-                    float hc = x >= 0 && x <= W && z >= 0 && z <= Hh ? Height(x + 2f, z + 2f) : -10f;
-                    if (hc > 3f) continue;                                    // under land: no water quads
+                    float hc = x >= 0 && x <= W && z >= 0 && z <= Hh ? Height(x + 2f, z + 2f) : BackdropHeight(x + 2f, z + 2f);
+                    if (hc > 3f) continue;                                    // under land (map or steppe backdrop): no water quads
                     mb.Quad(new Vector3(x, 0, z), new Vector3(x, 0, z + step), new Vector3(x + step, 0, z + step), new Vector3(x + step, 0, z),
                         new Vector2(x, z) / 10f, new Vector2(x, z + step) / 10f, new Vector2(x + step, z + step) / 10f, new Vector2(x + step, z) / 10f);
                 }
@@ -804,7 +857,10 @@ namespace OnlyVolunteers.Map.W85
             FarQuad(-far, -g, -g, Hh + g);                       // west
             FarQuad(W + g, -g, W + far, Hh + g);                 // east
             FarQuad(1100f, Hh + g, W + far, Hh + far);           // north-east (sea north of the harbour and Tramduro)
-            MeshGo("Sea_far_ring", parent, ring.Build("Sea_far_ring"), sea).GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+            if (BackdropOn) FarQuad(-far, Hh + g, 1100f, Hh + far);   // W86: north-west too; the steppe backdrop terrain covers it where it is land
+            var farSea = MeshGo("Sea_far_ring", parent, ring.Build("Sea_far_ring"), sea);
+            farSea.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+            if (BackdropOn) farSea.layer = FarLayer;                 // drawn to the far plane (W85FarView), like the backdrop
             // inland water (v85 vectors): the river as one ribbon along its axis (flow mode, surface = bed + 1.2 m, bed of s03), lakes /
             // plunge pool / Hamlet pond / swamp as flat fills at their s03 surface. Disposal kinds for WaterQuery: River, Lake; Pond, Bog not.
             var flow = FlowMaterial(sea);
@@ -817,6 +873,12 @@ namespace OnlyVolunteers.Map.W85
             {
                 var b = Obj(o);
                 string kind = S(Get(b, "kind")), id = S(Get(b, "id"));
+                if (kind == "river" && Get(b, "surface_m") != null)
+                {   // W86 (data v02): the water ribbon at the per-point surface of s03, no water in the underground spans
+                    RiverV2(parent, b, flow, wj);
+                    n++;
+                    continue;
+                }
                 if (kind == "river")
                 {
                     var axis = V2s(Get(b, "axis"));
@@ -838,7 +900,7 @@ namespace OnlyVolunteers.Map.W85
                 }
                 var outline = V2s(Get(b, "outline"));
                 if (outline.Length < 3 || !(kind == "lake" || kind == "swamp" || kind == "pond")) continue;
-                float lv = lakeLevel.TryGetValue(id, out float l0) ? l0 : outline.Average(q => Height(q.x, q.y)) + .2f;
+                float lv = Get(b, "surface_m") != null ? F(Get(b, "surface_m")) : lakeLevel.TryGetValue(id, out float l0) ? l0 : outline.Average(q => Height(q.x, q.y)) + .2f;
                 var mesh = Fill(id, outline, q => lv, Vector2.zero);
                 var wk = kind == "swamp" ? Audio.WaterKind.Bog : kind == "pond" ? Audio.WaterKind.Pond : Audio.WaterKind.Lake;
                 var go = MeshGo("Water_" + wk + "_" + id, parent, mesh, kind == "swamp" ? SwampMaterial(flow) : flow);
@@ -851,6 +913,7 @@ namespace OnlyVolunteers.Map.W85
             {
                 var b = Obj(o);
                 if (S(Get(b, "kind")) != "waterfall") continue;
+                if (Get(b, "lip_edge") != null) { WaterfallV2(parent, b, sea); continue; }      // W86: geometry from the data
                 Vector2 q = V2(Get(b, "at"));
                 float top = F(Get(b, "top_m"), 9f), bottom = S(Get(b, "id")) == "waterfall_sea" ? 0f : RiverBed(q.y) + 1.2f;
                 if (S(Get(b, "id")) == "waterfall_sea") top = RiverBed(q.y) + 1.2f;
@@ -868,6 +931,7 @@ namespace OnlyVolunteers.Map.W85
             var tris = new List<Vector2>();
             void Rect(float x0, float z0, float x1, float z1) { tris.AddRange(new[] { new Vector2(x0, z0), new Vector2(x1, z0), new Vector2(x1, z1), new Vector2(x0, z0), new Vector2(x1, z1), new Vector2(x0, z1) }); }
             Rect(-1500, -1500, W + 1500, 0); Rect(-1500, 0, 0, Hh); Rect(W, 0, W + 1500, Hh);       // south, west, east outside the terrain
+            if (BackdropOn) Rect(1100, Hh, W + 1500, Hh + 1500);        // W86: the sea north of the harbour / Tramduro (outside the terrain)
             const float cell = 8f;
             for (float z = 0; z < Hh; z += cell)
             {
@@ -882,10 +946,10 @@ namespace OnlyVolunteers.Map.W85
             zone.Triangles = tris.ToArray();
             WaterAreas.Add(new Audio.WaterData.Area { Id = "sea", Kind = Audio.WaterKind.Sea, SurfaceY = 0f, Triangles = tris.SelectMany(t => new[] { t.x, t.y }).ToArray() });
             var wd = ScriptableObject.CreateInstance<Audio.WaterData>();
-            wd.PlanRevision = "W85_v01 (data v01)"; wd.Areas = WaterAreas.ToArray();
-            AssetDatabase.CreateAsset(wd, Gen + "/W85_WaterData_v01.asset");
+            wd.PlanRevision = $"W85_{Ver} (data {Ver})"; wd.Areas = WaterAreas.ToArray();
+            AssetDatabase.CreateAsset(wd, Gen + $"/W85_WaterData_{Ver}.asset");
             Note($"water: dense sea grid {mb.V.Count / 4} quads + far plane, {n} inland bodies (flow mode), sea return zone {tris.Count / 3} triangles all round; " +
-                 $"WaterData {Gen}/W85_WaterData_v01.asset: " + string.Join(", ", WaterAreas.GroupBy(a => a.Kind).Select(g => g.Key + " " + g.Count())));
+                 $"WaterData {Gen}/W85_WaterData_{Ver}.asset: " + string.Join(", ", WaterAreas.GroupBy(a => a.Kind).Select(g => g.Key + " " + g.Count())));
         }
 
         // WaterQuery data for this map (disposal: River / Lake / Canal only; Pond, Bog, Pool, Sea not). Rivers slope, so each
@@ -1008,6 +1072,11 @@ namespace OnlyVolunteers.Map.W85
                     c.transform.rotation = Quaternion.LookRotation(new Vector3(b.x - a.x, 0, b.y - a.y));
                     c.size = new Vector3(.5f, wall + 60f, (b - a).magnitude + .2f);
                 }
+            if (BackdropOn)
+            {   // W86: the steppe backdrop terrain (BuildBackdrop) replaces the flat far plane
+                Note($"border: invisible wall {wall} m along the border fence line ({pl.Length} pts) + {east.Count + west.Count - 2} segments past the ends; steppe = backdrop terrain; fence / KPP / towers built with the Rough district (scope north_border)");
+                return;
+            }
             var st = Obj(Get(bj, "steppe"));
             var steppe = GameObject.CreatePrimitive(PrimitiveType.Plane);
             steppe.name = "Steppe_far"; Object.DestroyImmediate(steppe.GetComponent<Collider>());
@@ -1117,6 +1186,7 @@ namespace OnlyVolunteers.Map.W85
             var dj = Obj(Json.Parse(File.ReadAllText(file)));
             string district = S(Get(dj, "district"), Path.GetFileNameWithoutExtension(file));
             var parent = new GameObject("District_" + district).transform; parent.SetParent(root, false);
+            poolParent = parent;
             int nb = 0, np = 0, nz = 0;
             foreach (object o in Arr(Get(dj, "zones"))) if (Zone(parent, Obj(o))) nz++;
             RolloutDistrict(dj);
@@ -1149,6 +1219,7 @@ namespace OnlyVolunteers.Map.W85
             }
             foreach (var o in props) { if (Prop(parent, o)) np++; }
             string extras = Extras(parent, dj, district);
+            FlushPropBatches(parent);
             Note($"{district}: {nb} buildings, {np} props, {nz} zone surfaces{extras}");
         }
 
@@ -1188,6 +1259,7 @@ namespace OnlyVolunteers.Map.W85
             {
                 string kind = S(Get(z, "kind"), ""), id = S(Get(z, "id"), kind);
                 var line = V2s(Get(z, "line") ?? Get(z, "poly_line") ?? Get(z, "polyline"));
+                if (W86Zone(parent, z, kind, id, line, district, zones)) continue;       // W86: side gaps, patrol loops, planter strips
                 if (kind == "fence" || kind == "border_fence")
                 {
                     var pl = line.Length >= 2 ? line : V2s(Get(z, "poly"));
@@ -1200,6 +1272,7 @@ namespace OnlyVolunteers.Map.W85
                     if (mat == null || Get(MatMap, mat) == null) mat = district.Contains("elite") || district.Contains("rough") ? "concrete_panel_SK3c" : district.Contains("valley") ? "boards_SK5a" : "metal_painted_SK6a";
                     bool net = mat == "fence_net";
                     Fence(parent, id, pl, closed, F(Get(z, "height_m"), 2f), mat, g, net, S(Get(z, "tint")));
+                    AfterFence(parent, id, pl, closed, F(Get(z, "height_m"), 2f), g, district, mat);
                     fences++;
                 }
                 else if (kind == "wall" && line.Length >= 2)
@@ -1232,7 +1305,8 @@ namespace OnlyVolunteers.Map.W85
                     {
                         Frame(pw.ToList(), new Dictionary<string, object>(), out Vector2 c, out Vector2 ax, out Vector2 ay, out float hx, out float hy);
                         float baseY = pw.Min(q => Height(q.x, q.y)) - .2f;
-                        Box(parent, "AlleyPlug_" + id, new Vector3(c.x, baseY + 4.5f, c.y), new Vector3(2 * hx, 9f, 2 * hy), -Mathf.Atan2(ax.y, ax.x) * Mathf.Rad2Deg, "brick_SK3a", true);
+                        var plugGo = Box(parent, "AlleyPlug_" + id, new Vector3(c.x, baseY + 4.5f, c.y), new Vector3(2 * hx, 9f, 2 * hy), -Mathf.Atan2(ax.y, ax.x) * Mathf.Rad2Deg, "brick_SK3a", true);
+                        AlleyPlugT67(plugGo, pw.ToList(), id, V2s(Get(z, "poly")));
                         plugs++;
                     }
                     var poly = V2s(Get(z, "poly"));
@@ -1257,6 +1331,8 @@ namespace OnlyVolunteers.Map.W85
                     var gaps = wk != null ? new List<(Vector2 c, float w)> { (V2(Get(wk, "pos")), F(Get(wk, "w_m"), 6f)) } : null;
                     Fence(parent, id + "_board", poly, true, F(Get(fz, "board_h_m"), 1f), "boards_SK5a", gaps, false, null);
                     Fence(parent, id + "_net", poly, true, F(Get(fz, "net_h_m"), 4.5f), "fence_net", gaps, true, null);
+                    AfterFence(parent, id + "_board", poly, true, F(Get(fz, "board_h_m"), 1f), gaps, district, "boards_SK5a");
+                    AfterFence(parent, id + "_net", poly, true, F(Get(fz, "net_h_m"), 4.5f), gaps, district, "fence_net");
                     fences++;
                 }
                 else if (kind == "villa_plot")
@@ -1276,11 +1352,13 @@ namespace OnlyVolunteers.Map.W85
                             var hb = Box(parent, "Hedge_" + id, new Vector3(m.x, Height(m.x, m.y) + hh * .5f - .1f, m.y), new Vector3((p1 - p0).magnitude + .05f, hh, F(Get(hd, "w_m"), .9f)), -Mathf.Atan2(b.y - a.y, b.x - a.x) * Mathf.Rad2Deg, "lawn_hedge", true);
                         }
                     }
+                    HedgeT97(parent, z, id);
                     hedges++;
                 }
                 else if (kind == "bollard_row" && line.Length >= 2)
                 {
-                    foreach (var q in Resample(line, 1.6f)) Box(parent, "Bollard", P(q, .45f), new Vector3(.22f, .9f, .22f), 0f, "metal_painted_SK6a", true);
+                    if (district.Contains("downtown")) DcBollards(parent, id, line, !(Get(z, "grip_anchor") is bool gb && !gb));
+                    else foreach (var q in Resample(line, 1.6f)) Box(parent, "Bollard", P(q, .45f), new Vector3(.22f, .9f, .22f), 0f, "metal_painted_SK6a", true);
                 }
                 else if (kind == "pool")
                 {
@@ -1289,6 +1367,7 @@ namespace OnlyVolunteers.Map.W85
                     float baseH = poly.Average(q => Height(q.x, q.y));
                     bool basin = district.Contains("elite");                         // Elite: tiled basin; Downtown: 0.3 m mirror pool the van drives into
                     float lv = basin ? baseH - .08f : baseH + .3f;
+                    if (basin) { float pl = ElitePoolLevel(z, zones, out bool pok); if (pok) lv = pl; }
                     var wm = Fill("Pool_" + id, poly, q => lv, Vector2.zero);
                     var go = MeshGo("Water_Pool_" + id, parent, wm, PoolWater());
                     go.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
@@ -1303,10 +1382,15 @@ namespace OnlyVolunteers.Map.W85
                                 Vector2.zero, new Vector2(0, .34f), new Vector2((b - a).magnitude, .34f), new Vector2((b - a).magnitude, 0));
                         }
                         MeshGo("PoolRim_" + id, parent, rim.Build("PoolRim_" + id), Mat("plaza_M3"));
+                        if (district.Contains("downtown")) DcPool(parent, id, poly, V2s(Get(z, "edge_poly")), baseH);
                     }
                 }
             }
+            if (district.Contains("downtown"))
+                foreach (var z in zones.Where(z => S(Get(z, "kind")) == "plaza" && (S(Get(z, "id"), "") ?? "").Contains("05-04")))
+                    DcPlazaBand(parent, V2s(Get(z, "poly")));
             sb.Append($", {fences} fences, {walls} walls, {roads} district roads, {piers} piers, {plugs} alley plugs, {hedges} hedged plots");
+            sb.Append(W86ExtrasNote());
             return sb.ToString();
         }
 
@@ -1483,7 +1567,7 @@ namespace OnlyVolunteers.Map.W85
             MeshGo("PierSkirt_" + id, parent, sk.Build("PierSkirt_" + id), Mat(mat));
         }
 
-        static readonly HashSet<string> FlatZones = new() { "plaza", "pool", "playground", "parking", "yard", "sidewalk", "pitch", "court", "deck", "helipad", "terrace", "lot", "trash", "base_yard", "courtyard", "loading_pad", "apron", "taxi_stand", "gas_station", "fuel_pad", "fishing_platform", "materials_store" };
+        static readonly HashSet<string> FlatZones = new() { "plaza", "pool", "playground", "parking", "yard", "sidewalk", "pitch", "court", "deck", "helipad", "terrace", "lot", "trash", "base_yard", "courtyard", "loading_pad", "apron", "taxi_stand", "gas_station", "fuel_pad", "fishing_platform", "materials_store", "driveway" };
 
         static bool Zone(Transform parent, Dictionary<string, object> z)
         {
@@ -1491,8 +1575,10 @@ namespace OnlyVolunteers.Map.W85
             var poly = V2s(Get(z, "poly"));
             if (poly.Length < 3 || surf == null || Get(MatMap, surf) == null) return false;
             if (!FlatZones.Any(k => kind.Contains(k))) return false;
+            if (parent.name.Contains("elite") && (kind == "pool" || kind == "pool_deck") && T2Available()) return false;   // T98: generated basin + deck
             float lift = kind.Contains("pool") ? -.25f : .04f;
             float baseH = poly.Average(q => Height(q.x, q.y));
+            if (kind.Contains("fishing") || kind.Contains("dock")) baseH = Mathf.Max(baseH, RiverLevelNear(poly, 8f) + F(Get(z, "deck_h_m"), .4f) - lift);   // W86: over the water, never under it
             var mesh = Fill("Zone_" + S(Get(z, "id"), kind), poly, q => baseH + lift, Vector2.zero);
             float zt = Tile(surf);
             mesh.uv = mesh.vertices.Select(v => new Vector2(v.x, v.z) / zt).ToArray();
@@ -1525,22 +1611,24 @@ namespace OnlyVolunteers.Map.W85
             if (fp.Count < 3) return false;
             if (Area(fp) < 0) fp.Reverse();
             string id = S(Get(b, "id"), "b"), kind = (S(Get(b, "kind"), "") ?? "").ToLowerInvariant();
+            if (W86BeforeBuilding(parent, b, district, kind, fp, id)) return true;     // W86 integration: wagon model, bus stop, hay shelter
+            if (W86Building(parent, b, district, kind, fp, id)) return true;            // W86: fuel canopy (columns, no walls)
             if (TryRollout(parent, b, district, kind, fp, id)) return true;
             float height = F(Get(b, "height_m"), 0f);
             int floors = (int)F(Get(b, "floors"), 1f);
             float floorH = F(Get(b, "floor_h_m"), district.Contains("downtown") ? 3.5f : 2.8f);
             if (height <= 0f) height = Mathf.Max(2.5f, floors * floorH);
             string walls = S(Get(b, "walls")) ?? DefaultWalls(kind, district);
-            curSlot = S(Get(b, "material_slot")); curId = id;
+            curSlot = SlotFor(district, kind, S(Get(b, "material_slot"))); curId = id;
             var roof = Obj(Get(b, "roof")) ?? new Dictionary<string, object>();
             string roofType = S(Get(roof, "type"), "flat"), roofMat = S(Get(roof, "material")) ?? (roofType == "flat" ? "roof_flat_SK4d" : "roof_tile_SK4a");
             float baseY = fp.Min(q => Height(q.x, q.y)) - .25f;                   // foundations sink, nothing floats
             var go = new GameObject("B_" + id); go.transform.SetParent(parent, false);
             var details = new GameObject("details").transform; details.SetParent(go.transform, false);
             // tint: one material per texture; colour per house via property block (handoff: colour = material parameter)
-            string tint = S(Get(b, "tint"));
-            // arches: rectangular footprints only — passage split across the depth
-            var arches = Arr(Get(b, "entrances")).Select(Obj).Where(e => e != null && S(Get(e, "kind")) == "arch").Select(e => V2(Get(e, "pos"))).ToList();
+            string tint = ClearTint(curSlot) ? null : S(Get(b, "tint"));                 // W86: the retextured slots carry their colour in the texture
+            // arches: rectangular footprints only — passage across the depth, opening = the data's clear width / height (W86: 6 x 4.5 m)
+            var arches = ArchesOf(b, fp);
             float wallTile = Tile(walls);
             var body = new MB();
             float top = baseY + height;
@@ -1550,17 +1638,18 @@ namespace OnlyVolunteers.Map.W85
                 float L = (c - a).magnitude;
                 if (L < .05f) continue;
                 Vector2 d = (c - a) / L;
-                var cuts = new List<(float s, float w)>();
+                var cuts = new List<(float s, float w, float h)>();
                 foreach (var ar in arches)
                 {
-                    float s = Vector2.Dot(ar - a, d), off = Mathf.Abs(Cross(a, c, ar)) / L;
-                    if (s > 2f && s < L - 2f && off < 9f) cuts.Add((s, 4f));
+                    if (Mathf.Abs(Vector2.Dot(d, ar.Axis)) > .5f) continue;            // a wall along the passage is not cut
+                    float s = Vector2.Dot(ar.P - a, d), off = Mathf.Abs(Cross(a, c, ar.P)) / L;
+                    if (s > .3f && s < L - .3f && off < 30f) cuts.Add((s, ar.W, ar.H));
                 }
                 float u = 0f;
                 foreach (var seg in Segments(L, cuts))
                 {
                     Vector2 p0 = a + d * seg.s0, p1 = a + d * seg.s1;
-                    float y0 = seg.arch ? baseY + 4.5f : baseY;
+                    float y0 = seg.h > 0f ? baseY + seg.h : baseY;
                     body.Quad(new Vector3(p0.x, y0, p0.y), new Vector3(p0.x, top, p0.y), new Vector3(p1.x, top, p1.y), new Vector3(p1.x, y0, p1.y),
                         new Vector2((u + seg.s0) / wallTile, (y0 - baseY) / wallTile), new Vector2((u + seg.s0) / wallTile, height / wallTile),
                         new Vector2((u + seg.s1) / wallTile, height / wallTile), new Vector2((u + seg.s1) / wallTile, (y0 - baseY) / wallTile));
@@ -1586,23 +1675,50 @@ namespace OnlyVolunteers.Map.W85
             lod.SetLODs(new[] { new LOD(.06f, all), new LOD(.01f, all.Except(detailR).ToArray()) });
             lod.RecalculateBounds();
             GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic | StaticEditorFlags.OccluderStatic);
+            W86AfterBuilding(go.transform, b, district, kind, fp, id);                  // W86 integration: v07 / T2 reskins, T1 extras
             return true;
         }
 
         sealed class BInfo { public GameObject Go; public string Id, Type; public List<Vector2> Fp; public float Base, Top; public Dictionary<string, object> Roof; }
         static readonly List<BInfo> Built = new();
 
-        static IEnumerable<(float s0, float s1, bool arch)> Segments(float L, List<(float s, float w)> cuts)
+        static IEnumerable<(float s0, float s1, float h)> Segments(float L, List<(float s, float w, float h)> cuts)
         {
             float cur = 0f;
             foreach (var c in cuts.OrderBy(c => c.s))
             {
                 float a = Mathf.Max(cur, c.s - c.w * .5f), b = Mathf.Min(L, c.s + c.w * .5f);
-                if (a > cur) yield return (cur, a, false);
-                yield return (a, b, true);
+                if (b <= a) continue;
+                if (a > cur) yield return (cur, a, 0f);
+                yield return (a, b, c.h);
                 cur = b;
             }
-            if (cur < L) yield return (cur, L, false);
+            if (cur < L) yield return (cur, L, 0f);
+        }
+
+        // Drive-through arches of a building: entrances[kind=arch] (pos, w_m, clear_h_m, through) and arches[] (rect, clear_w_m, clear_h_m,
+        // through), merged (the Rough lists each arch in both). Defaults 4 x 4.5 m (W85 v01). Axis = passage direction (N-S / W-E), else the
+        // footprint's short axis (the passage goes through the depth).
+        struct Arch { public Vector2 P, Axis; public float W, H; }
+        static List<Arch> ArchesOf(Dictionary<string, object> b, List<Vector2> fp)
+        {
+            var list = new List<Arch>();
+            Frame(fp, new Dictionary<string, object>(), out _, out _, out Vector2 shortAx, out _, out _);
+            Vector2 AxisOf(string through) => through == "N-S" ? Vector2.up : through == "W-E" || through == "E-W" ? Vector2.right : shortAx;
+            void Add(Vector2 p, float w, float h, string through)
+            {
+                if (list.Any(a => (a.P - p).magnitude < 2f)) return;
+                list.Add(new Arch { P = p, W = w > .5f ? w : 4f, H = h > .5f ? h : 4.5f, Axis = AxisOf(through) });
+            }
+            foreach (var e in Arr(Get(b, "entrances")).Select(Obj))
+                if (e != null && S(Get(e, "kind")) == "arch") Add(V2(Get(e, "pos")), F(Get(e, "w_m") ?? Get(e, "clear_w_m"), 4f), F(Get(e, "clear_h_m"), 4.5f), S(Get(e, "through")));
+            foreach (var a in Arr(Get(b, "arches")).Select(Obj))
+            {
+                var r = V2s(Get(a, "rect"));
+                if (a == null || r.Length < 3) continue;
+                Add(r.Aggregate(Vector2.zero, (s, q) => s + q) / r.Length, F(Get(a, "clear_w_m") ?? Get(a, "w_m"), 4f), F(Get(a, "clear_h_m"), 4.5f), S(Get(a, "through")));
+            }
+            return list;
         }
 
         // Oriented frame of a footprint: ridge along ridge_axis_deg or the longest edge.
@@ -1692,7 +1808,7 @@ namespace OnlyVolunteers.Map.W85
         }
 
         // ROOF_COLLISION_NOTE recipe 1: body box (convex prism) + ONE convex hull of the whole roof incl. the ridge (no gap).
-        static void Colliders(Transform parent, string id, List<Vector2> fp, float baseY, float top, string type, Dictionary<string, object> roof, List<Vector2> arches)
+        static void Colliders(Transform parent, string id, List<Vector2> fp, float baseY, float top, string type, Dictionary<string, object> roof, List<Arch> arches)
         {
             var col = new GameObject("colliders"); col.transform.SetParent(parent, false);
             Frame(fp, roof, out Vector2 c, out Vector2 ax, out Vector2 ay, out float hx, out float hy);
@@ -1700,16 +1816,21 @@ namespace OnlyVolunteers.Map.W85
             float yaw = -Mathf.Atan2(ax.y, ax.x) * Mathf.Rad2Deg;
             if (rect && arches.Count > 0)
             {
-                // body split around each arch (4 m gap below 4.5 m) + one box above
-                var cuts = arches.Select(a => Vector2.Dot(a - c, ax)).OrderBy(s => s).ToList();
-                float cur = -hx;
-                foreach (float s in cuts.Append(hx + 2f))
+                // body split around each arch (the arch's clear width below its clear height, a box above it up to the roof); the split runs
+                // along the walls the passage cuts through (normally the long axis)
+                bool alongX = Mathf.Abs(Vector2.Dot(arches[0].Axis, ax)) < .5f;
+                Vector2 u = alongX ? ax : ay; float hu = alongX ? hx : hy, hv = alongX ? hy : hx;
+                float uyaw = -Mathf.Atan2(u.y, u.x) * Mathf.Rad2Deg;
+                var cuts = arches.Select(a => (s: Vector2.Dot(a.P - c, u), a.W, a.H)).OrderBy(t => t.s).ToList();
+                float cur = -hu;
+                foreach (var ct in cuts)
                 {
-                    float a0 = cur, a1 = Mathf.Min(hx, s - 2f);
-                    if (a1 > a0 + .1f) AddBox(col.transform, c + ax * (a0 + a1) * .5f, baseY, top, a1 - a0, 2 * hy, yaw);
-                    cur = s + 2f;
+                    float a0 = Mathf.Clamp(ct.s - ct.W * .5f, -hu, hu), a1 = Mathf.Clamp(ct.s + ct.W * .5f, -hu, hu);
+                    if (a0 > cur + .1f) AddBox(col.transform, c + u * (cur + a0) * .5f, baseY, top, a0 - cur, 2 * hv, uyaw);
+                    if (a1 > a0 + .05f) AddBox(col.transform, c + u * (a0 + a1) * .5f, baseY + ct.H, top, a1 - a0, 2 * hv, uyaw);
+                    cur = Mathf.Max(cur, a1);
                 }
-                AddBox(col.transform, c, baseY + 4.5f, top, 2 * hx, 2 * hy, yaw);
+                if (hu > cur + .1f) AddBox(col.transform, c + u * (cur + hu) * .5f, baseY, top, hu - cur, 2 * hv, uyaw);
             }
             else if (rect) AddBox(col.transform, c, baseY, top, 2 * hx, 2 * hy, yaw);
             else if (IsConvex(fp))
@@ -1904,7 +2025,7 @@ namespace OnlyVolunteers.Map.W85
             ["umbrella_towel"] = "BEACH/beach_umbrella_teal", ["umbrella_1_lounger"] = "BEACH/beach_umbrella_red", ["umbrella_2_loungers"] = "BEACH/beach_umbrella_teal",
             ["umbrella_3_loungers"] = "BEACH/beach_umbrella_red", ["beach_umbrella"] = "BEACH/beach_umbrella_red", ["umbrella_yellow"] = "BEACH/beach_umbrella_red",
             ["parked_tractor"] = "HEAVY/tractor_small", ["paz_bus"] = "HEAVY/bus_city", ["security_camera_pole"] = "SMALL/cctv_pole", ["wooden_crate"] = "SMALL/default_crate",
-            ["rounded_rock"] = "SMALL/rock_02",
+            ["rounded_rock"] = "SMALL/rock_02", ["bin"] = "BINS/trashbin_tipping",
             // Hamlet yard dressing -> the approved pilot kits (i09/i10 props, as in the texture test)
             ["woodpile"] = PK1 + "WOODPILE_v01", ["round_hay_bale"] = PK1 + "HAY_BALE_ROUND_v01", ["old_well"] = PK1 + "WELL_RURAL_v01",
             ["farm_trailer"] = PK1 + "CART_WOODEN_v01", ["handcart"] = PK1 + "CART_WOODEN_v01", ["clothesline"] = PK1 + "LAUNDRY_POLE_PAIR_v01",
@@ -1931,6 +2052,8 @@ namespace OnlyVolunteers.Map.W85
             string id = S(Get(p, "id"), kind);
             Vector2 q = V2(Get(p, "pos"));
             if (kind.Contains("lamp") && HamletLamp(q)) return false;                // H5 (Fedya 21.10): no street lamps in the Hamlet
+            if (W86Model(parent, p, kind, id, q)) return true;                       // W86 integration: M1 / M2 models, containers, masts, lamps
+            if (W86Prop(parent, p, kind, id, q)) return true;                         // W86: NPC spots, iron gates, piers, hedges, pumps, cars
             if (kind == "legend_object" || kind.Contains("marker") || kind.Contains("spawn") || kind == "trigger_marker")
             {   // numbered legend circle / spawn or gathering point: a named marker, not a cube
                 var mk = new GameObject("Marker_" + id + "_" + Safe(S(Get(p, "label"), kind) ?? kind));
@@ -1999,6 +2122,7 @@ namespace OnlyVolunteers.Map.W85
                 if (door != null && (SampleSkip.Contains(door) || (SampleCutX.TryGetValue(door, out var kx) && (V2(Get(p, "pos")).x < kx.x || V2(Get(p, "pos")).x > kx.y)))) continue;
                 if (Prop(parent, p)) n++;
             }
+            FlushPropBatches(parent);
             Note($"details by rules: {n} placed ({string.Join(", ", Obj(Get(dj, "counts")).Select(kv => kv.Key + " " + kv.Value))})");
         }
 
@@ -2018,6 +2142,21 @@ namespace OnlyVolunteers.Map.W85
             SampleSkip.Clear(); SampleCutX.Clear(); SampleLamps.Clear(); SampleSpots.Clear();
             foreach (var it in Arr(Get(Sample, "items")).Select(Obj))
             {
+                var near = Obj(Get(it, "replace_near"));
+                if (near != null && !it.ContainsKey("replace"))
+                {   // W86: replaced buildings found by kind near the sample (ids change with the pipeline)
+                    var kinds = new HashSet<string>(Arr(Get(near, "kinds")).Select(o => S(o)));
+                    Vector2 at = V2(Get(it, "pos")); float rad = F(Get(near, "radius_m"), 60f);
+                    var ids = new List<object>();
+                    foreach (string f in Directory.GetFiles(Data + "/districts", (S(Get(near, "district")) ?? "*") + "_v85.json"))
+                        foreach (var bo in Arr(Get(Obj(Json.Parse(File.ReadAllText(f))), "buildings")).Select(Obj))
+                        {
+                            var fp = V2s(Get(bo, "footprint"));
+                            if (fp.Length < 3 || !kinds.Contains(S(Get(bo, "kind"), ""))) continue;
+                            if ((fp.Aggregate(Vector2.zero, (s2, q) => s2 + q) / fp.Length - at).magnitude <= rad) ids.Add(S(Get(bo, "id")));
+                        }
+                    it["replace"] = ids;
+                }
                 foreach (var r in Arr(Get(it, "replace"))) SampleSkip.Add(S(r));
                 var cut = Obj(Get(it, "cut"));
                 if (cut != null) SampleCutX[S(Get(cut, "building"))] = V2(Get(cut, "keep_x"));
@@ -2096,7 +2235,7 @@ namespace OnlyVolunteers.Map.W85
                         if (!go) { log.Add("move: missing " + S(Get(mv, "name"))); continue; }
                         Vector2 q = V2(Get(mv, "pos")); var sz = Arr(Get(mv, "size"));
                         go.position = new Vector3(q.x, y + F(Get(mv, "lift_m")), q.y);
-                        if (sz.Count == 3) go.localScale = new Vector3(F(sz[0]), F(sz[1]), F(sz[2]));
+                        if (sz.Count == 3 && go.TryGetComponent(out MeshFilter mfm) && mfm.sharedMesh && mfm.sharedMesh.name == "Cube") go.localScale = new Vector3(F(sz[0]), F(sz[1]), F(sz[2]));
                         log.Add($"moved {go.name} to ({q.x:0.0}, {q.y:0.0}) +{F(Get(mv, "lift_m")):0.0} m");
                     }
                     log.Add($"{id}: {path} at ({at.x:0.0}, {at.y:0.0}) y {y:0.00} yaw {F(Get(it, "yaw_deg")):0}" + (Arr(Get(it, "replace")).Count > 0 ? " replaces " + string.Join(", ", Arr(Get(it, "replace")).Select(o => S(o))) : "") + (Get(it, "cut") != null ? " cuts " + S(Get(Obj(Get(it, "cut")), "building")) : ""));
@@ -2244,6 +2383,9 @@ namespace OnlyVolunteers.Map.W85
                 if (t.name == "colliders" && t.GetComponentsInChildren<Collider>().Length == 0) holes++;
             RoofTest(out int rays, out int missed);
             Note(W85FloatCheck.Run(root.gameObject.scene, true).TrimEnd());
+            string gf = W85GroundFit.Run(Data, Ter, out int gfErrors);                // W86: footprint ground range > 1.5 m = error
+            File.WriteAllText(Gen + "/W85_groundfit.txt", gf);
+            Note(gf);
             Note($"validate: renderers without material {miss}, buildings without colliders {holes}, roof rays {rays} (missed {missed}) - details {Gen}/W85_roof_test.txt");
         }
 
