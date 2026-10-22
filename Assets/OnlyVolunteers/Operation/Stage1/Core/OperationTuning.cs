@@ -32,8 +32,22 @@ namespace OnlyVolunteers.Operation.Stage1
         public int sutureStitches = 20;
         [Tooltip("Round 3: the approved sutured state (OperationSutured_v05.fbx, the INC_ABDOMEN frame of the opening).")]
         public GameObject suturedModel;
-        [Tooltip("Length of Op_EscapeFall_v01: the root stays on PatientRest while it plays.")]
+        [Tooltip("Round 4 (decision 4): the one scalpel stroke that reopens a sutured or patched belly runs this many times the cut speed.")]
+        public float reopenSpeedFactor = 2.5f;
+        [Tooltip("Round 4 (Fedya: 'everything ~1.5x faster'): playback speed of the escape (Escape_v01 clips, the old EscapeFall and the " +
+                 "KnockedOut lie) and the matching rule timers. 1 = authored speed.")]
+        public float escapeSpeed = 1.5f;
+        [Tooltip("Round 4: the patient escapes with the Escape_v01 clips (strap opening timed by their StrapOpen events, sit up, swing " +
+                 "off, hop and run). Off: the round-3 procedural unbuckle (unbuckleSeconds per strap) and the EscapeFall clip. Set by " +
+                 "OnlyVolunteers/Operation/Integrate escape clips v01.")]
+        public bool escapeClips;
+        [Tooltip("Round 4: escape clips (bit = OperationEscape id) not imported (the v01b left-side, edge-slump and stumble clips need a " +
+                 "local bpy rebuild). Missing exits fall back to his right side, missing slumps to Esc_Slump_Sit.")]
+        public int escapeMissingClips;
+        [Tooltip("Length of Op_EscapeFall_v01 at authored speed: the root stays on PatientRest while it plays (divided by escapeSpeed).")]
         public float escapeFallSeconds = 3f;
+        /// <summary>Round 4: real seconds of the EscapeFall clip at escapeSpeed.</summary>
+        public float EscapeFallDuration => escapeFallSeconds / Mathf.Max(0.1f, escapeSpeed);
         [Tooltip("PatientRest-local root of the KnockedOut clip after the EscapeFall clip: the floor point under the landed hips. " +
                  "v03 uses the mirrored clips (Op_*_Mirror_v01, escape over the patient's RIGHT = the table camera's side), so this is " +
                  "the mirror of validation_op_v01.json cross_contracts (-1.5, -0.66, 0.36).")]

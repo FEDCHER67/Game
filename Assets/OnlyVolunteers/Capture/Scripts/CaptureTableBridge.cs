@@ -26,7 +26,7 @@ namespace OnlyVolunteers.Capture
         public const float RemoveHoldSeconds = 1f;
         public const float BaseRadius = 14f;
         /// <summary>Round 3: seconds a living patient lies off the table, held by nobody, before he is a field NPC again.</summary>
-        public const float DischargeSettleSeconds = 1.2f;
+        public const float DischargeSettleSeconds = 0.8f; // round 4: ~1.5x faster (was 1.2 s)
 
         public NetworkOperationTable Table { get; private set; }
         public OperationTableView View { get; private set; }
@@ -152,7 +152,8 @@ namespace OnlyVolunteers.Capture
             c.Facts.condition = npc.Condition;
             c.State.conditionLoss = CaptureGrades.ConditionLoss(npc.Condition);
             KeepAppearance(npc);
-            if (undressed.Add(c.PatientId)) SpawnTrash(npc);
+            if (undressed.Add(c.PatientId) && !c.Facts.undressed) SpawnTrash(npc);
+            c.Facts.undressed = true;
             director.BeforeAdmit(c);
             // Over the pad, alongside the gurney (the KnockedOut root lies along its X axis, head toward the head end).
             var tuning = Table.Tuning;
@@ -185,29 +186,39 @@ namespace OnlyVolunteers.Capture
         {
             OperationState s = Table.State;
             NetworkPhysicsBody patient = Table.PatientBody;
-            bool candidate = Table.HasPatient && s != null && s.alive && !s.onTable && !Table.PatientFalling && (patient == null || !patient.HasHolder);
+            // Round 4: after the escape clips (HopRun / Stumble_Off) he is handed over at once, in the clip's last pose.
+            bool ranOff = Table.PatientRanOff;
+            bool candidate = Table.HasPatient && s != null && s.alive && !s.onTable && (!Table.PatientFalling || ranOff) && (patient == null || !patient.HasHolder);
             if (!candidate) { offTableSince = -1f; return; }
-            if (offTableSince < 0f) { offTableSince = Time.time; return; }
-            if (Time.time - offTableSince < DischargeSettleSeconds) return;
+            if (!ranOff)
+            {
+                if (offTableSince < 0f) { offTableSince = Time.time; return; }
+                if (Time.time - offTableSince < DischargeSettleSeconds) return;
+            }
             offTableSince = -1f;
             CaptureFacts facts = PatientFacts;
             if (facts == null && director.Facts.TryGetValue(s.patientId, out CaptureFacts known)) facts = known;
             OperationState state = Table.ServerDischargeLiving(out Vector3 pelvis, out Vector3 head, out bool faceUp);
             if (state == null) return;
+            bool standing = state.ranOff && !state.Sleeping;
+            if (standing) pelvis = Table.RunOffPoint(state.escapeSide, out head);
+            state.ranOff = false;
             if (facts == null)
             {
                 facts = new CaptureFacts { patientId = state.patientId, districtId = "village", visual = "SausageBuddy_A", npcTypeId = "SAUSAGE_BUDDY_A", rolled = true };
                 for (int i = 0; i < facts.intrinsic.Length && i < state.organs.Length; i++) facts.intrinsic[i] = state.organs[i].intrinsicGrade;
             }
+            facts.undressed = true; // round 4: he stays in the patient trunks
             PatientFacts = null;
             CaptureTieVisuals.Remove(ref bands, ref handLink, ref footLink);
             bool asleep = state.Sleeping;
             var save = new CaptureNpcSave
             {
                 facts = facts, operation = state, npcState = (byte)NpcState.Down,
-                // Awake: past the Out share of the stun at once (Groggy: kicks), up and away in ~2 s. Asleep: CaptureNpc pins him.
-                stunLeft = asleep ? 4f : 2f, stunTotal = asleep ? 8f : 6f,
-                inCargo = false, pelvis = pelvis, headDirection = head, faceUp = faceUp,
+                // Awake: past the Out share of the stun at once (Groggy: kicks), up and away in ~1.3 s (round 4: 1.5x faster).
+                // Asleep: CaptureNpc pins him. Ran off (HopRun): on his feet, running.
+                stunLeft = asleep ? 4f : 1.33f, stunTotal = asleep ? 8f : 4f,
+                inCargo = false, pelvis = pelvis, headDirection = head, faceUp = faceUp, standing = standing,
             };
             CaptureNpc c = CaptureSave.Respawn(director, save);
             Discharges++;
@@ -272,7 +283,7 @@ namespace OnlyVolunteers.Capture
         }
 
         private static readonly System.Collections.Generic.Dictionary<Material, Material> closedSkins = new();
-        private static Material[] Match(Material[] target, Material[] source)
+        internal static Material[] Match(Material[] target, Material[] source)
         {
             var result = (Material[])target.Clone();
             Material npcSkin = null;

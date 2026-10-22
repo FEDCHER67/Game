@@ -93,6 +93,9 @@ namespace OnlyVolunteers.Capture
         public Restraints restraints;
         public bool rolled;
         public int[] intrinsic = new int[CaptureGrades.Organs];
+        /// <summary>Round 4 (Fedya): he has been on the table: back in the field he keeps the patient look (his body in the
+        /// patient trunks, his own skin and face), never the crowd template's clothes again.</summary>
+        public bool undressed;
     }
 
     [Serializable]
@@ -109,6 +112,8 @@ namespace OnlyVolunteers.Capture
         public Vector3 pelvis;
         public Vector3 headDirection = Vector3.forward;
         public bool faceUp = true;
+        /// <summary>Round 4: re-created on his feet (he ran off the table): 'pelvis' is the floor point, 'headDirection' his facing.</summary>
+        public bool standing;
     }
 
     [Serializable]
