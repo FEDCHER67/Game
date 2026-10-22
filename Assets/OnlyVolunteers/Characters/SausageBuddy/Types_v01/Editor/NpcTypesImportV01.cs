@@ -44,8 +44,15 @@ namespace OnlyVolunteers.Characters.Types
         // Lighter LOD0 derivatives of the heavy types (ArtSource/.../Types_opt_v01/build_types_opt_v01.py): same rig, object
         // names and materials, hidden faces removed and the outfit decimated within 1.5 mm. A type with an opt FBX there is
         // imported from it; the source revision stays in ArtSource (and its old copy in Models).
-        private const string OptDir = "ArtSource/Characters/SAUSAGE_BUDDY_01/Types_opt_v01";
-        private const string OptTag = "opt_v01";
+        // TASK-000900: Types_opt_v02 (build_types_opt_v02.py, its README): opt_v01 minus the hidden face interior as LOD0,
+        // plus crowd levels LOD1 (~50 %) / LOD2 (~27 %), Unity's LOD names <name>_LOD0/1/2 in one FBX per type (see LODs below).
+        private const string OptDir = "ArtSource/Characters/SAUSAGE_BUDDY_01/Types_opt_v02";
+        private const string OptTag = "opt_v02";
+        // LOD switch distances: the opt_v02 error limits hold at 15 m (LOD1) and 40 m (LOD2); LOD2 is culled at ~150 m
+        // (README: ~1 % of the screen height). Screen heights for a 1.8 m figure seen by the play camera (FOV 75 at runtime in
+        // Map_W85_Play_v02) at the quality level's LOD bias (2 on PC), as V3Props17 / W86Decals do.
+        private const float GameFov = 75f, LodFigureM = 1.8f;
+        private static readonly float[] LodDistancesM = { 15f, 40f, 150f };
 
         // Vadim's approved pool with current revisions (README of SAUSAGE_BUDDY_01, TASK-000506..000545).
         // W86 (Vadim 976100c7, TASK-000859..000897): CONSTR_INDIAN v08 / MEXICAN v05 / UZBEK v05 replace v07 / v04 / v04;
@@ -159,9 +166,10 @@ namespace OnlyVolunteers.Characters.Types
             bool any = false, props = false;
             foreach (SkinnedMeshRenderer smr in instance.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
+                if (LodOf(smr.name, out string part) > 0) continue; // LOD0 only
                 if (smr.sharedMesh != null) tris += smr.sharedMesh.triangles.Length / 3;
                 if (any) bounds.Encapsulate(smr.bounds); else { bounds = smr.bounds; any = true; }
-                if (smr.name.StartsWith("Props_") && smr.name.EndsWith("Hand")) props = true;
+                if (part.StartsWith("Props_") && part.EndsWith("Hand")) props = true;
             }
             float feet = FeetUnderIdle((GameObject)PrefabUtility.InstantiatePrefab(model, scene), idle);
             float scale = v.npc_type != null && v.npc_type.game_scale > 0f ? v.npc_type.game_scale : 1f;
@@ -262,49 +270,15 @@ namespace OnlyVolunteers.Characters.Types
         private static string UpdatePrefab(string prefabPath, GameObject model, bool props, float scale, out string changes)
         {
             changes = "";
-            var source = new Dictionary<string, SkinnedMeshRenderer>();
-            foreach (SkinnedMeshRenderer smr in model.GetComponentsInChildren<SkinnedMeshRenderer>(true)) source[smr.name] = smr;
             GameObject root = PrefabUtility.LoadPrefabContents(prefabPath);
             try
             {
-                var byName = new Dictionary<string, Transform>();
-                foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) if (!byName.ContainsKey(t.name)) byName.Add(t.name, t);
-                var renderers = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-                var have = new HashSet<string>();
-                var drop = new List<SkinnedMeshRenderer>();
-                var errors = new List<string>();
-                foreach (SkinnedMeshRenderer smr in renderers)
-                {
-                    have.Add(smr.name);
-                    if (source.ContainsKey(smr.name)) continue;
-                    if (smr.name.StartsWith("Props_")) drop.Add(smr); else errors.Add($"no {smr.name} in the new model");
-                }
-                foreach (string n in source.Keys) if (!have.Contains(n)) errors.Add($"{n} only in the new model");
-                var bones = new Dictionary<SkinnedMeshRenderer, Transform[]>();
-                foreach (SkinnedMeshRenderer smr in renderers)
-                {
-                    if (!source.TryGetValue(smr.name, out SkinnedMeshRenderer src)) continue;
-                    var mapped = new Transform[src.bones.Length];
-                    for (int i = 0; i < mapped.Length; i++)
-                        if (src.bones[i] == null || !byName.TryGetValue(src.bones[i].name, out mapped[i])) errors.Add($"{smr.name}: bone {src.bones[i]?.name} missing");
-                    if (src.rootBone != null && !byName.ContainsKey(src.rootBone.name)) errors.Add($"{smr.name}: root bone {src.rootBone.name} missing");
-                    bones[smr] = mapped;
-                }
-                if (errors.Count > 0) return string.Join("; ", errors);
-                foreach (SkinnedMeshRenderer smr in renderers)
-                {
-                    if (!source.TryGetValue(smr.name, out SkinnedMeshRenderer src)) continue;
-                    smr.sharedMesh = src.sharedMesh;
-                    smr.sharedMaterials = src.sharedMaterials;
-                    smr.bones = bones[smr];
-                    smr.rootBone = src.rootBone != null ? byName[src.rootBone.name] : null;
-                    smr.localBounds = src.localBounds;
-                }
-                foreach (SkinnedMeshRenderer smr in drop) { changes += $", removed {smr.name}"; Object.DestroyImmediate(smr.gameObject); }
+                if ((root.transform.localScale - Vector3.one * scale).sqrMagnitude > 1e-8f) { root.transform.localScale = Vector3.one * scale; changes += Inv($", scale {scale:0.00}"); }
+                string error = Repoint(root, model, ref changes, out _, out _);
+                if (error != null) return error;
                 bool hasHeld = root.TryGetComponent(out NpcHeldProps held);
                 if (props && !hasHeld) { root.AddComponent<NpcHeldProps>(); changes += ", + NpcHeldProps"; }
                 else if (!props && hasHeld) { Object.DestroyImmediate(held); changes += ", - NpcHeldProps"; }
-                if ((root.transform.localScale - Vector3.one * scale).sqrMagnitude > 1e-8f) { root.transform.localScale = Vector3.one * scale; changes += Inv($", scale {scale:0.00}"); }
                 PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
                 return null;
             }
@@ -314,6 +288,201 @@ namespace OnlyVolunteers.Characters.Types
             }
         }
 
+        // ---------- LODs (Types_opt_v02) ----------
+
+        /// <summary>Unity's LOD naming: 0 for "Body" or "Body_LOD0", n for "Body_LODn"; part = "Body".</summary>
+        public static int LodOf(string name, out string part)
+        {
+            int i = name.LastIndexOf("_LOD", StringComparison.Ordinal);
+            if (i > 0 && i + 4 < name.Length && int.TryParse(name.Substring(i + 4), NumberStyles.None, CultureInfo.InvariantCulture, out int lod))
+            {
+                part = name.Substring(0, i);
+                return lod;
+            }
+            part = name;
+            return 0;
+        }
+
+        // Points an opened prefab (root) at a model's meshes without rebuilding it. The prefab keeps LOD0 under the plain
+        // names (Body, Face, Outfit, Props_*: KeepAppearance, CaptureUndress, OperationPatientRig and the type checks look
+        // them up by name): its renderer X takes the model's X / X_LOD0 mesh, materials, bones (by name), root bone and
+        // bounds. The model's X_LOD1 / X_LOD2 go onto sibling renderers X_LOD1 / X_LOD2 (made next to X when missing, with
+        // X's layer and render settings); levels the model no longer has are removed, and so is a Props_* renderer the new
+        // model lacks (with its levels). Then the LODGroup (SetupLods). tris[level] = the model's triangles per level.
+        // Null = done; otherwise the reasons (a part only one side has, a bone missing) and nothing is changed.
+        private static string Repoint(GameObject root, GameObject model, ref string changes, out int before, out int[] tris)
+        {
+            before = 0;
+            tris = Array.Empty<int>();
+            var source = new Dictionary<(string part, int lod), SkinnedMeshRenderer>();
+            int maxLod = 0;
+            foreach (SkinnedMeshRenderer smr in model.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                int lod = LodOf(smr.name, out string part);
+                source[(part, lod)] = smr;
+                maxLod = Math.Max(maxLod, lod);
+            }
+            var byName = new Dictionary<string, Transform>();
+            foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) if (!byName.ContainsKey(t.name)) byName.Add(t.name, t);
+            var lod0 = new List<SkinnedMeshRenderer>();
+            var levels = new Dictionary<(string part, int lod), SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer smr in root.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                int lod = LodOf(smr.name, out string part);
+                if (lod == 0) lod0.Add(smr); else levels[(part, lod)] = smr;
+            }
+            var errors = new List<string>();
+            var drop = new List<SkinnedMeshRenderer>();
+            var have = new HashSet<string>();
+            foreach (SkinnedMeshRenderer smr in lod0)
+            {
+                LodOf(smr.name, out string part);
+                have.Add(part);
+                if (source.ContainsKey((part, 0))) continue;
+                if (part.StartsWith("Props_")) drop.Add(smr); else errors.Add($"no {part} in the new model");
+            }
+            foreach ((string part, int lod) in source.Keys)
+            {
+                if (lod == 0 && !have.Contains(part)) errors.Add($"{part} only in the new model");
+                if (lod > 0 && !source.ContainsKey((part, 0))) errors.Add($"{part}_LOD{lod} without its LOD0");
+            }
+            var bones = new Dictionary<SkinnedMeshRenderer, Transform[]>();
+            foreach (SkinnedMeshRenderer src in source.Values)
+            {
+                var mapped = new Transform[src.bones.Length];
+                for (int i = 0; i < mapped.Length; i++)
+                    if (src.bones[i] == null || !byName.TryGetValue(src.bones[i].name, out mapped[i])) errors.Add($"{src.name}: bone {src.bones[i]?.name} missing");
+                if (src.rootBone != null && !byName.ContainsKey(src.rootBone.name)) errors.Add($"{src.name}: root bone {src.rootBone.name} missing");
+                bones[src] = mapped;
+            }
+            if (errors.Count > 0) return string.Join("; ", errors);
+
+            tris = new int[maxLod + 1];
+            foreach (SkinnedMeshRenderer smr in drop)
+            {
+                LodOf(smr.name, out string part);
+                foreach (var key in new List<(string part, int lod)>(levels.Keys))
+                    if (key.part == part) { Object.DestroyImmediate(levels[key].gameObject); levels.Remove(key); }
+                changes += $", removed {smr.name}";
+                Object.DestroyImmediate(smr.gameObject);
+            }
+            var kept = new HashSet<string>();
+            foreach (SkinnedMeshRenderer smr in lod0)
+            {
+                if (smr == null) continue; // dropped above
+                LodOf(smr.name, out string part);
+                kept.Add(part);
+                before += Tris(smr.sharedMesh);
+                SkinnedMeshRenderer src = source[(part, 0)];
+                Assign(smr, src, bones[src], byName);
+                tris[0] += Tris(src.sharedMesh);
+                for (int lod = 1; lod <= maxLod; lod++)
+                {
+                    levels.TryGetValue((part, lod), out SkinnedMeshRenderer level);
+                    if (!source.TryGetValue((part, lod), out SkinnedMeshRenderer srcLevel))
+                    {
+                        if (level != null) { Object.DestroyImmediate(level.gameObject); levels.Remove((part, lod)); }
+                        continue;
+                    }
+                    if (level == null) levels[(part, lod)] = level = MakeLevel(smr, $"{part}_LOD{lod}");
+                    Assign(level, srcLevel, bones[srcLevel], byName);
+                    tris[lod] += Tris(srcLevel.sharedMesh);
+                }
+            }
+            // Levels left without their LOD0 part or above the model's coarsest level.
+            foreach (var kv in new List<KeyValuePair<(string part, int lod), SkinnedMeshRenderer>>(levels))
+                if (kv.Value != null && (!kept.Contains(kv.Key.part) || kv.Key.lod > maxLod)) { Object.DestroyImmediate(kv.Value.gameObject); levels.Remove(kv.Key); }
+            SetupLods(root);
+            return null;
+        }
+
+        private static int Tris(Mesh mesh) => mesh != null ? mesh.triangles.Length / 3 : 0;
+
+        private static void Assign(SkinnedMeshRenderer smr, SkinnedMeshRenderer src, Transform[] bones, Dictionary<string, Transform> byName)
+        {
+            smr.sharedMesh = src.sharedMesh;
+            smr.sharedMaterials = src.sharedMaterials;
+            smr.bones = bones;
+            smr.rootBone = src.rootBone != null ? byName[src.rootBone.name] : null;
+            smr.localBounds = src.localBounds;
+        }
+
+        // A coarser level of part X: a sibling of X with X's pose, layer and render settings.
+        private static SkinnedMeshRenderer MakeLevel(SkinnedMeshRenderer lod0, string name)
+        {
+            var go = new GameObject(name) { layer = lod0.gameObject.layer };
+            go.transform.SetParent(lod0.transform.parent, false);
+            go.transform.SetLocalPositionAndRotation(lod0.transform.localPosition, lod0.transform.localRotation);
+            go.transform.localScale = lod0.transform.localScale;
+            var r = go.AddComponent<SkinnedMeshRenderer>();
+            r.shadowCastingMode = lod0.shadowCastingMode;
+            r.receiveShadows = lod0.receiveShadows;
+            r.updateWhenOffscreen = lod0.updateWhenOffscreen;
+            r.quality = lod0.quality;
+            r.skinnedMotionVectors = lod0.skinnedMotionVectors;
+            r.motionVectorGenerationMode = lod0.motionVectorGenerationMode;
+            r.lightProbeUsage = lod0.lightProbeUsage;
+            r.reflectionProbeUsage = lod0.reflectionProbeUsage;
+            r.probeAnchor = lod0.probeAnchor;
+            r.renderingLayerMask = lod0.renderingLayerMask;
+            r.allowOcclusionWhenDynamic = lod0.allowOcclusionWhenDynamic;
+            r.enabled = lod0.enabled;
+            return r;
+        }
+
+        // The LODGroup on the prefab root: level 0 = every part's LOD0, level n = X_LODn where the part has it, else its
+        // next finer level (every part stays drawn down to the cull). Switches at LodDistancesM for a LodFigureM figure
+        // (size and reference point set, not from the bind-pose bounds); no LOD renderers = no LODGroup.
+        private static void SetupLods(GameObject root)
+        {
+            var parts = new Dictionary<string, SortedDictionary<int, Renderer>>();
+            int maxLod = 0;
+            foreach (SkinnedMeshRenderer smr in root.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                int lod = LodOf(smr.name, out string part);
+                if (!parts.TryGetValue(part, out var p)) parts[part] = p = new SortedDictionary<int, Renderer>();
+                p[lod] = smr;
+                maxLod = Math.Max(maxLod, lod);
+            }
+            foreach (LODGroup old in root.GetComponentsInChildren<LODGroup>(true)) if (old.gameObject != root) Object.DestroyImmediate(old);
+            root.TryGetComponent(out LODGroup group);
+            if (maxLod == 0)
+            {
+                if (group != null) Object.DestroyImmediate(group);
+                return;
+            }
+            var levels = new List<Renderer>[maxLod + 1];
+            for (int l = 0; l <= maxLod; l++) levels[l] = new List<Renderer>();
+            foreach (SortedDictionary<int, Renderer> p in parts.Values)
+            {
+                if (!p.ContainsKey(0)) continue;
+                Renderer last = null;
+                for (int l = 0; l <= maxLod; l++)
+                {
+                    if (p.TryGetValue(l, out Renderer r)) last = r;
+                    levels[l].Add(last);
+                }
+            }
+            if (group == null) group = root.AddComponent<LODGroup>();
+            float k = Mathf.Max(0.1f, QualitySettings.lodBias) * LodFigureM / (2f * Mathf.Tan(GameFov * 0.5f * Mathf.Deg2Rad));
+            var lods = new LOD[maxLod + 1];
+            float previous = 1f;
+            for (int l = 0; l <= maxLod; l++)
+            {
+                // the last level ends at the cull distance, the others at 15 m / 40 m
+                float d = l == maxLod ? LodDistancesM[LodDistancesM.Length - 1] : LodDistancesM[Math.Min(l, LodDistancesM.Length - 2)];
+                previous = Mathf.Min(previous * 0.999f, Mathf.Clamp(k / d, 0.001f, 0.99f));
+                lods[l] = new LOD(previous, levels[l].ToArray());
+            }
+            group.fadeMode = LODFadeMode.None;
+            group.animateCrossFading = false;
+            group.SetLODs(lods);
+            Vector3 s = root.transform.lossyScale;
+            float scale = Mathf.Max(1e-3f, Mathf.Max(Mathf.Abs(s.x), Mathf.Abs(s.y), Mathf.Abs(s.z)));
+            group.localReferencePoint = new Vector3(0f, LodFigureM * 0.5f / scale, 0f);
+            group.size = LodFigureM / scale;
+        }
+
         private static string FbxName(string id, int rev) => $"SAUSAGE_BUDDY_{id}_v{rev:00}.fbx";
         private static string OptName(string id, int rev) => $"SAUSAGE_BUDDY_{id}_v{rev:00}_{OptTag}.fbx";
         private static bool HasOpt(string project, string id, int rev) => File.Exists(Path.Combine(project, OptDir, OptName(id, rev)));
@@ -321,16 +490,18 @@ namespace OnlyVolunteers.Characters.Types
         private static string SourceFbx(string project, string id, int rev) =>
             HasOpt(project, id, rev) ? $"{OptDir}/{OptName(id, rev)}" : $"{SourceDir}/{id}/{FbxName(id, rev)}";
 
-        [MenuItem("Tools/Only Volunteers/Characters/NPC Types v01: Use Optimized Meshes (opt_v01)")]
+        [MenuItem("Tools/Only Volunteers/Characters/NPC Types v01: Use Optimized Meshes + crowd LODs (opt_v02)")]
         public static void ApplyOptimizedMenu() => Debug.Log(ApplyOptimized());
 
-        /// <summary>Points the existing type prefabs at the opt_v01 meshes without rebuilding them: copies and imports each
-        /// opt FBX like the source FBX, then swaps every SkinnedMeshRenderer's mesh, materials, bones (by name) and bounds
-        /// inside the prefab, so the prefab's objects, components, colliders and file IDs (the scene instances' overrides)
-        /// stay as they are; the preset gets the new source and triangle count. Spawn tables and placements are not touched.</summary>
+        /// <summary>Points the existing type prefabs at the opt meshes (OptDir, now opt_v02 with LODs) without rebuilding
+        /// them: copies and imports each opt FBX like the source FBX, then Repoint: every LOD0 SkinnedMeshRenderer keeps its
+        /// name and gets the new mesh, materials, bones (by name) and bounds, the LOD1 / LOD2 renderers are added next to it
+        /// and a LODGroup on the root; the prefab's other objects, components, colliders and file IDs (the scene instances'
+        /// overrides) stay as they are; the preset gets the new source and LOD0 triangle count. Spawn tables and placements
+        /// are not touched. Types without an opt FBX are skipped.</summary>
         public static string ApplyOptimized()
         {
-            var log = new StringBuilder("[NpcTypesV01] opt_v01 meshes\n");
+            var log = new StringBuilder($"[NpcTypesV01] {OptTag} meshes\n");
             string project = Path.GetDirectoryName(Application.dataPath);
             Avatar avatar = null;
             foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(BuddyAFbx)) if (o is Avatar a) avatar = a;
@@ -352,55 +523,26 @@ namespace OnlyVolunteers.Characters.Types
                     failed++;
                     continue;
                 }
-                var source = new Dictionary<string, SkinnedMeshRenderer>();
-                foreach (SkinnedMeshRenderer smr in model.GetComponentsInChildren<SkinnedMeshRenderer>(true)) source[smr.name] = smr;
                 GameObject root = PrefabUtility.LoadPrefabContents(prefabPath);
-                int before = 0, after = 0;
-                var errors = new List<string>();
+                int before;
+                int[] tris;
+                string error, changes = "";
                 try
                 {
-                    var byName = new Dictionary<string, Transform>();
-                    foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) if (!byName.ContainsKey(t.name)) byName.Add(t.name, t);
-                    var renderers = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-                    foreach (SkinnedMeshRenderer smr in renderers)
-                        if (!source.ContainsKey(smr.name)) errors.Add($"no {smr.name} in the opt model");
-                    if (renderers.Length != source.Count) errors.Add($"renderers {renderers.Length} vs {source.Count}");
-                    var bones = new Dictionary<SkinnedMeshRenderer, Transform[]>();
-                    foreach (SkinnedMeshRenderer smr in renderers)
-                    {
-                        if (!source.TryGetValue(smr.name, out SkinnedMeshRenderer src)) continue;
-                        var mapped = new Transform[src.bones.Length];
-                        for (int i = 0; i < mapped.Length; i++)
-                            if (src.bones[i] == null || !byName.TryGetValue(src.bones[i].name, out mapped[i])) errors.Add($"{smr.name}: bone {src.bones[i]?.name} missing");
-                        if (src.rootBone != null && !byName.ContainsKey(src.rootBone.name)) errors.Add($"{smr.name}: root bone {src.rootBone.name} missing");
-                        bones[smr] = mapped;
-                    }
-                    if (errors.Count == 0)
-                    {
-                        foreach (SkinnedMeshRenderer smr in renderers)
-                        {
-                            SkinnedMeshRenderer src = source[smr.name];
-                            before += smr.sharedMesh != null ? smr.sharedMesh.triangles.Length / 3 : 0;
-                            smr.sharedMesh = src.sharedMesh;
-                            smr.sharedMaterials = src.sharedMaterials;
-                            smr.bones = bones[smr];
-                            smr.rootBone = src.rootBone != null ? byName[src.rootBone.name] : null;
-                            smr.localBounds = src.localBounds;
-                            after += src.sharedMesh.triangles.Length / 3;
-                        }
-                        PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
-                    }
+                    error = Repoint(root, model, ref changes, out before, out tris);
+                    if (error == null) PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
                 }
                 finally
                 {
                     PrefabUtility.UnloadPrefabContents(root);
                 }
-                if (errors.Count > 0)
+                if (error != null)
                 {
-                    log.AppendLine($"  {id}: NOT CHANGED: {string.Join("; ", errors)}");
+                    log.AppendLine($"  {id}: NOT CHANGED: {error}");
                     failed++;
                     continue;
                 }
+                int after = tris.Length > 0 ? tris[0] : 0;
                 var preset = AssetDatabase.LoadAssetAtPath<NpcTypePreset>($"{PresetsDir}/{id}.asset");
                 if (preset != null)
                 {
@@ -408,7 +550,8 @@ namespace OnlyVolunteers.Characters.Types
                     preset.Triangles = after;
                     EditorUtility.SetDirty(preset);
                 }
-                log.AppendLine(Inv($"  {id,-23} v{rev:00} {before,6} -> {after,6} tris  {OptName(id, rev)}"));
+                var lodGroup = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath).GetComponent<LODGroup>();
+                log.AppendLine(Inv($"  {id,-23} v{rev:00} {before,6} -> {after,6} tris, LODs {string.Join(" / ", tris)}, LODGroup {(lodGroup != null ? lodGroup.lodCount : 0)}  {OptName(id, rev)}{changes}"));
                 done++;
             }
             AssetDatabase.SaveAssets();
@@ -457,6 +600,9 @@ namespace OnlyVolunteers.Characters.Types
             var root = (GameObject)PrefabUtility.InstantiatePrefab(model, scene);
             PrefabUtility.UnpackPrefabInstance(root, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
             root.name = "SausageBuddy_" + id;
+            // opt_v02 models: LOD0 under the plain part names (as Repoint keeps them), our LODGroup instead of the importer's.
+            foreach (SkinnedMeshRenderer smr in root.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                if (smr.name.EndsWith("_LOD0", StringComparison.Ordinal) && LodOf(smr.name, out string part) == 0) smr.gameObject.name = part;
             if (!root.TryGetComponent(out Animator animator)) animator = root.AddComponent<Animator>();
             animator.runtimeAnimatorController = controller;
             animator.avatar = avatar;
@@ -465,6 +611,7 @@ namespace OnlyVolunteers.Characters.Types
             NpcRagdollBuilder.EnsureRig(root);
             if (handProps && !root.TryGetComponent(out NpcHeldProps _)) root.AddComponent<NpcHeldProps>();
             root.transform.localScale = Vector3.one * scale;
+            SetupLods(root);
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(root, $"{PrefabsDir}/SausageBuddy_{id}.prefab");
             Object.DestroyImmediate(root);
             return prefab;
@@ -617,7 +764,7 @@ namespace OnlyVolunteers.Characters.Types
             var baked = new Mesh();
             foreach (SkinnedMeshRenderer smr in instance.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
-                if (smr.sharedMesh == null || smr.name.StartsWith("Props_")) continue;
+                if (smr.sharedMesh == null || smr.name.StartsWith("Props_") || LodOf(smr.name, out _) > 0) continue;
                 smr.BakeMesh(baked, true);
                 foreach (Vector3 v in baked.vertices) min = Mathf.Min(min, smr.transform.TransformPoint(v).y);
             }

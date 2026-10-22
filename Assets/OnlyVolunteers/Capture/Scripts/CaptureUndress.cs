@@ -14,10 +14,12 @@ namespace OnlyVolunteers.Capture
         {
             if (npc == null || patientModel == null) return false;
             SkinnedMeshRenderer body = null, shorts = null, sourceBody = null, sourceShorts = null;
+            var bodyLods = new List<SkinnedMeshRenderer>();
             foreach (var smr in npc.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
                 if (smr.name == "Body") body = smr;
                 else if (smr.name == "Shorts") shorts = smr;
+                else if (smr.name.StartsWith("Body_LOD")) bodyLods.Add(smr);
             }
             foreach (var smr in patientModel.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
@@ -38,6 +40,15 @@ namespace OnlyVolunteers.Capture
             body.rootBone = bodyRoot;
             body.localBounds = sourceBody.localBounds;
             body.sharedMaterials = CaptureTableBridge.Match(sourceBody.sharedMaterials, own);
+            // TASK-000900: the types' crowd LODs Body_LOD1 / _LOD2 are cut under the outfit too: they show the same full body.
+            foreach (var level in bodyLods)
+            {
+                level.sharedMesh = body.sharedMesh;
+                level.bones = bodyBones;
+                level.rootBone = bodyRoot;
+                level.localBounds = body.localBounds;
+                level.sharedMaterials = body.sharedMaterials;
+            }
             if (addShorts)
             {
                 var go = new GameObject("Shorts");
@@ -53,6 +64,18 @@ namespace OnlyVolunteers.Capture
                 renderer.localBounds = sourceShorts.localBounds;
                 renderer.sharedMaterials = sourceShorts.sharedMaterials;
                 renderer.updateWhenOffscreen = body.updateWhenOffscreen;
+                // ... and in every level of the type's LODGroup, so it is culled with the body.
+                var group = body.GetComponentInParent<LODGroup>();
+                if (group != null)
+                {
+                    var lods = group.GetLODs();
+                    for (int i = 0; i < lods.Length; i++)
+                    {
+                        var list = new List<Renderer>(lods[i].renderers) { renderer };
+                        lods[i].renderers = list.ToArray();
+                    }
+                    group.SetLODs(lods);
+                }
             }
             foreach (var smr in npc.GetComponentsInChildren<SkinnedMeshRenderer>(true))
                 if (smr.name == "Outfit" || smr.name.StartsWith("Outfit")) smr.enabled = false;
