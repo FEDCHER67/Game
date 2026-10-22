@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_Tank",
+  "family": "Military",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    0.6242,
+    -0.0
+  ],
+  "lod0": {
+    "triangles": 2024,
+    "vertices": 1138,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.75,
+      -3.976,
+      0.0
+    ],
+    "bounds_max": [
+      1.75,
+      3.976,
+      2.54
+    ],
+    "size_xyz_m": [
+      3.5,
+      7.952,
+      2.54
+    ]
+  },
+  "lod1": {
+    "triangles": 620,
+    "vertices": 374,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.75,
+      -3.976,
+      0.0
+    ],
+    "bounds_max": [
+      1.75,
+      3.998,
+      2.33
+    ],
+    "size_xyz_m": [
+      3.5,
+      7.974,
+      2.33
+    ]
+  },
+  "lod1_ratio": 0.306,
+  "triangle_budget_lod0": 6000,
+  "data_box_target_xyz": [
+    3.4,
+    8.0,
+    2.8
+  ],
+  "material": "MW86_Military",
+  "textures": [
+    "MW86_Military_A.png",
+    "MW86_Military_B.png",
+    "MW86_Military_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_Tank_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\tank\\MW86_Tank_v01.blend"
+  },
+  "notes": "Tramduro parade tank (kind tank, data box 3.4 x 8 x 2.8, long axis on data Y).",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

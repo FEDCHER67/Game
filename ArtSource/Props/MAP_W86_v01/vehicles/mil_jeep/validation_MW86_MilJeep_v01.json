@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_MilJeep",
+  "family": "Military",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    0.025,
+    -0.0
+  ],
+  "lod0": {
+    "triangles": 972,
+    "vertices": 550,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.2,
+      -2.535,
+      0.0
+    ],
+    "bounds_max": [
+      1.2,
+      2.535,
+      2.4
+    ],
+    "size_xyz_m": [
+      2.4,
+      5.07,
+      2.4
+    ]
+  },
+  "lod1": {
+    "triangles": 424,
+    "vertices": 262,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.1,
+      -2.535,
+      0.0
+    ],
+    "bounds_max": [
+      1.1,
+      2.535,
+      2.4
+    ],
+    "size_xyz_m": [
+      2.2,
+      5.07,
+      2.4
+    ]
+  },
+  "lod1_ratio": 0.436,
+  "triangle_budget_lod0": 3000,
+  "data_box_target_xyz": [
+    3.0,
+    7.0,
+    2.8
+  ],
+  "material": "MW86_Military",
+  "textures": [
+    "MW86_Military_A.png",
+    "MW86_Military_B.png",
+    "MW86_Military_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_MilJeep_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\mil_jeep\\MW86_MilJeep_v01.blend"
+  },
+  "notes": "Military utility vehicle (kind military_utility_vehicle; real 4.9 x 2.2 m inside the 3 x 7 data box).",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

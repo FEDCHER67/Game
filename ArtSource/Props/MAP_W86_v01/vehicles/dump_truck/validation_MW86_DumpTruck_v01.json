@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_DumpTruck",
+  "family": "Machines",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    0.19,
+    -0.0
+  ],
+  "lod0": {
+    "triangles": 1380,
+    "vertices": 792,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.46,
+      -4.17,
+      0.0
+    ],
+    "bounds_max": [
+      1.46,
+      4.17,
+      3.1
+    ],
+    "size_xyz_m": [
+      2.92,
+      8.34,
+      3.1
+    ]
+  },
+  "lod1": {
+    "triangles": 532,
+    "vertices": 332,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.36,
+      -4.1,
+      0.0
+    ],
+    "bounds_max": [
+      1.36,
+      4.14,
+      3.1
+    ],
+    "size_xyz_m": [
+      2.72,
+      8.24,
+      3.1
+    ]
+  },
+  "lod1_ratio": 0.386,
+  "triangle_budget_lod0": 6000,
+  "data_box_target_xyz": [
+    3.6,
+    8.8,
+    3.2
+  ],
+  "material": "MW86_Machines",
+  "textures": [
+    "MW86_Machines_A.png",
+    "MW86_Machines_B.png",
+    "MW86_Machines_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_DumpTruck_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\dump_truck\\MW86_DumpTruck_v01.blend"
+  },
+  "notes": "3-axle tipper with a sand load (kind dump_truck, data 8.8 x 3.6 x 3.2, long axis on data X).",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

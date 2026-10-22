@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_MilTruck",
+  "family": "Military",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    0.05,
+    -0.0
+  ],
+  "lod0": {
+    "triangles": 1436,
+    "vertices": 804,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.33,
+      -3.55,
+      0.0
+    ],
+    "bounds_max": [
+      1.33,
+      3.55,
+      2.972
+    ],
+    "size_xyz_m": [
+      2.66,
+      7.1,
+      2.972
+    ]
+  },
+  "lod1": {
+    "triangles": 624,
+    "vertices": 384,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.25,
+      -3.55,
+      0.0
+    ],
+    "bounds_max": [
+      1.25,
+      3.55,
+      2.96
+    ],
+    "size_xyz_m": [
+      2.5,
+      7.1,
+      2.96
+    ]
+  },
+  "lod1_ratio": 0.435,
+  "triangle_budget_lod0": 6000,
+  "data_box_target_xyz": [
+    3.0,
+    7.0,
+    2.8
+  ],
+  "material": "MW86_Military",
+  "textures": [
+    "MW86_Military_A.png",
+    "MW86_Military_B.png",
+    "MW86_Military_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_MilTruck_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\mil_truck\\MW86_MilTruck_v01.blend"
+  },
+  "notes": "6x6 cargo truck with canvas canopy (kind military_cargo_truck, 3 x 7 data box).",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

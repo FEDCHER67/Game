@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_Boat_KeelBlocks",
+  "family": "Water",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    -0.0027,
+    -0.0
+  ],
+  "lod0": {
+    "triangles": 1236,
+    "vertices": 678,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.42,
+      -4.703,
+      0.0
+    ],
+    "bounds_max": [
+      1.42,
+      4.703,
+      4.516
+    ],
+    "size_xyz_m": [
+      2.839,
+      9.405,
+      4.516
+    ]
+  },
+  "lod1": {
+    "triangles": 386,
+    "vertices": 239,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -1.403,
+      -4.703,
+      0.0
+    ],
+    "bounds_max": [
+      1.403,
+      4.701,
+      4.382
+    ],
+    "size_xyz_m": [
+      2.807,
+      9.404,
+      4.382
+    ]
+  },
+  "lod1_ratio": 0.312,
+  "triangle_budget_lod0": 6000,
+  "data_box_target_xyz": [
+    3.0,
+    10.0,
+    2.6
+  ],
+  "material": "MW86_Water",
+  "textures": [
+    "MW86_Water_A.png",
+    "MW86_Water_B.png",
+    "MW86_Water_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_Boat_KeelBlocks_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\boat_keel_blocks\\MW86_Boat_KeelBlocks_v01.blend"
+  },
+  "notes": "Fishing boat laid up on keel blocks with jack stands (kind boat_on_keel_blocks, port yard).",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

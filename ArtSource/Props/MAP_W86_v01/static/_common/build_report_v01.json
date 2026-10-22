@@ -1,0 +1,3560 @@
+{
+ "CampfireCold": {
+  "kinds": [
+   "campfire_cold"
+  ],
+  "data_size": [
+   6.8,
+   6.8,
+   0.4
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Two stump seats only; stones / ash are walk-over (no collider).",
+  "notes": "Cold campfire in the wagon clearing: ring of 9 stones, ash, charred logs, two stump seats, kindling pile, two empty bottles (no labels).",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/CampfireCold/MW86_CampfireCold_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CampfireCold_A.fbx",
+    "tris_lod0": 1368,
+    "tris_lod1": 380,
+    "bounds_min": [
+     -2.651,
+     -1.425,
+     -0.014
+    ],
+    "bounds_max": [
+     2.273,
+     1.457,
+     0.425
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "LogBench": {
+  "kinds": [
+   "log_bench"
+  ],
+  "data_size": [
+   5.8,
+   1.4,
+   0.5
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box along the seat (5.2 x 0.5 x 0.48).",
+  "notes": "Fallen-log bench by the campfire: sawn flat seat, root plate at one end, branch stubs.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/LogBench/MW86_LogBench_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_LogBench_A.fbx",
+    "tris_lod0": 460,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.002,
+     -0.665,
+     -0.177
+    ],
+    "bounds_max": [
+     2.5,
+     0.64,
+     0.851
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "BlockedTunnelMouth": {
+  "kinds": [
+   "blocked_tunnel_mouth"
+  ],
+  "data_size": [
+   6.0,
+   3.0,
+   5.0
+  ],
+  "placement": "box",
+  "front": "Unity +X (Blender -X): the cliff is on the -X side",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Portal wall box + rock-fill box + spill hull: no way through.",
+  "notes": "Old single-track rail tunnel portal (stone voussoir arch, concrete face, wing walls) completely filled with rocks; rails come out from under the rocks. Terrain check (heightmap v02): ground rises steeply toward local -X, so the face looks to local +X.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/BlockedTunnelMouth/MW86_BlockedTunnelMouth_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BlockedTunnelMouth_A.fbx",
+    "tris_lod0": 1382,
+    "tris_lod1": 894,
+    "bounds_min": [
+     -3.6,
+     -3.85,
+     -0.209
+    ],
+    "bounds_max": [
+     0.7,
+     3.85,
+     6.525
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "Grave": {
+  "kinds": [
+   "grave"
+  ],
+  "data_size": [
+   1.0,
+   1.9,
+   0
+  ],
+  "placement": "box",
+  "front": "head end (cross / stone) at Blender +Y = Unity -Z",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Low box over the mound/fence (1.0 x 1.9 x 0.5) + post box for the cross.",
+  "notes": "A: wooden Orthodox cross with a little roof, grass mound, wreath. B: dark granite headstone with stone kerb and flowers. C: blue-painted iron fence (ogradka) with a metal cross, small bench and table.",
+  "variant_rule": "stable hash of id % 3",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/Grave/MW86_Grave_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_A.fbx",
+    "tris_lod0": 580,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.397,
+     -0.818,
+     0.0
+    ],
+    "bounds_max": [
+     0.405,
+     0.87,
+     1.665
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_B.fbx",
+    "tris_lod0": 712,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.475,
+     -0.925,
+     0.0
+    ],
+    "bounds_max": [
+     0.475,
+     0.87,
+     1.16
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "C": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Grave_C.fbx",
+    "tris_lod0": 1344,
+    "tris_lod1": 704,
+    "bounds_min": [
+     -0.66,
+     -0.975,
+     0.0
+    ],
+    "bounds_max": [
+     0.522,
+     0.975,
+     1.25
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "Standpipe": {
+  "kinds": [
+   "standpipe"
+  ],
+  "data_size": [
+   0.4,
+   0.4,
+   0
+  ],
+  "placement": "box",
+  "front": "spout to Blender -Y (Unity +Z)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Thin box 0.2 x 0.2 x 1.1.",
+  "notes": "Soviet street water column (vodorazbornaya kolonka): cast-iron column, lever handle, spout with bucket hook, concrete pad.",
+  "variant_rule": "A green, B blue (stable hash of id % 2)",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/Standpipe/MW86_Standpipe_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Standpipe_A.fbx",
+    "tris_lod0": 494,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.2,
+     -0.255,
+     0.0
+    ],
+    "bounds_max": [
+     0.2,
+     0.55,
+     1.275
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Standpipe_B.fbx",
+    "tris_lod0": 494,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.2,
+     -0.255,
+     0.0
+    ],
+    "bounds_max": [
+     0.2,
+     0.55,
+     1.275
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FishingNets": {
+  "kinds": [
+   "fishing_nets"
+  ],
+  "data_size": [
+   2.2,
+   0.3,
+   0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "None (line visuals have no blocking collider per data).",
+  "notes": "Net hung between two leaning stakes on the river bank, cork floats on the head rope, lead line at the bottom, two torn holes.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FishingNets/MW86_FishingNets_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FishingNets_A.fbx",
+    "tris_lod0": 1012,
+    "tris_lod1": 354,
+    "bounds_min": [
+     -1.255,
+     -0.036,
+     -0.003
+    ],
+    "bounds_max": [
+     1.289,
+     0.113,
+     1.995
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "NetDryingRack": {
+  "kinds": [
+   "net_drying_rack"
+  ],
+  "data_size": [
+   2.5,
+   0.3,
+   0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Two thin boxes on the trestles; net has none.",
+  "notes": "Two X-trestles with a pole, net drying over it on both sides, cork floats, one float line hanging.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/NetDryingRack/MW86_NetDryingRack_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_NetDryingRack_A.fbx",
+    "tris_lod0": 1284,
+    "tris_lod1": 294,
+    "bounds_min": [
+     -1.3,
+     -0.453,
+     -0.01
+    ],
+    "bounds_max": [
+     1.3,
+     0.468,
+     1.76
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "ReedClump": {
+  "kinds": [
+   "reed_clump"
+  ],
+  "data_size": [
+   1.5,
+   1.0,
+   0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "None (decorative, walk-through).",
+  "notes": "Pond-margin reeds with cattails; A green, B taller and drier.",
+  "variant_rule": "stable hash of id % 2",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/ReedClump/MW86_ReedClump_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_A.fbx",
+    "tris_lod0": 636,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.749,
+     -0.689,
+     -0.006
+    ],
+    "bounds_max": [
+     0.834,
+     0.624,
+     1.579
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ReedClump_B.fbx",
+    "tris_lod0": 784,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.031,
+     -0.484,
+     -0.005
+    ],
+    "bounds_max": [
+     0.938,
+     0.597,
+     1.972
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "ATM": {
+  "kinds": [
+   "atm"
+  ],
+  "data_size": [
+   1.0,
+   1.0,
+   2.0
+  ],
+  "placement": "box",
+  "front": "Unity +Z (Blender -Y); data gives no facing - check on the plaza",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 0.8 x 0.62 x 1.95.",
+  "notes": "Free-standing ATM pillar, blank top lightbox, no brand or text.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/ATM/MW86_ATM_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ATM_A.fbx",
+    "tris_lod0": 420,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.46,
+     -0.508,
+     0.0
+    ],
+    "bounds_max": [
+     0.46,
+     0.37,
+     2.11
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "BigScreen": {
+  "kinds": [
+   "big_screen"
+  ],
+  "data_size": [
+   26.9,
+   0.6,
+   8.0
+  ],
+  "placement": "facing",
+  "front": "Unity +Z (Blender -Y) must face the data rot direction (270 = south onto the plaza)",
+  "rotation_offset_y": 90,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 26.9 x 0.6 x 8.4.",
+  "notes": "LED screen on the podium edge between the towers, abstract blue / yellow geometric picture as in the approved plaza reference (no text, no logo). The screen colours are emissive swatches. DATA NOTE: with the box convention the placeholder ran N-S across the stair; place with Euler(0, 90 - rot_deg, 0) so it runs E-W and faces south.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/BigScreen/MW86_BigScreen_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BigScreen_A.fbx",
+    "tris_lod0": 368,
+    "tris_lod1": null,
+    "bounds_min": [
+     -13.45,
+     -0.3,
+     0.0
+    ],
+    "bounds_max": [
+     13.45,
+     0.33,
+     8.43
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "BollardYellow": {
+  "kinds": [
+   "bollard_yellow"
+  ],
+  "data_size": [
+   0.3,
+   0.3,
+   1.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.22 x 0.22 x 1.0 (blocks the van).",
+  "notes": "Steel plaza bollard, yellow, two white reflective bands, dome top, base flange.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/BollardYellow/MW86_BollardYellow_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BollardYellow_A.fbx",
+    "tris_lod0": 274,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.14,
+     -0.14,
+     0.0
+    ],
+    "bounds_max": [
+     0.14,
+     0.14,
+     1.02
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "CourtyardGate": {
+  "kinds": [
+   "courtyard_gate"
+  ],
+  "data_size": [
+   5.8,
+   0.25,
+   2.4
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 5.8 x 0.12 x 2.3 (closed gate).",
+  "notes": "Closed double gate of black wrought iron with an arched top, spear finials, scroll rings; no text. Sits between the two GatePier models.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/CourtyardGate/MW86_CourtyardGate_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CourtyardGate_A.fbx",
+    "tris_lod0": 1324,
+    "tris_lod1": 528,
+    "bounds_min": [
+     -2.935,
+     -0.07,
+     0.0
+    ],
+    "bounds_max": [
+     2.935,
+     0.035,
+     2.597
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "GatePier": {
+  "kinds": [
+   "gate_pier"
+  ],
+  "data_size": [
+   0.6,
+   0.6,
+   2.8
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.62 x 0.62 x 2.45.",
+  "notes": "Brick gate pier with corner pilasters, stone plinth and cap, iron lantern (emissive warm glass) on top.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/GatePier/MW86_GatePier_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GatePier_A.fbx",
+    "tris_lod0": 564,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.35,
+     -0.35,
+     0.0
+    ],
+    "bounds_max": [
+     0.35,
+     0.35,
+     2.975
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "HedgeTrimmed_2p8": {
+  "kinds": [
+   "hedge_trimmed (size 2.8 x 0.8 x 1.1)"
+  ],
+  "data_size": [
+   2.8,
+   0.8,
+   1.1
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 2.8 x 0.8 x 1.1.",
+  "notes": "Boxwood, flat top, near-sharp corners, low stone planter kerb.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/HedgeTrimmed_2p8/MW86_HedgeTrimmed_2p8_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_2p8_A.fbx",
+    "tris_lod0": 224,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.4,
+     -0.4,
+     0.0
+    ],
+    "bounds_max": [
+     1.4,
+     0.4,
+     1.112
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "HedgeTrimmed_29p4": {
+  "kinds": [
+   "hedge_trimmed (size 29.4 x 0.9 x 1.2)"
+  ],
+  "data_size": [
+   29.4,
+   0.9,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 29.4 x 0.9 x 1.2.",
+  "notes": "Same hedge as HedgeTrimmed_2p8, built at the full 29.4 m length (no stretching).",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/HedgeTrimmed_29p4/MW86_HedgeTrimmed_29p4_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_HedgeTrimmed_29p4_A.fbx",
+    "tris_lod0": 1232,
+    "tris_lod1": 308,
+    "bounds_min": [
+     -14.7,
+     -0.45,
+     0.0
+    ],
+    "bounds_max": [
+     14.7,
+     0.45,
+     1.212
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "MonumentTramduro": {
+  "kinds": [
+   "monument_tramduro"
+  ],
+  "data_size": [
+   4.8,
+   4.8,
+   12.0
+  ],
+  "placement": "facing",
+  "front": "figure faces Unity +Z (Blender -Y) = data rot direction (270 = the boulevard, south)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Round podium as 3 stacked boxes (walkable steps) + drum box + figure box.",
+  "notes": "Golden cartoon leader (round glasses, hair tuft, suit, right arm raised in a wave) on a low dark granite drum and a round podium of 3 steps, D 8.8 m as in the data notes and the approved plaza picture (wider than the 4.8 m placeholder box). Parody without likeness to real people. ~11.8 m total.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/MonumentTramduro/MW86_MonumentTramduro_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MonumentTramduro_A.fbx",
+    "tris_lod0": 3530,
+    "tris_lod1": 1022,
+    "bounds_min": [
+     -4.4,
+     -4.4,
+     -0.0
+    ],
+    "bounds_max": [
+     4.4,
+     4.4,
+     12.089
+    ],
+    "ucx": 5,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PoliceBooth": {
+  "kinds": [
+   "police_booth"
+  ],
+  "data_size": [
+   3.2,
+   3.2,
+   3.0
+  ],
+  "placement": "box",
+  "front": "door at Unity +Z (Blender -Y); data gives no facing",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 2.6 x 2.6 x 2.75.",
+  "notes": "Small glazed police booth: navy lower panels, white fascia with a blue band, blue roof beacon; no text.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PoliceBooth/MW86_PoliceBooth_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PoliceBooth_A.fbx",
+    "tris_lod0": 688,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.425,
+     -1.425,
+     0.0
+    ],
+    "bounds_max": [
+     1.425,
+     1.58,
+     3.06
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "RoundBenchFlowerbed": {
+  "kinds": [
+   "round_bench_flowerbed"
+  ],
+  "data_size": [
+   5.2,
+   5.2,
+   0.5
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 3.6 x 3.6 x 0.48 for the bed + 8 low boxes for the seat ring.",
+  "notes": "Round wooden bench ring around a raised flowerbed (no tree), as in the approved plaza reference. A red / yellow, B purple / white / pink.",
+  "variant_rule": "alternate A/B along the plaza rows",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/RoundBenchFlowerbed/MW86_RoundBenchFlowerbed_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_A.fbx",
+    "tris_lod0": 1438,
+    "tris_lod1": 894,
+    "bounds_min": [
+     -2.5,
+     -2.5,
+     0.0
+    ],
+    "bounds_max": [
+     2.5,
+     2.5,
+     0.911
+    ],
+    "ucx": 9,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RoundBenchFlowerbed_B.fbx",
+    "tris_lod0": 1438,
+    "tris_lod1": 894,
+    "bounds_min": [
+     -2.5,
+     -2.5,
+     0.0
+    ],
+    "bounds_max": [
+     2.5,
+     2.5,
+     0.919
+    ],
+    "ucx": 9,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PalletStack": {
+  "kinds": [
+   "pallet_stack"
+  ],
+  "data_size": [
+   2.2,
+   2.4,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Two boxes, one per stack.",
+  "notes": "Two stacks of empty wooden pallets (8 and 6 high), slightly uneven.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PalletStack/MW86_PalletStack_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletStack_A.fbx",
+    "tris_lod0": 792,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.089,
+     -0.626,
+     0.0
+    ],
+    "bounds_max": [
+     1.139,
+     0.69,
+     1.152
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FuelPumpSingle": {
+  "kinds": [
+   "fuel_pump_island (size 1.2 x 2.4 x 1.9)"
+  ],
+  "data_size": [
+   1.2,
+   2.4,
+   1.9
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Island box 1.2 x 2.4 x 0.15 + dispenser box 0.55 x 0.95 x 1.85 + 2 bollard boxes.",
+  "notes": "Fuel island (rounded kerb, yellow end bollards) with one double-sided dispenser: displays, nozzles, hoses. No text.",
+  "variant_rule": "one variant per station (all 3 Downtown pumps the same, e.g. B); A red, B blue, C green - no brand",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FuelPumpSingle/MW86_FuelPumpSingle_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_A.fbx",
+    "tris_lod0": 948,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.6,
+     -1.2,
+     -0.0
+    ],
+    "bounds_max": [
+     0.6,
+     1.2,
+     1.99
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_B.fbx",
+    "tris_lod0": 948,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.6,
+     -1.2,
+     -0.0
+    ],
+    "bounds_max": [
+     0.6,
+     1.2,
+     1.99
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "C": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpSingle_C.fbx",
+    "tris_lod0": 948,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.6,
+     -1.2,
+     -0.0
+    ],
+    "bounds_max": [
+     0.6,
+     1.2,
+     1.99
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FuelPumpDouble": {
+  "kinds": [
+   "fuel_pump_island (size 5.6 x 1.2 x 1.8)"
+  ],
+  "data_size": [
+   5.6,
+   1.2,
+   1.8
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Island box + 2 dispenser boxes + 2 bollard boxes.",
+  "notes": "One long island, 2 dispensers serving both sides (cars N and S), kerb 0.15 m, bollards at the ends (data note). No text.",
+  "variant_rule": "Construction station: A (red) to match C2; B / C spare",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FuelPumpDouble/MW86_FuelPumpDouble_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_A.fbx",
+    "tris_lod0": 1380,
+    "tris_lod1": 548,
+    "bounds_min": [
+     -2.8,
+     -0.6,
+     -0.0
+    ],
+    "bounds_max": [
+     2.8,
+     0.6,
+     1.99
+    ],
+    "ucx": 5,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_B.fbx",
+    "tris_lod0": 1380,
+    "tris_lod1": 548,
+    "bounds_min": [
+     -2.8,
+     -0.6,
+     -0.0
+    ],
+    "bounds_max": [
+     2.8,
+     0.6,
+     1.99
+    ],
+    "ucx": 5,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "C": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FuelPumpDouble_C.fbx",
+    "tris_lod0": 1380,
+    "tris_lod1": 548,
+    "bounds_min": [
+     -2.8,
+     -0.6,
+     -0.0
+    ],
+    "bounds_max": [
+     2.8,
+     0.6,
+     1.99
+    ],
+    "ucx": 5,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FootballGoalTornNet": {
+  "kinds": [
+   "football_goal_torn_net"
+  ],
+  "data_size": [
+   5.0,
+   1.2,
+   2.0
+  ],
+  "placement": "box",
+  "front": "goal mouth opens to Blender +Y = Unity -Z (toward the pitch for both data goals, rot 90 / 270, box convention)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Boxes for the two posts and the crossbar only (net does not block).",
+  "notes": "Pipe goal, off-white paint with rusty feet, back stanchions, torn and sagging net with holes and a hanging flap.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FootballGoalTornNet/MW86_FootballGoalTornNet_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FootballGoalTornNet_A.fbx",
+    "tris_lod0": 1428,
+    "tris_lod1": 480,
+    "bounds_min": [
+     -2.515,
+     -0.63,
+     -0.007
+    ],
+    "bounds_max": [
+     2.515,
+     0.615,
+     2.055
+    ],
+    "ucx": 3,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "WatchTower": {
+  "kinds": [
+   "watch_tower"
+  ],
+  "data_size": [
+   5.0,
+   5.0,
+   9.0
+  ],
+  "placement": "box",
+  "front": "ladder and door on Unity +Z (Blender -Y); data gives no facing",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "4 leg boxes, platform box (walkable) and cabin box.",
+  "notes": "Border watch tower at the Rough KPP: steel legs with X-bracing, timber cabin with a window band, pyramid roof, searchlight, ladder. Military green / dark grey, no insignia.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/WatchTower/MW86_WatchTower_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WatchTower_A.fbx",
+    "tris_lod0": 1436,
+    "tris_lod1": 832,
+    "bounds_min": [
+     -2.5,
+     -2.73,
+     -0.01
+    ],
+    "bounds_max": [
+     2.5,
+     2.5,
+     9.73
+    ],
+    "ucx": 6,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "LeaveCountryButton": {
+  "kinds": [
+   "leave_country_button"
+  ],
+  "data_size": [
+   0.4,
+   0.3,
+   1.3
+  ],
+  "placement": "box",
+  "front": "button face looks along local +X (Unity +X, Blender -X) = data rot direction (270 = south, toward the arriving van)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.3 x 0.3 x 1.3. Keeps W76LeaveCountryButton on the root.",
+  "notes": "Hazard-striped steel post with a slanted control box and a big red mushroom button (slight glow). No text on the model.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/LeaveCountryButton/MW86_LeaveCountryButton_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_LeaveCountryButton_A.fbx",
+    "tris_lod0": 386,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.2,
+     -0.16,
+     0.0
+    ],
+    "bounds_max": [
+     0.2,
+     0.16,
+     1.294
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "NeonHeartSign": {
+  "kinds": [
+   "neon_heart_sign"
+  ],
+  "data_size": [
+   1.0,
+   0.1,
+   1.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 2.3,
+  "scale_rule": null,
+  "collider_note": "None (wall decoration).",
+  "notes": "Pink neon heart tube (emissive) with wall stand-offs and a small transformer box; plane = X/Z, wall side Blender +Y. Data box stands on the ground: lift it ~2.3 m onto the club wall.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/NeonHeartSign/MW86_NeonHeartSign_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_NeonHeartSign_A.fbx",
+    "tris_lod0": 808,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.45,
+     -0.03,
+     0.017
+    ],
+    "bounds_max": [
+     0.45,
+     0.05,
+     0.832
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "SlidingGateSteel": {
+  "kinds": [
+   "sliding_gate_steel"
+  ],
+  "data_size": [
+   8.4,
+   0.4,
+   3.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 8.4 x 0.2 x 3.2 (closed, blocks the road).",
+  "notes": "One heavy steel sliding gate: tube frame, vertical ribs proud on both faces, red / white striped infill, bottom rollers. Pairs with GateGuideRail to the east.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/SlidingGateSteel/MW86_SlidingGateSteel_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SlidingGateSteel_A.fbx",
+    "tris_lod0": 740,
+    "tris_lod1": null,
+    "bounds_min": [
+     -4.2,
+     -0.11,
+     -0.085
+    ],
+    "bounds_max": [
+     4.2,
+     0.11,
+     3.2
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "GateGuideRail": {
+  "kinds": [
+   "gate_guide_rail"
+  ],
+  "data_size": [
+   6.9,
+   0.3,
+   0.6
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Low box 6.9 x 0.3 x 0.2 (+ post box at the far end).",
+  "notes": "Ground guide rail for the sliding gate: concrete strip, steel rail with support rollers, end stop and a roller guide post.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/GateGuideRail/MW86_GateGuideRail_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GateGuideRail_A.fbx",
+    "tris_lod0": 468,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.45,
+     -0.17,
+     0.0
+    ],
+    "bounds_max": [
+     3.45,
+     0.17,
+     0.6
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "AirWaterPost": {
+  "kinds": [
+   "air_water_post"
+  ],
+  "data_size": [
+   0.5,
+   0.5,
+   1.4
+  ],
+  "placement": "box",
+  "front": "display and hoses at Unity +Z (Blender -Y)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.38 x 0.3 x 1.35.",
+  "notes": "Fuel-station air / water post: cabinet, blank display, coiled air and water hoses. No text.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/AirWaterPost/MW86_AirWaterPost_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_AirWaterPost_A.fbx",
+    "tris_lod0": 424,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.236,
+     -0.206,
+     0.0
+    ],
+    "bounds_max": [
+     0.236,
+     0.2,
+     1.28
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PricePylonBlank": {
+  "kinds": [
+   "price_pylon_blank"
+  ],
+  "data_size": [
+   1.2,
+   0.4,
+   4.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Two leg boxes + cabinet box.",
+  "notes": "Fuel price pylon without text (v02 par. 11): double-sided cabinet with a red header, a round colour mark and blank dark price plates with colour tabs.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PricePylonBlank/MW86_PricePylonBlank_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PricePylonBlank_A.fbx",
+    "tris_lod0": 584,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.61,
+     -0.19,
+     0.0
+    ],
+    "bounds_max": [
+     0.61,
+     0.19,
+     4.0
+    ],
+    "ucx": 3,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "BioToilet": {
+  "kinds": [
+   "bio_toilet",
+   "portable_toilet"
+  ],
+  "data_size": [
+   1.2,
+   1.2,
+   2.3
+  ],
+  "placement": "box",
+  "front": "door at Unity +Z (Blender -Y)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 1.12 x 1.12 x 2.3.",
+  "notes": "Portable plastic toilet: ribbed shell, translucent white roof, door with vents and latch, vent pipe. A blue, B green, C orange.",
+  "variant_rule": "construction: A blue x2, C orange x1, B green x1; port portable_toilet: A",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/BioToilet/MW86_BioToilet_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_A.fbx",
+    "tris_lod0": 704,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.58,
+     -0.625,
+     0.0
+    ],
+    "bounds_max": [
+     0.58,
+     0.58,
+     2.5
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_B.fbx",
+    "tris_lod0": 704,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.58,
+     -0.625,
+     0.0
+    ],
+    "bounds_max": [
+     0.58,
+     0.58,
+     2.5
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "C": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BioToilet_C.fbx",
+    "tris_lod0": 704,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.58,
+     -0.625,
+     0.0
+    ],
+    "bounds_max": [
+     0.58,
+     0.58,
+     2.5
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "SiteBin": {
+  "kinds": [
+   "bin"
+  ],
+  "data_size": [
+   0.6,
+   0.6,
+   1.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.5 x 0.5 x 1.0.",
+  "notes": "Fuel-station litter bin: galvanised square body, green flap lid, short legs.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/SiteBin/MW86_SiteBin_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SiteBin_A.fbx",
+    "tris_lod0": 148,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.27,
+     -0.29,
+     0.0
+    ],
+    "bounds_max": [
+     0.27,
+     0.27,
+     0.98
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "ClothesLine": {
+  "kinds": [
+   "clothes_line"
+  ],
+  "data_size": [
+   12.0,
+   0.1,
+   1.8
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "None (thin posts and lines).",
+  "notes": "Workers' clothes line at the site huts: three T-posts, two sagging lines, overalls, shirts, towels.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/ClothesLine/MW86_ClothesLine_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ClothesLine_A.fbx",
+    "tris_lod0": 392,
+    "tris_lod1": null,
+    "bounds_min": [
+     -5.926,
+     -0.25,
+     -0.0
+    ],
+    "bounds_max": [
+     5.926,
+     0.25,
+     1.85
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FireBarrel": {
+  "kinds": [
+   "fire_barrel"
+  ],
+  "data_size": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.62 x 0.62 x 0.95.",
+  "notes": "Rusty steel drum used as a fire barrel on two bricks: glowing vent holes, charred wood sticking out, embers on top (emissive).",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FireBarrel/MW86_FireBarrel_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FireBarrel_A.fbx",
+    "tris_lod0": 642,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.302,
+     -0.304,
+     0.0
+    ],
+    "bounds_max": [
+     0.302,
+     0.304,
+     1.192
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FormworkPanels": {
+  "kinds": [
+   "formwork_panels"
+  ],
+  "data_size": [
+   4.8,
+   2.0,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Two boxes (one per stack).",
+  "notes": "Two stacks of framed formwork panels (red steel frames, yellow plywood faces) on timber bearers.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FormworkPanels/MW86_FormworkPanels_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkPanels_A.fbx",
+    "tris_lod0": 960,
+    "tris_lod1": null,
+    "bounds_min": [
+     -2.378,
+     -1.0,
+     0.0
+    ],
+    "bounds_max": [
+     2.361,
+     1.0,
+     1.07
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FormworkShields": {
+  "kinds": [
+   "formwork_shields"
+  ],
+  "data_size": [
+   6.8,
+   1.4,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Three boxes (one per stack).",
+  "notes": "Three stacks of timber board shields (planks nailed on battens) on bearers.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FormworkShields/MW86_FormworkShields_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkShields_A.fbx",
+    "tris_lod0": 1128,
+    "tris_lod1": 288,
+    "bounds_min": [
+     -3.309,
+     -0.7,
+     0.0
+    ],
+    "bounds_max": [
+     3.34,
+     0.7,
+     0.68
+    ],
+    "ucx": 3,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FormworkStack": {
+  "kinds": [
+   "formwork_stack"
+  ],
+  "data_size": [
+   12.4,
+   1.6,
+   1.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 12.4 x 1.5 x 1.0.",
+  "notes": "Stack of yellow timber formwork beams (H20-type) with red ends on three bearers.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FormworkStack/MW86_FormworkStack_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FormworkStack_A.fbx",
+    "tris_lod0": 1320,
+    "tris_lod1": 744,
+    "bounds_min": [
+     -6.137,
+     -0.8,
+     0.0
+    ],
+    "bounds_max": [
+     6.135,
+     0.8,
+     1.122
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "GravelPile": {
+  "kinds": [
+   "gravel_pile"
+  ],
+  "data_size": [
+   5.2,
+   4.4,
+   1.5
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Convex hull of the heap (walkable).",
+  "notes": "Heap of crushed stone with a few larger stones at the foot.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/GravelPile/MW86_GravelPile_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GravelPile_A.fbx",
+    "tris_lod0": 358,
+    "tris_lod1": null,
+    "bounds_min": [
+     -2.583,
+     -2.252,
+     -0.17
+    ],
+    "bounds_max": [
+     2.66,
+     2.213,
+     1.556
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "SandPile": {
+  "kinds": [
+   "sand_pile"
+  ],
+  "data_size": [
+   7.2,
+   6.0,
+   1.8
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Convex hull of the heap (walkable).",
+  "notes": "Heap of building sand with a shovel stuck in it.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/SandPile/MW86_SandPile_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SandPile_A.fbx",
+    "tris_lod0": 308,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.635,
+     -2.927,
+     0.0
+    ],
+    "bounds_max": [
+     3.967,
+     2.916,
+     2.312
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "IceChest": {
+  "kinds": [
+   "ice_chest"
+  ],
+  "data_size": [
+   1.6,
+   0.8,
+   1.0
+  ],
+  "placement": "box",
+  "front": "Unity +Z (Blender -Y)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 1.52 x 0.76 x 0.98.",
+  "notes": "Fuel-station ice chest / freezer: white body with a blue band, blue lid with handle, dark base. No text.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/IceChest/MW86_IceChest_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_IceChest_A.fbx",
+    "tris_lod0": 200,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.77,
+     -0.435,
+     0.0
+    ],
+    "bounds_max": [
+     0.77,
+     0.39,
+     0.96
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PalletBricks": {
+  "kinds": [
+   "pallet_bricks"
+  ],
+  "data_size": [
+   3.2,
+   3.2,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box per loaded pallet.",
+  "notes": "Four pallets of strapped red bricks; B has one pallet half emptied.",
+  "variant_rule": "stable hash of id % 2",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PalletBricks/MW86_PalletBricks_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_A.fbx",
+    "tris_lod0": 816,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.298,
+     -1.393,
+     0.0
+    ],
+    "bounds_max": [
+     1.3,
+     1.396,
+     0.974
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBricks_B.fbx",
+    "tris_lod0": 720,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.306,
+     -1.401,
+     0.0
+    ],
+    "bounds_max": [
+     1.295,
+     1.393,
+     0.974
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PalletBlocks": {
+  "kinds": [
+   "pallet_blocks"
+  ],
+  "data_size": [
+   3.2,
+   3.2,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box per loaded pallet.",
+  "notes": "Four pallets of strapped grey concrete blocks; B has one pallet emptied.",
+  "variant_rule": "stable hash of id % 2",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PalletBlocks/MW86_PalletBlocks_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_A.fbx",
+    "tris_lod0": 1104,
+    "tris_lod1": 816,
+    "bounds_min": [
+     -1.298,
+     -1.403,
+     0.0
+    ],
+    "bounds_max": [
+     1.308,
+     1.403,
+     0.974
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PalletBlocks_B.fbx",
+    "tris_lod0": 936,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.298,
+     -1.403,
+     0.0
+    ],
+    "bounds_max": [
+     1.308,
+     1.395,
+     0.974
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PipeStackSite": {
+  "kinds": [
+   "pipe_stack (construction, 12.4 x 0.8 x 0.8)"
+  ],
+  "data_size": [
+   12.4,
+   0.8,
+   0.8
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 12.4 x 0.8 x 0.8.",
+  "notes": "Pyramid of six pipes (3-2-1) on timber chocks; A dark steel, B orange PVC.",
+  "variant_rule": "A steel, B orange PVC sewer pipes (mix on site)",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PipeStackSite/MW86_PipeStackSite_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_A.fbx",
+    "tris_lod0": 612,
+    "tris_lod1": null,
+    "bounds_min": [
+     -6.078,
+     -0.54,
+     0.0
+    ],
+    "bounds_max": [
+     6.054,
+     0.54,
+     0.812
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackSite_B.fbx",
+    "tris_lod0": 612,
+    "tris_lod1": null,
+    "bounds_min": [
+     -6.099,
+     -0.54,
+     0.0
+    ],
+    "bounds_max": [
+     6.041,
+     0.54,
+     0.812
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "RebarBundles": {
+  "kinds": [
+   "rebar_bundles"
+  ],
+  "data_size": [
+   13.0,
+   3.0,
+   0.5
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One low box 12.4 x 2.8 x 0.45.",
+  "notes": "Five tied bundles of rebar on three bearers, bar ends sticking out, a few loose bars on top.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/RebarBundles/MW86_RebarBundles_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RebarBundles_A.fbx",
+    "tris_lod0": 1328,
+    "tris_lod1": 132,
+    "bounds_min": [
+     -6.443,
+     -1.5,
+     0.0
+    ],
+    "bounds_max": [
+     7.003,
+     1.5,
+     0.353
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "ScrapMetalPile": {
+  "kinds": [
+   "scrap_metal_pile"
+  ],
+  "data_size": [
+   4.8,
+   3.2,
+   1.4
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Convex hull of the base heap.",
+  "notes": "Heap of scrap: rusty base, bent sheets, pipes, an I-beam, a wheel with tyre, a painted panel.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/ScrapMetalPile/MW86_ScrapMetalPile_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_ScrapMetalPile_A.fbx",
+    "tris_lod0": 422,
+    "tris_lod1": null,
+    "bounds_min": [
+     -2.208,
+     -1.424,
+     -0.01
+    ],
+    "bounds_max": [
+     2.146,
+     1.416,
+     1.346
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "SmokingShelter": {
+  "kinds": [
+   "smoking_shelter"
+  ],
+  "data_size": [
+   4.4,
+   3.2,
+   2.4
+  ],
+  "placement": "box",
+  "front": "open side at Unity +Z (Blender -Y)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "4 post boxes, back-wall box, roof box.",
+  "notes": "Workers' smoking shelter (kurilka): steel posts, red profiled mono-pitch roof, galvanised half-walls, bench, red ash bucket with sand.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/SmokingShelter/MW86_SmokingShelter_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SmokingShelter_A.fbx",
+    "tris_lod0": 552,
+    "tris_lod1": null,
+    "bounds_min": [
+     -2.2,
+     -1.597,
+     0.0
+    ],
+    "bounds_max": [
+     2.2,
+     1.597,
+     2.334
+    ],
+    "ucx": 6,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "TyreStack": {
+  "kinds": [
+   "tyre_stack"
+  ],
+  "data_size": [
+   1.0,
+   1.0,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.95 x 0.95 x 1.2 (A) / 0.95 x 0.95 x 0.75 (B).",
+  "notes": "A: five stacked truck tyres. B: three stacked plus one leaning.",
+  "variant_rule": "stable hash of id % 2",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/TyreStack/MW86_TyreStack_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_A.fbx",
+    "tris_lod0": 840,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.485,
+     -0.468,
+     0.019
+    ],
+    "bounds_max": [
+     0.47,
+     0.467,
+     1.161
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_TyreStack_B.fbx",
+    "tris_lod0": 672,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.482,
+     -0.849,
+     0.017
+    ],
+    "bounds_max": [
+     0.603,
+     0.476,
+     0.883
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "WaterTank": {
+  "kinds": [
+   "water_tank"
+  ],
+  "data_size": [
+   3.6,
+   3.6,
+   2.4
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": "uniform = data size[0] / 3.6 (3.2 m tank -> 0.889)",
+  "collider_note": "Hull of the tank (16-gon prism).",
+  "notes": "Vertical plastic water tank with ribs, top hatch, outlet valve, on a concrete pad.",
+  "variant_rule": "A blue (3.6 m), B white (3.2 m)",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/WaterTank/MW86_WaterTank_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTank_A.fbx",
+    "tris_lod0": 898,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.8,
+     -1.945,
+     0.0
+    ],
+    "bounds_max": [
+     1.8,
+     1.8,
+     2.38
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTank_B.fbx",
+    "tris_lod0": 898,
+    "tris_lod1": null,
+    "bounds_min": [
+     -1.8,
+     -1.945,
+     0.0
+    ],
+    "bounds_max": [
+     1.8,
+     1.8,
+     2.38
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "WheelWash": {
+  "kinds": [
+   "wheel_wash"
+  ],
+  "data_size": [
+   7.6,
+   5.2,
+   0.4
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Two ramp hulls + a grate box at 0.3 m (van drives over).",
+  "notes": "Drive-over wheel-wash grate with ramps at both ends (drive along X), yellow frame, spray pipes, low blue pump box on the side.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/WheelWash/MW86_WheelWash_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WheelWash_A.fbx",
+    "tris_lod0": 462,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.8,
+     -1.8,
+     -0.0
+    ],
+    "bounds_max": [
+     3.8,
+     2.725,
+     0.66
+    ],
+    "ucx": 3,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "BigBags": {
+  "kinds": [
+   "big_bags"
+  ],
+  "data_size": [
+   3.6,
+   1.2,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 3.5 x 1.15 x 1.15.",
+  "notes": "Three white woven bulk bags (FIBC) with corner lift loops and tied spouts, one with a blue band.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/BigBags/MW86_BigBags_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BigBags_A.fbx",
+    "tris_lod0": 1092,
+    "tris_lod1": 156,
+    "bounds_min": [
+     -1.771,
+     -0.571,
+     -0.015
+    ],
+    "bounds_max": [
+     1.771,
+     0.571,
+     1.186
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "MooringBollard": {
+  "kinds": [
+   "bollard"
+  ],
+  "data_size": [
+   0.5,
+   0.5,
+   0.7
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.36 x 0.36 x 0.7 (keeps W76GripAnchor).",
+  "notes": "Cast-iron mooring bollard on a bolted base plate, black with a yellow painted head rim.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/MooringBollard/MW86_MooringBollard_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_MooringBollard_A.fbx",
+    "tris_lod0": 334,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.25,
+     -0.25,
+     0.0
+    ],
+    "bounds_max": [
+     0.25,
+     0.25,
+     0.68
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "RubberFender": {
+  "kinds": [
+   "rubber_fender"
+  ],
+  "data_size": [
+   1.2,
+   0.4,
+   1.0
+  ],
+  "placement": "box",
+  "front": "rubber face to Unity +Z (Blender -Y) = the water side (verified on all 10 data fenders: box convention local +Z points to the sea)",
+  "rotation_offset_y": 0.0,
+  "y_offset": -1.0,
+  "scale_rule": null,
+  "collider_note": "Box 1.2 x 0.4 x 1.0.",
+  "notes": "D-section rubber quay fender on steel back plates with a yellow-painted top angle. Intended to hang on the quay face: lower by ~1.0 m (top flush with the deck) and push ~0.2 m outward if it floats in front of the edge.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/RubberFender/MW86_RubberFender_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_RubberFender_A.fbx",
+    "tris_lod0": 192,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.6,
+     -0.16,
+     -0.0
+    ],
+    "bounds_max": [
+     0.6,
+     0.23,
+     1.04
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "CableReel": {
+  "kinds": [
+   "cable_reel"
+  ],
+  "data_size": [
+   1.6,
+   1.0,
+   1.6
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 1.6 x 1.0 x 1.6 (or a 16-gon hull).",
+  "notes": "Wooden cable drum on its edge; A black cable, B orange cable with a loose end.",
+  "variant_rule": "stable hash of id % 2",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/CableReel/MW86_CableReel_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_A.fbx",
+    "tris_lod0": 452,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.788,
+     -0.53,
+     0.0
+    ],
+    "bounds_max": [
+     0.788,
+     0.53,
+     1.6
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_CableReel_B.fbx",
+    "tris_lod0": 498,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.788,
+     -0.53,
+     0.0
+    ],
+    "bounds_max": [
+     1.614,
+     0.53,
+     1.6
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "OilDrum": {
+  "kinds": [
+   "oil_drum"
+  ],
+  "data_size": [
+   0.6,
+   0.6,
+   0.9
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Box 0.58 x 0.58 x 0.9.",
+  "notes": "200 L steel drum with rolling hoops and bung caps. A blue, B red, C yellow.",
+  "variant_rule": "stable hash of id % 3",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/OilDrum/MW86_OilDrum_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_A.fbx",
+    "tris_lod0": 424,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.3,
+     -0.3,
+     0.0
+    ],
+    "bounds_max": [
+     0.3,
+     0.3,
+     0.89
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_B.fbx",
+    "tris_lod0": 424,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.3,
+     -0.3,
+     0.0
+    ],
+    "bounds_max": [
+     0.3,
+     0.3,
+     0.89
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "C": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_OilDrum_C.fbx",
+    "tris_lod0": 424,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.3,
+     -0.3,
+     0.0
+    ],
+    "bounds_max": [
+     0.3,
+     0.3,
+     0.89
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "Pallets": {
+  "kinds": [
+   "pallets"
+  ],
+  "data_size": [
+   3.6,
+   2.4,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box per stack.",
+  "notes": "Six stacks of empty pallets of different heights.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/Pallets/MW86_Pallets_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_Pallets_A.fbx",
+    "tris_lod0": 1464,
+    "tris_lod1": 610,
+    "bounds_min": [
+     -1.756,
+     -1.275,
+     0.0
+    ],
+    "bounds_max": [
+     1.736,
+     1.273,
+     0.864
+    ],
+    "ucx": 6,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PipeStackPort": {
+  "kinds": [
+   "pipe_stack (port, 9 x 2.7 x 1.2)"
+  ],
+  "data_size": [
+   9.0,
+   2.7,
+   1.2
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Hull of the pyramid.",
+  "notes": "Pyramid of 15 large steel pipes (6-5-4) on timber chocks, some rusty, some galvanised.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PipeStackPort/MW86_PipeStackPort_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeStackPort_A.fbx",
+    "tris_lod0": 1332,
+    "tris_lod1": 636,
+    "bounds_min": [
+     -4.497,
+     -1.44,
+     0.0
+    ],
+    "bounds_max": [
+     4.499,
+     1.44,
+     1.278
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "WaterTowerPort": {
+  "kinds": [
+   "water_tower"
+  ],
+  "data_size": [
+   9.2,
+   9.2,
+   18.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "4 leg boxes, riser box, tank hull (full, solid per data).",
+  "notes": "Old steel water tower on four braced legs: pale sage tank r 4.6 m with a catwalk and railing, conical roof, central riser pipe, ladder. Not the Hamlet Rozhnovsky tower (that is WATER-TOWER-ASTRA-001).",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/WaterTowerPort/MW86_WaterTowerPort_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_WaterTowerPort_A.fbx",
+    "tris_lod0": 2292,
+    "tris_lod1": 1254,
+    "bounds_min": [
+     -5.3,
+     -5.3,
+     -0.012
+    ],
+    "bounds_max": [
+     5.3,
+     5.3,
+     18.5
+    ],
+    "ucx": 6,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PipeManifold": {
+  "kinds": [
+   "pipe_manifold"
+  ],
+  "data_size": null,
+  "placement": "box",
+  "front": "built to the data polyline (U-run): legs at local x = +-11 m reaching 2.48 m toward the tanks (data +y = north), run along y = -2.48",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "None needed (low pipe, 0.65 m) or one box per straight run.",
+  "notes": "Low yellow product pipe on H-supports from the two tanks: polyline [[1287.45,655.2],[1287.45,650.24],[1309.45,650.24],[1309.45,655.2]] around pos (1298.45, 652.72); flanges, two gate valves with red handwheels near the tanks. Data has size null -> builder made a 1 m cube.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PipeManifold/MW86_PipeManifold_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PipeManifold_A.fbx",
+    "tris_lod0": 1384,
+    "tris_lod1": 664,
+    "bounds_min": [
+     -11.35,
+     -2.48,
+     0.0
+    ],
+    "bounds_max": [
+     11.35,
+     2.83,
+     1.095
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "BridgeBarrier": {
+  "kinds": [
+   "bridge_barrier"
+  ],
+  "data_size": [
+   0.25,
+   6.4,
+   0
+  ],
+  "placement": "box",
+  "front": "boom along Blender Y (= data size[1] 6.4 m across the road); post at the Blender +Y end (Unity -Z)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "None (data solid = false); add a trigger if the KPP logic needs one.",
+  "notes": "Closed red / white striped boom barrier of the island KPP: post with motor box and counterweight, boom rest fork at the far end.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/BridgeBarrier/MW86_BridgeBarrier_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_BridgeBarrier_A.fbx",
+    "tris_lod0": 612,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.2,
+     -3.4,
+     0.0
+    ],
+    "bounds_max": [
+     0.2,
+     3.6,
+     1.2
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "FictionalNuclearMissile": {
+  "kinds": [
+   "fictional_nuclear_missile"
+  ],
+  "data_size": [
+   7.0,
+   7.0,
+   11.0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Missile body box + collar ring as 4 boxes.",
+  "notes": "Cartoon missile rising from an open silo: concrete collar with yellow / black hazard ring, two blast doors folded open, white body with red nose and fins, dark bands. No symbols or text.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/FictionalNuclearMissile/MW86_FictionalNuclearMissile_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_FictionalNuclearMissile_A.fbx",
+    "tris_lod0": 1346,
+    "tris_lod1": 646,
+    "bounds_min": [
+     -3.928,
+     -3.4,
+     0.0
+    ],
+    "bounds_max": [
+     3.928,
+     3.4,
+     10.75
+    ],
+    "ucx": 5,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "GoldStatue": {
+  "kinds": [
+   "gold_statue"
+  ],
+  "data_size": [
+   2.8,
+   2.8,
+   3.7
+  ],
+  "placement": "facing",
+  "front": "figure faces Unity +Z (Blender -Y); facing convention gives east for rot 0 - suggest yaw 180 (Unity) so it faces the lawn / south",
+  "rotation_offset_y": 0.0,
+  "y_offset": 1.3,
+  "scale_rule": null,
+  "collider_note": "Plinth box + figure box.",
+  "notes": "Same golden cartoon leader as the Downtown monument, 3.3 m on a 0.4 m dark plinth. Stands ON StepPedestal (same pos): lift by 1.3 m.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/GoldStatue/MW86_GoldStatue_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GoldStatue_A.fbx",
+    "tris_lod0": 2050,
+    "tris_lod1": 578,
+    "bounds_min": [
+     -1.097,
+     -0.85,
+     0.0
+    ],
+    "bounds_max": [
+     0.85,
+     0.85,
+     3.796
+    ],
+    "ucx": 2,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "StepPedestal": {
+  "kinds": [
+   "stepped_monument_pedestal"
+  ],
+  "data_size": [
+   4.8,
+   4.8,
+   1.3
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "Three stacked boxes (walkable steps).",
+  "notes": "Three square travertine steps with dark granite edge bands; carries GoldStatue.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/StepPedestal/MW86_StepPedestal_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_StepPedestal_A.fbx",
+    "tris_lod0": 168,
+    "tris_lod1": null,
+    "bounds_min": [
+     -2.41,
+     -2.41,
+     0.0
+    ],
+    "bounds_max": [
+     2.41,
+     2.41,
+     1.3
+    ],
+    "ucx": 3,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "GolfGreen": {
+  "kinds": [
+   "golf_green"
+  ],
+  "data_size": [
+   8.0,
+   7.0,
+   0
+  ],
+  "placement": "box",
+  "front": null,
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "None (raised 8 cm; walkable). Flag pin optional thin box.",
+  "notes": "Joke mini-golf putting green: oval green on a fringe, cup, flag pin, balls; B with a small sand bunker, C with a little bridge-less water edge stone ring. Red flags, no numbers.",
+  "variant_rule": "one per data green (green1 A, green2 B, green3 C)",
+  "blend": "ArtSource/Props/MAP_W86_v01/static/GolfGreen/MW86_GolfGreen_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_A.fbx",
+    "tris_lod0": 452,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.985,
+     -3.459,
+     0.0
+    ],
+    "bounds_max": [
+     4.021,
+     3.559,
+     2.1
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "B": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_B.fbx",
+    "tris_lod0": 546,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.972,
+     -3.481,
+     0.0
+    ],
+    "bounds_max": [
+     4.036,
+     3.556,
+     2.1
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   },
+   "C": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_GolfGreen_C.fbx",
+    "tris_lod0": 652,
+    "tris_lod1": null,
+    "bounds_min": [
+     -3.932,
+     -3.455,
+     -0.09
+    ],
+    "bounds_max": [
+     4.026,
+     3.487,
+     2.1
+    ],
+    "ucx": 0,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PorticoSteps": {
+  "kinds": [
+   "portico_steps"
+  ],
+  "data_size": [
+   10.0,
+   4.0,
+   0
+  ],
+  "placement": "box",
+  "front": "climbs toward Blender -Y = Unity +Z (north, to the palace door at y 812.5)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box per step (walkable).",
+  "notes": "White travertine stair of the palace portico: 5 steps (0.18 m) and a landing, cheek blocks with urns.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PorticoSteps/MW86_PorticoSteps_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PorticoSteps_A.fbx",
+    "tris_lod0": 592,
+    "tris_lod1": null,
+    "bounds_min": [
+     -5.05,
+     -2.05,
+     0.0
+    ],
+    "bounds_max": [
+     5.05,
+     2.05,
+     1.82
+    ],
+    "ucx": 7,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PresidentialSpeechStage": {
+  "kinds": [
+   "presidential_speech_stage"
+  ],
+  "data_size": [
+   16.0,
+   9.0,
+   0.8
+  ],
+  "placement": "box",
+  "front": "audience / steps side = Blender +Y = Unity -Z (south)",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box 16 x 9 x 0.8 (walkable top).",
+  "notes": "Stage platform: pleated red skirt with gold trim, light deck, red carpet runner from the steps to the lectern, two flag stands with plain red / gold flags at the back.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PresidentialSpeechStage/MW86_PresidentialSpeechStage_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PresidentialSpeechStage_A.fbx",
+    "tris_lod0": 1136,
+    "tris_lod1": 152,
+    "bounds_min": [
+     -8.12,
+     -4.53,
+     0.0
+    ],
+    "bounds_max": [
+     8.12,
+     4.53,
+     4.31
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "PresidentialLectern": {
+  "kinds": [
+   "presidential_lectern"
+  ],
+  "data_size": [
+   1.4,
+   0.8,
+   1.2
+  ],
+  "placement": "box",
+  "front": "front panel to Blender +Y = Unity -Z (south, the audience); speaker stands on the Blender -Y side",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.8,
+  "scale_rule": null,
+  "collider_note": "Box 1.1 x 0.7 x 1.2.",
+  "notes": "Dark wood lectern with a red front panel and gold trim, slanted reading desk, two microphones. No emblem. Stands ON the stage (same area): lift by 0.8 m.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/PresidentialLectern/MW86_PresidentialLectern_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_PresidentialLectern_A.fbx",
+    "tris_lod0": 280,
+    "tris_lod1": null,
+    "bounds_min": [
+     -0.7,
+     -0.4,
+     0.0
+    ],
+    "bounds_max": [
+     0.7,
+     0.4,
+     1.445
+    ],
+    "ucx": 1,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ },
+ "SpeechPlatformSteps": {
+  "kinds": [
+   "speech_platform_steps"
+  ],
+  "data_size": [
+   8.0,
+   2.0,
+   0
+  ],
+  "placement": "box",
+  "front": "climbs toward Blender -Y = Unity +Z (north, up onto the stage); top = 0.8 m",
+  "rotation_offset_y": 0.0,
+  "y_offset": 0.0,
+  "scale_rule": null,
+  "collider_note": "One box per step (walkable).",
+  "notes": "Four steps up to the stage with the red carpet runner and brass rope posts.",
+  "variant_rule": null,
+  "blend": "ArtSource/Props/MAP_W86_v01/static/SpeechPlatformSteps/MW86_SpeechPlatformSteps_v01.blend",
+  "variants": {
+   "A": {
+    "fbx": "Assets/OnlyVolunteers/Art/Props/MapW86_v01/Static/FBX/MW86_SpeechPlatformSteps_A.fbx",
+    "tris_lod0": 728,
+    "tris_lod1": null,
+    "bounds_min": [
+     -4.0,
+     -1.0,
+     0.0
+    ],
+    "bounds_max": [
+     4.0,
+     1.0,
+     1.765
+    ],
+    "ucx": 4,
+    "checks": {
+     "pivot_on_ground": true,
+     "base_not_floating": true,
+     "tris_within_budget": true,
+     "lod1_when_over_1k": true,
+     "no_empty_mesh": true,
+     "no_zero_area_faces": true
+    },
+    "notes": []
+   }
+  }
+ }
+}

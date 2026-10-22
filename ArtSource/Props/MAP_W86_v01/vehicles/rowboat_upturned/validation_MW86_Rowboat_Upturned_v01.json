@@ -1,0 +1,83 @@
+{
+  "asset": "MW86_Rowboat_Upturned",
+  "family": "Water",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "ground",
+  "pivot": "footprint centre on the ground (z=0)",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    -0.0,
+    -0.0069
+  ],
+  "lod0": {
+    "triangles": 274,
+    "vertices": 153,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -0.694,
+      -1.85,
+      0.0
+    ],
+    "bounds_max": [
+      0.694,
+      1.85,
+      0.888
+    ],
+    "size_xyz_m": [
+      1.387,
+      3.7,
+      0.888
+    ]
+  },
+  "lod1": {
+    "triangles": 132,
+    "vertices": 74,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -0.7,
+      -1.85,
+      0.005
+    ],
+    "bounds_max": [
+      0.7,
+      1.85,
+      0.861
+    ],
+    "size_xyz_m": [
+      1.4,
+      3.7,
+      0.856
+    ]
+  },
+  "lod1_ratio": 0.482,
+  "triangle_budget_lod0": 3000,
+  "data_box_target_xyz": [
+    1.5,
+    3.8,
+    1.0
+  ],
+  "material": "MW86_Water",
+  "textures": [
+    "MW86_Water_A.png",
+    "MW86_Water_B.png",
+    "MW86_Water_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_Rowboat_Upturned_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\rowboat_upturned\\MW86_Rowboat_Upturned_v01.blend"
+  },
+  "notes": "Wooden rowing boat upside down on two logs + oars (kind upturned_boat, Hamlet river bank). Fishing nets = M2.",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "base_on_ground_z0": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}

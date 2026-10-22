@@ -154,6 +154,9 @@ namespace OnlyVolunteers.Map.W85
             LastVisibleChunks = nVis;
             mask.SetData(maskData);
             b.visible.SetCounterValue(0);
+            // re-bind every frame: a compute shader re-import (asset refresh in the editor) drops the instance's bindings
+            compute.SetBuffer(kernel, "_Blades", source); compute.SetBuffer(kernel, "_Chunks", chunks); compute.SetBuffer(kernel, "_ChunkMask", mask);
+            compute.SetInt("_ChunkCount", data.chunks.Length);
             compute.SetBuffer(kernel, "_Visible", b.visible);
             compute.Dispatch(kernel, data.chunks.Length, 1, 1);
             GraphicsBuffer.CopyCount(b.visible, b.args, 4);

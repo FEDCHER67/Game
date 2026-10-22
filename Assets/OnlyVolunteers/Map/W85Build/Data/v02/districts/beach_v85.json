@@ -1,0 +1,6522 @@
+{
+ "district": "beach",
+ "version": "v85 (placement: world v85 drawing; content: plan v06 + BEACH_SPEC) + Downtown v37 move -54 m",
+ "shift_v37": {
+  "dy_m": -54.0,
+  "x_taper_full_full_taper": [
+   700.0,
+   790.0,
+   1280.0,
+   1400.0
+  ],
+  "rule": "world y += beach_dy(x), smoothstep tapers"
+ },
+ "sources": [
+  "ArtSource/References/Map/World_v85/build_world_v85.py (R45_miami_beach, R38_ocean_drive, R74_elite_ring TRACK)",
+  "ArtSource/References/Map/World_v11/Districts/D09_City_Beach_layout_v06.json",
+  "ArtSource/References/Map/World_v11/Districts/D09_City_Beach_plan_v06.png",
+  "docs/specs/BEACH_SPEC_2026-10-15_v01.md",
+  "docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-20_v10.md §7.7 §7.9",
+  "docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-18_v02.md §8.9"
+ ],
+ "transform": "world = common.post(pre-shift metres of build_world_v85.py) = pre + (20, -28) on the whole beach (x > 770, y < 470); then plan v37 move: y += beach_dy(x) = -54 m for x 790-1280, smooth taper to 0 at x 700 / 1400 (residuals below are measured at the v85 drawn position, before the move)",
+ "fit": {
+  "transform": "world = common.post(pre-shift metres of build_world_v85.py) = pre + (20, -28) on the whole beach (x > 770, y < 470); then plan v37 move: y += beach_dy(x) = -54 m for x 790-1280, smooth taper to 0 at x 700 / 1400 (residuals below are measured at the v85 drawn position, before the move)",
+  "residuals_m (max bbox edge diff, centre shift)": {
+   "pier+head (drawn from y 161 pre)": [
+    0.4,
+    [
+     0.0,
+     0.4
+    ]
+   ],
+   "tower_W": [
+    0.2,
+    [
+     0.0,
+     0.0
+    ]
+   ],
+   "tower_E": [
+    0.2,
+    [
+     0.0,
+     0.0
+    ]
+   ],
+   "bar_W": [
+    2.0,
+    [
+     0.0,
+     -0.9
+    ]
+   ],
+   "bar_E": [
+    2.0,
+    [
+     0.0,
+     -0.9
+    ]
+   ],
+   "lot_W": [
+    0.2,
+    [
+     0.0,
+     0.15
+    ]
+   ],
+   "lot_E": [
+    0.2,
+    [
+     0.0,
+     0.15
+    ]
+   ]
+  },
+  "waterline_drawn_minus_coast_b_m": [
+   -0.4,
+   -0.6,
+   null,
+   -0.4,
+   -0.4
+  ]
+ },
+ "pad_height_m": null,
+ "pad_note": "sand slopes gently from the dunes (~+2.5 m) to the waterline (0 m)",
+ "abs_heights": false,
+ "lighting": "sunny_bright_miami",
+ "buildings": [
+  {
+   "id": "09-bar-W",
+   "kind": "beach_bar",
+   "material_slot": "beach_bar",
+   "footprint": [
+    [
+     967.0,
+     130.0
+    ],
+    [
+     983.0,
+     130.0
+    ],
+    [
+     983.0,
+     138.0
+    ],
+    [
+     967.0,
+     138.0
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.4,
+   "height_m": 3.4,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.3,
+    "striped_awning": true
+   },
+   "walls": "stucco_SK3b",
+   "tint": "#F6C9C4",
+   "entrances": [
+    {
+     "pos": [
+      975.0,
+      130.0
+     ],
+     "facing_deg": 270,
+     "kind": "counter",
+     "w_m": 10.0
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "awning": true,
+    "windows": false,
+    "storefront": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "pastel art-deco cocktail bar on the sand at the dune foot (BEACH_SPEC §2a \"13\"): striped roof / awning, counter facing the sea, high stools, 2 tables with umbrellas on the sea side; west bar"
+  },
+  {
+   "id": "09-bar-E",
+   "kind": "beach_bar",
+   "material_slot": "beach_bar",
+   "footprint": [
+    [
+     1080.0,
+     130.0
+    ],
+    [
+     1096.0,
+     130.0
+    ],
+    [
+     1096.0,
+     138.0
+    ],
+    [
+     1080.0,
+     138.0
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.4,
+   "height_m": 3.4,
+   "roof": {
+    "type": "flat",
+    "material": "roof_flat_SK4d",
+    "parapet_h_m": 0.3,
+    "striped_awning": true
+   },
+   "walls": "stucco_SK3b",
+   "tint": "#BFE7E4",
+   "entrances": [
+    {
+     "pos": [
+      1088.0,
+      130.0
+     ],
+     "facing_deg": 270,
+     "kind": "counter",
+     "w_m": 10.0
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "awning": true,
+    "windows": false,
+    "storefront": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "pastel art-deco cocktail bar on the sand at the dune foot (BEACH_SPEC §2a \"13\"): striped roof / awning, counter facing the sea, high stools, 2 tables with umbrellas on the sea side; east bar, next to the volleyball courts"
+  },
+  {
+   "id": "09-rental",
+   "kind": "rental_hut",
+   "material_slot": "beach_bar",
+   "footprint": [
+    [
+     1207.5,
+     114.91
+    ],
+    [
+     1212.5,
+     114.91
+    ],
+    [
+     1212.5,
+     118.91
+    ],
+    [
+     1207.5,
+     118.91
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 2.8,
+   "height_m": 2.8,
+   "roof": {
+    "type": "flat",
+    "material": "boards_SK5a"
+   },
+   "walls": "boards_SK5a",
+   "tint": "#F4EFE4",
+   "entrances": [
+    {
+     "pos": [
+      1210.0,
+      114.91
+     ],
+     "facing_deg": 270,
+     "kind": "door",
+     "w_m": 1.2
+    }
+   ],
+   "facade_kit": "none",
+   "sockets": {
+    "windows": true
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "jet-ski / SUP rental hut by the water (layout v06 rental: 3 jet skis, 6 SUPs); east of the swim zone"
+  },
+  {
+   "id": "09e-cabana",
+   "kind": "beach_bar",
+   "material_slot": "beach_bar",
+   "footprint": [
+    [
+     1426.0,
+     214.0
+    ],
+    [
+     1438.0,
+     214.0
+    ],
+    [
+     1438.0,
+     222.0
+    ],
+    [
+     1426.0,
+     222.0
+    ]
+   ],
+   "floors": 1,
+   "floor_h_m": 3.0,
+   "height_m": 3.0,
+   "roof": {
+    "type": "flat",
+    "material": "boards_SK5a",
+    "parapet_h_m": 0.0
+   },
+   "walls": "boards_SK5a",
+   "tint": "#F4EFE4",
+   "entrances": [],
+   "facade_kit": "none",
+   "sockets": {
+    "awning": true,
+    "windows": false
+   },
+   "collider": "full_roof",
+   "disabled": false,
+   "notes": "Elite beach cabana bar (open canopy) under the hill; reached only by the sand track",
+   "sub_area": "elite_beach"
+  }
+ ],
+ "props": [
+  {
+   "id": "09-jetski0",
+   "kind": "jet_ski",
+   "pos": [
+    1203.0,
+    99.84
+   ],
+   "rot_deg": 270,
+   "size": [
+    3.2,
+    1.2,
+    1.1
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-jetski1",
+   "kind": "jet_ski",
+   "pos": [
+    1209.0,
+    100.76
+   ],
+   "rot_deg": 270,
+   "size": [
+    3.2,
+    1.2,
+    1.1
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-jetski2",
+   "kind": "jet_ski",
+   "pos": [
+    1215.0,
+    101.67
+   ],
+   "rot_deg": 270,
+   "size": [
+    3.2,
+    1.2,
+    1.1
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-sup0",
+   "kind": "sup_board",
+   "pos": [
+    1214.5,
+    116.91
+   ],
+   "rot_deg": 90,
+   "size": [
+    0.8,
+    3.2,
+    0.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-sup1",
+   "kind": "sup_board",
+   "pos": [
+    1215.5,
+    116.91
+   ],
+   "rot_deg": 90,
+   "size": [
+    0.8,
+    3.2,
+    0.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-sup2",
+   "kind": "sup_board",
+   "pos": [
+    1216.5,
+    116.91
+   ],
+   "rot_deg": 90,
+   "size": [
+    0.8,
+    3.2,
+    0.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-sup3",
+   "kind": "sup_board",
+   "pos": [
+    1217.5,
+    116.91
+   ],
+   "rot_deg": 90,
+   "size": [
+    0.8,
+    3.2,
+    0.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-sup4",
+   "kind": "sup_board",
+   "pos": [
+    1218.5,
+    116.91
+   ],
+   "rot_deg": 90,
+   "size": [
+    0.8,
+    3.2,
+    0.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-sup5",
+   "kind": "sup_board",
+   "pos": [
+    1219.5,
+    116.91
+   ],
+   "rot_deg": 90,
+   "size": [
+    0.8,
+    3.2,
+    0.2
+   ],
+   "grip_anchor": false
+  },
+  {
+   "id": "09-lifeguard0",
+   "kind": "lifeguard_tower",
+   "pos": [
+    925.0,
+    109.0
+   ],
+   "rot_deg": 270,
+   "size": [
+    3.0,
+    3.0,
+    4.5
+   ],
+   "grip_anchor": true,
+   "material": "boards_SK5a",
+   "tint": "#F4D35E",
+   "solid": true,
+   "notes": "lifeguard tower facing the sea, at the west van entry (v85: exactly 2)"
+  },
+  {
+   "id": "09-lifeguard1",
+   "kind": "lifeguard_tower",
+   "pos": [
+    1170.0,
+    114.0
+   ],
+   "rot_deg": 270,
+   "size": [
+    3.0,
+    3.0,
+    4.5
+   ],
+   "grip_anchor": true,
+   "material": "boards_SK5a",
+   "tint": "#9BD08A",
+   "solid": true,
+   "notes": "lifeguard tower facing the sea, at the east van entry (v85: exactly 2)"
+  },
+  {
+   "id": "09-palm-park-0-946",
+   "kind": "palm",
+   "pos": [
+    966.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-0-957",
+   "kind": "palm",
+   "pos": [
+    977.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-0-968",
+   "kind": "palm",
+   "pos": [
+    988.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-0-1089",
+   "kind": "palm",
+   "pos": [
+    1109.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-0-1100",
+   "kind": "palm",
+   "pos": [
+    1120.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-0-1111",
+   "kind": "palm",
+   "pos": [
+    1131.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-0-1122",
+   "kind": "palm",
+   "pos": [
+    1142.0,
+    162.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_north"
+  },
+  {
+   "id": "09-palm-park-1-797",
+   "kind": "palm",
+   "pos": [
+    817.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-808",
+   "kind": "palm",
+   "pos": [
+    828.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-819",
+   "kind": "palm",
+   "pos": [
+    839.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-830",
+   "kind": "palm",
+   "pos": [
+    850.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-841",
+   "kind": "palm",
+   "pos": [
+    861.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-852",
+   "kind": "palm",
+   "pos": [
+    872.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-863",
+   "kind": "palm",
+   "pos": [
+    883.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-874",
+   "kind": "palm",
+   "pos": [
+    894.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-885",
+   "kind": "palm",
+   "pos": [
+    905.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-973",
+   "kind": "palm",
+   "pos": [
+    993.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-984",
+   "kind": "palm",
+   "pos": [
+    1004.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-995",
+   "kind": "palm",
+   "pos": [
+    1015.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1039",
+   "kind": "palm",
+   "pos": [
+    1059.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1050",
+   "kind": "palm",
+   "pos": [
+    1070.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1061",
+   "kind": "palm",
+   "pos": [
+    1081.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1072",
+   "kind": "palm",
+   "pos": [
+    1092.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1083",
+   "kind": "palm",
+   "pos": [
+    1103.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1193",
+   "kind": "palm",
+   "pos": [
+    1213.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1204",
+   "kind": "palm",
+   "pos": [
+    1224.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1215",
+   "kind": "palm",
+   "pos": [
+    1235.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-park-1-1226",
+   "kind": "palm",
+   "pos": [
+    1246.0,
+    150.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "park_south"
+  },
+  {
+   "id": "09-palm-bar-941",
+   "kind": "palm",
+   "pos": [
+    961.0,
+    132.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single"
+  },
+  {
+   "id": "09-palm-bar-969",
+   "kind": "palm",
+   "pos": [
+    989.0,
+    132.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single"
+  },
+  {
+   "id": "09-palm-bar-1054",
+   "kind": "palm",
+   "pos": [
+    1074.0,
+    132.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single"
+  },
+  {
+   "id": "09-palm-bar-1082",
+   "kind": "palm",
+   "pos": [
+    1102.0,
+    132.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single"
+  },
+  {
+   "id": "09-palm-bar-800",
+   "kind": "palm",
+   "pos": [
+    820.0,
+    123.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single"
+  },
+  {
+   "id": "09-palm-bar-1235",
+   "kind": "palm",
+   "pos": [
+    1255.0,
+    122.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single"
+  },
+  {
+   "id": "09e-palm-foot-00",
+   "kind": "palm",
+   "pos": [
+    1256.0,
+    156.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-01",
+   "kind": "palm",
+   "pos": [
+    1266.72,
+    158.47
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-02",
+   "kind": "palm",
+   "pos": [
+    1277.44,
+    160.95
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-03",
+   "kind": "palm",
+   "pos": [
+    1288.19,
+    163.96
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-04",
+   "kind": "palm",
+   "pos": [
+    1298.98,
+    169.02
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-05",
+   "kind": "palm",
+   "pos": [
+    1309.51,
+    176.7
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-06",
+   "kind": "palm",
+   "pos": [
+    1319.95,
+    185.95
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-07",
+   "kind": "palm",
+   "pos": [
+    1330.67,
+    195.18
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-08",
+   "kind": "palm",
+   "pos": [
+    1341.4,
+    204.81
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-09",
+   "kind": "palm",
+   "pos": [
+    1352.28,
+    213.64
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-10",
+   "kind": "palm",
+   "pos": [
+    1363.17,
+    221.89
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-11",
+   "kind": "palm",
+   "pos": [
+    1374.09,
+    228.86
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-12",
+   "kind": "palm",
+   "pos": [
+    1385.05,
+    233.9
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-13",
+   "kind": "palm",
+   "pos": [
+    1396.02,
+    236.91
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-14",
+   "kind": "palm",
+   "pos": [
+    1406.98,
+    237.96
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-15",
+   "kind": "palm",
+   "pos": [
+    1417.95,
+    238.84
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-16",
+   "kind": "palm",
+   "pos": [
+    1428.92,
+    239.67
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-17",
+   "kind": "palm",
+   "pos": [
+    1439.89,
+    240.49
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-18",
+   "kind": "palm",
+   "pos": [
+    1450.86,
+    241.31
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-19",
+   "kind": "palm",
+   "pos": [
+    1461.8,
+    241.65
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-20",
+   "kind": "palm",
+   "pos": [
+    1472.6,
+    239.58
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-foot-21",
+   "kind": "palm",
+   "pos": [
+    1483.4,
+    237.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.0,
+    4.0,
+    9.0
+   ],
+   "grip_anchor": false,
+   "row": "elite_foot",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-cabana-1400",
+   "kind": "palm",
+   "pos": [
+    1420.0,
+    218.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-cabana-1422",
+   "kind": "palm",
+   "pos": [
+    1442.0,
+    220.5
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-palm-cabana-1490",
+   "kind": "palm",
+   "pos": [
+    1510.0,
+    234.0
+   ],
+   "rot_deg": 0,
+   "size": [
+    4.5,
+    4.5,
+    10.0
+   ],
+   "grip_anchor": false,
+   "row": "single",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09-umb-00",
+   "kind": "umbrella_towel",
+   "pos": [
+    1184.2,
+    116.32
+   ],
+   "rot_deg": 254.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-01",
+   "kind": "umbrella_towel",
+   "pos": [
+    998.77,
+    101.15
+   ],
+   "rot_deg": 254.6,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-02",
+   "kind": "umbrella_towel",
+   "pos": [
+    988.22,
+    96.73
+   ],
+   "rot_deg": 254.5,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-03",
+   "kind": "umbrella_towel",
+   "pos": [
+    1107.25,
+    111.96
+   ],
+   "rot_deg": 254.9,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-04",
+   "kind": "umbrella_towel",
+   "pos": [
+    1023.3,
+    115.41
+   ],
+   "rot_deg": 255.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-05",
+   "kind": "umbrella_towel",
+   "pos": [
+    1002.32,
+    117.34
+   ],
+   "rot_deg": 255.8,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-06",
+   "kind": "umbrella_towel",
+   "pos": [
+    1012.87,
+    110.82
+   ],
+   "rot_deg": 255.8,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-07",
+   "kind": "umbrella_towel",
+   "pos": [
+    935.84,
+    97.32
+   ],
+   "rot_deg": 253.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-08",
+   "kind": "umbrella_towel",
+   "pos": [
+    932.4,
+    103.32
+   ],
+   "rot_deg": 256.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-09",
+   "kind": "umbrella_towel",
+   "pos": [
+    1110.88,
+    118.33
+   ],
+   "rot_deg": 256.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-10",
+   "kind": "umbrella_towel",
+   "pos": [
+    900.91,
+    102.96
+   ],
+   "rot_deg": 254.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-11",
+   "kind": "umbrella_towel",
+   "pos": [
+    1099.49,
+    104.7
+   ],
+   "rot_deg": 251.5,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-12",
+   "kind": "lounger_1",
+   "pos": [
+    932.06,
+    114.09
+   ],
+   "rot_deg": 252.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-13",
+   "kind": "lounger_1",
+   "pos": [
+    998.95,
+    90.27
+   ],
+   "rot_deg": 255.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-14",
+   "kind": "lounger_1",
+   "pos": [
+    1089.58,
+    102.91
+   ],
+   "rot_deg": 252.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-15",
+   "kind": "lounger_1",
+   "pos": [
+    1097.01,
+    93.62
+   ],
+   "rot_deg": 255.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-16",
+   "kind": "lounger_1",
+   "pos": [
+    1002.15,
+    106.23
+   ],
+   "rot_deg": 253.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-17",
+   "kind": "lounger_1",
+   "pos": [
+    1187.63,
+    111.32
+   ],
+   "rot_deg": 250.8,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-18",
+   "kind": "lounger_1",
+   "pos": [
+    1065.13,
+    115.94
+   ],
+   "rot_deg": 253.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-19",
+   "kind": "lounger_1",
+   "pos": [
+    1009.12,
+    94.49
+   ],
+   "rot_deg": 253.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-20",
+   "kind": "lounger_1",
+   "pos": [
+    1180.72,
+    110.29
+   ],
+   "rot_deg": 251.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-21",
+   "kind": "lounger_1",
+   "pos": [
+    1005.68,
+    100.38
+   ],
+   "rot_deg": 251.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-22",
+   "kind": "lounger_1",
+   "pos": [
+    985.1,
+    113.84
+   ],
+   "rot_deg": 259.5,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-23",
+   "kind": "lounger_1",
+   "pos": [
+    1062.09,
+    88.49
+   ],
+   "rot_deg": 256.9,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-24",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1118.13,
+    98.03
+   ],
+   "rot_deg": 257.5,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-25",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1104.14,
+    106.15
+   ],
+   "rot_deg": 260.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-26",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1013.16,
+    100.02
+   ],
+   "rot_deg": 257.9,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-27",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1111.22,
+    96.67
+   ],
+   "rot_deg": 258.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-28",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1044.31,
+    114.77
+   ],
+   "rot_deg": 255.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-29",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    883.36,
+    111.64
+   ],
+   "rot_deg": 256.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-30",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    992.29,
+    102.24
+   ],
+   "rot_deg": 262.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-31",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    974.42,
+    98.36
+   ],
+   "rot_deg": 254.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-32",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    880.3,
+    117.98
+   ],
+   "rot_deg": 259.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-33",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    929.33,
+    98.61
+   ],
+   "rot_deg": 262.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-34",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1020.34,
+    88.56
+   ],
+   "rot_deg": 262.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-35",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1075.96,
+    101.07
+   ],
+   "rot_deg": 257.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-36",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    956.95,
+    94.87
+   ],
+   "rot_deg": 255.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#4F8FD8"
+  },
+  {
+   "id": "09-umb-37",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1016.48,
+    105.08
+   ],
+   "rot_deg": 258.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-38",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    964.38,
+    116.36
+   ],
+   "rot_deg": 263.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-39",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1121.94,
+    115.59
+   ],
+   "rot_deg": 263.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-40",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    904.54,
+    118.84
+   ],
+   "rot_deg": 256.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-41",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1006.44,
+    89.92
+   ],
+   "rot_deg": 263.5,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-42",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1069.47,
+    100.64
+   ],
+   "rot_deg": 261.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-43",
+   "kind": "umbrella_2_loungers",
+   "pos": [
+    1080.07,
+    107.65
+   ],
+   "rot_deg": 265.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-44",
+   "kind": "loungers_2",
+   "pos": [
+    1223.15,
+    117.18
+   ],
+   "rot_deg": 257.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-45",
+   "kind": "loungers_2",
+   "pos": [
+    1006.18,
+    111.74
+   ],
+   "rot_deg": 260.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-46",
+   "kind": "loungers_2",
+   "pos": [
+    1104.2,
+    117.21
+   ],
+   "rot_deg": 260.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-47",
+   "kind": "loungers_2",
+   "pos": [
+    1079.69,
+    96.29
+   ],
+   "rot_deg": 258.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-48",
+   "kind": "loungers_2",
+   "pos": [
+    953.67,
+    111.91
+   ],
+   "rot_deg": 260.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-49",
+   "kind": "loungers_2",
+   "pos": [
+    1041.28,
+    98.6
+   ],
+   "rot_deg": 259.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-50",
+   "kind": "loungers_2",
+   "pos": [
+    964.72,
+    105.6
+   ],
+   "rot_deg": 264.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-51",
+   "kind": "loungers_2",
+   "pos": [
+    1048.37,
+    98.78
+   ],
+   "rot_deg": 260.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-52",
+   "kind": "loungers_2",
+   "pos": [
+    975.28,
+    109.95
+   ],
+   "rot_deg": 265.5,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-53",
+   "kind": "loungers_2",
+   "pos": [
+    1086.83,
+    108.56
+   ],
+   "rot_deg": 260.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-54",
+   "kind": "loungers_2",
+   "pos": [
+    978.42,
+    114.82
+   ],
+   "rot_deg": 260.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-55",
+   "kind": "loungers_2",
+   "pos": [
+    1020.38,
+    99.59
+   ],
+   "rot_deg": 260.8,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-56",
+   "kind": "loungers_2",
+   "pos": [
+    1051.92,
+    93.44
+   ],
+   "rot_deg": 261.4,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-57",
+   "kind": "loungers_2",
+   "pos": [
+    1059.38,
+    94.33
+   ],
+   "rot_deg": 266.9,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-58",
+   "kind": "loungers_2",
+   "pos": [
+    1073.03,
+    117.62
+   ],
+   "rot_deg": 262.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-59",
+   "kind": "loungers_2",
+   "pos": [
+    1013.52,
+    89.27
+   ],
+   "rot_deg": 262.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-60",
+   "kind": "loungers_2",
+   "pos": [
+    985.61,
+    103.2
+   ],
+   "rot_deg": 263.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#F2C14E"
+  },
+  {
+   "id": "09-umb-61",
+   "kind": "loungers_2",
+   "pos": [
+    1062.6,
+    110.95
+   ],
+   "rot_deg": 266.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#E86F5C"
+  },
+  {
+   "id": "09-umb-62",
+   "kind": "loungers_2",
+   "pos": [
+    989.14,
+    119.37
+   ],
+   "rot_deg": 264.2,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#E86F5C"
+  },
+  {
+   "id": "09-umb-63",
+   "kind": "loungers_2",
+   "pos": [
+    1055.66,
+    110.37
+   ],
+   "rot_deg": 267.0,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": false,
+   "umbrella_color": "#E86F5C"
+  },
+  {
+   "id": "09-umb-64",
+   "kind": "umbrella_1_lounger",
+   "pos": [
+    1017.37,
+    94.71
+   ],
+   "rot_deg": 266.7,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#E86F5C"
+  },
+  {
+   "id": "09-umb-65",
+   "kind": "umbrella_1_lounger",
+   "pos": [
+    969.96,
+    111.89
+   ],
+   "rot_deg": 251.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#6CC3A0"
+  },
+  {
+   "id": "09-umb-66",
+   "kind": "umbrella_3_loungers",
+   "pos": [
+    1009.03,
+    105.43
+   ],
+   "rot_deg": 251.3,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#6CC3A0"
+  },
+  {
+   "id": "09-umb-67",
+   "kind": "umbrella_3_loungers",
+   "pos": [
+    886.7,
+    105.44
+   ],
+   "rot_deg": 251.1,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#6CC3A0"
+  },
+  {
+   "id": "09e-lounger-00-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1444.0,
+    199.16
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#1F3B57",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-00-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1448.0,
+    208.05
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#FFFFFF",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-01-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1452.0,
+    200.95
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#FFFFFF",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-01-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1456.0,
+    209.9
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#C9A86A",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-02-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1460.0,
+    202.91
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#C9A86A",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-02-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1464.0,
+    211.97
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#1F3B57",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-03-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1468.0,
+    205.08
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#1F3B57",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-03-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1472.0,
+    214.26
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#FFFFFF",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-04-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1476.0,
+    207.51
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#FFFFFF",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-04-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1480.0,
+    216.84
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#C9A86A",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-05-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1484.0,
+    210.25
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#C9A86A",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-05-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1488.0,
+    219.75
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#1F3B57",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-06-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1492.0,
+    213.36
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#1F3B57",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-06-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1496.0,
+    223.1
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#FFFFFF",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-07-0",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1500.0,
+    217.0
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#FFFFFF",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-lounger-07-1",
+   "kind": "lounger_umbrella_elite",
+   "pos": [
+    1504.0,
+    227.08
+   ],
+   "rot_deg": 270,
+   "size": null,
+   "grip_anchor": false,
+   "umbrella": true,
+   "umbrella_color": "#C9A86A",
+   "sub_area": "elite_beach"
+  },
+  {
+   "id": "09e-guard-spawn1",
+   "kind": "npc_spot",
+   "pos": [
+    1412.0,
+    188.4
+   ],
+   "rot_deg": 270,
+   "size": [
+    0.6,
+    0.6,
+    1.8
+   ],
+   "grip_anchor": false,
+   "role": "elite_guard",
+   "patrol": "09e-guard-patrol",
+   "sub_area": "elite_beach",
+   "notes": "patrol start (phase 0.0)"
+  },
+  {
+   "id": "09e-guard-spawn2",
+   "kind": "npc_spot",
+   "pos": [
+    1508.0,
+    234.0
+   ],
+   "rot_deg": 270,
+   "size": [
+    0.6,
+    0.6,
+    1.8
+   ],
+   "grip_anchor": false,
+   "role": "elite_guard",
+   "patrol": "09e-guard-patrol",
+   "sub_area": "elite_beach",
+   "notes": "patrol start (phase 0.5)"
+  }
+ ],
+ "zones": [
+  {
+   "id": "09-sand",
+   "kind": "sand",
+   "poly": [
+    [
+     794.0,
+     101.92
+    ],
+    [
+     798.12,
+     102.25
+    ],
+    [
+     804.53,
+     102.56
+    ],
+    [
+     811.09,
+     102.69
+    ],
+    [
+     817.81,
+     102.62
+    ],
+    [
+     824.69,
+     102.38
+    ],
+    [
+     831.72,
+     101.94
+    ],
+    [
+     838.91,
+     101.31
+    ],
+    [
+     846.25,
+     100.5
+    ],
+    [
+     853.75,
+     99.5
+    ],
+    [
+     860.94,
+     98.5
+    ],
+    [
+     867.81,
+     97.5
+    ],
+    [
+     874.38,
+     96.5
+    ],
+    [
+     880.62,
+     95.5
+    ],
+    [
+     886.56,
+     94.5
+    ],
+    [
+     892.19,
+     93.5
+    ],
+    [
+     897.5,
+     92.5
+    ],
+    [
+     902.5,
+     91.5
+    ],
+    [
+     907.81,
+     90.52
+    ],
+    [
+     913.44,
+     89.55
+    ],
+    [
+     919.38,
+     88.59
+    ],
+    [
+     925.62,
+     87.66
+    ],
+    [
+     932.19,
+     86.73
+    ],
+    [
+     939.06,
+     85.83
+    ],
+    [
+     946.25,
+     84.94
+    ],
+    [
+     953.75,
+     84.06
+    ],
+    [
+     961.25,
+     83.2
+    ],
+    [
+     968.75,
+     82.36
+    ],
+    [
+     976.25,
+     81.53
+    ],
+    [
+     983.75,
+     80.72
+    ],
+    [
+     991.25,
+     79.92
+    ],
+    [
+     998.75,
+     79.14
+    ],
+    [
+     1006.25,
+     78.38
+    ],
+    [
+     1013.75,
+     77.62
+    ],
+    [
+     1020.94,
+     77.03
+    ],
+    [
+     1027.81,
+     76.59
+    ],
+    [
+     1034.38,
+     76.31
+    ],
+    [
+     1040.62,
+     76.19
+    ],
+    [
+     1046.56,
+     76.22
+    ],
+    [
+     1052.19,
+     76.41
+    ],
+    [
+     1057.5,
+     76.75
+    ],
+    [
+     1062.5,
+     77.25
+    ],
+    [
+     1067.5,
+     77.81
+    ],
+    [
+     1072.5,
+     78.44
+    ],
+    [
+     1077.5,
+     79.12
+    ],
+    [
+     1082.5,
+     79.88
+    ],
+    [
+     1087.5,
+     80.69
+    ],
+    [
+     1092.5,
+     81.56
+    ],
+    [
+     1097.5,
+     82.5
+    ],
+    [
+     1102.5,
+     83.5
+    ],
+    [
+     1107.5,
+     84.52
+    ],
+    [
+     1112.5,
+     85.55
+    ],
+    [
+     1117.5,
+     86.59
+    ],
+    [
+     1122.5,
+     87.66
+    ],
+    [
+     1127.5,
+     88.73
+    ],
+    [
+     1132.5,
+     89.83
+    ],
+    [
+     1137.5,
+     90.94
+    ],
+    [
+     1142.5,
+     92.06
+    ],
+    [
+     1147.66,
+     93.17
+    ],
+    [
+     1152.97,
+     94.27
+    ],
+    [
+     1158.44,
+     95.34
+    ],
+    [
+     1164.06,
+     96.41
+    ],
+    [
+     1169.84,
+     97.45
+    ],
+    [
+     1175.78,
+     98.48
+    ],
+    [
+     1181.88,
+     99.5
+    ],
+    [
+     1188.12,
+     100.5
+    ],
+    [
+     1194.14,
+     101.45
+    ],
+    [
+     1199.92,
+     102.36
+    ],
+    [
+     1205.47,
+     103.22
+    ],
+    [
+     1210.78,
+     104.03
+    ],
+    [
+     1215.86,
+     104.8
+    ],
+    [
+     1220.7,
+     105.52
+    ],
+    [
+     1225.31,
+     106.19
+    ],
+    [
+     1229.69,
+     106.81
+    ],
+    [
+     1233.98,
+     107.28
+    ],
+    [
+     1238.2,
+     107.59
+    ],
+    [
+     1242.34,
+     107.75
+    ],
+    [
+     1246.41,
+     107.75
+    ],
+    [
+     1250.39,
+     107.59
+    ],
+    [
+     1254.3,
+     107.28
+    ],
+    [
+     1258.12,
+     106.81
+    ],
+    [
+     1261.88,
+     106.19
+    ],
+    [
+     1265.7,
+     105.67
+    ],
+    [
+     1269.61,
+     105.27
+    ],
+    [
+     1273.59,
+     104.97
+    ],
+    [
+     1277.66,
+     104.78
+    ],
+    [
+     1281.8,
+     104.74
+    ],
+    [
+     1286.02,
+     105.13
+    ],
+    [
+     1290.31,
+     106.0
+    ],
+    [
+     1294.69,
+     107.35
+    ],
+    [
+     1299.14,
+     109.17
+    ],
+    [
+     1303.67,
+     111.43
+    ],
+    [
+     1308.28,
+     114.12
+    ],
+    [
+     1312.97,
+     117.21
+    ],
+    [
+     1317.73,
+     120.68
+    ],
+    [
+     1322.58,
+     124.49
+    ],
+    [
+     1327.5,
+     128.62
+    ],
+    [
+     1332.5,
+     133.03
+    ],
+    [
+     1337.5,
+     137.52
+    ],
+    [
+     1342.5,
+     142.05
+    ],
+    [
+     1347.5,
+     146.57
+    ],
+    [
+     1352.5,
+     151.03
+    ],
+    [
+     1357.5,
+     155.4
+    ],
+    [
+     1362.5,
+     159.62
+    ],
+    [
+     1367.5,
+     163.64
+    ],
+    [
+     1372.5,
+     167.42
+    ],
+    [
+     1377.5,
+     170.86
+    ],
+    [
+     1382.5,
+     173.92
+    ],
+    [
+     1387.5,
+     176.55
+    ],
+    [
+     1392.5,
+     178.71
+    ],
+    [
+     1397.5,
+     180.34
+    ],
+    [
+     1402.5,
+     181.47
+    ],
+    [
+     1407.5,
+     182.5
+    ],
+    [
+     1412.5,
+     183.5
+    ],
+    [
+     1417.5,
+     184.52
+    ],
+    [
+     1422.5,
+     185.55
+    ],
+    [
+     1427.5,
+     186.59
+    ],
+    [
+     1432.5,
+     187.66
+    ],
+    [
+     1437.5,
+     188.73
+    ],
+    [
+     1442.5,
+     189.83
+    ],
+    [
+     1447.5,
+     190.94
+    ],
+    [
+     1452.5,
+     192.06
+    ],
+    [
+     1457.38,
+     193.23
+    ],
+    [
+     1462.12,
+     194.45
+    ],
+    [
+     1466.75,
+     195.72
+    ],
+    [
+     1471.25,
+     197.03
+    ],
+    [
+     1475.62,
+     198.39
+    ],
+    [
+     1479.88,
+     199.8
+    ],
+    [
+     1484.0,
+     201.25
+    ],
+    [
+     1488.0,
+     202.75
+    ],
+    [
+     1491.81,
+     204.28
+    ],
+    [
+     1495.44,
+     205.84
+    ],
+    [
+     1498.88,
+     207.44
+    ],
+    [
+     1502.12,
+     209.06
+    ],
+    [
+     1505.19,
+     210.72
+    ],
+    [
+     1508.06,
+     212.41
+    ],
+    [
+     1510.75,
+     214.12
+    ],
+    [
+     1513.25,
+     215.88
+    ],
+    [
+     1515.59,
+     217.66
+    ],
+    [
+     1517.78,
+     219.47
+    ],
+    [
+     1519.81,
+     221.31
+    ],
+    [
+     1521.69,
+     223.19
+    ],
+    [
+     1523.41,
+     225.09
+    ],
+    [
+     1524.97,
+     227.03
+    ],
+    [
+     1526.0,
+     228.48
+    ],
+    [
+     1526.0,
+     234.0
+    ],
+    [
+     1514.0,
+     236.0
+    ],
+    [
+     1488.0,
+     242.0
+    ],
+    [
+     1460.0,
+     248.0
+    ],
+    [
+     1420.0,
+     244.0
+    ],
+    [
+     1370.0,
+     231.56
+    ],
+    [
+     1342.0,
+     210.35
+    ],
+    [
+     1320.0,
+     191.0
+    ],
+    [
+     1302.0,
+     174.78
+    ],
+    [
+     1282.0,
+     166.34
+    ],
+    [
+     794.0,
+     166.3
+    ]
+   ],
+   "surface": "sand_white",
+   "color": "#F7F2E0",
+   "layer": 0,
+   "notes": "white Miami sand (v10 §7.9, BEACH_SPEC §2a); slightly uneven; wet sand 1.5 m at the waterline, foam; extends east along the Elite hill foot to the Elite beach (v74). West edge x 794 = transition to the sand arc / Quiet valley rocks."
+  },
+  {
+   "id": "09-waterline",
+   "kind": "shoreline",
+   "line": [
+    [
+     791.88,
+     101.75
+    ],
+    [
+     798.12,
+     102.25
+    ],
+    [
+     804.53,
+     102.56
+    ],
+    [
+     811.09,
+     102.69
+    ],
+    [
+     817.81,
+     102.62
+    ],
+    [
+     824.69,
+     102.38
+    ],
+    [
+     831.72,
+     101.94
+    ],
+    [
+     838.91,
+     101.31
+    ],
+    [
+     846.25,
+     100.5
+    ],
+    [
+     853.75,
+     99.5
+    ],
+    [
+     860.94,
+     98.5
+    ],
+    [
+     867.81,
+     97.5
+    ],
+    [
+     874.38,
+     96.5
+    ],
+    [
+     880.62,
+     95.5
+    ],
+    [
+     886.56,
+     94.5
+    ],
+    [
+     892.19,
+     93.5
+    ],
+    [
+     897.5,
+     92.5
+    ],
+    [
+     902.5,
+     91.5
+    ],
+    [
+     907.81,
+     90.52
+    ],
+    [
+     913.44,
+     89.55
+    ],
+    [
+     919.38,
+     88.59
+    ],
+    [
+     925.62,
+     87.66
+    ],
+    [
+     932.19,
+     86.73
+    ],
+    [
+     939.06,
+     85.83
+    ],
+    [
+     946.25,
+     84.94
+    ],
+    [
+     953.75,
+     84.06
+    ],
+    [
+     961.25,
+     83.2
+    ],
+    [
+     968.75,
+     82.36
+    ],
+    [
+     976.25,
+     81.53
+    ],
+    [
+     983.75,
+     80.72
+    ],
+    [
+     991.25,
+     79.92
+    ],
+    [
+     998.75,
+     79.14
+    ],
+    [
+     1006.25,
+     78.38
+    ],
+    [
+     1013.75,
+     77.62
+    ],
+    [
+     1020.94,
+     77.03
+    ],
+    [
+     1027.81,
+     76.59
+    ],
+    [
+     1034.38,
+     76.31
+    ],
+    [
+     1040.62,
+     76.19
+    ],
+    [
+     1046.56,
+     76.22
+    ],
+    [
+     1052.19,
+     76.41
+    ],
+    [
+     1057.5,
+     76.75
+    ],
+    [
+     1062.5,
+     77.25
+    ],
+    [
+     1067.5,
+     77.81
+    ],
+    [
+     1072.5,
+     78.44
+    ],
+    [
+     1077.5,
+     79.12
+    ],
+    [
+     1082.5,
+     79.88
+    ],
+    [
+     1087.5,
+     80.69
+    ],
+    [
+     1092.5,
+     81.56
+    ],
+    [
+     1097.5,
+     82.5
+    ],
+    [
+     1102.5,
+     83.5
+    ],
+    [
+     1107.5,
+     84.52
+    ],
+    [
+     1112.5,
+     85.55
+    ],
+    [
+     1117.5,
+     86.59
+    ],
+    [
+     1122.5,
+     87.66
+    ],
+    [
+     1127.5,
+     88.73
+    ],
+    [
+     1132.5,
+     89.83
+    ],
+    [
+     1137.5,
+     90.94
+    ],
+    [
+     1142.5,
+     92.06
+    ],
+    [
+     1147.66,
+     93.17
+    ],
+    [
+     1152.97,
+     94.27
+    ],
+    [
+     1158.44,
+     95.34
+    ],
+    [
+     1164.06,
+     96.41
+    ],
+    [
+     1169.84,
+     97.45
+    ],
+    [
+     1175.78,
+     98.48
+    ],
+    [
+     1181.88,
+     99.5
+    ],
+    [
+     1188.12,
+     100.5
+    ],
+    [
+     1194.14,
+     101.45
+    ],
+    [
+     1199.92,
+     102.36
+    ],
+    [
+     1205.47,
+     103.22
+    ],
+    [
+     1210.78,
+     104.03
+    ],
+    [
+     1215.86,
+     104.8
+    ],
+    [
+     1220.7,
+     105.52
+    ],
+    [
+     1225.31,
+     106.19
+    ],
+    [
+     1229.69,
+     106.81
+    ],
+    [
+     1233.98,
+     107.28
+    ],
+    [
+     1238.2,
+     107.59
+    ],
+    [
+     1242.34,
+     107.75
+    ],
+    [
+     1246.41,
+     107.75
+    ],
+    [
+     1250.39,
+     107.59
+    ],
+    [
+     1254.3,
+     107.28
+    ],
+    [
+     1258.12,
+     106.81
+    ],
+    [
+     1261.88,
+     106.19
+    ],
+    [
+     1265.7,
+     105.67
+    ],
+    [
+     1269.61,
+     105.27
+    ],
+    [
+     1273.59,
+     104.97
+    ],
+    [
+     1277.66,
+     104.78
+    ],
+    [
+     1281.8,
+     104.74
+    ],
+    [
+     1286.02,
+     105.13
+    ],
+    [
+     1290.31,
+     106.0
+    ],
+    [
+     1294.69,
+     107.35
+    ],
+    [
+     1299.14,
+     109.17
+    ],
+    [
+     1303.67,
+     111.43
+    ],
+    [
+     1308.28,
+     114.12
+    ],
+    [
+     1312.97,
+     117.21
+    ],
+    [
+     1317.73,
+     120.68
+    ],
+    [
+     1322.58,
+     124.49
+    ],
+    [
+     1327.5,
+     128.62
+    ],
+    [
+     1332.5,
+     133.03
+    ],
+    [
+     1337.5,
+     137.52
+    ],
+    [
+     1342.5,
+     142.05
+    ],
+    [
+     1347.5,
+     146.57
+    ],
+    [
+     1352.5,
+     151.03
+    ],
+    [
+     1357.5,
+     155.4
+    ],
+    [
+     1362.5,
+     159.62
+    ],
+    [
+     1367.5,
+     163.64
+    ],
+    [
+     1372.5,
+     167.42
+    ],
+    [
+     1377.5,
+     170.86
+    ],
+    [
+     1382.5,
+     173.92
+    ],
+    [
+     1387.5,
+     176.55
+    ],
+    [
+     1392.5,
+     178.71
+    ],
+    [
+     1397.5,
+     180.34
+    ],
+    [
+     1402.5,
+     181.47
+    ],
+    [
+     1407.5,
+     182.5
+    ],
+    [
+     1412.5,
+     183.5
+    ],
+    [
+     1417.5,
+     184.52
+    ],
+    [
+     1422.5,
+     185.55
+    ],
+    [
+     1427.5,
+     186.59
+    ],
+    [
+     1432.5,
+     187.66
+    ],
+    [
+     1437.5,
+     188.73
+    ],
+    [
+     1442.5,
+     189.83
+    ],
+    [
+     1447.5,
+     190.94
+    ],
+    [
+     1452.5,
+     192.06
+    ],
+    [
+     1457.38,
+     193.23
+    ],
+    [
+     1462.12,
+     194.45
+    ],
+    [
+     1466.75,
+     195.72
+    ],
+    [
+     1471.25,
+     197.03
+    ],
+    [
+     1475.62,
+     198.39
+    ],
+    [
+     1479.88,
+     199.8
+    ],
+    [
+     1484.0,
+     201.25
+    ],
+    [
+     1488.0,
+     202.75
+    ],
+    [
+     1491.81,
+     204.28
+    ],
+    [
+     1495.44,
+     205.84
+    ],
+    [
+     1498.88,
+     207.44
+    ],
+    [
+     1502.12,
+     209.06
+    ],
+    [
+     1505.19,
+     210.72
+    ],
+    [
+     1508.06,
+     212.41
+    ],
+    [
+     1510.75,
+     214.12
+    ],
+    [
+     1513.25,
+     215.88
+    ],
+    [
+     1515.59,
+     217.66
+    ],
+    [
+     1517.78,
+     219.47
+    ],
+    [
+     1519.81,
+     221.31
+    ],
+    [
+     1521.69,
+     223.19
+    ],
+    [
+     1523.41,
+     225.09
+    ],
+    [
+     1524.97,
+     227.03
+    ],
+    [
+     1526.38,
+     229.0
+    ],
+    [
+     1527.62,
+     231.0
+    ],
+    [
+     1528.72,
+     232.75
+    ],
+    [
+     1529.66,
+     234.25
+    ],
+    [
+     1530.44,
+     235.5
+    ],
+    [
+     1531.06,
+     236.5
+    ],
+    [
+     1531.53,
+     237.25
+    ],
+    [
+     1531.84,
+     237.75
+    ]
+   ],
+   "wet_sand_m": 1.5,
+   "notes": "sea polygon edge of the v85 drawing (coast_b, chaikin x3)"
+  },
+  {
+   "id": "09-park",
+   "kind": "palm_park",
+   "poly": [
+    [
+     806.0,
+     147.0
+    ],
+    [
+     1260.0,
+     147.0
+    ],
+    [
+     1260.0,
+     164.3
+    ],
+    [
+     806.0,
+     164.3
+    ]
+   ],
+   "surface": "lawn",
+   "layer": 2,
+   "notes": "palm park ~17 m between the embankment street and the dunes; hides the sea from the city; trees = the 2 designed palm rows only (props)"
+  },
+  {
+   "id": "09-park-path",
+   "kind": "path",
+   "line": [
+    [
+     810.0,
+     158.0
+    ],
+    [
+     811.0,
+     158.23
+    ],
+    [
+     813.0,
+     158.68
+    ],
+    [
+     816.0,
+     159.35
+    ],
+    [
+     820.0,
+     160.25
+    ],
+    [
+     824.25,
+     161.07
+    ],
+    [
+     828.75,
+     161.79
+    ],
+    [
+     833.5,
+     162.42
+    ],
+    [
+     838.5,
+     162.96
+    ],
+    [
+     843.5,
+     163.35
+    ],
+    [
+     848.5,
+     163.6
+    ],
+    [
+     853.5,
+     163.71
+    ],
+    [
+     858.5,
+     163.67
+    ],
+    [
+     863.5,
+     163.48
+    ],
+    [
+     868.5,
+     163.16
+    ],
+    [
+     873.5,
+     162.7
+    ],
+    [
+     878.5,
+     162.1
+    ],
+    [
+     883.5,
+     161.41
+    ],
+    [
+     888.5,
+     160.65
+    ],
+    [
+     893.5,
+     159.81
+    ],
+    [
+     898.5,
+     158.88
+    ],
+    [
+     903.5,
+     157.97
+    ],
+    [
+     908.5,
+     157.07
+    ],
+    [
+     913.5,
+     156.19
+    ],
+    [
+     918.5,
+     155.31
+    ],
+    [
+     923.5,
+     154.54
+    ],
+    [
+     928.5,
+     153.87
+    ],
+    [
+     933.5,
+     153.29
+    ],
+    [
+     938.5,
+     152.82
+    ],
+    [
+     943.5,
+     152.5
+    ],
+    [
+     948.5,
+     152.32
+    ],
+    [
+     953.5,
+     152.29
+    ],
+    [
+     958.5,
+     152.41
+    ],
+    [
+     963.5,
+     152.67
+    ],
+    [
+     968.5,
+     153.06
+    ],
+    [
+     973.5,
+     153.59
+    ],
+    [
+     978.5,
+     154.25
+    ],
+    [
+     983.5,
+     154.98
+    ],
+    [
+     988.5,
+     155.79
+    ],
+    [
+     993.5,
+     156.66
+    ],
+    [
+     998.5,
+     157.6
+    ],
+    [
+     1003.5,
+     158.51
+    ],
+    [
+     1008.5,
+     159.4
+    ],
+    [
+     1013.5,
+     160.26
+    ],
+    [
+     1018.5,
+     161.1
+    ],
+    [
+     1023.5,
+     161.83
+    ],
+    [
+     1028.5,
+     162.45
+    ],
+    [
+     1033.5,
+     162.96
+    ],
+    [
+     1038.5,
+     163.36
+    ],
+    [
+     1043.5,
+     163.61
+    ],
+    [
+     1048.5,
+     163.71
+    ],
+    [
+     1053.5,
+     163.66
+    ],
+    [
+     1058.5,
+     163.47
+    ],
+    [
+     1063.5,
+     163.14
+    ],
+    [
+     1068.5,
+     162.68
+    ],
+    [
+     1073.5,
+     162.09
+    ],
+    [
+     1078.5,
+     161.37
+    ],
+    [
+     1083.5,
+     160.6
+    ],
+    [
+     1088.5,
+     159.76
+    ],
+    [
+     1093.5,
+     158.87
+    ],
+    [
+     1098.5,
+     157.92
+    ],
+    [
+     1103.5,
+     157.01
+    ],
+    [
+     1108.5,
+     156.14
+    ],
+    [
+     1113.5,
+     155.3
+    ],
+    [
+     1118.5,
+     154.51
+    ],
+    [
+     1123.5,
+     153.83
+    ],
+    [
+     1128.5,
+     153.26
+    ],
+    [
+     1133.5,
+     152.82
+    ],
+    [
+     1138.5,
+     152.49
+    ],
+    [
+     1143.5,
+     152.32
+    ],
+    [
+     1148.5,
+     152.29
+    ],
+    [
+     1153.5,
+     152.42
+    ],
+    [
+     1158.5,
+     152.69
+    ],
+    [
+     1163.5,
+     153.09
+    ],
+    [
+     1168.5,
+     153.61
+    ],
+    [
+     1173.5,
+     154.26
+    ],
+    [
+     1178.5,
+     155.03
+    ],
+    [
+     1183.5,
+     155.84
+    ],
+    [
+     1188.5,
+     156.7
+    ],
+    [
+     1193.5,
+     157.61
+    ],
+    [
+     1198.5,
+     158.56
+    ],
+    [
+     1203.5,
+     159.46
+    ],
+    [
+     1208.5,
+     160.31
+    ],
+    [
+     1213.5,
+     161.11
+    ],
+    [
+     1218.5,
+     161.86
+    ],
+    [
+     1223.5,
+     162.49
+    ],
+    [
+     1228.5,
+     162.99
+    ],
+    [
+     1233.5,
+     163.36
+    ],
+    [
+     1238.5,
+     163.62
+    ],
+    [
+     1242.88,
+     163.43
+    ],
+    [
+     1246.62,
+     162.8
+    ],
+    [
+     1249.75,
+     161.74
+    ],
+    [
+     1252.25,
+     160.25
+    ],
+    [
+     1254.12,
+     159.12
+    ],
+    [
+     1255.38,
+     158.37
+    ],
+    [
+     1256.0,
+     158.0
+    ]
+   ],
+   "width_m": 3.6,
+   "surface": "sidewalk_S1",
+   "notes": "winding promenade path through the palm park"
+  },
+  {
+   "id": "09-dunes",
+   "kind": "dunes",
+   "poly": [
+    [
+     810.0,
+     138.72
+    ],
+    [
+     816.0,
+     139.69
+    ],
+    [
+     822.0,
+     140.37
+    ],
+    [
+     828.0,
+     140.46
+    ],
+    [
+     834.0,
+     139.92
+    ],
+    [
+     840.0,
+     138.99
+    ],
+    [
+     846.0,
+     138.07
+    ],
+    [
+     852.0,
+     137.54
+    ],
+    [
+     858.0,
+     137.64
+    ],
+    [
+     864.0,
+     138.32
+    ],
+    [
+     870.0,
+     139.29
+    ],
+    [
+     876.0,
+     140.14
+    ],
+    [
+     882.0,
+     140.5
+    ],
+    [
+     888.0,
+     140.22
+    ],
+    [
+     894.0,
+     139.41
+    ],
+    [
+     900.0,
+     138.43
+    ],
+    [
+     906.0,
+     137.7
+    ],
+    [
+     912.0,
+     137.52
+    ],
+    [
+     918.0,
+     137.97
+    ],
+    [
+     924.0,
+     138.87
+    ],
+    [
+     930.0,
+     139.82
+    ],
+    [
+     936.0,
+     140.42
+    ],
+    [
+     942.0,
+     140.41
+    ],
+    [
+     948.0,
+     139.8
+    ],
+    [
+     954.0,
+     138.84
+    ],
+    [
+     960.0,
+     137.95
+    ],
+    [
+     966.0,
+     137.51
+    ],
+    [
+     972.0,
+     137.71
+    ],
+    [
+     978.0,
+     138.46
+    ],
+    [
+     984.0,
+     139.44
+    ],
+    [
+     990.0,
+     140.23
+    ],
+    [
+     996.0,
+     140.5
+    ],
+    [
+     1002.0,
+     140.12
+    ],
+    [
+     1008.0,
+     139.27
+    ],
+    [
+     1014.0,
+     138.3
+    ],
+    [
+     1020.0,
+     137.63
+    ],
+    [
+     1026.0,
+     137.55
+    ],
+    [
+     1032.0,
+     138.09
+    ],
+    [
+     1038.0,
+     139.02
+    ],
+    [
+     1044.0,
+     139.94
+    ],
+    [
+     1050.0,
+     140.46
+    ],
+    [
+     1056.0,
+     140.36
+    ],
+    [
+     1062.0,
+     139.67
+    ],
+    [
+     1068.0,
+     138.69
+    ],
+    [
+     1074.0,
+     137.85
+    ],
+    [
+     1080.0,
+     137.5
+    ],
+    [
+     1086.0,
+     137.79
+    ],
+    [
+     1092.0,
+     138.6
+    ],
+    [
+     1098.0,
+     139.58
+    ],
+    [
+     1104.0,
+     140.31
+    ],
+    [
+     1110.0,
+     140.48
+    ],
+    [
+     1116.0,
+     140.02
+    ],
+    [
+     1122.0,
+     139.12
+    ],
+    [
+     1128.0,
+     138.17
+    ],
+    [
+     1134.0,
+     137.57
+    ],
+    [
+     1140.0,
+     137.59
+    ],
+    [
+     1146.0,
+     138.21
+    ],
+    [
+     1152.0,
+     139.17
+    ],
+    [
+     1158.0,
+     140.06
+    ],
+    [
+     1164.0,
+     140.49
+    ],
+    [
+     1170.0,
+     140.28
+    ],
+    [
+     1176.0,
+     139.53
+    ],
+    [
+     1182.0,
+     138.55
+    ],
+    [
+     1188.0,
+     137.76
+    ],
+    [
+     1194.0,
+     137.5
+    ],
+    [
+     1200.0,
+     137.89
+    ],
+    [
+     1206.0,
+     138.75
+    ],
+    [
+     1212.0,
+     139.72
+    ],
+    [
+     1218.0,
+     140.38
+    ],
+    [
+     1224.0,
+     140.45
+    ],
+    [
+     1230.0,
+     139.9
+    ],
+    [
+     1236.0,
+     138.97
+    ],
+    [
+     1242.0,
+     138.05
+    ],
+    [
+     1248.0,
+     137.53
+    ],
+    [
+     1254.0,
+     137.65
+    ],
+    [
+     1260.0,
+     138.34
+    ],
+    [
+     1260.0,
+     147.0
+    ],
+    [
+     806.0,
+     147.0
+    ]
+   ],
+   "surface": "sand_white",
+   "layer": 1,
+   "shrubs": true,
+   "notes": "low dunes with beach grass and bushes; crossed only by the boardwalks, the pier square boardwalk and the 2 van entries"
+  },
+  {
+   "id": "09-veg-dunes",
+   "kind": "veg_zone",
+   "poly": [
+    [
+     810.0,
+     138.72
+    ],
+    [
+     816.0,
+     139.69
+    ],
+    [
+     822.0,
+     140.37
+    ],
+    [
+     828.0,
+     140.46
+    ],
+    [
+     834.0,
+     139.92
+    ],
+    [
+     840.0,
+     138.99
+    ],
+    [
+     846.0,
+     138.07
+    ],
+    [
+     852.0,
+     137.54
+    ],
+    [
+     858.0,
+     137.64
+    ],
+    [
+     864.0,
+     138.32
+    ],
+    [
+     870.0,
+     139.29
+    ],
+    [
+     876.0,
+     140.14
+    ],
+    [
+     882.0,
+     140.5
+    ],
+    [
+     888.0,
+     140.22
+    ],
+    [
+     894.0,
+     139.41
+    ],
+    [
+     900.0,
+     138.43
+    ],
+    [
+     906.0,
+     137.7
+    ],
+    [
+     912.0,
+     137.52
+    ],
+    [
+     918.0,
+     137.97
+    ],
+    [
+     924.0,
+     138.87
+    ],
+    [
+     930.0,
+     139.82
+    ],
+    [
+     936.0,
+     140.42
+    ],
+    [
+     942.0,
+     140.41
+    ],
+    [
+     948.0,
+     139.8
+    ],
+    [
+     954.0,
+     138.84
+    ],
+    [
+     960.0,
+     137.95
+    ],
+    [
+     966.0,
+     137.51
+    ],
+    [
+     972.0,
+     137.71
+    ],
+    [
+     978.0,
+     138.46
+    ],
+    [
+     984.0,
+     139.44
+    ],
+    [
+     990.0,
+     140.23
+    ],
+    [
+     996.0,
+     140.5
+    ],
+    [
+     1002.0,
+     140.12
+    ],
+    [
+     1008.0,
+     139.27
+    ],
+    [
+     1014.0,
+     138.3
+    ],
+    [
+     1020.0,
+     137.63
+    ],
+    [
+     1026.0,
+     137.55
+    ],
+    [
+     1032.0,
+     138.09
+    ],
+    [
+     1038.0,
+     139.02
+    ],
+    [
+     1044.0,
+     139.94
+    ],
+    [
+     1050.0,
+     140.46
+    ],
+    [
+     1056.0,
+     140.36
+    ],
+    [
+     1062.0,
+     139.67
+    ],
+    [
+     1068.0,
+     138.69
+    ],
+    [
+     1074.0,
+     137.85
+    ],
+    [
+     1080.0,
+     137.5
+    ],
+    [
+     1086.0,
+     137.79
+    ],
+    [
+     1092.0,
+     138.6
+    ],
+    [
+     1098.0,
+     139.58
+    ],
+    [
+     1104.0,
+     140.31
+    ],
+    [
+     1110.0,
+     140.48
+    ],
+    [
+     1116.0,
+     140.02
+    ],
+    [
+     1122.0,
+     139.12
+    ],
+    [
+     1128.0,
+     138.17
+    ],
+    [
+     1134.0,
+     137.57
+    ],
+    [
+     1140.0,
+     137.59
+    ],
+    [
+     1146.0,
+     138.21
+    ],
+    [
+     1152.0,
+     139.17
+    ],
+    [
+     1158.0,
+     140.06
+    ],
+    [
+     1164.0,
+     140.49
+    ],
+    [
+     1170.0,
+     140.28
+    ],
+    [
+     1176.0,
+     139.53
+    ],
+    [
+     1182.0,
+     138.55
+    ],
+    [
+     1188.0,
+     137.76
+    ],
+    [
+     1194.0,
+     137.5
+    ],
+    [
+     1200.0,
+     137.89
+    ],
+    [
+     1206.0,
+     138.75
+    ],
+    [
+     1212.0,
+     139.72
+    ],
+    [
+     1218.0,
+     140.38
+    ],
+    [
+     1224.0,
+     140.45
+    ],
+    [
+     1230.0,
+     139.9
+    ],
+    [
+     1236.0,
+     138.97
+    ],
+    [
+     1242.0,
+     138.05
+    ],
+    [
+     1248.0,
+     137.53
+    ],
+    [
+     1254.0,
+     137.65
+    ],
+    [
+     1260.0,
+     138.34
+    ],
+    [
+     1260.0,
+     147.0
+    ],
+    [
+     806.0,
+     147.0
+    ]
+   ],
+   "density": "sparse",
+   "species": "bush",
+   "notes": "bushes / beach grass + a few palm groups of 1-3 (BEACH_SPEC §2a); keep the boardwalks and van entries clear"
+  },
+  {
+   "id": "09-parking-0",
+   "kind": "parking",
+   "poly": [
+    [
+     922.0,
+     149.0
+    ],
+    [
+     956.0,
+     149.0
+    ],
+    [
+     956.0,
+     165.5
+    ],
+    [
+     922.0,
+     165.5
+    ]
+   ],
+   "surface": "asphalt_A5d12",
+   "layer": 3,
+   "stall_w_m": 3.0,
+   "stall_rows_y": [
+    161.5,
+    153.0
+   ],
+   "stalls": 22,
+   "notes": "beach parking as drawn (next to the van entry W), stalls N-S, white lines; access from the embankment street"
+  },
+  {
+   "id": "09-parking-1",
+   "kind": "parking",
+   "poly": [
+    [
+     1169.0,
+     149.0
+    ],
+    [
+     1203.0,
+     149.0
+    ],
+    [
+     1203.0,
+     165.5
+    ],
+    [
+     1169.0,
+     165.5
+    ]
+   ],
+   "surface": "asphalt_A5d12",
+   "layer": 3,
+   "stall_w_m": 3.0,
+   "stall_rows_y": [
+    161.5,
+    153.0
+   ],
+   "stalls": 22,
+   "notes": "beach parking as drawn (next to the van entry E), stalls N-S, white lines; access from the embankment street"
+  },
+  {
+   "id": "09-pier-square",
+   "kind": "plaza",
+   "poly": [
+    [
+     1018.0,
+     147.0
+    ],
+    [
+     1046.0,
+     147.0
+    ],
+    [
+     1046.0,
+     164.3
+    ],
+    [
+     1018.0,
+     164.3
+    ]
+   ],
+   "surface": "plaza_M3",
+   "layer": 3,
+   "notes": "square at the central street (x 1032) with the boardwalk to the beach; no palms on it"
+  },
+  {
+   "id": "09-boardwalk-main",
+   "kind": "boardwalk",
+   "line": [
+    [
+     1032.0,
+     147.0
+    ],
+    [
+     1032.0,
+     135.0
+    ]
+   ],
+   "width_m": 6.0,
+   "surface": "boards_pier_SK5a_v02"
+  },
+  {
+   "id": "09-dune-walk-816",
+   "kind": "boardwalk",
+   "line": [
+    [
+     836.0,
+     148.0
+    ],
+    [
+     836.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-dune-walk-871",
+   "kind": "boardwalk",
+   "line": [
+    [
+     891.0,
+     148.0
+    ],
+    [
+     891.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-dune-walk-926",
+   "kind": "boardwalk",
+   "line": [
+    [
+     946.0,
+     148.0
+    ],
+    [
+     946.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-dune-walk-981",
+   "kind": "boardwalk",
+   "line": [
+    [
+     1001.0,
+     148.0
+    ],
+    [
+     1001.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-dune-walk-1036",
+   "kind": "boardwalk",
+   "line": [
+    [
+     1056.0,
+     148.0
+    ],
+    [
+     1056.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-dune-walk-1091",
+   "kind": "boardwalk",
+   "line": [
+    [
+     1111.0,
+     148.0
+    ],
+    [
+     1111.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-dune-walk-1201",
+   "kind": "boardwalk",
+   "line": [
+    [
+     1221.0,
+     148.0
+    ],
+    [
+     1221.0,
+     136.0
+    ]
+   ],
+   "width_m": 2.4,
+   "surface": "boards_pier_SK5a_v02",
+   "anchors": [
+    "shower",
+    "bin"
+   ],
+   "notes": "wooden walk over the dunes; shower + bin at the sand end"
+  },
+  {
+   "id": "09-van-entry-915",
+   "kind": "van_entry_sand",
+   "line": [
+    [
+     915.0,
+     168.0
+    ],
+    [
+     915.0,
+     133.0
+    ]
+   ],
+   "width_m": 9.2,
+   "surface": "sand_ruts",
+   "van_drive": true,
+   "world_road": false,
+   "notes": "van entry from the end of the city street onto the sand (drawn 9.2 m); kerb lowered at the street; nothing stands on it"
+  },
+  {
+   "id": "09-van-entry-1162",
+   "kind": "van_entry_sand",
+   "line": [
+    [
+     1162.0,
+     168.0
+    ],
+    [
+     1162.0,
+     133.0
+    ]
+   ],
+   "width_m": 9.2,
+   "surface": "sand_ruts",
+   "van_drive": true,
+   "world_road": false,
+   "notes": "van entry from the end of the city street onto the sand (drawn 9.2 m); kerb lowered at the street; nothing stands on it"
+  },
+  {
+   "id": "09-van-corridor-915",
+   "kind": "van_route",
+   "line": [
+    [
+     915.0,
+     133.0
+    ],
+    [
+     915.0,
+     92.3
+    ]
+   ],
+   "width_m": 8.0,
+   "surface": "sand_white",
+   "keep_clear": true,
+   "notes": "corridor from the entry to the water (BEACH_SPEC §2a)"
+  },
+  {
+   "id": "09-van-corridor-1162",
+   "kind": "van_route",
+   "line": [
+    [
+     1162.0,
+     133.0
+    ],
+    [
+     1162.0,
+     99.02
+    ]
+   ],
+   "width_m": 8.0,
+   "surface": "sand_white",
+   "keep_clear": true,
+   "notes": "corridor from the entry to the water (BEACH_SPEC §2a)"
+  },
+  {
+   "id": "09-van-strip-water",
+   "kind": "van_route",
+   "line": [
+    [
+     820.0,
+     108.55
+    ],
+    [
+     828.0,
+     108.17
+    ],
+    [
+     836.0,
+     107.57
+    ],
+    [
+     844.0,
+     106.75
+    ],
+    [
+     852.0,
+     105.73
+    ],
+    [
+     860.0,
+     104.63
+    ],
+    [
+     868.0,
+     103.47
+    ],
+    [
+     876.0,
+     102.24
+    ],
+    [
+     884.0,
+     100.93
+    ],
+    [
+     892.0,
+     99.53
+    ],
+    [
+     900.0,
+     98.0
+    ],
+    [
+     908.0,
+     96.48
+    ],
+    [
+     916.0,
+     95.14
+    ],
+    [
+     924.0,
+     93.9
+    ],
+    [
+     932.0,
+     92.76
+    ],
+    [
+     940.0,
+     91.71
+    ],
+    [
+     948.0,
+     90.73
+    ],
+    [
+     956.0,
+     89.8
+    ],
+    [
+     964.0,
+     88.89
+    ],
+    [
+     972.0,
+     88.0
+    ],
+    [
+     980.0,
+     87.12
+    ],
+    [
+     988.0,
+     86.27
+    ],
+    [
+     996.0,
+     85.43
+    ],
+    [
+     1004.0,
+     84.6
+    ],
+    [
+     1012.0,
+     83.8
+    ],
+    [
+     1020.0,
+     83.11
+    ],
+    [
+     1028.0,
+     82.59
+    ],
+    [
+     1036.0,
+     82.28
+    ],
+    [
+     1044.0,
+     82.21
+    ],
+    [
+     1052.0,
+     82.4
+    ],
+    [
+     1060.0,
+     83.0
+    ],
+    [
+     1068.0,
+     83.88
+    ],
+    [
+     1076.0,
+     84.92
+    ],
+    [
+     1084.0,
+     86.12
+    ],
+    [
+     1092.0,
+     87.47
+    ],
+    [
+     1100.0,
+     89.0
+    ],
+    [
+     1108.0,
+     90.62
+    ],
+    [
+     1116.0,
+     92.28
+    ],
+    [
+     1124.0,
+     93.98
+    ],
+    [
+     1132.0,
+     95.72
+    ],
+    [
+     1140.0,
+     97.5
+    ],
+    [
+     1148.0,
+     99.24
+    ],
+    [
+     1156.0,
+     100.86
+    ],
+    [
+     1164.0,
+     102.39
+    ],
+    [
+     1172.0,
+     103.83
+    ],
+    [
+     1180.0,
+     105.19
+    ],
+    [
+     1188.0,
+     106.48
+    ],
+    [
+     1196.0,
+     107.74
+    ],
+    [
+     1204.0,
+     108.99
+    ],
+    [
+     1212.0,
+     110.22
+    ],
+    [
+     1220.0,
+     111.41
+    ],
+    [
+     1228.0,
+     112.57
+    ],
+    [
+     1236.0,
+     113.43
+    ],
+    [
+     1244.0,
+     113.75
+    ],
+    [
+     1252.0,
+     113.47
+    ]
+   ],
+   "width_m": 6.0,
+   "surface": "sand_white",
+   "keep_clear": true,
+   "notes": "strip along the waterline (coast + 3..9 m), passes landward of the pier root"
+  },
+  {
+   "id": "09-van-strip-back",
+   "kind": "van_route",
+   "line": [
+    [
+     835.0,
+     125.0
+    ],
+    [
+     1238.0,
+     125.0
+    ]
+   ],
+   "width_m": 6.0,
+   "surface": "sand_white",
+   "keep_clear": true,
+   "notes": "rear strip along the dunes, south of the two bars; links both entries"
+  },
+  {
+   "id": "09-van-track-elite",
+   "kind": "track",
+   "line": [
+    [
+     1162.0,
+     132.0
+    ],
+    [
+     1162.75,
+     132.02
+    ],
+    [
+     1164.25,
+     132.05
+    ],
+    [
+     1166.5,
+     132.09
+    ],
+    [
+     1169.5,
+     132.16
+    ],
+    [
+     1173.25,
+     132.23
+    ],
+    [
+     1177.75,
+     132.33
+    ],
+    [
+     1183.0,
+     132.44
+    ],
+    [
+     1189.0,
+     132.56
+    ],
+    [
+     1194.8,
+     132.7
+    ],
+    [
+     1200.39,
+     132.84
+    ],
+    [
+     1205.78,
+     132.98
+    ],
+    [
+     1210.97,
+     133.14
+    ],
+    [
+     1215.95,
+     133.3
+    ],
+    [
+     1220.73,
+     133.48
+    ],
+    [
+     1225.31,
+     133.66
+    ],
+    [
+     1229.69,
+     133.84
+    ],
+    [
+     1233.88,
+     134.09
+    ],
+    [
+     1237.88,
+     134.38
+    ],
+    [
+     1241.69,
+     134.73
+    ],
+    [
+     1245.31,
+     135.14
+    ],
+    [
+     1248.75,
+     135.6
+    ],
+    [
+     1252.0,
+     136.12
+    ],
+    [
+     1255.06,
+     136.69
+    ],
+    [
+     1257.94,
+     137.31
+    ],
+    [
+     1260.8,
+     137.99
+    ],
+    [
+     1263.64,
+     138.73
+    ],
+    [
+     1266.47,
+     139.52
+    ],
+    [
+     1269.28,
+     140.36
+    ],
+    [
+     1272.08,
+     141.26
+    ],
+    [
+     1274.86,
+     142.21
+    ],
+    [
+     1277.62,
+     143.22
+    ],
+    [
+     1280.38,
+     144.28
+    ],
+    [
+     1283.09,
+     145.44
+    ],
+    [
+     1285.78,
+     146.75
+    ],
+    [
+     1288.44,
+     148.19
+    ],
+    [
+     1291.06,
+     149.75
+    ],
+    [
+     1293.66,
+     151.42
+    ],
+    [
+     1296.22,
+     153.18
+    ],
+    [
+     1298.75,
+     155.04
+    ],
+    [
+     1301.25,
+     156.98
+    ],
+    [
+     1304.22,
+     159.24
+    ],
+    [
+     1307.66,
+     161.88
+    ],
+    [
+     1311.56,
+     164.93
+    ],
+    [
+     1315.94,
+     168.44
+    ],
+    [
+     1320.78,
+     172.44
+    ],
+    [
+     1326.09,
+     176.94
+    ],
+    [
+     1331.88,
+     181.92
+    ],
+    [
+     1338.12,
+     187.36
+    ],
+    [
+     1344.38,
+     192.76
+    ],
+    [
+     1350.62,
+     198.03
+    ],
+    [
+     1356.88,
+     203.09
+    ],
+    [
+     1363.12,
+     207.84
+    ],
+    [
+     1369.38,
+     212.18
+    ],
+    [
+     1375.62,
+     216.03
+    ],
+    [
+     1381.88,
+     219.3
+    ],
+    [
+     1388.12,
+     221.89
+    ],
+    [
+     1394.22,
+     223.71
+    ],
+    [
+     1400.16,
+     224.73
+    ],
+    [
+     1405.94,
+     225.34
+    ],
+    [
+     1411.56,
+     225.91
+    ],
+    [
+     1417.03,
+     226.42
+    ],
+    [
+     1422.34,
+     226.89
+    ],
+    [
+     1427.5,
+     227.31
+    ],
+    [
+     1432.5,
+     227.69
+    ],
+    [
+     1437.22,
+     227.98
+    ],
+    [
+     1441.66,
+     228.2
+    ],
+    [
+     1445.81,
+     228.34
+    ],
+    [
+     1449.69,
+     228.41
+    ],
+    [
+     1453.28,
+     228.39
+    ],
+    [
+     1456.59,
+     228.3
+    ],
+    [
+     1459.62,
+     228.12
+    ],
+    [
+     1462.38,
+     227.88
+    ],
+    [
+     1464.78,
+     227.66
+    ],
+    [
+     1466.84,
+     227.47
+    ],
+    [
+     1468.56,
+     227.31
+    ],
+    [
+     1469.94,
+     227.19
+    ],
+    [
+     1470.97,
+     227.09
+    ],
+    [
+     1471.66,
+     227.03
+    ],
+    [
+     1472.0,
+     227.0
+    ]
+   ],
+   "width_m": 5.0,
+   "surface": "sand_ruts",
+   "world_road": true,
+   "van_drive": true,
+   "notes": "two van ruts in the sand from the east van entry along the foot of the Elite hill to the Elite beach (v10 §7.7); never climbs the hill"
+  },
+  {
+   "id": "09-pier",
+   "kind": "pier",
+   "poly": [
+    [
+     1027.0,
+     30.0
+    ],
+    [
+     1037.0,
+     30.0
+    ],
+    [
+     1037.0,
+     76.41
+    ],
+    [
+     1027.0,
+     76.41
+    ]
+   ],
+   "surface": "boards_pier_SK5a_v02",
+   "deck_h_m": 1.2,
+   "pile_step_m": 4.0,
+   "railing": true,
+   "fishermen": 15,
+   "length_m": 46.4,
+   "notes": "wooden pier 10 m wide (as drawn), starts AT the waterline (abutment on the wet sand), ~46 m into the sea + head platform; fishermen with rods"
+  },
+  {
+   "id": "09-pier-head",
+   "kind": "pier",
+   "poly": [
+    [
+     1017.0,
+     18.0
+    ],
+    [
+     1047.0,
+     18.0
+    ],
+    [
+     1047.0,
+     30.0
+    ],
+    [
+     1017.0,
+     30.0
+    ]
+   ],
+   "surface": "boards_pier_SK5a_v02",
+   "deck_h_m": 1.2,
+   "pile_step_m": 4.0,
+   "railing": true,
+   "notes": "head platform 30 x 12 m"
+  },
+  {
+   "id": "09-swim-zone",
+   "kind": "swim_zone",
+   "line": [
+    [
+     962.0,
+     82.12
+    ],
+    [
+     962.0,
+     53.0
+    ],
+    [
+     1102.0,
+     53.0
+    ],
+    [
+     1102.0,
+     82.4
+    ]
+   ],
+   "notes": "buoy line (layout v06 swim_zone, 150 m wide around the pier); jet skis outside"
+  },
+  {
+   "id": "09-oil-spill",
+   "kind": "oil_spill",
+   "poly": [
+    [
+     872.0,
+     105.86
+    ],
+    [
+     841.0,
+     118.08
+    ],
+    [
+     810.0,
+     124.67
+    ],
+    [
+     810.0,
+     102.67
+    ],
+    [
+     820.33,
+     102.53
+    ],
+    [
+     830.67,
+     102.0
+    ],
+    [
+     841.0,
+     101.08
+    ],
+    [
+     851.33,
+     99.82
+    ],
+    [
+     861.67,
+     98.39
+    ],
+    [
+     872.0,
+     96.86
+    ]
+   ],
+   "surface": "sand_white",
+   "decal": "OilTar",
+   "notes": "splashes \"from a brush\": drops with fans of small spray, dense at the water, sparse inland; NOT one blot; no sunbathers here (layout v06 oil_spill: 24 main drops, west end near the Quiet valley)"
+  },
+  {
+   "id": "09-oil-film",
+   "kind": "oil_film_water",
+   "poly": [
+    [
+     800.0,
+     87.34
+    ],
+    [
+     882.0,
+     82.27
+    ],
+    [
+     882.0,
+     94.27
+    ],
+    [
+     865.6,
+     96.82
+    ],
+    [
+     849.2,
+     99.11
+    ],
+    [
+     832.8,
+     100.84
+    ],
+    [
+     816.4,
+     101.64
+    ],
+    [
+     800.0,
+     101.34
+    ]
+   ],
+   "notes": "light oily film on the water in front of the splashes"
+  },
+  {
+   "id": "09-volley-0",
+   "kind": "volleyball",
+   "poly": [
+    [
+     1112.0,
+     104.0
+    ],
+    [
+     1128.0,
+     104.0
+    ],
+    [
+     1128.0,
+     112.0
+    ],
+    [
+     1112.0,
+     112.0
+    ]
+   ],
+   "surface": "sand_white",
+   "net": [
+    [
+     1120.0,
+     103.0
+    ],
+    [
+     1120.0,
+     113.0
+    ]
+   ],
+   "notes": "16 x 8 m court, posts + net + rope lines, side by side along the shore"
+  },
+  {
+   "id": "09-volley-1",
+   "kind": "volleyball",
+   "poly": [
+    [
+     1136.0,
+     104.0
+    ],
+    [
+     1152.0,
+     104.0
+    ],
+    [
+     1152.0,
+     112.0
+    ],
+    [
+     1136.0,
+     112.0
+    ]
+   ],
+   "surface": "sand_white",
+   "net": [
+    [
+     1144.0,
+     103.0
+    ],
+    [
+     1144.0,
+     113.0
+    ]
+   ],
+   "notes": "16 x 8 m court, posts + net + rope lines, side by side along the shore"
+  },
+  {
+   "id": "09e-guard-patrol",
+   "kind": "patrol_route",
+   "sub_area": "elite_beach",
+   "loop": [
+    [
+     1412.0,
+     188.4
+    ],
+    [
+     1436.0,
+     193.41
+    ],
+    [
+     1460.0,
+     198.91
+    ],
+    [
+     1484.0,
+     206.25
+    ],
+    [
+     1508.0,
+     217.37
+    ],
+    [
+     1508.0,
+     234.0
+    ],
+    [
+     1480.0,
+     228.0
+    ],
+    [
+     1450.0,
+     226.0
+    ],
+    [
+     1420.0,
+     226.0
+    ]
+   ],
+   "closed": true,
+   "length_m": 244.5,
+   "guards": 2,
+   "guard_kind": "elite_guard",
+   "phases": [
+    0.0,
+    0.5
+   ],
+   "speed_mps": 1.3,
+   "waits": [
+    {
+     "waypoint": 0,
+     "s": 6
+    },
+    {
+     "waypoint": 4,
+     "s": 6
+    },
+    {
+     "waypoint": 7,
+     "s": 4
+    }
+   ],
+   "catching_allowed": true,
+   "clear_m": {
+    "cabana": 4.0,
+    "loungers": 3.0
+   },
+   "notes": "Elite beach under the hill, outside the village fence (Fedya 22.10): NPC may be caught here, but 2 guards walk this loop (opposite phase, ~188 s per lap): seaward leg 5 m above the waterline, landward leg behind the lounger rows and behind the cabana (along the van ruts). Patrol behaviour (vision, alarm to the Elite gate guards) = gameplay code; this is the map data."
+  },
+  {
+   "id": "09-no-tree-sand",
+   "kind": "no_tree",
+   "poly": [
+    [
+     826.0,
+     138.0
+    ],
+    [
+     826.0,
+     102.29
+    ],
+    [
+     834.0,
+     101.74
+    ],
+    [
+     842.0,
+     100.97
+    ],
+    [
+     850.0,
+     100.0
+    ],
+    [
+     858.0,
+     98.91
+    ],
+    [
+     866.0,
+     97.76
+    ],
+    [
+     874.0,
+     96.56
+    ],
+    [
+     882.0,
+     95.27
+    ],
+    [
+     890.0,
+     93.89
+    ],
+    [
+     898.0,
+     92.4
+    ],
+    [
+     906.0,
+     90.85
+    ],
+    [
+     914.0,
+     89.46
+    ],
+    [
+     922.0,
+     88.2
+    ],
+    [
+     930.0,
+     87.04
+    ],
+    [
+     938.0,
+     85.97
+    ],
+    [
+     946.0,
+     84.97
+    ],
+    [
+     954.0,
+     84.03
+    ],
+    [
+     962.0,
+     83.12
+    ],
+    [
+     970.0,
+     82.22
+    ],
+    [
+     978.0,
+     81.34
+    ],
+    [
+     986.0,
+     80.48
+    ],
+    [
+     994.0,
+     79.64
+    ],
+    [
+     1002.0,
+     78.81
+    ],
+    [
+     1010.0,
+     78.0
+    ],
+    [
+     1018.0,
+     77.27
+    ],
+    [
+     1026.0,
+     76.71
+    ],
+    [
+     1034.0,
+     76.33
+    ],
+    [
+     1042.0,
+     76.19
+    ],
+    [
+     1050.0,
+     76.33
+    ],
+    [
+     1058.0,
+     76.8
+    ],
+    [
+     1066.0,
+     77.64
+    ],
+    [
+     1074.0,
+     78.64
+    ],
+    [
+     1082.0,
+     79.8
+    ],
+    [
+     1090.0,
+     81.12
+    ],
+    [
+     1098.0,
+     82.6
+    ],
+    [
+     1106.0,
+     84.21
+    ],
+    [
+     1114.0,
+     85.86
+    ],
+    [
+     1122.0,
+     87.55
+    ],
+    [
+     1130.0,
+     89.28
+    ],
+    [
+     1138.0,
+     91.05
+    ],
+    [
+     1146.0,
+     92.82
+    ],
+    [
+     1154.0,
+     94.47
+    ],
+    [
+     1162.0,
+     96.02
+    ],
+    [
+     1170.0,
+     97.48
+    ],
+    [
+     1178.0,
+     98.85
+    ],
+    [
+     1186.0,
+     100.16
+    ],
+    [
+     1194.0,
+     101.43
+    ],
+    [
+     1202.0,
+     102.68
+    ],
+    [
+     1210.0,
+     103.91
+    ],
+    [
+     1218.0,
+     105.11
+    ],
+    [
+     1226.0,
+     106.29
+    ],
+    [
+     1234.0,
+     107.28
+    ],
+    [
+     1242.0,
+     107.74
+    ],
+    [
+     1248.0,
+     138.0
+    ]
+   ],
+   "why": "sand: van drives, loungers, courts"
+  },
+  {
+   "id": "09-no-tree-park",
+   "kind": "no_tree",
+   "poly": [
+    [
+     806.0,
+     147.0
+    ],
+    [
+     1260.0,
+     147.0
+    ],
+    [
+     1260.0,
+     164.3
+    ],
+    [
+     806.0,
+     164.3
+    ]
+   ],
+   "why": "palm park: only the 2 designed palm rows (props)"
+  },
+  {
+   "id": "09-grove-W",
+   "kind": "veg_zone",
+   "poly": [
+    [
+     806.0,
+     115.0
+    ],
+    [
+     826.0,
+     115.0
+    ],
+    [
+     826.0,
+     138.0
+    ],
+    [
+     806.0,
+     138.0
+    ]
+   ],
+   "density": "grove",
+   "species": "palm",
+   "notes": "small palm grove at the west edge of the sand (BEACH_SPEC §2a); keep the water strip free"
+  },
+  {
+   "id": "09-grove-E",
+   "kind": "veg_zone",
+   "poly": [
+    [
+     1242.0,
+     118.0
+    ],
+    [
+     1260.0,
+     118.0
+    ],
+    [
+     1260.0,
+     127.0
+    ],
+    [
+     1242.0,
+     127.0
+    ]
+   ],
+   "density": "grove",
+   "species": "palm",
+   "notes": "small palm grove at the east edge of the sand (BEACH_SPEC §2a), between the van strips and the track (>= 4 m from both)"
+  }
+ ],
+ "fixed_by_logic": [
+  {
+   "id": "beach-01",
+   "where": [
+    1250.0,
+    136.0
+   ],
+   "ru": "Колея бусика к пляжу Элиты обходит восточный край дюн по песку (x 1220…1290, отход от рисунка до 6.3 м), дальше — как нарисовано (v84)",
+   "why_ru": "на картинке колея срезает угол дюн и газона парка (x 1218…1240 до сдвига) — проезд бусика по кустам дюн"
+  },
+  {
+   "id": "beach-02",
+   "where": [
+    1032.0,
+    76.41
+   ],
+   "ru": "Начало пирса поставлено точно на кромку воды (y 76.4), на карте v85 — y 79.0",
+   "why_ru": "v10 §7.9: пирс начинается от кромки воды; разница — рисованная (прямоугольник поверх мокрого песка)"
+  },
+  {
+   "id": "beach-03",
+   "where": [
+    1032.0,
+    156.0
+   ],
+   "ru": "Убрано пальм ряда парка на площади у пирса: 1 (площадь x 1018…1046)",
+   "why_ru": "правило картинки отступает от улицы только на 10 м, а площадь шире (28 м) — дерево на мощёной площади"
+  },
+  {
+   "id": "beach-04",
+   "where": [
+    1032.0,
+    132.0
+   ],
+   "ru": "Пальмы у баров вынесены за стены баров: x 967/983/1080/1096 -> 961/989/1074/1102 (y 132)",
+   "why_ru": "на картинке ствол пальмы стоит на углу бара (внутри контура 16 x 8 м)"
+  },
+  {
+   "id": "beach-05",
+   "where": [
+    1430.0,
+    224.0
+   ],
+   "ru": "Две пальмы у кабаны Элиты сдвинуты с колеи бусика: (1424, 224) -> (1420, 218.0), (1441, 224) -> (1442, 220.5)",
+   "why_ru": "на картинке пальма в 0,5 м от края колеи 5 м — дерево на проезде; v10 §1.2: от края дороги не ближе ~2 м"
+  },
+  {
+   "id": "beach-06",
+   "where": [
+    1032.0,
+    123.0
+   ],
+   "ru": "Лежаки: вместо 4 ровных блоков у дюн (54 шт. на картинке) — 68 наборов вразброс, гуще к центру, ряды угадываются, наборы по плану v06 (зонт+полотенце 12, 1 лежак 12, зонт+2 лежака 20, 2 лежака 20, зонт+1 2, зонт+3 2)",
+   "why_ru": "BEACH_SPEC §2а и v02 §8.9 («не ровные ряды», ~70 наборов, зонт у половины); блоки картинки стояли на задней полосе бусика вдоль дюн"
+  },
+  {
+   "id": "beach-07",
+   "where": [
+    1032.0,
+    98.0
+   ],
+   "ru": "Проезды бусика по песку заданы явно (2 коридора к воде, полоса у воды, задняя полоса у дюн, колея к Элите) — на них ничего не стоит",
+   "why_ru": "BEACH_SPEC §2а; полотенца/зонтики-точки картинки (60 + 18 шт.) не переносятся — мелочи ставит s06 вне проездов"
+  },
+  {
+   "id": "beach-08",
+   "where": [
+    1412.0,
+    188.4
+   ],
+   "ru": "Решение Феди 22.10 (W86 п. 14): на пляже Элиты ловить можно, но там ходит патруль охраны — маршрут 09e-guard-patrol (9 точек, 244 м, 2 охранника в противофазе).",
+   "why_ru": "Элита остаётся опасной: риск и награда."
+  },
+  {
+   "id": "beach-09",
+   "where": [
+    1032.0,
+    118.0
+   ],
+   "ru": "План Даунтауна v37 (Вадим 22.10): пляж один в один с карты v85, сдвинут на 54 м к югу (город вырос вверх и вниз). Сдвиг целиком для x 790-1280, плавный переход к 0 у скал Тихой долины (x 700) и у пляжа Элиты (x 1400): колея бусика к Элите идёт по песку наискосок, как на картинке v37.",
+   "why_ru": "Набережная SP Даунтауна v37 на 54 м южнее старой S1; суша на месте бывшего моря — land_override в out_v02/downtown_v37_land.json."
+  }
+ ],
+ "questions_for_vadim": [
+  {
+   "id": "beach-q1",
+   "ru": "Волейбольные площадки: на карте v85 стоят на востоке от пирса (рядом с восточным баром); в BEACH_SPEC §2а — «у западного кафе».",
+   "options_ru": [
+    "1 — оставить как на карте v85 (восток от пирса, у восточного бара)",
+    "2 — перенести к западному бару (x ~975), лежаки — на восток"
+   ],
+   "default": 1,
+   "applied": "данные: вариант 1 (как нарисовано на v85)"
+  }
+ ],
+ "counts": {
+  "buildings": 4,
+  "palms_park": 28,
+  "palms_single": 9,
+  "palms_elite_foot": 22,
+  "umbrella_sets": 68,
+  "umbrella_sets_with_umbrella": 36,
+  "elite_loungers": 16,
+  "lifeguard_towers": 2,
+  "volleyball": 2,
+  "parking_lots": 2,
+  "parking_stalls": 44,
+  "zones": 36,
+  "props": 156
+ },
+ "checks": {
+  "min_palm_spacing_m": 10.95,
+  "min_palm_to_track_edge_m": 5.21,
+  "min_umbrella_set_to_van_strip_edge_m": 1.84,
+  "pier_start_y": 76.41,
+  "pier_start_on_coast": true
+ },
+ "notes": "ids 09e-* = the Elite beach under the hill (cabana, loungers, foot palm row) reached by the van track; drop them if the Elite file also carries them. Small details for s06: showers + bins at the dune boardwalks, scooters (2 at the west bar, 2 at the embankment, 1 at the east bar), towels at the water."
+}

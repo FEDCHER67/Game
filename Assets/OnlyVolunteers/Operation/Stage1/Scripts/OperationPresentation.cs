@@ -612,8 +612,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 float pop = t < 1f ? Mathf.Sin(t * Mathf.PI * 0.5f) * (1f + 0.25f * Mathf.Sin(t * Mathf.PI)) : 1f;
                 s.opening.localScale = new Vector3(pop, pop, 1f);
             }
-            // Round 3: once suturing starts the seam's skin patch covers the hole: the organs are out of reach and out of view.
-            bool organVisible = visible && opened && !organ.removed && InternalsShown && state.zoneSuture <= 0f && !state.sutured;
+            // Round 4: the skin edges close over the organs stitch by stitch (OperationSutureV05.SetClosure); they disappear
+            // once the seam is finished or the body wears the patch.
+            bool organVisible = visible && opened && !organ.removed && InternalsShown && !state.sutured && !state.skinPatched;
             s.organ.gameObject.SetActive(organVisible);
             if (organVisible)
             {
@@ -648,7 +649,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (s.onTable || table.PatientObject == null) return false;
             bool nearRest = Vector3.Distance(table.PatientObject.transform.position, table.RestPose.position) < 0.35f;
-            return nearRest && ((view != null && view.falling) || Time.time - escapedAt < table.Tuning.escapeFallSeconds + 1.5f);
+            return nearRest && ((view != null && view.falling) || Time.time - escapedAt < table.Tuning.EscapeFallDuration + 1.5f);
         }
         /// <summary>The root has jumped to the KnockedOut root under the landed body: switch clips in the same frame
         /// (the KnockedOut first frame equals the EscapeFall last frame after that root offset), so nothing pops.</summary>
@@ -671,6 +672,7 @@ namespace OnlyVolunteers.Operation.Stage1
             var tuning = table.Tuning;
             for (int i = 0; i < 5; i++) rig.LimbMotion[i] = 0f;
             rig.Twitch = 0f; rig.HeadShake = 0f;
+            rig.FallSpeed = Mathf.Max(0.1f, tuning.escapeSpeed); // round 4: the old EscapeFall clip ~1.5x too
             float t = Time.time;
             bool falling = EscapeFalling(s, view);
             // The physics box follows the pose: along the body on the table, along the KnockedOut clip on the floor.
@@ -690,6 +692,22 @@ namespace OnlyVolunteers.Operation.Stage1
                 return;
             }
             rig.SetFrozen(false);
+            // Round 4: the Escape_v01 clip the server is playing (same clip and time on every peer), then its last pose is
+            // held while the table hands him to the field (HopRun / Stumble_Off). Without the clips: the round-3 path.
+            float escapeSpeed = Mathf.Max(0.1f, tuning.escapeSpeed);
+            if (s.onTable && OperationEscape.Valid(s.escapeClip) && rig.PlayEscape(s.escapeClip, s.escapeClipTime, escapeSpeed))
+            {
+                bool slump = OperationEscape.Clips[s.escapeClip].slump;
+                rig.Face(slump ? 80f : 5f, slump ? 30f : 90f, slump ? 0f : 55f + 30f * Mathf.Max(0f, Mathf.Sin(t * 2.3f)), 0f);
+                return;
+            }
+            if (!s.onTable && falling && tuning.escapeClips && rig.OpState == OperationPatientRig.StateEscape)
+            {
+                rig.HoldEscape(escapeSpeed);
+                rig.Face(0f, 90f, 80f, 0f);
+                return;
+            }
+            rig.EndEscape();
             if (!s.onTable || s.knockedOut)
             {
                 rig.SetOpState(falling ? OperationPatientRig.StateEscapeFall : OperationPatientRig.StateKnockedOut);
@@ -779,6 +797,17 @@ namespace OnlyVolunteers.Operation.Stage1
                     OperationVisuals.Splash(at, 3, new Color(0.95f, 0.35f, 0.45f), 0.018f);
                     hud?.WorldToast("ВЖУХ! Открыто", at, HintTone.Good);
                     break;
+                case PatientCue.Reopened:
+                    OperationSfx.Play(audioSource, OperationCue.Slit, 0.8f);
+                    OperationVisuals.Splash(at, 2, new Color(0.95f, 0.35f, 0.45f), 0.014f);
+                    hud?.WorldToast("Шов вскрыт — внутри всё как было", at, HintTone.Good);
+                    break;
+                case PatientCue.EscapeSlump:
+                    hud?.WorldToast("Обмяк!", head, HintTone.Good);
+                    break;
+                case PatientCue.RanOff:
+                    hud?.Toast("Сбежал со стола! Лови его", HintTone.Bad);
+                    break;
                 case PatientCue.SloppyCut:
                     hud?.WorldToast("Криво! Качество −1", at, HintTone.Warn);
                     break;
@@ -834,7 +863,7 @@ namespace OnlyVolunteers.Operation.Stage1
                     Sfx.PlayAt(SfxIds.NpcWhimper, head, 0.6f);
                     break;
                 case PatientCue.EscapeAttempt:
-                    hud?.Toast("Он слезает со стола! Пристегни торс", HintTone.Warn);
+                    hud?.Toast("Он слезает со стола! Пристегни ремни", HintTone.Warn);
                     break;
                 case PatientCue.FailedEscapeFall:
                     escapedAt = Time.time;

@@ -36,6 +36,36 @@ REL = lambda p: os.path.relpath(p, ROOT).replace(os.sep, '/')
 
 LOG = {}                                                                   # district -> {'fix': [], 'q': []}
 
+# W86 (Vadim 22.10 "hills badly placed, too flat"; Fedya "the village should be more hilly"): designed Hamlet relief, built by s03 BEFORE
+# the plots / fields / yards / streets are flattened (they stay flat, as terraces on the slopes). Base: the 5 terrain_feature polygons of
+# HAMLET_LAYOUT_v04 (world = layout + (70, 0)) - each re-fitted to the v06 houses (they stood on v04 house places) - plus 6 new ones.
+# Every hill has a role (separates house groups / frames the pond and the church / viewpoint); crest polyline + half width, smoothstep
+# profile, height varies +-15 % along the crest (s03), micro relief 0.3-1.5 m comes from the world field. Heights relative to the ground.
+HAMLET_TERRAIN = [
+    ('02-TR-north_fold', 'hill', [(268, 620), (318, 628), (372, 624)], 32, 4.6, 'v04 02-TR-north_fold +3.8 (moved ~35 m north: v06 houses on its place)',
+     'северная складка под хребтом: закрывает деревню с севера, северный ряд домов стоит на её подножии; с гребня вид на крыши и пруд'),
+    ('02-TR-field_knoll', 'hill', [(398, 606), (430, 612)], 22, 3.4, 'new',
+     'бугор над полем 1: обрамляет поле с севера и отделяет его от ручья'),
+    ('02-TR-church_rise', 'hill', [(205, 590), (248, 592)], 34, 2.0, 'new',
+     'церковь и кладбище на пологом подъёме над главной улицей - церковь видна с площади'),
+    ('02-TR-pond_west_hill', 'hill', [(176, 450), (182, 476), (188, 500)], 28, 5.6, 'new (hill with a rock drawn on map v85)',
+     'холм с камнем к западу от пруда (нарисован на карте): обрамляет пруд, отделяет западные дома от леса и осыпей'),
+    ('02-TR-base2_swell', 'hill', [(170, 522), (174, 552)], 18, 2.5, 'new',
+     'увал у подножия хребта за двором деда: закрывает задний двор базы 2; с него вид на пруд'),
+    ('02-TR-west_hollow', 'dip', [(286, 440), (264, 434), (244, 428)], 12, -1.2, 'v04 02-TR-west_hollow -1.4 (moved south of the pond: v06 houses H23/H24 on its place)',
+     'ложбина стока из пруда к полю 2: весной сырая, бусик проезжает'),
+    ('02-TR-central_rise', 'hill', [(326, 452), (376, 456)], 32, 2.6, 'v04 02-TR-central_rise +2.6 (re-fitted to the v06 loop block)',
+     'центральные дома на низком подъёме внутри петли: улицы огибают его, от площади вид вверх на дворы'),
+    ('02-TR-east_knoll', 'hill', [(430, 490), (437, 512), (434, 532)], 19, 2.8, 'v04 02-TR-east_rise +3.4 (moved to the free ground between the two streets at the bypass)',
+     'бугор между двумя улицами у объездной: прикрывает асфальт и машины от деревни'),
+    ('02-TR-south_swell', 'hill', [(332, 352), (372, 360), (414, 352)], 30, 4.2, 'v04 02-TR-south_ripple +1.5 (moved to the forest edge, raised: v06 houses H20-H22 on its place)',
+     'южный увал у кромки леса: закрывает деревню с юга, точка обзора на крыши; лесная дорога обходит его по западному краю'),
+    ('02-TR-green_hollow', 'dip', [(380, 527), (414, 530)], 10, -1.0, 'new',
+     'сырая ложбина на лугу между площадью и полем 1'),
+    ('02-TR-sw_swell', 'hill', [(172, 388), (182, 414)], 24, 3.4, 'new',
+     'увал к западу от поля 2: отделяет поле от леса и берега'),
+]
+
 
 def fix(dist, where, ru, why):
     L = LOG.setdefault(dist, {'fix': [], 'q': []})['fix']
@@ -660,6 +690,12 @@ def hamlet(W_):
         question(D, 'Фонари на деревянных столбах без проводов: в раскладке v06 их 4 (у главной улицы и площади); HAMLET_SPEC §5 оставил это открытым.',
                  ['1 — оставить 4 фонаря раскладки, без проводов (сейчас)', '2 — фонарей в Хуторе нет совсем', '3 — фонари только у площади и на въездах с асфальта'],
                  1, '4 pole_lamp props kept (grip anchors), no wires')
+    tbl = next((p for p in P if p['id'] == '02-SQ-TABLE'), None)
+    if tbl:
+        P.append({'id': '02-POLICE-POST', 'kind': 'police_post_npc', 'pos': rnd2((tbl['pos'][0] - 2.0, tbl['pos'][1] - 2.0)), 'rot_deg': 270.0,
+                  'size': [0.8, 0.8, 1.8], 'grip_anchor': False, 'dressing': False, 'npc': 'grandpa_policeman_with_rifle', 'facing_deg': 270.0,
+                  'notes': 'post of the only Hamlet policeman (slow grandpa with a rifle, comes to noise): sits at the square table under the tree, '
+                           'faces the main street (south) - Fedya 22.10 item 21, option A'})
     n_out = sum(1 for b in B if b['kind'] in ('shed', 'chicken_coop', 'pig_shelter', 'hay_shelter'))
     counts = {'houses': sum(1 for b in B if b['kind'] == 'house'), 'abandoned': sum(1 for b in B if b.get('abandoned')), 'base2_hut': 1,
               'church': 1, 'water_tower': 1, 'bus_stop': 1, 'outbuildings': n_out,
@@ -679,7 +715,10 @@ def hamlet(W_):
                         'docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-20_v10.md §1 §4 §6 §7.2 §8', 'docs/specs/MAP_BUILD_HANDOFF_FEDYA_2026-10-18_v02.md §8.2',
                         'docs/specs/HAMLET_SPEC_2026-10-18_v01.md'],
             'transform': transform, 'fit': {'houses': fitd, 'church': fitc}, 'pad_height_m': None,
-            'pad_note': 'no pad: the Hamlet lies on the natural terrain (bumps +1.5..+3.8 m, dip -1.4 m in 3D only, HAMLET_SPEC §2); fields, pad, square flat',
+            'pad_note': 'no pad: the Hamlet lies on the natural terrain - designed hills / dips in terrain_features (built by s03, W86), the ground rises '
+                        'gently to the gorge rim in the east; house plots, yards, fields, square, base 2 and streets are flattened on top (terraces)',
+            'terrain_features': [{'id': i_, 'kind': k_, 'crest': [list(map(float, q)) for q in cr], 'half_width_m': float(hw_), 'height_m': float(hh_),
+                                  'source': src_, 'role_ru': role_} for i_, k_, cr, hw_, hh_, src_, role_ in HAMLET_TERRAIN],
             'abs_heights': False, 'lighting': 'warm_rural', 'no_wires': True,
             'seam': 'NO backing plate, no district ground polygon, no border: outside the listed zones the ground is the world meadow L01; zone edges blend '
                     '1.5-3 m into the meadow (v10 §7.2 "без шва")', 'surface_edge_blend_m': 2.0,
@@ -926,43 +965,63 @@ def valley(W_):
     main_x = crossings(main, loop)
     # ---- buildings
     lpos = centroid(lab_door)
+    lc = centroid(lab)
+    rotcw = lambda p: (lc[0] + (p[1] - lc[1]), lc[1] - (p[0] - lc[0]))        # 90 deg clockwise about the lab centre
+    lab_v11 = list(lab)
+    lab = [rotcw(p) for p in lab_v11]
+    lab_pad = [(p[0], min(p[1], max(q[1] for q in lab) + 1.0)) for p in (rotcw(p) for p in lab_pad)]   # stays inside the fence
     lfp = ccw(lab)
-    ly0 = min(p[1] for p in lab)
+    lx0r, lx1r = min(p[0] for p in lab), max(p[0] for p in lab)
+    ly0r, ly1r = min(p[1] for p in lab), max(p[1] for p in lab)
+    gate_w = round(math.dist(lab_door[0], lab_door[1]), 1)
+    gate_p = rotcw((lpos[0], min(p[1] for p in lab_v11)))                    # v11 south gate -> west side
+    door_p = rotcw((min(p[0] for p in lab_v11) + 6.0, min(p[1] for p in lab_v11)))
+    ly0 = ly0r
     B.append({'id': '08_01_lab', 'kind': 'lab_final_base', 'base': 5, 'material_slot': 'valley_lab', 'footprint': R(lfp), 'floors': 2, 'floor_h_m': 3.2, 'height_m': 6.4,
               'roof': {'type': 'flat', 'material': 'roof_flat_SK4d', 'parapet_h_m': 0.6, 'skylights': True},
               'walls': 'concrete_SK3c', 'tint': '#E8ECEE', 'glazing': 'tower_glass bands', 'facade_kit': 'none',
-              'entrances': [{'pos': rnd2((lpos[0], ly0)), 'facing_deg': 270.0, 'kind': 'garage_gate', 'w_m': round(math.dist(lab_door[0], lab_door[1]), 1),
-                             'notes': 'van garage gate (drawn); the van drives in'},
-                            {'pos': rnd2((min(p[0] for p in lab) + 6.0, ly0)), 'facing_deg': 270.0, 'kind': 'door', 'w_m': 1.4, 'police_stop': True,
-                             'notes': 'glass entrance next to the garage (not drawn; by logic: police / people door)'}],
+              'entrances': [{'pos': rnd2(gate_p), 'facing_deg': 180.0, 'kind': 'garage_gate', 'w_m': gate_w,
+                             'notes': 'big van garage gate, W86: on the WEST long side facing the end of the approach drive (Fedya 22.10 item 20)'},
+                            {'pos': rnd2(door_p), 'facing_deg': 180.0, 'kind': 'door', 'w_m': 1.4, 'police_stop': True,
+                             'notes': 'glass entrance next to the garage (not drawn; by logic: police / people door)'},
+                            {'pos': rnd2(((lx0r + lx1r) / 2, ly0r)), 'facing_deg': 270.0, 'kind': 'garage_gate_small', 'w_m': 4.0,
+                             'notes': 'small exit gate on the SOUTH short side: the exit drive points down (south) to the loading pad (Fedya 22.10 item 20)'}],
               'sockets': {'balconies': 'none', 'windows': True, 'ridge_cap': None, 'ac_units': 4, 'antenna': True, 'floodlights': True},
               'collider': 'full_roof', 'interior': True,
               'notes': 'FINAL lab = base 5, the most elaborate base of the game (v10 §7.8, v02 §8.8): concrete, glass, clean lines; OR, organ fridges, '
-                       'automation, van garage, light; feels like a reward. v11: 2 floors 6.4 m, garage door south.'})
+                       'automation, van garage, light; feels like a reward. v11: 2 floors 6.4 m. W86 (Fedya 22.10 item 20): the building and its plot '
+                       'rotated 90 deg clockwise about the centre - big gate west (approach drive), small exit gate south (loading pad).'})
     cpos = centroid(cas_door)
     cy0 = min(p[1] for p in cas)
     B.append({'id': '08_03_casino', 'kind': 'casino', 'material_slot': 'valley_casino', 'footprint': R(ccw(cas)), 'floors': 2, 'floor_h_m': 3.2, 'height_m': 6.4,
               'roof': {'type': 'flat', 'material': 'roof_flat_SK4d', 'parapet_h_m': 0.8}, 'walls': 'stucco_SK3b', 'tint': '#DDB9A0', 'facade_kit': 'none',
               'entrances': [{'pos': rnd2((cpos[0], cy0)), 'facing_deg': 270.0, 'kind': 'door', 'w_m': round(math.dist(cas_door[0], cas_door[1]), 1),
                              'canopy': True, 'notes': 'main entrance to the beach-gate forecourt'}],
-              'sockets': {'balconies': 'none', 'windows': True, 'ridge_cap': None, 'sign': 'CASINO (neon)', 'awning': True},
+              'sockets': {'balconies': 'none', 'windows': True, 'ridge_cap': None, 'sign': 'neon sign WITHOUT a name (Fedya 22.10 item 19: later a strip club)',
+                          'awning': True},
               'collider': 'full_roof', 'notes': 'casino at the beach gate with its own parking and sign (v10 §7.8); second casino / Casino Island OPEN (v10 §12)'})
     # ---- base 5 loading: the drawn drive ends at the lab's west wall, the garage gate is on the south side (6.4 m to the lawn)
-    lx0 = min(p[0] for p in lab)
-    pad = [(lpos[0] - 9.0, ly0 - 15.0), (lpos[0] + 9.0, ly0 - 15.0), (lpos[0] + 9.0, ly0), (lpos[0] - 9.0, ly0)]
+    # W86 item 20: the loading pad keeps its size (18 x 15) and its x span; the rotated 38 m building stands on its old place, so the pad
+    # sits 4 m south of the new south (small-gate) side; the approach drive ends in front of the west gate; the exit drive leaves the
+    # small south gate straight down to the pad; the side drive (west of the lab) links the pad back to the approach drive
+    yx = ly0r - 4.0
+    pad = [(lpos[0] - 9.0, yx - 15.0), (lpos[0] + 9.0, yx - 15.0), (lpos[0] + 9.0, yx), (lpos[0] - 9.0, yx)]
+    spur = list(spur[:-1]) + [(lx0r - 9.0, gate_p[1] + 2.3)] if math.dist(spur[-1], (lx0r - 9.0, gate_p[1])) < 25 else list(spur)
+    Z[[i for i, z_ in enumerate(Z) if z_['id'] == '08-asphalt-lab'][0]]['line'] = R(spur)
     se = spur[-1]
-    link = [se, (lx0 - 4.0, se[1] - 4.0), (lx0 - 4.0, ly0 - 4.0), (lx0 + 3.0, ly0 - 9.0), (lpos[0] - 9.0, ly0 - 9.0)]
+    exit_drive = [((lx0r + lx1r) / 2, ly0r), ((lx0r + lx1r) / 2, yx)]
+    link = [se, (se[0] - 3.0, se[1] - 5.0), (se[0] - 3.0, yx - 4.0), (lpos[0] - 9.0, yx - 7.5)]
     Z.append({'id': '08-base5-forecourt', 'kind': 'plaza', 'poly': R(ccw(lab_pad)), 'surface': 'concrete_SK3c', 'base': 5, 'notes': 'drawn paved plot of the lab'})
     Z.append({'id': '08-base5-loading', 'kind': 'loading_pad', 'poly': R(ccw(pad)), 'surface': 'concrete_SK3c', 'base': 5, 'size_m': [18.0, 15.0],
               'notes': 'loading / turning pad in front of the garage gate (v10 §4: >= 12-15 m at every base); police car spot at its west edge'})
     Z.append({'id': '08-base5-drive', 'kind': 'road', 'line': R(link), 'width_m': 4.8, 'road_class': 'drive', 'surface': 'asphalt_A5d12', 'kerb': False,
-              'notes': 'continues the drawn lab drive round the SW corner of the lab to the garage pad (see question)'})
-    question(D, 'База 5: на карте подъезд к лаборатории кончается у её западной стены, а ворота гаража — на южной стороне, перед ними 6 м до газона (развернуться бусику негде).',
-             ['1 — продлить подъезд вокруг ЮЗ угла к воротам + площадка погрузки 18×15 м перед гаражом (сейчас)',
-              '2 — перенести ворота гаража на западную стену, где кончается подъезд', '3 — оставить как на карте (к воротам по газону)'],
-             1, 'drive extended round the SW corner + 18 x 15 m loading pad south of the garage gate')
-    fix(D, (lpos[0], ly0 - 7.5), 'У ворот гаража базы 5 добавлена площадка погрузки 18×15 м и подъезд к ней (продолжение нарисованного подъезда)',
-        'v10 §4: у каждой базы площадка погрузки 12–15 м; на карте перед воротами 6,4 м мощения, подъезд упирается в другую стену')
+              'notes': 'side drive west of the lab: approach drive end -> loading pad (W86 item 20)'})
+    Z.append({'id': '08-base5-exit', 'kind': 'road', 'line': R(exit_drive), 'width_m': 4.8, 'road_class': 'drive', 'surface': 'concrete_SK3c', 'kerb': False,
+              'notes': 'small exit drive: from the small south gate straight down (south) to the loading pad (Fedya 22.10 item 20)'})
+    fix(D, gate_p, 'Лаборатория (база 5) повёрнута на 90° по часовой вместе с участком: большие ворота гаража смотрят на запад, на конец подъезда; '
+                   'малые ворота на южной короткой стороне, выезд прямо вниз к площадке 18×15 м (площадка того же размера, сдвинута на юг '
+                   'под новый торец здания: на старом месте теперь стоит само 38-метровое здание)',
+        'Федя 22.10, ответ 20: ворота к подъезду, площадка остаётся, малый выезд вниз с короткой стороны (не со стороны больших ворот)')
     Z.append({'id': '08-casino-forecourt', 'kind': 'plaza', 'poly': R(ccw(cas_fc)), 'surface': 'concrete_SK3c', 'notes': 'casino forecourt to the beach gate'})
     Z.append({'id': '08-casino-parking', 'kind': 'parking', 'poly': R(ccw(park)), 'surface': 'asphalt_A5d12', 'markings': True, 'bays': 4,
               'notes': 'casino parking (drawn 4 bays)'})

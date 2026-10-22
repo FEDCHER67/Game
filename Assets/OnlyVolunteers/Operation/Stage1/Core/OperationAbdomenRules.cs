@@ -8,7 +8,7 @@ namespace OnlyVolunteers.Operation.Stage1
     /// the cursor's angle round the loop (unwrapped against the progress so the seam closes cleanly).</summary>
     public sealed partial class OperationRules
     {
-        public float GuideProgress(int guide) => guide == OperationAbdomenGeometry.ZoneGuide ? State.zoneCut
+        public float GuideProgress(int guide) => guide == OperationAbdomenGeometry.ZoneGuide ? (State.BellyClosed ? State.zoneReopen : State.zoneCut)
             : guide == 2 ? State.organs[2].connectionCut : 0f;
         /// <summary>+1 or -1 once the liver loop has a direction; the belly line always runs one way.</summary>
         public int GuideDirection(int guide) => guide == 2 ? State.organs[2].connectionDirection : 1;
@@ -16,7 +16,8 @@ namespace OnlyVolunteers.Operation.Stage1
         private bool SharedGuideOpen(int guide)
         {
             if (!tuning.sharedAbdomen) return false;
-            if (guide == OperationAbdomenGeometry.ZoneGuide) return !State.zoneOpened;
+            // Round 4 (decision 4): a closed belly (seam, begun seam or the dead-body patch) opens again along the same line.
+            if (guide == OperationAbdomenGeometry.ZoneGuide) return !State.zoneOpened || State.BellyClosed;
             if (guide != 2 || !State.zoneOpened) return false;
             var liver = State.organs[2];
             return !liver.removed && !liver.Released;
@@ -61,6 +62,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (!Finite(along) || !Finite(offset) || !Finite(seconds) || seconds <= 0f ||
                 !Finite(offLineTravel) || offLineTravel < 0f || !SharedGuideOpen(guide)) return CutStep.None;
+            lastSeconds = seconds;
             bool zone = guide == OperationAbdomenGeometry.ZoneGuide;
             var liver = State.organs[2];
             if (Mathf.Abs(offset) > OperationAbdomenGeometry.Tolerance(tuning, guide))
@@ -78,6 +80,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (delta <= 0f) return CutStep.None;
             float next = Mathf.Min(1f, previous + delta);
             bool neat = Mathf.Abs(offset) <= tuning.neatTolerance;
+            if (zone && State.BellyClosed) return Reopen(previous, target);
             if (zone)
             {
                 State.zoneCut = next;
@@ -113,6 +116,29 @@ namespace OnlyVolunteers.Operation.Stage1
             return CutStep.Completed;
         }
 
+        /// <summary>Round 4 (decision 4): one scalpel stroke along the line (reopenSpeedFactor x the cut speed) reopens a sutured,
+        /// partly sewn or patched belly. The insides stay as they were (no new sloppy loss, released connections and removed
+        /// organs unchanged), spoilage simply continues; the belly can be sewn up again.</summary>
+        private CutStep Reopen(float previous, float target)
+        {
+            float delta = Mathf.Min(Mathf.Clamp01(target) - previous, Mathf.Max(1f, tuning.reopenSpeedFactor) *
+                tuning.cutSpeed / OperationAbdomenGeometry.GuideLength(tuning, OperationAbdomenGeometry.ZoneGuide) * lastSeconds);
+            if (delta <= 0f) return CutStep.None;
+            State.zoneReopen = Mathf.Min(1f, previous + delta);
+            if (State.zoneReopen < 0.995f) return CutStep.Advanced;
+            State.sutured = false; State.skinPatched = false; State.zoneSuture = 0f; State.zoneReopen = 0f;
+            Emit(PatientCue.Reopened);
+            return CutStep.Completed;
+        }
+        private float lastSeconds;
+
+        /// <summary>Round 4: a dead body leaving the table opened and unsewn gets the plain skin patch (no stitches).</summary>
+        public void PatchIfOpen()
+        {
+            if (!State.zoneOpened || State.sutured) return;
+            State.skinPatched = true; State.zoneSuture = 0f; State.zoneReopen = 0f;
+        }
+
         // ---------- suturing (round 3: every operation ends with sewing the incision up) ----------
         /// <summary>Stitches done (0..tuning.sutureStitches), from the seam progress.</summary>
         public int Stitches => State.sutured ? Mathf.Max(1, tuning.sutureStitches) : Mathf.FloorToInt(State.zoneSuture * Mathf.Max(1, tuning.sutureStitches) + 0.0001f);
@@ -121,7 +147,7 @@ namespace OnlyVolunteers.Operation.Stage1
         /// after the opening was made, never twice.</summary>
         public bool CanBeginSuture(float along, float offset)
         {
-            if (!Finite(along) || !Finite(offset) || !State.zoneOpened || State.sutured) return false;
+            if (!Finite(along) || !Finite(offset) || !State.zoneOpened || State.sutured || State.skinPatched) return false;
             if (Mathf.Abs(offset) > OperationAbdomenGeometry.Tolerance(tuning, OperationAbdomenGeometry.ZoneGuide)) return false;
             return along >= State.zoneSuture - tuning.cutStartSlack && along <= State.zoneSuture + tuning.cutResumeWindow;
         }
@@ -130,7 +156,7 @@ namespace OnlyVolunteers.Operation.Stage1
         /// Each finished stitch emits Stitch, the last one Sutured; the belly is closed from then on (no organ access).</summary>
         public CutStep Suture(float along, float offset, float seconds)
         {
-            if (!Finite(along) || !Finite(offset) || !Finite(seconds) || seconds <= 0f || !State.zoneOpened || State.sutured) return CutStep.None;
+            if (!Finite(along) || !Finite(offset) || !Finite(seconds) || seconds <= 0f || !State.zoneOpened || State.sutured || State.skinPatched) return CutStep.None;
             if (Mathf.Abs(offset) > OperationAbdomenGeometry.Tolerance(tuning, OperationAbdomenGeometry.ZoneGuide)) return CutStep.OffLine;
             float previous = State.zoneSuture;
             float delta = Mathf.Min(Mathf.Clamp01(along) - previous,

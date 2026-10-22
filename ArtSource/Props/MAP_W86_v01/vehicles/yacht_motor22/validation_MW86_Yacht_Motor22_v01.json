@@ -1,0 +1,82 @@
+{
+  "asset": "MW86_Yacht_Motor22",
+  "family": "Water",
+  "revision": "v01",
+  "blender": "5.2.1 LTS",
+  "kind": "water",
+  "pivot": "footprint centre on the WATERLINE (z=0); hull below",
+  "axes": "Blender Z up, nose -Y; FBX axis_forward=-Z, axis_up=Y, FBX_SCALE_ALL, apply transform -> Unity: nose +Z, Y up, 1 unit = 1 m",
+  "offset_applied_to_builder_coords": [
+    -0.0,
+    -0.5625,
+    0.0
+  ],
+  "lod0": {
+    "triangles": 1504,
+    "vertices": 850,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -2.896,
+      -11.062,
+      -1.0
+    ],
+    "bounds_max": [
+      2.896,
+      11.062,
+      6.5
+    ],
+    "size_xyz_m": [
+      5.791,
+      22.125,
+      7.5
+    ]
+  },
+  "lod1": {
+    "triangles": 506,
+    "vertices": 311,
+    "non_manifold_edges": 0,
+    "zero_area_faces": 0,
+    "bounds_min": [
+      -2.896,
+      -11.062,
+      -1.0
+    ],
+    "bounds_max": [
+      2.896,
+      11.062,
+      6.15
+    ],
+    "size_xyz_m": [
+      5.791,
+      22.125,
+      7.15
+    ]
+  },
+  "lod1_ratio": 0.336,
+  "triangle_budget_lod0": 8000,
+  "data_box_target_xyz": [
+    6.0,
+    22.0,
+    4.0
+  ],
+  "material": "MW86_Water",
+  "textures": [
+    "MW86_Water_A.png",
+    "MW86_Water_B.png",
+    "MW86_Water_C.png"
+  ],
+  "files": {
+    "fbx": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Art\\Props\\MapW86_v01\\Vehicles\\MW86_Yacht_Motor22_v01.fbx",
+    "blend": "C:\\Dev\\Game\\ArtSource\\Props\\MAP_W86_v01\\vehicles\\yacht_motor22\\MW86_Yacht_Motor22_v01.blend"
+  },
+  "notes": "Motor yacht with flybridge, 22 m (kind yacht 22 x 6; scale 0.68 for the 15 x 5 one). White / teak / navy stripe. Pivot = waterline.",
+  "checks": {
+    "lod0_within_budget": true,
+    "lod1_ratio_25_55pct": true,
+    "pivot_footprint_centred": true,
+    "no_zero_area_faces": true,
+    "footprint_within_data_box_+5pct": true
+  },
+  "all_checks_passed": true
+}
