@@ -27,6 +27,9 @@ namespace OnlyVolunteers.Map
             };
             phone = PhoneController.Create(input.ViewCamera, input);
             phone.OpenChanged += SetHandsBusy;
+            // W86: the bank app's "Cash on you" = this pawn's money: its own inventory (the capture map's NetworkInventory,
+            // which sales pay and the save keeps), else the map hotbar's LocalInventory.
+            phone.Wallet.Pocket = GetComponent<IInventoryView>() ?? GetComponentInChildren<IInventoryView>(true);
         }
 
         private void SetHandsBusy(bool busy)

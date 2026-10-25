@@ -1,0 +1,89 @@
+{
+  "schema": "W86.static-collision.v01",
+  "asset": "CONTAINER_TRUCK",
+  "units": "metres",
+  "blender_axes": "Z up, -Y front",
+  "fbx_axes": "Y up; -Z export forward setting; verify +Z front on roundtrip",
+  "pivot": "base centre; visual meshes and root identity",
+  "unity_instruction": "UCX names alone do not create colliders. Add BoxColliders from unity_local_center/size, disable UCX renderers; or convex MeshColliders from separate collision FBX. Do not render UCX.",
+  "colliders": [
+    {
+      "name": "UCX_CONTAINER_TRUCK_00",
+      "shape": "convex_box",
+      "convex": true,
+      "triangles": 12,
+      "blender_center": [
+        0.0,
+        -7.099999904632568,
+        2.0
+      ],
+      "blender_size": [
+        2.450000047683716,
+        2.799999952316284,
+        4.0
+      ],
+      "unity_local_center": [
+        0.0,
+        2.0,
+        7.099999904632568
+      ],
+      "unity_local_size": [
+        2.450000047683716,
+        4.0,
+        2.799999952316284
+      ]
+    },
+    {
+      "name": "UCX_CONTAINER_TRUCK_01",
+      "shape": "convex_box",
+      "convex": true,
+      "triangles": 12,
+      "blender_center": [
+        0.0,
+        1.5,
+        2.690000057220459
+      ],
+      "blender_size": [
+        2.440000057220459,
+        12.1899995803833,
+        2.619999885559082
+      ],
+      "unity_local_center": [
+        0.0,
+        2.690000057220459,
+        -1.5
+      ],
+      "unity_local_size": [
+        2.440000057220459,
+        2.619999885559082,
+        12.1899995803833
+      ]
+    },
+    {
+      "name": "UCX_CONTAINER_TRUCK_02",
+      "shape": "convex_box",
+      "convex": true,
+      "triangles": 12,
+      "blender_center": [
+        0.0,
+        -0.10000000149011612,
+        0.6499999761581421
+      ],
+      "blender_size": [
+        2.4000000953674316,
+        15.800000190734863,
+        1.2999999523162842
+      ],
+      "unity_local_center": [
+        0.0,
+        0.6499999761581421,
+        0.10000000149011612
+      ],
+      "unity_local_size": [
+        2.4000000953674316,
+        1.2999999523162842,
+        15.800000190734863
+      ]
+    }
+  ]
+}

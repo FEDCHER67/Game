@@ -1,5 +1,6 @@
 using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Clinic;
+using OnlyVolunteers.Inventory;
 using OnlyVolunteers.Map;
 using OnlyVolunteers.Map.Crowd;
 using OnlyVolunteers.Operation.Stage1;
@@ -10,7 +11,7 @@ namespace OnlyVolunteers.Capture
     /// <summary>Save and quit (D13, CD-09): the player, the van and its cargo doors, every captured NPC not yet on the
     /// table (identity, OperationState with sleep / residual / blood / grades, ties, condition, stun, where his pelvis lies
     /// and which way his head points, van-local when in the bay), the table (patient and outputs, stock), the field kit
-    /// and the time of day. Timers are saved values: nothing runs while the game is closed. Escaped NPCs (back on their
+    /// the time of day and (W86) the host player's cash. Timers are saved values: nothing runs while the game is closed. Escaped NPCs (back on their
     /// feet and free) are part of the crowd again and are not saved. One JSON file in persistentDataPath/OnlyVolunteers.</summary>
     public static class CaptureSave
     {
@@ -89,6 +90,30 @@ namespace OnlyVolunteers.Capture
             var clock = Object.FindAnyObjectByType<OnlyVolunteers.Sky22V04.SkyClock22>();
             data.timeOfDay = clock != null ? clock.Hour : -1f;
             data.completedPatients.AddRange(d.Registry.Completed);
+            // W86: the host player's money (server model of his NetworkInventory; the sale path pays into it).
+            InventoryModel wallet = Wallet(d);
+            data.hasCash = wallet != null;
+            data.cash = wallet != null ? wallet.Cash : 0;
+        }
+
+        /// <summary>The server-side cash model of the host player (the map pawn's NetworkInventory), or null.</summary>
+        private static InventoryModel Wallet(CaptureDirector d)
+        {
+            var inventory = d.Pawn != null ? d.Pawn.GetComponent<NetworkInventory>() : null;
+            return inventory != null ? inventory.ServerModel : null;
+        }
+
+        /// <summary>W86: sets the host player's cash to the saved amount through the model's own add / spend (its
+        /// CashChanged mirrors it to the HUD). A save without the field (older than W86) keeps the current cash.</summary>
+        private static void RestoreCash(CaptureDirector d, CaptureSaveData data)
+        {
+            if (!data.hasCash) { Debug.Log("[CAPTURE] the save has no cash (older save): cash kept"); return; }
+            InventoryModel wallet = Wallet(d);
+            if (wallet == null) { Debug.LogWarning("[CAPTURE] cash not restored: the player's NetworkInventory is not running on the server"); return; }
+            int target = Mathf.Max(0, data.cash), now = wallet.Cash;
+            if (target > now) wallet.AddCash(target - now);
+            else if (target < now) wallet.TrySpendCash(now - target);
+            Debug.Log($"[CAPTURE] cash restored: ${wallet.Cash} (saved ${data.cash})");
         }
 
         public static void Read(CaptureDirector d, CaptureSaveData data)
@@ -119,6 +144,7 @@ namespace OnlyVolunteers.Capture
             }
             d.Kit.Restore(data.kit);
             d.Disposal?.Restore(data.corpses, data.bodyBags);
+            RestoreCash(d, data);
             var clock = Object.FindAnyObjectByType<OnlyVolunteers.Sky22V04.SkyClock22>();
             if (clock != null && data.timeOfDay >= 0f) clock.SetHour(data.timeOfDay);
         }

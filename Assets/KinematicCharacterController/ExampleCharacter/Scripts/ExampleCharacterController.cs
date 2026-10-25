@@ -141,6 +141,22 @@ namespace KinematicCharacterController.Examples
             SetCapsuleHeight(_isCrouching ? CrouchedCapsuleHeight : _isStooped ? StoopedCapsuleHeight : StandCapsuleHeight);
         }
 
+        /// <summary>OV W86: another standing height for this one character (the map player: 1.80 instead of 2.0).
+        /// Crouched and stooped heights stay; the mesh and, if standing, the capsule follow at once.</summary>
+        public void ApplyStandHeight(float height)
+        {
+            if (height <= 0f || Motor == null)
+                return;
+            StandCapsuleHeight = height;
+            if (Motor.Capsule == null)
+                Motor.Capsule = Motor.GetComponent<CapsuleCollider>();
+            if (!_isCrouching && !_isStooped)
+            {
+                SetCapsuleHeight(height);
+                SetMeshHeight(height);
+            }
+        }
+
         // OV stage1: one place for the capsule size (pivot at the feet).
         private void SetCapsuleHeight(float height)
         {

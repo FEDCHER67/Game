@@ -37,7 +37,7 @@ namespace OnlyVolunteers.Vehicles
         private void LateUpdate()
         {
             if (Van == null) return;
-            bool look = Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1);
+            bool look = !OnlyVolunteers.UI.OvMenuGate.Blocking && (Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1));
             if (look)
             {
                 _yawOffset += Input.GetAxisRaw("Mouse X") * MouseSensitivity;

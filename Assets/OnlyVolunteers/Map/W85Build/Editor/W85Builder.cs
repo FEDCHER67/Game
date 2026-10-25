@@ -69,7 +69,7 @@ namespace OnlyVolunteers.Map.W85
 
         // W86 pass (lead brief 22.10): the same builder on Data/v02 -> Generated/v02 + Scenes/Map/Map_W85_Build_v02.unity (v01 untouched).
         [MenuItem("OnlyVolunteers/Map/W86 Build (data v02)")]
-        public static void BuildV02() => Build("v02", true);
+        public static void BuildV02() => Build("v02", false); // no confirm dialog (Fedya 25.10: never ask to click Rebuild)
         public static void BuildV02Silent() => Build("v02", false);
 
         static void Build(string ver, bool interactive)
@@ -119,6 +119,7 @@ namespace OnlyVolunteers.Map.W85
             Step("light", () => BuildLight(root));
             Step("W86 rollout post pass", () => { W86PostPass(root); EliteRoadLamps(root); CutPoolHoles(); W86DecalHooks(root); });
             if (IsV2) Step("W86 decals", () => W86Decals(root));                 // W86 decals (B3): markings, wear, oil, foam into DecalHooks_W86
+            if (IsV2) Step("G46 road surfaces", () => Note(W86RoadRepair.Meshes(root)));
             Step("validate", () => Validate(root));
             Note(RolloutSummary());
             Step("i10 look", () => Note(W85Look.Apply(root, Ter, Ver, LookRects())));
@@ -334,6 +335,7 @@ namespace OnlyVolunteers.Map.W85
                     heights[j, i] = (raw[k] | raw[k + 1] << 8) / 65535f;
                 }
             if (IsV2) GradeFootprints(heights, R, F(size[1]), F(pos[1]));               // W86 ground fit: level the rare footprint > 1.5 m
+            if (IsV2) W86RoadRepair.Grade(heights, F(size[1]), F(pos[1]));             // G46 shared road profiles, approach cuts, reviewed sea artifacts
             // layers first: they import textures, and an import during the build reverted the fresh TerrainData to its saved (flat) state
             var splat = Obj(Get(tj, "splat"));
             var keys = Arr(Get(splat, "layers")).Select(o => (string)o).ToList();
@@ -351,6 +353,7 @@ namespace OnlyVolunteers.Map.W85
                     int b = j * (R - 1) + i;
                     holes[j, i] = (bits[b >> 3] >> (7 - (b & 7)) & 1) == 1;           // 1 = solid
                 }
+            if (IsV2) W86RoadRepair.TunnelHoles(holes, heights, F(size[1]), F(pos[1]));
             td.SetHoles(0, 0, holes);
             td.terrainLayers = layerArr;
             var masks = Arr(Get(splat, "files")).Select(f => LoadPng(Data + "/" + (string)f)).ToArray();
@@ -403,6 +406,7 @@ namespace OnlyVolunteers.Map.W85
             td.SetHeights(0, 0, lastHeights);
             td.SetHoles(0, 0, lastHoles);
             td.SetAlphamaps(0, 0, lastAlpha);
+            if (IsV2) W86RoadRepair.PaintAccessRuts(td);
             EditorUtility.SetDirty(td);
             foreach (Texture2D tex in td.alphamapTextures) EditorUtility.SetDirty(tex);
             AssetDatabase.SaveAssets();
@@ -422,7 +426,7 @@ namespace OnlyVolunteers.Map.W85
         {
             ["pine"] = new[] { "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Pine_A_v04.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Pine_B_v04.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Pine_C_v04.prefab" },
             // i10 set: forest conifers and bare Rough trees = the V19Wind versions (Map/Wind/Trees_v01), the rest = COZY kit (Leafy_v04_i08, OaksPines_i09)
-            ["spruce"] = new[] { "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Spruce_A_v03_04_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Spruce_B_v03_04_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Fir_v03_04_Wind_v01.prefab", "Assets/OnlyVolunteers/Map/Wind/Trees_v01/Prefabs/Forest_Young_v03_04_Wind_v01.prefab" },
+            ["spruce"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Conifers_v04_03/Prefabs/Forest_Spruce_A_v04_03_Wind.prefab", "Assets/OnlyVolunteers/Art/Trees/Conifers_v04_03/Prefabs/Forest_Spruce_B_v04_03_Wind.prefab", "Assets/OnlyVolunteers/Art/Trees/Conifers_v04_03/Prefabs/Forest_Fir_v04_03_Wind.prefab", "Assets/OnlyVolunteers/Art/Trees/Conifers_v04_03/Prefabs/Forest_Young_v04_03_Wind.prefab" },
             ["birch"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_A_v04_04.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_B_v04_04.prefab" },
             ["oak"] = new[] { "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_A_v01_02.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_B_v01_02.prefab", "Assets/OnlyVolunteers/Art/Trees/OaksPines_i09/Prefabs/Oak_C_v01_02.prefab" },
             ["leafy"] = new[] { "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Apple_A_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Apple_B_v04_03.prefab", "Assets/OnlyVolunteers/Art/Trees/Leafy_v04_i08/Prefabs/Poplar_C_v04_04.prefab" },
@@ -448,15 +452,45 @@ namespace OnlyVolunteers.Map.W85
             return idx[(int)(h * idx.Count) % idx.Count];
         }
 
-        static void AddTree(string kind, float x, float z, float scale, float rotDeg)
+        // G45: coordinate-derived hashes never consume a shared RNG or depend on iteration order.
+        static Vector2[][] ForestTreePolygons = Array.Empty<Vector2[]>();
+        static readonly HashSet<long> ForestTreeRemoved = new();
+        static bool ForestTreeAt(float x, float z) => ForestTreePolygons.Any(p => W76Atmosphere.Inside(p, new Vector2(x, z)));
+        static long TreePositionKey(float x, float z) => ((long)Mathf.RoundToInt(x * 10f) << 32) | (uint)Mathf.RoundToInt(z * 10f);
+        static uint TreeSeed(float x, float z, uint salt)
         {
-            int p = Proto(kind, Mathf.Repeat(x * .37f + z * .71f, 1f));
+            unchecked
+            {
+                uint h = (uint)Mathf.RoundToInt(x * 10f) * 0x9e3779b9u ^ (uint)Mathf.RoundToInt(z * 10f) * 0x85ebca6bu ^ salt;
+                h ^= h >> 16; h *= 0x7feb352du; h ^= h >> 15; h *= 0x846ca68bu; return h ^ (h >> 16);
+            }
+        }
+        static float TreeRandom(float x, float z, uint salt) => (TreeSeed(x, z, salt) & 0xffffffu) / 16777216f;
+        static void AddTree(string kind, float x, float z, float scale, float rotDeg, bool designed = false)
+        {
+            bool forest = IsV2 && ForestTreeAt(x, z);
+            if (forest && ForestTreeRemoved.Contains(TreePositionKey(x, z))) return;
+            if (IsV2 && !designed && kind != "bare" && kind != "bush" && kind != "palm")
+            {
+                float mix = TreeRandom(x, z, 4502u);
+                if (forest) kind = mix < .22f ? "oak" : mix < .55f ? "spruce" : "pine";
+                else if (mix < .14f) kind = "spruce";
+                else if (mix < .30f) kind = "pine";
+            }
+            int p = Proto(kind, IsV2 ? TreeRandom(x, z, 4503u) : Mathf.Repeat(x * .37f + z * .71f, 1f));
             if (p < 0) return;
+            float height = scale;
+            if (IsV2 && !designed && kind != "bare" && kind != "bush" && kind != "palm")
+            {
+                height *= Mathf.Lerp(forest ? .82f : .94f, forest ? 1.18f : 1.06f, TreeRandom(x, z, 4504u));
+                // New lowest crown is 2.1 m: preserve >=1.89 m of clear trunk, above the 1.8 m player.
+                if (kind == "spruce") height = Mathf.Clamp(height, .90f, 1.18f);
+            }
             TreeList.Add(new TreeInstance
             {
                 prototypeIndex = p,
-                position = new Vector3(x / W, 0f, z / Hh),             // y snapped by the terrain (Flush below)
-                widthScale = scale, heightScale = scale, rotation = rotDeg * Mathf.Deg2Rad,
+                position = new Vector3(x / W, 0f, z / Hh),
+                widthScale = scale, heightScale = height, rotation = rotDeg * Mathf.Deg2Rad,
                 color = Color.white, lightmapColor = Color.white
             });
         }
@@ -469,7 +503,8 @@ namespace OnlyVolunteers.Map.W85
                 ProtoIdx[kv.Key] = new List<int>();
                 foreach (string p in kv.Value)
                 {
-                    var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(p);
+                    var treePath = !IsV2 ? p.Replace("Art/Trees/Conifers_v04_03/Prefabs/Forest_", "Map/Wind/Trees_v01/Prefabs/Forest_").Replace("_v04_03_Wind.prefab", "_v03_04_Wind_v01.prefab") : p;
+                    var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(treePath);
                     if (!prefab) { Note("missing tree prefab " + p); continue; }
                     int at = Protos.FindIndex(t => t.prefab == prefab);
                     if (at < 0) { Protos.Add(new TreePrototype { prefab = prefab }); at = Protos.Count - 1; }
@@ -478,6 +513,16 @@ namespace OnlyVolunteers.Map.W85
             }
             td.treePrototypes = Protos.ToArray();
             var vj = Obj(Json.Parse(File.ReadAllText(Data + "/vegetation_v85.json")));
+            ForestTreePolygons = IsV2 ? Arr(Get(Obj(Json.Parse(File.ReadAllText(Data + "/districts/forest_v85.json"))), "zones"))
+                .Select(Obj).Where(z => S(Get(z, "kind")) == "veg_zone").Select(z => V2s(Get(z, "poly"))).Where(p => p.Length >= 3).ToArray() : Array.Empty<Vector2[]>();
+            ForestTreeRemoved.Clear();
+            if (IsV2)
+            {
+                var forest = Arr(Get(vj, "trees")).Select(Arr).Where(t => ForestTreeAt(F(t[0]), F(t[1]))).ToArray();
+                foreach (var t in forest.OrderBy(t => TreeSeed(F(t[0]), F(t[1]), 4501u)).ThenBy(t => TreePositionKey(F(t[0]), F(t[1]))).Take(Mathf.RoundToInt(forest.Length * .15f)))
+                    ForestTreeRemoved.Add(TreePositionKey(F(t[0]), F(t[1])));
+                Note($"G45 forest: {forest.Length} -> {forest.Length - ForestTreeRemoved.Count}; removed {ForestTreeRemoved.Count} stable placements");
+            }
             foreach (object o in Arr(Get(vj, "trees")))
             {
                 var t = Arr(o);
@@ -486,7 +531,7 @@ namespace OnlyVolunteers.Map.W85
             // designed trees of the districts (Hamlet orchard + square tree, beach / Elite palm rows): only those s05 kept (same hard rules,
             // duplicates between districts removed)
             var keep = new HashSet<string>(Arr(Get(vj, "designed_from_districts")).Select(o => S(Get(Obj(o), "id"))));
-            foreach (string f in Directory.GetFiles(Data + "/districts", "*_v85.json"))
+            foreach (string f in Directory.GetFiles(Data + "/districts", "*_v85.json").OrderBy(f => f, StringComparer.Ordinal))
                 foreach (object o in Arr(Get(Obj(Json.Parse(File.ReadAllText(f))), "props")))
                 {
                     var p = Obj(o);
@@ -494,9 +539,18 @@ namespace OnlyVolunteers.Map.W85
                     if (!IsTree(kind) || !keep.Contains(S(Get(p, "id"), ""))) continue;
                     Vector2 q = V2(Get(p, "pos"));
                     string k = kind.Contains("palm") ? "palm" : kind.Contains("bush") || kind.Contains("shrub") ? "bush" : f.Contains("rough") ? "bare" : kind.Contains("pine") ? "pine" : kind.Contains("birch") ? "birch" : kind.Contains("oak") ? "oak" : "leafy";
-                    AddTree(k, q.x, q.y, 1f, F(Get(p, "rot_deg")));
+                    AddTree(k, q.x, q.y, 1f, F(Get(p, "rot_deg")), true);
                 }
+            // A partial vegetation rebuild keeps the exact reviewed XYZ, including terrain-snap rounding.
+            var prior = td.treeInstances.GroupBy(t => TreePositionKey(t.position.x * W, t.position.z * Hh)).ToDictionary(g => g.Key, g => g.First().position);
             td.SetTreeInstances(TreeList.ToArray(), true);
+            if (prior.Count > 0)
+            {
+                var trees = td.treeInstances;
+                for (int i = 0; i < trees.Length; i++)
+                    if (prior.TryGetValue(TreePositionKey(trees[i].position.x * W, trees[i].position.z * Hh), out var position)) trees[i].position = position;
+                td.SetTreeInstances(trees, false);
+            }
         }
 
         // ------------------------------------------------------------------ meshes
@@ -1439,7 +1493,7 @@ namespace OnlyVolunteers.Map.W85
             bool Blocked(Dictionary<string, object> self, Vector2 q)
             {
                 if (lines.Any(o => !ReferenceEquals(o.z, self) && W76Atmosphere.Distance(o.pl, q) < CarriagewayOf(o.z) * .5f + .3f)) return true;
-                if (drops.Any(d => W76Atmosphere.Inside(d, q) || W76Atmosphere.Distance(d.Append(d[0]).ToArray(), q) < .6f)) return true;
+                // W86 (Fedya 25.10, screenshots 08/09): curb drops (vehicle crossings) no longer cut the walk: paving runs on, the kerb is lowered
                 foreach (var (id, pl, w, kind) in WorldRoads)
                     if (kind != "tunnel" && kind != "dirt" && kind != "sand_track" && W76Atmosphere.Distance(pl, q) < w * .5f + .4f) return true;
                 return false;
@@ -1462,7 +1516,8 @@ namespace OnlyVolunteers.Map.W85
                         Vector2 pin = pts[i] + nrm * cw * .5f, pout = pts[i] + nrm * (cw * .5f + sw), mid = (pin + pout) * .5f;
                         bool blocked = Blocked(z, mid) || Blocked(z, pin + nrm * .4f);
                         if (blocked || prevIn == null) { prevIn = blocked ? (Vector2?)null : pin; prevOut = blocked ? (Vector2?)null : pout; continue; }
-                        float y = Height(pts[i].x, pts[i].y) + .06f + curb;
+                        bool lowered = drops.Any(d => W76Atmosphere.Inside(d, mid) || W76Atmosphere.Distance(d.Append(d[0]).ToArray(), mid) < .6f);
+                        float y = Height(pts[i].x, pts[i].y) + .06f + (lowered ? .025f : curb); // dropped kerb at a crossing
                         Vector3 a0 = new(prevIn.Value.x, y, prevIn.Value.y), a1 = new(prevOut.Value.x, y, prevOut.Value.y), b0 = new(pin.x, y, pin.y), b1 = new(pout.x, y, pout.y);
                         float u0 = acc / st, u1 = (acc + 1f) / st; acc += 1f;
                         if (sgn > 0) mb.Quad(a1, b1, b0, a0, new Vector2(sw / st, u0), new Vector2(sw / st, u1), new Vector2(0, u1), new Vector2(0, u0));
@@ -1483,7 +1538,10 @@ namespace OnlyVolunteers.Map.W85
             foreach (var j in junctions)
             {
                 Vector2 c = V2(Get(j, "pos"));
+                // W86: the corner square starts at the real kerb line (the widest carriageway meeting here), not a fixed 6 m: wide
+                // streets left a grass strip between the two walks at every corner
                 float h = 6f;
+                foreach (var o in lines) if (W76Atmosphere.Distance(o.pl, c) < CarriagewayOf(o.z) * .5f + 1f) h = Mathf.Max(h, CarriagewayOf(o.z) * .5f);
                 foreach (var sx in new[] { -1f, 1f })
                     foreach (var sy in new[] { -1f, 1f })
                     {
@@ -2283,42 +2341,77 @@ namespace OnlyVolunteers.Map.W85
 
         // texture test v04 FlickerLamp (N-R3): point light in the lamp head (MP_Glass centroid), #BAC8D2, range 7, 0.4, off by day;
         // in the Rough + a spot under the head (range 15, 95 deg, soft shadows) that follows the flicker (FlickerFollowerV01, on 140).
-        static Light NightLamp(GameObject pole, bool strong)
+        static Light NightLamp(GameObject pole, bool strong) => NightLamps(pole, strong)[0];
+
+        // W86 (Fedya 25.10, recheck 01): one light PER HEAD. The MP_Glass vertices of the pole are clustered (heads > 0.5 m apart);
+        // a single-head lamp is unchanged, a double lantern gets two lights, each at its own glass, dimmed so the pair reads as one
+        // fixture (x .62 each) instead of a doubled one.
+        static List<Light> NightLamps(GameObject pole, bool strong)
         {
-            var light = new GameObject("Flicker").AddComponent<Light>();
-            light.transform.SetParent(pole.transform, false);
             var pts = new List<Vector3>();
             foreach (var r in pole.GetComponentsInChildren<MeshRenderer>())
             {
                 var mf = r.GetComponent<MeshFilter>(); if (!mf || !mf.sharedMesh) continue;
                 var mesh = mf.sharedMesh; var vs = mesh.vertices; var mats = r.sharedMaterials;
                 for (int s = 0; s < Mathf.Min(mesh.subMeshCount, mats.Length); s++)
-                    if (mats[s] && mats[s].name == "MP_Glass") pts.AddRange(mesh.GetTriangles(s).Select(i => r.transform.TransformPoint(vs[i])));
+                    if (mats[s] && (mats[s].name == "MP_Glass" || mats[s].name == "MP_Lamp_Glow")) pts.AddRange(mesh.GetTriangles(s).Select(i => r.transform.TransformPoint(vs[i])));
             }
-            if (pts.Count > 0) light.transform.position = pts.Aggregate(Vector3.zero, (a, c) => a + c) / pts.Count - Vector3.up * .07f;
-            else
+            // connected glass = one head: a point joins (and merges) every cluster that has a point within 0.35 m
+            var heads = new List<List<Vector3>>();
+            foreach (var p in pts.Distinct())
+            {
+                var near = heads.Where(c => c.Any(q => (q - p).sqrMagnitude < .1225f)).ToList();
+                if (near.Count == 0) { heads.Add(new List<Vector3> { p }); continue; }
+                var first = near[0]; first.Add(p);
+                for (int k = 1; k < near.Count; k++) { first.AddRange(near[k]); heads.Remove(near[k]); }
+            }
+            // glass panes and the glowing bulb of ONE lantern can sit apart: clusters whose centres are within 0.7 m are one head
+            // (the two heads of the Old Town double lantern are 1.24 m apart)
+            for (bool merged = true; merged;)
+            {
+                merged = false;
+                for (int i = 0; i < heads.Count && !merged; i++)
+                    for (int k = i + 1; k < heads.Count && !merged; k++)
+                    {
+                        Vector3 ci = heads[i].Aggregate(Vector3.zero, (x, y) => x + y) / heads[i].Count, ck = heads[k].Aggregate(Vector3.zero, (x, y) => x + y) / heads[k].Count;
+                        if ((ci - ck).sqrMagnitude < .49f) { heads[i].AddRange(heads[k]); heads.RemoveAt(k); merged = true; }
+                    }
+            }
+            heads = heads.Where(h => h.Count >= 3).ToList();
+            var centres = heads.Count > 0 ? heads.Select(h => h.Aggregate(Vector3.zero, (a, c) => a + c) / h.Count - Vector3.up * .07f).ToList() : null;
+            if (centres == null)
             {
                 var rs = pole.GetComponentsInChildren<Renderer>(); var bb = rs[0].bounds; foreach (var r in rs) bb.Encapsulate(r.bounds);
-                light.transform.position = new Vector3(bb.center.x, bb.max.y - .3f, bb.center.z);
+                centres = new List<Vector3> { new(bb.center.x, bb.max.y - .3f, bb.center.z) };
             }
+            float share = centres.Count > 1 ? .62f : 1f;
             ColorUtility.TryParseHtmlString("#BAC8D2", out Color col);
-            light.type = LightType.Point; light.color = col; light.range = 7f; light.intensity = .4f; light.shadows = LightShadows.None; light.enabled = false;
-            if (!strong) return light;
-            var spot = new GameObject("Flicker_Spot").AddComponent<Light>();
-            spot.transform.SetParent(light.transform, false); spot.transform.SetPositionAndRotation(light.transform.position - Vector3.up * .6f, Quaternion.Euler(90f, 0, 0));
-            spot.type = LightType.Spot; spot.color = col; spot.range = 15f; spot.spotAngle = 95f; spot.innerSpotAngle = 50f;
-            spot.shadows = LightShadows.Soft; spot.shadowStrength = .9f; spot.shadowNearPlane = .1f; spot.enabled = false;
-            var ad = new SerializedObject(spot.gameObject.AddComponent<UniversalAdditionalLightData>()); var tier = ad.FindProperty("m_AdditionalLightsShadowResolutionTier"); if (tier != null) { tier.intValue = 1; ad.ApplyModifiedPropertiesWithoutUndo(); }
-            var fol = spot.gameObject.AddComponent<OnlyVolunteers.Art.TextureTest.FlickerFollowerV01>(); fol.source = light; fol.target = spot; fol.sourceOn = .65f; fol.targetOn = 140f;
-            return light;
+            var lights = new List<Light>();
+            foreach (var c in centres)
+            {
+                var light = new GameObject("Flicker").AddComponent<Light>();
+                light.transform.SetParent(pole.transform, false); light.transform.position = c;
+                light.type = LightType.Point; light.color = col; light.range = 7f; light.intensity = .4f; light.shadows = LightShadows.None; light.enabled = false;
+                lights.Add(light);
+                if (!strong) continue;
+                var spot = new GameObject("Flicker_Spot").AddComponent<Light>();
+                spot.transform.SetParent(light.transform, false); spot.transform.SetPositionAndRotation(light.transform.position - Vector3.up * .6f, Quaternion.Euler(90f, 0, 0));
+                spot.type = LightType.Spot; spot.color = col; spot.range = 15f; spot.spotAngle = 95f; spot.innerSpotAngle = 50f;
+                spot.shadows = LightShadows.Soft; spot.shadowStrength = .9f; spot.shadowNearPlane = .1f; spot.enabled = false;
+                var ad = new SerializedObject(spot.gameObject.AddComponent<UniversalAdditionalLightData>()); var tier = ad.FindProperty("m_AdditionalLightsShadowResolutionTier"); if (tier != null) { tier.intValue = 1; ad.ApplyModifiedPropertiesWithoutUndo(); }
+                var fol = spot.gameObject.AddComponent<OnlyVolunteers.Art.TextureTest.FlickerFollowerV01>(); fol.source = light; fol.target = spot; fol.sourceOn = .65f; fol.targetOn = 140f * share;
+            }
+            return lights;
         }
 
         // after the i10 look (which empties the sky rig's lamp list): only the sample lamps turn on at night, flicker and get fog halos
+        public static readonly Rect DowntownCalmRect = new(960f, 120f, 460f, 540f); // world XZ around Downtown (the Rough lies west of x 960)
         static void SampleNight(Transform root)
         {
             if (SampleLamps.Count == 0) return;
             var life = (root.Find("NightLamps_N-R3") ?? root).gameObject.AddComponent<OnlyVolunteers.Map.Look.V3.DistrictLife19V02>();
             life.flyers = Array.Empty<OnlyVolunteers.Map.Look.V3.DistrictLife19V02.Flyer>(); life.wornLamps = SampleLamps.ToArray();
+            life.calmAreas = new[] { DowntownCalmRect }; // W86 (Fedya 25.10): Downtown lamps steady, rare short drop-outs; the Rough keeps the worn flicker
             int rigs = 0;
             foreach (var mb in root.GetComponentsInChildren<MonoBehaviour>(true).Where(m => m && m.GetType().Name == "SkyMapNight22I03"))
             {

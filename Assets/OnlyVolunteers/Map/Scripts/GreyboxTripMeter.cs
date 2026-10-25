@@ -38,6 +38,7 @@ namespace OnlyVolunteers.Map
             Vector3 p = transform.position;
             _tripDistance += Vector3.Distance(new Vector3(p.x, 0f, p.z), new Vector3(_lastPosition.x, 0f, _lastPosition.z));
             _lastPosition = p;
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu: no teleports / trip reset
 
             if (Input.GetKeyDown(KeyCode.T)) ResetTrip();
             for (int i = 0; i < Spots.Length && i < 8; i++)
@@ -92,6 +93,7 @@ namespace OnlyVolunteers.Map
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             float t = Time.time - _tripStart;
             float avg = t > 0.5f ? _tripDistance / t * 3.6f : 0f;
             // Bottom-right, so it does not cover the van's key help in the top-left on narrow game views.

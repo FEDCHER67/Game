@@ -19,8 +19,9 @@ namespace OnlyVolunteers.Map
         private void LateUpdate()
         {
             if (Target == null) return;
-            if (Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
-            if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
+            bool menu = OnlyVolunteers.UI.OvMenuGate.Blocking; // W86 pause menu owns the cursor
+            if (!menu && Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
+            if (!menu && Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
             Cursor.visible = Cursor.lockState != CursorLockMode.Locked;
             if (Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1))
             {

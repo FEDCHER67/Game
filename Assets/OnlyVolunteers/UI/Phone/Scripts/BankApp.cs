@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using OnlyVolunteers.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace OnlyVolunteers.Phone
 {
     // Local placeholder money. Who owns money in co-op (shared or per player) is not decided yet.
+    // W86: "Cash on you" is the real cash of the inventory the phone is bound to (Pocket: the map pawn's NetworkInventory,
+    // which the first-buyer crate pays and the capture save keeps); the $85 placeholder only without one. The Bank balance
+    // and its history stay placeholders: no bank account exists in the game yet.
     public sealed class PhoneWallet
     {
         public sealed class Entry
@@ -14,8 +18,11 @@ namespace OnlyVolunteers.Phone
             public int Amount;
         }
 
+        private const int PlaceholderCash = 85;
+
         public int Bank { get; private set; } = 1251;
-        public int Cash { get; private set; } = 85;
+        public IInventoryView Pocket { get; set; }
+        public int Cash => Pocket != null ? Pocket.Cash : PlaceholderCash;
         public int Version { get; private set; }
         public readonly List<Entry> History = new()
         {
@@ -90,12 +97,26 @@ namespace OnlyVolunteers.Phone
             subtitle.text = "Your money. No questions.";
         }
 
+        private int shownCash = int.MinValue;
+
+        // W86: the real cash can change while the app is open (a sale): keep the line current.
+        public override void Tick()
+        {
+            if (cash != null && Phone.Wallet.Cash != shownCash) ShowCash();
+        }
+
+        private void ShowCash()
+        {
+            shownCash = Phone.Wallet.Cash;
+            cash.text = "Cash on you: " + PhoneUi.Money(shownCash);
+        }
+
         public override void Show()
         {
             base.Show();
             var wallet = Phone.Wallet;
             balance.text = PhoneUi.Money(wallet.Bank);
-            cash.text = "Cash on you: " + PhoneUi.Money(wallet.Cash);
+            ShowCash();
             if (builtVersion == wallet.Version)
                 return;
             builtVersion = wallet.Version;

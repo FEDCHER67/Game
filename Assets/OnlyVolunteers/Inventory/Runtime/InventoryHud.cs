@@ -53,6 +53,23 @@ namespace OnlyVolunteers.Inventory
         private float lastActivity;
         private int lastSelected = -1;
 
+        private IInventoryView cashSource;
+
+        /// <summary>W86: where the "$" number comes from when the money is not in the hotbar's own inventory (the capture
+        /// map: the hotbar is the map's LocalInventory, the money the player's NetworkInventory). Null = the hotbar's.</summary>
+        public IInventoryView CashSource
+        {
+            get => cashSource;
+            set
+            {
+                if (ReferenceEquals(cashSource, value)) return;
+                if (cashSource != null && isActiveAndEnabled) cashSource.Changed -= MarkDirty;
+                cashSource = value;
+                if (cashSource != null && isActiveAndEnabled) cashSource.Changed += MarkDirty;
+                MarkDirty();
+            }
+        }
+
         private void Awake()
         {
             inventory = inventorySource as IInventoryView ?? GetComponentInParent<IInventoryView>();
@@ -61,11 +78,13 @@ namespace OnlyVolunteers.Inventory
         private void OnEnable()
         {
             if (inventory != null) inventory.Changed += MarkDirty;
+            if (cashSource != null) cashSource.Changed += MarkDirty;
         }
 
         private void OnDisable()
         {
             if (inventory != null) inventory.Changed -= MarkDirty;
+            if (cashSource != null) cashSource.Changed -= MarkDirty;
             if (canvasObject != null) canvasObject.SetActive(false);
         }
 
@@ -222,7 +241,7 @@ namespace OnlyVolunteers.Inventory
                 ? $"{currentItem.DisplayName}  ${current.UnitValue.ToString("N0", CultureInfo.InvariantCulture)}"
                 : string.Empty;
             itemName.color = new Color(1f, 1f, 1f, contentAlpha * 0.85f);
-            cashText.text = "$" + inventory.Cash.ToString("N0", CultureInfo.InvariantCulture);
+            cashText.text = "$" + (cashSource ?? inventory).Cash.ToString("N0", CultureInfo.InvariantCulture);
             cashText.color = new Color(1f, 1f, 1f, contentAlpha * 0.7f);
             if (selected != lastSelected)
             {

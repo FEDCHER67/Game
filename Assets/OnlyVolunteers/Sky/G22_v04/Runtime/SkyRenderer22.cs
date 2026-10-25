@@ -17,6 +17,11 @@ namespace OnlyVolunteers.Sky22V04
         [SerializeField,Range(.3f,3)] float cloudScale=1;
         [SerializeField,Range(24,80)] int cloudSteps=64;
         [SerializeField,Min(0)] float cloudTime;
+        [Tooltip("W86: the light (and its shadows) turns in steps of this many degrees while the sky disc moves smoothly. " +
+                 "A light that turns every frame re-rasterises the shadow map each frame: long shadows (the 130 m towers) " +
+                 "crawl and shimmer and URP's texel snapping cannot hold them. 0 = follow every frame: the default since Fedya 25.10 (the steps moved all the lighting in jerks).")]
+        [SerializeField,Range(0,2)] float shadowStepDegrees=0f;
+        Vector3 sunShadowDir, moonShadowDir;
         Material sky;
         readonly Stack<Saved> saved=new Stack<Saved>();
         public SkyMood22 Mood { get=>mood;set=>mood=value; }
@@ -57,8 +62,8 @@ namespace OnlyVolunteers.Sky22V04
             sky.SetFloat("_Stars",state.stars);sky.SetFloat("_Golden",state.golden);sky.SetFloat("_Daylight",state.daylight);
             sky.SetFloat("_CloudTime",cloudTime*windSpeed);sky.SetFloat("_CloudScale",cloudScale);sky.SetFloat("_Steps",cloudSteps);
             RenderSettings.skybox=sky;
-            SetLight(sun,state.sunDirection,state.sunlight,state.sunIntensity,state.shadowStrength,state.daylight>.35f);
-            SetLight(moon,state.moonDirection,state.moonlight,state.moonIntensity,.35f,state.daylight<=.35f);
+            SetLight(sun,Stepped(ref sunShadowDir,state.sunDirection),state.sunlight,state.sunIntensity,state.shadowStrength,state.daylight>.35f);
+            SetLight(moon,Stepped(ref moonShadowDir,state.moonDirection),state.moonlight,state.moonIntensity,.2f,state.daylight<=.35f); // W86: softer moon shadow
             RenderSettings.sun=state.daylight>.35f?sun:moon;
             RenderSettings.ambientMode=AmbientMode.Trilight;RenderSettings.ambientIntensity=1;
             RenderSettings.ambientSkyColor=state.ambient;RenderSettings.ambientEquatorColor=state.ambient*.85f;
@@ -73,6 +78,13 @@ namespace OnlyVolunteers.Sky22V04
         {
             if(districtSource && districtSource.isActiveAndEnabled)districtSource.AfterCamera(camera);
             if(saved.Count>0 && saved.Peek().camera==camera)saved.Pop().Restore(sun,moon);
+        }
+        // The held light direction moves only once the sky's direction is shadowStepDegrees away (a jump after F12 or a
+        // clock set is taken at once, being far beyond the step).
+        Vector3 Stepped(ref Vector3 held, Vector3 direction)
+        {
+            if(held==Vector3.zero || shadowStepDegrees<=0 || Vector3.Angle(held,direction)>=shadowStepDegrees)held=direction;
+            return held;
         }
         static void SetLight(Light light, Vector3 direction, Color colour, float intensity, float shadow, bool casts)
         {

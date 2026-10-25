@@ -911,6 +911,8 @@ namespace OnlyVolunteers.Map.W85
                 {
                     var poly = V2s(Get(z, "poly")); if (poly.Length < 3) continue;
                     var b = DBox(poly);
+                    // G45: preserve the north turning aisle beside the rotated casino.
+                    if (S(Get(z, "id"), "") == "08-casino-parking") b.yMax -= 3.2f;
                     var rows = Arr(Get(z, "stall_rows_y")).Select(o => F(o)).ToList();
                     var stallPolys = Arr(Get(z, "stall_polys")).Select(V2s).Where(p => p.Length >= 4).ToList();
                     bool marked = Get(z, "markings") is bool mk ? mk : Get(z, "markings") is string || rows.Count > 0 || stallPolys.Count > 0;

@@ -20,6 +20,11 @@ namespace OnlyVolunteers.Map
                  "wheel arches (1.04 m). Applied at runtime to this instance only; <= 0 keeps the prefab's size.")]
         public float CapsuleRadius = 0.35f;
 
+        [Tooltip("Standing capsule height of the map player (Vadim's prefab: 2.0, eye 1.85). W86: 1.80, eye 1.65, so the " +
+                 "town, the van (2.08 m) and the NPCs (about 1.9-2.0 m) read bigger. Crouch 1.0 and stoop 1.35 stay. " +
+                 "Applied at runtime to this instance only; <= 0 keeps the prefab's height.")]
+        public float StandHeight = 1.8f;
+
         [Header("Footsteps (optional, Sfx)")]
         [Tooltip("Metres between footfalls at walking speed (WalkSpeed) and at a sprint (RunSpeed); lerped between. The " +
                  "KCC player walks 4.7 m/s and sprints 8.2 m/s (KccFirstPersonInput): about 2.4 and 3 steps a second.")]
@@ -44,7 +49,10 @@ namespace OnlyVolunteers.Map
         private void Awake()
         {
             WaterBodyAudio.Ensure(gameObject);
-            if (CapsuleRadius > 0f && Kcc != null && Kcc.Character != null)
+            if (Kcc == null || Kcc.Character == null) return;
+            if (StandHeight > 0f)
+                Kcc.Character.ApplyStandHeight(StandHeight);
+            if (CapsuleRadius > 0f)
                 Kcc.Character.ApplyCapsuleRadius(CapsuleRadius);
         }
 
@@ -59,6 +67,7 @@ namespace OnlyVolunteers.Map
         {
             KinematicCharacterMotor motor = Kcc != null && Kcc.Character != null ? Kcc.Character.Motor : null;
             if (motor == null) return;
+            if (StandHeight > 0f) Kcc.RefreshEyeHeights(); // after every Awake: the input read the prefab's 2.0 capsule
             motor.CollidableLayers |= 1 << OvLayers.VehicleInterior;
             motor.StableGroundLayers &= ~(1 << OvLayers.NpcBody);
         }

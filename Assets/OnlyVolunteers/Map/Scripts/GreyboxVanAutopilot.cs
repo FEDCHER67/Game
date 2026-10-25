@@ -73,6 +73,7 @@ namespace OnlyVolunteers.Map
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             if (SomeoneDrives) return;
             string text;
             if (_mode > 0) text = $"Тест-автопилот: {SpeedsKmh[_mode - 1]:0} км/ч ({Key} — дальше / стоп)";

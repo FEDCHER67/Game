@@ -45,6 +45,8 @@ namespace OnlyVolunteers.Vehicles
 
         private void Update()
         {
+            // W86 pause menu owns the input: the van coasts to a stop under the handbrake, no keys or cursor changes
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) { _van.Throttle = 0f; _van.Steer = 0f; _van.Handbrake = true; return; }
             float throttle = 0f;
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) throttle += 1f;
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) throttle -= 1f;
@@ -130,6 +132,7 @@ namespace OnlyVolunteers.Vehicles
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             GUI.Label(new Rect(16, 12, 300, 24), $"{Mathf.Abs(_van.SpeedKmh):0} км/ч (макс. {_van.MaxSpeedKmh:0})");
             int max = VanUpgrades.MaxLevel;
             GUI.Label(new Rect(16, 34, 640, 24),

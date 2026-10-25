@@ -237,6 +237,7 @@ namespace OnlyVolunteers.Capture
 
         private void Update()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu: no slot keys / tool use
             if (!itemsReady) EnsureItems();
             Mouse mouse = OpsInput.Mouse;
             bool active = Active;

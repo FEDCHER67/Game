@@ -1,0 +1,63 @@
+{
+  "schema": "W86.static-collision.v01",
+  "asset": "COMPACT",
+  "units": "metres",
+  "blender_axes": "Z up, -Y front",
+  "fbx_axes": "Y up; -Z export forward setting; verify +Z front on roundtrip",
+  "pivot": "base centre; visual meshes and root identity",
+  "unity_instruction": "UCX names alone do not create colliders. Add BoxColliders from unity_local_center/size, disable UCX renderers; or convex MeshColliders from separate collision FBX. Do not render UCX.",
+  "colliders": [
+    {
+      "name": "UCX_COMPACT_00",
+      "shape": "convex_box",
+      "convex": true,
+      "triangles": 12,
+      "blender_center": [
+        0.0,
+        0.0,
+        0.38999998569488525
+      ],
+      "blender_size": [
+        1.5073721408843994,
+        3.69599986076355,
+        0.7799999713897705
+      ],
+      "unity_local_center": [
+        0.0,
+        0.38999998569488525,
+        -0.0
+      ],
+      "unity_local_size": [
+        1.5073721408843994,
+        0.7799999713897705,
+        3.69599986076355
+      ]
+    },
+    {
+      "name": "UCX_COMPACT_01",
+      "shape": "convex_box",
+      "convex": true,
+      "triangles": 12,
+      "blender_center": [
+        0.0,
+        -0.11549999564886093,
+        1.0499999523162842
+      ],
+      "blender_size": [
+        1.3599117994308472,
+        2.001999855041504,
+        0.8999999761581421
+      ],
+      "unity_local_center": [
+        0.0,
+        1.0499999523162842,
+        0.11549999564886093
+      ],
+      "unity_local_size": [
+        1.3599117994308472,
+        0.8999999761581421,
+        2.001999855041504
+      ]
+    }
+  ]
+}

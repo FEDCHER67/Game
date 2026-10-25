@@ -64,7 +64,7 @@ namespace OnlyVolunteers.Map.W85
         [MenuItem("OnlyVolunteers/Map/W86 Make Play scene (v02)")]
         static void MakeMenuV02()
         {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            EditorSceneManager.SaveOpenScenes(); // no "save modified scenes?" dialog (Fedya 25.10)
             Debug.Log(Make(MapSceneOf("v02"), PlaySceneOf("v02"), "W85", "v02"));
         }
 
@@ -334,6 +334,26 @@ namespace OnlyVolunteers.Map.W85
                 var slot = dirGo.GetComponent<W85EditorSaveSlot>() ?? dirGo.AddComponent<W85EditorSaveSlot>();
                 slot.EditorSlot = ver == "v01" ? $"capture_stageA_editor_{mapTag}.json" : $"capture_stageA_editor_{mapTag}_{ver}.json";
                 Note($"capture director: table {Name(cd.TablePrefab)} at {(cd.TableSpawn ? F(cd.TableSpawn.position) : "missing: TableSpawn")}, pawn {Name(cd.PawnNetworkObject)}, tuning {Name(cd.Tuning)}, body bag {Name(cd.BodyBagPrefab)}, LoadOnStart {cd.LoadOnStart}, autosave {cd.AutosaveSeconds} s, save file {cd.SaveFileName}");
+            }
+
+            // 8b. W86 look pass (lead 25.10, brief §2): SMAA, live sky reflection, material response on play-time copies (W86LookV01).
+            if (ver != "v01")
+            {
+                var lookGo = scene.GetRootGameObjects().FirstOrDefault(g => g.name == "W86_Look");
+                if (!lookGo) { lookGo = new GameObject("W86_Look"); UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(lookGo, scene); }
+                if (!lookGo.GetComponent<W86LookV01>()) lookGo.AddComponent<W86LookV01>();
+                // Escape pause menu + graphics settings page (lead 25.10): owns Escape and the ov_gfx_* settings in this scene
+                if (!lookGo.GetComponent<OnlyVolunteers.UI.Pause.W86PauseMenuV01>()) lookGo.AddComponent<OnlyVolunteers.UI.Pause.W86PauseMenuV01>();
+                Note("look: W86LookV01 (SMAA High, sky reflection cubemap, material response rules)");
+                Note(W86SmoothNormalsV01.Apply(scene, ver));
+                Note(W86PropFixV01.Apply(scene, ver)); // lamps: stems between arms and lanterns (Fedya 25.10, screenshot 07)
+                Note(W85Builder.LightAllLamps(scene));
+                Note(W86PropFixV01.LiftCoplanar(scene)); // z-fighting surfaces (the square "shadow" in Fedya's recording)
+                Note(W86PropFixV01.TrafficSignals(scene, ver)); // signal heads with hoods and a working cycle (Fedya 25.10, screenshot 06)
+                Note(W86VehiclesV01.Apply(scene)); // G47 stage 2: CC0 world vehicles with LODs and colliders
+                foreach (var life in scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<OnlyVolunteers.Map.Look.V3.DistrictLife19V02>(true)))
+                    if (life.wornLamps != null && life.wornLamps.Length > 0 && (life.calmAreas == null || life.calmAreas.Length == 0))
+                    { life.calmAreas = new[] { W85Builder.DowntownCalmRect }; EditorUtility.SetDirty(life); Note("lamps: Downtown calm flicker area set"); }
             }
 
             // 9. Missing scripts carried from i10 (G20 painting HUD) would warn every load.

@@ -167,6 +167,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (table == null || !table.IsClientInitialized) return;
             if (player == null) { FindPlayer(); if (player == null) return; }
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu owns the input
             var key = OpsInput.Keyboard; var mouse = OpsInput.Mouse;
             if (key == null || mouse == null) return;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -181,7 +182,11 @@ namespace OnlyVolunteers.Operation.Stage1
                 return;
             }
             PromptVisible = false;
-            if (key.escapeKey.wasPressedThisFrame || key.eKey.wasPressedThisFrame) { Exit(); return; }
+            if (key.escapeKey.wasPressedThisFrame || key.eKey.wasPressedThisFrame)
+            {
+                if (key.escapeKey.wasPressedThisFrame) OnlyVolunteers.UI.OvMenuGate.ConsumeEscape(); // this Escape leaves the table, it does not open the pause menu
+                Exit(); return;
+            }
             bool wasd = key.wKey.isPressed || key.aKey.isPressed || key.sKey.isPressed || key.dKey.isPressed;
             // walking away: held > 0.2 s (and over a few frames, so one slow frame is not a "hold")
             if (wasd) { if (wasdFrames++ > 0) wasdHeld += Time.unscaledDeltaTime; } else { wasdHeld = 0f; wasdFrames = 0; }

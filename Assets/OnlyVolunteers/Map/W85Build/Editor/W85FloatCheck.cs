@@ -23,6 +23,25 @@ namespace OnlyVolunteers.Map.W85
         const string PostPrefab = "Assets/OnlyVolunteers/Art/StyleKit_v3/PilotKit_v01/Prefabs/POST_v01.prefab";
         static readonly string[] Words = { "roof", "canopy", "awning", "porch", "shelter", "shed", "naves" };
 
+        // G46: a tilted cliff rock's pivot is not its support. Test the actual mesh against the map terrain.
+        // Only unattached rocks move, by the smallest vertical displacement that embeds a real vertex by 15 cm.
+        public static bool SeatRock(Transform rock)
+        {
+            float gap = float.PositiveInfinity;
+            foreach (var mf in rock.GetComponentsInChildren<MeshFilter>(true))
+            {
+                if (!mf.sharedMesh) continue;
+                foreach (var v in mf.sharedMesh.vertices)
+                {
+                    Vector3 p = mf.transform.TransformPoint(v);
+                    gap = Mathf.Min(gap, p.y - Ground(p));
+                }
+            }
+            if (float.IsInfinity(gap) || gap <= .05f) return false;
+            rock.position += Vector3.down * (gap + .15f);
+            return true;
+        }
+
         public static string Run(Scene scene, bool fix)
         {
             Physics.SyncTransforms();

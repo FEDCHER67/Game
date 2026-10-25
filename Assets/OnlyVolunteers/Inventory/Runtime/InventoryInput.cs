@@ -71,13 +71,14 @@ namespace OnlyVolunteers.Inventory
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             // A tap shows nothing; a held charge shows the small bar under the crosshair.
             if (dropHeldSince >= 0f && Time.unscaledTime - dropHeldSince > 0.12f) ThrowChargeIndicator.Draw(ThrowChargeShown);
         }
 
         private void Update()
         {
-            if (inventory == null || !inventory.IsLocalOwner) return;
+            if (inventory == null || !inventory.IsLocalOwner || OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu
             if (requireLockedCursor && Cursor.lockState != CursorLockMode.Locked) return;
 
             for (int i = 0; i < selectSlot.Length && i < inventory.SlotCount; i++)
