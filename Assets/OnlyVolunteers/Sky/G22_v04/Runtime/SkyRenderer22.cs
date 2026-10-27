@@ -30,6 +30,16 @@ namespace OnlyVolunteers.Sky22V04
         public event System.Action<Camera,Color> HorizonColourEvaluated;
         public float CloudTime { get=>cloudTime;set=>cloudTime=Mathf.Max(0,value); }
         public SkyDistrictSource22 DistrictSource { get=>districtSource;set=>districtSource=value; }
+        static float smoothGloom=.1f;
+        /// <summary>0 by day .. 1 at full night (19:30-04:30), smooth at dusk/dawn (clouds fade out with it).</summary>
+        public static float NightAmount(float hour)
+        {
+            hour=Mathf.Repeat(hour,24f);
+            if(hour>=19.5f || hour<4.5f)return 1f;
+            if(hour>=18f)return Mathf.SmoothStep(0f,1f,(hour-18f)/1.5f);
+            if(hour<6f)return Mathf.SmoothStep(1f,0f,(hour-4.5f)/1.5f);
+            return 0f;
+        }
         public void Configure(SkyClock22 c, Material template, Light s, Light m) { clock=c;skyTemplate=template;sun=s;moon=m;ReleaseSky(); }
         void OnEnable()
         {
@@ -58,7 +68,10 @@ namespace OnlyVolunteers.Sky22V04
             sky.SetColor("_CloudTop",state.cloudTop);sky.SetColor("_CloudBase",state.cloudBase);
             sky.SetColor("_SunColour",state.sunlight);sky.SetColor("_MoonColour",state.moonlight);
             sky.SetVector("_SunDirection",state.sunDirection);sky.SetVector("_MoonDirection",state.moonDirection);
-            sky.SetFloat("_Cover",Mathf.Clamp01(local.cloudCover));sky.SetFloat("_Gloom",Mathf.Clamp01(local.gloom));
+            // Vadim 23.10: one cloud cover for the whole map (no clouds sliding in/out between districts), clouds fade out at night,
+            // the district gloom drifts very slowly
+            smoothGloom=Mathf.MoveTowards(smoothGloom,Mathf.Clamp01(local.gloom),Time.unscaledDeltaTime*.03f);
+            sky.SetFloat("_Cover",Mathf.Lerp(.38f,0f,NightAmount(clock.Hour)));sky.SetFloat("_Gloom",smoothGloom);
             sky.SetFloat("_Stars",state.stars);sky.SetFloat("_Golden",state.golden);sky.SetFloat("_Daylight",state.daylight);
             sky.SetFloat("_CloudTime",cloudTime*windSpeed);sky.SetFloat("_CloudScale",cloudScale);sky.SetFloat("_Steps",cloudSteps);
             RenderSettings.skybox=sky;

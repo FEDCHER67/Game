@@ -267,11 +267,21 @@ half4 WaterFragment(WaterVaryings i) : SV_Target
 #endif
     float noise = SAMPLE_TEXTURE2D(_OV_NoiseMap, sampler_OV_NoiseMap, p * 0.17 + time * float2(0.007,-0.011)).r;
     float soft = max(_OV_FoamSoftness, min(fwidth(depth) * 0.6, 0.15) + 0.001);
-    float inner = 1 - smoothstep(max(0, _OV_InnerWidth - soft), _OV_InnerWidth + soft, depth);
+    float arrival = 0.5 + 0.5 * sin(time * TWO_PI / max(_OV_FoamPeriod, 0.1) + noise * 0.7);
+    // Vadim 23.10: the shore band breathes with the arrival and has a broken, lacy outer edge instead of a hard line;
+    // a thin fringe of moving foam flecks right next to it (limited to the first ~half metre of depth, never offshore).
+    // Vadim 27.10: the band laps in and out (wider swing) and leaves a fading wet trail while it retreats, so the water
+    // reads as moving; all foam stays inside this one band at the waterline.
+    float innerW = _OV_InnerWidth * (0.55 + 0.9 * arrival);
+    float edgeDepth = depth + (foamTexture - 0.5) * innerW * 0.9 + (noise - 0.5) * 0.08;
+    float inner = 1 - smoothstep(max(0, innerW - soft), innerW + soft, edgeDepth);
+    float lace = (1 - smoothstep(innerW, innerW * 2.2, depth)) * smoothstep(0.52, 0.72, foamTexture + noise * 0.2) * 0.85;
+    inner = max(inner, lace);
+    float trail = (1 - smoothstep(innerW, _OV_InnerWidth * 1.45 + soft, depth)) * (1 - arrival) * smoothstep(0.35, 0.7, foamTexture) * 0.45;
+    inner = max(inner, trail);
     // Camera depth catches opaque vertical posts/rocks/vehicles as well as the terrain slope.
     float contact = 1 - smoothstep(0, max(_OV_IntersectionWidth, 0.001), eyeGap);
     inner = max(inner, contact);
-    float arrival = 0.5 + 0.5 * sin(time * TWO_PI / max(_OV_FoamPeriod, 0.1) + noise * 0.7);
     float centre = _OV_InnerWidth + _OV_OuterTravel * (0.25 + 0.75 * arrival);
     float outer = 1 - smoothstep(_OV_OuterWidth, _OV_OuterWidth + soft, abs(depth - centre));
     // The upstream animated depth-contour/dissolve idea, rescaled to metres and softened.
@@ -289,7 +299,9 @@ half4 WaterFragment(WaterVaryings i) : SV_Target
     flowFoam = smoothstep(0.10, 0.38, streak) * _OV_FlowFoam * saturate(length(velocity) * 3);
     flowFoam *= (1 - detailFade) * lerp(0.4, 1, 1 - smoothstep(0, 2.5, depth));
 #endif
-    float foam = saturate(max(inner, outer) + caps + flowFoam);
+    // Vadim 27.10: white only where the water meets the shore. No second offshore band (outer), no crest caps and no
+    // river streaks: they read as static white blotches in open water. The terms stay computed for the material UI.
+    float foam = saturate(inner + 0 * (outer + caps + flowFoam));
 
 #if defined(_ENABLEREFRACTION)
     float2 offset = TransformWorldToViewDir(n, false).xy * _OV_Refraction;
@@ -320,6 +332,9 @@ half4 WaterFragment(WaterVaryings i) : SV_Target
     colour += _OV_SunColor.rgb * sun.color * glint;
     colour = lerp(colour, _OV_FoamColor.rgb * lerp(0.92, 1, sun.shadowAttenuation), foam * _OV_FoamColor.a);
     // Surface alpha stays opaque: OpaqueTexture transmission is composited once, never double-blended.
+    // Vadim 22.10: the surface follows the day/night light (sun colour/intensity + ambient), not a fixed colour.
+    float dayLight = saturate(Luminance(sun.color) * 0.85 + Luminance(SampleSH(half3(0, 1, 0))) * 0.6);
+    colour *= lerp(0.10, 1.0, dayLight);
     return half4(MixFog(colour, i.waveFog.y), 1);
 #endif
 #endif

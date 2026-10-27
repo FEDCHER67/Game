@@ -10,6 +10,7 @@ namespace OnlyVolunteers.Map.Look.V3
     public sealed class DistrictAerial19V01 : MonoBehaviour
     {
         public float clearStart=35, clearHalf=175, portHalf=100, hazyHalf=150;
+        public float outsideHalf=420;   // Vadim 23.10: far haze also between districts (hills), so the whole map is never visible at once
         public float lowHeightMultiplier=1.12f, highHeightMultiplier=.85f;
         public Vector2 heightRange=new Vector2(0,24);
         public float outerEdgeBlend=100;
@@ -31,14 +32,15 @@ namespace OnlyVolunteers.Map.Look.V3
             var previous=new Saved{camera=camera,vectors=new Vector4[Names.Length],ground=Shader.GetGlobalTexture("_G18AerialGround")};
             for(int i=0;i<Names.Length;i++)previous.vectors[i]=Shader.GetGlobalVector(Names[i]);
             saved.Push(previous);
-            float rough=0,forest=0,coefficient=0;
+            float rough=0,forest=0,coefficient=0,total=0;
             for(int i=0;i<districts.Length;i++)
             {
-                string id=districts[i].id;float w=weights[i];
+                string id=districts[i].id;float w=weights[i];total+=w;
                 if(id=="residential")rough+=w;
                 else if(id=="forest")forest+=w;
                 else coefficient+=w*Mathf.Log(2)/Mathf.Pow(Mathf.Max(1,HalfDistance(id)-clearStart),2);
             }
+            coefficient+=Mathf.Max(0,1-total)*Mathf.Log(2)/Mathf.Pow(Mathf.Max(1,outsideHalf-clearStart),2);
             LastHorizon=horizon;LastClear=new Vector4(clearStart,coefficient,lowHeightMultiplier,highHeightMultiplier);
             Shader.SetGlobalVector(Names[0],horizon.linear);
             Shader.SetGlobalVector(Names[1],LastClear);

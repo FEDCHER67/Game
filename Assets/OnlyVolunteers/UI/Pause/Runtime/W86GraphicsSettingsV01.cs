@@ -73,7 +73,7 @@ namespace OnlyVolunteers.UI.Pause
 
         public static GfxValues Defaults()
         {
-            var v = Preset(2, CurrentDisplay());
+            var v = Preset(0, CurrentDisplay()); // Vadim 27.10: start on Low (RTX 3060 Ti); players raise it in the Escape menu
             v.VSync = 0; v.FpsCap = 0;
             return v;
         }

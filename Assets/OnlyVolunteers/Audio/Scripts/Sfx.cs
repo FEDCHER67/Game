@@ -55,6 +55,9 @@ namespace OnlyVolunteers.Audio
             float now = Time.time;
             // LastPlayed outlives a Play session in the Editor (the asset stays loaded) while Time.time restarts at 0.
             if (now >= entry.LastPlayed && now - entry.LastPlayed < entry.Cooldown) return false;
+            // A 3D sound past its range is not heard at all (logarithmic rolloff never reaches zero: NPCs on the far side of
+            // the map were audible everywhere).
+            if (entry.SpatialBlend > 0.5f && TooFar(position, entry.MaxDistance)) return false;
             AudioClip clip = Pick(entry);
             if (clip == null) return false;
             int voice = Voice(library, entry.Priority);
@@ -75,6 +78,15 @@ namespace OnlyVolunteers.Audio
             source.Play();
             _started[voice] = now;
             return true;
+        }
+
+        private static AudioListener _listener;
+
+        private static bool TooFar(Vector3 position, float maxDistance)
+        {
+            if (_listener == null || !_listener.isActiveAndEnabled) _listener = Object.FindFirstObjectByType<AudioListener>();
+            if (_listener == null) return false;
+            return (_listener.transform.position - position).sqrMagnitude > maxDistance * maxDistance;
         }
 
         // A random clip, not the one played last time when there is a choice. An empty slot (a clip missing on this
@@ -148,6 +160,7 @@ namespace OnlyVolunteers.Audio
             _voices = null;
             _started = null;
             _next = 0;
+            _listener = null;
         }
     }
 }

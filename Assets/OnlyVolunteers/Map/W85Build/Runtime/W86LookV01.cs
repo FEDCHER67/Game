@@ -112,7 +112,7 @@ namespace OnlyVolunteers.Map.W85
         // "for the very best PCs"). ReflectionSize (128 px) below high, MaxReflectionSize (256 px) from high.
         // Costs: docs/reports/GRAPHICS_SETTINGS_NOTES_2026-10-25_RU.md
         public const string PrefReflections = "ov_gfx_reflections";
-        public const int ReflectionsDefault = 4;
+        public const int ReflectionsDefault = 1; // Vadim 27.10: defaults = the Low preset (W86GraphicsSettingsV01.Preset(0))
         static readonly int[] FacesPerTier = { 0, 0, 1, 2, 3, 4, 6 };
         public const string PrefLod = "ov_gfx_lod";               // 0 near (more FPS), 1 normal, 2 far (default 1)
         public const string PrefRenderScale = "ov_gfx_render_scale"; // percent, 50..100 (default 100)
@@ -141,22 +141,22 @@ namespace OnlyVolunteers.Map.W85
                     savedShadowRes = rp.mainLightShadowmapResolution; savedRenderScale = rp.renderScale; savedMipLimit = QualitySettings.globalTextureMipmapLimit; savedBorder = rp.cascadeBorder;
                 }
 #endif
-                int msaa = PlayerPrefs.GetInt(PrefMsaa, 8);
+                int msaa = PlayerPrefs.GetInt(PrefMsaa, 2);
                 rp.msaaSampleCount = msaa >= 8 ? 8 : msaa >= 4 ? 4 : msaa >= 2 ? 2 : 1;
-                int sh = Mathf.Clamp(PlayerPrefs.GetInt(PrefShadows, 2), 0, 2);
+                int sh = Mathf.Clamp(PlayerPrefs.GetInt(PrefShadows, 1), 0, 2);
                 if (sh <= 0) rp.shadowDistance = 0f;
                 else if (sh == 1) { rp.shadowDistance = 50f; rp.mainLightShadowmapResolution = 2048; }
                 else { rp.shadowDistance = 120f; rp.mainLightShadowmapResolution = 4096; }
                 // W86 (Fedya 25.10, video_02): at night the moon throws the towers' shadow across the plaza and its far edge was the hard
                 // shadow-distance cut, a straight line riding with the camera. The last cascade now fades out over its last 35 %.
                 rp.cascadeBorder = .35f;
-                rp.renderScale = Mathf.Clamp(PlayerPrefs.GetInt(PrefRenderScale, 100), 50, 100) / 100f;
+                rp.renderScale = Mathf.Clamp(PlayerPrefs.GetInt(PrefRenderScale, 85), 50, 100) / 100f;
             }
-            QualitySettings.globalTextureMipmapLimit = Mathf.Clamp(PlayerPrefs.GetInt(PrefTextures, 0), 0, 2);
-            W85GrassRenderer.SetQuality((GrassQuality)Mathf.Clamp(PlayerPrefs.GetInt("ov_grass_quality", (int)GrassQuality.High), 0, 3));
+            QualitySettings.globalTextureMipmapLimit = Mathf.Clamp(PlayerPrefs.GetInt(PrefTextures, 1), 0, 2);
+            W85GrassRenderer.SetQuality((GrassQuality)Mathf.Clamp(PlayerPrefs.GetInt("ov_grass_quality", (int)GrassQuality.Low), 0, 3));
 
             if (baseBuildingLod0 < 0f) baseBuildingLod0 = BuildingLod0Height;
-            BuildingLod0Height = baseBuildingLod0 * LodScale[Mathf.Clamp(PlayerPrefs.GetInt(PrefLod, 1), 0, 2)];
+            BuildingLod0Height = baseBuildingLod0 * LodScale[Mathf.Clamp(PlayerPrefs.GetInt(PrefLod, 0), 0, 2)];
             TuneLods();
 
             reflTier = Mathf.Clamp(PlayerPrefs.GetInt(PrefReflections, ReflectionsDefault), 0, 6);
