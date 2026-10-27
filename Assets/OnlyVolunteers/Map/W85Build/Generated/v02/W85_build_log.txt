@@ -5,9 +5,10 @@ v04 rollout: on (14 surfaces, 28 kit pieces, 29 kit materials, HH house walls 7,
 models: M1 45 instances / 23 models, M2 161 ids
 ground fit grading: 1 footprint(s) levelled in the built terrain: 02-H19 1,52 -> ~1.2 m
 bank bands: 6 water bodies, 33790 splat texels (T129 / T131 pebbles = layer 12, T06 / T22 mud -> L03 dirt)
-terrain 1744x135x950 m, heightmap 2049, splat 2048 x 11 layers, 4760 trees, height probe 20,00 m (expected 20,00)
+G45 forest: 2519 -> 2141; removed 378 stable placements
+terrain 1744x135x950 m, heightmap 2049, splat 2048 x 11 layers, 4381 trees, height probe 20,00 m (expected 20,00)
 ok: terrain
-steppe backdrop: terrain 1025 x 1025, 6976 x 4096 m at (-2002,9, 942,0), heights -20..280 m, layer TransparentFX, no collider / shadows; seam z 950 max |dh| 0,01 m; haze end 3800 m
+steppe backdrop: terrain 1025 x 1025, 6976 x 4096 m at (-2002,9, 942,0), heights -20..280 m, layer TransparentFX, no collider / shadows; seam z 950 max |dh| 0,09 m; haze end 3800 m
 ok: steppe backdrop
 bridge bridge_tramduro: 209 m, deck 8,8 m, 9 piers
 roads: 18 meshes (own grade-limited heights, mesh colliders), 2 bridges; dirt roads / sand ruts = splat
@@ -18,7 +19,7 @@ ok: tunnel
 river river: 205 segments in 4 runs at the s03 surface (4,0..30,0 m), skipped: underground spans [61..68] [118..128], falls [24..27], lakes; 3 cascade foam splashes, 8 portal rocks
 waterfall waterfall_mountain: lip 29,3 -> base 12,0 m (drop 17,3 m, 3,9 m wide), 15 rows, 0 sheet pushes off the rock face, foam r 6 m, 2 framing rocks
 waterfall waterfall_sea: lip 4,0 -> base 0,0 m (drop 4,0 m, 7,0 m wide), 4 rows, 0 sheet pushes off the rock face, foam r 5 m, 2 framing rocks
-water: dense sea grid 103505 quads + far plane, 6 inland bodies (flow mode), sea return zone 672 triangles all round; WaterData Assets/OnlyVolunteers/Map/W85Build/Generated/v02/W85_WaterData_v02.asset: River 410, Lake 3, Bog 1, Pond 1, Sea 1
+water: dense sea grid 103523 quads + far plane, 6 inland bodies (flow mode), sea return zone 672 triangles all round; WaterData Assets/OnlyVolunteers/Map/W85Build/Generated/v02/W85_WaterData_v02.asset: River 410, Lake 3, Bog 1, Pond 1, Sea 1
 ok: water
 border: invisible wall 60 m along the border fence line (115 pts) + 7 segments past the ends; steppe = backdrop terrain; fence / KPP / towers built with the Rough district (scope north_border)
 ok: border
@@ -36,17 +37,17 @@ hamlet: 64 buildings, 129 props, 1 zone surfaces, 0 fences, 0 walls, 0 district 
 ok: district hamlet_v85
 port: 7 buildings, 68 props, 2 zone surfaces, 4 fences, 0 walls, 0 district roads, 1 piers, 0 alley plugs, 0 hedged plots
 ok: district port_v85
-quiet_valley: 2 buildings, 1 props, 4 zone surfaces, 1 fences, 0 walls, 1 district roads, 0 piers, 0 alley plugs, 0 hedged plots
+quiet_valley: 2 buildings, 1 props, 5 zone surfaces, 1 fences, 0 walls, 1 district roads, 0 piers, 0 alley plugs, 0 hedged plots
 ok: district quiet_valley_v85
 rough: 90 buildings, 95 props, 4 zone surfaces, 5 fences, 0 walls, 1 district roads, 0 piers, 0 alley plugs, 0 hedged plots
 ok: district rough_v85
 tramduro: 3 buildings, 26 props, 5 zone surfaces, 1 fences, 0 walls, 0 district roads, 0 piers, 0 alley plugs, 0 hedged plots, 3 patrol loops
 ok: district tramduro_v85
-retaining walls: 5 road cut runs (Elite stone road inner side, tunnel portal approaches) + 4 villa terraces, 620 m in all
+retaining walls: 5 road cut runs (Elite stone road inner side, tunnel portal approaches) + 4 villa terraces, 616 m in all
 ok: retaining walls
-view pocket view_b_spur: 1 terrain tree(s) removed from the pocket; gravel 28-gon at 46,0 m, stone parapet + rail 25 m in 2 run(s) on the open rim (11 posts), 2 benches facing (0,7, -0,8), lamp on, no sign
+view pocket view_b_spur: 0 terrain tree(s) removed from the pocket; gravel 28-gon at 46,0 m, stone parapet + rail 25 m in 2 run(s) on the open rim (11 posts), 2 benches facing (0,7, -0,8), lamp on, no sign
 ok: view pocket
-rock faces: 149386 m2 steeper than 35 deg -> 174 rock skin chunks (298772 tris, box-projected UVs, edges sunk into the ground), 387 outcrops on faces > 50 deg
+rock faces: 149513 m2 steeper than 35 deg -> 177 rock skin chunks (299026 tris, box-projected UVs, edges sunk into the ground), 388 outcrops on faces > 50 deg
 ok: rock faces
 details by rules: 505 placed (downtown_lamps 115, hydrants 123, parked_cars 60, traffic_lights 22, rough_benches 68, rural_signs 9, total 505)
 ok: details
@@ -62,8 +63,10 @@ ok: light
 W86 post pass: 70 renderers re-materialled
 T98 pools: 4 basins, 886 terrain hole cells cut
 ok: W86 rollout post pass
-decals: 435 renderers (T123_road_markings 40, T124_road_wear 160, T124_street_utility 60, T124_oil 82, T124_ground 45, T124_oil_film 1, T134_shore_foam 41, T134_river_foam 6), chunks 64 / 128 m, LOD cull at 2 lod bias / FOV 70; district roads with decals 3, Hamlet dung patches skipped (no dung texture) 4, roads with decals 19, T123 centre dashes 253, T123 Downtown centre dashes 462, T123 Downtown parking-lane line runs 170, T123 edge line runs 52, T123 lane arrows 12, T123 stall lines 60, T123 stop lines 80, T123 zebra stripes 176, T123 zebras 16, T124 beach oil spill drops 24, T124 beach oil spray 153, T124 broken edges (GPT) 35, T124 Construction puddles 3, T124 cracks 142, T124 cracks (Downtown) 98, T124 damp patches 13, T124 drains at the junction corners (Downtown) 184, T124 drains at the kerb 8, T124 drains at the kerb (Downtown) 158, T124 Hamlet mud patches 6, T124 manholes 6, T124 manholes (Downtown) 73, T124 manholes (Rough, sunk ring) 9, T124 oil at fuel pumps 25, T124 oil at garage gates 75, T124 oil at the drums 5, T124 oil drips on roads 24, T124 oil film on the sea 9, T124 oil in parking stalls 10, T124 oil in the parking strip (Downtown) 99, T124 oil on yards / pads 87, T124 oil under vehicles 22, T124 patches 46, T124 patches (Downtown) 26, T124 patches (GPT) 9, T124 puddles in the Construction ruts 10, T124 puddles in the Hamlet ruts 25, T124 puddles in the Rough tracks 33, T124 puddles on asphalt (GPT) 14, T124 puddles on the forest roads 14, T124 Rough alligator 17, T124 Rough cold-mix 19, T124 Rough gravel 7, T124 tar seams 68, T124 wear on yards / pads 67, T134 river bank trails 19, T134 river cascade bands 4, T134 river rapids bands 21, T134 shore foam metres 6324, T134 shore foam runs 34; 57,3 s
+decals: 434 renderers (T123_road_markings 40, T124_road_wear 160, T124_street_utility 60, T124_oil 82, T124_ground 45, T124_oil_film 1, T134_shore_foam 40, T134_river_foam 6), chunks 64 / 128 m, LOD cull at 2 lod bias / FOV 70; district roads with decals 3, Hamlet dung patches skipped (no dung texture) 4, roads with decals 19, T123 centre dashes 253, T123 Downtown centre dashes 462, T123 Downtown parking-lane line runs 170, T123 edge line runs 52, T123 lane arrows 12, T123 stall lines 60, T123 stop lines 80, T123 zebra stripes 176, T123 zebras 16, T124 beach oil spill drops 24, T124 beach oil spray 153, T124 broken edges (GPT) 35, T124 Construction puddles 3, T124 cracks 142, T124 cracks (Downtown) 98, T124 damp patches 13, T124 drains at the junction corners (Downtown) 184, T124 drains at the kerb 8, T124 drains at the kerb (Downtown) 158, T124 Hamlet mud patches 6, T124 manholes 6, T124 manholes (Downtown) 73, T124 manholes (Rough, sunk ring) 9, T124 oil at fuel pumps 25, T124 oil at garage gates 75, T124 oil at the drums 5, T124 oil drips on roads 24, T124 oil film on the sea 9, T124 oil in parking stalls 10, T124 oil in the parking strip (Downtown) 99, T124 oil on yards / pads 87, T124 oil under vehicles 22, T124 patches 46, T124 patches (Downtown) 26, T124 patches (GPT) 9, T124 puddles in the Construction ruts 10, T124 puddles in the Hamlet ruts 25, T124 puddles in the Rough tracks 33, T124 puddles on asphalt (GPT) 14, T124 puddles on the forest roads 14, T124 Rough alligator 17, T124 Rough cold-mix 19, T124 Rough gravel 7, T124 tar seams 68, T124 wear on yards / pads 67, T134 river bank trails 19, T134 river cascade bands 4, T134 river rapids bands 21, T134 shore foam metres 5652, T134 shore foam runs 19; 54,7 s
 ok: W86 decals
+[G46] 58 road meshes and colliders share source profiles; tunnel sections welded; 0 unsupported cliff rocks seated
+ok: G46 road surfaces
 roof test: 425 buildings, failing 0; ridge rays 1473 (missed 0), sweeps 302 (missed 0)
 floating check: 260 raised roof / canopy / awning / porch / shelter pieces, 0 floaters, 0 fixes (support posts / put down)
 ground fit: 456 building footprints of Assets/OnlyVolunteers/Map/W85Build/Data/v02, 0 errors (ground range > 1,5 m), 1 warnings (> 1 m)
@@ -75,7 +78,7 @@ look rectangles (data v02): old_town (780, 160)-(1272, 528), beach (790, 46)-(15
 fog: terrainWorld (-120.00, -120.00, 1728.00, 1024.00) -> (0.00, 0.00, 1744.00, 950.00), 18 mist banks moved to W85 Rough / Forest
 fog x1,08: roughDensity 0,01933, forestDensity 0,0281, groundExtinction 0,0594, district linear fog end pulled in
 i10 look copied: palette/weather/fog/aerial + 11 light volumes, G22 sky, V19Wind, Sun, PostFX_v17; terrain material V3_Terrain, camera FOV 70 far 460
-grass: 1365894 blades in 2757 chunks (beach=13118; between_districts=986317; elite=9645; fields=15427; forest=3600; industrial=1248; old_town=40299; residential=37081; tramduro=15704; transition=5918; village=237537; 27667 hard tris; rejectedHard=829920; seconds=10,9); W85GrassRenderer (draw distance High 60 / Med 50 / Low 40 m, density falloff, horizon occlusion, quality setting), mesh / material / compute: True
+grass: 1365405 blades in 2754 chunks (beach=13124; between_districts=985958; elite=9650; fields=15112; forest=3788; industrial=1248; old_town=40285; residential=37081; tramduro=15704; transition=5918; village=237537; 28173 hard tris; rejectedHard=830352; seconds=10,6); W85GrassRenderer (draw distance High 60 / Med 50 / Low 40 m, density falloff, horizon occlusion, quality setting), mesh / material / compute: True
 ok: i10 look
 far view: W85FarView on Map_W85_v02: camera far 4000 m for layer TransparentFX (steppe backdrop, far sea), other layers keep each camera's own far clip
 north view fog: Rough fog pass -> OnlyVolunteers/W86/DistrictFogNorthView: light haze (150-2600 m, max 0,82) past z 880-946 (fence band) and on ridges over 22-34 m near it
@@ -88,4 +91,4 @@ grey placeholders left (untextured primitive cube / cylinder props): 0; textured
 materials: 14 reused, 131 created, 10 V19 palette-field copies (field off), 60 slot materials
 terrain re-applied after the asset save: height probe 20,00 m (expected 20,00 m)
 steppe backdrop re-applied after the asset save: probe 32,2 m
-built in 454 s
+built in 440 s

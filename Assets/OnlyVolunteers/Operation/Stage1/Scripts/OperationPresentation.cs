@@ -762,10 +762,20 @@ namespace OnlyVolunteers.Operation.Stage1
             // Awake on the table: scared. Strapped (torso) he fights the straps; unstrapped he first lies there, then
             // wriggles towards the edge (the Struggle clip) until the escape clip takes over.
             float escape = Mathf.Clamp01(s.escapeProgress / Mathf.Max(0.1f, tuning.escapeSeconds));
-            bool fighting = OperationStraps.Held(s, tuning) || s.unbuckleProgress > 0f || escape > 0.25f;
+            // W86 fix (the patient who woke strapped and lay still for 80 s): with the clip-driven escape (round 4) the
+            // round-3 signals above never run, and an awake patient who cannot start an escape clip (both wrists strapped
+            // and a leg free: OperationRules.NextEscapeClip = -1; or the open, unsutured belly that keeps him on the
+            // table) was neither Held nor escaping, so he stayed in TableAwake. He fights instead: Struggle, and his free
+            // limbs flail as in the round-3 slide.
+            bool clipEscape = tuning.escapeClips && !tuning.torsoStrap;
+            bool anyStrap = false;
+            for (int i = 0; i < 4; i++) anyStrap |= s.restraints[i];
+            bool stuck = clipEscape && (anyStrap || s.CavityOpen);
+            bool fighting = OperationStraps.Held(s, tuning) || s.unbuckleProgress > 0f || escape > 0.25f || stuck;
+            float flail = stuck ? 1f : escape;
             rig.SetOpState(fighting ? OperationPatientRig.StateStruggle : OperationPatientRig.StateTableAwake);
             rig.Face(10f + weak * 30f, 80f + weak * 20f, 30f + 40f * Mathf.Max(0f, Mathf.Sin(t * 2.3f)), 0f);
-            for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0f : FreeLimbStruggle * escape;
+            for (int i = 0; i < 4; i++) rig.LimbMotion[i] = s.restraints[i] ? 0f : FreeLimbStruggle * flail;
         }
 
         // ---------- cues ----------

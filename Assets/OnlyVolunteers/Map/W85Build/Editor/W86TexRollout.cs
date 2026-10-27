@@ -213,6 +213,7 @@ namespace OnlyVolunteers.Map.W85
                 if (district.Contains("valley"))
                 {
                     if (kind.Contains("lab")) { StripVisuals(go); ValleyLabQ3(go, b, fp, id); return; }
+                    // CasinoQ3 reads the source entrance facing; G45 north front includes the blank sign and portico.
                     if (kind == "casino") { StripVisuals(go); CasinoQ3(go, b, fp, id); return; }
                 }
                 if (district.Contains("beach"))
@@ -707,7 +708,7 @@ namespace OnlyVolunteers.Map.W85
             }
             foreach (var t in Prefix("Zone_02-FISH-DOCK")) { Set(t, T1M("T1_T19b_deck"), "T19 jetty deck"); JettyPiles(t); }
             // --- Downtown yards (T66 c), port yard / pier (T89 b, T90 b), Elite piers (T100 b), beach (T112 b, T113 b), Tramduro concrete (XT1 a)
-            foreach (var t in all.Where(t => t.name.StartsWith("Zone_05-") && (t.name.Contains("yard") || t.name.Contains("forecourt") || t.name.Contains("parking")))) Set(t, T1M("T1_T66c_slabs"), "T66 Downtown yards (slabs)");
+            foreach (var t in all.Where(t => t.name.StartsWith("Zone_05-") && (t.name.Contains("yard") || t.name.Contains("forecourt") || t.name.Contains("parking")) && !t.name.StartsWith("Zone_05-03-parking"))) Set(t, T1M("T1_T66c_slabs"), "T66 Downtown yards (slabs)");
             foreach (var nm in new[] { "Zone_06-yard", "Zone_06-09-loading-apron" }) Set(Named(nm), T2M("T2M_T89b_yard"), "T89 port yard");
             foreach (var t in Prefix("Pier_06-")) Set(t, T2M("T2M_T90b_pier"), "T90 port pier");
             foreach (var t in Prefix("PierSkirt_06-")) Set(t, T2M("T2M_T90b_skirt"), "T90 port pier");
@@ -719,6 +720,7 @@ namespace OnlyVolunteers.Map.W85
             HelipadXT1(Named("Zone_10-helipad"), Named("District_tramduro"));
             // --- DC3 square paving (cool grey slabs)
             Set(Named("Zone_05-04-plaza"), DcPaving(), "DC3 square paving");
+            foreach (var t in all.Where(t => t.name.StartsWith("Zone_05-03-parking"))) Set(t, DcPaving(), "DC3 square paving (under the towers, Fedya 25.10)");
             // --- Elite stone road (E2: sandstone setts, rubble parapet)
             Set(Named("Road_elite_stone_road"), MapReadyT7("setts_sand", Tile("cobble_SK2c")), "E2 stone road (setts)");
             Set(Named("Parapet_elite_stone_road"), MapReadyT7("rubble_grey", 2f), "E2 stone road parapet");

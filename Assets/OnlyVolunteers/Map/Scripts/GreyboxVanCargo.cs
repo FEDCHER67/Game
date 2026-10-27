@@ -821,6 +821,7 @@ namespace OnlyVolunteers.Map
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             GreyboxPawn pawn = _seat != null ? _seat.Pawn : null;
             bool near = pawn != null && pawn.Controlled && Vector3.Distance(pawn.Position, transform.position) <= HudRadius;
             if ((_seat == null || !_seat.Driving) && !near) return;

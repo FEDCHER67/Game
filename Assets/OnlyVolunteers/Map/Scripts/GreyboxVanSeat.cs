@@ -102,7 +102,7 @@ namespace OnlyVolunteers.Map
         private void Update()
         {
             // The frame the interactor used E to get in must not also get straight back out.
-            if (Pawn == null || !Driving || !Input.GetKeyDown(KeyCode.E) || !GreyboxInput.EFree) return;
+            if (Pawn == null || !Driving || OnlyVolunteers.UI.OvMenuGate.Blocking || !Input.GetKeyDown(KeyCode.E) || !GreyboxInput.EFree) return;
             if (Mathf.Abs(_van.SpeedKmh) <= MaxExitSpeedKmh) GetOut();
         }
 
@@ -249,6 +249,7 @@ namespace OnlyVolunteers.Map
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             // On foot the hints come from GreyboxInteractor.
             if (!Driving) return;
             const string hint = "E — выйти из бусика (на малой скорости)     1–4, F — двери";

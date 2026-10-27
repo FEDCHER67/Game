@@ -150,6 +150,10 @@ namespace OnlyVolunteers.Capture
         public int bodyBags = 2;
         public List<CaptureCorpseSave> corpses = new List<CaptureCorpseSave>();
         public List<string> completedPatients = new List<string>();
+        /// <summary>W86: the host player's cash (his NetworkInventory: the first-buyer crate pays into it). hasCash false =
+        /// a save written before cash was saved: the load keeps the cash he has and restores the rest as before.</summary>
+        public bool hasCash;
+        public int cash;
     }
 
     /// <summary>Dev/test hooks in the Core assembly so PlayMode tests (which cannot see Assembly-CSharp) can drive the

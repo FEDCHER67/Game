@@ -45,6 +45,7 @@ namespace OnlyVolunteers.Map
 
         private void Update()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu
             float x = (Input.GetKey(KeyCode.D) ? 1f : 0f) - (Input.GetKey(KeyCode.A) ? 1f : 0f);
             float z = (Input.GetKey(KeyCode.W) ? 1f : 0f) - (Input.GetKey(KeyCode.S) ? 1f : 0f);
             Vector3 forward = CameraTransform != null

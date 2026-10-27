@@ -328,6 +328,7 @@ namespace OnlyVolunteers.Capture
         private void Update()
         {
             var d = D;
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu: no pick-up / throw / bag
             if (d == null || !d.Ready || d.Table == null || !d.Table.IsServerInitialized || d.Pawn == null) return;
             if (grabber == null) grabber = d.Pawn.GetComponent<NetworkGrabber>();
             var key = OpsInput.Keyboard; var mouse = OpsInput.Mouse;
@@ -453,6 +454,7 @@ namespace OnlyVolunteers.Capture
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             float charge = ThrowChargeShown;
             if (charge >= 0f && Time.unscaledTime - chargeSince > 0.12f) ThrowChargeIndicator.Draw(charge);
         }

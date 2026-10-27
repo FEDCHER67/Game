@@ -72,7 +72,7 @@ namespace OnlyVolunteers.Map
 
         private void Update()
         {
-            if (Pawn == null) return;
+            if (Pawn == null || OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu owns Q/E
 
             WeaponStun weapon = CurrentWeapon;
             _canHit = FindHit(weapon, out GreyboxNpc target, out HitZone zone, out Vector3 point);
@@ -346,6 +346,7 @@ namespace OnlyVolunteers.Map
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             if (Time.unscaledTime < _bodyModeShownUntil)
             {
                 var top = new GUIStyle(GUI.skin.label) { fontSize = 20, alignment = TextAnchor.MiddleCenter };

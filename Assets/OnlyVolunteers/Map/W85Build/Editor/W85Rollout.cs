@@ -1002,6 +1002,52 @@ namespace OnlyVolunteers.Map.W85
             (p.x > 185 && p.x < 470 && p.y > 365 && p.y < 625) || (p.x > 180 && p.x < 445 && p.y > 60 && p.y < 330) || (p.x > 520 && p.x < 665 && p.y > 60 && p.y < 300);
         static bool HamletLamp(Vector2 p) => p.x > 185 && p.x < 470 && p.y > 365 && p.y < 625;
 
+        /// <summary>W86 (Fedya 25.10): the play scene built before "every lamp lights" gets the missing lamp lights (forest, valley,
+        /// construction): the same flicker light + shadowed spot, added to the flicker list, the fog halos and the shadow budget.</summary>
+        public static string LightAllLamps(UnityEngine.SceneManagement.Scene scene)
+        {
+            var root = scene.GetRootGameObjects().FirstOrDefault(g => g.name.StartsWith("Map_W85_"));
+            if (!root) return "lamps: no map root";
+            var all = root.GetComponentsInChildren<Transform>(true).Where(x => (x.name.Contains("lamp") || x.name.Contains("Lamp")) && x.GetComponentInChildren<MeshRenderer>()).ToList();
+            var set = new HashSet<Transform>(all);
+            int added = 0, rebuilt = 0;
+            foreach (var lamp in all)
+            {
+                bool nested = false;
+                for (var p = lamp.parent; p != null; p = p.parent) if (set.Contains(p)) { nested = true; break; }
+                if (nested || HamletLamp(new Vector2(lamp.position.x, lamp.position.z))) continue;
+                var own = lamp.GetComponentsInChildren<Light>(true).Where(l => l.name == "Flicker").ToList();
+                if (lamp.GetComponentInChildren<Light>(true) && own.Count == 0) continue; // a lamp with its own other light (not ours)
+                // probe how many heads it has; a pole lit with fewer lights than heads (the old one-light-per-pole) is redone
+                var probe = NightLamps(lamp.gameObject, false); int heads = probe.Count; foreach (var l in probe) Object.DestroyImmediate(l.gameObject);
+                if (own.Count == heads && heads > 0) continue;
+                foreach (var l in own) Object.DestroyImmediate(l.gameObject);
+                NightLamps(lamp.gameObject, true);
+                if (own.Count == 0) added++; else rebuilt++;
+            }
+            // every registration rebuilt from the lights that exist now: no destroyed entries, no duplicates
+            var lights = root.GetComponentsInChildren<Light>(true).Where(l => l.name == "Flicker").ToList();
+            var spots = lights.Select(l => l.GetComponentsInChildren<Light>(true).FirstOrDefault(x => x != l && x.name == "Flicker_Spot")).Where(x => x).ToList();
+            var objs = scene.GetRootGameObjects();
+            foreach (var life in objs.SelectMany(g => g.GetComponentsInChildren<OnlyVolunteers.Map.Look.V3.DistrictLife19V02>(true)))
+                if (life.wornLamps != null && life.wornLamps.Length > 0) { life.wornLamps = lights.ToArray(); EditorUtility.SetDirty(life); }
+            foreach (var fog in objs.SelectMany(g => g.GetComponentsInChildren<OnlyVolunteers.Map.Look.V3.DistrictFog19V05>(true)))
+            {
+                var keep = fog.halos.Where(h => h.light && h.light.name != "Flicker").ToList(); // van headlights etc.
+                keep.AddRange(lights.Select(l => new OnlyVolunteers.Map.Look.V3.DistrictFog19V05.Halo { light = l, position = l.transform.position, size = 2.3f, colour = new Color(.78f, .86f, .91f, .36f) }));
+                fog.halos = keep.ToArray(); EditorUtility.SetDirty(fog);
+            }
+            foreach (var mb in objs.SelectMany(g => g.GetComponentsInChildren<MonoBehaviour>(true)).Where(m => m && m.GetType().Name == "SkyMapNight22I03"))
+            {
+                var so = new SerializedObject(mb); var p = so.FindProperty("lamps"); if (p == null) continue;
+                p.arraySize = lights.Count; for (int i = 0; i < lights.Count; i++) p.GetArrayElementAtIndex(i).objectReferenceValue = lights[i];
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
+            foreach (var budget in objs.SelectMany(g => g.GetComponentsInChildren<W85LampShadowBudget>(true)))
+            { budget.Spots = spots.ToArray(); EditorUtility.SetDirty(budget); break; }
+            return $"lamps: {added} newly lit, {rebuilt} multi-head lamps redone with one light per head; {lights.Count} head lights, {spots.Count} shadowed spots registered";
+        }
+
         static void UrbanLamps(Transform root)
         {
             SampleLamps.Clear();
@@ -1015,11 +1061,13 @@ namespace OnlyVolunteers.Map.W85
                 for (var p = lamp.parent; p != null; p = p.parent) if (set.Contains(p)) { nested = true; break; }
                 if (nested || lamp.GetComponentInChildren<Light>()) continue;
                 Vector2 q = new(lamp.position.x, lamp.position.z);
-                if (RuralLamp(q)) { rural++; continue; }
-                var l = NightLamp(lamp.gameObject, true);
-                SampleLamps.Add(l);
-                var sp = l.GetComponentsInChildren<Light>(true).FirstOrDefault(x => x != l);
-                if (sp) spots.Add(sp);
+                if (HamletLamp(q)) { rural++; continue; } // W86 (Fedya 25.10): every lamp on the map lights up; the Hamlet has none by design
+                foreach (var l in NightLamps(lamp.gameObject, true)) // one light per head (double lanterns: two)
+                {
+                    SampleLamps.Add(l);
+                    var sp = l.GetComponentsInChildren<Light>(true).FirstOrDefault(x => x != l);
+                    if (sp) spots.Add(sp);
+                }
             }
             if (spots.Count > 0)
             {

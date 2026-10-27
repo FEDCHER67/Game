@@ -48,7 +48,7 @@ namespace OnlyVolunteers.Vehicles.Paint
         void Update()
         {
             var keyboard = Keyboard.current; var mouse = Mouse.current;
-            if (keyboard == null || mouse == null) return;
+            if (keyboard == null || mouse == null || OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu
             if (!mouse.leftButton.isPressed) strokeLimitedUntilRelease = false;
             if (TextOpen) return; // All gameplay shortcuts/paint/orbit suspended while typing.
             Ray ray = firstPerson ? new Ray(view.transform.position, view.transform.forward) : view.ScreenPointToRay(mouse.position.ReadValue());

@@ -151,8 +151,9 @@ namespace OnlyVolunteers.Map.Crowd
 
         private void Update()
         {
-            if (Input.GetKeyDown(OverlayKey)) ShowOverlay = !ShowOverlay;
-            if (Input.GetKeyDown(TimeOfDayKey))
+            bool keys = !OnlyVolunteers.UI.OvMenuGate.Blocking; // W86 pause menu
+            if (keys && Input.GetKeyDown(OverlayKey)) ShowOverlay = !ShowOverlay;
+            if (keys && Input.GetKeyDown(TimeOfDayKey))
             {
                 Evening = Evening < 0.5f ? 1f : 0f;
                 Hint(Evening > 0.5f ? "Толпа: вечер" : "Толпа: день");
@@ -462,6 +463,7 @@ namespace OnlyVolunteers.Map.Crowd
 
         private void OnGUI()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // the W86 pause menu covers the screen
             // OnGUI runs every frame (Layout + Repaint): nothing to draw = no work and no garbage.
             if (_hints.Count == 0 && !ShowOverlay) return;
             float now = Time.time;

@@ -293,7 +293,7 @@ namespace OnlyVolunteers.Network
 
         private void Update()
         {
-            if (localPlayer != null && Input.GetKeyDown(KeyCode.Escape))
+            if (localPlayer != null && !OnlyVolunteers.UI.OvMenuGate.MenuInstalled && Input.GetKeyDown(KeyCode.Escape)) // the W86 pause menu owns Escape where installed
             {
                 panelOpen = !panelOpen;
                 localPlayer.SetPanelOpen(panelOpen);

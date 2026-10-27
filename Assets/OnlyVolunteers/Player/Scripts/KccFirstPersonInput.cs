@@ -93,6 +93,19 @@ namespace OnlyVolunteers.Player
             }
         }
 
+        /// <summary>OV W86: re-reads the eye levels after an instance changed its standing height
+        /// (GreyboxKccPawn.StandHeight), whichever Awake ran first. Eye = capsule top - EyeInset.</summary>
+        public void RefreshEyeHeights()
+        {
+            _standingCapsuleTop = Character.StandCapsuleHeight;
+            _standingEyeHeight = _standingCapsuleTop - EyeInset;
+            _crouchedEyeHeight = Character.CrouchedCapsuleHeight - EyeInset;
+            _stoopedEyeHeight = Character.StoopedCapsuleHeight - EyeInset;
+            _visualEyeHeight = _visualCrouched ? _crouchedEyeHeight : _standingEyeHeight;
+            _eyeTransitionSpeed = Mathf.Abs(_standingEyeHeight - _crouchedEyeHeight) /
+                CrouchCameraTransitionTime;
+        }
+
         private void Awake()
         {
             _yaw = Character.transform.eulerAngles.y;

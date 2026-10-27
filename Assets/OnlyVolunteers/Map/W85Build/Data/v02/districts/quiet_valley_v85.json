@@ -150,13 +150,13 @@
     {
      "pos": [
       538.8,
-      154.4
+      171.6
      ],
-     "facing_deg": 270.0,
+     "facing_deg": 90.0,
      "kind": "door",
      "w_m": 6.4,
      "canopy": true,
-     "notes": "main entrance to the beach-gate forecourt"
+     "notes": "main entrance to the north public-approach forecourt (G45)"
     }
    ],
    "sockets": {
@@ -1926,23 +1926,30 @@
    "poly": [
     [
      514.8,
-     149.2
+     176.8
     ],
     [
      564.4,
-     149.2
+     176.8
     ],
     [
      564.4,
-     154.8
+     171.2
     ],
     [
      514.8,
-     154.8
+     171.2
     ]
    ],
    "surface": "concrete_SK3c",
-   "notes": "casino forecourt to the beach gate"
+   "notes": "casino north forecourt to the public road and west parking (G45)"
+  },
+  {
+   "id": "08-casino-parking-north-link",
+   "kind": "plaza",
+   "poly": [[506.4, 171.2], [516.8, 171.2], [516.8, 176.8], [506.4, 176.8]],
+   "surface": "concrete_SK3c",
+   "notes": "G45: north turn from the west parking aisle to the mirrored forecourt; stalls stop south of the turn"
   },
   {
    "id": "08-casino-parking",
@@ -5097,22 +5104,28 @@
    "poly": [
     [
      514.8,
-     149.2
+     176.8
     ],
     [
      564.4,
-     149.2
+     176.8
     ],
     [
      564.4,
-     154.8
+     171.2
     ],
     [
      514.8,
-     154.8
+     171.2
     ]
    ],
    "why": "plaza"
+  },
+  {
+   "id": "08-no-tree-casino-parking-north-link",
+   "kind": "no_tree",
+   "poly": [[506.4, 171.2], [516.8, 171.2], [516.8, 176.8], [506.4, 176.8]],
+   "why": "G45 parking access apron"
   },
   {
    "id": "08-no-tree-casino-parking",

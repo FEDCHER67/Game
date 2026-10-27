@@ -155,6 +155,7 @@ namespace OnlyVolunteers.Phone
 
         private void Update()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu: the phone keeps its state underneath, no Tab / clicks / look writes
             // isActiveAndEnabled: on the map the whole pawn is switched off while driving the van.
             bool controlAllowed = playerInput == null || playerInput.isActiveAndEnabled;
             if (!controlAllowed)

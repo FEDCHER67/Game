@@ -91,6 +91,7 @@ namespace OnlyVolunteers.Capture
             kitGo.transform.SetParent(transform, false);
             Kit = kitGo.AddComponent<CaptureFieldKit>();
             gameObject.AddComponent<CaptureGrabArbiter>().Init(Pawn);
+            BindCashDisplay();
             // The gurney brakes fully while any body is carried near it (a captured NPC, a corpse, a body bag).
             var mapGrabber = Pawn != null ? Pawn.GetComponentInChildren<PhysicsGrabber>(true) : null;
             OperationTableBrake.CarryingNear = (point, range) =>
@@ -218,6 +219,16 @@ namespace OnlyVolunteers.Capture
             Bridge = gameObject.AddComponent<CaptureTableBridge>();
             Bridge.Bind(Table, this, Pawn);
             Debug.Log($"[CAPTURE] table spawned at {TableSpawn.position} (admission mode)");
+        }
+
+        /// <summary>W86: one balance on screen. The money is the player's NetworkInventory (the first-buyer crate pays it,
+        /// the capture save keeps it); the hotbar belongs to the map's LocalInventory (its start cash is not this money),
+        /// so the hotbar's "$" reads the NetworkInventory. The phone binds itself (GreyboxPhone).</summary>
+        private void BindCashDisplay()
+        {
+            var wallet = Pawn != null ? Pawn.GetComponent<NetworkInventory>() : null;
+            if (wallet == null) return;
+            foreach (var hud in Pawn.GetComponentsInChildren<InventoryHud>(true)) hud.CashSource = wallet;
         }
 
         /// <summary>Game time when the save was restored (the clocks run from here).</summary>
@@ -348,7 +359,7 @@ namespace OnlyVolunteers.Capture
                 if (npc != null && npc.isActiveAndEnabled && (npc.State == NpcState.Down || npc.InCargo) && !npc.TryGetComponent(out CaptureNpc _))
                     Ensure(npc);
             Keyboard key = OpsInput.Keyboard;
-            if (key != null && key.kKey.wasPressedThisFrame && !tableMode)
+            if (key != null && key.kKey.wasPressedThisFrame && !tableMode && !OnlyVolunteers.UI.OvMenuGate.Blocking)
             {
                 if (key.leftShiftKey.isPressed || key.rightShiftKey.isPressed) NewGame();
                 else Save(true);

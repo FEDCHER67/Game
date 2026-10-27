@@ -703,8 +703,11 @@ namespace OnlyVolunteers.Operation.Stage1
             foreach (var player in FindObjectsByType<NetworkPlayer>(FindObjectsSortMode.None))
             {
                 if (player == null) continue;
-                float d = (player.transform.position - transform.position).sqrMagnitude;
-                if (d < best) { best = d; nearest = player.transform.position; any = true; }
+                // W86: the moving body (MotorPosition, as InReach), not the root: the capture map pawn's root stays where it
+                // spawned, so the root picked the side toward the player once the left-exit clips (v01b) were imported.
+                Vector3 at = player.MotorPosition;
+                float d = (at - transform.position).sqrMagnitude;
+                if (d < best) { best = d; nearest = at; any = true; }
             }
             if (!any && Camera.main != null) { nearest = Camera.main.transform.position; any = true; }
             if (!any) return;

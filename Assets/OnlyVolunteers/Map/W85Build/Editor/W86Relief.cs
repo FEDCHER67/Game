@@ -47,7 +47,7 @@ namespace OnlyVolunteers.Map.W85
         // ------------------------------------------------------------------ ground fit (s03 rule: footprint range > 1.5 m = error)
         // A building footprint whose ground range is over W85GroundFit.Limit gets its ground compressed towards the footprint mean to
         // ~1.25 m (inside the footprint fully, fading out over 3 m around it) in the built heightmap only; logged per building.
-        static void GradeFootprints(float[,] h, int R, float sizeY, float posY)
+        internal static void GradeFootprints(float[,] h, int R, float sizeY, float posY)
         {
             float cell = W / (R - 1), cellZ = Hh / (R - 1);
             float At(float x, float z)
@@ -423,6 +423,7 @@ namespace OnlyVolunteers.Map.W85
                 go.transform.localScale = go.transform.localScale * (size / ext);
             }
             go.transform.position = new Vector3(at.x, Height(at.x, at.y) - sink, at.y);
+            if (IsV2) W85FloatCheck.SeatRock(go.transform);                       // G46: validate actual tilted mesh support, not just its pivot
             foreach (Transform t in go.GetComponentsInChildren<Transform>(true)) GameObjectUtility.SetStaticEditorFlags(t.gameObject, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
             rocksPlaced++;
             return true;

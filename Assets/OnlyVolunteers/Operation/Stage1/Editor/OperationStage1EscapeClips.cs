@@ -8,7 +8,7 @@ namespace OnlyVolunteers.Operation.Stage1.Editor
 {
     /// <summary>Round 4: one click wires the Escape_v01 clips (docs/reviews/escape_anims_v01/CONTRACT.md) into gameplay:
     /// copies the FBX from ArtSource into Assets, imports them like the Operation_v01 clips (Generic, Copy From Other Avatar =
-    /// the avatar of Op_Dead_v01, compression Off, Loop Time only on *_Loop_v01), adds one state per clip to
+    /// the avatar of Op_Dead_v01, Preserve Hierarchy as Op_Dead_v01, compression Off, Loop Time only on *_Loop_v01), adds one state per clip to
     /// Patient_Operation.controller (state name = OperationEscape.Clips[i].name, no transitions: the presentation enters
     /// them directly) and switches the stage-1 tuning to the clip-driven escape (escapeClips, escapeMissingClips).
     /// Clips that are not in ArtSource (the v01b FBX need a local bpy rebuild, see the contract) are listed as missing; the
@@ -90,14 +90,20 @@ namespace OnlyVolunteers.Operation.Stage1.Editor
         {
             var importer = AssetImporter.GetAtPath(asset) as ModelImporter;
             if (importer == null) return;
+            // W86 fix: the Escape_v01 FBX hold only the armature, a single root. Without preserveHierarchy Unity made that
+            // armature the model root, so the curve paths lost their "Buddy_Rig_Mixamo65/" prefix: on the patient the
+            // armature's own keys (scale 100, -90 deg X) moved the Animator object and no bone was animated (the escape
+            // was never seen). The Op_*_v01 clips keep the armature as a child; so must these.
             bool dirty = importer.animationType != template.animationType || importer.avatarSetup != template.avatarSetup ||
                 importer.sourceAvatar != template.sourceAvatar || importer.animationCompression != ModelImporterAnimationCompression.Off ||
+                importer.preserveHierarchy != template.preserveHierarchy ||
                 importer.importAnimation == false || importer.clipAnimations == null || importer.clipAnimations.Length != 1 ||
                 importer.clipAnimations[0].name != clip.name || importer.clipAnimations[0].loopTime != clip.loop;
             if (!dirty) return;
             importer.animationType = template.animationType;
             importer.avatarSetup = template.avatarSetup;
             importer.sourceAvatar = template.sourceAvatar;
+            importer.preserveHierarchy = template.preserveHierarchy;
             importer.importAnimation = true;
             importer.animationCompression = ModelImporterAnimationCompression.Off;
             importer.SaveAndReimport();

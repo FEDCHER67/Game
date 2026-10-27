@@ -103,6 +103,7 @@ namespace OnlyVolunteers.Network
 
         private void Update()
         {
+            if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu: keep holding, no new grabs
             if (!IsOwner || player == null || player.ViewCamera == null || profile == null) return;
             if ((InputSuppressed || !OnlyVolunteers.Operation.Stage1.OpsInput.CursorLocked || player.HandsBusy) && !smokeHolding)
             {
