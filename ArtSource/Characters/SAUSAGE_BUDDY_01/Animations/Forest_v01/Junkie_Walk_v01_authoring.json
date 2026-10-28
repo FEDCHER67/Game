@@ -1,0 +1,125 @@
+{
+  "clip": "Junkie_Walk",
+  "file_stem": "Junkie_Walk_v01",
+  "action": "Junkie_Walk",
+  "frames": [
+    1,
+    73
+  ],
+  "fps": 30,
+  "duration_s": 2.4,
+  "loop": true,
+  "start_contract": "junkie_walk",
+  "end_contract": "junkie_walk",
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "beats": [
+    "0.00 left foot down, 0.60 right: soft-kneed shuffle, toes out, feet skimming the floor",
+    "0.0-1.2 nodding off while walking: the head sinks, eyes close (face hint)",
+    "torso hunched forward, swaying side to side behind the pelvis (spring lag, overshoot)",
+    "head hangs and lolls with lag; arms hang like ropes (pendulums) with follow-through",
+    "1.20 the left foot hooks across in front of the right (event Stumble)",
+    "1.30-1.62 lurch forward-right, head whips up, little backward arm windmill",
+    "1.62 the right foot flings out wide and catches him (event Catch), knees buckle",
+    "1.9-2.3 wobble back, \"huh?\" look down at the feet, shuffles on"
+  ],
+  "events": {
+    "FootL": 0.0,
+    "FootR": 0.6,
+    "Stumble": 1.2,
+    "Catch": 1.62
+  },
+  "max_leg_overreach_m": 0.0,
+  "max_contact_lift_m": 0.0,
+  "package": "Forest_v01",
+  "authoring": "Original procedural keyframe animation (clips_forest.py on crowd_core / acting_core); no external motion reused",
+  "ground_speed_m_s": 0.8,
+  "face_hints": {
+    "note": "preview-only face shape keys (FOREST_OD_JUNKIE Face: Blink, Worried, Surprised, Happy); not in the FBX, for GreyboxFace.Set",
+    "step_s": 0.25,
+    "samples": [
+      [
+        0.0,
+        0.652,
+        0.25,
+        0.0,
+        0.0
+      ],
+      [
+        0.25,
+        0.71,
+        0.25,
+        0.0,
+        0.0
+      ],
+      [
+        0.5,
+        0.755,
+        0.25,
+        0.0,
+        0.0
+      ],
+      [
+        0.75,
+        0.854,
+        0.25,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.953,
+        0.25,
+        0.0,
+        0.0
+      ],
+      [
+        1.25,
+        0.806,
+        0.25,
+        0.0,
+        0.0
+      ],
+      [
+        1.5,
+        0.0,
+        0.25,
+        0.95,
+        0.0
+      ],
+      [
+        1.75,
+        0.0,
+        0.25,
+        0.95,
+        0.0
+      ],
+      [
+        2.0,
+        0.55,
+        0.75,
+        0.0,
+        0.0
+      ],
+      [
+        2.25,
+        0.556,
+        0.75,
+        0.0,
+        0.0
+      ],
+      [
+        2.5,
+        0.684,
+        0.25,
+        0.0,
+        0.0
+      ]
+    ],
+    "keys": [
+      "Blink",
+      "Worried",
+      "Surprised",
+      "Happy"
+    ]
+  }
+}

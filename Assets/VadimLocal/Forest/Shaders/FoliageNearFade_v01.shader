@@ -15,7 +15,7 @@ Shader "OnlyVolunteers/Forest/FoliageNearFade_v01"
         _WindPivotOS("Local base pivot offset",Vector)=(0,0,0,0)
         _TipFlash("Tip light change",Range(0,.3))=.08
         [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull",Float)=0
-        _NearFade("Near fade: x see-through, y opaque (m)",Vector)=(2,6,0,0)
+        _NearFade("Near fade: x see-through, y opaque (m)",Vector)=(1.5,4.5,0,0)
         _NearAlpha("Alpha when touching",Range(0,1))=.04
     }
     SubShader

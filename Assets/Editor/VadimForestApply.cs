@@ -174,7 +174,7 @@ namespace OnlyVolunteers.EditorTools
             var scene = EditorSceneManager.OpenScene(Scene);
             log = new StringBuilder();
             ter = GameObject.Find("Terrain_W85_v02").GetComponent<Terrain>(); td = ter.terrainData; tp = ter.transform.position;
-            groundLayer = ter.gameObject.layer;
+            groundLayer = ter.gameObject.layer; fBorder = null;
             Folders();
             LoadDesign();
             BuildFields();
@@ -198,7 +198,7 @@ namespace OnlyVolunteers.EditorTools
             WaterQueryData();
             ForestFogOff();
             SwampSinkZone();
-            TerrainMatte(); OilOffBeach(); BeachOilBack(); NearFoliageFeature();
+            TerrainMatte(); OilOffBeach(); BeachOilBack(); NearFoliageFeature(); UnderwaterObject();
             SnapLeftovers(root);
 
             ter.Flush();
@@ -250,7 +250,7 @@ namespace OnlyVolunteers.EditorTools
                 if (t[0].StartsWith("street_")) KeepStreets.Add(pts);
                 if (t[0].StartsWith("oldroad_") && t[0] != "oldroad_forest_to_valley") OldRoads.Add(pts);
             }
-            Lake = Dsg["lake"]; Swamp = Dsg["swamp"]; Stream = Dsg["stream"]; PathUp = Dsg["path_up"]; PathWb = Dsg["path_wb"]; PathRed = Dsg["path_red"];
+            Lake = Dsg["lake"]; Swamp = Dsg["swamp"]; OldSwamp = Dsg.TryGetValue("swamp_v1", out var sv1) ? sv1 : null; Stream = Dsg["stream"]; PathUp = Dsg["path_up"]; PathWb = Dsg["path_wb"]; PathRed = Dsg["path_red"];
             Gat = Dsg["gat"]; GatLink = Dsg["gat_link"]; GatReturn = Dsg.TryGetValue("gat_return", out var gr) ? gr : null; Brook = Dsg.TryGetValue("brook", out var bk) && bk.Count > 3 ? bk : null; ValleyLink = Dsg["valley_link"]; ValleyKeep = Dsg["valley_keep"];
             WagonP = Dsg["wagon"][0]; TunnelP = Dsg["tunnel"][0]; BridgeP = Dsg["bridge"][0]; DenP = Dsg["den"][0]; BigPine = Dsg["big_pine"][0];
             Hills = new List<Vector2>(Dsg["hills"]); Hills.AddRange(HillsExtra); Npc = Dsg["npc"]; Stash = Dsg["stash"];
@@ -275,9 +275,20 @@ namespace OnlyVolunteers.EditorTools
         }
         /// <summary>Edit weight: 1 inside the forest (and its band to the Hamlet), 0 on the Hamlet, the roads and everything outside.</summary>
         static float M(Vector2 p) => MaskSample(maskPx, p).r;
-        static float RefTrees(Vector2 p) => MaskSample(refPx, p).r;
+        // Vadim 28.10: the north and west parts of the swamp became forest (design key swamp_v1 = the old outline):
+        // there the reference (drawn for the old swamp: open, no trees) reads as an ordinary mixed stand
+        static float RefTrees(Vector2 p) => WasSwamp(p) ? .62f : MaskSample(refPx, p).r;
+        static bool WasSwamp(Vector2 p) => OldSwamp != null && p.x > 198f && p.x < 292f && p.y > 194f && p.y < 312f && InOutline(OldSwamp, p) && !InOutline(Swamp, p);
+        static bool InOutline(List<Vector2> poly, Vector2 p)
+        {
+            bool inside = false;
+            for (int i = 0, j = poly.Count - 1; i < poly.Count; j = i++)
+                if ((poly[i].y > p.y) != (poly[j].y > p.y) && p.x < (poly[j].x - poly[i].x) * (p.y - poly[i].y) / (poly[j].y - poly[i].y) + poly[i].x) inside = !inside;
+            return inside;
+        }
+        static List<Vector2> OldSwamp;
         static float RefRocks(Vector2 p) => MaskSample(refPx, p).g;
-        static float RefOpen(Vector2 p) => MaskSample(refPx, p).b;
+        static float RefOpen(Vector2 p) => WasSwamp(p) ? .18f : MaskSample(refPx, p).b;
 
         // ================================================================================================ distance fields (0.5 m)
 
@@ -409,8 +420,8 @@ namespace OnlyVolunteers.EditorTools
         // Vadim 28.10: tree leaf cards turn see-through near the camera (no green screen inside a crown)
         const string NearShaderName = "OnlyVolunteers/Forest/FoliageNearFade_v01";
         static Shader NearShader => Shader.Find(NearShaderName);
-        // see-through below 2 m, fully solid from 6 m: the whole fir crown around the head is clear (Vadim 28.10: wider, more see-through)
-        static void NearFadeParams(Material m) { m.SetVector("_NearFade", new Vector4(2f, 6f, 0f, 0f)); m.SetFloat("_NearAlpha", .04f); }
+        // see-through below 1.5 m, solid from 4.5 m, nearly invisible when touching (Vadim 28.10: radius a bit smaller, strength as is)
+        static void NearFadeParams(Material m) { m.SetVector("_NearFade", new Vector4(1.5f, 4.5f, 0f, 0f)); m.SetFloat("_NearAlpha", .04f); }
 
         static Color S(float r, float g, float b) => new Color(r, g, b, 1f);   // sRGB as typed in materials.json
         static readonly Color StoneGrey = new Color(.44f, .445f, .45f, 1f);   // = VadimMountainApply.StoneColor: one grey for boulders, portal rock, mountain walls
@@ -571,6 +582,26 @@ namespace OnlyVolunteers.EditorTools
             ["Pine_18"] = (.3f, 8f), ["Pine_20"] = (.32f, 8f), ["Pine_25"] = (.36f, 9f), ["Birch"] = (.2f, 7f)
         };
 
+        /// <summary>The fir prefab with leaf materials that never fade near the camera (the border row stays solid at the barrier).</summary>
+        static GameObject WallPrefab(string n)
+        {
+            var src = TreePrefabs[n]; var go = (GameObject)PrefabUtility.InstantiatePrefab(src); PrefabUtility.UnpackPrefabInstance(go, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            go.name = "FK_" + n + "_Wall";
+            foreach (var r in go.GetComponentsInChildren<Renderer>(true))
+            {
+                var ms = r.sharedMaterials;
+                for (int i = 0; i < ms.Length; i++)
+                {
+                    if (!ms[i] || !ms[i].name.StartsWith("FK_Leaf")) continue;
+                    string mp = Dir + "/Materials/" + ms[i].name + "_Wall.mat"; var wm = AssetDatabase.LoadAssetAtPath<Material>(mp);
+                    if (!wm) { wm = new Material(ms[i]) { name = ms[i].name + "_Wall" }; AssetDatabase.CreateAsset(wm, mp); }
+                    wm.CopyPropertiesFromMaterial(ms[i]); wm.shader = windShader; wm.enableInstancing = true; EditorUtility.SetDirty(wm); ms[i] = wm;
+                }
+                r.sharedMaterials = ms;
+            }
+            var pf = PrefabUtility.SaveAsPrefabAsset(go, Dir + "/Prefabs/FK_" + n + "_Wall.prefab"); Object.DestroyImmediate(go); return pf;
+        }
+
         static GameObject TreePrefab(string n)
         {
             var go = new GameObject("FK_" + n);
@@ -645,9 +676,68 @@ namespace OnlyVolunteers.EditorTools
             }
             return hsum;
         }
-        static bool InThicket(Vector2 p) => p.y > 150f && p.y < 392f && p.x < WallX(p.y) + 9f;
-        /// <summary>The ragged line of the border thicket (the invisible barrier runs 4 m west of it).</summary>
-        static float WallX(float z) => 196f + 5f * (Fbm(z / 31f, 4.2f, 2) - .5f) * 2f;
+        // Vadim 28.10: the whole forest border (west and south sea coast, round to the east cliff; only the Quiet Valley exit stays
+        // open) is a narrow row of trees right on the cliff top, with gaps where the cliff and the sea show. The invisible barrier
+        // runs just on the forest side of it. Design key "border" = Vadim's rough line, snapped here to the real cliff top.
+        const float WallBand = 6f, BarrierOff = 7.5f;
+        static List<Vector2> BorderEdge, BorderInland; static Field fBorder, fFoot;
+        // the wall fills the coastal rock rim's inner slope and stands WallBand deep on the forest floor at its foot (Vadim 28.10:
+        // from the forest you see a wall of trees, not the rock rim)
+        static bool InThicket(Vector2 p) { float d = Border().Dist(p); return d < .5f && fFoot.Dist(p) > -WallBand; }
+        static Field Border() { if (fBorder == null) BuildBorder(); return fBorder; }
+
+        static void BuildBorder()
+        {
+            // the hand line every 1 m
+            var hand = new List<Vector2>(); var src = Dsg["border"];
+            for (int i = 0; i + 1 < src.Count; i++) { float len = (src[i + 1] - src[i]).magnitude; int n = Mathf.Max(1, Mathf.CeilToInt(len)); for (int k = 0; k < n; k++) hand.Add(Vector2.Lerp(src[i], src[i + 1], (float)k / n)); }
+            hand.Add(src[src.Count - 1]);
+            int N = hand.Count; var nrm = new Vector2[N]; var off = new float[N];
+            bool InWin(Vector2 q) => q.x > 151f && q.x < 559f && q.y > 21f && q.y < 519f;
+            for (int k = 0; k < N; k++)
+            {
+                var t = (hand[Mathf.Min(k + 3, N - 1)] - hand[Mathf.Max(k - 3, 0)]).normalized; nrm[k] = new Vector2(-t.y, t.x);   // left of the line = inland
+                float found = float.NaN;
+                for (float sd = -14f; sd <= 26f && float.IsNaN(found); sd += .5f)
+                {
+                    var a = hand[k] - nrm[k] * sd; var b = a - nrm[k] * 1.5f; if (!InWin(a) || !InWin(b)) continue;
+                    float ya = OldY(a); if (ya < 1.5f || ya - OldY(b) < .9f) continue;                // a steep drop seaward ...
+                    for (float u = 2f; u <= 24f; u += 1f) { var c = a - nrm[k] * u; if (InWin(c) && OldY(c) < 1.2f) { found = sd; break; } }   // ... down to the sea
+                }
+                off[k] = float.IsNaN(found) ? 0f : found;
+            }
+            BorderEdge = new List<Vector2>(); var inl = new List<Vector2>();
+            for (int k = 0; k < N; k++)
+            {
+                var w = new List<float>(); for (int d = -6; d <= 6; d++) w.Add(off[Mathf.Clamp(k + d, 0, N - 1)]); w.Sort();
+                BorderEdge.Add(hand[k] - nrm[k] * w[6]);
+            }
+            // the foot of the rim: the first 6 m flat stretch (< 1.6 m rise) inland of the cliff top
+            var foot = new float[N];
+            for (int k = 0; k < N; k++)
+            {
+                foot[k] = 20f;
+                for (float u = 0f; u <= 20f; u += 1f)
+                {
+                    float lo = 1e9f, hi = -1e9f;
+                    for (float v = 0f; v <= 6f; v += 1f) { float h = OldY(BorderEdge[k] + nrm[k] * (u + v)); lo = Mathf.Min(lo, h); hi = Mathf.Max(hi, h); }
+                    if (hi - lo < 1.6f) { foot[k] = u; break; }
+                }
+            }
+            var footLine = new List<Vector2>();
+            for (int k = 0; k < N; k++)
+            {
+                var w = new List<float>(); for (int d = -6; d <= 6; d++) w.Add(foot[Mathf.Clamp(k + d, 0, N - 1)]); w.Sort();
+                footLine.Add(BorderEdge[k] + nrm[k] * w[6]); inl.Add(BorderEdge[k] + nrm[k] * (w[6] + BarrierOff));
+            }
+            BorderInland = inl;
+            var polyF = new List<Vector2>(footLine) { new Vector2(560f, footLine[N - 1].y), new Vector2(560f, 520f), new Vector2(150f, 520f), new Vector2(150f, footLine[0].y) };
+            fFoot = new Field(FO, FW, FH); fFoot.AddLine(footLine, 1, 30f); fFoot.Sign(polyF);
+            log.AppendLine($"border rim foot: {foot.Average():0.0} m inland of the cliff top on average (max {foot.Max():0})");
+            var poly = new List<Vector2>(BorderEdge) { new Vector2(560f, BorderEdge[N - 1].y), new Vector2(560f, 520f), new Vector2(150f, 520f), new Vector2(150f, BorderEdge[0].y) };
+            fBorder = new Field(FO, FW, FH); fBorder.AddLine(BorderEdge, 1, 30f); fBorder.Sign(poly);
+            log.AppendLine($"border: {N} m of line, snapped to the cliff top at {off.Count(o => o != 0f)} m");
+        }
 
         static void Heights()
         {
@@ -1125,6 +1215,120 @@ namespace OnlyVolunteers.EditorTools
             File.WriteAllLines(Out + "w86_deps.txt", deps);
         }
 
+        /// <summary>Check shots of the west border row: top view of the west strip + two views from the barrier (no save).</summary>
+        public static void WallCheck()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            EditorSceneManager.OpenScene(Scene); log = new StringBuilder();
+            ter = GameObject.Find("Terrain_W85_v02").GetComponent<Terrain>(); td = ter.terrainData; tp = ter.transform.position;
+            var gameCams = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None).Where(c => c.enabled).ToList();
+            foreach (var c in gameCams) c.enabled = false;
+            RenderSettings.fog = false;
+            var go = new GameObject("WallCam"); var cam = go.AddComponent<Camera>(); cam.nearClipPlane = .1f; cam.farClipPlane = 2000f;
+            float tdist = ter.treeDistance; ter.treeDistance = 2000f;
+            // top: x 150..300, z 140..400 at 4 px/m (the barrier line drawn by the log only)
+            cam.orthographic = true; cam.orthographicSize = 130f; cam.aspect = 150f / 260f;
+            go.transform.position = new Vector3(225f, 400f, 270f); go.transform.rotation = Quaternion.Euler(90, 0, 0);
+            Shot(cam, 600, 1040, Out + "forest_wall_top.png"); Shot(cam, 600, 1040, Out + "forest_wall_top.png");
+            ter.treeDistance = tdist; cam.orthographic = false; cam.fieldOfView = 60f;
+            // from the barrier, looking out to the sea: two on the west coast, two on the south coast
+            int k = 0; var bar = GameObject.Find("Map_W85_v02").transform.Find("VadimForest/Barrier_west_thicket");
+            foreach (var target in new[] { new Vector2(185f, 220f), new Vector2(180f, 300f), new Vector2(300f, 72f), new Vector2(460f, 66f) })
+            {
+                Vector3 bp = new Vector3(target.x, 0f, target.y); float bd = 1e9f;
+                if (bar) foreach (Transform c in bar) { float d = (new Vector2(c.position.x, c.position.z) - target).sqrMagnitude; if (d < bd) { bd = d; bp = c.position; } }
+                var inward = (new Vector2(340f, 240f) - new Vector2(bp.x, bp.z)).normalized;
+                var e = new Vector3(bp.x + inward.x * 1.5f, 0f, bp.z + inward.y * 1.5f); e.y = ter.SampleHeight(e) + tp.y + 1.7f;
+                go.transform.position = e; go.transform.rotation = Quaternion.LookRotation(new Vector3(-inward.x, -.05f, -inward.y));
+                Shot(cam, 1400, 800, Out + "forest_wall_ground_" + k + ".png");
+                var far = e + new Vector3(inward.x, 0f, inward.y) * 10f; far.y = ter.SampleHeight(far) + tp.y + 1.7f; go.transform.position = far;
+                Shot(cam, 1400, 800, Out + "forest_wall_far_" + k + ".png"); go.transform.position = e; k++;
+                log.AppendLine($"view {k}: barrier box at {bp.x:0.0}, {bp.z:0.0}");
+            }
+            // the whole forest from above (the border row and the barrier line are what to check)
+            cam.orthographic = true; cam.orthographicSize = 190f; cam.aspect = 355f / 380f; ter.treeDistance = 2000f;
+            go.transform.position = new Vector3(342.5f, 400f, 230f); go.transform.rotation = Quaternion.Euler(90, 0, 0);
+            Shot(cam, 1065, 1140, Out + "forest_wall_topall.png"); Shot(cam, 1065, 1140, Out + "forest_wall_topall.png");
+            ter.treeDistance = tdist; cam.orthographic = false;
+            // the former north-west swamp, now forest: from its north edge looking south-east over what is left of the bog
+            var sv = new Vector3(222f, 0f, 302f); sv.y = ter.SampleHeight(sv) + tp.y + 1.7f;
+            go.transform.position = sv; go.transform.rotation = Quaternion.Euler(6f, 145f, 0f);
+            Shot(cam, 1400, 800, Out + "forest_wall_swamp.png");
+            File.WriteAllText(Out + "forest_wallcheck.txt", log.ToString());
+        }
+
+        /// <summary>The border wall as the player meets it: from 3 m and 14 m in front of the barrier, facing the wall, at free spots.</summary>
+        public static void WallViews()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            EditorSceneManager.OpenScene(Scene); log = new StringBuilder();
+            ter = GameObject.Find("Terrain_W85_v02").GetComponent<Terrain>(); td = ter.terrainData; tp = ter.transform.position;
+            foreach (var c in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None)) c.enabled = false;
+            RenderSettings.fog = false;
+            var go = new GameObject("WallCam"); var cam = go.AddComponent<Camera>(); cam.nearClipPlane = .1f; cam.farClipPlane = 2000f; cam.fieldOfView = 60f;
+            var tr = td.treeInstances.Select(t => new Vector2(tp.x + t.position.x * td.size.x, tp.z + t.position.z * td.size.z)).ToList();
+            bool FreeAt(Vector3 e) => !Physics.CheckSphere(e, .7f, ~0, QueryTriggerInteraction.Ignore) && !tr.Any(q => (q - new Vector2(e.x, e.z)).sqrMagnitude < 1.6f * 1.6f);
+            var bar = GameObject.Find("Map_W85_v02").transform.Find("VadimForest/Barrier_west_thicket"); int k = 0;
+            foreach (var target in new[] { new Vector2(185f, 220f), new Vector2(178f, 300f), new Vector2(240f, 85f), new Vector2(330f, 62f), new Vector2(460f, 66f) })
+            {
+                Transform best = null; float bd = 1e9f;
+                foreach (Transform c in bar) { float d = (new Vector2(c.position.x, c.position.z) - target).sqrMagnitude; if (d < bd) { bd = d; best = c; } }
+                var bp = best.position; var n = new Vector2(best.right.x, best.right.z).normalized;
+                float hA = ter.SampleHeight(bp + new Vector3(n.x, 0, n.y) * 12f), hB = ter.SampleHeight(bp - new Vector3(n.x, 0, n.y) * 12f);
+                if (Vector2.Dot(n, new Vector2(340f, 240f) - new Vector2(bp.x, bp.z)) < 0f) n = -n;   // n points inland
+                foreach (float dist in new[] { 3f, 14f })
+                {
+                    Vector3 e = Vector3.zero; bool ok = false;
+                    for (int t = 0; t < 40 && !ok; t++)
+                    {
+                        float side = (t % 2 == 0 ? 1 : -1) * (t / 2) * 1.5f, dd = dist + (t / 10) * 1.5f;
+                        var q = new Vector2(bp.x, bp.z) + n * dd + new Vector2(-n.y, n.x) * side;
+                        e = new Vector3(q.x, 0f, q.y); e.y = ter.SampleHeight(e) + tp.y + 1.7f; ok = FreeAt(e);
+                    }
+                    go.transform.position = e; go.transform.rotation = Quaternion.LookRotation(new Vector3(-n.x, -.03f, -n.y));
+                    string f = Out + $"forest_wallview_{k}_{dist:0}.png"; Shot(cam, 1400, 800, f); Shot(cam, 1400, 800, f);
+                    log.AppendLine($"view {k} {dist:0} m: {e.x:0.0}, {e.z:0.0} free={ok}");
+                }
+                k++;
+            }
+            File.WriteAllText(Out + "forest_wallviews.txt", log.ToString());
+        }
+
+        public static void WallProfile()
+        {
+            EditorSceneManager.OpenScene(Scene); var sb = new StringBuilder();
+            var t = GameObject.Find("Terrain_W85_v02").GetComponent<Terrain>();
+            var bar = GameObject.Find("Map_W85_v02").transform.Find("VadimForest/Barrier_west_thicket");
+            foreach (var target in new[] { new Vector2(185f, 220f), new Vector2(178f, 300f), new Vector2(240f, 85f), new Vector2(330f, 62f), new Vector2(460f, 66f), new Vector2(200f, 140f), new Vector2(400f, 50f) })
+            {
+                Transform best = null; float bd = 1e9f;
+                foreach (Transform c in bar) { float d = (new Vector2(c.position.x, c.position.z) - target).sqrMagnitude; if (d < bd) { bd = d; best = c; } }
+                var bp = best.position; var n = new Vector2(best.right.x, best.right.z).normalized;
+                if (Vector2.Dot(n, new Vector2(340f, 240f) - new Vector2(bp.x, bp.z)) < 0f) n = -n;
+                sb.Append($"{bp.x:0},{bp.z:0}: ");
+                for (int d = -22; d <= 30; d += 2) { var q = new Vector3(bp.x + n.x * d, 0, bp.z + n.y * d); sb.Append($"{(d == 0 ? "|" : "")}{t.SampleHeight(q) + t.transform.position.y:0} "); }
+                sb.AppendLine();
+            }
+            File.WriteAllText(Out + "forest_wallprofile.txt", sb.ToString());
+        }
+
+        public static void WallProbe()
+        {
+            EditorSceneManager.OpenScene(Scene); var sb = new StringBuilder();
+            foreach (var q in new[] { new Vector2(185f, 220f), new Vector2(178f, 300f), new Vector2(240f, 85f), new Vector2(330f, 62f), new Vector2(460f, 66f) })
+            {
+                sb.AppendLine($"== {q}");
+                foreach (var r in Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+                {
+                    var b = r.bounds; var c = new Vector2(b.center.x, b.center.z);
+                    if (b.size.magnitude > 400f) continue;
+                    var cl = new Vector2(Mathf.Clamp(q.x, b.min.x, b.max.x), Mathf.Clamp(q.y, b.min.z, b.max.z));
+                    if ((cl - q).magnitude < 14f) { var t = r.transform; string path = t.name; for (var u = t.parent; u && path.Length < 160; u = u.parent) path = u.name + "/" + path; sb.AppendLine($"  {path}  size {b.size.x:0},{b.size.y:0},{b.size.z:0}  ymax {b.max.y:0.0}"); }
+                }
+            }
+            File.WriteAllText(Out + "forest_wallprobe.txt", sb.ToString());
+        }
+
         static void PolishShots(string tag)
         {
             var gameCams = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None).Where(c => c.enabled).ToList(); bool fogWas = RenderSettings.fog;
@@ -1153,6 +1357,22 @@ namespace OnlyVolunteers.EditorTools
                 log.AppendLine($"shots {tag}: fir at {best}");
             }
             finally { Object.DestroyImmediate(go); foreach (var c in gameCams) if (c) c.enabled = true; RenderSettings.fog = fogWas; }
+        }
+
+        /// <summary>Vadim 28.10: under the sea / a lake the view is in blue water (OnlyVolunteers.Map.UnderwaterView), one per scene.</summary>
+        static void UnderwaterObject()
+        {
+            if (Object.FindFirstObjectByType<OnlyVolunteers.Map.UnderwaterView>(FindObjectsInactive.Include)) { log.AppendLine("underwater view: present"); return; }
+            var go = new GameObject("UnderwaterView"); go.transform.SetParent(GameObject.Find("Map_W85_v02").transform, false);
+            go.AddComponent<OnlyVolunteers.Map.UnderwaterView>(); log.AppendLine("underwater view: added");
+        }
+
+        /// <summary>Adds the underwater view to the current scene (no rebuild).</summary>
+        public static void Underwater()
+        {
+            var scene = EditorSceneManager.OpenScene(Scene); log = new StringBuilder();
+            UnderwaterObject(); EditorSceneManager.MarkSceneDirty(scene); EditorSceneManager.SaveScene(scene);
+            File.WriteAllText(Out + "forest_underwater.txt", log.ToString());
         }
 
         /// <summary>The swamp pulls a walker down (OnlyVolunteers.Map.SwampSink) inside the design outline, below the mud top.</summary>
@@ -1576,6 +1796,15 @@ namespace OnlyVolunteers.EditorTools
         static Dictionary<long, List<int>> placedHash = new();
         static long HKey(int x, int z) => ((long)x << 32) ^ (uint)z;
         static void HashAdd(int idx) { var p = Placed[idx].p; long k = HKey(Mathf.FloorToInt(p.x / 4f), Mathf.FloorToInt(p.y / 4f)); if (!placedHash.TryGetValue(k, out var l)) placedHash[k] = l = new List<int>(); l.Add(idx); }
+        /// <summary>No tree trunk (kit trees, snags) closer than d to p.</summary>
+        static bool TrunkClear(Vector2 p, float d)
+        {
+            int cx = Mathf.FloorToInt(p.x / 4f), cz = Mathf.FloorToInt(p.y / 4f), rr = Mathf.CeilToInt(d / 4f) + 1;
+            for (int x = cx - rr; x <= cx + rr; x++) for (int z = cz - rr; z <= cz + rr; z++)
+                if (placedHash.TryGetValue(HKey(x, z), out var l)) foreach (int i in l) if ((Placed[i].p - p).sqrMagnitude < d * d) return false;
+            return true;
+        }
+
         static bool Free(Vector2 p, float r)
         {
             int cx = Mathf.FloorToInt(p.x / 4f), cz = Mathf.FloorToInt(p.y / 4f), rr = Mathf.CeilToInt(r / 4f) + 1;
@@ -1608,6 +1837,8 @@ namespace OnlyVolunteers.EditorTools
         {
             var protos = td.treePrototypes.ToList(); int baseIdx = protos.Count;
             foreach (var n in TreeNames) protos.Add(new TreePrototype { prefab = TreePrefabs[n], bendFactor = 0f });
+            int wallBase = protos.Count;   // the border row: the firs with crowns that never turn see-through
+            for (int k = 0; k < 4; k++) protos.Add(new TreePrototype { prefab = WallPrefab(TreeNames[k]), bendFactor = 0f });
             td.treePrototypes = protos.ToArray(); td.RefreshPrototypes();
             var bare = new List<int>(); for (int i = 0; i < protos.Count; i++) if (protos[i].prefab && protos[i].prefab.name.StartsWith("TREE_BARE")) bare.Add(i);
             // pass 3: the in-game round lime Leafy bushes (Bush_A / Bush_B) go from the forest and its fringe (Vadim: "just a green spot on the floor")
@@ -1625,12 +1856,12 @@ namespace OnlyVolunteers.EditorTools
             for (float z = 22f; z < 518f; z += 1.25f) for (float x = 152f; x < 558f; x += 1.25f) cand.Add(new Vector2(x + RRange(-.6f, .6f), z + RRange(-.6f, .6f)));
             for (int i = cand.Count - 1; i > 0; i--) { int j = Rng.Next(i + 1); (cand[i], cand[j]) = (cand[j], cand[i]); }
             var count = new int[TreeNames.Length]; int added = 0;
-            void Add(Vector2 p, int sp, float scale, float r)
+            void Add(Vector2 p, int sp, float scale, float r, bool wallTree = false)
             {
                 float nx = (p.x - tp.x) / td.size.x, nz = (p.y - tp.z) / td.size.z;
                 trees.Add(new TreeInstance
                 {
-                    position = new Vector3(nx, (NewY(p) - tp.y) / td.size.y, nz), prototypeIndex = baseIdx + sp,
+                    position = new Vector3(nx, (NewY(p) - tp.y) / td.size.y, nz), prototypeIndex = (wallTree && sp < 4 ? wallBase : baseIdx) + sp,
                     widthScale = scale * RRange(.94f, 1.06f), heightScale = scale, rotation = R01() * 6.283f, color = Color.white, lightmapColor = Color.white
                 });
                 Placed.Add((p, r, sp)); HashAdd(Placed.Count - 1); count[sp]++; added++;
@@ -1639,25 +1870,27 @@ namespace OnlyVolunteers.EditorTools
             Add(BigPine, 6, 1.28f, 5f);
             foreach (var p in cand)
             {
-                float m = M(p); if (m < .4f + .38f * Fbm(p.x / 16f + 70f, p.y / 16f + 3f, 2)) continue;
                 bool thick = InThicket(p);
+                float m = M(p); if (!thick && m < .4f + .38f * Fbm(p.x / 16f + 70f, p.y / 16f + 3f, 2)) continue;
                 if (Blocked(p, 2.0f)) continue;
                 float y = NewY(p); if (y < .8f) continue;
-                if (Slope(p) > 31f) continue;
+                if (Slope(p) > (thick ? 50f : 31f)) continue;
                 if ((p - BigPine).magnitude < 7f) continue;
                 float dens = RefTrees(p), open = RefOpen(p);
                 if (!thick && open > .55f && dens < .4f) continue;                                    // the reference's clearings
                 float cl = Fbm(p.x / 30f + 4f, p.y / 30f + 9f, 3);
                 float d = thick ? 1.3f : Mathf.Clamp01(.18f + .82f * dens) * (.7f + .6f * cl);
                 if (!thick && d < .28f) continue;
-                bool wall = thick && p.x < WallX(p.y) + 6f;                          // pass 3: the border wall - firs branch to branch, low crowns
-                float r = wall ? RRange(1.3f, 1.75f) : thick ? RRange(1.9f, 2.5f) : Mathf.Lerp(6.4f, 3.4f, Mathf.Clamp01(d)) * Mathf.Lerp(1.7f, 1f, Sm(.55f, .92f, m));
+                bool wall = thick;                                                    // the border row on the cliff top
+                // Vadim 28.10 (GPT ref 33 v01 approved): a solid wall, no gaps - 2-3 staggered rows of our firs, lower limbs to the ground
+                float r = wall ? RRange(1.3f, 1.75f) : Mathf.Lerp(6.4f, 3.4f, Mathf.Clamp01(d)) * Mathf.Lerp(1.7f, 1f, Sm(.55f, .92f, m));
                 if (!Free(p, r)) continue;
-                if (!wall && R01() > .92f) continue;
+                if (!wall && R01() > .85f) continue;                                  // Vadim 28.10: ~8 % fewer trees than pass 3
                 // species: stands by noise (dark fir stands, light pine stands, birch patches at edges / openings)
                 float pine = Fbm(p.x / 46f + 21f, p.y / 46f + 3f, 2), birchN = Fbm(p.x / 33f + 8f, p.y / 33f + 15f, 2);
                 float edge = Mathf.Clamp01(1f - PathEdge(p) / 9f) + Mathf.Clamp01(1f - Mathf.Abs(fSwamp.Dist(p)) / 10f) + Mathf.Clamp01(1f - fLake.Dist(p) / 12f) + Mathf.Clamp01(open * 1.5f);
-                float[] w = wall ? new[] { 42f, 38f, 15f, 5f, 0f, 0f, 0f, 0f } : thick ? new[] { 30f, 35f, 20f, 10f, 0f, 0f, 0f, 5f } : new[] { 10f, 18f, 15f, 12f, 13f, 12f, 10f, 10f };
+                float dIn = wall ? -fFoot.Dist(p) : 0f;                                // < 0 on the rim slope, 0 at its foot .. 6 at the forest side
+                float[] w = wall ? (dIn > 3.5f ? new[] { 34f, 36f, 22f, 8f, 0f, 0f, 0f, 0f } : new[] { 12f, 30f, 35f, 23f, 0f, 0f, 0f, 0f }) : thick ? new[] { 30f, 35f, 20f, 10f, 0f, 0f, 0f, 5f } : new[] { 10f, 18f, 15f, 12f, 13f, 12f, 10f, 10f };
                 if (!thick)
                 {
                     float pf = Mathf.Lerp(.45f, 1.9f, Sm(.35f, .65f, pine)), ff = Mathf.Lerp(1.5f, .55f, Sm(.35f, .65f, pine));
@@ -1669,7 +1902,8 @@ namespace OnlyVolunteers.EditorTools
                 float tot = w.Sum(), pick = R01() * tot; int spc = 0; for (; spc < w.Length - 1; spc++) { pick -= w[spc]; if (pick <= 0f) break; }
                 float scale = spc == 0 ? RRange(.7f, 1.2f) : RRange(.85f, 1.15f);
                 if (thick && spc == 0) scale = RRange(.9f, 1.35f);
-                Add(p, spc, scale, r);
+                if (wall) scale *= RRange(1.0f, 1.15f);                               // fuller crowns: they meet and close every sightline
+                Add(p, spc, scale, r, wall);
             }
             // a few dead snags on the swamp hummocks
             int snags = 0;
@@ -2176,7 +2410,7 @@ namespace OnlyVolunteers.EditorTools
             for (int tries = 0; tries < 6000 && rockCount < 1250; tries++)
             {
                 var p = new Vector2(RRange(170f, 515f), RRange(50f, 400f)); if (M(p) < .7f) continue;
-                bool thick = InThicket(p); if (!thick && R01() > .2f) continue;
+                bool thick = InThicket(p); if (thick || R01() > .2f) continue;     // Vadim 28.10: no boulders in the border wall
                 if (!RockFree(p, thick ? 3f : 7f) || Blocked(p, 2f)) continue;
                 var it = Items[thick || R01() < .5f ? BigRocks[Rng.Next(BigRocks.Length)] : SmallRocks[Rng.Next(SmallRocks.Length)]];
                 PlaceItem("Rock_s_" + rockCount, it, p, RRange(0, 360), thick ? RRange(1.1f, 2f) : RRange(.7f, 1.4f), parent, true, .22f, 12f); rockCount++; RockSpots.Add((p, 1.5f));
@@ -2362,7 +2596,8 @@ namespace OnlyVolunteers.EditorTools
             int x0 = Mathf.FloorToInt((150f - tp.x) / cx), x1 = Mathf.CeilToInt((560f - tp.x) / cx), z0 = Mathf.FloorToInt((20f - tp.z) / cz), z1 = Mathf.CeilToInt((520f - tp.z) / cz);
             int w = x1 - x0, h = z1 - z0; var layers = new int[DetailNames.Length][,]; for (int l = 0; l < layers.Length; l++) layers[l] = new int[h, w];
             int Li(string n) => System.Array.IndexOf(DetailNames, n);
-            var pineCells = new HashSet<long>();
+            var pineCells = new HashSet<long>(); var stumpCells = new HashSet<long>(); float cellHalf = .5f * Mathf.Sqrt(cx * cx + cz * cz);
+            bool NearCell(HashSet<long> set, int ci, int cj, int r) { for (int a = -r; a <= r; a++) for (int b = -r; b <= r; b++) if (set.Contains(HKey(ci + a, cj + b))) return true; return false; }
             foreach (var t in Placed) if (t.sp >= 4 && t.sp <= 6)
                 for (int dz = -2; dz <= 2; dz++) for (int dx = -1; dx <= 1; dx++) pineCells.Add(HKey(Mathf.FloorToInt((t.p.x - tp.x) / cx) + dx, Mathf.FloorToInt((t.p.y - tp.z) / cz) + dz));
             for (int j = 0; j < h; j++) for (int i = 0; i < w; i++)
@@ -2387,8 +2622,8 @@ namespace OnlyVolunteers.EditorTools
                 float fernN = Fbm(p.x / 14f + 3f, p.y / 14f + 1f, 2), berryN = Fbm(p.x / 11f + 17f, p.y / 11f + 6f, 2), bushN = Fbm(p.x / 17f + 30f, p.y / 17f + 12f, 2), grassN = Fbm(p.x / 9f + 30f, p.y / 9f + 12f, 2);
                 float under = Mathf.Clamp01(dens * 1.2f) * (thick ? 1.4f : 1f);
                 float swampFade = Sm(-1f, 7f, dsw);                                     // the shrubs thin out towards the bog (soft edge)
-                bool wall = thick && p.x < WallX(p.y) + 6f;
-                if (wall) { if (R01() < .55f) Put("Bush_v05", R01() < .35f ? 2 : 1); }      // the border wall: bush to bush under the firs
+                bool wall = thick;
+                if (wall) { if (R01() < .85f) Put("Bush_v05", R01() < .55f ? 2 : 1); if (R01() < .3f) Put("Fern_v01", 1); }   // the border wall: its foot sealed bush to bush
                 else if (thick && R01() < .26f) Put("Bush_v05", 1);
                 if (fernN > .5f && R01() < .3f * under) Put("Fern_v01", 1);
                 if (berryN > .48f && R01() < .38f * under * swampFade) Put(R01() < .5f ? "Blueberry_v05" : "Blueberry_Twig_v01", R01() < .3f ? 2 : 1);
@@ -2402,32 +2637,60 @@ namespace OnlyVolunteers.EditorTools
                 // Bush_v05, the main forest bush: in loose clumps (noise), along the path edges and the openings' rims, never on the path
                 float edge = Mathf.Clamp01(1f - Mathf.Abs(pe - 3f) / 3f) * .6f + Mathf.Clamp01(open * 1.4f) * .5f + Mathf.Clamp01(1f - Mathf.Abs(dsw - 6f) / 5f) * .3f;
                 if (!thick && pe > 1.6f && R01() < (.03f + .1f * edge + .09f * under) * Sm(.42f, .62f, bushN) * swampFade) Put("Bush_v05", 1);
-                if (R01() < .008f * (1f + under)) Put("Stump", 1);
+                // Vadim 28.10: a stump never grows into a tree or another stump (the detail can sit anywhere in its cell)
+                if (R01() < .008f * (1f + under) && TrunkClear(p, 1.3f + cellHalf) && !NearCell(stumpCells, x0 + i, z0 + j, 2)) { Put("Stump", 1); stumpCells.Add(HKey(x0 + i, z0 + j)); }
                 if (pineCells.Contains(HKey(x0 + i, z0 + j)) && R01() < .14f) Put("Cones", 1);
             }
-            for (int l = 0; l < layers.Length; l++) td.SetDetailLayer(x0, z0, l, layers[l]);
-            log.AppendLine($"ground cover (terrain details {res}, instanced, drawn to {ter.detailObjectDistance:0} m): " + string.Join(", ", CoverCount.OrderBy(k => k.Key).Select(k => k.Key + " " + k.Value)));
-            // fallen logs (with colliders), more in the thicket
-            var logs = new GameObject("Logs_forest").transform; logs.SetParent(forestRoot, false); int nl = 0;
-            for (int tries = 0; tries < 9000 && nl < 230; tries++)
+            // fallen logs (with colliders), more in the thicket. Vadim 28.10: a log never touches a tree, a rock, a stump or another log -
+            // checked along its whole length; the bushes / grass / stumps under it are cleared
+            var logs = new GameObject("Logs_forest").transform; logs.SetParent(forestRoot, false); int nl = 0, cleared = 0;
+            var logIt = Items["Log_Rotten"]; var lb = logIt.bounds; bool alongX = lb.size.x >= lb.size.z;
+            Vector3 axisL = alongX ? Vector3.right : Vector3.forward; float lenL = Mathf.Max(lb.size.x, lb.size.z), widL = Mathf.Min(lb.size.x, lb.size.z);
+            var logPts = new List<Vector2>();
+            for (int tries = 0; tries < 12000 && nl < 230; tries++)
             {
                 var p = new Vector2(RRange(172f, 515f), RRange(48f, 405f)); if (M(p) < .7f) continue;
                 bool thick = InThicket(p); if (!thick && R01() > .45f) continue;
                 if (Blocked(p, 3.0f) || Slope(p) > 22f || !RockFree(p, 2.5f)) continue;
-                PlaceItem("Log_" + nl, Items["Log_Rotten"], p, RRange(0, 360), RRange(.9f, 1.35f), logs, true, .12f, 3f); RockSpots.Add((p, 2.2f)); nl++;
+                float yaw = RRange(0, 360), sc = RRange(.9f, 1.35f), half = lenL * sc * .5f + .3f, hw = widL * sc * .5f;
+                var ax3 = Quaternion.Euler(0f, yaw, 0f) * axisL; var ax = new Vector2(ax3.x, ax3.z).normalized;
+                var pts = new List<Vector2>(); for (float t = -half; t <= half + .01f; t += .5f) pts.Add(p + ax * t);
+                bool ok = true;
+                foreach (var q in pts)
+                {
+                    if (!TrunkClear(q, 1.0f + hw) || !RockFree(q, hw + .25f) || Slope(q) > 26f) { ok = false; break; }
+                    foreach (var o in logPts) if ((o - q).sqrMagnitude < (2f * hw + .6f) * (2f * hw + .6f)) { ok = false; break; }
+                    int ci = Mathf.FloorToInt((q.x - tp.x) / cx), cj = Mathf.FloorToInt((q.y - tp.z) / cz);
+                    if (ok && NearCell(stumpCells, ci, cj, 0)) { stumpCells.Remove(HKey(ci, cj)); }   // the stump under it goes (below)
+                    if (!ok) break;
+                }
+                if (!ok) continue;
+                PlaceItem("Log_" + nl, logIt, p, yaw, sc, logs, true, .12f, 3f); RockSpots.Add((p, 2.2f)); nl++;
+                logPts.AddRange(pts);
+                // nothing grows through the log: clear the detail cells along it
+                foreach (var q in pts)
+                    for (int a = -1; a <= 1; a++) for (int b = -1; b <= 1; b++)
+                    {
+                        int ii = Mathf.FloorToInt((q.x - tp.x) / cx) + a - x0, jj = Mathf.FloorToInt((q.y - tp.z) / cz) + b - z0; if (ii < 0 || jj < 0 || ii >= w || jj >= h) continue;
+                        var cc = new Vector2(tp.x + (x0 + ii + .5f) * cx, tp.z + (z0 + jj + .5f) * cz); if ((cc - q).magnitude > hw + cellHalf + .2f) continue;
+                        for (int l = 0; l < layers.Length; l++) if (layers[l][jj, ii] > 0) { layers[l][jj, ii] = 0; cleared++; }
+                    }
             }
-            log.AppendLine($"logs: {nl}");
+            log.AppendLine($"logs: {nl} (checked along {lenL:0.0} m x scale, {cleared} detail cells cleared under them)");
+            for (int l = 0; l < layers.Length; l++) td.SetDetailLayer(x0, z0, l, layers[l]);
+            log.AppendLine($"ground cover (terrain details {res}, instanced, drawn to {ter.detailObjectDistance:0} m): " + string.Join(", ", CoverCount.OrderBy(k => k.Key).Select(k => k.Key + " " + k.Value)));
             // the invisible barrier deep in the western thicket (Vadim 27.10: impassable thicket + barrier, "beyond is just forest")
             var bar = new GameObject("Barrier_west_thicket").transform; bar.SetParent(forestRoot, false); int nb = 0;
-            // pass 3: the whole border, from the portal crag (z ~148) to the north edge (z ~394), 12 m tall, overlapping boxes (no gaps)
-            for (float z = 148f; z < 394f; z += 5f)
+            // the whole border line, 7.5 m inland of the cliff top, 12 m tall, overlapping boxes every 4 m (no gaps)
+            Border();
+            for (int k = 0; k + 4 < BorderInland.Count; k += 4)
             {
-                float bx0 = WallX(z) - 4f, bx1 = WallX(z + 5f) - 4f;
-                var a = new Vector2(bx0, z); var b = new Vector2(bx1, z + 5f); float ylo = Mathf.Min(NewY(a), NewY(b)), y = Mathf.Max(NewY(a), NewY(b));
+                var a = BorderInland[k]; var b = BorderInland[Mathf.Min(k + 4, BorderInland.Count - 1)];
+                float ylo = Mathf.Min(NewY(a), NewY(b)), y = Mathf.Max(NewY(a), NewY(b));
                 var c = new GameObject("wall_" + nb); c.transform.SetParent(bar, false); c.transform.SetPositionAndRotation(new Vector3((a.x + b.x) * .5f, (ylo - 2f + y + 10f) * .5f, (a.y + b.y) * .5f), Quaternion.LookRotation(new Vector3(b.x - a.x, 0, b.y - a.y)));
                 c.AddComponent<BoxCollider>().size = new Vector3(1.2f, y + 10f - (ylo - 2f), (b - a).magnitude + 1f); nb++;
             }
-            log.AppendLine($"barrier: {nb} collider boxes along the thicket line (x ~{WallX(270f) - 4f:0}), z 148..394, 12 m (no renderer)");
+            log.AppendLine($"barrier: {nb} collider boxes along the whole border, 7.5 m inland of the cliff top, 12 m (no renderer)");
         }
 
         // ================================================================================================ tall grass (W85 blades): re-seated, thinned under trees, off paths / water

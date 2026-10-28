@@ -1,0 +1,736 @@
+{
+  "package": "Forest_v01",
+  "fps": 30,
+  "rig": "Buddy_Rig_Mixamo65 (65 bones, root mixamorig:Hips)",
+  "preview_mesh": "FOREST_OD_JUNKIE v01 (rig identical to A v04: 65 bones, same order, rest matrices equal)",
+  "contracts": {
+    "junkie_walk": "Junkie_Walk frame 1 (left foot touchdown; right foot still out wide behind from the catch); loop seam only",
+    "high_lie": "High_Lie base: flat on the back on the floor behind the root (head toward +Y, hips ~0.4 m behind the root), starfish: arms out on the floor palms up, legs spread, feet flopped out",
+    "idle": "A v04 Idle frame 1 (exact raw values)"
+  },
+  "placement": {
+    "Junkie_Walk": "in place on a treadmill; authored ground speed 0.8 m/s (playback speed = ground speed / 0.8)",
+    "Inject": "free standing; ends lying behind the root (see High_Lie). Needs a free ~1.6 x 2.4 m patch from 0.75 m in front of the root to 1.6 m behind it. The syringe is a separate prop on mixamorig:RightHand (SyringeShow .. SyringeDrop), then a world prop on the floor",
+    "High_Lie_Loop": "on the floor behind the root: hips ~0.4 m, head top ~1.3 m behind; feet ~0.6 m in front, hands ~0.9 m to each side"
+  },
+  "syringe_attachment": {
+    "prop": "ArtSource/Props/SYRINGE-ASTRA-001/SYRINGE-ASTRA-001.fbx (existing prop; origin = needle tip, long axis +Z toward the plunger)",
+    "bone": "mixamorig:RightHand",
+    "frame": "Blender pose-bone frame of the hand: origin at the wrist joint (bone head), +Y along the bone toward the fingers, +X thumb/index side, +Z palm normal",
+    "position_m": [
+      0.012,
+      0.215,
+      0.045
+    ],
+    "rotation_quaternion_wxyz": [
+      0.766044,
+      0.642788,
+      0.0,
+      0.0
+    ],
+    "rotation_note": "+90 deg about hand X: prop +Z (tip -> plunger) = hand -Y, prop +X = hand +X (flange wings across the hand), prop +Y = hand +Z (palm normal); needle along the fingers",
+    "unity_local_guess": {
+      "localPosition": [
+        -0.012,
+        0.215,
+        0.045
+      ],
+      "localRotation_xyzw_of_blender_frame": [
+        0.642788,
+        -0.0,
+        -0.0,
+        0.766044
+      ],
+      "note": "standard right->left-handed X flip of the Blender bone frame; the syringe FBX has its own import axis conversion, so place it once with a gizmo"
+    },
+    "plunger": "CTRL_PlungerTravel_Z local z 0.000 (out) -> -0.048 (in) during the Inject event window",
+    "hidden_parts": [
+      "SM_BloodVolume_FILL_Z"
+    ]
+  },
+  "face_hints": {
+    "Junkie_Walk": {
+      "note": "preview-only face shape keys (FOREST_OD_JUNKIE Face: Blink, Worried, Surprised, Happy); not in the FBX, for GreyboxFace.Set",
+      "step_s": 0.25,
+      "samples": [
+        [
+          0.0,
+          0.652,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          0.25,
+          0.71,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.755,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          0.75,
+          0.854,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.953,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          1.25,
+          0.806,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          1.5,
+          0.0,
+          0.25,
+          0.95,
+          0.0
+        ],
+        [
+          1.75,
+          0.0,
+          0.25,
+          0.95,
+          0.0
+        ],
+        [
+          2.0,
+          0.55,
+          0.75,
+          0.0,
+          0.0
+        ],
+        [
+          2.25,
+          0.556,
+          0.75,
+          0.0,
+          0.0
+        ],
+        [
+          2.5,
+          0.684,
+          0.25,
+          0.0,
+          0.0
+        ]
+      ],
+      "keys": [
+        "Blink",
+        "Worried",
+        "Surprised",
+        "Happy"
+      ]
+    },
+    "Inject": {
+      "note": "preview-only face shape keys (FOREST_OD_JUNKIE Face: Blink, Worried, Surprised, Happy); not in the FBX, for GreyboxFace.Set",
+      "step_s": 0.25,
+      "samples": [
+        [
+          0.0,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          0.25,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          0.75,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          1.25,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          1.5,
+          0.85,
+          0.0,
+          0.0,
+          0.35
+        ],
+        [
+          1.75,
+          0.85,
+          0.0,
+          0.0,
+          0.35
+        ],
+        [
+          2.0,
+          0.85,
+          0.0,
+          0.0,
+          0.35
+        ],
+        [
+          2.25,
+          0.85,
+          0.0,
+          0.0,
+          0.35
+        ],
+        [
+          2.5,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          2.75,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          3.0,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          3.25,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          3.5,
+          0.0,
+          0.3,
+          0.8,
+          0.0
+        ],
+        [
+          3.75,
+          0.0,
+          0.3,
+          0.8,
+          0.0
+        ],
+        [
+          4.0,
+          0.6,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          4.25,
+          0.584,
+          0.253,
+          0.0,
+          0.156
+        ],
+        [
+          4.5,
+          0.526,
+          0.078,
+          0.0,
+          0.741
+        ],
+        [
+          4.75,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          5.0,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          5.25,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          5.5,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          5.75,
+          0.024,
+          0.0,
+          0.381,
+          1.0
+        ],
+        [
+          6.0,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          6.25,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          6.5,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          6.75,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          7.0,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          7.25,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          7.5,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          7.75,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          8.0,
+          0.5,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "keys": [
+        "Blink",
+        "Worried",
+        "Surprised",
+        "Happy"
+      ]
+    },
+    "High_Lie_Loop": {
+      "note": "preview-only face shape keys (FOREST_OD_JUNKIE Face: Blink, Worried, Surprised, Happy); not in the FBX, for GreyboxFace.Set",
+      "step_s": 0.25,
+      "samples": [
+        [
+          0.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.75,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.75,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.75,
+          0.972,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.75,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.75,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.75,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.25,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.75,
+          0.2,
+          0.6,
+          0.35,
+          0.0
+        ],
+        [
+          7.0,
+          0.2,
+          0.6,
+          0.35,
+          0.0
+        ],
+        [
+          7.25,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          7.5,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          7.75,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          8.0,
+          0.5,
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "keys": [
+        "Blink",
+        "Happy",
+        "Surprised",
+        "Worried"
+      ]
+    }
+  },
+  "clips": {
+    "Junkie_Walk": {
+      "file": "Junkie_Walk_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Junkie_Walk",
+      "frames": [
+        1,
+        73
+      ],
+      "duration_s": 2.4,
+      "loop": true,
+      "start_contract": "junkie_walk",
+      "end_contract": "junkie_walk",
+      "activity": "JunkieWalk",
+      "role": "loop",
+      "events": {
+        "FootL": 0.0,
+        "FootR": 0.6,
+        "Stumble": 1.2,
+        "Catch": 1.62
+      },
+      "unity": "Loop Time on; authored at 0.8 m/s, play at ground speed / 0.8",
+      "beats": [
+        "0.00 left foot down, 0.60 right: soft-kneed shuffle, toes out, feet skimming the floor",
+        "0.0-1.2 nodding off while walking: the head sinks, eyes close (face hint)",
+        "torso hunched forward, swaying side to side behind the pelvis (spring lag, overshoot)",
+        "head hangs and lolls with lag; arms hang like ropes (pendulums) with follow-through",
+        "1.20 the left foot hooks across in front of the right (event Stumble)",
+        "1.30-1.62 lurch forward-right, head whips up, little backward arm windmill",
+        "1.62 the right foot flings out wide and catches him (event Catch), knees buckle",
+        "1.9-2.3 wobble back, \"huh?\" look down at the feet, shuffles on"
+      ],
+      "ground_speed_m_s": 0.8
+    },
+    "Inject": {
+      "file": "Inject_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|Inject",
+      "frames": [
+        1,
+        241
+      ],
+      "duration_s": 8.0,
+      "loop": false,
+      "start_contract": "idle",
+      "end_contract": "high_lie",
+      "activity": "Inject",
+      "role": "oneshot",
+      "events": {
+        "SyringeShow": 1.16,
+        "Inject": 3.48,
+        "Sit": 5.66,
+        "SyringeDrop": 7.18
+      },
+      "unity": "",
+      "beats": [
+        "0.0-0.7 sways standing, slouched",
+        "0.7-1.1 hand into the hoodie pocket, rummages",
+        "1.16 out comes the syringe (event SyringeShow)",
+        "1.5 holds it up in front of his eyes",
+        "1.6-2.3 squints cross-eyed, two finger flicks on the barrel (tap tap)",
+        "2.4 left arm out, palm up; 2.78 / 3.00 two chop-slaps on the inner forearm",
+        "3.16-3.48 aims, needle in (event Inject), thumb pushes; 3.5-3.9 freezes",
+        "4.06 pulls it out, arms drop; 4.3-5.0 head tips back slowly, blissful, big wobble",
+        "5.12 knees buckle (1), 5.36 catches himself, 5.58 buckle (2)",
+        "5.66 plops onto his butt (event Sit), 5.80 legs fly up, 5.94 legs slap down, bounce",
+        "5.9-6.6 sways seated",
+        "6.6-7.3 tips slowly back (accelerating), arms fly out",
+        "7.18 the right hand opens mid-fling, the syringe drops (event SyringeDrop)",
+        "7.30 thud on the back, 7.38 head bonk and bounce, hands land palm-up",
+        "8.0 high_lie"
+      ],
+      "syringe": {
+        "show": 1.16,
+        "push": [
+          3.48,
+          3.86
+        ],
+        "drop": 7.18
+      }
+    },
+    "High_Lie_Loop": {
+      "file": "High_Lie_Loop_v01.fbx",
+      "take": "Buddy_Rig_Mixamo65|High_Lie_Loop",
+      "frames": [
+        1,
+        241
+      ],
+      "duration_s": 8.0,
+      "loop": true,
+      "start_contract": "high_lie",
+      "end_contract": "high_lie",
+      "activity": "HighLie",
+      "role": "loop",
+      "events": {},
+      "unity": "",
+      "beats": [
+        "breathing belly throughout; head rolls slowly side to side",
+        "1.38-1.92 the right leg kicks twice like a dreaming dog, the body jolts",
+        "2.1-4.4 both arms up, slow breaststroke paddling in the air, flop back down",
+        "5.1-6.45 slow goofy wave at the sky (right hand)",
+        "5.22-5.58 left foot twitches",
+        "6.8-7.4 a lazy swat at a fly, misses, the hand flops down; giggle",
+        "8.0 base"
+      ],
+      "syringe": {
+        "floor": true
+      }
+    }
+  }
+}

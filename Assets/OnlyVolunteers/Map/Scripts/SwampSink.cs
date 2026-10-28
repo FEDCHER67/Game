@@ -3,9 +3,10 @@ using UnityEngine.Rendering;
 
 namespace OnlyVolunteers.Map
 {
-    // Vadim 28.10: the forest swamp pulls a walker down. About 10 s in the mud = drowned, then respawn at the wagon (B01).
-    // Stepping out lets the player climb back up (the timer runs down twice as fast). The view sinks only while rendering
-    // (camera moved in beginCameraRendering, put back after): the KCC and its camera are untouched.
+    // Vadim 28.10: the forest swamp pulls a walker down; the view sinks while the head stays at the surface for a while.
+    // The moment the head goes under the bog surface (or after 10 s) = drowned: black screen, respawn at the wagon (B01).
+    // No mud overlay (Vadim: cheap). Stepping out lets the player climb back up (the timer runs down twice as fast).
+    // The view sinks only while rendering (camera moved in beginCameraRendering, put back after): the KCC and its camera are untouched.
     public sealed class SwampSink : MonoBehaviour
     {
         [Tooltip("Swamp outline, world x/z (from the forest design).")]
@@ -93,6 +94,8 @@ namespace OnlyVolunteers.Map
             if (depth <= 0.001f || !pawn || cam != pawn.ViewCamera) return;
             _moved = cam; _camPos = cam.transform.position;
             cam.transform.position = _camPos - Vector3.up * depth;
+            // the eyes under the bog surface (the pools sit 0.25 m below the mud top): drowned now
+            if (_dead < 0f && _t > .5f && cam.transform.position.y < MudTopY - .25f) _dead = 0f;
         }
 
         private void End(ScriptableRenderContext ctx, Camera cam)
@@ -103,21 +106,18 @@ namespace OnlyVolunteers.Map
 
         private void OnGUI()
         {
-            float p = _dead >= 0f ? 1f : Progress;
-            if (p <= 0.001f) return;
             if (!_px) { _px = new Texture2D(1, 1); _px.SetPixel(0, 0, Color.white); _px.Apply(); }
-            // the mud rises from the bottom of the view; at the end it closes over the eyes
-            float h = Screen.height * Mathf.Clamp01(p * 1.1f - 0.1f);
-            var old = GUI.color;
-            GUI.color = new Color(0.16f, 0.13f, 0.07f, 0.93f);
-            GUI.DrawTexture(new Rect(0, Screen.height - h, Screen.width, h), _px);
-            GUI.color = new Color(0f, 0f, 0f, Mathf.Clamp01((p - 0.6f) * 2f) * (_dead >= 0f ? 1f : 0.7f));
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _px);
-            GUI.color = old;
+            if (_dead >= 0f)
+            {
+                // drowned: just a black screen until the respawn
+                var old = GUI.color; GUI.color = Color.black;
+                GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _px); GUI.color = old;
+                return;
+            }
+            if (Progress <= 0.001f) return;
             var style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = Mathf.RoundToInt(Screen.height / 28f), fontStyle = FontStyle.Bold };
             style.normal.textColor = Color.white;
-            string msg = _dead >= 0f ? "Тебя затянуло в болото" : "Болото затягивает! Выбирайся";
-            GUI.Label(new Rect(0, Screen.height * 0.3f, Screen.width, Screen.height * 0.1f), msg, style);
+            GUI.Label(new Rect(0, Screen.height * 0.3f, Screen.width, Screen.height * 0.1f), "Болото затягивает! Выбирайся", style);
         }
     }
 }
