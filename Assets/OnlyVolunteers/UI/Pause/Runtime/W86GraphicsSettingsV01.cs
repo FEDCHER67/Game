@@ -143,7 +143,11 @@ namespace OnlyVolunteers.UI.Pause
         {
             var v = Load();
             ApplyQuality(v);
-            if (!Application.isEditor && PlayerPrefs.HasKey(PrefWidth)) ApplyDisplay(v);
+            if (Application.isEditor) return;
+            // Vadim 28.10: every start = borderless at the monitor's largest resolution and highest refresh rate (3840x2160 144 Hz)
+            var best = Screen.resolutions.OrderByDescending(r => r.width * r.height).ThenByDescending(r => r.refreshRateRatio.value).FirstOrDefault();
+            if (best.width > 0) { v.ScreenMode = 1; v.Width = best.width; v.Height = best.height; v.RefreshNum = best.refreshRateRatio.numerator; v.RefreshDen = best.refreshRateRatio.denominator == 0 ? 1u : best.refreshRateRatio.denominator; }
+            ApplyDisplay(v); SaveDisplay(v);
         }
 
         /// <summary>Distinct resolutions the display reports (largest first).</summary>

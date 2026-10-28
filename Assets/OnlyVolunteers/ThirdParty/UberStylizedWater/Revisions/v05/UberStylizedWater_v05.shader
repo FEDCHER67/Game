@@ -74,6 +74,7 @@ Shader "OnlyVolunteers/Uber Stylized Water v05"
         _OV_Wave4Direction("Wave 4 direction XZ", Vector) = (-0.8,0,-0.6,0)
         _OV_Wave5("Wave 5 length amplitude speed (amplitude 0 = off)", Vector) = (2,0,0.6,0)
         _OV_Wave5Direction("Wave 5 direction XZ", Vector) = (0.2,0,-1,0)
+        _OV_Wobble("Shake: amplitude m, frequency 1/m, speed (amplitude 0 = off)", Vector) = (0.05,0.9,4,0)
         [Header(Under the surface)]
         [Toggle(_ENABLEREFRACTION)] _ENABLEREFRACTION("Opaque texture refraction", Float) = 1
         _OV_Refraction("Distortion (fraction of screen)", Range(0,0.02)) = 0.003

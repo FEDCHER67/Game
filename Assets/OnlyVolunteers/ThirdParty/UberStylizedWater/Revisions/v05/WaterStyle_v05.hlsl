@@ -38,6 +38,7 @@ float _2nd_Wave_Speed, _OV_CrestFoam, _OV_CrestThreshold, _OV_ShadowStrength;
 float _OV_Refraction, _OV_Clarity;
 float _OV_FallSpeed, _OV_FallFoam, _OV_FallOpacity, _OV_SplashSpeed;
 float _OV_SplashOpacity, _OV_SoftContact;
+float4 _OV_Wobble;
 float _OV_UseMidColor, _OV_MidDepth, _OV_GlintCoverage;
 CBUFFER_END
 
@@ -83,6 +84,18 @@ void OV_UberWave(float3 p, float lengthM, float amplitude, float speed, float3 d
     normal = lerp(float3(0,1,0), normal, enabled);
 }
 
+// Light fast back-and-forth shake on top of the waves (Vadim 28.10): x = amplitude m, y = 1/m, z = speed.
+float3 OV_Wobble(float3 p)
+{
+    float t = _Time.y * _OV_Wobble.z;
+    float f = _OV_Wobble.y;
+    float3 s = float3(sin(p.x * f + p.y * f * 0.8 + t),
+                      sin(p.z * f * 1.3 - p.y * f * 0.6 - t * 1.17),
+                      sin((p.x - p.z) * f * 0.7 + t * 1.41));
+    float fade = 1 - smoothstep(60, 140, distance(GetCameraPositionWS(), p));
+    return s * (_OV_Wobble.x * fade);
+}
+
 WaterVaryings WaterVertex(WaterAttributes input)
 {
     WaterVaryings o = (WaterVaryings)0;
@@ -107,6 +120,12 @@ WaterVaryings WaterVertex(WaterAttributes input)
     crest = delta.y / max(_1st_Wave_Height + _2nd_Wave_Height + _OV_Wave3.y + _OV_Wave4.y + _OV_Wave5.y, 0.0001);
     p += delta;
     n = normalize(lerp(n, normalize(n1 + n2 + n3 + n4 + n5 - float3(0,4,0)), waveFade));
+#endif
+    float3 wob = OV_Wobble(p);
+#if defined(_OV_MODE_WATERFALL) || defined(_OV_MODE_FOAMSPLASH)
+    p += n * ((wob.x + wob.y) * 0.6) + float3(wob.z, 0, wob.x) * 0.3;
+#else
+    p += float3(wob.x, wob.z * 0.5, wob.y);
 #endif
     o.positionWS = p;
     o.normalWS = n;
