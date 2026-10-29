@@ -1,0 +1,2441 @@
+{
+ "version": "escape_clips_manifest_v02",
+ "package": "Escape_Panic_v02 (panic variants of Escape_v01, K10 case)",
+ "fps": 30,
+ "rig": "Buddy_Rig_Mixamo65 (65 bones, mixamorig, unchanged)",
+ "unity_import": "same as Escape_v01: Generic, Copy From Other Avatar = SAUSAGE_BUDDY_A_v04Avatar, Anim. Compression Off; Loop Time on only for *_Loop_* clips",
+ "authoring_space": "PatientRest (as v01): head +Y, face +Z, his LEFT = +X; Unity PatientRest-local = (-x, z, -y). Root motion: none (Apply Root Motion off), except the HopRun hand-off and the in-place run loop (see root_motion per clip)",
+ "pose_keys": {
+  "unchanged_from_v01": [
+   "LIE",
+   "SIT",
+   "EDGE_R",
+   "REACH_R",
+   "REACH_L",
+   "LEGS_REACH",
+   "RUN0",
+   "EDGE_L",
+   "RUN0_L",
+   "LAND_R",
+   "DOWN_R",
+   "LAND_L",
+   "DOWN_L"
+  ],
+  "new_in_v02": [
+   "BCRUN",
+   "RUN0_BC",
+   "RUN0_BC_L"
+  ],
+  "files": [
+   "../Escape_v01/esc_pose_keys_v01.json",
+   "esc_pose_keys_v02.json"
+  ]
+ },
+ "run0_root": {
+  "position": [
+   1.6685,
+   -0.66,
+   1.1373
+  ],
+  "yaw_deg_about_up": 50.0,
+  "facing_unity": [
+   0.766,
+   0.0,
+   0.6428
+  ],
+  "note": "PatientRest-local Unity transform of the floor root that Flee_Run_v01 frame 1 expects (position (-x, z, -y) of armature space; rotation = -yaw about Unity +Y, sign flips with the handedness). Equivalently table-local: PatientRest @ this.",
+  "patientrest_armature": {
+   "position": [
+    -1.6685,
+    -1.1373,
+    -0.66
+   ],
+   "yaw_deg_about_z": -50.0
+  },
+  "speed_mps_at_end": 3.2
+ },
+ "run0_root_L": {
+  "position": [
+   -1.6435,
+   -0.66,
+   1.1671
+  ],
+  "yaw_deg_about_up": -50.0,
+  "facing_unity": [
+   -0.766,
+   0.0,
+   0.6428
+  ],
+  "note": "PatientRest-local Unity transform of the floor root that Flee_Run_v01 frame 1 expects (position (-x, z, -y) of armature space; rotation = -yaw about Unity +Y, sign flips with the handedness). Equivalently table-local: PatientRest @ this.",
+  "patientrest_armature": {
+   "position": [
+    1.6435,
+    -1.1671,
+    -0.66
+   ],
+   "yaw_deg_about_z": 50.0
+  },
+  "speed_mps_at_end": 3.2
+ },
+ "chaining": [
+  "Every v02 clip starts and ends on the same pose keys as its v01 counterpart (seam error 0), so v01 and v02 clips can be mixed freely in one escape.",
+  "Panic chain: [Esc_Lie_TugArmX_Loop_Panic_v02 x n] -> Esc_Lie_UnbuckleArmX_ByY_Panic_v02 -> Esc_SitUp_Panic_v02 -> [Esc_Sit_UnbuckleLeg(L|R|sBoth)_Panic_v02] -> Esc_SwingOff_(R|L)_Panic_v02 -> Esc_HopRun_(R|L)_BellyClutch_v02 -> Esc_Run_BellyClutch_Loop_Panic_v02 (free NPC root at RUN0 / RUN0_L, 3.2 m/s; or Flee_Run_v01 with a ~0.2 s crossfade).",
+  "Esc_HopRun_*_BellyClutch_v02 ends on RUN0_BC / RUN0_BC_L = Esc_Run_BellyClutch_Loop_Panic_v02 frame 1 at the v01 RUN0 / RUN0_L root (same root, yaw and 3.2 m/s as v01).",
+  "StrapOpen times are identical to v01 (only the clip lengths changed): ARM 1.40 s, LEG one 1.35 s, LegsBoth R 1.08 s / L 1.42 s."
+ ],
+ "clips": {
+  "Esc_HopRun_L_BellyClutch_v02": {
+   "fbx": "Esc_HopRun_L_BellyClutch_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_HopRun_L_BellyClutch_v02",
+   "unity_state_suggestion": "Esc_HopRun_L_BellyClutch",
+   "variant_of": "Esc_HopRun_L_v01",
+   "v01_duration_s": 1.5,
+   "duration_s": 1.5,
+   "duration_vs_v01_pct": 0.0,
+   "frames": [
+    1,
+    46
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "EDGE_L",
+   "end_pose_key": "RUN0_BC_L",
+   "chains_to": [
+    "Esc_Run_BellyClutch_Loop_Panic_v02 (loop) on the free NPC root placed at RUN0_L (= RUN0_L of v01), moving 3.2 m/s along its facing"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "LookBelly",
+     "t": 0.12,
+     "norm": 0.08,
+     "frame": 4.6
+    },
+    {
+     "name": "BellyGrab",
+     "t": 0.41,
+     "norm": 0.2733,
+     "frame": 13.3
+    },
+    {
+     "name": "Land",
+     "t": 0.52,
+     "norm": 0.3467,
+     "frame": 16.6
+    },
+    {
+     "name": "RunStart",
+     "t": 0.98,
+     "norm": 0.6533,
+     "frame": 30.4
+    },
+    {
+     "name": "HandOffToRun",
+     "t": 1.5,
+     "note": "end pose = Esc_Run_BellyClutch_Loop_Panic_v02 frame 1 at RUN0_L",
+     "norm": 1.0,
+     "frame": 46.0
+    }
+   ],
+   "interrupt": "t < 0.30 -> Esc_Slump_Edge_L_v01; 0.47 <= t <= 0.98 -> Esc_Stumble_Off_L_Panic_v02 (or _v01); 0.30-0.47 and > 0.98: ragdoll / capture flow",
+   "root_motion": "hips leave the table (PatientRest-local); final hand-off root RUN0_L (see esc_pose_keys_v01.json run0_root_L_patientrest_unity); speed at the end 3.2 m/s along the facing",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "EDGE_L": 0.0,
+     "RUN0_BC_L": "new key (esc_pose_keys_v02.json)"
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 3.4,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 57.4,
+     "hand_Right": 55.7,
+     "foot_Left": 31.1,
+     "foot_Right": 79.7,
+     "Head": 71.9,
+     "Hips": 54.3
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 322.73,
+     "chest": 246.77,
+     "pelvis": 0.0,
+     "arm_Left": 7.64,
+     "leg_Left": 4.69,
+     "arm_Right": 2.9,
+     "leg_Right": 7.0
+    },
+    "floor_min_mm": 0.5,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 4.3,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.77,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_HopRun_R_BellyClutch_v02": {
+   "fbx": "Esc_HopRun_R_BellyClutch_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_HopRun_R_BellyClutch_v02",
+   "unity_state_suggestion": "Esc_HopRun_R_BellyClutch",
+   "variant_of": "Esc_HopRun_R_v01",
+   "v01_duration_s": 1.5,
+   "duration_s": 1.5,
+   "duration_vs_v01_pct": 0.0,
+   "frames": [
+    1,
+    46
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "EDGE_R",
+   "end_pose_key": "RUN0_BC",
+   "chains_to": [
+    "Esc_Run_BellyClutch_Loop_Panic_v02 (loop) on the free NPC root placed at RUN0 (= RUN0 of v01), moving 3.2 m/s along its facing"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "LookBelly",
+     "t": 0.12,
+     "norm": 0.08,
+     "frame": 4.6
+    },
+    {
+     "name": "BellyGrab",
+     "t": 0.41,
+     "norm": 0.2733,
+     "frame": 13.3
+    },
+    {
+     "name": "Land",
+     "t": 0.52,
+     "norm": 0.3467,
+     "frame": 16.6
+    },
+    {
+     "name": "RunStart",
+     "t": 0.98,
+     "norm": 0.6533,
+     "frame": 30.4
+    },
+    {
+     "name": "HandOffToRun",
+     "t": 1.5,
+     "note": "end pose = Esc_Run_BellyClutch_Loop_Panic_v02 frame 1 at RUN0",
+     "norm": 1.0,
+     "frame": 46.0
+    }
+   ],
+   "interrupt": "t < 0.30 -> Esc_Slump_Edge_R_v01; 0.47 <= t <= 0.98 -> Esc_Stumble_Off_R_Panic_v02 (or _v01); 0.30-0.47 and > 0.98: ragdoll / capture flow (same windows as v01)",
+   "root_motion": "hips leave the table (PatientRest-local); final hand-off root RUN0 (see esc_pose_keys_v01.json run0_root_patientrest_unity); speed at the end 3.2 m/s along the facing",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "EDGE_R": 0.0,
+     "RUN0_BC": "new key (esc_pose_keys_v02.json)"
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 3.4,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 57.4,
+     "hand_Right": 55.7,
+     "foot_Left": 31.1,
+     "foot_Right": 79.7,
+     "Head": 71.9,
+     "Hips": 54.3
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 322.58,
+     "chest": 246.64,
+     "pelvis": 0.0,
+     "arm_Left": 2.71,
+     "leg_Left": 5.1,
+     "arm_Right": 7.71,
+     "leg_Right": 5.32
+    },
+    "floor_min_mm": 0.5,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 3.3,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.82,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Lie_TugArmL_Loop_Panic_v02": {
+   "fbx": "Esc_Lie_TugArmL_Loop_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_TugArmL_Loop_Panic_v02",
+   "unity_state_suggestion": "Esc_Lie_TugArmL_Loop_Panic",
+   "variant_of": "Esc_Lie_TugArmL_Loop_v01",
+   "v01_duration_s": 2.0,
+   "duration_s": 2.0,
+   "duration_vs_v01_pct": 0.0,
+   "frames": [
+    1,
+    61
+   ],
+   "fps": 30,
+   "loop": true,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "chains_to": [
+    "loop",
+    "Esc_Lie_UnbuckleArmL_ByR_Panic_v02"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_L"
+    ],
+    "open": [
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "interrupt": "any time -> Esc_Slump_LieReachL_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LIE": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 1.7,
+     "hand_Right": 5.4,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 8.0,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.2,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 3.26,
+     "chest": 0.55,
+     "pelvis": 1.82,
+     "arm_Left": 1.71,
+     "leg_Left": 0.26,
+     "arm_Right": -1.6,
+     "leg_Right": 0.09
+    },
+    "floor_min_mm": 653.97,
+    "closed_strap_drift_mm": {
+     "arm_L": 23.9,
+     "leg_L": 8.2,
+     "leg_R": 8.3
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 1.1,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.83,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Lie_TugArmR_Loop_Panic_v02": {
+   "fbx": "Esc_Lie_TugArmR_Loop_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_TugArmR_Loop_Panic_v02",
+   "unity_state_suggestion": "Esc_Lie_TugArmR_Loop_Panic",
+   "variant_of": "Esc_Lie_TugArmR_Loop_v01",
+   "v01_duration_s": 2.0,
+   "duration_s": 2.0,
+   "duration_vs_v01_pct": 0.0,
+   "frames": [
+    1,
+    61
+   ],
+   "fps": 30,
+   "loop": true,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "chains_to": [
+    "loop",
+    "Esc_Lie_UnbuckleArmR_ByL_Panic_v02"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_R"
+    ],
+    "open": [
+     "STRAP_ARM_L"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [],
+   "interrupt": "any time -> Esc_Slump_LieReachR_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LIE": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 5.4,
+     "hand_Right": 1.7,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 8.0,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.2,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 3.26,
+     "chest": 0.54,
+     "pelvis": 1.68,
+     "arm_Left": 0.82,
+     "leg_Left": 0.26,
+     "arm_Right": 0.88,
+     "leg_Right": -0.05
+    },
+    "floor_min_mm": 655.39,
+    "closed_strap_drift_mm": {
+     "arm_R": 23.9,
+     "leg_L": 8.3,
+     "leg_R": 8.2
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.83,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Lie_UnbuckleArmL_ByR_Panic_v02": {
+   "fbx": "Esc_Lie_UnbuckleArmL_ByR_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_UnbuckleArmL_ByR_Panic_v02",
+   "unity_state_suggestion": "Esc_Lie_UnbuckleArmL_ByR_Panic",
+   "variant_of": "Esc_Lie_UnbuckleArmL_ByR_v01",
+   "v01_duration_s": 2.6,
+   "duration_s": 3.0,
+   "duration_vs_v01_pct": 15.4,
+   "frames": [
+    1,
+    91
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "chains_to": [
+    "Esc_SitUp_Panic_v02 / Esc_SitUp_v01 (both arms now free)"
+   ],
+   "buckle_contacts": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 0.8,
+     "frame": 25.0,
+     "norm": 0.2667
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.25,
+     "frame": 38.5,
+     "norm": 0.4167
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_ARM_L",
+     "t": 1.4,
+     "frame": 43.0,
+     "norm": 0.4667
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.52,
+     "frame": 46.6,
+     "norm": 0.5067
+    }
+   ],
+   "strap_open": [
+    {
+     "strap": "STRAP_ARM_L",
+     "t": 1.4,
+     "frame": 43.0,
+     "norm": 0.4667
+    }
+   ],
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_L"
+    ],
+    "open": [
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {
+    "STRAP_ARM_L": "open"
+   },
+   "strap_animation": {
+    "STRAP_ARM_L": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.4,
+       0.0
+      ],
+      [
+       1.52,
+       30.0
+      ],
+      [
+       1.7,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.4667,
+       0.0
+      ],
+      [
+       0.5067,
+       30.0
+      ],
+      [
+       0.5667,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "LookBelly",
+     "t": 0.15,
+     "norm": 0.05,
+     "frame": 5.5
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 0.6,
+     "norm": 0.2,
+     "frame": 19.0
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 0.73,
+     "norm": 0.2433,
+     "frame": 22.9
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 0.8,
+     "norm": 0.2667,
+     "frame": 25.0
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.06,
+     "norm": 0.3533,
+     "frame": 32.8
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.25,
+     "norm": 0.4167,
+     "frame": 38.5
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_ARM_L",
+     "t": 1.4,
+     "norm": 0.4667,
+     "frame": 43.0
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_ARM_L",
+     "hand": "Right",
+     "t": 1.52,
+     "norm": 0.5067,
+     "frame": 46.6
+    },
+    {
+     "name": "BellyGrab",
+     "t": 1.96,
+     "norm": 0.6533,
+     "frame": 59.8
+    }
+   ],
+   "interrupt": "any time -> Esc_Slump_LieReachL_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LIE": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 2.5,
+     "hand_Right": 4.8,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 6.5,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.1,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": 12.52,
+    "pad_gap_min_mm": {
+     "head": 3.26,
+     "chest": 0.55,
+     "pelvis": 1.82,
+     "arm_Left": -1.09,
+     "leg_Left": 2.86,
+     "arm_Right": 0.64,
+     "leg_Right": 0.03
+    },
+    "floor_min_mm": 652.34,
+    "closed_strap_drift_mm": {
+     "arm_L": 23.2,
+     "leg_L": 6.3,
+     "leg_R": 6.3
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.89,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Lie_UnbuckleArmR_ByL_Panic_v02": {
+   "fbx": "Esc_Lie_UnbuckleArmR_ByL_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Lie_UnbuckleArmR_ByL_Panic_v02",
+   "unity_state_suggestion": "Esc_Lie_UnbuckleArmR_ByL_Panic",
+   "variant_of": "Esc_Lie_UnbuckleArmR_ByL_v01",
+   "v01_duration_s": 2.6,
+   "duration_s": 3.0,
+   "duration_vs_v01_pct": 15.4,
+   "frames": [
+    1,
+    91
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "LIE",
+   "chains_to": [
+    "Esc_SitUp_Panic_v02 / Esc_SitUp_v01 (both arms now free)"
+   ],
+   "buckle_contacts": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 0.8,
+     "frame": 25.0,
+     "norm": 0.2667
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.25,
+     "frame": 38.5,
+     "norm": 0.4167
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_ARM_R",
+     "t": 1.4,
+     "frame": 43.0,
+     "norm": 0.4667
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.52,
+     "frame": 46.6,
+     "norm": 0.5067
+    }
+   ],
+   "strap_open": [
+    {
+     "strap": "STRAP_ARM_R",
+     "t": 1.4,
+     "frame": 43.0,
+     "norm": 0.4667
+    }
+   ],
+   "preconditions": {
+    "closed": [
+     "STRAP_ARM_R"
+    ],
+    "open": [
+     "STRAP_ARM_L"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {
+    "STRAP_ARM_R": "open"
+   },
+   "strap_animation": {
+    "STRAP_ARM_R": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.4,
+       0.0
+      ],
+      [
+       1.52,
+       30.0
+      ],
+      [
+       1.7,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.4667,
+       0.0
+      ],
+      [
+       0.5067,
+       30.0
+      ],
+      [
+       0.5667,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "LookBelly",
+     "t": 0.15,
+     "norm": 0.05,
+     "frame": 5.5
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 0.6,
+     "norm": 0.2,
+     "frame": 19.0
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 0.73,
+     "norm": 0.2433,
+     "frame": 22.9
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 0.8,
+     "norm": 0.2667,
+     "frame": 25.0
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.06,
+     "norm": 0.3533,
+     "frame": 32.8
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.25,
+     "norm": 0.4167,
+     "frame": 38.5
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_ARM_R",
+     "t": 1.4,
+     "norm": 0.4667,
+     "frame": 43.0
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_ARM_R",
+     "hand": "Left",
+     "t": 1.52,
+     "norm": 0.5067,
+     "frame": 46.6
+    },
+    {
+     "name": "BellyGrab",
+     "t": 1.96,
+     "norm": 0.6533,
+     "frame": 59.8
+    }
+   ],
+   "interrupt": "any time -> Esc_Slump_LieReachR_v01 (crossfade 0.15-0.25 s)",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LIE": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 4.8,
+     "hand_Right": 2.5,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 6.5,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.1,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": 14.8,
+    "pad_gap_min_mm": {
+     "head": 3.26,
+     "chest": 0.55,
+     "pelvis": 1.68,
+     "arm_Left": 1.67,
+     "leg_Left": 2.86,
+     "arm_Right": 0.22,
+     "leg_Right": 0.03
+    },
+    "floor_min_mm": 652.34,
+    "closed_strap_drift_mm": {
+     "arm_R": 23.2,
+     "leg_L": 6.3,
+     "leg_R": 6.3
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.89,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Run_BellyClutch_Loop_Panic_v02": {
+   "fbx": "Esc_Run_BellyClutch_Loop_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Run_BellyClutch_Loop_Panic_v02",
+   "unity_state_suggestion": "Esc_Run_BellyClutch_Loop_Panic",
+   "variant_of": "Flee_Run_v01 (Escape_Police_v01, same legs/footfalls/speed)",
+   "v01_duration_s": null,
+   "duration_s": 0.566667,
+   "duration_vs_v01_pct": null,
+   "frames": [
+    1,
+    18
+   ],
+   "fps": 30,
+   "loop": true,
+   "start_pose_key": "BCRUN",
+   "end_pose_key": "BCRUN",
+   "chains_to": [
+    "loop"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "FootL",
+     "t": 0.0,
+     "norm": 0.0,
+     "frame": 1.0
+    },
+    {
+     "name": "FootR",
+     "t": 0.2833,
+     "norm": 0.4999,
+     "frame": 9.5
+    }
+   ],
+   "interrupt": "as Flee_Run_v01 (ragdoll / capture flow)",
+   "root_motion": "in place (like Flee_Run_v01): ground +Y at 3.20 m/s, play at speed / 3.20; drive the free NPC root (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "BCRUN": "new key (esc_pose_keys_v02.json)"
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 32.3,
+     "hand_Right": 36.9,
+     "foot_Left": 39.2,
+     "foot_Right": 41.7,
+     "Head": 39.3,
+     "Hips": 19.6
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 24.6,
+     "hand_Right": 30.1,
+     "foot_Left": 57.8,
+     "foot_Right": 48.6,
+     "Head": 29.6,
+     "Hips": 15.9
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": null,
+    "floor_min_mm": 23.94,
+    "closed_strap_drift_mm": null,
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.17,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Sit_UnbuckleLegL_Panic_v02": {
+   "fbx": "Esc_Sit_UnbuckleLegL_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegL_Panic_v02",
+   "unity_state_suggestion": "Esc_Sit_UnbuckleLegL_Panic",
+   "variant_of": "Esc_Sit_UnbuckleLegL_v01",
+   "v01_duration_s": 2.3,
+   "duration_s": 2.4,
+   "duration_vs_v01_pct": 4.3,
+   "frames": [
+    1,
+    73
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "chains_to": [
+    "Esc_Sit_UnbuckleLegR_Panic_v02 if the other leg is still strapped",
+    "Esc_SwingOff_R/L_Panic_v02"
+   ],
+   "buckle_contacts": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.8,
+     "frame": 25.0,
+     "norm": 0.3333
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.2,
+     "frame": 37.0,
+     "norm": 0.5
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_L",
+     "t": 1.35,
+     "frame": 41.5,
+     "norm": 0.5625
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.4700000000000002,
+     "frame": 45.1,
+     "norm": 0.6125
+    }
+   ],
+   "strap_open": [
+    {
+     "strap": "STRAP_LEG_L",
+     "t": 1.35,
+     "frame": 41.5,
+     "norm": 0.5625
+    }
+   ],
+   "preconditions": {
+    "closed": [
+     "STRAP_LEG_L"
+    ],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {
+    "STRAP_LEG_L": "open"
+   },
+   "strap_animation": {
+    "STRAP_LEG_L": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.35,
+       0.0
+      ],
+      [
+       1.47,
+       40.0
+      ],
+      [
+       1.65,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.5625,
+       0.0
+      ],
+      [
+       0.6125,
+       40.0
+      ],
+      [
+       0.6875,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "BellyGrab",
+     "hand": "Right",
+     "t": 0.2,
+     "norm": 0.0833,
+     "frame": 7.0
+    },
+    {
+     "name": "Hop",
+     "t": 0.32,
+     "norm": 0.1333,
+     "frame": 10.6
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.63,
+     "norm": 0.2625,
+     "frame": 19.9
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.8,
+     "norm": 0.3333,
+     "frame": 25.0
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.0,
+     "norm": 0.4167,
+     "frame": 31.0
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.2,
+     "norm": 0.5,
+     "frame": 37.0
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_L",
+     "t": 1.35,
+     "norm": 0.5625,
+     "frame": 41.5
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.4700000000000002,
+     "norm": 0.6125,
+     "frame": 45.1
+    },
+    {
+     "name": "Hop",
+     "t": 1.82,
+     "norm": 0.7583,
+     "frame": 55.6
+    },
+    {
+     "name": "Hop",
+     "t": 1.96,
+     "norm": 0.8167,
+     "frame": 59.8
+    }
+   ],
+   "interrupt": "any time -> Esc_Slump_Sit_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "SIT": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 4.1,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.4,
+     "Hips": 0.1
+    },
+    "buckle_contact_err_max_mm": 0.81,
+    "pad_gap_min_mm": {
+     "head": 179.26,
+     "chest": 165.65,
+     "pelvis": 1.97,
+     "arm_Left": 3.03,
+     "leg_Left": 3.28,
+     "arm_Right": 6.43,
+     "leg_Right": 3.43
+    },
+    "floor_min_mm": 658.57,
+    "closed_strap_drift_mm": {
+     "leg_L": 28.6,
+     "leg_R": 28.6
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.83,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Sit_UnbuckleLegR_Panic_v02": {
+   "fbx": "Esc_Sit_UnbuckleLegR_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegR_Panic_v02",
+   "unity_state_suggestion": "Esc_Sit_UnbuckleLegR_Panic",
+   "variant_of": "Esc_Sit_UnbuckleLegR_v01",
+   "v01_duration_s": 2.3,
+   "duration_s": 2.4,
+   "duration_vs_v01_pct": 4.3,
+   "frames": [
+    1,
+    73
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "chains_to": [
+    "Esc_Sit_UnbuckleLegL_Panic_v02 if the other leg is still strapped",
+    "Esc_SwingOff_R/L_Panic_v02"
+   ],
+   "buckle_contacts": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.8,
+     "frame": 25.0,
+     "norm": 0.3333
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.2,
+     "frame": 37.0,
+     "norm": 0.5
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_R",
+     "t": 1.35,
+     "frame": 41.5,
+     "norm": 0.5625
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.4700000000000002,
+     "frame": 45.1,
+     "norm": 0.6125
+    }
+   ],
+   "strap_open": [
+    {
+     "strap": "STRAP_LEG_R",
+     "t": 1.35,
+     "frame": 41.5,
+     "norm": 0.5625
+    }
+   ],
+   "preconditions": {
+    "closed": [
+     "STRAP_LEG_R"
+    ],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L"
+    ]
+   },
+   "straps_after": {
+    "STRAP_LEG_R": "open"
+   },
+   "strap_animation": {
+    "STRAP_LEG_R": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.35,
+       0.0
+      ],
+      [
+       1.47,
+       40.0
+      ],
+      [
+       1.65,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.5625,
+       0.0
+      ],
+      [
+       0.6125,
+       40.0
+      ],
+      [
+       0.6875,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "BellyGrab",
+     "hand": "Left",
+     "t": 0.2,
+     "norm": 0.0833,
+     "frame": 7.0
+    },
+    {
+     "name": "Hop",
+     "t": 0.32,
+     "norm": 0.1333,
+     "frame": 10.6
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.63,
+     "norm": 0.2625,
+     "frame": 19.9
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.8,
+     "norm": 0.3333,
+     "frame": 25.0
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.0,
+     "norm": 0.4167,
+     "frame": 31.0
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.2,
+     "norm": 0.5,
+     "frame": 37.0
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_R",
+     "t": 1.35,
+     "norm": 0.5625,
+     "frame": 41.5
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.4700000000000002,
+     "norm": 0.6125,
+     "frame": 45.1
+    },
+    {
+     "name": "Hop",
+     "t": 1.82,
+     "norm": 0.7583,
+     "frame": 55.6
+    },
+    {
+     "name": "Hop",
+     "t": 1.96,
+     "norm": 0.8167,
+     "frame": 59.8
+    }
+   ],
+   "interrupt": "any time -> Esc_Slump_Sit_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "SIT": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 4.1,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.4,
+     "Hips": 0.1
+    },
+    "buckle_contact_err_max_mm": 0.81,
+    "pad_gap_min_mm": {
+     "head": 176.66,
+     "chest": 162.48,
+     "pelvis": 1.97,
+     "arm_Left": 6.28,
+     "leg_Left": 6.73,
+     "arm_Right": 2.99,
+     "leg_Right": 0.2
+    },
+    "floor_min_mm": 659.2,
+    "closed_strap_drift_mm": {
+     "leg_L": 28.6,
+     "leg_R": 28.6
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.53,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Sit_UnbuckleLegsBoth_Panic_v02": {
+   "fbx": "Esc_Sit_UnbuckleLegsBoth_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegsBoth_Panic_v02",
+   "unity_state_suggestion": "Esc_Sit_UnbuckleLegsBoth_Panic",
+   "variant_of": "Esc_Sit_UnbuckleLegsBoth_v01",
+   "v01_duration_s": 2.6,
+   "duration_s": 2.8,
+   "duration_vs_v01_pct": 7.7,
+   "frames": [
+    1,
+    85
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "SIT",
+   "chains_to": [
+    "Esc_SwingOff_R/L_Panic_v02"
+   ],
+   "buckle_contacts": [
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.8,
+     "frame": 25.0,
+     "norm": 0.2857
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.8,
+     "frame": 25.0,
+     "norm": 0.2857
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_R",
+     "t": 1.08,
+     "frame": 33.4,
+     "norm": 0.3857
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.2000000000000002,
+     "frame": 37.0,
+     "norm": 0.4286
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.28,
+     "frame": 39.4,
+     "norm": 0.4571
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_L",
+     "t": 1.42,
+     "frame": 43.6,
+     "norm": 0.5071
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.54,
+     "frame": 47.2,
+     "norm": 0.55
+    }
+   ],
+   "strap_open": [
+    {
+     "strap": "STRAP_LEG_R",
+     "t": 1.08,
+     "frame": 33.4,
+     "norm": 0.3857
+    },
+    {
+     "strap": "STRAP_LEG_L",
+     "t": 1.42,
+     "frame": 43.6,
+     "norm": 0.5071
+    }
+   ],
+   "preconditions": {
+    "closed": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": []
+   },
+   "straps_after": {
+    "STRAP_LEG_L": "open",
+    "STRAP_LEG_R": "open"
+   },
+   "strap_animation": {
+    "STRAP_LEG_L": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.42,
+       0.0
+      ],
+      [
+       1.54,
+       40.0
+      ],
+      [
+       1.72,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.5071,
+       0.0
+      ],
+      [
+       0.55,
+       40.0
+      ],
+      [
+       0.6143,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    },
+    "STRAP_LEG_R": {
+     "angle_keys_deg": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.08,
+       0.0
+      ],
+      [
+       1.2,
+       40.0
+      ],
+      [
+       1.38,
+       120.0
+      ]
+     ],
+     "angle_keys_norm": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.3857,
+       0.0
+      ],
+      [
+       0.4286,
+       40.0
+      ],
+      [
+       0.4929,
+       120.0
+      ]
+     ],
+     "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+   },
+   "events": [
+    {
+     "name": "BellyGrab",
+     "t": 0.24,
+     "norm": 0.0857,
+     "frame": 8.2
+    },
+    {
+     "name": "Hop",
+     "t": 0.35,
+     "norm": 0.125,
+     "frame": 11.5
+    },
+    {
+     "name": "Miss",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.63,
+     "norm": 0.225,
+     "frame": 19.9
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 0.8,
+     "norm": 0.2857,
+     "frame": 25.0
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 0.8,
+     "norm": 0.2857,
+     "frame": 25.0
+    },
+    {
+     "name": "Slip",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.0,
+     "norm": 0.3571,
+     "frame": 31.0
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_R",
+     "t": 1.08,
+     "norm": 0.3857,
+     "frame": 33.4
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_R",
+     "hand": "Right",
+     "t": 1.2000000000000002,
+     "norm": 0.4286,
+     "frame": 37.0
+    },
+    {
+     "name": "Grab",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.28,
+     "norm": 0.4571,
+     "frame": 39.4
+    },
+    {
+     "name": "StrapOpen",
+     "strap": "STRAP_LEG_L",
+     "t": 1.42,
+     "norm": 0.5071,
+     "frame": 43.6
+    },
+    {
+     "name": "Release",
+     "strap": "STRAP_LEG_L",
+     "hand": "Left",
+     "t": 1.54,
+     "norm": 0.55,
+     "frame": 47.2
+    },
+    {
+     "name": "Hop",
+     "t": 1.9,
+     "norm": 0.6786,
+     "frame": 58.0
+    },
+    {
+     "name": "Hop",
+     "t": 2.04,
+     "norm": 0.7286,
+     "frame": 62.2
+    },
+    {
+     "name": "Hop",
+     "t": 2.18,
+     "norm": 0.7786,
+     "frame": 66.4
+    }
+   ],
+   "interrupt": "any time -> Esc_Slump_Sit_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "SIT": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 4.1,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 0.1,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": 0.83,
+    "pad_gap_min_mm": {
+     "head": 248.68,
+     "chest": 164.08,
+     "pelvis": 1.91,
+     "arm_Left": 3.13,
+     "leg_Left": 2.51,
+     "arm_Right": 6.43,
+     "leg_Right": 1.32
+    },
+    "floor_min_mm": 659.46,
+    "closed_strap_drift_mm": {
+     "leg_L": 28.6,
+     "leg_R": 28.6
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 21.95,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_SitUp_Panic_v02": {
+   "fbx": "Esc_SitUp_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_SitUp_Panic_v02",
+   "unity_state_suggestion": "Esc_SitUp_Panic",
+   "variant_of": "Esc_SitUp_v01",
+   "v01_duration_s": 1.0,
+   "duration_s": 1.2,
+   "duration_vs_v01_pct": 20.0,
+   "frames": [
+    1,
+    37
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "LIE",
+   "end_pose_key": "SIT",
+   "chains_to": [
+    "Esc_Sit_UnbuckleLegsBoth_Panic_v02 / _LegL_ / _LegR_ (a leg strap closed)",
+    "Esc_SwingOff_R/L_Panic_v02 (all open)"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R"
+    ],
+    "any": [
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ]
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "BellyGrab",
+     "t": 0.42,
+     "norm": 0.35,
+     "frame": 13.6
+    }
+   ],
+   "interrupt": "any time -> Esc_Slump_Sit_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LIE": 0.0,
+     "SIT": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 7.7,
+     "hand_Right": 7.7,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 7.5,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 2.8,
+     "Hips": 0.1
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 3.26,
+     "chest": 0.55,
+     "pelvis": 0.0,
+     "arm_Left": 1.63,
+     "leg_Left": 3.5,
+     "arm_Right": 0.71,
+     "leg_Right": 0.42
+    },
+    "floor_min_mm": 656.0,
+    "closed_strap_drift_mm": {
+     "leg_L": 26.2,
+     "leg_R": 26.2
+    },
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.91,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Stumble_Off_L_Panic_v02": {
+   "fbx": "Esc_Stumble_Off_L_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Stumble_Off_L_Panic_v02",
+   "unity_state_suggestion": "Esc_Stumble_Off_L_Panic",
+   "variant_of": "Esc_Stumble_Off_L_v01",
+   "v01_duration_s": 1.6,
+   "duration_s": 1.8,
+   "duration_vs_v01_pct": 12.5,
+   "frames": [
+    1,
+    55
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "LAND_L",
+   "end_pose_key": "DOWN_L",
+   "chains_to": [
+    "knocked-down ragdoll (start from the last frame), then the capture flow"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.08,
+     "norm": 0.0444,
+     "frame": 3.4
+    },
+    {
+     "name": "BellyGrab",
+     "t": 0.18,
+     "norm": 0.1,
+     "frame": 6.4
+    },
+    {
+     "name": "NearlyFalls",
+     "t": 0.32,
+     "norm": 0.1778,
+     "frame": 10.6
+    },
+    {
+     "name": "KneesHit",
+     "t": 0.88,
+     "norm": 0.4889,
+     "frame": 27.4
+    },
+    {
+     "name": "BodyHitsFloor",
+     "t": 1.28,
+     "norm": 0.7111,
+     "frame": 39.4
+    },
+    {
+     "name": "RagdollReady",
+     "t": 1.8,
+     "note": "end pose DOWN_x (= v01): face down on the floor, relaxed; start the knocked-down ragdoll from this pose (or hold it)",
+     "norm": 1.0,
+     "frame": 55.0
+    }
+   ],
+   "interrupt": "is itself the interrupt clip (ends on DOWN_L = ragdoll start)",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body on the floor beside the table (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LAND_L": 0.0,
+     "DOWN_L": 1e-07
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 30.9,
+     "hand_Right": 29.1,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 13.6,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.3,
+     "foot_Right": 0.3,
+     "Head": 0.0,
+     "Hips": 0.1
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {},
+    "floor_min_mm": 0.3,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.99,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_Stumble_Off_R_Panic_v02": {
+   "fbx": "Esc_Stumble_Off_R_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_Stumble_Off_R_Panic_v02",
+   "unity_state_suggestion": "Esc_Stumble_Off_R_Panic",
+   "variant_of": "Esc_Stumble_Off_R_v01",
+   "v01_duration_s": 1.6,
+   "duration_s": 1.8,
+   "duration_vs_v01_pct": 12.5,
+   "frames": [
+    1,
+    55
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "LAND_R",
+   "end_pose_key": "DOWN_R",
+   "chains_to": [
+    "knocked-down ragdoll (start from the last frame), then the capture flow"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "Limp",
+     "t": 0.08,
+     "norm": 0.0444,
+     "frame": 3.4
+    },
+    {
+     "name": "BellyGrab",
+     "t": 0.18,
+     "norm": 0.1,
+     "frame": 6.4
+    },
+    {
+     "name": "NearlyFalls",
+     "t": 0.32,
+     "norm": 0.1778,
+     "frame": 10.6
+    },
+    {
+     "name": "KneesHit",
+     "t": 0.88,
+     "norm": 0.4889,
+     "frame": 27.4
+    },
+    {
+     "name": "BodyHitsFloor",
+     "t": 1.28,
+     "norm": 0.7111,
+     "frame": 39.4
+    },
+    {
+     "name": "RagdollReady",
+     "t": 1.8,
+     "note": "end pose DOWN_x (= v01): face down on the floor, relaxed; start the knocked-down ragdoll from this pose (or hold it)",
+     "norm": 1.0,
+     "frame": 55.0
+    }
+   ],
+   "interrupt": "is itself the interrupt clip (ends on DOWN_R = ragdoll start)",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body on the floor beside the table (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "LAND_R": 0.0,
+     "DOWN_R": 1e-07
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.0,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 29.1,
+     "hand_Right": 30.9,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 13.6,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 0.3,
+     "foot_Right": 0.3,
+     "Head": 0.0,
+     "Hips": 0.1
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {},
+    "floor_min_mm": 0.3,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.62,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_SwingOff_L_Panic_v02": {
+   "fbx": "Esc_SwingOff_L_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_SwingOff_L_Panic_v02",
+   "unity_state_suggestion": "Esc_SwingOff_L_Panic",
+   "variant_of": "Esc_SwingOff_L_v01",
+   "v01_duration_s": 1.2,
+   "duration_s": 1.4,
+   "duration_vs_v01_pct": 16.7,
+   "frames": [
+    1,
+    43
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "EDGE_L",
+   "chains_to": [
+    "Esc_HopRun_L_BellyClutch_v02 / Esc_HopRun_L_v01"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "BellyGrab",
+     "t": 0.19,
+     "norm": 0.1357,
+     "frame": 6.7
+    },
+    {
+     "name": "SlipOffEdge",
+     "t": 0.86,
+     "norm": 0.6143,
+     "frame": 26.8
+    },
+    {
+     "name": "CatchPalms",
+     "t": 0.95,
+     "norm": 0.6786,
+     "frame": 29.5
+    }
+   ],
+   "interrupt": "t < 0.76 -> Esc_Slump_Sit_v01; t >= 0.76 -> Esc_Slump_Edge_L_v01",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "SIT": 0.0,
+     "EDGE_L": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 6.7,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 5.4,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 1.2,
+     "foot_Right": 1.0,
+     "Head": 0.3,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 344.28,
+     "chest": 223.38,
+     "pelvis": 0.93,
+     "arm_Left": -1.84,
+     "leg_Left": 6.79,
+     "arm_Right": 2.18,
+     "leg_Right": 3.48
+    },
+    "floor_min_mm": 45.53,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.63,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  },
+  "Esc_SwingOff_R_Panic_v02": {
+   "fbx": "Esc_SwingOff_R_Panic_v02.fbx",
+   "take": "Buddy_Rig_Mixamo65|Esc_SwingOff_R_Panic_v02",
+   "unity_state_suggestion": "Esc_SwingOff_R_Panic",
+   "variant_of": "Esc_SwingOff_R_v01",
+   "v01_duration_s": 1.2,
+   "duration_s": 1.4,
+   "duration_vs_v01_pct": 16.7,
+   "frames": [
+    1,
+    43
+   ],
+   "fps": 30,
+   "loop": false,
+   "start_pose_key": "SIT",
+   "end_pose_key": "EDGE_R",
+   "chains_to": [
+    "Esc_HopRun_R_BellyClutch_v02 / Esc_HopRun_R_v01"
+   ],
+   "buckle_contacts": [],
+   "strap_open": [],
+   "preconditions": {
+    "closed": [],
+    "open": [
+     "STRAP_ARM_L",
+     "STRAP_ARM_R",
+     "STRAP_LEG_L",
+     "STRAP_LEG_R"
+    ],
+    "any": []
+   },
+   "straps_after": {},
+   "strap_animation": {},
+   "events": [
+    {
+     "name": "BellyGrab",
+     "t": 0.19,
+     "norm": 0.1357,
+     "frame": 6.7
+    },
+    {
+     "name": "SlipOffEdge",
+     "t": 0.86,
+     "norm": 0.6143,
+     "frame": 26.8
+    },
+    {
+     "name": "CatchPalms",
+     "t": 0.95,
+     "norm": 0.6786,
+     "frame": 29.5
+    }
+   ],
+   "interrupt": "t < 0.76 -> Esc_Slump_Sit_v01; t >= 0.76 -> Esc_Slump_Edge_R_v01 (same split as v01)",
+   "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+   "checks": {
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+     "SIT": 0.0,
+     "EDGE_R": 0.0
+    },
+    "seam_eval_vs_pose_key_mm": {
+     "t0": 0.001,
+     "tEnd": 0.001
+    },
+    "seam_step_start_mm": {
+     "hand_Left": 6.7,
+     "hand_Right": 0.0,
+     "foot_Left": 0.0,
+     "foot_Right": 0.0,
+     "Head": 5.4,
+     "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+     "hand_Left": 0.0,
+     "hand_Right": 0.0,
+     "foot_Left": 1.0,
+     "foot_Right": 1.2,
+     "Head": 0.3,
+     "Hips": 0.0
+    },
+    "buckle_contact_err_max_mm": null,
+    "pad_gap_min_mm": {
+     "head": 344.28,
+     "chest": 223.19,
+     "pelvis": 1.38,
+     "arm_Left": 2.1,
+     "leg_Left": 0.89,
+     "arm_Right": -1.65,
+     "leg_Right": 2.96
+    },
+    "floor_min_mm": 45.34,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+     "arm_Left_in_trunk": 0.0,
+     "arm_Left_in_head": 0.0,
+     "arm_Right_in_trunk": 0.0,
+     "arm_Right_in_head": 0.0,
+     "leg_Left_in_head": 0.0,
+     "leg_Right_in_head": 0.0
+    },
+    "max_key_step_deg": 20.6,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_bones": 65
+   }
+  }
+ }
+}

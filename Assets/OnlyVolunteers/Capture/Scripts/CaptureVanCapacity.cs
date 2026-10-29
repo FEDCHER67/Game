@@ -8,8 +8,9 @@ namespace OnlyVolunteers.Capture
     /// <summary>Stock van capacity (spec §4, D5, CD-08): 3 lying NPCs. With more bodies inside the cargo box the cargo
     /// doors refuse to close (they bounce back open) and the van refuses to drive off: the engine coughs and stalls,
     /// «Тесно, не влезает». Runs after the driver's and the on-foot door input in the same frame, so it only overrides
-    /// their requests; the van, its doors and the cargo logic are unchanged. Cargo-body upgrades (+1 per level, up to 5)
-    /// are stage B: Capacity is the hook.</summary>
+    /// their requests; the van, its doors and the cargo logic are unchanged. Cargo-body upgrades (ECONOMY §6.2, Fedya
+    /// 29.10: capacity I 3→4, II 4→5, bought at the workshop) arrive as the van's VanCargoFitoutV01 (applied from the
+    /// economy on every machine): Capacity follows it each frame; without one it stays at the stock value.</summary>
     [DefaultExecutionOrder(200)]
     [RequireComponent(typeof(VanController))]
     public sealed class CaptureVanCapacity : MonoBehaviour
@@ -22,6 +23,7 @@ namespace OnlyVolunteers.Capture
         private GreyboxVanCargo cargo;
         private GreyboxVanSeat seat;
         private VanCargoSpace space;
+        private VanCargoFitoutV01 fitout;
         private float nextCough;
         private float nextHint;
         public int BodiesInside { get; private set; }
@@ -39,6 +41,7 @@ namespace OnlyVolunteers.Capture
 
         private void Update()
         {
+            if (fitout != null || TryGetComponent(out fitout)) Capacity = fitout.Capacity; // the paid steps (3 / 4 / 5)
             if (space == null && !TryGetComponent(out space)) return;
             BodiesInside = Count();
             if (!Overloaded) return;

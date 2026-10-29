@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OnlyVolunteers.Capture;
 using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Vehicles;
 using UnityEngine;
@@ -38,6 +39,13 @@ namespace OnlyVolunteers.Map
     //   van teleport (F1-F8, R: VanController.ResetCount, or a jump over TeleportJump) carries the loaded NPCs and a
     //   riding player along.
     // - HUD: "Груз: n (оглушены m)" while driving or near the van; "тесно" above SoftLimit (a soft limit, nothing stops more).
+    //   With the van's cargo fit-out (VanCargoFitoutV01, the paid cargo body) SoftLimit follows its Capacity (3 / 4 / 5).
+    // - Containment I (van_containment_1, Fedya 29.10): every loaded NPC up to the capacity is strapped (CargoStrapBook,
+    //   load order; the strap fitting slides onto the nearest floor rail at the waist or, lying, the nearer ankle). A
+    //   strapped captive never starts an escape (no run, no crawl; one in progress is called off), is not put out when a
+    //   sitter is thrown about (he rides with the van, held firmer), and tugs at the strap instead (a startled flash, turned
+    //   to the open door). Grabbing a lying one still drags him out as before (the hold overrides the strap; out of the bay
+    //   = unloaded = unstrapped). A flip or the sea still throws everyone out. Belts: posed every frame (LateUpdate).
     // Van-local coordinates follow VanSetupBuilder's Blender boxes, local = (-bx, bz, -by - 0.02): rear opening z -2.21,
     // sliding door on +X at z -0.92..0.42 (driver door on -X), van skin at x +-0.94, floor 0.55.
     // State on the NPCs is plain data (InCargo, Carrier, State); the per-NPC timers here are offline bookkeeping.
@@ -141,6 +149,15 @@ namespace OnlyVolunteers.Map
         private Rigidbody _vanBody;
         private GreyboxVanSeat _seat;
         private VanCargoSpace _space;
+        // containment I: who holds which strap, where its fitting sits on the rail (van-local), waist or ankle
+        private sealed class Strap { public Vector3 Anchor; public bool Ankle; }
+        private const float StrappedMatching = 3f;   // a strapped sitter rides with the van this many times firmer
+        private const float StrapHoldMargin = 0.8f;  // and is held in up to this far out of the bay
+        private VanCargoFitoutV01 _fitout;
+        private readonly CargoStrapBook<GreyboxNpc> _straps = new();
+        private readonly Dictionary<GreyboxNpc, Strap> _strapAt = new();
+        private readonly List<GreyboxNpc> _loaded = new();
+        private readonly List<GreyboxNpc> _strapDrop = new();
         private readonly Dictionary<GreyboxNpc, Tracked> _tracked = new();
         private readonly HashSet<GreyboxNpc> _seen = new();
         private readonly List<GreyboxNpc> _drop = new();
@@ -156,6 +173,11 @@ namespace OnlyVolunteers.Map
         public float SpeedKmh => _van != null ? _van.SpeedKmh : 0f;
         public Vector3 VanVelocity => _vanBody != null ? _vanBody.linearVelocity : Vector3.zero;
         public VanCargoSpace CargoSpace => _space;
+        /// <summary>The paid cargo body of this van (null = stock: capacity 3, no straps, no padding).</summary>
+        public VanCargoFitoutV01 Fitout => _fitout != null ? _fitout : TryGetComponent(out _fitout) ? _fitout : null;
+        /// <summary>Containment I holds this loaded NPC (he cannot get out on his own).</summary>
+        public bool Strapped(GreyboxNpc npc) => _straps.IsStrapped(npc);
+        public int StrappedCount => _straps.Count;
 
         // In OnEnable rather than Awake (same moment at start): it also runs after a script reload in Play mode.
         private void OnEnable()
@@ -327,6 +349,7 @@ namespace OnlyVolunteers.Map
             float now = Time.time;
             if (CheckMovedOrEjected(dt, now)) return;
             _frameVelocity ??= _space.PointVelocity;
+            UpdateStraps();
 
             _seen.Clear();
             foreach (GreyboxNpc npc in GreyboxNpc.All)
@@ -380,14 +403,20 @@ namespace OnlyVolunteers.Map
                 else Unload(npc);
                 return;
             }
-            if (npc.Phase == StunPhase.Groggy && body.HolderCount == 0)
+            bool strapped = _straps.IsStrapped(npc);
+            if (npc.Phase == StunPhase.Groggy && body.HolderCount == 0 && CargoContainmentRules.CanTryEscape(strapped))
             {
                 if (TickEscape(npc, t, com, now) && t.Running && KeepGoing(npc, main.linearVelocity, t, com, now, -1f))
                     npc.CrawlGoal = EscapeGoal(t.Door);
             }
             else if (t.Door >= 0)
             {
-                StopEscape(npc, t, now); // held, or knocked Out again
+                StopEscape(npc, t, now); // held, knocked Out again, or strapped (containment I)
+            }
+            else if (strapped && npc.Phase == StunPhase.Groggy && body.HolderCount == 0)
+            {
+                npc.CrawlToward = false;
+                Tug(npc, t, com, now);
             }
             if (body.HolderCount == 0 && !t.Running) body.DampToward(_frameVelocity, LoadedDamping, SettledSpeed);
         }
@@ -414,6 +443,13 @@ namespace OnlyVolunteers.Map
             Vector3 com = rb.worldCenterOfMass;
             Tracked t = Track(npc, rb.rotation);
             Vector3 vanVelocity = _space.PointVelocity(com);
+            bool strapped = _straps.IsStrapped(npc);
+            if (npc.State == NpcState.Escaping && strapped)
+            {
+                StopEscape(npc, t, now); // containment I: the strap holds him (an escape begun before it was fastened)
+                Turn(rb, t, dt);
+                return;
+            }
             if (npc.State == NpcState.Escaping)
             {
                 // Grabbed on the run (draft section 2: "схватить"): caught, it sits back down with a startled flash;
@@ -429,15 +465,17 @@ namespace OnlyVolunteers.Map
                 if (body.Active && Ours(npc) && npc.State != NpcState.Down) Turn(rb, t, dt);
                 return;
             }
-            // Thrown out of the bay while sitting (braking with the door open, a shove): out, by the same rules.
-            if (!_space.Contains(com, 0.3f))
+            // Thrown out of the bay while sitting (braking with the door open, a shove): out, by the same rules. Strapped
+            // (containment I): the belt holds him in (only a body flung far past it, a flip or the sea, gets out).
+            if (!_space.Contains(com, 0.3f) && (!strapped || !_space.Contains(com, StrapHoldMargin)))
             {
                 GetOut(npc, rb.linearVelocity, com, Outward(-1, com));
                 return;
             }
             Vector3 lag = vanVelocity - rb.linearVelocity;
-            if (lag.sqrMagnitude > SettledSpeedSqr) rb.AddForce(lag * (rb.mass * SeatedMatching));
-            TickEscape(npc, t, com, now);
+            if (lag.sqrMagnitude > SettledSpeedSqr) rb.AddForce(lag * (rb.mass * SeatedMatching * (strapped ? StrappedMatching : 1f)));
+            if (CargoContainmentRules.CanTryEscape(strapped)) TickEscape(npc, t, com, now);
+            else Tug(npc, t, com, now);
             Turn(rb, t, dt);
         }
 
@@ -591,6 +629,79 @@ namespace OnlyVolunteers.Map
             if (t.Door >= 0) t.RetryAt = now + EscapeRetry;
             t.Door = -1;
             t.Running = false;
+        }
+
+        // Containment I: a strapped captive with a door open stares at it and yanks at the strap now and then (a startled
+        // flash every EscapeRetry seconds), never more.
+        private void Tug(GreyboxNpc npc, Tracked t, Vector3 com, float now)
+        {
+            int door = OpenDoorNear(com);
+            if (door < 0) return;
+            if (npc.State != NpcState.Down) t.TargetYaw = VanYaw(EscapeGoal(door) - com);
+            if (now < t.RetryAt) return;
+            t.RetryAt = now + EscapeRetry;
+            npc.Flash();
+        }
+
+        // ---------- Containment I: straps ----------
+
+        // Who is strapped this tick (CargoStrapBook: load order, up to the capacity), HUD limit from the paid capacity.
+        private void UpdateStraps()
+        {
+            VanCargoFitoutV01 fitout = Fitout;
+            if (fitout != null) SoftLimit = fitout.Capacity;
+            _loaded.Clear();
+            foreach (GreyboxNpc npc in GreyboxNpc.All)
+                if (npc != null && npc.isActiveAndEnabled && Ours(npc)) _loaded.Add(npc);
+            bool installed = fitout != null && fitout.Restraints;
+            int capacity = fitout != null ? fitout.Capacity : CargoContainmentRules.StockCapacity;
+            List<GreyboxNpc> fastened = _straps.Update(installed, capacity, _loaded);
+            foreach (GreyboxNpc npc in fastened)
+            {
+                // the fitting slides to the nearest rail point: the waist, or the nearer ankle of a lying body
+                Vector3 waist = npc.StrapPoint(false);
+                Vector3 anchor = fitout.StrapAnchor(waist);
+                bool ankle = false;
+                if (npc.State == NpcState.Down)
+                {
+                    Vector3 foot = npc.StrapPoint(true);
+                    Vector3 footAnchor = fitout.StrapAnchor(foot);
+                    if (Vector3.Distance(fitout.transform.TransformPoint(footAnchor), foot) + 0.15f < Vector3.Distance(fitout.transform.TransformPoint(anchor), waist))
+                    {
+                        anchor = footAnchor;
+                        ankle = true;
+                    }
+                }
+                _strapAt[npc] = new Strap { Anchor = anchor, Ankle = ankle };
+                npc.CrawlToward = false;
+                Debug.Log($"[CARGO] {npc.name} strapped ({(ankle ? "ankle" : "waist")}) at ring {_straps.SlotOf(npc)} of {capacity}");
+            }
+            _strapDrop.Clear();
+            foreach (GreyboxNpc npc in _strapAt.Keys) if (!_straps.IsStrapped(npc)) _strapDrop.Add(npc);
+            foreach (GreyboxNpc npc in _strapDrop) _strapAt.Remove(npc);
+        }
+
+        // Belts at the render pose: from the D-ring on the rail to the waist (a sitter always) or the ankle. A held body
+        // (being dragged out) shows none: the hold overrides the strap.
+        private void LateUpdate()
+        {
+            VanCargoFitoutV01 fitout = Fitout;
+            if (fitout == null || !fitout.Restraints || _strapAt.Count == 0) return;
+            foreach (KeyValuePair<GreyboxNpc, Strap> s in _strapAt)
+            {
+                GreyboxNpc npc = s.Key;
+                if (npc == null || !Ours(npc)) continue;
+                int slot = _straps.SlotOf(npc);
+                if (slot < 0) continue;
+                INpcBody body = npc.PhysicalBody;
+                if (npc.State == NpcState.Down && body != null && body.HolderCount > 0) continue;
+                bool ankle = s.Value.Ankle && npc.State == NpcState.Down;
+                // the lap belt goes over the top of the body there: the ankle, a lying waist, a sitter's lap
+                bool lying = npc.State == NpcState.Down;
+                float over = ankle ? 0.07f : lying ? 0.2f : 0.12f;
+                float half = ankle ? 0.09f : lying ? 0.26f : 0.2f;
+                fitout.PoseStrap(slot, s.Value.Anchor, npc.StrapPoint(ankle), over, half);
+            }
         }
 
         // Sitting NPCs keep their facing relative to the van (rotation is frozen in physics), turning toward TargetYaw.

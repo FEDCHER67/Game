@@ -79,18 +79,37 @@ namespace OnlyVolunteers.Inventory
         {
             if (inventory != null) inventory.Changed += MarkDirty;
             if (cashSource != null) cashSource.Changed += MarkDirty;
+            OnlyVolunteers.Economy.EconomyClientView.Changed += OnFundChanged;
         }
 
         private void OnDisable()
         {
             if (inventory != null) inventory.Changed -= MarkDirty;
             if (cashSource != null) cashSource.Changed -= MarkDirty;
+            OnlyVolunteers.Economy.EconomyClientView.Changed -= OnFundChanged;
             if (canvasObject != null) canvasObject.SetActive(false);
         }
 
         private void OnDestroy()
         {
             if (canvasObject != null) Destroy(canvasObject);
+        }
+
+        private int shownFund = int.MinValue;
+
+        /// <summary>ECONOMY spec v01 §3.1/§11: the "$" is the team's shared fund whenever an economy runs (snapshots also
+        /// arrive for timers: only a balance change shows the bar).</summary>
+        private void OnFundChanged()
+        {
+            int fund = OnlyVolunteers.Economy.EconomyClientView.Available ? OnlyVolunteers.Economy.EconomyClientView.Balance : int.MinValue;
+            if (fund != shownFund) MarkDirty();
+        }
+
+        private int ShownCash()
+        {
+            if (OnlyVolunteers.Economy.EconomyClientView.Available) return shownFund = OnlyVolunteers.Economy.EconomyClientView.Balance;
+            shownFund = int.MinValue;
+            return (cashSource ?? inventory).Cash;
         }
 
         private void MarkDirty()
@@ -241,7 +260,7 @@ namespace OnlyVolunteers.Inventory
                 ? $"{currentItem.DisplayName}  ${current.UnitValue.ToString("N0", CultureInfo.InvariantCulture)}"
                 : string.Empty;
             itemName.color = new Color(1f, 1f, 1f, contentAlpha * 0.85f);
-            cashText.text = "$" + (cashSource ?? inventory).Cash.ToString("N0", CultureInfo.InvariantCulture);
+            cashText.text = "$" + ShownCash().ToString("N0", CultureInfo.InvariantCulture);
             cashText.color = new Color(1f, 1f, 1f, contentAlpha * 0.7f);
             if (selected != lastSelected)
             {

@@ -2,6 +2,10 @@ using System;
 
 namespace OnlyVolunteers.Buyers
 {
+    /// <summary>Read-only G48 adapter. The runtime bootstrap always binds one (G48SyringePriceLookup over the loaded
+    /// catalogue, or an always-false lookup when the catalogue failed to load): a bound lookup that cannot resolve an id
+    /// makes the price unavailable (exception), it never falls back to the spec numbers below.</summary>
+    public interface ISyringePriceLookup { bool TryGetPrice(string id, out int dollars); }
     /// <summary>Only unresolved presets live here. All confirmed tables below are fixed.</summary>
     public sealed class BuyerTuning
     {
@@ -21,6 +25,25 @@ namespace OnlyVolunteers.Buyers
 
     public static class BuyerCatalog
     {
+        public static ISyringePriceLookup SyringePrices { get; set; }
+        public static int SyringePrice(string id)
+        {
+            if (SyringePrices != null)
+            {
+                if (!SyringePrices.TryGetPrice(id, out int price))
+                    throw new InvalidOperationException("Syringe economy price unavailable in the bound catalogue: " + id);
+                if (price < 0) throw new ArgumentOutOfRangeException(nameof(price));
+                return price;
+            }
+            // Unbound only (pure tests / standalone runner): the temporary §5 values. Production binds a lookup first.
+            switch (id)
+            {
+                case "syringe_blood": case "syringe_anaesthesia": return 2;
+                case "c01_blood_first": return 10;
+                case "c01_blood_repeat": return 8;
+                default: throw new ArgumentException("Unknown syringe economy id", nameof(id));
+            }
+        }
         public const string BloodBuyer = "C01";
         // Canon has not finally assigned the universal first buyer to C02.
         public const string OrganBuyer = "ORGANS_01";
@@ -98,10 +121,43 @@ namespace OnlyVolunteers.Buyers
         {
             if (negotiatedPercent < 0 || negotiatedPercent > 20) throw new ArgumentOutOfRangeException(nameof(negotiatedPercent));
             if (!IsOrgan(kind)) return BasePrice(kind) * (kind == ProductKind.IntroSyringe ? 1m : 1m + negotiatedPercent / 100m);
-            return BasePrice(kind) * TierMultiplier(tier) * (1m + negotiatedPercent / 100m) *
-                (onTimeSpecial ? 1.25m : 1m) * (deliveredCooled ? 1m : .9m) *
-                (isSpecial ? 1m : SaturationMultiplier(unitsAlreadySold));
+            return PriceWithFactors(BasePrice(kind), TierMultiplier(tier), 1m, negotiatedPercent,
+                onTimeSpecial ? 1.25m : 1m, deliveredCooled ? 1m : .9m,
+                isSpecial ? 1m : SaturationMultiplier(unitsAlreadySold));
         }
+        /// <summary>Explicit spec-v01 read API; existing G27 calls retain their compatibility behavior.</summary>
+        public static EconomyCatalog LoadEconomy(string json) => EconomyCatalog.FromJson(json);
+
+        /// <summary>Same Buyers price calculation using the explicitly loaded economy source.
+        /// No saturation on special orders; no organ factors on blood. Returns an unrounded unit value.</summary>
+        public static decimal UnitPrice(EconomyCatalog economy, string buyerId, ProductKind kind,
+            QualityTier tier, int negotiatedPercent, bool onTimeSpecial, bool deliveredCooled,
+            int unitsAlreadySold, bool isSpecial, bool introductoryBloodSale = true)
+        {
+            if (economy == null) throw new ArgumentNullException(nameof(economy));
+            if (negotiatedPercent != 0 && negotiatedPercent != 5 && negotiatedPercent != 10 && negotiatedPercent != 20)
+                throw new ArgumentOutOfRangeException(nameof(negotiatedPercent));
+            if (unitsAlreadySold < 0) throw new ArgumentOutOfRangeException(nameof(unitsAlreadySold));
+            economy.GetBuyer(buyerId);
+            if (!IsOrgan(kind))
+            {
+                if (buyerId != "buyer_blood") throw new ArgumentException("Blood requires buyer_blood.", nameof(buyerId));
+                if (kind == ProductKind.IntroSyringe)
+                    return economy.GetPrice(introductoryBloodSale ? "blood_syringe_first" : "blood_syringe_repeat");
+                return economy.GetPrice(EconomyCatalog.ProductId(kind)) * (1m + negotiatedPercent / 100m);
+            }
+            if (tier < economy.BuyerFloor(buyerId)) throw new ArgumentOutOfRangeException(nameof(tier), "Below buyer quality floor.");
+            return PriceWithFactors(economy.GetPrice(EconomyCatalog.ProductId(kind)), economy.QualityMultiplier(tier),
+                economy.BuyerCoefficient(buyerId), negotiatedPercent,
+                onTimeSpecial && isSpecial ? economy.Get("special_order_on_time_multiplier").Number("value") : 1m,
+                deliveredCooled ? 1m : economy.Get("uncooled_multiplier").Number("value"),
+                isSpecial ? 1m : SaturationMultiplier(unitsAlreadySold));
+        }
+
+        private static decimal PriceWithFactors(decimal basePrice, decimal quality, decimal buyer,
+            int negotiatedPercent, decimal onTime, decimal cooling, decimal saturation) =>
+            basePrice * quality * buyer * (1m + negotiatedPercent / 100m) * onTime * cooling * saturation;
+
         public static ProductKind OrderKind(OrderTemplate template) => template == OrderTemplate.HamletKidney ? ProductKind.Kidney : ProductKind.Brain;
         public static QualityTier OrderMinimum(OrderTemplate template) => template == OrderTemplate.HamletKidney ? QualityTier.Good : QualityTier.Perfect;
         public static string OrderNpcType(OrderTemplate template) => template == OrderTemplate.HamletKidney ? "HAMLET_BODYBUILDER" : "OLD_STREAMER";

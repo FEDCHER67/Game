@@ -1,0 +1,83 @@
+{
+ "comment": "--build writes here (never over existing files):   MECHANIC_W86_v02.blend         = MECHANIC_W86_v01.blend with the v02 wrench (the animation source, LOD0 only)   MECHANIC_W86_v02_opt_v02.blend = MECHANIC_W86_v01_opt_v02.blend with the v02 wrench in LOD0/1/2   MECHANIC_W86_v02_opt_v02.fbx   = its game FBX (the opt_v02 export: rig + Body/Face/Outfit/Wrench_RightHand _LOD0/1/2,                                    the Idle clip only, the same export options)   wrench_MECHANIC_W86_v02.json   = layout, triangles, checks Everything except the Wrench_RightHand meshes is the v01 data unchanged (same objects, weights, materials, shape keys).",
+ "delta_deg": 45.0,
+ "centre_bone": [
+  0.005400000140070915,
+  0.10040000081062317,
+  0.05480000004172325
+ ],
+ "axis_bone_rear_to_front": [
+  -0.70711,
+  0.70711,
+  0.0
+ ],
+ "front_end_u": 0.604,
+ "rear_end_u": -0.244,
+ "length_m": 0.848,
+ "front_jaw": {
+  "u": 0.52,
+  "R": 0.084,
+  "slot": 0.032,
+  "half": 0.0145,
+  "open_deg": 15.0
+ },
+ "rear_jaw": {
+  "u": -0.178,
+  "R": 0.066,
+  "slot": 0.025,
+  "half": 0.0135,
+  "open_deg": 15.0
+ },
+ "grip_u": [
+  -0.068,
+  0.068
+ ],
+ "support_u": 0.335,
+ "grip_pose": {
+  "fingers": [
+   0.0,
+   44.76,
+   29.96
+  ],
+  "thumb": [
+   32.44,
+   -8.2,
+   28.24
+  ]
+ },
+ "tris": {
+  "source": 588,
+  "LOD0": 588,
+  "LOD1": 300,
+  "LOD2": 160
+ },
+ "extent_u_source": [
+  -0.2435,
+  0.6033
+ ],
+ "hand_check": {
+  "hand_verts": 506,
+  "inside": 0,
+  "deepest_mm": 0.0,
+  "within_4mm": 25
+ },
+ "fbx_objects": [
+  "Body_LOD0",
+  "Body_LOD1",
+  "Body_LOD2",
+  "Face_LOD0",
+  "Face_LOD1",
+  "Face_LOD2",
+  "Outfit_LOD0",
+  "Outfit_LOD1",
+  "Outfit_LOD2",
+  "Wrench_RightHand_LOD0",
+  "Wrench_RightHand_LOD1",
+  "Wrench_RightHand_LOD2"
+ ],
+ "outputs": [
+  "MECHANIC_W86_v02.blend",
+  "MECHANIC_W86_v02_opt_v02.blend",
+  "MECHANIC_W86_v02_opt_v02.fbx"
+ ]
+}

@@ -1,0 +1,360 @@
+{
+  "clip": "Esc_Sit_UnbuckleLegL_Panic_v02",
+  "action": "Esc_Sit_UnbuckleLegL_Panic_v02",
+  "take": "Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegL_Panic_v02",
+  "variant_of": "Esc_Sit_UnbuckleLegL_v01",
+  "v01_duration_s": 2.3,
+  "duration_vs_v01_pct": 4.3,
+  "frames": [
+    1,
+    73
+  ],
+  "fps": 30,
+  "duration_s": 2.4,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "SIT",
+  "end_pose_key": "SIT",
+  "preconditions": {
+    "closed": [
+      "STRAP_LEG_L"
+    ],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R"
+    ],
+    "any": [
+      "STRAP_LEG_R"
+    ]
+  },
+  "straps_after": {
+    "STRAP_LEG_L": "open"
+  },
+  "strap_animation": {
+    "STRAP_LEG_L": {
+      "angle_keys_deg": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.35,
+          0.0
+        ],
+        [
+          1.47,
+          40.0
+        ],
+        [
+          1.65,
+          120.0
+        ]
+      ],
+      "angle_keys_norm": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.5625,
+          0.0
+        ],
+        [
+          0.6125,
+          40.0
+        ],
+        [
+          0.6875,
+          120.0
+        ]
+      ],
+      "note": "rotation about the strap local +X (Unity same sign), 0 = closed, 120 = open; interpolate smoothly (monotone)"
+    }
+  },
+  "events": [
+    {
+      "name": "BellyGrab",
+      "hand": "Right",
+      "t": 0.2,
+      "norm": 0.0833,
+      "frame": 7.0
+    },
+    {
+      "name": "Hop",
+      "t": 0.32,
+      "norm": 0.1333,
+      "frame": 10.6
+    },
+    {
+      "name": "Miss",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 0.63,
+      "norm": 0.2625,
+      "frame": 19.9
+    },
+    {
+      "name": "Grab",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 0.8,
+      "norm": 0.3333,
+      "frame": 25.0
+    },
+    {
+      "name": "Slip",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 1.0,
+      "norm": 0.4167,
+      "frame": 31.0
+    },
+    {
+      "name": "Grab",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 1.2,
+      "norm": 0.5,
+      "frame": 37.0
+    },
+    {
+      "name": "StrapOpen",
+      "strap": "STRAP_LEG_L",
+      "t": 1.35,
+      "norm": 0.5625,
+      "frame": 41.5
+    },
+    {
+      "name": "Release",
+      "strap": "STRAP_LEG_L",
+      "hand": "Left",
+      "t": 1.4700000000000002,
+      "norm": 0.6125,
+      "frame": 45.1
+    },
+    {
+      "name": "Hop",
+      "t": 1.82,
+      "norm": 0.7583,
+      "frame": 55.6
+    },
+    {
+      "name": "Hop",
+      "t": 1.96,
+      "norm": 0.8167,
+      "frame": 59.8
+    }
+  ],
+  "next": [
+    "Esc_Sit_UnbuckleLegR_Panic_v02 if the other leg is still strapped",
+    "Esc_SwingOff_R/L_Panic_v02"
+  ],
+  "beats": [
+    "0.06 jolt, sees the belly; 0.20 right hand clutches the belly (holds it to the end)",
+    "0.25 double-take to the strapped shin; 0.32 panicky butt hop, panting",
+    "0.52-0.68 left hand dives at the shin, 0.63 misses (grabs his own shin)",
+    "0.80 grab (v01 contact), 1.00 slip, shakes the hand, glance at the belly, double-take",
+    "1.20 grab #2, 1.35 STRAP OPEN STRAP_LEG_L, 1.47 lets go, foot wiggles",
+    "1.68-2.00 sits back, both hands on the belly, two hops",
+    "2.06-2.40 palms back on the pad = SIT"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0286,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "hand_L": 0.0094
+    },
+    "hand_ik_overreach_at_s": {
+      "hand_L": 0.317
+    },
+    "contact_root_lift_max_m": 0.0246,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightArm": 8,
+      "mixamorig:RightForeArm": 9,
+      "mixamorig:RightHand": 22,
+      "mixamorig:LeftArm": 26,
+      "mixamorig:LeftForeArm": 8,
+      "mixamorig:LeftHand": 22,
+      "mixamorig:LeftHandIndex1": 11,
+      "mixamorig:LeftHandIndex2": 20,
+      "mixamorig:LeftHandIndex3": 11,
+      "mixamorig:LeftHandMiddle1": 11,
+      "mixamorig:LeftHandMiddle2": 20,
+      "mixamorig:LeftHandMiddle3": 11,
+      "mixamorig:LeftHandRing1": 11,
+      "mixamorig:LeftHandRing2": 20,
+      "mixamorig:LeftHandRing3": 11,
+      "mixamorig:LeftHandPinky1": 11,
+      "mixamorig:LeftHandPinky2": 20,
+      "mixamorig:LeftHandPinky3": 11
+    },
+    "root_height_smoothing_max_m": 0.0,
+    "inbetween_lift_max_m": 0.0,
+    "seam_eval_vs_pose_key_mm": {
+      "t0": 0.001,
+      "tEnd": 0.001
+    }
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.83,
+    "max_key_step_bone": "mixamorig:LeftForeArm",
+    "pad_gap_min_mm": {
+      "head": 179.26,
+      "chest": 165.65,
+      "pelvis": 1.97,
+      "arm_Left": 3.03,
+      "leg_Left": 3.28,
+      "arm_Right": 6.43,
+      "leg_Right": 3.43
+    },
+    "pad_gap_min_at_s": {
+      "head": 1.067,
+      "chest": 0.983,
+      "pelvis": 0.592,
+      "arm_Left": 0.883,
+      "leg_Left": 1.683,
+      "arm_Right": 2.367,
+      "leg_Right": 2.317
+    },
+    "floor_min_mm": 658.57,
+    "floor_min_at_s": 0.283,
+    "closed_strap_drift_mm": {
+      "leg_L": 28.6,
+      "leg_R": 28.6
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "buckle_contacts": [
+      {
+        "t": 0.8,
+        "frame": 25.0,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 0.0,
+        "grip_to_target_mm": 0.0
+      },
+      {
+        "t": 1.2,
+        "frame": 37.0,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 0.0,
+        "grip_to_target_mm": 0.0
+      },
+      {
+        "t": 1.35,
+        "frame": 41.5,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 0.0,
+        "grip_to_target_mm": 0.0
+      },
+      {
+        "t": 1.37,
+        "frame": 42.1,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 1.9,
+        "grip_to_target_mm": 0.24
+      },
+      {
+        "t": 1.39,
+        "frame": 42.7,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 7.0,
+        "grip_to_target_mm": 0.31
+      },
+      {
+        "t": 1.41,
+        "frame": 43.3,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 14.3,
+        "grip_to_target_mm": 0.3
+      },
+      {
+        "t": 1.43,
+        "frame": 43.9,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 22.9,
+        "grip_to_target_mm": 0.19
+      },
+      {
+        "t": 1.45,
+        "frame": 44.5,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 31.8,
+        "grip_to_target_mm": 0.02
+      },
+      {
+        "t": 1.47,
+        "frame": 45.1,
+        "hand": "Left",
+        "strap": "STRAP_LEG_L",
+        "strap_deg": 40.0,
+        "grip_to_target_mm": 0.81
+      }
+    ],
+    "buckle_contact_err_max_mm": 0.81,
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+      "SIT": 0.0
+    },
+    "seam_step_start_mm": {
+      "hand_Left": 0.0,
+      "hand_Right": 0.0,
+      "foot_Left": 0.0,
+      "foot_Right": 0.0,
+      "Head": 4.1,
+      "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+      "hand_Left": 0.0,
+      "hand_Right": 0.0,
+      "foot_Left": 0.0,
+      "foot_Right": 0.0,
+      "Head": 0.4,
+      "Hips": 0.1
+    },
+    "max_step_mm": {
+      "hand_Left": 170.8,
+      "hand_Right": 88.5,
+      "foot_Left": 4.7,
+      "foot_Right": 4.7,
+      "Head": 106.1,
+      "Hips": 26.6
+    },
+    "closed_strap_drift_at_s": {
+      "leg_L": 0.6,
+      "leg_R": 0.6
+    },
+    "max_step_at_s": {
+      "hand_Left": 1.667,
+      "hand_Right": 0.1,
+      "foot_Left": 1.667,
+      "foot_Right": 1.667,
+      "Head": 1.667,
+      "Hips": 1.85
+    },
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Sit_UnbuckleLegL_Panic_v02",
+    "fbx_bones": 65
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend",
+  "pose_keys_file": "esc_pose_keys_v01.json (Escape_v01)"
+}

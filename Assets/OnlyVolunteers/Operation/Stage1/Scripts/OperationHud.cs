@@ -25,6 +25,9 @@ namespace OnlyVolunteers.Operation.Stage1
         private const int ToolSlots = 5; // Hands, Anesthesia, Blood, Scalpel, Suture (round 3)
         private Text[] organChips = new Text[3];
         private Image[] organChipBg = new Image[3];
+        // WP05: the patient's spoilage clock and the table's closing supplies (card), the first-opening warning (top)
+        private Text spoilText, supplyText;
+        private RectTransform warnPill; private Text warnText; private float warnUntil = -10f;
         // banners
         private RectTransform panic; private Text panicText; private Image panicRing; private Text panicSeconds;
         private RectTransform dead; private Text deadText;
@@ -132,7 +135,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private void BuildCard(RectTransform parent)
         {
             var card = PhoneUi.Rect("PatientCard", parent);
-            Place(card, new Vector2(0, 1), new Vector2(24, -24), new Vector2(380, 262), new Vector2(0, 1));
+            Place(card, new Vector2(0, 1), new Vector2(24, -24), new Vector2(380, 318), new Vector2(0, 1));
             var bg = card.gameObject.AddComponent<Image>(); PhoneUi.SetRadius(bg, 20); bg.color = Panel; bg.raycastTarget = false;
             var title = Label(card, "ПАЦИЕНТ", 16, Muted, TextAnchor.UpperLeft, true); Place(title.rectTransform, new Vector2(0, 1), new Vector2(20, -14), new Vector2(200, 22), new Vector2(0, 1));
             idText = Label(card, "", 14, Muted, TextAnchor.UpperRight); Place(idText.rectTransform, new Vector2(1, 1), new Vector2(-18, -15), new Vector2(160, 22), new Vector2(1, 1));
@@ -173,6 +176,8 @@ namespace OnlyVolunteers.Operation.Stage1
                 Place(organChipBg[i].rectTransform, new Vector2(0, 1), new Vector2(146, -130 - i * 40), new Vector2(216, 34), new Vector2(0, 1));
                 organChips[i] = Label(organChipBg[i].rectTransform, "", 16, Neutral, TextAnchor.MiddleLeft); organChips[i].rectTransform.Stretch(10, 0, 8, 0);
             }
+            spoilText = Label(card, "", 17, Muted, TextAnchor.MiddleLeft, true); Place(spoilText.rectTransform, new Vector2(0, 1), new Vector2(20, -258), new Vector2(350, 24), new Vector2(0, 1));
+            supplyText = Label(card, "", 15, Muted, TextAnchor.MiddleLeft); Place(supplyText.rectTransform, new Vector2(0, 1), new Vector2(20, -286), new Vector2(350, 22), new Vector2(0, 1));
         }
         private Image Box(RectTransform parent, string name, Vector2 center, Vector2 size, Color color, float radius)
         {
@@ -198,7 +203,22 @@ namespace OnlyVolunteers.Operation.Stage1
             var dbg = dead.gameObject.AddComponent<Image>(); PhoneUi.SetRadius(dbg, 26); dbg.color = new Color(0.12f, 0.12f, 0.14f, 0.9f); dbg.raycastTarget = false;
             deadText = Label(dead, "", 30, Color.white, TextAnchor.MiddleCenter, true); deadText.rectTransform.Stretch(16, 6, 16, 6);
             panic.gameObject.SetActive(false); dead.gameObject.SetActive(false);
+            // WP05 (OB-07): the first-opening warning, a few seconds under the banners; the world keeps running.
+            warnPill = PhoneUi.Rect("SpoilWarning", parent); Place(warnPill, new Vector2(0.5f, 1), new Vector2(0, -132), new Vector2(1040, 64), new Vector2(0.5f, 1));
+            var wbg = warnPill.gameObject.AddComponent<Image>(); PhoneUi.SetRadius(wbg, 22); wbg.color = new Color(0.32f, 0.2f, 0.02f, 0.92f); wbg.raycastTarget = false;
+            warnText = Label(warnPill, "", 23, Color.white, TextAnchor.MiddleCenter, true); warnText.rectTransform.Stretch(18, 4, 18, 4);
+            warnPill.gameObject.SetActive(false);
         }
+
+        /// <summary>WP05: a short warning line under the top banners for a few seconds (the first opening of a body).</summary>
+        public void Warning(string text, float seconds)
+        {
+            if (warnText == null) return;
+            warnText.text = text ?? "";
+            warnUntil = Time.unscaledTime + Mathf.Max(1f, seconds);
+            LastToast = text;
+        }
+        public bool WarningVisible => warnPill != null && warnPill.gameObject.activeSelf;
 
         private void BuildHotbar(RectTransform parent)
         {
@@ -492,10 +512,28 @@ namespace OnlyVolunteers.Operation.Stage1
                 else { text = OperationText.OrganShort[i] + " · цела"; bg = new Color(1, 1, 1, 0.08f); }
                 organChips[i].text = text; organChipBg[i].color = bg;
             }
+            // WP05: the one spoilage clock of this patient (OPS v01 §4) and the table's closing supplies.
+            if (!s.spoilStarted)
+            {
+                spoilText.text = "Органы свежие · порча начнётся при вскрытии";
+                spoilText.color = Muted;
+            }
+            else
+            {
+                float next = OperationRules.SecondsToNextSpoil(s, tuning);
+                spoilText.text = (s.corpseLoss > 0 ? "Порча идёт: −" + s.corpseLoss + " · " : "Порча идёт · ") + "следующая −1 через " + Mathf.CeilToInt(next) + " с";
+                spoilText.color = s.corpseLoss > 0 || next <= 15f ? Bad : Warn;
+            }
+            if (v != null)
+            {
+                supplyText.text = "Наборы шва: " + v.sutureKits + " · заплатки: " + v.patches + (s.sutureKitReserved && !s.sutured ? " · набор в работе" : "");
+                supplyText.color = v.sutureKits <= 0 && !s.sutureKitReserved ? Warn : Muted;
+            }
         }
 
         private void UpdateBanners(OperationState s)
         {
+            if (warnPill != null) warnPill.gameObject.SetActive(Time.unscaledTime < warnUntil);
             bool p = s.Panicking;
             panic.gameObject.SetActive(p);
             if (p)
@@ -682,6 +720,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 case OpHint.NothingToSuture: tone = HintTone.Warn; return table.State != null && table.State.sutured ? "Уже зашито" :
                     table.State != null && table.State.skinPatched ? "Заплатка — сначала вскрой скальпелем [4]" : "Шить нечего — разреза нет";
                 case OpHint.StitchFromTop: tone = HintTone.Warn; return "Шей от верхнего края разреза, по линии";
+                case OpHint.SyringeOtherPerson: tone = HintTone.Warn; return OnlyVolunteers.Inventory.SyringeRules.OtherPersonNotice;
+                case OpHint.SyringeUnavailable: tone = HintTone.Warn; return "Нужен пригодный шприц";
+                case OpHint.NoSutureKit: return "Нет набора шва — без него не зашить";
             }
             return null;
         }
@@ -738,6 +779,7 @@ namespace OnlyVolunteers.Operation.Stage1
                     {
                         if (!s.zoneOpened || s.sutured || s.skinPatched) { tone = HintTone.Warn; return s.sutured ? "Уже зашито" : s.skinPatched ? "Заплатка — сначала вскрой скальпелем [4]" : "Шить нечего — разреза нет"; }
                         if (!table.ServerOrLocalCanOperate(s)) { tone = HintTone.Bad; return "Он дёргается — пристегни или усыпи"; }
+                        if (!s.sutureKitReserved && v != null && v.sutureKits <= 0) { tone = HintTone.Bad; return "Нет набора шва — без него не зашить"; }
                         if (view.Stroking) { tone = HintTone.Good; return "Шьём… стежок " + Mathf.FloorToInt(s.zoneSuture * tuning.sutureStitches) + "/" + tuning.sutureStitches; }
                         tone = HintTone.Good; return s.zoneSuture > 0.01f ? "Зажми ЛКМ у точки и шей дальше по линии" : "Зажми ЛКМ у верхнего края и шей по линии вниз";
                     }

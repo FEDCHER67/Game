@@ -69,7 +69,7 @@ namespace OnlyVolunteers.Buyers.Tests
         public void BUY08_AttendanceWithoutNegotiationPreventsMissPenaltyAndSurvivesSave()
         {
             Meeting(); Assert.That(rules.RecordMeetingAttendance(Organ, "p2"), Is.True);
-            var saved = rules.Snapshot; rules = new BuyerRules(clock, rng, saved);
+            var saved = rules.Snapshot; rules = Reload(saved);
             clock.Now = B().Meeting.ExpiresAt; rules.Tick();
             Assert.That(B().Respect, Is.EqualTo(30)); Assert.That(B().Meeting.HadInteraction, Is.True);
         }
@@ -207,7 +207,7 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY21_FailedTypeReleasesOnlyItsGoodsImmediatelySoTheyCanBeStashed()
         {
-            rules = new BuyerRules(clock, rng, Seed(45)); Order(); Meeting();
+            rules = NewWorld(Seed(45)); Order(); Meeting();
             string kidney1 = Add(tier: QualityTier.Good, packaged: true), kidney2 = Add(holder: "p2"), liver = Add(ProductKind.Liver);
             rules.LoadItem(Organ, kidney1, "p1"); rules.LoadItem(Organ, kidney2, "p2"); rules.LoadItem(Organ, liver, "p1");
             rules.BeginGroup(Organ, ProductKind.Kidney, "p1"); rng.Value = 99; rules.AskMeeting(Organ, "p1", 20);
@@ -246,7 +246,7 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY22_BUY41_HandoffKeepsAttemptAndTimerButUsesNewSkill()
         {
-            var seed = Seed(); seed.Participants[1].NegotiationLevel = 3; rules = new BuyerRules(clock, rng, seed);
+            rules = NewWorld(Seed()); GiveBargainRank("p2", 3);
             Meeting(); rules.BeginGroup(Organ, ProductKind.Kidney, "p1"); rng.Value = 99; rules.AskMeeting(Organ, "p1", 20);
             long expiry = B().Meeting.ExpiresAt;
             rules.SetPresentParticipants("p2"); Assert.That(rules.ChangeNegotiator(Organ, "p2"), Is.True);

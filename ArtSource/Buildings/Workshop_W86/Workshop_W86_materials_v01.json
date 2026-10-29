@@ -1,0 +1,350 @@
+{
+ "revision": "v01",
+ "shader": "URP/Lit",
+ "uv": "UV0 in metres (1 UV = 1 m); set material tiling = 1 / tile_m",
+ "sheet": "Working/Reviews/Workshop_2026-10-28/TEXTURE_SHEET_A_v01.md",
+ "materials": {
+  "MAT_WS_corrugated_grey": {
+   "albedo": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v07/T7_metal_trapez_albedo.png",
+   "albedo_from_art_root": "TextureTest_v01/Source_v07/T7_metal_trapez_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v07/T7_metal_trapez_normal.png",
+   "tile_m": 1.5,
+   "unity_tiling": 0.66667,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#A3A8AB",
+   "smoothness": 0.35,
+   "metallic": 0.3,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "1 / option 1",
+   "note": "Wall cladding, interior liner, roof deck. Geometry carries 0.1875 m trapezoid ribs; texture adds fine rib shading."
+  },
+  "MAT_WS_red_steel": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_painted_metal_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_painted_metal_albedo.png",
+   "normal": null,
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#B23A2C",
+   "smoothness": 0.35,
+   "metallic": 0.1,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "4 + 10 / option 1",
+   "note": "Columns, rafters, braces, shelving, tool chests, drawer fronts, heater cabinet."
+  },
+  "MAT_WS_brick": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3a_brick/3a_brick_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/3a_brick/3a_brick_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/3a_brick/3a_brick_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFFFFF",
+   "smoothness": 0.08,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "2 / option 1 (tile 2 m instead of 3 m)",
+   "note": "Geometric courses every 0.125 m from z=0.05 and protruding bricks are aligned to this texture at tile 2.0 m, offset 0. Do not change the tile."
+  },
+  "MAT_WS_concrete": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_light_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_concrete_light_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_light_normal.png",
+   "tile_m": 3.0,
+   "unity_tiling": 0.33333,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#C9C5BD",
+   "smoothness": 0.22,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "5 / option 1",
+   "note": "Bay floors, foundation band, thresholds."
+  },
+  "MAT_WS_concrete_pit": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_bridge_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_concrete_bridge_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_bridge_normal.png",
+   "tile_m": 4.0,
+   "unity_tiling": 0.25,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#B9B6B0",
+   "smoothness": 0.18,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "7 / option 1",
+   "note": "Inspection pit walls, steps, pit floor."
+  },
+  "MAT_WS_apron": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_slabs_old_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_concrete_slabs_old_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_slabs_old_normal.png",
+   "tile_m": 6.0,
+   "unity_tiling": 0.16667,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#CFCCC6",
+   "smoothness": 0.12,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "6 / note (old slabs over the dirt yard)",
+   "note": "Apron slab only; the yard around stays terrain layer 1b_dirt_road (sheet 6 option 1)."
+  },
+  "MAT_WS_yellow_rail": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_painted_metal_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_painted_metal_albedo.png",
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#E0B13A",
+   "smoothness": 0.45,
+   "metallic": 0.1,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "8 / option 1",
+   "note": "Pit rails, hoop guard, bollards, step nosings, hand-in zone floor outline, hose."
+  },
+  "MAT_WS_rubber": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#2B2B2E",
+   "smoothness": 0.18,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "-",
+   "note": "Tyres, castors, seals, phone, plastic chair. Plain colour."
+  },
+  "MAT_WS_metal_worn": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#9AA0A6",
+   "smoothness": 0.42,
+   "metallic": 0.55,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "9 / option 1",
+   "note": "Galvanised / bare steel: workbench frames, pipes, pit edge angle, handles, desk."
+  },
+  "MAT_WS_metal_dark": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#45494E",
+   "smoothness": 0.35,
+   "metallic": 0.35,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "9 / option 1 (dark tint)",
+   "note": "Trims, fascia, door hoods/guides/coil boxes, window frames, conduits, cabinets."
+  },
+  "MAT_WS_glass": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#6F8A96",
+   "smoothness": 0.92,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": 0.35,
+   "texture_sheet_row": "-",
+   "note": "Window panes (two-sided quads). URP Lit Transparent, alpha ~0.35; opaque is acceptable."
+  },
+  "MAT_WS_wood": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFFFFF",
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "- (StyleKit 5a)",
+   "note": "Bench tops, crates, pegboards, tool handles."
+  },
+  "MAT_WS_rollerdoor_red": {
+   "albedo": "ArtSource/Buildings/Workshop_W86/Workshop_rollerdoor_v01.png",
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 0.64,
+   "unity_tiling": 1.5625,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#B23A2C",
+   "smoothness": 0.38,
+   "metallic": 0.15,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "3 / new texture",
+   "note": "Outer face of roller-door curtains. Geometric lamellae every 0.08 m are aligned to the texture (UV v = z - 0.10)."
+  },
+  "MAT_WS_rollerdoor_grey": {
+   "albedo": "ArtSource/Buildings/Workshop_W86/Workshop_rollerdoor_v01.png",
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 0.64,
+   "unity_tiling": 1.5625,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#5A6067",
+   "smoothness": 0.35,
+   "metallic": 0.2,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "3 / new texture (dark grey, as in reference 04)",
+   "note": "Inner face of the curtains."
+  },
+  "MAT_WS_paint_white": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#E4DDC8",
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "-",
+   "note": "Floor markings (flush, cut into the floor), sign board, calendar, lamp housings."
+  },
+  "MAT_WS_emissive": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFF3DA",
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": "#FFF3DA",
+   "alpha": null,
+   "texture_sheet_row": "-",
+   "note": "Lamp diffusers. Emission ~2-4 (HDR), pair with real lights at the anchors."
+  },
+  "MAT_WS_fabric": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#6A2C26",
+   "smoothness": 0.05,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "-",
+   "note": "Sofa, office chair upholstery, rag (reference A: dark red)."
+  },
+  "MAT_WS_oil": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#24211E",
+   "smoothness": 0.7,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "-",
+   "note": "Oil stains on the floor (4 mm above it)."
+  },
+  "MAT_WS_cardboard": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#B48F63",
+   "smoothness": 0.1,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "texture_sheet_row": "-",
+   "note": "Cardboard boxes on shelves."
+  }
+ }
+}

@@ -50,6 +50,11 @@ namespace OnlyVolunteers.Inventory
         }
         public int Count => count.Value;
         public int UnitValue => unitValue.Value;
+        // Server authoritative metadata; NetworkInventory must move Stack (see G49 report), not re-create by type id.
+        private readonly SyncVar<SyringeInstance> syringe = new SyncVar<SyringeInstance>();
+        public SyringeInstance Syringe => syringe.Value;
+        public ItemStack Stack => new ItemStack(Definition != null ? Definition.Id : 0, Count, UnitValue, Syringe);
+        public void ServerSetSyringe(SyringeInstance instance) { syringe.Value = instance?.Copy(); }
 
         public override void OnStartServer()
         {

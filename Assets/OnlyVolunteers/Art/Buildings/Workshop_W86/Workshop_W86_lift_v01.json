@@ -1,0 +1,551 @@
+{
+ "revision": "v01",
+ "units": "metres",
+ "asset": "Workshop_W86 vehicle lift (two-post, overhead beam, clear floor)",
+ "coordinate_system": "Unity local space of the building root (same as Workshop_W86_anchors_v01.json): +Y up, +Z = front (door side), pivot = floor level at the footprint centre. Converted from Blender (x, y, z) as (-x, z, -y).",
+ "file": "Workshop_W86_lift_v01.fbx",
+ "placement": {
+  "fbx_root": "Place the imported model at the building root transform (like Workshop_W86_props_v01.fbx). Every part is a top-level node at its pivot with identity-transform children *_LOD0, *_LOD1, UCX_*.",
+  "lift_centre": [
+   -0.0,
+   0.0,
+   2.4
+  ],
+  "lift_centre_note": "= van_park_point; posts straddle the van at mid wheelbase, the pit stays open between them",
+  "yaw": 0.0
+ },
+ "naming": "L = Unity +X side (east, van driver left with the nose to the back wall), R = Unity -X side (west, power unit + control box). Arms: F = front (van nose, back wall, -Z), R = rear (door side, +Z).",
+ "travel": {
+  "min": 0.0,
+  "max": 1.6,
+  "axis": "local +Y translation of every moving part, same value for all six",
+  "suggested_duration_s": 8.0,
+  "note": "Moving parts: Lift_Carriage_L/R and Lift_Arms_FL/FR/RL/RR. They are separate top-level nodes (2-level hierarchy rule); move them together (or re-parent the arms under their carriage in the prefab)."
+ },
+ "moving_parts": {
+  "Lift_Carriage_L": {
+   "pivot": [
+    1.68,
+    0.0,
+    2.4
+   ],
+   "rest_local_y": 0.0,
+   "raised_local_y": 1.6,
+   "pivot_note": "post centre on the floor (pivot is below the carriage on purpose: local y = lift height)"
+  },
+  "Lift_Carriage_R": {
+   "pivot": [
+    -1.68,
+    0.0,
+    2.4
+   ],
+   "rest_local_y": 0.0,
+   "raised_local_y": 1.6,
+   "pivot_note": "post centre on the floor"
+  },
+  "Lift_Arms_FR": {
+   "pivot": [
+    -1.28,
+    0.0,
+    2.27
+   ],
+   "side": "R",
+   "end": "front",
+   "stowed_local_yaw": 0.0,
+   "engaged_local_yaw": -40.6,
+   "pad_top_stowed_rest": [
+    -1.28,
+    0.3,
+    1.2559
+   ],
+   "pad_top_engaged_rest": [
+    -0.62,
+    0.3,
+    1.5
+   ],
+   "pad_top_engaged_raised": [
+    -0.62,
+    1.9,
+    1.5
+   ]
+  },
+  "Lift_Arms_FL": {
+   "pivot": [
+    1.28,
+    0.0,
+    2.27
+   ],
+   "side": "L",
+   "end": "front",
+   "stowed_local_yaw": 0.0,
+   "engaged_local_yaw": 40.6,
+   "pad_top_stowed_rest": [
+    1.28,
+    0.3,
+    1.2559
+   ],
+   "pad_top_engaged_rest": [
+    0.62,
+    0.3,
+    1.5
+   ],
+   "pad_top_engaged_raised": [
+    0.62,
+    1.9,
+    1.5
+   ]
+  },
+  "Lift_Arms_RR": {
+   "pivot": [
+    -1.28,
+    0.0,
+    2.53
+   ],
+   "side": "R",
+   "end": "rear",
+   "stowed_local_yaw": 0.0,
+   "engaged_local_yaw": 40.6,
+   "pad_top_stowed_rest": [
+    -1.28,
+    0.3,
+    3.5442
+   ],
+   "pad_top_engaged_rest": [
+    -0.62,
+    0.3,
+    3.3
+   ],
+   "pad_top_engaged_raised": [
+    -0.62,
+    1.9,
+    3.3
+   ]
+  },
+  "Lift_Arms_RL": {
+   "pivot": [
+    1.28,
+    0.0,
+    2.53
+   ],
+   "side": "L",
+   "end": "rear",
+   "stowed_local_yaw": 0.0,
+   "engaged_local_yaw": -40.6,
+   "pad_top_stowed_rest": [
+    1.28,
+    0.3,
+    3.5442
+   ],
+   "pad_top_engaged_rest": [
+    0.62,
+    0.3,
+    3.3
+   ],
+   "pad_top_engaged_raised": [
+    0.62,
+    1.9,
+    3.3
+   ]
+  }
+ },
+ "arm_swing": {
+  "axis": "local Y rotation about the hinge pin (= the node pivot)",
+  "stowed": "FBX rest pose: arms parallel to the van, outside the wheel track",
+  "engaged_abs_deg": 40.6,
+  "arm_length_pin_to_pad": 1.014,
+  "sequence": [
+   "van parked at van_park_point (yaw 180)",
+   "arms swing from stowed (yaw 0) to engaged_local_yaw (about 1.5 s)",
+   "carriages + arms translate local y 0 -> 1.6",
+   "lowering: reverse, then swing the arms back to 0 before the van drives out"
+  ],
+  "note": "The arms must be stowed whenever the van drives in or out: engaged arms lie across the wheel path."
+ },
+ "arm_pads": {
+  "top_y_rest": 0.3,
+  "top_y_raised": 1.9,
+  "radius": 0.062,
+  "engaged_centres_rest": {
+   "Lift_Arms_FR": [
+    -0.62,
+    0.3,
+    1.5
+   ],
+   "Lift_Arms_FL": [
+    0.62,
+    0.3,
+    1.5
+   ],
+   "Lift_Arms_RR": [
+    -0.62,
+    0.3,
+    3.3
+   ],
+   "Lift_Arms_RL": [
+    0.62,
+    0.3,
+    3.3
+   ]
+  }
+ },
+ "van_contact_points": {
+  "van_contact_y_rest": 0.35,
+  "gap_pad_to_van_at_rest": 0.05,
+  "points": {
+   "FR": {
+    "building_rest": [
+     -0.62,
+     0.35,
+     1.5
+    ],
+    "building_raised": [
+     -0.62,
+     1.95,
+     1.5
+    ],
+    "van_local": [
+     0.62,
+     0.35,
+     0.9
+    ]
+   },
+   "FL": {
+    "building_rest": [
+     0.62,
+     0.35,
+     1.5
+    ],
+    "building_raised": [
+     0.62,
+     1.95,
+     1.5
+    ],
+    "van_local": [
+     -0.62,
+     0.35,
+     0.9
+    ]
+   },
+   "RR": {
+    "building_rest": [
+     -0.62,
+     0.35,
+     3.3
+    ],
+    "building_raised": [
+     -0.62,
+     1.95,
+     3.3
+    ],
+    "van_local": [
+     0.62,
+     0.35,
+     -0.9
+    ]
+   },
+   "RL": {
+    "building_rest": [
+     0.62,
+     0.35,
+     3.3
+    ],
+    "building_raised": [
+     0.62,
+     1.95,
+     3.3
+    ],
+    "van_local": [
+     -0.62,
+     0.35,
+     -0.9
+    ]
+   }
+  },
+  "van_local_note": "van_local = (x, y, z) in a van root frame with forward = local +Z and right = local +X (the van parked with yaw 180): x = +0.62 right (R arms) / -0.62 left (L arms), y = sill height, z = +0.90 front / -0.90 rear. The points are symmetric.",
+  "rule": "Pads start 0.05 m under the sills. Either start moving the van once the carriages pass 0.05 m (van rises 1.55 m, top at 3.95 m), or move it with the carriages from the start (rises 1.6 m, top at 4.0 m). Clearances below are for the second (worst) case."
+ },
+ "van": {
+  "envelope": [
+   2.0,
+   2.4,
+   5.2
+  ],
+  "wheelbase": 3.16,
+  "mass_t": 2.5,
+  "lift_capacity_label_t": 4.0,
+  "raised_top_y": 4.0
+ },
+ "control_box": {
+  "post": "R (Unity -X)",
+  "face_centre": [
+   -1.996,
+   1.4,
+   2.4
+  ],
+  "buttons": {
+   "estop": [
+    -2.03,
+    1.5,
+    2.4
+   ],
+   "up": [
+    -2.01,
+    1.37,
+    2.45
+   ],
+   "down": [
+    -2.01,
+    1.37,
+    2.35
+   ]
+  },
+  "interaction_point": [
+   -2.55,
+   0.0,
+   2.4
+  ],
+  "interaction_yaw": 90.0,
+  "note": "Operator (mechanic) stands 0.55 m outside the R post, facing Unity +X toward the box; the van is beyond the post, visible past its front (door-side) edge. Box face at 1.2-1.6 m: E-stop on top, up (white) / down (black) below, key switch + pilot lamp at the bottom."
+ },
+ "clearances": {
+  "between_posts": 3.06,
+  "between_carriages_incl_door_guards": 2.69,
+  "between_stowed_arm_pads_floor_level": 2.41,
+  "shutoff_bar_bottom_y": 4.1,
+  "beam_bottom_y": 4.22,
+  "lift_top_y": 4.535,
+  "raised_van_top_y": 4.0,
+  "raised_van_to_shutoff_bar": 0.1,
+  "note": "Building purlins over the van are at y >= 4.85, rafters/lamps sit at x = +-2.055 (outside the van width)."
+ },
+ "objects": {
+  "Lift_Static": {
+   "pivot": [
+    -0.0,
+    0.0,
+    2.4
+   ],
+   "lod0_tris": 3008,
+   "lod1_tris": 150,
+   "colliders": [
+    "UCX_Lift_Static_01",
+    "UCX_Lift_Static_02",
+    "UCX_Lift_Static_03"
+   ]
+  },
+  "Lift_Carriage_R": {
+   "pivot": [
+    -1.68,
+    0.0,
+    2.4
+   ],
+   "lod0_tris": 388,
+   "lod1_tris": 32,
+   "colliders": [
+    "UCX_Lift_Carriage_R_01"
+   ]
+  },
+  "Lift_Carriage_L": {
+   "pivot": [
+    1.68,
+    0.0,
+    2.4
+   ],
+   "lod0_tris": 388,
+   "lod1_tris": 32,
+   "colliders": [
+    "UCX_Lift_Carriage_L_01"
+   ]
+  },
+  "Lift_Arms_FR": {
+   "pivot": [
+    -1.28,
+    0.0,
+    2.27
+   ],
+   "lod0_tris": 320,
+   "lod1_tris": 74,
+   "colliders": [
+    "UCX_Lift_Arms_FR_01",
+    "UCX_Lift_Arms_FR_02"
+   ]
+  },
+  "Lift_Arms_FL": {
+   "pivot": [
+    1.28,
+    0.0,
+    2.27
+   ],
+   "lod0_tris": 320,
+   "lod1_tris": 74,
+   "colliders": [
+    "UCX_Lift_Arms_FL_01",
+    "UCX_Lift_Arms_FL_02"
+   ]
+  },
+  "Lift_Arms_RR": {
+   "pivot": [
+    -1.28,
+    0.0,
+    2.53
+   ],
+   "lod0_tris": 320,
+   "lod1_tris": 74,
+   "colliders": [
+    "UCX_Lift_Arms_RR_01",
+    "UCX_Lift_Arms_RR_02"
+   ]
+  },
+  "Lift_Arms_RL": {
+   "pivot": [
+    1.28,
+    0.0,
+    2.53
+   ],
+   "lod0_tris": 320,
+   "lod1_tris": 74,
+   "colliders": [
+    "UCX_Lift_Arms_RL_01",
+    "UCX_Lift_Arms_RL_02"
+   ]
+  }
+ },
+ "tris": {
+  "lod0_total": 5064,
+  "lod1_total": 510,
+  "lod0_limit": 6000
+ },
+ "materials": [
+  "MAT_WS_emissive",
+  "MAT_WS_metal_dark",
+  "MAT_WS_metal_worn",
+  "MAT_WS_paint_white",
+  "MAT_WS_red_steel",
+  "MAT_WS_rubber",
+  "MAT_WS_yellow_rail"
+ ],
+ "materials_note": "All materials are the existing workshop set (Workshop_W86_materials_v01.json); no new textures. Hazard-stripe black uses MAT_WS_rubber (#2B2B2E).",
+ "unity_notes": [
+  "Animate: arms localEulerAngles.y 0 -> engaged_local_yaw, then localPosition.y of the six moving nodes 0 -> 1.6 (same value).",
+  "Moving UCX colliders (UCX_Lift_Carriage_*, UCX_Lift_Arms_*) must never push or lift the player: put them on a layer that ignores the player or disable them while the lift moves; the van should be kinematic and follow the carriages.",
+  "Lift_Static UCX_01/02 = posts, UCX_03 = power unit + control box block on the R post (part of that post). No colliders on hoses, beam (>= 4.1 m) or the 22 mm base plates.",
+  "LODGroup: one group on the model root with all *_LOD0 renderers in LOD0 and all *_LOD1 renderers in LOD1."
+ ],
+ "clashes_with_workshop": [
+  "Base plates (22 mm) stand over the white bay guide lines (Unity x +-1.55..1.65) for 0.6 m at z 2.1..2.7; the lines run under the plates, no coplanar faces (plate bottoms omitted).",
+  "The posts lie inside the old van_path_middle_bay check box (x +-1.85): at the lift the drive-in width is 2.69 m between the carriages (door guards) and 2.41 m at floor level between the stowed arm pads; van width 2.0 m. Door and pit clear zones untouched.",
+  "middle_bay_repair_zone (x +-1.6) overlaps the inner 0.07 m of both posts.",
+  "Post tops stand 0.22 m from the housings of Light_Strip_01 (L) and Light_Strip_02 (R) at y 3.83-3.90; no contact, lamps keep lighting the van sides.",
+  "Raised van (top 4.0) clears the building by 0.85 m (purlins) and the lift shut-off bar by 0.10 m; no travel reduction needed."
+ ],
+ "checks": {
+  "coplanar_same_facing_overlaps": {
+   "rest_stowed": [],
+   "rest_stowed_count": 0,
+   "rest_engaged": [],
+   "rest_engaged_count": 0,
+   "raised_engaged": [],
+   "raised_engaged_count": 0
+  },
+  "floating_islands": {
+   "Lift_Static": {
+    "islands": 142,
+    "unattached": [],
+    "unattached_count": 0
+   },
+   "Lift_Carriage_R": {
+    "islands": 21,
+    "unattached": [],
+    "unattached_count": 0
+   },
+   "Lift_Carriage_L": {
+    "islands": 21,
+    "unattached": [],
+    "unattached_count": 0
+   },
+   "Lift_Arms_FR": {
+    "islands": 13,
+    "unattached": [],
+    "unattached_count": 0
+   },
+   "Lift_Arms_FL": {
+    "islands": 13,
+    "unattached": [],
+    "unattached_count": 0
+   },
+   "Lift_Arms_RR": {
+    "islands": 13,
+    "unattached": [],
+    "unattached_count": 0
+   },
+   "Lift_Arms_RL": {
+    "islands": 13,
+    "unattached": [],
+    "unattached_count": 0
+   }
+  },
+  "base_plate_floor_gap": [
+   0.0,
+   0.0,
+   -0.0,
+   -0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "lift_min_z_rest": 0.0,
+  "lift_vs_building_intersections": {
+   "rest_stowed": {
+    "count": 0,
+    "sample": []
+   },
+   "rest_engaged": {
+    "count": 0,
+    "sample": []
+   },
+   "raised_engaged": {
+    "count": 0,
+    "sample": []
+   }
+  },
+  "raised_van": {
+   "envelope_unity_min": [
+    -1.0,
+    1.96,
+    -0.2
+   ],
+   "envelope_unity_max": [
+    1.0,
+    4.0,
+    5.0
+   ],
+   "top_y": 4.0,
+   "building_verts_inside": 0,
+   "lift_verts_inside": 0,
+   "headroom_to_building_m": 0.849,
+   "headroom_to_lift_shutoff_bar_m": 0.099,
+   "min_distance_to_middle_bay_lamps_m": 0.975
+  },
+  "lift_to_lamp_housing_min_m": 0.22,
+  "pit_opening_hits_below_4m": {
+   "rest_stowed": 0,
+   "rest_engaged": 0,
+   "raised_engaged": 0
+  },
+  "drive_in": {
+   "lift_verts_in_van_path": 0,
+   "clear_width_by_height": {
+    "floor_to_0.31": 2.41,
+    "0.31_to_4.0": 2.69
+   },
+   "clear_height_under_shutoff_bar": 4.1,
+   "note": "arms stowed (FBX rest pose)"
+  },
+  "prop_aabb_clashes": [],
+  "arm_swing_min_gap_to_tyres_m": {
+   "astra": 0.05,
+   "dummy_wb3.16": 0.062
+  }
+ }
+}

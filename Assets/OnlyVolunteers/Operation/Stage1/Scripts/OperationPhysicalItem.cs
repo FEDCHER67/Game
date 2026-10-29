@@ -33,7 +33,8 @@ namespace OnlyVolunteers.Operation.Stage1
         public NetworkObject Holder => holder.Value;
         public WorldItem World => world;
         public bool IsOrgan => Kind <= 1;
-        public string Title => Kind == 2 ? "Пакет крови" : Kind == 3 ? "Шприц с кровью" :
+        public string Title => Kind == 2 ? "Пакет крови" : Kind == 3 ?
+            (world?.Syringe != null && world.Syringe.Portion == null ? "Пустой шприц" : "Шприц с кровью") :
             OrganIndex >= 0 && OrganIndex < 3 ? OperationText.Organs[OrganIndex] : Kind == 1 ? "Печень" : "Почка";
         public string Inspection => Kind == 2 ? "Пакет крови · $" + (tuning != null ? tuning.bloodValue : 50) + " · не портится" :
             Title + " · " + OperationText.Tier(Grade);
@@ -54,6 +55,7 @@ namespace OnlyVolunteers.Operation.Stage1
             Data = data; tuning = config; identity.Value = data.id; grade.Value = data.grade; kind.Value = data.kind; organIndex.Value = data.organIndex;
             world = GetComponent<WorldItem>();
             world.ServerSetDefinition(definition); RefreshValue();
+            world.ServerSetSyringe(data.syringe);
         }
         private void RefreshValue()
         {
@@ -137,6 +139,7 @@ namespace OnlyVolunteers.Operation.Stage1
         private void FixedUpdate()
         {
             if (!IsServerInitialized || Data == null) return;
+            Data.syringe = world.Syringe;
             if (inventory != null)
             {
                 var player = inventory.GetComponent<NetworkPlayer>();

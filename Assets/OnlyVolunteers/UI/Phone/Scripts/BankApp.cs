@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using OnlyVolunteers.Economy;
 using OnlyVolunteers.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace OnlyVolunteers.Phone
 {
-    // Local placeholder money. Who owns money in co-op (shared or per player) is not decided yet.
-    // W86: "Cash on you" is the real cash of the inventory the phone is bound to (Pocket: the map pawn's NetworkInventory,
-    // which the first-buyer crate pays and the capture save keeps); the $85 placeholder only without one. The Bank balance
-    // and its history stay placeholders: no bank account exists in the game yet.
+    // ECONOMY spec v01 §3.1, §11 (2026-10-28): the team has ONE shared fund (TeamEconomy, host-authoritative). Whenever
+    // it runs, Bank and Cash both read it and the history is its real transaction lines; there is no bank-versus-pocket
+    // split and no payment from here (purchases go to the host as intents: TeamEconomy.Request).
+    // Without an economy (scenes with no session) the old local placeholders stay: "Cash on you" = the bound inventory
+    // (Pocket) or $85, the bank $1 251 and its placeholder history.
     public sealed class PhoneWallet
     {
         public sealed class Entry
@@ -20,10 +22,16 @@ namespace OnlyVolunteers.Phone
 
         private const int PlaceholderCash = 85;
 
-        public int Bank { get; private set; } = 1251;
+        private int placeholderBank = 1251;
+        private int version;
+
+        /// <summary>The team's shared fund is running (then it is the only balance).</summary>
+        public bool HasTeamFund => EconomyClientView.Available;
+        public int Bank => HasTeamFund ? EconomyClientView.Balance : placeholderBank;
         public IInventoryView Pocket { get; set; }
-        public int Cash => Pocket != null ? Pocket.Cash : PlaceholderCash;
-        public int Version { get; private set; }
+        public int Cash => HasTeamFund ? EconomyClientView.Balance : Pocket != null ? Pocket.Cash : PlaceholderCash;
+        /// <summary>Changes when the shown history changes (the fund's transaction sequence, or a placeholder payment).</summary>
+        public long Version => HasTeamFund ? EconomyClientView.Current.seq : -1 - version;
         public readonly List<Entry> History = new()
         {
             new Entry { Title = "Scrap Guy", Detail = "Blood · 2 bags", Amount = 180 },
@@ -34,13 +42,37 @@ namespace OnlyVolunteers.Phone
             new Entry { Title = "ShadyBank", Detail = "Welcome bonus", Amount = 1000 }
         };
 
+        /// <summary>The team's real money lines (newest first) while the fund runs, else the placeholder history.</summary>
+        public List<Entry> Lines()
+        {
+            if (!HasTeamFund) return History;
+            var lines = new List<Entry>();
+            foreach (FundEntry e in EconomyClientView.Current.recent)
+                lines.Add(new Entry { Title = e.title, Detail = KindName(e.kind) + " · фонд после: " + PhoneUi.Money(e.balanceAfter), Amount = e.amount });
+            return lines;
+        }
+
+        private static string KindName(string kind) => kind switch
+        {
+            "sale" => "Продажа",
+            "van" => "Мастерская",
+            "equipment" => "Оборудование",
+            "property" => "Недвижимость",
+            "migration" => "Перенос старых денег",
+            "phone" => "Приложение",
+            "dev" => "DEV",
+            "system" => "Система",
+            _ => kind,
+        };
+
+        /// <summary>Placeholder payment, only without a team fund (with one, ask the host: TeamEconomy.Request).</summary>
         public bool TryPay(int amount, string title, string detail)
         {
-            if (amount > Bank)
+            if (HasTeamFund || amount > placeholderBank)
                 return false;
-            Bank -= amount;
+            placeholderBank -= amount;
             History.Insert(0, new Entry { Title = title, Detail = detail, Amount = -amount });
-            Version++;
+            version++;
             return true;
         }
     }
@@ -51,8 +83,12 @@ namespace OnlyVolunteers.Phone
         private static readonly Color Navy = PhoneUi.Hex("#22307F");
         private Text balance;
         private Text cash;
+        private Text cardTitle;
+        private Text note;
+        private Text depositLabel;
+        private Text atmLabel;
         private RectTransform history;
-        private int builtVersion = -1;
+        private long builtVersion = long.MinValue;
 
         public override string Title => "Bank";
         public override string IconName => "app_bank";
@@ -64,8 +100,8 @@ namespace OnlyVolunteers.Phone
 
             var card = PhoneUi.Panel(root, "Card", PhoneUi.Hex("#4153C8"), 22);
             card.rectTransform.Top(top + 14, 148, 14, 14);
-            PhoneUi.Label(card.transform, "Account balance", 14, new Color(1, 1, 1, 0.75f))
-                .rectTransform.Top(16, 20, 20, 80);
+            cardTitle = PhoneUi.Label(card.transform, "Account balance", 14, new Color(1, 1, 1, 0.75f));
+            cardTitle.rectTransform.Top(16, 20, 20, 80);
             balance = PhoneUi.Label(card.transform, "", 38, Color.white, TextAnchor.MiddleLeft, false, true);
             balance.rectTransform.Top(38, 52, 20, 20);
             cash = PhoneUi.Label(card.transform, "", 15, Color.white, TextAnchor.MiddleLeft, true);
@@ -75,18 +111,26 @@ namespace OnlyVolunteers.Phone
             PhoneUi.Picture(card.transform, "Coin", PhoneUi.Icon(IconName)).rectTransform
                 .Place(new Vector2(1, 1), new Vector2(-42, -40), new Vector2(56, 56));
 
-            PhoneUi.Label(root, "Cash on you can be lost if you get busted. Deposit it at an ATM.", 13,
-                PhoneUi.Muted, TextAnchor.UpperLeft).rectTransform.Top(top + 172, 38, 20, 20);
+            note = PhoneUi.Label(root, "Cash on you can be lost if you get busted. Deposit it at an ATM.", 13,
+                PhoneUi.Muted, TextAnchor.UpperLeft);
+            note.rectTransform.Top(top + 172, 38, 20, 20);
 
-            var deposit = PhoneUi.TextButton(root, "Deposit cash", Navy, Color.white, 15, 22,
-                () => Phone.Toast("Deposits only at an ATM."));
+            // With the team fund: Shop / deliveries; without it the old placeholder buttons.
+            var deposit = PhoneUi.TextButton(root, "Deposit cash", Navy, Color.white, 15, 22, () =>
+            {
+                if (Phone.Wallet.HasTeamFund) Phone.OpenApp(Phone.Shop);
+                else Phone.Toast("Deposits only at an ATM.");
+            });
             ((RectTransform)deposit.transform).Top(top + 214, 46, 14, 206);
+            depositLabel = deposit.GetComponentInChildren<Text>();
             var atm = PhoneUi.TextButton(root, "Find ATM", PhoneUi.Hex("#DDE1F3"), Navy, 15, 22, () =>
             {
+                if (Phone.Wallet.HasTeamFund) { Phone.OpenApp(Phone.Shop); return; }
                 Phone.OpenApp(Phone.Map);
                 Phone.Toast("No ATMs on this test site yet.");
             });
             ((RectTransform)atm.transform).Top(top + 214, 46, 206, 14);
+            atmLabel = atm.GetComponentInChildren<Text>();
 
             PhoneUi.Label(root, "History", 17, PhoneUi.Ink, TextAnchor.MiddleLeft, false, true)
                 .rectTransform.Top(top + 274, 26, 20, 20);
@@ -98,30 +142,58 @@ namespace OnlyVolunteers.Phone
         }
 
         private int shownCash = int.MinValue;
+        private bool shownFund;
 
         // W86: the real cash can change while the app is open (a sale): keep the line current.
         public override void Tick()
         {
-            if (cash != null && Phone.Wallet.Cash != shownCash) ShowCash();
+            var wallet = Phone.Wallet;
+            if (cash != null && (wallet.Cash != shownCash || wallet.HasTeamFund != shownFund)) ShowCash();
+            if (wallet.Version != builtVersion) BuildHistory();
         }
 
         private void ShowCash()
         {
-            shownCash = Phone.Wallet.Cash;
-            cash.text = "Cash on you: " + PhoneUi.Money(shownCash);
+            var wallet = Phone.Wallet;
+            shownCash = wallet.Cash;
+            shownFund = wallet.HasTeamFund;
+            balance.text = PhoneUi.Money(wallet.Bank);
+            if (shownFund)
+            {
+                int waiting = 0;
+                foreach (DeliveryOrder d in EconomyClientView.Current.deliveries)
+                    if (d.State == DeliveryState.Pending || d.State == DeliveryState.Waiting) waiting++;
+                cardTitle.text = "Общий фонд команды";
+                cash.text = waiting > 0 ? "Ожидаемых поставок: " + waiting : "Одни деньги на всю команду";
+                note.text = "Продажи и покупки всей команды идут через этот фонд. Ниже — реальные записи.";
+                depositLabel.text = "Магазин";
+                atmLabel.text = "Доставки";
+            }
+            else
+            {
+                cardTitle.text = "Account balance";
+                cash.text = "Cash on you: " + PhoneUi.Money(shownCash);
+                note.text = "Cash on you can be lost if you get busted. Deposit it at an ATM.";
+                depositLabel.text = "Deposit cash";
+                atmLabel.text = "Find ATM";
+            }
         }
 
         public override void Show()
         {
             base.Show();
-            var wallet = Phone.Wallet;
-            balance.text = PhoneUi.Money(wallet.Bank);
             ShowCash();
+            BuildHistory();
+        }
+
+        private void BuildHistory()
+        {
+            var wallet = Phone.Wallet;
             if (builtVersion == wallet.Version)
                 return;
             builtVersion = wallet.Version;
             PhoneUi.Clear(history);
-            foreach (var entry in wallet.History)
+            foreach (var entry in wallet.Lines())
             {
                 var row = PhoneUi.Panel(history, "Entry", Color.white, 14);
                 PhoneUi.Height(row.gameObject, 58);

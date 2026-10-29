@@ -1,0 +1,195 @@
+{
+  "clip": "Esc_HopRun_L_BellyClutch_v02",
+  "action": "Esc_HopRun_L_BellyClutch_v02",
+  "take": "Buddy_Rig_Mixamo65|Esc_HopRun_L_BellyClutch_v02",
+  "variant_of": "Esc_HopRun_L_v01",
+  "v01_duration_s": 1.5,
+  "duration_vs_v01_pct": 0.0,
+  "frames": [
+    1,
+    46
+  ],
+  "fps": 30,
+  "duration_s": 1.5,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "EDGE_L",
+  "end_pose_key": "RUN0_BC_L",
+  "preconditions": {
+    "closed": [],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R",
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ],
+    "any": []
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [
+    {
+      "name": "LookBelly",
+      "t": 0.12,
+      "norm": 0.08,
+      "frame": 4.6
+    },
+    {
+      "name": "BellyGrab",
+      "t": 0.41,
+      "norm": 0.2733,
+      "frame": 13.3
+    },
+    {
+      "name": "Land",
+      "t": 0.52,
+      "norm": 0.3467,
+      "frame": 16.6
+    },
+    {
+      "name": "RunStart",
+      "t": 0.98,
+      "norm": 0.6533,
+      "frame": 30.4
+    },
+    {
+      "name": "HandOffToRun",
+      "t": 1.5,
+      "note": "end pose = Esc_Run_BellyClutch_Loop_Panic_v02 frame 1 at RUN0_L",
+      "norm": 1.0,
+      "frame": 46.0
+    }
+  ],
+  "next": [
+    "Esc_Run_BellyClutch_Loop_Panic_v02 (loop) on the free NPC root placed at RUN0_L (= RUN0_L of v01), moving 3.2 m/s along its facing"
+  ],
+  "beats": [
+    "0.00 EDGE_L",
+    "0.12-0.24 stares at his belly (gulp)",
+    "0.30-0.39 leans, palms push, slides off the edge",
+    "0.41 both hands slap onto the belly (from here to the end)",
+    "0.52 LAND, squash, hunched",
+    "0.60-0.80 dizzy wobble, hands on the belly, glances at it",
+    "0.86-0.98 hop-turn 40 deg toward the foot end",
+    "0.98-1.50 accelerates 0.8 -> 3.2 m/s into the belly-clutch run",
+    "1.50 = Esc_Run_BellyClutch_Loop_Panic_v02 frame 1 at RUN0_L"
+  ],
+  "root_motion": "hips leave the table (PatientRest-local); final hand-off root RUN0_L (see esc_pose_keys_v01.json run0_root_L_patientrest_unity); speed at the end 3.2 m/s along the facing",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "hand_R": 0.0161,
+      "hand_L": 0.0146,
+      "foot_Left": 0.0667,
+      "foot_Right": 0.0659
+    },
+    "hand_ik_overreach_at_s": {
+      "hand_R": 0.383,
+      "hand_L": 0.383
+    },
+    "contact_root_lift_max_m": 0.0611,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightArm": 9,
+      "mixamorig:RightForeArm": 9,
+      "mixamorig:RightHand": 9,
+      "mixamorig:LeftArm": 9,
+      "mixamorig:LeftForeArm": 8,
+      "mixamorig:LeftHand": 9,
+      "mixamorig:RightLeg": 18,
+      "mixamorig:RightFoot": 16,
+      "mixamorig:LeftUpLeg": 6,
+      "mixamorig:LeftLeg": 17,
+      "mixamorig:LeftFoot": 16
+    },
+    "root_height_smoothing_max_m": 0.0801,
+    "inbetween_lift_max_m": 0.0,
+    "seam_eval_vs_pose_key_mm": {
+      "t0": 0.001,
+      "tEnd": 0.001
+    }
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.77,
+    "max_key_step_bone": "mixamorig:LeftHand",
+    "pad_gap_min_mm": {
+      "head": 322.73,
+      "chest": 246.77,
+      "pelvis": 0.0,
+      "arm_Left": 7.64,
+      "leg_Left": 4.69,
+      "arm_Right": 2.9,
+      "leg_Right": 7.0
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.183,
+      "chest": 0.0,
+      "pelvis": 0.283,
+      "arm_Left": 0.283,
+      "leg_Left": 0.283,
+      "arm_Right": 0.0,
+      "leg_Right": 0.283
+    },
+    "floor_min_mm": 0.5,
+    "floor_min_at_s": 0.5,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 4.3,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {
+      "arm_Left_in_trunk": 0.367
+    },
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+      "EDGE_L": 0.0,
+      "RUN0_BC_L": "new key (esc_pose_keys_v02.json)"
+    },
+    "seam_step_start_mm": {
+      "hand_Left": 0.0,
+      "hand_Right": 0.0,
+      "foot_Left": 0.0,
+      "foot_Right": 0.0,
+      "Head": 3.4,
+      "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+      "hand_Left": 57.4,
+      "hand_Right": 55.7,
+      "foot_Left": 31.1,
+      "foot_Right": 79.7,
+      "Head": 71.9,
+      "Hips": 54.3
+    },
+    "max_step_mm": {
+      "hand_Left": 152.3,
+      "hand_Right": 148.5,
+      "foot_Left": 151.0,
+      "foot_Right": 148.1,
+      "Head": 71.9,
+      "Hips": 54.3
+    },
+    "closed_strap_drift_at_s": {},
+    "max_step_at_s": {
+      "hand_Left": 0.417,
+      "hand_Right": 0.417,
+      "foot_Left": 0.517,
+      "foot_Right": 0.517,
+      "Head": 1.5,
+      "Hips": 1.5
+    },
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_HopRun_L_BellyClutch_v02",
+    "fbx_bones": 65
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend",
+  "pose_keys_file": "esc_pose_keys_v01.json (Escape_v01) + esc_pose_keys_v02.json"
+}

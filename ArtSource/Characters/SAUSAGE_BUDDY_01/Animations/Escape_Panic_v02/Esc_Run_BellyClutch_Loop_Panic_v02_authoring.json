@@ -1,0 +1,124 @@
+{
+  "clip": "Esc_Run_BellyClutch_Loop_Panic_v02",
+  "action": "Esc_Run_BellyClutch_Loop_Panic_v02",
+  "take": "Buddy_Rig_Mixamo65|Esc_Run_BellyClutch_Loop_Panic_v02",
+  "variant_of": "Flee_Run_v01 (Escape_Police_v01, same legs/footfalls/speed)",
+  "v01_duration_s": null,
+  "duration_vs_v01_pct": null,
+  "frames": [
+    1,
+    18
+  ],
+  "fps": 30,
+  "duration_s": 0.566667,
+  "loop": true,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "BCRUN",
+  "end_pose_key": "BCRUN",
+  "preconditions": {
+    "closed": [],
+    "open": [],
+    "any": []
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [
+    {
+      "name": "FootL",
+      "t": 0.0,
+      "norm": 0.0,
+      "frame": 1.0
+    },
+    {
+      "name": "FootR",
+      "t": 0.2833,
+      "norm": 0.4999,
+      "frame": 9.5
+    }
+  ],
+  "next": [
+    "loop"
+  ],
+  "beats": [
+    "Flee_Run_v01 legs (left heel touchdown at frame 1, right at 0.283 s), knees driven higher in the swing",
+    "cartoon hunch (spine 36 deg forward, bobbing twice per cycle), head pushed forward like a chicken",
+    "both hands clutch the open belly, elbows out (chicken wings), hands bounce with the steps",
+    "seam = frame 1 (exact)"
+  ],
+  "root_motion": "in place (like Flee_Run_v01): ground +Y at 3.20 m/s, play at speed / 3.20; drive the free NPC root (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {},
+    "hand_ik_overreach_at_s": {},
+    "contact_root_lift_max_m": 0.0,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightUpLeg": 8,
+      "mixamorig:LeftUpLeg": 6
+    },
+    "root_height_smoothing_max_m": 0.0,
+    "inbetween_lift_max_m": 0.0,
+    "seam_eval_vs_pose_key_mm": {
+      "t0": 0.001,
+      "tEnd": 0.001
+    }
+  },
+  "validation": {
+    "floor_min_mm": 23.94,
+    "floor_min_at_s": 0.325,
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "flee_run_v01_floor_min_mm": 24.68,
+    "max_key_step_deg": 20.17,
+    "max_key_step_bone": "mixamorig:LeftLeg",
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+      "BCRUN": "new key (esc_pose_keys_v02.json)"
+    },
+    "seam_step_start_mm": {
+      "hand_Left": 32.3,
+      "hand_Right": 36.9,
+      "foot_Left": 39.2,
+      "foot_Right": 41.7,
+      "Head": 39.3,
+      "Hips": 19.6
+    },
+    "seam_step_end_mm": {
+      "hand_Left": 24.6,
+      "hand_Right": 30.1,
+      "foot_Left": 57.8,
+      "foot_Right": 48.6,
+      "Head": 29.6,
+      "Hips": 15.9
+    },
+    "max_step_mm": {
+      "hand_Left": 36.2,
+      "hand_Right": 36.9,
+      "foot_Left": 100.7,
+      "foot_Right": 100.7,
+      "Head": 39.3,
+      "Hips": 19.6
+    },
+    "closed_strap_drift_at_s": {},
+    "max_step_at_s": {
+      "hand_Left": 0.3,
+      "hand_Right": 0.017,
+      "foot_Left": 0.533,
+      "foot_Right": 0.25,
+      "Head": 0.017,
+      "Hips": 0.017
+    },
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_Run_BellyClutch_Loop_Panic_v02",
+    "fbx_bones": 65
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend",
+  "pose_keys_file": "esc_pose_keys_v01.json (Escape_v01) + esc_pose_keys_v02.json"
+}

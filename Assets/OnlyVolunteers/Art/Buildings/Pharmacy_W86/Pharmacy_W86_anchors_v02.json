@@ -1,0 +1,1079 @@
+{
+ "revision": "v02",
+ "units": "metres",
+ "coordinate_system": "Unity local space of the unit root: +Y up, +Z = street side, pivot = floor level at the centre of the street front (outer face of the storefront wall). Converted from Blender (x, y, z) as (-x, z, -y). The same points exist as ANCHOR_* empties in Pharmacy_W86_unit_v02.fbx; if importer axes differ, trust the empties.",
+ "yaw": "degrees about Unity +Y; 0 = facing +Z (toward the street), 180 = facing -Z (toward the courtyard)",
+ "footprint": {
+  "size_xyz": [
+   10.25,
+   2.85,
+   12.74
+  ],
+  "floor_y": 0.0,
+  "ceiling_y": 2.6,
+  "storefront_top_y": 3.0,
+  "interior_x": [
+   -4.925,
+   4.925
+  ],
+  "interior_z": [
+   -12.44,
+   -0.3
+  ],
+  "foundation_bottom_y": -0.35,
+  "note": "Self-contained ground-floor insert: storefront piece (street, +Z), side wall linings 0.2 m, rear wall 0.3 m with door, ceiling slab to y=2.85. The existing building above/around stays. Street step top flush with the floor; its front face reaches y=-0.35 for a pavement up to 0.35 m lower."
+ },
+ "site": {
+  "building": "Rough 04-H3 (5-storey khrushchevka), ground-floor west unit",
+  "street": "south (unit +Z)",
+  "rear_door_offset_note": "Rear door centre at Unity local x=-0.70 (Blender x=+0.70). With the unit yawed so +Z faces south, local -X points east."
+ },
+ "street_door": {
+  "outside": {
+   "position": [
+    -3.7,
+    0.0,
+    0.9
+   ],
+   "yaw": 180.0
+  },
+  "inside": {
+   "position": [
+    -3.7,
+    0.0,
+    -1.2
+   ],
+   "yaw": 180.0
+  },
+  "centre": [
+   -3.7,
+   0.0,
+   -0.11
+  ],
+  "clear_width": 1.2,
+  "clear_height": 2.12,
+  "step_height_max": 0.15,
+  "leaf": "Door_Street"
+ },
+ "counter_purchase_point": {
+  "position": [
+   -2.175,
+   0.0,
+   -4.48
+  ],
+  "yaw": 180.0,
+  "note": "Player stands here facing the cash desk (Unity -Z); register and card terminal on the desk."
+ },
+ "cashier_point": {
+  "position": [
+   -2.175,
+   0.0,
+   -6.24
+  ],
+  "yaw": 0.0,
+  "note": "Staff NPC behind the cash desk, facing the customer."
+ },
+ "staff_door": {
+  "sales_side": {
+   "position": [
+    -3.875,
+    0.0,
+    -7.44
+   ],
+   "yaw": 180.0
+  },
+  "stock_side": {
+   "position": [
+    -3.875,
+    0.0,
+    -8.79
+   ],
+   "yaw": 180.0
+  },
+  "centre": [
+   -3.875,
+   0.0,
+   -8.115
+  ],
+  "clear_width": 1.05,
+  "clear_height": 2.1,
+  "leaf": "Door_Staff",
+  "player_access": "none: behind the counter line (glass counter, cash desk, staff gate with STAFF ONLY plate, end cabinet) and the closed Door_Staff (STAFF ONLY sign on the sales face)"
+ },
+ "staff_gate": {
+  "centre": [
+   -3.9,
+   0.0,
+   -5.35
+  ],
+  "width": 0.95,
+  "height": 1.04,
+  "note": "Fixed closed counter gate (part of the unit mesh + collider). Staff do not need it: their route is staff door -> behind counter."
+ },
+ "stockroom": {
+  "centre": {
+   "position": [
+    -2.1575,
+    0.0,
+    -10.515
+   ],
+   "yaw": 0.0
+  },
+  "bounds_min": [
+   -4.925,
+   0.0,
+   -12.44
+  ],
+  "bounds_max": [
+   4.925,
+   2.6,
+   -8.19
+  ],
+  "capture_space": {
+   "centre": [
+    -2.1575,
+    0.0,
+    -10.315
+   ],
+   "size_x_z": [
+    4.33,
+    3.45
+   ],
+   "note": "Open floor between rack B / rear door and the right wall shelving; usable from the courtyard door."
+  }
+ },
+ "rear_door": {
+  "inside": {
+   "position": [
+    -0.7,
+    0.0,
+    -11.64
+   ],
+   "yaw": 180.0
+  },
+  "outside": {
+   "position": [
+    -0.7,
+    0.0,
+    -13.54
+   ],
+   "yaw": 180.0
+  },
+  "centre": [
+   -0.7,
+   0.0,
+   -12.59
+  ],
+  "clear_width": 1.3,
+  "clear_height": 2.19,
+  "threshold": "flush (floor level), landing ramp 1.4 m falls 0.12 m to the yard",
+  "leaf": "Door_Rear"
+ },
+ "staff_npc_route": [
+  {
+   "position": [
+    -2.175,
+    0.0,
+    -6.24
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -3.875,
+    0.0,
+    -6.41
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -3.875,
+    0.0,
+    -7.44
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -3.875,
+    0.0,
+    -8.79
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -2.2875,
+    0.0,
+    -10.615
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -0.7,
+    0.0,
+    -11.64
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -0.7,
+    0.0,
+    -13.54
+   ],
+   "yaw": 180.0
+  },
+  {
+   "position": [
+    -0.7,
+    0.0,
+    -15.34
+   ],
+   "yaw": 180.0
+  }
+ ],
+ "staff_npc_route_note": "Cashier -> behind the counter -> staff door (opens into the stockroom) -> across the stockroom -> rear door -> yard.",
+ "rear_van_loading": {
+  "loading_point": {
+   "position": [
+    -0.7,
+    0.0,
+    -14.64
+   ],
+   "yaw": 180.0
+  },
+  "van_stop": {
+   "position": [
+    -0.7,
+    0.0,
+    -17.74
+   ],
+   "yaw": 180.0,
+   "note": "Van centre; nose toward the yard (Unity -Z), rear doors facing the pharmacy door."
+  },
+  "van_rear_bumper": [
+   -0.7,
+   0.0,
+   -15.14
+  ],
+  "carry_path": [
+   [
+    -0.7,
+    0,
+    -11.64
+   ],
+   [
+    -0.7,
+    0,
+    -13.54
+   ],
+   [
+    -0.7,
+    0,
+    -14.64
+   ]
+  ],
+  "clear_zone": {
+   "centre": [
+    -0.7,
+    0,
+    -18.74
+   ],
+   "size_x_z": [
+    8.0,
+    10.0
+   ],
+   "note": "Keep this yard area flat and free for stopping / a three-point turn (van 5.2 x 2.0 m). Not part of the insert."
+  },
+  "side_option": {
+   "van_stop": [
+    -3.9,
+    0.0,
+    -15.74
+   ],
+   "yaw": -90.0,
+   "note": "Alternative: van parked parallel to the wall, side door at the loading point."
+  }
+ },
+ "zones": {
+  "customer": {
+   "min": [
+    -4.925,
+    0,
+    -5.04
+   ],
+   "max": [
+    4.925,
+    0,
+    -0.3
+   ],
+   "note": "Public sales floor."
+  },
+  "staff": {
+   "min": [
+    -4.925,
+    0,
+    -8.04
+   ],
+   "max": [
+    4.925,
+    0,
+    -5.66
+   ],
+   "note": "Behind the counter: no player access from the sales floor."
+  }
+ },
+ "lights": [
+  {
+   "name": "Light_Sales_01",
+   "position": [
+    3.2833,
+    2.525,
+    -1.6272
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_02",
+   "position": [
+    -0.0,
+    2.525,
+    -1.6272
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_03",
+   "position": [
+    -3.2833,
+    2.525,
+    -1.6272
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_04",
+   "position": [
+    3.2833,
+    2.525,
+    -3.855
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_05",
+   "position": [
+    -0.0,
+    2.525,
+    -3.855
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_06",
+   "position": [
+    -3.2833,
+    2.525,
+    -3.855
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_07",
+   "position": [
+    3.2833,
+    2.525,
+    -6.85
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_08",
+   "position": [
+    -0.0,
+    2.525,
+    -6.85
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Sales_09",
+   "position": [
+    -3.2833,
+    2.525,
+    -6.85
+   ],
+   "type": "area or point down",
+   "colour": "#FFE3BC",
+   "suggested": {
+    "point_range_m": 6.5,
+    "intensity_lm": 1600
+   }
+  },
+  {
+   "name": "Light_Stock_01",
+   "position": [
+    2.4675,
+    2.5,
+    -10.315
+   ],
+   "type": "point down",
+   "colour": "#F3F0E6",
+   "suggested": {
+    "point_range_m": 6,
+    "intensity_lm": 1400
+   }
+  },
+  {
+   "name": "Light_Stock_02",
+   "position": [
+    -3.1675,
+    2.5,
+    -10.315
+   ],
+   "type": "point down",
+   "colour": "#F3F0E6",
+   "suggested": {
+    "point_range_m": 6,
+    "intensity_lm": 1400
+   }
+  },
+  {
+   "name": "Light_Rear_Bulkhead",
+   "position": [
+    -1.86,
+    2.23,
+    -12.89
+   ],
+   "type": "point",
+   "colour": "#FFE2B0",
+   "suggested": {
+    "point_range_m": 6,
+    "intensity_lm": 500
+   }
+  },
+  {
+   "name": "Light_CrossSign",
+   "position": [
+    -4.9,
+    2.6,
+    0.66
+   ],
+   "type": "point (green, small)",
+   "colour": "#45C46C",
+   "suggested": {
+    "point_range_m": 3,
+    "intensity_lm": 150
+   }
+  }
+ ],
+ "doors": {
+  "Door_Staff": {
+   "hinge_position": [
+    -4.395,
+    0.005,
+    -8.115
+   ],
+   "pivot": "hinge, floor",
+   "closed_local_yaw": 0.0,
+   "open_local_yaw": 90.0,
+   "opens_into": "stockroom (+Y Blender / -Z Unity)",
+   "state": "closed, locked for the player; staff NPCs may open it",
+   "clear_width": 1.05,
+   "clear_height": 2.1,
+   "collider": "UCX_Door_Staff_01 (child)"
+  },
+  "Door_Street": {
+   "hinge_position": [
+    -4.295,
+    0.005,
+    -0.11
+   ],
+   "pivot": "hinge, floor",
+   "closed_local_yaw": 0.0,
+   "open_local_yaw": 90.0,
+   "opens_into": "sales floor (inward)",
+   "state": "closed in the FBX; player-openable / auto-open shop door",
+   "clear_width": 1.2,
+   "clear_height": 2.12,
+   "collider": "UCX_Door_Street_01 (child)"
+  },
+  "Door_Rear": {
+   "hinge_position": [
+    -1.345,
+    0.005,
+    -12.66
+   ],
+   "pivot": "hinge, floor",
+   "closed_local_yaw": 0.0,
+   "open_local_yaw": 95.0,
+   "opens_into": "courtyard (outward)",
+   "state": "closed in the FBX; openable from the courtyard and from inside",
+   "clear_width": 1.3,
+   "clear_height": 2.19,
+   "collider": "UCX_Door_Rear_01 (child)"
+  }
+ },
+ "price_cards": {
+  "source": "Assets/OnlyVolunteers/Buyers/Data/Economy_v01.json (G48 catalog, read-only)",
+  "cards": {
+   "body_bag": {
+    "object": "PH_P_PriceCard_body_bag",
+    "item_object": "PH_P_Item_body_bag",
+    "position": [
+     3.6964,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Body Bag",
+    "price": "$5",
+    "unit": "each"
+   },
+   "trash_bag": {
+    "object": "PH_P_PriceCard_trash_bag",
+    "item_object": "PH_P_Item_trash_bag",
+    "position": [
+     2.9393,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Trash Bag",
+    "price": "$5",
+    "unit": "each"
+   },
+   "organ_bag": {
+    "object": "PH_P_PriceCard_organ_bag",
+    "item_object": "PH_P_Item_organ_bag",
+    "position": [
+     2.1821,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Organ Bag",
+    "price": "$10",
+    "unit": "each"
+   },
+   "blood_bag_empty": {
+    "object": "PH_P_PriceCard_blood_bag_empty",
+    "item_object": "PH_P_Item_blood_bag_empty",
+    "position": [
+     1.425,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Empty Blood Bag",
+    "price": "$5",
+    "unit": "each"
+   },
+   "syringe_blood": {
+    "object": "PH_P_PriceCard_syringe_blood",
+    "item_object": "PH_P_Item_syringe_blood",
+    "position": [
+     0.6679,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Blood Syringe",
+    "price": "$2",
+    "unit": "each"
+   },
+   "syringe_anaesthesia": {
+    "object": "PH_P_PriceCard_syringe_anaesthesia",
+    "item_object": "PH_P_Item_syringe_anaesthesia",
+    "position": [
+     -0.0893,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Empty Anesthetic Syringe",
+    "price": "$2",
+    "unit": "each"
+   },
+   "zip_tie": {
+    "object": "PH_P_PriceCard_zip_tie",
+    "item_object": "PH_P_Item_zip_tie",
+    "position": [
+     -0.8464,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "label": "Cable Tie",
+    "price": "$5",
+    "unit": "each"
+   },
+   "zip_tie_pack_4": {
+    "object": "PH_P_PriceCard_zip_tie_pack_4",
+    "item_object": "PH_P_Item_zip_tie_pack_4",
+    "position": [
+     -1.545,
+     1.1,
+     -5.085
+    ],
+    "yaw": 0.0,
+    "label": "Cable Ties — Pack of 4",
+    "price": "$20",
+    "unit": "/ pack"
+   },
+   "anaesthesia_basic": {
+    "object": "PH_P_PriceCard_anaesthesia_basic",
+    "item_object": "PH_P_Item_anaesthesia_basic",
+    "position": [
+     -2.805,
+     1.1,
+     -5.085
+    ],
+    "yaw": 0.0,
+    "label": "Basic Anesthetic",
+    "price": "$200",
+    "unit": "/ vial"
+   }
+  },
+  "note": "Customer-facing tent cards on the counter. Labels are baked into Pharmacy_labels_v01.png; the runtime shop must charge the same catalog entry (keys above). Improved/late anaesthetic are not displayed (unlock-gated)."
+ },
+ "props": {
+  "file": "Pharmacy_W86_props_v02.fbx",
+  "note": "Place the props root at the unit root transform; every child is already in position.",
+  "items": {
+   "PH_P_Item_body_bag": {
+    "position": [
+     3.6964,
+     1.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "body_bag"
+   },
+   "PH_P_PriceCard_body_bag": {
+    "position": [
+     3.6964,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "body_bag",
+    "label": "Body Bag",
+    "price": "$5",
+    "unit": "each"
+   },
+   "PH_P_Item_trash_bag": {
+    "position": [
+     2.9393,
+     1.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "trash_bag"
+   },
+   "PH_P_PriceCard_trash_bag": {
+    "position": [
+     2.9393,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "trash_bag",
+    "label": "Trash Bag",
+    "price": "$5",
+    "unit": "each"
+   },
+   "PH_P_Item_organ_bag": {
+    "position": [
+     2.1821,
+     1.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "organ_bag"
+   },
+   "PH_P_PriceCard_organ_bag": {
+    "position": [
+     2.1821,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "organ_bag",
+    "label": "Organ Bag",
+    "price": "$10",
+    "unit": "each"
+   },
+   "PH_P_Item_blood_bag_empty": {
+    "position": [
+     1.425,
+     1.0,
+     -5.34
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "blood_bag_empty"
+   },
+   "PH_P_PriceCard_blood_bag_empty": {
+    "position": [
+     1.425,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "blood_bag_empty",
+    "label": "Empty Blood Bag",
+    "price": "$5",
+    "unit": "each"
+   },
+   "PH_P_Item_syringe_blood": {
+    "position": [
+     0.6679,
+     1.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "syringe_blood"
+   },
+   "PH_P_PriceCard_syringe_blood": {
+    "position": [
+     0.6679,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "syringe_blood",
+    "label": "Blood Syringe",
+    "price": "$2",
+    "unit": "each"
+   },
+   "PH_P_Item_syringe_anaesthesia": {
+    "position": [
+     -0.0893,
+     1.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "syringe_anaesthesia"
+   },
+   "PH_P_PriceCard_syringe_anaesthesia": {
+    "position": [
+     -0.0893,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "syringe_anaesthesia",
+    "label": "Empty Anesthetic Syringe",
+    "price": "$2",
+    "unit": "each"
+   },
+   "PH_P_Item_zip_tie": {
+    "position": [
+     -0.8464,
+     1.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "zip_tie"
+   },
+   "PH_P_PriceCard_zip_tie": {
+    "position": [
+     -0.8464,
+     1.0,
+     -5.115
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "zip_tie",
+    "label": "Cable Tie",
+    "price": "$5",
+    "unit": "each"
+   },
+   "PH_P_Item_zip_tie_pack_4": {
+    "position": [
+     -1.545,
+     1.1,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "zip_tie_pack_4"
+   },
+   "PH_P_PriceCard_zip_tie_pack_4": {
+    "position": [
+     -1.545,
+     1.1,
+     -5.085
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "zip_tie_pack_4",
+    "label": "Cable Ties — Pack of 4",
+    "price": "$20",
+    "unit": "/ pack"
+   },
+   "PH_P_Item_anaesthesia_basic": {
+    "position": [
+     -2.805,
+     1.1,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "anaesthesia_basic"
+   },
+   "PH_P_PriceCard_anaesthesia_basic": {
+    "position": [
+     -2.805,
+     1.1,
+     -5.085
+    ],
+    "yaw": 0.0,
+    "area": "counter",
+    "catalog_key": "anaesthesia_basic",
+    "label": "Basic Anesthetic",
+    "price": "$200",
+    "unit": "/ vial"
+   },
+   "PH_P_CashRegister": {
+    "position": [
+     -2.175,
+     1.1,
+     -5.42
+    ],
+    "yaw": 0.0,
+    "area": "counter"
+   },
+   "PH_P_MiniCross": {
+    "position": [
+     -2.825,
+     1.1,
+     -5.53
+    ],
+    "yaw": 0.0,
+    "area": "counter"
+   },
+   "PH_P_Gloves": {
+    "position": [
+     3.175,
+     0.88,
+     -7.74
+    ],
+    "yaw": 0.0,
+    "area": "staff"
+   },
+   "PH_P_PosterCross": {
+    "position": [
+     4.925,
+     1.3,
+     -4.09
+    ],
+    "yaw": -90.0,
+    "area": "sales"
+   },
+   "PH_P_InfoSheet": {
+    "position": [
+     4.925,
+     1.38,
+     -4.66
+    ],
+    "yaw": -90.0,
+    "area": "sales"
+   },
+   "PH_P_Clock": {
+    "position": [
+     4.925,
+     2.12,
+     -4.66
+    ],
+    "yaw": -90.0,
+    "area": "sales"
+   },
+   "PH_P_WindowPoster": {
+    "position": [
+     -0.71,
+     1.67,
+     -0.2
+    ],
+    "yaw": 0.0,
+    "area": "window"
+   },
+   "PH_P_DoorMat": {
+    "position": [
+     -3.7,
+     0.0,
+     -0.85
+    ],
+    "yaw": 0.0,
+    "area": "sales"
+   },
+   "PH_P_Extinguisher_Sales": {
+    "position": [
+     -4.925,
+     0.55,
+     -7.25
+    ],
+    "yaw": 90.0,
+    "area": "staff"
+   },
+   "PH_P_Extinguisher_Stock": {
+    "position": [
+     -1.76,
+     0.3,
+     -12.44
+    ],
+    "yaw": 0.0,
+    "area": "stock"
+   },
+   "PH_P_BinSales": {
+    "position": [
+     -2.615,
+     0.0,
+     -0.92
+    ],
+    "yaw": 0.0,
+    "area": "sales"
+   },
+   "PH_P_StreetBin": {
+    "position": [
+     -4.855,
+     0.0,
+     0.55
+    ],
+    "yaw": 0.0,
+    "area": "street",
+    "note": "Exterior, beside the door. Snap to the pavement height in Unity."
+   },
+   "PH_P_Chair": {
+    "position": [
+     -3.41,
+     0.0,
+     -11.89
+    ],
+    "yaw": 160.0,
+    "area": "stock"
+   },
+   "PH_P_MopBucket": {
+    "position": [
+     -2.06,
+     0.0,
+     -12.14
+    ],
+    "yaw": 180.0,
+    "area": "stock"
+   },
+   "PH_P_Towel": {
+    "position": [
+     -2.1,
+     1.575,
+     -12.365
+    ],
+    "yaw": 0.0,
+    "area": "stock"
+   },
+   "PH_P_Soap": {
+    "position": [
+     -2.75,
+     0.86,
+     -12.38
+    ],
+    "yaw": 0.0,
+    "area": "stock"
+   },
+   "PH_P_Cartons_A": {
+    "position": [
+     2.995,
+     0.0,
+     -10.115
+    ],
+    "yaw": -90.0,
+    "area": "stock"
+   },
+   "PH_P_Cartons_B": {
+    "position": [
+     -3.975,
+     0.0,
+     -11.99
+    ],
+    "yaw": 5.0,
+    "area": "stock"
+   }
+  },
+  "shelf_fills": [
+   "PH_P_Fill_Back_b0",
+   "PH_P_Fill_Back_b1",
+   "PH_P_Fill_Back_b2",
+   "PH_P_Fill_Back_b3",
+   "PH_P_Fill_Fridge",
+   "PH_P_Fill_RackA",
+   "PH_P_Fill_RackB",
+   "PH_P_Fill_ShelfL_b0",
+   "PH_P_Fill_ShelfL_b1",
+   "PH_P_Fill_ShelfL_b2",
+   "PH_P_Fill_ShelfR_b0",
+   "PH_P_Fill_ShelfR_b1",
+   "PH_P_Fill_ShelfR_b2",
+   "PH_P_Fill_StockL",
+   "PH_P_Fill_StockR",
+   "PH_P_Fill_StockRear",
+   "PH_P_Fill_Vitrine",
+   "PH_P_Fill_Window"
+  ]
+ }
+}

@@ -666,12 +666,19 @@ namespace OnlyVolunteers.Operation.Stage1
         // a small extra on limbs that are NOT strapped (a free arm or leg flails a little more while he struggles or
         // panics) and a faint twitch during an overdose; head shake and torso sway are off. Face blend shapes stay.
         private const float FreeLimbStruggle = 0.25f, FreeLimbPanic = 0.3f;
+        /// <summary>K10: the escape clips with both hands free and nothing to unbuckle: swinging off and hopping off.</summary>
+        private static bool ClutchClip(int clip)
+        {
+            int b = OperationEscape.BaseOf(clip); // the panic v02 variants too (the BellyClutch HopRun clutches on its own)
+            return clip == OperationEscape.ClutchHopRunR || clip == OperationEscape.ClutchHopRunL ? false
+                : b == OperationEscape.SwingOffR || b == OperationEscape.SwingOffL || OperationEscape.IsHopRun(b);
+        }
         private void UpdatePatient(OperationState s, OperationView view)
         {
             if (rig == null) { rig = table.PatientRig; if (rig == null) return; }
             var tuning = table.Tuning;
             for (int i = 0; i < 5; i++) rig.LimbMotion[i] = 0f;
-            rig.Twitch = 0f; rig.HeadShake = 0f;
+            rig.Twitch = 0f; rig.HeadShake = 0f; rig.BellyClutch = 0f;
             rig.FallSpeed = Mathf.Max(0.1f, tuning.escapeSpeed); // round 4: the old EscapeFall clip ~1.5x too
             float t = Time.time;
             bool falling = EscapeFalling(s, view);
@@ -699,11 +706,15 @@ namespace OnlyVolunteers.Operation.Stage1
             {
                 bool slump = OperationEscape.Clips[s.escapeClip].slump;
                 rig.Face(slump ? 80f : 5f, slump ? 30f : 90f, slump ? 0f : 55f + 30f * Mathf.Max(0f, Mathf.Sin(t * 2.3f)), 0f);
+                // K10: off the pad with the belly open (hands free now): hunched, clutching it; the field NPC keeps the pose.
+                if (s.alive && s.CavityOpen && ClutchClip(s.escapeClip)) rig.BellyClutch = 1f;
                 return;
             }
             if (!s.onTable && falling && tuning.escapeClips && rig.OpState == OperationPatientRig.StateEscape)
             {
                 rig.HoldEscape(escapeSpeed);
+                // K10: the held HopRun pose until the hand-off (the BellyClutch v02 HopRun already clutches by itself)
+                if (s.alive && s.ShockRun && rig.EscapeClipPlaying != OperationEscape.ClutchHopRunR && rig.EscapeClipPlaying != OperationEscape.ClutchHopRunL) rig.BellyClutch = 1f;
                 rig.Face(0f, 90f, 80f, 0f);
                 return;
             }
@@ -764,13 +775,13 @@ namespace OnlyVolunteers.Operation.Stage1
             float escape = Mathf.Clamp01(s.escapeProgress / Mathf.Max(0.1f, tuning.escapeSeconds));
             // W86 fix (the patient who woke strapped and lay still for 80 s): with the clip-driven escape (round 4) the
             // round-3 signals above never run, and an awake patient who cannot start an escape clip (both wrists strapped
-            // and a leg free: OperationRules.NextEscapeClip = -1; or the open, unsutured belly that keeps him on the
-            // table) was neither Held nor escaping, so he stayed in TableAwake. He fights instead: Struggle, and his free
-            // limbs flail as in the round-3 slide.
+            // and a leg free: OperationRules.NextEscapeClip = -1) was neither Held nor escaping, so he stayed in
+            // TableAwake. He fights instead: Struggle, and his free limbs flail as in the round-3 slide. (K10, variant В:
+            // the open, unsutured belly no longer keeps him on the table, so it no longer counts as stuck.)
             bool clipEscape = tuning.escapeClips && !tuning.torsoStrap;
             bool anyStrap = false;
             for (int i = 0; i < 4; i++) anyStrap |= s.restraints[i];
-            bool stuck = clipEscape && (anyStrap || s.CavityOpen);
+            bool stuck = clipEscape && anyStrap;
             bool fighting = OperationStraps.Held(s, tuning) || s.unbuckleProgress > 0f || escape > 0.25f || stuck;
             float flail = stuck ? 1f : escape;
             rig.SetOpState(fighting ? OperationPatientRig.StateStruggle : OperationPatientRig.StateTableAwake);
@@ -806,6 +817,12 @@ namespace OnlyVolunteers.Operation.Stage1
                     OperationSfx.Play(audioSource, OperationCue.Slit, 0.8f);
                     OperationVisuals.Splash(at, 3, new Color(0.95f, 0.35f, 0.45f), 0.018f);
                     hud?.WorldToast("ВЖУХ! Открыто", at, HintTone.Good);
+                    break;
+                case PatientCue.SpoilageStarted:
+                    // WP05 (OB-07): the first opening starts the spoilage of every organ still inside, also of a living patient.
+                    hud?.Warning("Тело вскрыто — органы начали портиться: −1 качества через " +
+                                 Mathf.RoundToInt(table.Tuning.corpseGraceSeconds + table.Tuning.corpseGradeSeconds) + " с, дальше каждые " +
+                                 Mathf.RoundToInt(table.Tuning.corpseGradeSeconds) + " с. Шов и холод не вернут", 7f);
                     break;
                 case PatientCue.Reopened:
                     OperationSfx.Play(audioSource, OperationCue.Slit, 0.8f);

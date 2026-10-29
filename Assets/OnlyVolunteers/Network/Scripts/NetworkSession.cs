@@ -102,8 +102,11 @@ namespace OnlyVolunteers.Network
                 return;
             starting = true;
             hostRequested = true;
-            manager.TransportManager.Transport.SetMaximumClients(MaxPlayers);
-            manager.TransportManager.Transport.SetServerBindAddress("0.0.0.0", IPAddressType.IPv4);
+            // PLAYER stage: a Solo world is not even offered on the network (loopback only, the host's own client);
+            // ClientLoadedStartScenes still refuses any other connection by the world-mode rule.
+            bool solo = OnlyVolunteers.Session.WorldSessionV01.SoloWorld;
+            manager.TransportManager.Transport.SetMaximumClients(solo ? 1 : MaxPlayers);
+            manager.TransportManager.Transport.SetServerBindAddress(solo ? "127.0.0.1" : "0.0.0.0", IPAddressType.IPv4);
             status = "Starting host";
             if (!manager.ServerManager.StartConnection(port))
             {
@@ -146,6 +149,8 @@ namespace OnlyVolunteers.Network
             if (args.ConnectionState == LocalConnectionState.Started)
             {
                 Debug.Log("[OV Network] server started");
+                // ECONOMY spec v01: the team's one shared fund (host-authoritative; no save in this test scene).
+                OnlyVolunteers.Economy.TeamEconomy.Ensure(manager)?.ServerBegin(waitForExternalLoad: false);
                 SpawnBodies();
                 if (hostRequested)
                 {
@@ -168,6 +173,7 @@ namespace OnlyVolunteers.Network
             {
                 starting = false;
                 status = manager.ServerManager.Started ? "Host connected" : "Client connected";
+                OnlyVolunteers.Economy.TeamEconomy.Ensure(manager); // a pure client receives the fund snapshots
                 Debug.Log("[OV Network] client transport connected; ID assigned on player spawn");
             }
             else if (args.ConnectionState == LocalConnectionState.Stopped)
@@ -195,6 +201,15 @@ namespace OnlyVolunteers.Network
         private void ClientLoadedStartScenes(NetworkConnection connection, bool asServer)
         {
             if (!asServer || !connection.IsActive || players.ContainsKey(connection.ClientId)) return;
+            // PLAYER stage: the immutable world mode (a Solo world refuses every client but the host's own).
+            var verdict = OnlyVolunteers.Session.WorldSessionV01.ServerDecideJoin(connection, players.Count);
+            if (verdict != OnlyVolunteers.Session.JoinVerdict.Accept)
+            {
+                status = OnlyVolunteers.Session.WorldModeRules.Explain(verdict);
+                Debug.LogWarning($"[OV Network] join refused id={connection.ClientId}: {verdict}");
+                manager.ServerManager.Kick(connection, KickReason.UnexpectedProblem);
+                return;
+            }
             if (players.Count >= MaxPlayers)
             {
                 manager.ServerManager.Kick(connection, KickReason.UnexpectedProblem);

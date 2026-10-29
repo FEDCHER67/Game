@@ -58,6 +58,12 @@ namespace OnlyVolunteers.Inventory
         /// </summary>
         public int TryAdd(int itemId, int count, int unitValue)
         {
+            if (catalog.TryGet(itemId, out ItemInfo syringeInfo) && syringeInfo.SyringeKind != SyringeKind.None)
+            {
+                int added = 0;
+                while (added < count && TryAdd(new ItemStack(itemId, 1, unitValue, SyringeInstance.New(syringeInfo.SyringeKind))) == 1) added++;
+                return added;
+            }
             int toAdd = CountThatFits(itemId, count, unitValue);
             if (toAdd <= 0) return 0;
             catalog.TryGet(itemId, out ItemInfo info);
@@ -82,7 +88,20 @@ namespace OnlyVolunteers.Inventory
             int taken = Math.Min(count, slot.Count);
             slot.Count -= taken;
             Set(index, slot.Count > 0 ? slot : ItemStack.Empty);
-            return new ItemStack(slot.ItemId, taken, slot.UnitValue);
+            return new ItemStack(slot.ItemId, taken, slot.UnitValue, slot.Syringe);
+        }
+
+        /// <summary>Existing instance pickup/handover: never mint a replacement for a used syringe.</summary>
+        public int TryAdd(ItemStack stack)
+        {
+            if (stack.Syringe == null) return TryAdd(stack.ItemId, stack.Count, stack.UnitValue);
+            if (stack.Count != 1 || stack.Syringe.Discarded || string.IsNullOrWhiteSpace(stack.Syringe.ItemId) ||
+                !catalog.TryGet(stack.ItemId, out ItemInfo info) || info.SyringeKind != stack.Syringe.Kind ||
+                info.Size > FreeCapacity) return 0;
+            foreach (var slot in slots) if (slot.Syringe?.ItemId == stack.Syringe.ItemId) return 0;
+            int index = slots[SelectedIndex].IsEmpty ? SelectedIndex : Array.FindIndex(slots, s => s.IsEmpty);
+            if (index < 0) return 0;
+            Set(index, stack); return 1;
         }
 
         public bool Select(int index)

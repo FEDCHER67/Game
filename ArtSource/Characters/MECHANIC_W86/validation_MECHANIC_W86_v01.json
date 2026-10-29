@@ -1,0 +1,404 @@
+{
+  "asset": "MECHANIC_W86_v01",
+  "variant": "MECHANIC_W86",
+  "height_m": 1.748,
+  "bones": 65,
+  "rig_source": "Mixamo \"Run Look Back\" skeleton (names, parents, rolls kept)",
+  "mixamo_leg_ratio": 0.7711,
+  "animation": "procedural startle + 180 turn + cartoon panic run (Run Look Back twists the body backwards, so it was not used)",
+  "lod": "crowd",
+  "actions": {
+    "Idle": [
+      1,
+      60
+    ],
+    "Panic_Run_Loop": [
+      1,
+      18
+    ],
+    "Panic_TurnFlee": [
+      1,
+      150
+    ],
+    "DoubleTake_Flee": [
+      1,
+      150
+    ],
+    "PlayDead_Fall": [
+      1,
+      60
+    ],
+    "PlayDead_Loop": [
+      1,
+      240
+    ],
+    "PlayDead_GetUp": [
+      1,
+      100
+    ],
+    "TripFall": [
+      1,
+      150
+    ],
+    "PoliceCall": [
+      1,
+      210
+    ],
+    "FakeSurrender_Flee": [
+      1,
+      150
+    ],
+    "Hide_Enter": [
+      1,
+      70
+    ],
+    "Hide_Loop": [
+      1,
+      180
+    ],
+    "LookBack_Bonk": [
+      1,
+      150
+    ]
+  },
+  "meshes": {
+    "Body": {
+      "triangles": 5424,
+      "vertices": 2750,
+      "materials": [
+        "Buddy_Skin",
+        "Buddy_Skin_Nose"
+      ],
+      "max_influences": 2,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Outfit": {
+      "triangles": 13373,
+      "vertices": 7374,
+      "materials": [
+        "MECHANIC_W86_Tee",
+        "MECHANIC_W86_Jacket",
+        "MECHANIC_W86_Jacket_Roll",
+        "MECHANIC_W86_Jacket_Dark",
+        "MECHANIC_W86_Jacket_Oil",
+        "MECHANIC_W86_Trousers",
+        "MECHANIC_W86_Trousers_Cuff",
+        "MECHANIC_W86_Trousers_Pocket",
+        "MECHANIC_W86_Oil",
+        "MECHANIC_W86_Rag",
+        "MECHANIC_W86_Belt",
+        "MECHANIC_W86_Buckle",
+        "MECHANIC_W86_Pouch",
+        "MECHANIC_W86_Gloves_Cuff",
+        "MECHANIC_W86_Gloves",
+        "MECHANIC_W86_Boots",
+        "MECHANIC_W86_Boots_Sole",
+        "MECHANIC_W86_Boot_Lace",
+        "MECHANIC_W86_Bandana",
+        "MECHANIC_W86_Hair",
+        "MECHANIC_W86_Mustache",
+        "MECHANIC_W86_Stubble"
+      ],
+      "max_influences": 5,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    },
+    "Face": {
+      "triangles": 2128,
+      "vertices": 1086,
+      "materials": [
+        "Buddy_Eye_White",
+        "Buddy_Eye_Rim",
+        "Buddy_Pupil",
+        "Buddy_Eye_Shine",
+        "Buddy_Brow",
+        "Buddy_Mouth"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": [
+        "Basis",
+        "Blink",
+        "Blink_L",
+        "Blink_R",
+        "Surprised",
+        "Worried",
+        "Happy"
+      ]
+    },
+    "Wrench_RightHand": {
+      "triangles": 412,
+      "vertices": 212,
+      "materials": [
+        "MECHANIC_W86_Wrench"
+      ],
+      "max_influences": 1,
+      "unweighted_vertices": 0,
+      "shape_keys": []
+    }
+  },
+  "grounding_offset_m": {
+    "Idle": 0.0011,
+    "Panic_Run_Loop": 0.0574,
+    "Panic_TurnFlee": 0.0552,
+    "DoubleTake_Flee": {
+      "per_frame": true,
+      "min": -0.05,
+      "max": 0.0574
+    },
+    "PlayDead_Fall": {
+      "per_frame": true,
+      "min": -0.0024,
+      "max": 0.0739
+    },
+    "PlayDead_Loop": {
+      "per_frame": true,
+      "min": 0.0723,
+      "max": 0.0739
+    },
+    "PlayDead_GetUp": {
+      "per_frame": true,
+      "min": -0.0023,
+      "max": 0.0739
+    },
+    "TripFall": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.1057
+    },
+    "PoliceCall": {
+      "per_frame": true,
+      "min": -0.2725,
+      "max": 0.0011
+    },
+    "FakeSurrender_Flee": {
+      "per_frame": true,
+      "min": -0.0331,
+      "max": 0.0604
+    },
+    "Hide_Enter": {
+      "per_frame": true,
+      "min": -0.0334,
+      "max": 0.0767
+    },
+    "Hide_Loop": {
+      "per_frame": true,
+      "min": 0.0767,
+      "max": 0.0767
+    },
+    "LookBack_Bonk": {
+      "per_frame": true,
+      "min": -0.2225,
+      "max": 0.0574
+    }
+  },
+  "face_tracks_blend_only": [
+    "Panic_TurnFlee_Face",
+    "DoubleTake_Flee_Face",
+    "PlayDead_Fall_Face",
+    "PlayDead_Loop_Face",
+    "PlayDead_GetUp_Face",
+    "TripFall_Face",
+    "PoliceCall_Face",
+    "FakeSurrender_Flee_Face",
+    "Hide_Enter_Face",
+    "Hide_Loop_Face",
+    "LookBack_Bonk_Face"
+  ],
+  "props_blend_only": {
+    "Prop_Phone": "PoliceCall_Phone (object keys; attach to the right hand in the game)"
+  },
+  "npc_type": {
+    "label": "Механик мастерской (W86)",
+    "group": "W86 мастерская",
+    "body": {
+      "belly": 1.25
+    },
+    "idle_arm_down_deg": 62.0,
+    "game_scale": 1.0,
+    "hand_props": true,
+    "hand_props_note": "Wrench_RightHand: the wrench, rigid on mixamorig:RightHand; never dropped (deliberately not named Props_*Hand, so NpcHeldProps ignores it). Grip: Grip_R finger pose, see MECHANIC_W86 notes JSON.",
+    "face_defaults": {},
+    "face_baked": {},
+    "slots": {
+      "MECHANIC_W86_Jacket": {
+        "default": "#646C50",
+        "metal": false
+      },
+      "MECHANIC_W86_Jacket_Roll": {
+        "default": "#585F46",
+        "metal": false
+      },
+      "MECHANIC_W86_Jacket_Dark": {
+        "default": "#50573F",
+        "metal": false
+      },
+      "MECHANIC_W86_Jacket_Oil": {
+        "default": "#3E4232",
+        "metal": false
+      },
+      "MECHANIC_W86_Tee": {
+        "default": "#A3A8AB",
+        "metal": false
+      },
+      "MECHANIC_W86_Trousers": {
+        "default": "#373631",
+        "metal": false
+      },
+      "MECHANIC_W86_Trousers_Cuff": {
+        "default": "#302F2B",
+        "metal": false
+      },
+      "MECHANIC_W86_Trousers_Pocket": {
+        "default": "#2E2D29",
+        "metal": false
+      },
+      "MECHANIC_W86_Oil": {
+        "default": "#1C1B19",
+        "metal": false
+      },
+      "MECHANIC_W86_Belt": {
+        "default": "#75604D",
+        "metal": false
+      },
+      "MECHANIC_W86_Buckle": {
+        "default": "#96989C",
+        "metal": true
+      },
+      "MECHANIC_W86_Pouch": {
+        "default": "#685442",
+        "metal": false
+      },
+      "MECHANIC_W86_Gloves": {
+        "default": "#DEA830",
+        "metal": false
+      },
+      "MECHANIC_W86_Gloves_Cuff": {
+        "default": "#C48E24",
+        "metal": false
+      },
+      "MECHANIC_W86_Rag": {
+        "default": "#A8A8A4",
+        "metal": false
+      },
+      "MECHANIC_W86_Boots": {
+        "default": "#3A342F",
+        "metal": false
+      },
+      "MECHANIC_W86_Boots_Sole": {
+        "default": "#1E1C1B",
+        "metal": false
+      },
+      "MECHANIC_W86_Boot_Lace": {
+        "default": "#282522",
+        "metal": false
+      },
+      "MECHANIC_W86_Bandana": {
+        "default": "#B23A2C",
+        "metal": false
+      },
+      "MECHANIC_W86_Hair": {
+        "default": "#7E8082",
+        "metal": false
+      },
+      "MECHANIC_W86_Mustache": {
+        "default": "#545456",
+        "metal": false
+      },
+      "MECHANIC_W86_Stubble": {
+        "default": "#7C5846",
+        "metal": false
+      },
+      "MECHANIC_W86_Wrench": {
+        "default": "#969AA0",
+        "metal": true
+      }
+    },
+    "colourways": [
+      {
+        "MECHANIC_W86_Jacket": "#344262",
+        "MECHANIC_W86_Jacket_Roll": "#2C3854",
+        "MECHANIC_W86_Jacket_Dark": "#2C3854",
+        "MECHANIC_W86_Jacket_Oil": "#222836",
+        "MECHANIC_W86_Bandana": "#284696",
+        "MECHANIC_W86_Trousers": "#2C2E34"
+      },
+      {
+        "MECHANIC_W86_Jacket": "#7A5E40",
+        "MECHANIC_W86_Jacket_Roll": "#6A5036",
+        "MECHANIC_W86_Jacket_Dark": "#6A5036",
+        "MECHANIC_W86_Jacket_Oil": "#4C3A28",
+        "MECHANIC_W86_Bandana": "#D6A228",
+        "MECHANIC_W86_Trousers": "#3C4238"
+      }
+    ]
+  },
+  "fbx_actions": [
+    "Idle"
+  ],
+  "clips_note": "Same skeleton as SAUSAGE_BUDDY_BASE: the game plays the BASE clips on this model; all clips stay in the .blend",
+  "total_triangles": 21337,
+  "part_triangles": {
+    "MECHANIC_W86_Shirt": 1376,
+    "MECHANIC_W86_Tee": 1168,
+    "Skin_Head": 1088,
+    "MECHANIC_W86_Boot_Shoe_Upper": 1000,
+    "MECHANIC_W86_Trousers": 944,
+    "MECHANIC_W86_Boot_Shoe_Sole": 672,
+    "Skin_Ear": 576,
+    "Skin_Leg": 576,
+    "Eye": 576,
+    "EyeRim": 576,
+    "Skin_Palm": 560,
+    "MECHANIC_W86_Hair": 524,
+    "MECHANIC_W86_Bandana": 512,
+    "Skin_Arm": 480,
+    "Skin_Index": 384,
+    "Skin_Middle": 384,
+    "Skin_Ring": 384,
+    "Skin_Thumb": 384,
+    "Pupil": 336,
+    "Skin_Torso": 320,
+    "Mouth": 312,
+    "MECHANIC_W86_Collar": 296,
+    "Skin_Nose": 288,
+    "MECHANIC_W86_Glove_Finger": 288,
+    "MECHANIC_W86_Stubble_Dot": 285,
+    "MECHANIC_W86_Belt": 260,
+    "MECHANIC_W86_Boot_Lace": 256,
+    "MECHANIC_W86_Rag": 248,
+    "MECHANIC_W86_Mustache": 240,
+    "MECHANIC_W86_ShirtEdge": 216,
+    "MECHANIC_W86_Glove_Palm": 200,
+    "MECHANIC_W86_Bandana_Tail": 200,
+    "MECHANIC_W86_ChestPocket": 184,
+    "MECHANIC_W86_CargoPocket": 184,
+    "MECHANIC_W86_Wrench_Shank": 180,
+    "Brow": 168,
+    "Shine": 160,
+    "MECHANIC_W86_Glove_Cuff": 160,
+    "MECHANIC_W86_Oil": 142,
+    "MECHANIC_W86_BackPocket": 120,
+    "MECHANIC_W86_Bandana_Knot": 120,
+    "Prop_Phone_Island": 120,
+    "Prop_Phone_Camera": 120,
+    "MECHANIC_W86_Wrench_JawBig": 116,
+    "MECHANIC_W86_Wrench_JawSmall": 116,
+    "MECHANIC_W86_Buckle": 108,
+    "MECHANIC_W86_BuckleBar": 108,
+    "MECHANIC_W86_Pouch": 108,
+    "MECHANIC_W86_PouchFlap": 108,
+    "MECHANIC_W86_PouchStrap": 108,
+    "MECHANIC_W86_PouchB": 108,
+    "MECHANIC_W86_PouchBFlap": 108,
+    "Prop_Phone": 108,
+    "MECHANIC_W86_ChestFlap": 104,
+    "MECHANIC_W86_JacketOil": 72,
+    "MECHANIC_W86_Glove_Thumb": 64,
+    "MECHANIC_W86_JacketOilB": 62,
+    "MECHANIC_W86_OilB": 62,
+    "MECHANIC_W86_CargoFlap": 24,
+    "MECHANIC_W86_Yoke": 2
+  }
+}

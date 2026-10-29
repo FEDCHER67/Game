@@ -1,0 +1,415 @@
+{
+ "asset": "PortableFridge_W86",
+ "revision": "v01",
+ "item_id": 301,
+ "item_key": "container.cooler",
+ "status": "review pending (Fedya visual OK); not imported into Unity",
+ "design": "Extends COOLER-ASTRA-001 v03 style (white body, blue lid, navy latches/hinges/feet, front sticker 'ОРГАНЫ / НЕ КАНТОВАТЬ') to the 8-slot two-handed rules; worn finish, duct-tape repair on the lid.",
+ "rules_source": [
+  "docs/specs/ECONOMY_SALES_PROGRESSION_SPEC_2026-10-25_v01.md (portable fridge $1 000, 8 items, two hands, van storage mounts)",
+  "docs/specs/WORK_INVENTORY_SPEC_2026-10-18_v01.md (id 301, 8 slots, hold E lifts and closes, 2 van mounts)"
+ ],
+ "units": "metres",
+ "axes": {
+  "blender": "Z up, front (sticker, latches) = -Y, hinge side = +Y, origin = floor centre under the feet",
+  "unity": "local = (-x_blender, z_blender, -y_blender) with the FBX settings below; front faces Unity +Z, hinge side Unity -Z. If importer axes differ, trust the SLOT_/GRIP_/REF_ empties in the FBX.",
+  "fbx_export": "axis_forward -Z, axis_up Y, bake_space_transform, FBX_SCALE_UNITS, mesh_smooth_type OFF, triangulated, embedded atlas (same as Pharmacy_W86)"
+ },
+ "files": {
+  "fbx": "C:\\Dev\\Game\\ArtSource\\Props\\PortableFridge_W86\\PortableFridge_W86_v01.fbx",
+  "fbx_van_mount": "C:\\Dev\\Game\\ArtSource\\Props\\PortableFridge_W86\\PortableFridge_W86_VanMount_v01.fbx",
+  "blend": "C:\\Dev\\Game\\ArtSource\\Props\\PortableFridge_W86\\PortableFridge_W86_v01.blend",
+  "atlas": "C:\\Dev\\Game\\ArtSource\\Props\\PortableFridge_W86\\Textures\\PortableFridge_W86_Atlas_v01.png",
+  "material": "M_PortableFridge_W86_Atlas (one material, one 1024 atlas, shared with the mount)"
+ },
+ "dimensions": {
+  "shell_closed_xyz_blender": [
+   0.6,
+   0.52,
+   0.414
+  ],
+  "overall_closed_with_handles_hardware_xyz_blender": [
+   0.6908,
+   0.5485,
+   0.415
+  ],
+  "overall_open_xyz_blender": [
+   0.6908,
+   0.6708,
+   0.8719
+  ],
+  "unity_size_xyz": [
+   0.6908,
+   0.415,
+   0.5485
+  ],
+  "cavity_inner_xyz": [
+   0.54,
+   0.46,
+   0.28
+  ],
+  "clear_height_floor_to_closed_lid": 0.305,
+  "body_rim_height": 0.33,
+  "lid_top_height": 0.414
+ },
+ "lid": {
+  "objects": "SM_PortableFridge_Lid_LOD0, SM_PortableFridge_Lid_LOD1 and UCX_SM_PortableFridge_Lid_00 are direct children of the root; all three have their origin ON the hinge axis (= LID_PIVOT empty). In Unity parent the three under one transform at LID_PIVOT (local transforms become zero) and rotate that.",
+  "why_flat": "FBX bake_space_transform (project convention) misplaces meshes nested under a translated empty; flat children of an identity root re-import exactly (checked).",
+  "pivot_blender": [
+   0.0,
+   0.268,
+   0.33
+  ],
+  "pivot_unity": [
+   -0.0,
+   0.33,
+   -0.268
+  ],
+  "hinge_axis": "local X of the lid objects / LID_PIVOT (Blender X = Unity -X, along the long side)",
+  "closed_angle_deg": 0.0,
+  "open_angle_deg": 95.0,
+  "open_rotation_blender": "lid objects rotation_euler.x = -95 deg",
+  "open_rotation_unity": "pivot.localEulerAngles = (-95, 0, 0) (verify once against REF_LidFront_Open); the front edge rises and swings to the rear",
+  "ref_empty_open_front_edge": {
+   "name": "REF_LidFront_Open",
+   "blender": [
+    0.0,
+    0.3977,
+    0.8487
+   ],
+   "unity": [
+    -0.0,
+    0.84867,
+    -0.3977
+   ]
+  },
+  "rear_clearance_needed_m": 0.134,
+  "rear_clearance_note": "the fully open lid reaches this far behind the body's back wall; keep it free of walls",
+  "rule": "WORK_INVENTORY: E opens only when set down; lifting closes it; a carried cooler cannot be opened."
+ },
+ "grips": {
+  "note": "Bar centres of the two side handles. GRIP_R/GRIP_L = right/left hand of a carrier standing behind the cooler with its front (sticker) facing away from him (same facing as the cooler). Bar axis = Blender Y / Unity Z; palms face the box (inward along X).",
+  "GRIP_R": {
+   "blender": [
+    -0.332,
+    0.0,
+    0.255
+   ],
+   "unity": [
+    0.332,
+    0.255,
+    -0.0
+   ]
+  },
+  "GRIP_L": {
+   "blender": [
+    0.332,
+    0.0,
+    0.255
+   ],
+   "unity": [
+    -0.332,
+    0.255,
+    -0.0
+   ]
+  },
+  "grip_span_m": 0.664,
+  "bar_diameter_m": 0.029,
+  "bar_clear_length_m": 0.11,
+  "finger_clearance_m": 0.02
+ },
+ "slots": {
+  "count": 8,
+  "layout": "2 columns (x) x 4 rows (y), numbered front row first, viewer's left (-X Blender) first; rows 1-3 (slots 1-6) thin 0.267 x 0.090, row 4 (slots 7-8) wide 0.267 x 0.172",
+  "slot_class_rule": "PROPOSAL for the lead: thin slots take any item up to 0.090 deep (every organ except the brain, sealed organ bags, blood bags, syringes); wide slots take anything incl. the bare brain (0.160 deep). Server puts deep items into a free wide slot and other items into thin slots first. One NPC's seven organs = six thin + brain in a wide slot, one wide slot left. A third bare brain is refused (a bagged brain is thin).",
+  "anchor": "empty at the slot floor centre (cavity floor z=0.050); identity rotation; place an item so its bounds bottom sits on the anchor, wide face towards the front (organ models are authored front -Y, so no rotation)",
+  "divider_height_m": 0.15,
+  "fits": "largest items: sealed ORGANBAG 0.256 x 0.075 x 0.287, lungs 0.218 x 0.071 x 0.200, heart 0.202 x 0.087 x 0.200, liver 0.205 x 0.066 x 0.153, blood bag 0.160 x 0.033 x 0.274",
+  "anchors": [
+   {
+    "name": "SLOT_01",
+    "class": "thin",
+    "box_xyz": [
+     0.267,
+     0.09,
+     0.305
+    ],
+    "blender": [
+     -0.1365,
+     -0.185,
+     0.05
+    ],
+    "unity": [
+     0.1365,
+     0.05,
+     0.185
+    ],
+    "centre_blender": [
+     -0.1365,
+     -0.185,
+     0.2
+    ],
+    "centre_unity": [
+     0.1365,
+     0.2,
+     0.185
+    ]
+   },
+   {
+    "name": "SLOT_02",
+    "class": "thin",
+    "box_xyz": [
+     0.267,
+     0.09,
+     0.305
+    ],
+    "blender": [
+     0.1365,
+     -0.185,
+     0.05
+    ],
+    "unity": [
+     -0.1365,
+     0.05,
+     0.185
+    ],
+    "centre_blender": [
+     0.1365,
+     -0.185,
+     0.2
+    ],
+    "centre_unity": [
+     -0.1365,
+     0.2,
+     0.185
+    ]
+   },
+   {
+    "name": "SLOT_03",
+    "class": "thin",
+    "box_xyz": [
+     0.267,
+     0.09,
+     0.305
+    ],
+    "blender": [
+     -0.1365,
+     -0.089,
+     0.05
+    ],
+    "unity": [
+     0.1365,
+     0.05,
+     0.089
+    ],
+    "centre_blender": [
+     -0.1365,
+     -0.089,
+     0.2
+    ],
+    "centre_unity": [
+     0.1365,
+     0.2,
+     0.089
+    ]
+   },
+   {
+    "name": "SLOT_04",
+    "class": "thin",
+    "box_xyz": [
+     0.267,
+     0.09,
+     0.305
+    ],
+    "blender": [
+     0.1365,
+     -0.089,
+     0.05
+    ],
+    "unity": [
+     -0.1365,
+     0.05,
+     0.089
+    ],
+    "centre_blender": [
+     0.1365,
+     -0.089,
+     0.2
+    ],
+    "centre_unity": [
+     -0.1365,
+     0.2,
+     0.089
+    ]
+   },
+   {
+    "name": "SLOT_05",
+    "class": "thin",
+    "box_xyz": [
+     0.267,
+     0.09,
+     0.305
+    ],
+    "blender": [
+     -0.1365,
+     0.007,
+     0.05
+    ],
+    "unity": [
+     0.1365,
+     0.05,
+     -0.007
+    ],
+    "centre_blender": [
+     -0.1365,
+     0.007,
+     0.2
+    ],
+    "centre_unity": [
+     0.1365,
+     0.2,
+     -0.007
+    ]
+   },
+   {
+    "name": "SLOT_06",
+    "class": "thin",
+    "box_xyz": [
+     0.267,
+     0.09,
+     0.305
+    ],
+    "blender": [
+     0.1365,
+     0.007,
+     0.05
+    ],
+    "unity": [
+     -0.1365,
+     0.05,
+     -0.007
+    ],
+    "centre_blender": [
+     0.1365,
+     0.007,
+     0.2
+    ],
+    "centre_unity": [
+     -0.1365,
+     0.2,
+     -0.007
+    ]
+   },
+   {
+    "name": "SLOT_07",
+    "class": "wide",
+    "box_xyz": [
+     0.267,
+     0.172,
+     0.305
+    ],
+    "blender": [
+     -0.1365,
+     0.144,
+     0.05
+    ],
+    "unity": [
+     0.1365,
+     0.05,
+     -0.144
+    ],
+    "centre_blender": [
+     -0.1365,
+     0.144,
+     0.2
+    ],
+    "centre_unity": [
+     0.1365,
+     0.2,
+     -0.144
+    ]
+   },
+   {
+    "name": "SLOT_08",
+    "class": "wide",
+    "box_xyz": [
+     0.267,
+     0.172,
+     0.305
+    ],
+    "blender": [
+     0.1365,
+     0.144,
+     0.05
+    ],
+    "unity": [
+     -0.1365,
+     0.05,
+     -0.144
+    ],
+    "centre_blender": [
+     0.1365,
+     0.144,
+     0.2
+    ],
+    "centre_unity": [
+     -0.1365,
+     0.2,
+     -0.144
+    ]
+   }
+  ]
+ },
+ "colliders": {
+  "convention": "UCX_ naming only; Unity does not convert these automatically (same as G34 manifest). Use as BoxColliders.",
+  "UCX_SM_PortableFridge_Body_00": "solid body box 0.60 x 0.52 x 0.33 (cavity filled: sockets are picked by aim point)",
+  "UCX_SM_PortableFridge_Body_01/_02": "side handles",
+  "UCX_SM_PortableFridge_Lid_00": "lid box, origin on the hinge like the lid meshes (rotate it with them)"
+ },
+ "lods": {
+  "LOD0_tris": 1600,
+  "LOD1_tris": 484,
+  "per_object": {
+   "SM_PortableFridge_Body_LOD0": 1010,
+   "SM_PortableFridge_Body_LOD1": 358,
+   "SM_PortableFridge_Lid_LOD0": 590,
+   "SM_PortableFridge_Lid_LOD1": 126,
+   "SM_PortableFridge_VanMount_LOD0": 440,
+   "SM_PortableFridge_VanMount_LOD1": 280
+  },
+  "budget_LOD0": 2500,
+  "note": "_LOD0/_LOD1 suffixes for Unity; all four LOD meshes are children of the root, so one LODGroup covers body and lid (keep it after re-parenting the lid under its pivot)."
+ },
+ "van_mount": {
+  "fbx": "C:\\Dev\\Game\\ArtSource\\Props\\PortableFridge_W86\\PortableFridge_W86_VanMount_v01.fbx",
+  "objects": "PortableFridge_W86_VanMount (root) -> SM_PortableFridge_VanMount_LOD0/LOD1, UCX_..._00-04, COOLER_SOCKET, REF_WallPlane",
+  "origin": "floor level, centre of the cooler footprint",
+  "COOLER_SOCKET": {
+   "blender": [
+    0,
+    0,
+    0.01
+   ],
+   "unity": [
+    0,
+    0.01,
+    0
+   ],
+   "use": "cooler root goes here with identity rotation; front faces into the bay, hinge to the wall"
+  },
+  "wall_plane": {
+   "blender_y": 0.41,
+   "unity_z": -0.41,
+   "use": "rear face of the wall plate; bolt the mount with this plane on the bay wall"
+  },
+  "dims_xyz_blender": [
+   0.632,
+   0.7451,
+   0.22
+  ],
+  "lid_clearance_m": 0.0102,
+  "standoff_m": 0.128,
+  "lid_clearance": "fully open lid stays 0.010 m in front of the wall plane (stand-off 0.128 m)",
+  "rules": "Storage system $1 500 = 2 open cooler mounts; a mounted cooler keeps its id/contents and can be opened in place; nothing falls out while driving."
+ }
+}

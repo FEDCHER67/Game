@@ -9,13 +9,13 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY01_FirstBloodUnlocksOrganContact()
         {
-            var seed = Seed(); seed.OrganContactUnlocked = false; rules = new BuyerRules(clock, rng, seed);
+            var seed = Seed(); seed.OrganContactUnlocked = false; rules = NewWorld(seed);
             Assert.That(rules.IsBuyerAvailable(Organ), Is.False);
             Meeting(Blood); Sell(ProductKind.BloodBag, Blood);
             Assert.That(rules.IsBuyerAvailable(Organ), Is.True);
         }
         [Test]
-        public void BUY02_BUY44_IntroSyringeIsTenDollarsOnceNoBargainingAndFirstBloodRewards()
+        public void BUY02_BUY44_FirstSyringeTenThenEightNoBargainingAndFirstBloodRewards()
         {
             Meeting(Blood); Group(ProductKind.IntroSyringe, Blood);
             Assert.That(rules.AskMeeting(Blood, "p1", 5), Is.False);
@@ -23,9 +23,12 @@ namespace OnlyVolunteers.Buyers.Tests
             var receipt = rules.ConfirmSale(Request(new[] { id }, Blood));
             Assert.That(receipt.Total, Is.EqualTo(10)); Assert.That(receipt.XpEach, Is.EqualTo(55));
             Assert.That(receipt.TeamXp, Is.EqualTo(110)); Assert.That(B(Blood).Respect, Is.EqualTo(32));
-            Assert.That(rules.BeginGroup(Blood, ProductKind.IntroSyringe, "p1"), Is.False);
+            Assert.That(rules.BeginGroup(Blood, ProductKind.IntroSyringe, "p1"), Is.True);
+            string repeat = Add(ProductKind.IntroSyringe); rules.LoadItem(Blood, repeat, "p1");
+            var second = rules.ConfirmSale(Request(new[] { repeat }, Blood));
+            Assert.That(second.Total, Is.EqualTo(8)); Assert.That(second.XpEach, Is.EqualTo(5));
             var next = Sell(ProductKind.BloodBag, Blood);
-            Assert.That(next.XpEach, Is.EqualTo(5)); Assert.That(B(Blood).Respect, Is.EqualTo(33));
+            Assert.That(next.XpEach, Is.EqualTo(5)); Assert.That(B(Blood).Respect, Is.EqualTo(34));
         }
         [Test]
         public void BUY44_IntroSyringeAfterBloodBagHasNoSecondFirstBloodBonus()
@@ -34,9 +37,9 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(bag.XpEach, Is.EqualTo(55)); Assert.That(B(Blood).Respect, Is.EqualTo(32));
             var syringe = Sell(ProductKind.IntroSyringe, Blood);
             Assert.That(syringe.Total, Is.EqualTo(10)); Assert.That(syringe.XpEach, Is.EqualTo(5)); Assert.That(syringe.TeamXp, Is.EqualTo(10));
-            Assert.That(B(Blood).Respect, Is.EqualTo(33)); Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(120));
-            Assert.That(rules.Snapshot.FreeXp, Is.EqualTo(120)); Assert.That(rules.Snapshot.SharedFunds, Is.EqualTo(60));
-            Assert.That(rules.Snapshot.IntroSyringeSold, Is.True); Assert.That(rules.Snapshot.FirstBloodSold, Is.True);
+            Assert.That(B(Blood).Respect, Is.EqualTo(33)); Assert.That(economyState.LifetimeXp, Is.EqualTo(120));
+            Assert.That(economyState.FreeXp, Is.EqualTo(120)); Assert.That(economyState.Fund.Balance, Is.EqualTo(60));
+            Assert.That(rules.Snapshot.IntroSyringeSold, Is.True); Assert.That(economyState.FirstBloodGranted, Is.True);
         }
         [Test]
         public void BUY03_BUY04_BloodHasFixedBaseAndNoQualityCoolingOrSaturation()
@@ -79,7 +82,7 @@ namespace OnlyVolunteers.Buyers.Tests
             var request = Request(new[] { id }); Assert.That(rules.Quote(request).Total, Is.EqualTo(1050));
             rules.UpdateQuality(id, QualityTier.Good); request.ExpectedTotal = 1050;
             Assert.That(rules.ConfirmSale(request).Error, Is.EqualTo(SaleError.PriceChanged));
-            Assert.That(I(id).Sold, Is.False); Assert.That(rules.Snapshot.SharedFunds, Is.Zero);
+            Assert.That(I(id).Sold, Is.False); Assert.That(economyState.Fund.Balance, Is.Zero);
             request = Request(new[] { id }); Assert.That(rules.ConfirmSale(request).Total, Is.EqualTo(400));
         }
         [Test]
@@ -121,7 +124,7 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(B().Meeting.Negotiations.Count, Is.EqualTo(2));
             foreach (int respect in new[] {0,19,20,39,40,59,60,79,80,100})
             {
-                rules = new BuyerRules(clock, rng, Seed(respect)); Meeting(); Group();
+                rules = NewWorld(Seed(respect)); Meeting(); Group();
                 string id = Add(); rules.LoadItem(Organ, id, "p1");
                 Assert.That(B().Respect, Is.EqualTo(respect));
                 var request = Request(new[] { id });
@@ -148,25 +151,25 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY23_RespectClampsAtBothEnds()
         {
-            rules = new BuyerRules(clock, rng, Seed(100)); Meeting(); Sell(count: 10); Assert.That(B().Respect, Is.EqualTo(100));
-            rules = new BuyerRules(clock, rng, Seed(0)); Meeting(); rules.CancelMeeting(Organ); Assert.That(B().Respect, Is.Zero);
+            rules = NewWorld(Seed(100)); Meeting(); Sell(count: 10); Assert.That(B().Respect, Is.EqualTo(100));
+            rules = NewWorld(Seed(0)); Meeting(); rules.CancelMeeting(Organ); Assert.That(B().Respect, Is.Zero);
         }
         [Test]
         public void BUY25_ZeroRespectAllowsTradingButFortyRequiredForNewOrders()
         {
-            rules = new BuyerRules(clock, rng, Seed(0)); Meeting(); Assert.That(Sell().Success, Is.True);
+            rules = NewWorld(Seed(0)); Meeting(); Assert.That(Sell().Success, Is.True);
             Assert.That(rules.CreateOrderOffer("o", Organ, OrderTemplate.HamletKidney, "target", "stash", "p1"), Is.False);
-            rules = new BuyerRules(clock, rng, Seed(39)); Assert.That(rules.CreateOrderOffer("o", Organ, OrderTemplate.HamletKidney, "target", "stash", "p1"), Is.False);
+            rules = NewWorld(Seed(39)); Assert.That(rules.CreateOrderOffer("o", Organ, OrderTemplate.HamletKidney, "target", "stash", "p1"), Is.False);
             Respect40(); Offer();
         }
         [Test]
         public void BUY36_BUY52_AbdominalSetAndBloodPays630TeamXpAndOnlyOnlinePlayers()
         {
             Meeting(); Sell(count: 2); Sell(ProductKind.Liver); Meeting(Blood); Sell(ProductKind.BloodBag, Blood);
-            Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(630)); Assert.That(rules.Snapshot.FreeXp, Is.EqualTo(630));
+            Assert.That(economyState.LifetimeXp, Is.EqualTo(630)); Assert.That(economyState.FreeXp, Is.EqualTo(630));
             rules.SetPresentParticipants("p1", "p3"); Sell(ProductKind.BloodBag, Blood);
-            Assert.That(rules.Snapshot.Participants.Single(p => p.Id == "p2").PersonalXp, Is.EqualTo(315));
-            Assert.That(rules.Snapshot.Participants.Single(p => p.Id == "p3").PersonalXp, Is.EqualTo(5));
+            Assert.That(economyState.XpOf("p2"), Is.EqualTo(315));
+            Assert.That(economyState.XpOf("p3"), Is.EqualTo(5));
         }
         [TestCase(ProductKind.Kidney,100)] [TestCase(ProductKind.Liver,100)] [TestCase(ProductKind.Eye,100)]
         [TestCase(ProductKind.Lungs,150)] [TestCase(ProductKind.Heart,200)] [TestCase(ProductKind.Brain,250)]
@@ -185,13 +188,13 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY55_UpgradesOrderedAndSpendOnlyFreeTeamXp()
         {
-            rules = new BuyerRules(clock, rng, Seed(xp: 3500));
+            rules = NewWorld(Seed(), xp: 3500);
             Assert.That(rules.BuyNegotiationUpgrade("p1", 2), Is.False);
-            Assert.That(rules.BuyNegotiationUpgrade("p1", 1), Is.True); Assert.That(rules.Snapshot.FreeXp, Is.EqualTo(3000));
+            Assert.That(rules.BuyNegotiationUpgrade("p1", 1), Is.True); Assert.That(economyState.FreeXp, Is.EqualTo(3000));
             Assert.That(rules.BuyNegotiationUpgrade("p1", 1), Is.False);
-            Assert.That(rules.BuyNegotiationUpgrade("p1", 2), Is.True); Assert.That(rules.Snapshot.FreeXp, Is.EqualTo(2000));
-            Assert.That(rules.BuyNegotiationUpgrade("p1", 3), Is.True); Assert.That(rules.Snapshot.FreeXp, Is.Zero);
-            Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(3500)); Assert.That(rules.Snapshot.Participants[0].PersonalXp, Is.Zero);
+            Assert.That(rules.BuyNegotiationUpgrade("p1", 2), Is.True); Assert.That(economyState.FreeXp, Is.EqualTo(2000));
+            Assert.That(rules.BuyNegotiationUpgrade("p1", 3), Is.True); Assert.That(economyState.FreeXp, Is.Zero);
+            Assert.That(economyState.LifetimeXp, Is.EqualTo(3500)); Assert.That(economyState.XpOf("p1"), Is.Zero);
             Assert.That(rules.BuyNegotiationUpgrade("p2", 1), Is.False); Assert.That(rules.BuyNegotiationUpgrade("p1", 4), Is.False);
         }
     }

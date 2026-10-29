@@ -31,6 +31,7 @@ namespace OnlyVolunteers.Inventory
         [Tooltip("Two or three letters shown in the hotbar when there is no icon.")]
         [SerializeField] private string shortLabel = "?";
         [SerializeField] private ItemKind kind;
+        [SerializeField] private SyringeKind syringeKind;
         [SerializeField] private Sprite icon;
         [Tooltip("Capacity units this item uses. Larger than the inventory capacity means it can only be carried by hand.")]
         [SerializeField, Min(1)] private int size = 1;
@@ -60,7 +61,8 @@ namespace OnlyVolunteers.Inventory
         public Sprite Icon => icon;
         public int Size => size;
         public int MaxStack => maxStack;
-        public int BaseValue => baseValue;
+        public int BaseValue => syringeKind == SyringeKind.None ? baseValue : SyringeRules.Price(syringeKind);
+        public SyringeKind SyringeKind => syringeKind;
         public NetworkObject WorldPrefab => worldPrefab;
         public GameObject WorldModel => worldModel;
         public float WorldModelSize => worldModelSize;
@@ -69,6 +71,6 @@ namespace OnlyVolunteers.Inventory
         public float DropBounciness => dropBounciness;
         public float DropSquish => dropSquish;
 
-        public ItemInfo ToInfo() => new ItemInfo(id, size, maxStack);
+        public ItemInfo ToInfo() => new ItemInfo(id, size, syringeKind == SyringeKind.None ? maxStack : 1, syringeKind);
     }
 }

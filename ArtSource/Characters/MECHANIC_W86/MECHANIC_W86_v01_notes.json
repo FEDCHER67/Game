@@ -1,0 +1,905 @@
+{
+ "asset": "MECHANIC_W86 v01: the workshop mechanic (reference variant B, Working/Reviews/Mechanic_2026-10-29/mechanic_reference_B_chosen.webp)",
+ "files": {
+  "source_blend": "ArtSource/Characters/MECHANIC_W86/MECHANIC_W86_v01.blend (LOD0 source, rig, the Sausage Buddy built-in clips)",
+  "fbx_lod0_only": "ArtSource/Characters/MECHANIC_W86/MECHANIC_W86_v01.fbx (pipeline export: Body, Face, Outfit, Wrench_RightHand, Idle take)",
+  "fbx_game": "ArtSource/Characters/MECHANIC_W86/MECHANIC_W86_v01_opt_v02.fbx (use this one: <mesh>_LOD0/_LOD1/_LOD2, Idle take; Unity LOD import naming)",
+  "opt_blend": "ArtSource/Characters/MECHANIC_W86/MECHANIC_W86_v01_opt_v02.blend",
+  "validation": "validation_MECHANIC_W86_v01.json, lods_MECHANIC_W86_v01_opt_v02.json",
+  "clips": "ArtSource/Characters/MECHANIC_W86/Animations_v01/*.fbx + clips_mechanic_v01.json + MECHANIC_W86_Anim_v01.blend",
+  "grip_clip": "ArtSource/Characters/MECHANIC_W86/Animations_v01/MECHANIC_W86_Grip_R_v01.fbx",
+  "sheet": "ArtSource/Characters/MECHANIC_W86/MECHANIC_W86_v01_sheet.png (+ Previews_v01/, palette PNG)",
+  "scripts": [
+   "mechanic_w86_type.py (the type: body, outfit, wrench)",
+   "build_mechanic_w86.py (runs SAUSAGE_BUDDY_01/build_buddy.py)",
+   "lods_mechanic_w86.py (runs Types_opt_v02 optimise + verify)",
+   "mech_rig.py (grip, hand poses, helpers)",
+   "mechanic_w86_anim.py (the clips)",
+   "render_mechanic_w86.py (previews, sheet)",
+   "notes_mechanic_w86.py (this file)"
+  ]
+ },
+ "rig": {
+  "armature": "Buddy_Rig_Mixamo65",
+  "bones": 65,
+  "root": "mixamorig:Hips",
+  "naming": "Mixamo 65 (mixamorig:*)",
+  "same_as_crowd_types": {
+   "compared_with": "SAUSAGE_BUDDY_BAD_DRUNK_v04.blend",
+   "same_bone_names": true,
+   "max_rest_matrix_difference": 0.0,
+   "meaning": "identical rest pose: every shared Sausage Buddy clip (Walk_v04, Idle_Stand_v04, crowd, escape, get-up...) plays on him unchanged; Unity: Generic, copy the avatar from the Sausage Buddy BASE like the crowd types (avatarSetup copy), no root motion"
+  },
+  "scale": "metres, 1.748 m tall (crowd types 1.75 m), FBX axis_forward -Z, axis_up Y, apply_unit_scale, no leaf bones",
+  "bone_list": [
+   {
+    "name": "mixamorig:Hips",
+    "parent": null,
+    "deform": true
+   },
+   {
+    "name": "mixamorig:Spine",
+    "parent": "mixamorig:Hips",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:Spine1",
+    "parent": "mixamorig:Spine",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:Spine2",
+    "parent": "mixamorig:Spine1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:Neck",
+    "parent": "mixamorig:Spine2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:Head",
+    "parent": "mixamorig:Neck",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:HeadTop_End",
+    "parent": "mixamorig:Head",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightShoulder",
+    "parent": "mixamorig:Spine2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightArm",
+    "parent": "mixamorig:RightShoulder",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightForeArm",
+    "parent": "mixamorig:RightArm",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHand",
+    "parent": "mixamorig:RightForeArm",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandThumb1",
+    "parent": "mixamorig:RightHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandThumb2",
+    "parent": "mixamorig:RightHandThumb1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandThumb3",
+    "parent": "mixamorig:RightHandThumb2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandThumb4",
+    "parent": "mixamorig:RightHandThumb3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandIndex1",
+    "parent": "mixamorig:RightHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandIndex2",
+    "parent": "mixamorig:RightHandIndex1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandIndex3",
+    "parent": "mixamorig:RightHandIndex2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandIndex4",
+    "parent": "mixamorig:RightHandIndex3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandMiddle1",
+    "parent": "mixamorig:RightHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandMiddle2",
+    "parent": "mixamorig:RightHandMiddle1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandMiddle3",
+    "parent": "mixamorig:RightHandMiddle2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandMiddle4",
+    "parent": "mixamorig:RightHandMiddle3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandRing1",
+    "parent": "mixamorig:RightHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandRing2",
+    "parent": "mixamorig:RightHandRing1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandRing3",
+    "parent": "mixamorig:RightHandRing2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightHandRing4",
+    "parent": "mixamorig:RightHandRing3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandPinky1",
+    "parent": "mixamorig:RightHand",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandPinky2",
+    "parent": "mixamorig:RightHandPinky1",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandPinky3",
+    "parent": "mixamorig:RightHandPinky2",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightHandPinky4",
+    "parent": "mixamorig:RightHandPinky3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftShoulder",
+    "parent": "mixamorig:Spine2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftArm",
+    "parent": "mixamorig:LeftShoulder",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftForeArm",
+    "parent": "mixamorig:LeftArm",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHand",
+    "parent": "mixamorig:LeftForeArm",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandThumb1",
+    "parent": "mixamorig:LeftHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandThumb2",
+    "parent": "mixamorig:LeftHandThumb1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandThumb3",
+    "parent": "mixamorig:LeftHandThumb2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandThumb4",
+    "parent": "mixamorig:LeftHandThumb3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandIndex1",
+    "parent": "mixamorig:LeftHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandIndex2",
+    "parent": "mixamorig:LeftHandIndex1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandIndex3",
+    "parent": "mixamorig:LeftHandIndex2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandIndex4",
+    "parent": "mixamorig:LeftHandIndex3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandMiddle1",
+    "parent": "mixamorig:LeftHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandMiddle2",
+    "parent": "mixamorig:LeftHandMiddle1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandMiddle3",
+    "parent": "mixamorig:LeftHandMiddle2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandMiddle4",
+    "parent": "mixamorig:LeftHandMiddle3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandRing1",
+    "parent": "mixamorig:LeftHand",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandRing2",
+    "parent": "mixamorig:LeftHandRing1",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandRing3",
+    "parent": "mixamorig:LeftHandRing2",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftHandRing4",
+    "parent": "mixamorig:LeftHandRing3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandPinky1",
+    "parent": "mixamorig:LeftHand",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandPinky2",
+    "parent": "mixamorig:LeftHandPinky1",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandPinky3",
+    "parent": "mixamorig:LeftHandPinky2",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftHandPinky4",
+    "parent": "mixamorig:LeftHandPinky3",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:RightUpLeg",
+    "parent": "mixamorig:Hips",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightLeg",
+    "parent": "mixamorig:RightUpLeg",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightFoot",
+    "parent": "mixamorig:RightLeg",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightToeBase",
+    "parent": "mixamorig:RightFoot",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:RightToe_End",
+    "parent": "mixamorig:RightToeBase",
+    "deform": false
+   },
+   {
+    "name": "mixamorig:LeftUpLeg",
+    "parent": "mixamorig:Hips",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftLeg",
+    "parent": "mixamorig:LeftUpLeg",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftFoot",
+    "parent": "mixamorig:LeftLeg",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftToeBase",
+    "parent": "mixamorig:LeftFoot",
+    "deform": true
+   },
+   {
+    "name": "mixamorig:LeftToe_End",
+    "parent": "mixamorig:LeftToeBase",
+    "deform": false
+   }
+  ]
+ },
+ "body": {
+  "base": "Sausage Buddy body (buddy_body), pot belly = buddy_wear.reshape belly 1.25 applied to the body and every garment (real geometry, layers keep their gaps; TRANSIT_TRUCKER 1.0, POLICE_FAT 1.6)",
+  "idle_arm_down_deg_builtin_clips": 62.0,
+  "height_m": 1.748
+ },
+ "meshes_lod0_source": {
+  "Body": {
+   "triangles": 5424,
+   "materials": [
+    "Buddy_Skin",
+    "Buddy_Skin_Nose"
+   ],
+   "shape_keys": []
+  },
+  "Outfit": {
+   "triangles": 13373,
+   "materials": [
+    "MECHANIC_W86_Tee",
+    "MECHANIC_W86_Jacket",
+    "MECHANIC_W86_Jacket_Roll",
+    "MECHANIC_W86_Jacket_Dark",
+    "MECHANIC_W86_Jacket_Oil",
+    "MECHANIC_W86_Trousers",
+    "MECHANIC_W86_Trousers_Cuff",
+    "MECHANIC_W86_Trousers_Pocket",
+    "MECHANIC_W86_Oil",
+    "MECHANIC_W86_Rag",
+    "MECHANIC_W86_Belt",
+    "MECHANIC_W86_Buckle",
+    "MECHANIC_W86_Pouch",
+    "MECHANIC_W86_Gloves_Cuff",
+    "MECHANIC_W86_Gloves",
+    "MECHANIC_W86_Boots",
+    "MECHANIC_W86_Boots_Sole",
+    "MECHANIC_W86_Boot_Lace",
+    "MECHANIC_W86_Bandana",
+    "MECHANIC_W86_Hair",
+    "MECHANIC_W86_Mustache",
+    "MECHANIC_W86_Stubble"
+   ],
+   "shape_keys": []
+  },
+  "Face": {
+   "triangles": 2128,
+   "materials": [
+    "Buddy_Eye_White",
+    "Buddy_Eye_Rim",
+    "Buddy_Pupil",
+    "Buddy_Eye_Shine",
+    "Buddy_Brow",
+    "Buddy_Mouth"
+   ],
+   "shape_keys": [
+    "Basis",
+    "Blink",
+    "Blink_L",
+    "Blink_R",
+    "Surprised",
+    "Worried",
+    "Happy"
+   ]
+  },
+  "Wrench_RightHand": {
+   "triangles": 412,
+   "materials": [
+    "MECHANIC_W86_Wrench"
+   ],
+   "shape_keys": []
+  }
+ },
+ "lods_opt_v02": {
+  "LOD0": 20881,
+  "LOD1": 9686,
+  "LOD2": 4620,
+  "per_mesh": {
+   "LOD0": {
+    "Body": 5424,
+    "Face": 1672,
+    "Outfit": 13373,
+    "Wrench_RightHand": 412
+   },
+   "LOD1": {
+    "Body": 2516,
+    "Face": 758,
+    "Outfit": 6226,
+    "Wrench_RightHand": 186
+   },
+   "LOD2": {
+    "Body": 1178,
+    "Face": 344,
+    "Outfit": 3016,
+    "Wrench_RightHand": 82
+   }
+  },
+  "method": "SAUSAGE_BUDDY_01/Types_opt_v02 pipeline unchanged (\"source\" branch): LOD0 = source minus the hidden Face interior; LOD1/LOD2 limit-checked collapse (LOD1 p99 8 mm/max 16 mm, LOD2 p99 20 mm/max 43 mm). verify_opt_v02 checks passed on .blend and FBX.",
+  "unity_lod_screen_heights_suggested": {
+   "LOD0": 0.1,
+   "LOD1": 0.037,
+   "LOD2_cull": 0.01
+  }
+ },
+ "materials": {
+  "convention": "flat colour Principled materials per slot named MECHANIC_W86_<Slot> + the shared Buddy_* skin/eye materials; no UVs, no textures (as every Sausage Buddy type); colourways tint the slot materials",
+  "slots": {
+   "MECHANIC_W86_Jacket": {
+    "default": "#646C50",
+    "metal": false
+   },
+   "MECHANIC_W86_Jacket_Roll": {
+    "default": "#585F46",
+    "metal": false
+   },
+   "MECHANIC_W86_Jacket_Dark": {
+    "default": "#50573F",
+    "metal": false
+   },
+   "MECHANIC_W86_Jacket_Oil": {
+    "default": "#3E4232",
+    "metal": false
+   },
+   "MECHANIC_W86_Tee": {
+    "default": "#A3A8AB",
+    "metal": false
+   },
+   "MECHANIC_W86_Trousers": {
+    "default": "#373631",
+    "metal": false
+   },
+   "MECHANIC_W86_Trousers_Cuff": {
+    "default": "#302F2B",
+    "metal": false
+   },
+   "MECHANIC_W86_Trousers_Pocket": {
+    "default": "#2E2D29",
+    "metal": false
+   },
+   "MECHANIC_W86_Oil": {
+    "default": "#1C1B19",
+    "metal": false
+   },
+   "MECHANIC_W86_Belt": {
+    "default": "#75604D",
+    "metal": false
+   },
+   "MECHANIC_W86_Buckle": {
+    "default": "#96989C",
+    "metal": true
+   },
+   "MECHANIC_W86_Pouch": {
+    "default": "#685442",
+    "metal": false
+   },
+   "MECHANIC_W86_Gloves": {
+    "default": "#DEA830",
+    "metal": false
+   },
+   "MECHANIC_W86_Gloves_Cuff": {
+    "default": "#C48E24",
+    "metal": false
+   },
+   "MECHANIC_W86_Rag": {
+    "default": "#A8A8A4",
+    "metal": false
+   },
+   "MECHANIC_W86_Boots": {
+    "default": "#3A342F",
+    "metal": false
+   },
+   "MECHANIC_W86_Boots_Sole": {
+    "default": "#1E1C1B",
+    "metal": false
+   },
+   "MECHANIC_W86_Boot_Lace": {
+    "default": "#282522",
+    "metal": false
+   },
+   "MECHANIC_W86_Bandana": {
+    "default": "#B23A2C",
+    "metal": false
+   },
+   "MECHANIC_W86_Hair": {
+    "default": "#7E8082",
+    "metal": false
+   },
+   "MECHANIC_W86_Mustache": {
+    "default": "#545456",
+    "metal": false
+   },
+   "MECHANIC_W86_Stubble": {
+    "default": "#7C5846",
+    "metal": false
+   },
+   "MECHANIC_W86_Wrench": {
+    "default": "#969AA0",
+    "metal": true
+   }
+  },
+  "colourways": [
+   {
+    "MECHANIC_W86_Jacket": "#344262",
+    "MECHANIC_W86_Jacket_Roll": "#2C3854",
+    "MECHANIC_W86_Jacket_Dark": "#2C3854",
+    "MECHANIC_W86_Jacket_Oil": "#222836",
+    "MECHANIC_W86_Bandana": "#284696",
+    "MECHANIC_W86_Trousers": "#2C2E34"
+   },
+   {
+    "MECHANIC_W86_Jacket": "#7A5E40",
+    "MECHANIC_W86_Jacket_Roll": "#6A5036",
+    "MECHANIC_W86_Jacket_Dark": "#6A5036",
+    "MECHANIC_W86_Jacket_Oil": "#4C3A28",
+    "MECHANIC_W86_Bandana": "#D6A228",
+    "MECHANIC_W86_Trousers": "#3C4238"
+   }
+  ],
+  "look": {
+   "skin": "#D59A72",
+   "nose": "#DE6442",
+   "brow": "#4A4848",
+   "rim": "#B27050"
+  }
+ },
+ "wrench": {
+  "mesh": "Wrench_RightHand (opt FBX: Wrench_RightHand_LOD0/_LOD1/_LOD2)",
+  "triangles": {
+   "LOD0": 412,
+   "LOD1": 186,
+   "LOD2": 82
+  },
+  "skinning": "every vertex weight 1.0 on mixamorig:RightHand (rigid), a SkinnedMeshRenderer on the same rig, so it stays in the hand in every clip, ragdoll and crossfade without any script",
+  "material": "MECHANIC_W86_Wrench (metallic grey)",
+  "shape": "double open-ended spanner, ~0.27 m (cartoon 1.25x), chunky oval shank in the fist, big jaw on the thumb side",
+  "grip_centre_in_RightHand_bone_space_m": [
+   0.004,
+   0.0988,
+   0.0369
+  ],
+  "shank_axis_in_RightHand_bone_space": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "name_note": "deliberately NOT Props_RightHand: NpcTypesImportV01 adds NpcHeldProps for Props_*Hand meshes and NpcHeldProps drops them at the first danger; the mechanic never lets go of his wrench. Do not add NpcHeldProps to him."
+ },
+ "grip": {
+  "what": "Grip_R: local rotations of the right-hand finger bones only (Index/Middle/Ring/Pinky 1-3 curled 20/34/24 deg toward the palm, Thumb 1-3 closing over the shank 35/15/15 deg). Checked on the mesh: 36 of 320 finger vertices within 4 mm of the shank, deepest overlap 3.3 mm (a tight grip, no visible gap or slipping).",
+  "why_a_layer": "every shared clip keys all 65 bones including the fingers (Walk_v04 up to 20 deg, Idle_Stand_v04 15 deg, Cop_ShakeFist_v02 84 deg), so a grip baked into the mesh would break; the override layer replaces only the right-hand finger rotations and keeps everything else of the base clip",
+  "clip": "Animations_v01/MECHANIC_W86_Grip_R_v01.fbx, take Grip_R, 2 frames (constant), loop",
+  "unity_setup": [
+   "AvatarMask \"Mechanic_HandR_Grip.mask\" (Generic: Transform mask): import the skeleton from the mechanic FBX, untick everything, tick only the transforms listed in keyed_bones (mixamorig:RightHand children).",
+   "Animator layer \"HandGrip_R\" as the LAST layer: blending Override, weight 1, mask Mechanic_HandR_Grip, one state playing Grip_R (loop) with no transitions.",
+   "Leave NpcHeldProps off the mechanic. The Grip_R layer also covers the mechanic clips (they already hold the grip).",
+   "Alternative without a layer: a LateUpdate script that sets these transforms to the Grip_R clip pose after the Animator (read the values from the clip, not from Blender quaternions: the FBX import converts axes)."
+  ],
+  "keyed_bones": [
+   "mixamorig:RightHandThumb1",
+   "mixamorig:RightHandThumb2",
+   "mixamorig:RightHandThumb3",
+   "mixamorig:RightHandThumb4",
+   "mixamorig:RightHandIndex1",
+   "mixamorig:RightHandIndex2",
+   "mixamorig:RightHandIndex3",
+   "mixamorig:RightHandIndex4",
+   "mixamorig:RightHandMiddle1",
+   "mixamorig:RightHandMiddle2",
+   "mixamorig:RightHandMiddle3",
+   "mixamorig:RightHandMiddle4",
+   "mixamorig:RightHandRing1",
+   "mixamorig:RightHandRing2",
+   "mixamorig:RightHandRing3",
+   "mixamorig:RightHandRing4",
+   "mixamorig:RightHandPinky1",
+   "mixamorig:RightHandPinky2",
+   "mixamorig:RightHandPinky3",
+   "mixamorig:RightHandPinky4"
+  ],
+  "blender_local_quaternions_wxyz": {
+   "mixamorig:RightHandThumb1": [
+    0.953717,
+    0.212708,
+    -0.183004,
+    0.108116
+   ],
+   "mixamorig:RightHandThumb2": [
+    0.991445,
+    0.091854,
+    -0.081477,
+    0.044287
+   ],
+   "mixamorig:RightHandThumb3": [
+    0.991445,
+    0.090842,
+    -0.082891,
+    0.043748
+   ],
+   "mixamorig:RightHandThumb4": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "mixamorig:RightHandIndex1": [
+    0.984808,
+    0.173648,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandIndex2": [
+    0.956305,
+    0.292372,
+    0.0,
+    2e-06
+   ],
+   "mixamorig:RightHandIndex3": [
+    0.978148,
+    0.207912,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandIndex4": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "mixamorig:RightHandMiddle1": [
+    0.984808,
+    0.173648,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandMiddle2": [
+    0.956305,
+    0.292372,
+    0.0,
+    2e-06
+   ],
+   "mixamorig:RightHandMiddle3": [
+    0.978148,
+    0.207912,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandMiddle4": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "mixamorig:RightHandRing1": [
+    0.984808,
+    0.173648,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandRing2": [
+    0.956305,
+    0.292372,
+    0.0,
+    2e-06
+   ],
+   "mixamorig:RightHandRing3": [
+    0.978148,
+    0.207912,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandRing4": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "mixamorig:RightHandPinky1": [
+    0.984808,
+    0.173648,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandPinky2": [
+    0.956305,
+    0.292372,
+    0.0,
+    2e-06
+   ],
+   "mixamorig:RightHandPinky3": [
+    0.978148,
+    0.207912,
+    0.0,
+    1e-06
+   ],
+   "mixamorig:RightHandPinky4": [
+    1,
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "face": {
+  "shape_keys": [
+   "Blink",
+   "Blink_L",
+   "Blink_R",
+   "Surprised",
+   "Worried",
+   "Happy"
+  ],
+  "expressions": {
+   "neutral": {},
+   "annoyed": {
+    "Blink": 0.55,
+    "Worried": 0.15
+   },
+   "grinning": {
+    "Happy": 1.0
+   },
+   "mock_serious_aim": {
+    "Blink_L": 1.0,
+    "Worried": 0.45
+   }
+  },
+  "note": "no dedicated angry/annoyed shape on the Sausage Buddy face: annoyed is an approximation (heavy lids)"
+ },
+ "clips": {
+  "manifest": "Animations_v01/clips_mechanic_v01.json",
+  "count": 9,
+  "list": [
+   {
+    "state": "Mech_Gag_WrenchGun",
+    "role": "MechGag",
+    "seconds": 4.1667,
+    "loop": false,
+    "events": [
+     "Raise",
+     "Pew",
+     "Blow",
+     "Nod"
+    ]
+   },
+   {
+    "state": "Mech_Gag_CockNod",
+    "role": "MechGag",
+    "seconds": 3.5667,
+    "loop": false,
+    "events": [
+     "Cock",
+     "Nod"
+    ]
+   },
+   {
+    "state": "Mech_Work_InspectPart",
+    "role": "MechWork/Bench",
+    "seconds": 5.5667,
+    "loop": false,
+    "events": [
+     "PartUp",
+     "Tap",
+     "Tap2",
+     "PartDown"
+    ]
+   },
+   {
+    "state": "Mech_Work_WipeBench",
+    "role": "MechWork/Shelf",
+    "seconds": 6.1667,
+    "loop": false,
+    "events": [
+     "PatRag",
+     "WipeStart",
+     "WipeEnd",
+     "HandWipe"
+    ]
+   },
+   {
+    "state": "Mech_Work_CheckBay",
+    "role": "MechWork/BaySide",
+    "seconds": 5.5667,
+    "loop": false,
+    "events": [
+     "Knock",
+     "Knock2",
+     "Knock3",
+     "Nod"
+    ]
+   },
+   {
+    "state": "Mech_Attend_Enter",
+    "role": "MechAttend/Enter",
+    "seconds": 0.7667,
+    "loop": false,
+    "events": []
+   },
+   {
+    "state": "Mech_Attend_Loop",
+    "role": "MechAttend/Loop",
+    "seconds": 3.9667,
+    "loop": true,
+    "events": [
+     "ShoulderTap"
+    ]
+   },
+   {
+    "state": "Mech_Attend_Exit",
+    "role": "MechAttend/Exit",
+    "seconds": 0.6667,
+    "loop": false,
+    "events": []
+   },
+   {
+    "state": "Mech_Upgrade_Perform",
+    "role": "MechUpgrade",
+    "seconds": 4.5667,
+    "loop": false,
+    "events": [
+     "AimStart",
+     "Poof",
+     "Blow",
+     "Pleased",
+     "Done"
+    ]
+   }
+  ],
+  "shared_clips_he_uses": {
+   "Walk": "Walk_v04 (+Grip_R layer)",
+   "Idle": "Idle_Stand_v04 (+Grip_R layer)",
+   "others": "any Sausage Buddy clip (same rig)"
+  },
+  "suggested_wiring": [
+   "Idle/work loop: Idle_Stand_v04; occasional gags Mech_Gag_WrenchGun / Mech_Gag_CockNod every 20-45 active seconds (random, no repeat of the same gag twice in a row), suppressed during dialogue, hand-in, a service session or any higher-priority action.",
+   "Work stops on the route: Mech_Work_InspectPart (bench), Mech_Work_WipeBench (shelf/cabinet), Mech_Work_CheckBay (bay side, outside the lift footprint); each starts and ends on Idle_Stand_v04 frame 1 (cross-fade 0.2-0.25 s).",
+   "Player attention: the controller turns him; Mech_Attend_Enter -> Mech_Attend_Loop (loop) -> Mech_Attend_Exit.",
+   "Upgrade: turn to the van, then Mech_Upgrade_Perform; its Poof event (frame 52, 1.70 s) is the presentation cue for the puff and the visible change; the server commits the purchase and syncs the cue (an animation event never grants anything on its own)."
+  ]
+ },
+ "deviations_from_reference": [
+  "Sausage Buddy style instead of the painted reference: mitten hands (3 fingers + thumb), capsule head, the shared big eyes and brows (brows only recoloured dark grey, not thicker), flat colour materials (no fabric/stubble texture).",
+  "Oil stains, stubble, pockets, rolled cuffs are modelled decals; the jacket yoke is a thin seam line.",
+  "Annoyed face is Blink + Worried (no angry shape on the rig); the pupils cannot look sideways as in the reference.",
+  "The pot belly is a little smaller than the painting (belly 1.25) so the shared clips keep the arms clear of it.",
+  "The wrench sits front-back through the fist (the mitten fingers wrap round it): with the arm hanging it points forward, not down along the leg; raised in front of the chest it stands upright as in the reference three-quarter view.",
+  "The rag is a static hanging cloth on the back pocket (weights from the trousers), it has no cloth simulation."
+ ]
+}

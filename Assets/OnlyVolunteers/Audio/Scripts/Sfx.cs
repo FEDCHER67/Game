@@ -68,7 +68,8 @@ namespace OnlyVolunteers.Audio
             source.Stop();
             source.transform.position = position;
             source.clip = clip;
-            source.outputAudioMixerGroup = library.Output;
+            // 29.10: the OV_Main_v01 bus by clip id (NPC voices / UI → VoiceUI, the rest → Effects); no mixer = as before
+            source.outputAudioMixerGroup = OvAudioMixerV01.SfxGroup(entry.Id, library.Output);
             source.volume = Mathf.Clamp01(Random.Range(entry.Volume.x, entry.Volume.y) * volumeScale);
             source.pitch = Mathf.Clamp(Random.Range(entry.Pitch.x, entry.Pitch.y) * pitchScale, 0.1f, 3f);
             source.spatialBlend = entry.SpatialBlend;

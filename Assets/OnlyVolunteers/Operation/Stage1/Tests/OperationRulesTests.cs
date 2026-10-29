@@ -131,7 +131,7 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
             Assert.True(rules.FillBlood(ref fill,2.6f));Assert.AreEqual(1f,fill);Assert.AreEqual(1,state.bloodPortions);
             Assert.False(rules.FillBlood(ref fill,1f),"a full syringe takes nothing more");
             state.restraints[1]=false;state.restraints[4]=true;Assert.True(rules.CanDrawBlood(0),"the torso strap allows both arms");
-            rules.Die(DeathCause.Overdose);state.restraints[4]=false;Assert.True(rules.CanDrawBlood(0),"a corpse can give blood");
+            rules.Die(DeathCause.Overdose);state.restraints[4]=false;Assert.False(rules.CanDrawBlood(0),"§5: no blood draw from a corpse");
         }
         [Test] public void V02_DazedThenEscapeOnlyWithoutTorso()
         {

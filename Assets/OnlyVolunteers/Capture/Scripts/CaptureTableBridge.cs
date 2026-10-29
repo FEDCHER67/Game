@@ -259,6 +259,9 @@ namespace OnlyVolunteers.Capture
                 if (smr.name == "Body") npcSkin = smr.sharedMaterials;
                 else if (smr.name == "Face") npcFace = smr.sharedMaterials;
             }
+            // K10: a former patient brought back wears the wound's stencilled skin copies: keep his own skin materials.
+            var wound = npc.GetComponentInChildren<OperationBodyWound>(true);
+            if (wound != null && wound.OriginalBodyMaterials != null) npcSkin = wound.OriginalBodyMaterials;
         }
 
         /// <summary>The same skin and face materials on the patient model (the Buddy head, face and build are the patient

@@ -54,6 +54,9 @@ namespace OnlyVolunteers.Map
     // frame and writes the contract's parameters; this script only tells it how fast it moves the NPC itself (fleeing, the
     // escape run) and asks for the knock on the van wall and, on a capsule (whose Animator stays on), a hit react.
     // State is public plain data (State, Phase, StunLeft, StunTotal, InCargo, Carrier, Condition) for a network version later.
+    // Van cargo containment (Fedya 29.10, ECONOMY §6.2): padded walls in the carrier (van_containment_2, VanCargoFitoutV01)
+    // block the knock at the same check as tied hands (no clip, no thud, no CargoKnocked); every real knock strike raises
+    // CargoKnocked, the one emitter for hearing (listeners: NPC / police owners; none here, never through Incident).
     [RequireComponent(typeof(CharacterController))]
     public sealed class GreyboxNpc : MonoBehaviour
     {
@@ -146,6 +149,11 @@ namespace OnlyVolunteers.Map
         public static readonly List<GreyboxNpc> All = new();
         // Raised when a free NPC goes down (before its body switches on) and when it becomes loaded in a cargo bay.
         public static event System.Action<GreyboxNpc, NpcIncident> Incident;
+        // Van containment (Fedya 29.10): one strike of a real knock on the cargo bay wall from inside (the Cargo_Knock
+        // clip's strike, where its thud sounds; world point at the fist). The only emitter for "noise from a closed van":
+        // hearing (NPC NB-D17, police) is its listeners' (Vadim's), nothing here listens. Never raised when the knock is
+        // blocked (tied hands, padded walls). Not an NpcIncident: PoliceDirector would book heat for it like a stun.
+        public static event System.Action<GreyboxNpc, Vector3> CargoKnocked;
 
         private CharacterController _controller;
         private GreyboxNpcBody _body;
@@ -213,6 +221,32 @@ namespace OnlyVolunteers.Map
             }
         }
         private bool CarrierAlive => Carrier is Object o ? o != null : Carrier != null;
+        /// <summary>Loaded in a bay with padded walls (van_containment_2 on that van).</summary>
+        public bool CarrierPadded => InCargo && CarrierAlive && VanCargoFitoutV01.IsPadded(Carrier);
+        /// <summary>The knock gate (OnlyVolunteers.Capture.CargoContainmentRules): tied hands or padded walls = no knock.</summary>
+        public bool CanKnock => OnlyVolunteers.Capture.CargoContainmentRules.CanKnock(HandsBound, CarrierPadded);
+
+        /// <summary>One knock strike at a world point: raises <see cref="CargoKnocked"/> unless the knock is blocked (then
+        /// nothing). True = it was a real knock (the caller sounds the thud).</summary>
+        public bool EmitCargoKnock(Vector3 point)
+        {
+            if (!CanKnock) return false;
+            CargoKnocked?.Invoke(this, point);
+            return true;
+        }
+
+        /// <summary>Where a containment strap holds him (VanCargoFitoutV01 belt): the waist (the animated pelvis bone of the
+        /// sit clips, the ragdoll's pelvis lying) or, lying, an ankle. World, render pose where there is a bone.</summary>
+        public Vector3 StrapPoint(bool ankle)
+        {
+            INpcBody down = State == NpcState.Down ? PhysicalBody : null;
+            if (down != null && down.Active && ankle) return down.Landmark(NpcLandmark.RightAnkle);
+            NpcRagdollProfile p = _ragdoll != null ? _ragdoll.Profile : null;
+            int pelvis = p != null ? p.IndexOf(NpcRagdollProfile.Kind.Pelvis) : -1;
+            Transform bone = pelvis >= 0 ? _ragdoll.BoneOf(pelvis) : null;
+            if (bone != null) return bone.position;
+            return down != null && down.Active ? down.Landmark(NpcLandmark.Pelvis) : Center;
+        }
         private GreyboxFace Face => _face ??= new GreyboxFace(gameObject);
 
         /// <summary>Hit zone of a swing along 'ray' (the view ray of a first-person hit), in NPC space: the height where
@@ -1048,9 +1082,11 @@ namespace OnlyVolunteers.Map
             if (_knockHit >= 0 && _knockHit < p.Knock.Events.Length && Time.time - _knockAt >= p.Knock.Events[_knockHit])
             {
                 _knockHit++;
-                Sfx.PlayAt(SfxIds.ThudVan, KnockPoint, p.KnockVolume);
+                Vector3 fist = KnockPoint;
+                if (EmitCargoKnock(fist)) Sfx.PlayAt(SfxIds.ThudVan, fist, p.KnockVolume);
+                else _knockHit = -1; // padded / tied since the knock began: silent, no more strikes
             }
-            if (HandsBound) return; // tied hands cannot knock
+            if (!CanKnock) return; // tied hands or padded walls (van_containment_2) cannot knock
             if (Time.time < _nextKnock) return;
             _nextKnock = Time.time + Random.Range(p.KnockInterval.x, p.KnockInterval.y);
             bool slow = !CarrierAlive || Carrier.PointVelocity(Center).magnitude < p.KnockVanSpeed;

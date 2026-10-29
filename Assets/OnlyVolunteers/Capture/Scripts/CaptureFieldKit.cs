@@ -21,12 +21,12 @@ namespace OnlyVolunteers.Capture
     /// when drawn, the bag value once when sealed). The dose and blood rules are the table's own (OperationRules on the
     /// NPC's OperationState). Input: the Input System through OpsInput (the scenario driver's virtual devices drive it).</summary>
     [DefaultExecutionOrder(50)]
-    public sealed class CaptureFieldKit : MonoBehaviour
+    public sealed partial class CaptureFieldKit : MonoBehaviour
     {
         public const float Reach = 2.6f;
         /// <summary>ItemDefinition id of the field kit in the shared ItemDatabase (Capture/Data/Items_v01) and its hotbar slot.</summary>
         public const int KitItemId = 301, KitSlot = 1;
-        public int Ties = CaptureRules.StartingTies;
+        public int Ties;
         public float AnesthesiaBarrel;
         public float AnesthesiaStock;
         public float BloodFill;
@@ -73,11 +73,6 @@ namespace OnlyVolunteers.Capture
             tuning = operationTuning;
             pawn = owner;
             hud = ui;
-            if (AnesthesiaBarrel <= 0f && AnesthesiaStock <= 0f)
-            {
-                AnesthesiaBarrel = tuning.syringeCapacity;
-                AnesthesiaStock = tuning.anesthesiaStock;
-            }
             inventory = pawn != null ? pawn.GetComponentInChildren<LocalInventory>(true) : null;
             if (inventory == null) inventory = FindAnyObjectByType<LocalInventory>(FindObjectsInactive.Include);
             viewModel = new CaptureViewModel(pawn != null ? pawn.ViewCamera : null, anesthesiaModel, bloodModel);
@@ -162,6 +157,13 @@ namespace OnlyVolunteers.Capture
         {
             var model = inventory != null ? inventory.Model : null;
             if (model == null) return Tool;
+            var syringe = model.Selected.Syringe;
+            if (syringe != null)
+            {
+                if (syringe.Kind == SyringeKind.Blood)
+                { if (BloodSyringe != syringe) SyringeRules.CancelDraw(BloodSyringe); BloodSyringe = syringe; BloodFill = syringe.Fill; return FieldTool.Blood; }
+                if (syringe.Kind == SyringeKind.Anaesthesia) { AnaesthesiaSyringe = syringe; AnesthesiaBarrel = syringe.Fill; return FieldTool.Anesthesia; }
+            }
             int kit = KitSlotIndex, selected = model.SelectedIndex;
             if (kit < 0 || selected != kit) { lastSelected = selected; return FieldTool.Hands; }
             if (lastSelected != kit) kitTool = FieldTool.Ties;
@@ -202,6 +204,7 @@ namespace OnlyVolunteers.Capture
         /// <summary>The barrel fills from the field stock whenever the syringe is taken out.</summary>
         private void Refill(bool announce)
         {
+            if (AnaesthesiaSyringe == null || AnaesthesiaSyringe.Discarded || AnaesthesiaSyringe.LegacyUnknown) return;
             float missing = tuning.syringeCapacity - AnesthesiaBarrel;
             if (missing <= 0.001f) return;
             float add = Mathf.Min(missing, AnesthesiaStock);
@@ -212,16 +215,14 @@ namespace OnlyVolunteers.Capture
             }
             AnesthesiaStock -= add;
             AnesthesiaBarrel += add;
+            AnaesthesiaSyringe.Fill = AnesthesiaBarrel;
             if (announce) hud?.Toast("Шприц заправлен", CaptureHud.Neutral, 1.4f);
         }
 
-        /// <summary>Back at the base: the field stock is topped up (placeholder until syringe stock and refills are
-        /// decided, spec §11 / ops T-06).</summary>
+        /// <summary>§5: no free refill at the base. Purchased stock is supplied by the existing shop adapter.</summary>
         public void RestockAtBase()
         {
-            bool changed = AnesthesiaStock < tuning.anesthesiaStock - 0.01f;
-            AnesthesiaStock = Mathf.Max(AnesthesiaStock, tuning.anesthesiaStock);
-            if (changed) hud?.Toast("Аптечка пополнена", CaptureHud.Good, 1.6f);
+            hud?.Toast("Расходники покупаются в аптеке", CaptureHud.Neutral, 1.6f);
         }
 
         /// <summary>The hotbar's own number keys, read here too through OpsInput (InventoryInput reads them only while the OS
@@ -238,6 +239,7 @@ namespace OnlyVolunteers.Capture
         private void Update()
         {
             if (OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu: no slot keys / tool use
+            if (FishNet.InstanceFinder.IsServerStarted) SyringeRules.TickFreshness(BloodSyringe, Time.deltaTime);
             if (!itemsReady) EnsureItems();
             Mouse mouse = OpsInput.Mouse;
             bool active = Active;
@@ -246,6 +248,7 @@ namespace OnlyVolunteers.Capture
             viewModel?.SetVisible(active && Tool != FieldTool.Hands);
             if (!active || mouse == null)
             {
+                CancelPartialBlood();
                 Using = false;
                 holdTarget = null;
                 holdTable = false;
@@ -266,6 +269,7 @@ namespace OnlyVolunteers.Capture
                 if (pressed && Tool != FieldTool.Hands) Use(mouse.leftButton.wasPressedThisFrame);
                 else
                 {
+                    CancelPartialBlood();
                     holdTarget = null;
                     holdTable = false;
                     holdTime = 0f;
@@ -369,6 +373,7 @@ namespace OnlyVolunteers.Capture
 
         private void PourIntoBag(int bag)
         {
+            if (BloodSyringe == null || inventory?.Model?.Selected.Syringe != BloodSyringe) { Refuse("Возьми шприц в руку"); return; }
             var table = CaptureDirector.Instance != null ? CaptureDirector.Instance.Table : null;
             if (BloodFill < 1f) { Refuse(BloodFill > 0.01f ? "Шприц набран не до конца — сначала добери порцию" : "Шприц пуст"); return; }
             if (table == null || !table.BagFree(bag)) { Refuse("Этот пакет уже занят"); return; }
@@ -377,7 +382,7 @@ namespace OnlyVolunteers.Capture
                 BloodFill = Mathf.Clamp01(f);
                 Transferring = f > 0.0001f;
                 if (!Transferring) CaptureDirector.Instance?.Toast("Кровь перелита в пакет (+1)", CaptureHud.Good);
-            })) { Refuse("Сейчас нельзя — пакет занят"); return; }
+            }, BloodSyringe)) { Refuse("Сейчас нельзя — пакет занят"); return; }
             Transferring = true;
             Debug.Log($"[CAPTURE] field syringe -> table bag {bag}");
         }
@@ -408,16 +413,20 @@ namespace OnlyVolunteers.Capture
 
         private void UseAnesthesia(CaptureNpc target, bool justPressed)
         {
+            if (!SyringeAllowed(AnaesthesiaSyringe, SyringeKind.Anaesthesia, target.PatientId, target.Alive)) return;
             if (!target.Alive) { if (justPressed) Refuse("Он мёртв — наркоз уже не нужен"); return; }
             if (AnesthesiaBarrel <= 0.0001f) { if (justPressed) Refuse("Шприц пуст — возьми другой слот и снова этот, чтобы заправить"); return; }
             float amount = Mathf.Min(AnesthesiaBarrel, tuning.dosePerSecond * Time.deltaTime);
+            if (target.Rules.DoseSyringe(AnaesthesiaSyringe, amount, true, out amount) != SyringeUseResult.Success) return;
             AnesthesiaBarrel -= amount;
+            AnaesthesiaSyringe.Fill = AnesthesiaBarrel;
             target.QueueDose(amount);
             Using = true;
         }
 
         private void UseBlood(CaptureNpc target, bool justPressed)
         {
+            if (!SyringeAllowed(BloodSyringe, SyringeKind.Blood, target.PatientId, target.Alive)) return;
             // One portion per syringe (round 2): a full syringe is emptied into a bag at the table first.
             if (BloodFill >= 1f) { if (justPressed) Refuse("Шприц полон — перелей кровь в пустой пакет на столе"); return; }
             // One portion per press: a new portion needs a new press (no sliding into the lethal third by holding on).
@@ -436,7 +445,10 @@ namespace OnlyVolunteers.Capture
                 return;
             }
             Using = true;
-            if (target.DrawBlood(ref BloodFill, Time.deltaTime))
+            var outcome = target.DrawSyringe(BloodSyringe, Time.deltaTime, out bool completed);
+            BloodFill = BloodSyringe.Fill;
+            if (outcome != SyringeUseResult.Success) return;
+            if (completed)
             {
                 BloodFill = 1f;
                 bloodLatched = true;
@@ -479,18 +491,20 @@ namespace OnlyVolunteers.Capture
                 }
                 case FieldTool.Anesthesia:
                 {
+                    if (!SyringeAllowed(AnaesthesiaSyringe, SyringeKind.Anaesthesia, table.State.patientId, table.State.alive)) return;
                     if (AnesthesiaBarrel <= 0.0001f) { if (justPressed) Refuse("Шприц пуст — возьми другой слот и снова этот, чтобы заправить"); return; }
                     float amount = Mathf.Min(AnesthesiaBarrel, tuning.dosePerSecond * Time.deltaTime);
-                    float accepted = table.ServerFieldDose(part, amount, out why);
-                    if (why == OpHint.None) { AnesthesiaBarrel -= accepted; Using = accepted > 0f; return; }
+                    float accepted = table.ServerFieldDose(part, amount, out why, AnaesthesiaSyringe);
+                    if (why == OpHint.None) { AnesthesiaBarrel -= accepted; AnaesthesiaSyringe.Fill = AnesthesiaBarrel; Using = accepted > 0f; return; }
                     break;
                 }
                 case FieldTool.Blood:
                 {
+                    if (!SyringeAllowed(BloodSyringe, SyringeKind.Blood, table.State.patientId, table.State.alive)) return;
                     if (BloodFill >= 1f) { if (justPressed) Refuse("Шприц полон — перелей кровь в пустой пакет на столе"); return; }
                     if (justPressed) bloodLatched = false;
                     if (bloodLatched) return;
-                    why = table.ServerFieldDrawBlood(part, ref BloodFill, Time.deltaTime, out bool portion);
+                    why = table.ServerFieldDrawBlood(part, ref BloodFill, Time.deltaTime, out bool portion, BloodSyringe);
                     if (why != OpHint.None) break;
                     Using = true;
                     if (!portion) return;
@@ -512,6 +526,8 @@ namespace OnlyVolunteers.Capture
 
         private string TableRefusal(OpHint why) => why switch
         {
+            OpHint.SyringeOtherPerson => SyringeRules.OtherPersonNotice,
+            OpHint.SyringeUnavailable => "Нужен пригодный шприц",
             OpHint.WrongSpot => Tool == FieldTool.Anesthesia ? "Коли в руку, плечо или шею" : "Кровь берут из руки",
             OpHint.PatientDead => "Он мёртв — наркоз уже не нужен",
             OpHint.NotOnTable => "Он ещё не лёг на стол",

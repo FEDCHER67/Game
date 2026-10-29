@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OnlyVolunteers.Economy;
 
 namespace OnlyVolunteers.Buyers.Tests
 {
@@ -33,7 +34,7 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY30_FailedOrderNegotiationNoSlotOrDeadlineAndThreeHourOfferBan()
         {
-            rules = new BuyerRules(clock, rng, Seed(41)); Offer(); rng.Value = 99; rules.AskOrder("order", "p1", 20); rules.AskOrder("order", "p1", 10);
+            rules = NewWorld(Seed(41)); Offer(); rng.Value = 99; rules.AskOrder("order", "p1", 20); rules.AskOrder("order", "p1", 10);
             Assert.That(B().Respect, Is.EqualTo(40)); Assert.That(rules.Snapshot.ActiveOrder, Is.Null);
             Assert.That(rules.Snapshot.OpenStashes, Is.Empty);
             Assert.That(rules.ChangeOrderNegotiator("order", "p2"), Is.False);
@@ -90,7 +91,7 @@ namespace OnlyVolunteers.Buyers.Tests
         [Test]
         public void BUY22_BUY41_OrderHandoffPreservesTermsAttemptsAndUsesReplacementSkill()
         {
-            var seed = Seed(40); seed.Participants[1].NegotiationLevel = 3; rules = new BuyerRules(clock, rng, seed);
+            rules = NewWorld(Seed(40)); GiveBargainRank("p2", 3);
             Offer(); rng.Value = 99; rules.AskOrder("order", "p1", 20); rules.SetPresentParticipants("p2");
             Assert.That(rules.ChangeOrderNegotiator("order", "p2"), Is.True);
             rng.Value = 64; rules.AskOrder("order", "p2", 10); // level 3 respect: 50 + 15 = 65
@@ -141,12 +142,12 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(rules.DepositInStash("order", id, "p1"), Is.False);
             rules.AcceptOrderPrice("order", "p1"); rules.AcceptOrder("order", "p1");
             Assert.That(rules.Snapshot.OpenStashes, Does.Contain("stash"));
-            rules.DepositInStash("order", id, "p1"); Assert.That(rules.Snapshot.SharedFunds, Is.Zero);
+            rules.DepositInStash("order", id, "p1"); Assert.That(economyState.Fund.Balance, Is.Zero);
             Assert.That(rules.WithdrawFromStash("order", id, "p1"), Is.True);
             Assert.That(rules.ConfirmSale(StashRequest(id)).Error, Is.EqualTo(SaleError.NotReserved));
             rules.DepositInStash("order", id, "p1"); Assert.That(rules.ConfirmSale(StashRequest(id)).Success, Is.True);
-            Assert.That(I(id).Sold, Is.True); Assert.That(rules.Snapshot.SharedFunds, Is.EqualTo(500));
-            Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(540));
+            Assert.That(I(id).Sold, Is.True); Assert.That(economyState.Fund.Balance, Is.EqualTo(500));
+            Assert.That(economyState.LifetimeXp, Is.EqualTo(540));
             Assert.That(rules.WithdrawFromStash("order", id, "p1"), Is.False);
         }
         [TestCase("npc",SaleError.WrongNpc)] [TestCase("type",SaleError.WrongKind)]
@@ -161,7 +162,7 @@ namespace OnlyVolunteers.Buyers.Tests
             var request = StashRequest(id); Assert.That(rules.Quote(request).Error, Is.EqualTo(expected)); Assert.That(B().Respect, Is.EqualTo(40));
             Assert.That(rules.ConfirmSale(request).Error, Is.EqualTo(expected)); rules.ConfirmSale(request); rules.ConfirmSale(StashRequest(id));
             Assert.That(B().Respect, Is.EqualTo(39)); Assert.That(I(id).Sold, Is.False);
-            Assert.That(rules.Snapshot.SharedFunds, Is.Zero); Assert.That(rules.Snapshot.LifetimeXp, Is.Zero);
+            Assert.That(economyState.Fund.Balance, Is.Zero); Assert.That(economyState.LifetimeXp, Is.Zero);
         }
         [Test]
         public void BUY48_PenaltyIsPerItemAndScopedToEachMeeting()
@@ -176,7 +177,7 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(rules.ConfirmSale(Request(new[] { valid, a })).Error, Is.EqualTo(SaleError.InvalidRequest));
             Assert.That(B().Respect, Is.EqualTo(30)); Assert.That(rules.Snapshot.WrongItemAttempts, Is.Empty);
             Assert.That(I(valid).Sold, Is.False); Assert.That(I(a).Sold, Is.False); Assert.That(I(b).Sold, Is.False);
-            Assert.That(rules.Snapshot.SharedFunds, Is.Zero); Assert.That(rules.Snapshot.LifetimeXp, Is.Zero);
+            Assert.That(economyState.Fund.Balance, Is.Zero); Assert.That(economyState.LifetimeXp, Is.Zero);
             rules.CancelMeeting(Organ); Meeting(); Group(); rules.LoadItem(Organ, a, "p1");
             Assert.That(rules.ConfirmSale(Request(new[] { a })).Error, Is.EqualTo(SaleError.InvalidRequest));
             Assert.That(B().Respect, Is.EqualTo(30)); Assert.That(rules.Snapshot.WrongItemAttempts, Is.Empty);
@@ -190,7 +191,7 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(rules.ConfirmSale(request).Error, Is.EqualTo(SaleError.NotReserved));
             Assert.That(rules.ConfirmSale(request).Error, Is.EqualTo(SaleError.NotReserved));
             Assert.That(B().Respect, Is.EqualTo(before)); Assert.That(rules.Snapshot.WrongItemAttempts, Is.Empty);
-            Assert.That(I(id).Sold, Is.False); Assert.That(rules.Snapshot.SharedFunds, Is.Zero); Assert.That(rules.Snapshot.FreeXp, Is.Zero);
+            Assert.That(I(id).Sold, Is.False); Assert.That(economyState.Fund.Balance, Is.Zero); Assert.That(economyState.FreeXp, Is.Zero);
         }
         [Test]
         public void BUY49_RespectDropDoesNotInvalidateAcceptedOrder()
@@ -226,7 +227,7 @@ namespace OnlyVolunteers.Buyers.Tests
             Meeting(); Group(); string id = Add(); rules.LoadItem(Organ, id, "p1"); var request = Request(new[] { id });
             var results = new SaleResult[32]; Parallel.For(0, results.Length, n => results[n] = rules.ConfirmSale(request));
             Assert.That(results.All(r => r.Success && r.Total == 250 && r.XpEach == 120), Is.True);
-            Assert.That(rules.Snapshot.SharedFunds, Is.EqualTo(250)); Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(240));
+            Assert.That(economyState.Fund.Balance, Is.EqualTo(250)); Assert.That(economyState.LifetimeXp, Is.EqualTo(240));
             Assert.That(B().Respect, Is.EqualTo(32)); Assert.That(rules.Snapshot.Receipts.Count, Is.EqualTo(1));
             results[0].Total = 999; results[0].SoldItemIds.Clear(); Assert.That(rules.ConfirmSale(request).Total, Is.EqualTo(250));
         }
@@ -236,11 +237,11 @@ namespace OnlyVolunteers.Buyers.Tests
             Meeting(); Group(); string id = Add(); rules.LoadItem(Organ, id, "p1");
             var invalid = rules.ConfirmSale(Request(new[] { id, "missing" }));
             Assert.That(invalid.Error, Is.EqualTo(SaleError.MissingItem)); Assert.That(I(id).Sold, Is.False);
-            Assert.That(rules.Snapshot.SharedFunds, Is.Zero); Assert.That(rules.Snapshot.FreeXp, Is.Zero);
+            Assert.That(economyState.Fund.Balance, Is.Zero); Assert.That(economyState.FreeXp, Is.Zero);
             var requests = Enumerable.Range(0, 16).Select(_ => Request(new[] { id })).ToArray(); var results = new SaleResult[16];
             Parallel.For(0, 16, n => results[n] = rules.ConfirmSale(requests[n]));
-            Assert.That(results.Count(r => r.Success), Is.EqualTo(1)); Assert.That(rules.Snapshot.SharedFunds, Is.EqualTo(250));
-            Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(240));
+            Assert.That(results.Count(r => r.Success), Is.EqualTo(1)); Assert.That(economyState.Fund.Balance, Is.EqualTo(250));
+            Assert.That(economyState.LifetimeXp, Is.EqualTo(240));
         }
         [Test]
         public void BUY37_SoldIdentityCannotBeRegisteredOrSoldAgainInAnotherGroup()
@@ -250,33 +251,35 @@ namespace OnlyVolunteers.Buyers.Tests
             Assert.That(rules.RegisterItem(duplicate), Is.False);
             Group(); Assert.That(rules.LoadItem(Organ, id, "p1"), Is.False);
             Assert.That(rules.ConfirmSale(Request(new[] { id })).Error, Is.EqualTo(SaleError.AlreadySold));
-            Assert.That(rules.Snapshot.SharedFunds, Is.EqualTo(250)); Assert.That(rules.Snapshot.LifetimeXp, Is.EqualTo(240));
+            Assert.That(economyState.Fund.Balance, Is.EqualTo(250)); Assert.That(economyState.LifetimeXp, Is.EqualTo(240));
         }
         [Test]
         public void BUY37_OverflowRollsBackAllSaleChangesAndNoReceiptIsPublished()
         {
-            var seed = Seed(); seed.SharedFunds = decimal.MaxValue; rules = new BuyerRules(clock, rng, seed);
+            // WP02: the fund lives in the economy; a fund that cannot hold the sale makes the booking throw.
+            economyState.Credit(int.MaxValue - 100, "test", "almost full fund", "test:almost-full");
             Meeting(); Group(); string id = Add(); rules.LoadItem(Organ, id, "p1"); var req = Request(new[] { id });
             Assert.Throws<OverflowException>(() => rules.ConfirmSale(req));
-            Assert.That(I(id).Sold, Is.False); Assert.That(rules.Snapshot.LifetimeXp, Is.Zero);
+            Assert.That(I(id).Sold, Is.False); Assert.That(economyState.LifetimeXp, Is.Zero);
+            Assert.That(economyState.Fund.Balance, Is.EqualTo(int.MaxValue - 100)); Assert.That(economyState.FirstKinds, Is.Empty);
             Assert.That(B().Respect, Is.EqualTo(30)); Assert.That(rules.Snapshot.Receipts, Is.Empty);
             Assert.That(B().Counters.Single(c => c.Kind == ProductKind.Kidney).Units, Is.Zero);
         }
         [Test]
         public void BUY38_SavedBansNegotiationAttemptsAndWrongItemPenaltiesCannotReset()
         {
-            rules = new BuyerRules(clock, rng, Seed(42));
+            rules = NewWorld(Seed(42));
             Meeting(); rules.BeginGroup(Organ, ProductKind.Kidney, "p1"); rng.Value = 99;
             rules.AskMeeting(Organ, "p1", 20); rules.AskMeeting(Organ, "p1", 10);
             rules.BeginGroup(Organ, ProductKind.Liver, "p1"); rules.AskMeeting(Organ, "p1", 20);
-            var saved = rules.Snapshot; rules = new BuyerRules(clock, rng, saved);
+            var saved = rules.Snapshot; rules = Reload(saved);
             Assert.That(B().Counters.Single(c => c.Kind == ProductKind.Kidney).BannedUntil, Is.EqualTo(14400));
             Assert.That(B().Meeting.Negotiations.Single(n => n.Kind == ProductKind.Liver).AttemptsUsed, Is.EqualTo(1));
             Assert.That(rules.AskMeeting(Organ, "p1", 20), Is.False);
             rules.AcceptMeetingPrice(Organ, "p1"); Order(); string wrong = Deposit(npc: "impostor");
             Assert.That(rules.ConfirmSale(StashRequest(wrong)).Error, Is.EqualTo(SaleError.WrongNpc)); int respect = B().Respect;
             Assert.That(respect, Is.EqualTo(40)); Assert.That(rules.Snapshot.WrongItemAttempts.Count, Is.EqualTo(1));
-            rules = new BuyerRules(clock, rng, rules.Snapshot);
+            rules = Reload(rules.Snapshot);
             Assert.That(rules.ConfirmSale(StashRequest(wrong)).Error, Is.EqualTo(SaleError.WrongNpc));
             Assert.That(B().Respect, Is.EqualTo(respect)); Assert.That(rules.Snapshot.WrongItemAttempts.Count, Is.EqualTo(1));
         }
@@ -285,20 +288,24 @@ namespace OnlyVolunteers.Buyers.Tests
         {
             Respect40(); rules.IntroduceBuyer(Organ); Meeting(); var sold = Sell();
             Order(10); string stash = Deposit(); var saved = rules.Snapshot;
+            long lifetime = economyState.LifetimeXp, free = economyState.FreeXp; int fund = economyState.Fund.Balance;
             var serializer = new DataContractSerializer(typeof(BuyerWorldState)); BuyerWorldState loaded;
             using (var stream = new MemoryStream()) { serializer.WriteObject(stream, saved); stream.Position = 0; loaded = (BuyerWorldState)serializer.ReadObject(stream); }
+            // WP02: the economy is saved in its own block of the same save: an in-memory save/load round trip of it too.
+            economyState = EconomyState.FromSave(economyState.ToSave()); economy = new EconomyBuyerLedger(economyState);
             var resumedClock = new TestClock { Now = loaded.LastGameSeconds };
-            var resumed = new BuyerRules(resumedClock, rng, loaded); var restored = resumed.Snapshot;
+            var resumed = new BuyerRules(resumedClock, rng, economy, loaded); var restored = resumed.Snapshot;
             Assert.That(restored.ActiveOrder.Deadline, Is.EqualTo(saved.ActiveOrder.Deadline));
             Assert.That(restored.Buyers[1].Meeting.ExpiresAt, Is.EqualTo(saved.Buyers[1].Meeting.ExpiresAt));
             Assert.That(restored.Buyers[1].Respect, Is.EqualTo(saved.Buyers[1].Respect));
             Assert.That(restored.Buyers[1].Introduced, Is.True); Assert.That(restored.OrganContactUnlocked, Is.True);
-            Assert.That(restored.FirstOrganTypes, Is.EqualTo(saved.FirstOrganTypes)); Assert.That(restored.LifetimeXp, Is.EqualTo(saved.LifetimeXp));
-            Assert.That(restored.FreeXp, Is.EqualTo(saved.FreeXp)); Assert.That(restored.SharedFunds, Is.EqualTo(saved.SharedFunds));
-            Assert.That(restored.Participants.Select(p => p.PersonalXp), Is.EqualTo(saved.Participants.Select(p => p.PersonalXp)));
+            Assert.That(restored.TakeLegacy().Empty, Is.True, "the buyer snapshot carries no money or XP of its own");
+            Assert.That(economyState.LifetimeXp, Is.EqualTo(lifetime)); Assert.That(economyState.FreeXp, Is.EqualTo(free));
+            Assert.That(economyState.Fund.Balance, Is.EqualTo(fund)); Assert.That(economyState.FirstKinds, Is.EqualTo(new[] { "Kidney" }));
+            Assert.That(economyState.XpOf("p1"), Is.EqualTo(120)); Assert.That(economyState.XpOf("p2"), Is.EqualTo(120));
             Assert.That(restored.Buyers[1].Counters[0].Units, Is.EqualTo(1)); Assert.That(restored.Items.Single(i => i.Id == stash).StashOrderId, Is.EqualTo("order"));
             Assert.That(resumed.ConfirmSale(new SaleRequest { ConfirmationId = sold.ConfirmationId }).Total, Is.EqualTo(sold.Total));
-            Assert.That(resumed.Snapshot.LifetimeXp, Is.EqualTo(saved.LifetimeXp));
+            Assert.That(economyState.LifetimeXp, Is.EqualTo(lifetime), "a replayed receipt grants nothing");
             // Neither loading nor repeated reads charge real elapsed/offline time.
             Assert.That(resumed.Snapshot.LastGameSeconds, Is.EqualTo(saved.LastGameSeconds));
             saved.Buyers[1].Respect = 0; restored.ActiveOrder.Deadline = 0;

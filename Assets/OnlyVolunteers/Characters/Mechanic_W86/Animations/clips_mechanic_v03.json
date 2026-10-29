@@ -1,0 +1,966 @@
+{
+ "comment": "MECHANIC_W86 clips v03 (Blender, Claude 2026-10-29): the full manifest in the clips_mechanic_v01.json format for the 0.84 m wrench v02 (MECHANIC_W86_v02_opt_v02.fbx). Every clip entry points at a v03 FBX in Animations_v03 (same Animator state names, lengths and event frames as v02: WrenchGun 126 frames, Pew 50; Upgrade 138 frames, Poof 52 = 1.70 s). carry_clips: his own copies of the shared Idle_Stand_v04 / Walk_v04 for the states Idle and Walk. grip_clip: Grip_R v02 (the oblique grip), same bones.",
+ "grip_clip": {
+  "file": "MECHANIC_W86_Grip_R_v02.fbx",
+  "take": "Grip_R",
+  "frames": [
+   1,
+   2
+  ],
+  "keyed_bones": [
+   "mixamorig:RightHandThumb1",
+   "mixamorig:RightHandThumb2",
+   "mixamorig:RightHandThumb3",
+   "mixamorig:RightHandThumb4",
+   "mixamorig:RightHandIndex1",
+   "mixamorig:RightHandIndex2",
+   "mixamorig:RightHandIndex3",
+   "mixamorig:RightHandIndex4",
+   "mixamorig:RightHandMiddle1",
+   "mixamorig:RightHandMiddle2",
+   "mixamorig:RightHandMiddle3",
+   "mixamorig:RightHandMiddle4",
+   "mixamorig:RightHandRing1",
+   "mixamorig:RightHandRing2",
+   "mixamorig:RightHandRing3",
+   "mixamorig:RightHandRing4",
+   "mixamorig:RightHandPinky1",
+   "mixamorig:RightHandPinky2",
+   "mixamorig:RightHandPinky3",
+   "mixamorig:RightHandPinky4"
+  ],
+  "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/MECHANIC_W86_Grip_R_v02.fbx"
+ },
+ "carry_clips": [
+  {
+   "role": "MechIdle",
+   "state": "Idle",
+   "file": "Mech_Idle_v03.fbx",
+   "take": "Mech_Idle_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Idle_v03.fbx",
+   "loop": true,
+   "frames": [
+    1,
+    151
+   ],
+   "fps": 30,
+   "seconds": 5.0,
+   "from_shared": "Idle_Stand_v04",
+   "note": "Idle_Stand_v04 with the right hand turned 20 deg in the palm plane (the big wrench clear of the leg, pouch and floor); replaces the shared clip in his controller state \"Idle\"."
+  },
+  {
+   "role": "MechWalk",
+   "state": "Walk",
+   "file": "Mech_Walk_v03.fbx",
+   "take": "Mech_Walk_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Walk_v03.fbx",
+   "loop": true,
+   "frames": [
+    1,
+    21
+   ],
+   "fps": 30,
+   "seconds": 0.6667,
+   "from_shared": "Walk",
+   "note": "Walk with the right hand turned 20 deg in the palm plane (the big wrench clear of the leg, pouch and floor); replaces the shared clip in his controller state \"Walk\"."
+  }
+ ],
+ "clips": [
+  {
+   "role": "MechGag",
+   "state": "Mech_Gag_WrenchGun",
+   "file": "Mech_Gag_WrenchGun_v03.fbx",
+   "take": "Mech_Gag_WrenchGun_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Gag_WrenchGun_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    126
+   ],
+   "fps": 30,
+   "seconds": 4.1667,
+   "events": {
+    "Raise": {
+     "frame": 19,
+     "seconds": 0.6,
+     "fraction": 0.144
+    },
+    "Aimed": {
+     "frame": 25,
+     "seconds": 0.8,
+     "fraction": 0.192
+    },
+    "Pew": {
+     "frame": 50,
+     "seconds": 1.6333,
+     "fraction": 0.392
+    },
+    "Release": {
+     "frame": 58,
+     "seconds": 1.9,
+     "fraction": 0.456
+    },
+    "Nod": {
+     "frame": 86,
+     "seconds": 2.8333,
+     "fraction": 0.68
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Worried",
+     "frame": 12,
+     "seconds": 0.3667,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 15,
+     "seconds": 0.4667,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 19,
+     "seconds": 0.6,
+     "value": 0.45
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 20,
+     "seconds": 0.6333,
+     "value": 1.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 47,
+     "seconds": 1.5333,
+     "value": 0.45
+    },
+    {
+     "shape": "Surprised",
+     "frame": 48,
+     "seconds": 1.5667,
+     "value": 0.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 50,
+     "seconds": 1.6333,
+     "value": 0.45
+    },
+    {
+     "shape": "Worried",
+     "frame": 55,
+     "seconds": 1.8,
+     "value": 0.15
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 56,
+     "seconds": 1.8333,
+     "value": 1.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 56,
+     "seconds": 1.8333,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 61,
+     "seconds": 2.0,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 62,
+     "seconds": 2.0333,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 76,
+     "seconds": 2.5,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 84,
+     "seconds": 2.7667,
+     "value": 0.85
+    },
+    {
+     "shape": "Happy",
+     "frame": 108,
+     "seconds": 3.5667,
+     "value": 0.85
+    },
+    {
+     "shape": "Happy",
+     "frame": 120,
+     "seconds": 3.9667,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Gag_WrenchGun_v03_Face",
+   "grounding_hips_shift_m": [
+    0.001,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "v03 two-hand aim on the 0.84 m wrench: brings it up across the belly and shoulders it like a rifle (bladed stance, upper body ~33 deg to his right, the wrench horizontal along his forward = at the van), right fist on the rear part next to the rear jaw, elbow down and out, left palm up under the shank just behind the front jaw, squints along it ~1 s with a mock-serious face, a silent \"pew\" with a tiny flick, lets go with the left hand, lowers it to the carry, smug nod, idle.",
+   "revision": "v03"
+  },
+  {
+   "role": "MechGag",
+   "state": "Mech_Gag_CockNod",
+   "file": "Mech_Gag_CockNod_v03.fbx",
+   "take": "Mech_Gag_CockNod_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Gag_CockNod_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    108
+   ],
+   "fps": 30,
+   "seconds": 3.5667,
+   "events": {
+    "Cock": {
+     "frame": 51,
+     "seconds": 1.6667,
+     "fraction": 0.4673
+    },
+    "Nod": {
+     "frame": 77,
+     "seconds": 2.5333,
+     "fraction": 0.7103
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Blink",
+     "frame": 18,
+     "seconds": 0.5667,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 22,
+     "seconds": 0.7,
+     "value": 0.35
+    },
+    {
+     "shape": "Blink",
+     "frame": 40,
+     "seconds": 1.3,
+     "value": 0.35
+    },
+    {
+     "shape": "Blink",
+     "frame": 44,
+     "seconds": 1.4333,
+     "value": 0.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 49,
+     "seconds": 1.6,
+     "value": 0.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 51,
+     "seconds": 1.6667,
+     "value": 0.5
+    },
+    {
+     "shape": "Surprised",
+     "frame": 56,
+     "seconds": 1.8333,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 60,
+     "seconds": 1.9667,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 62,
+     "seconds": 2.0333,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 68,
+     "seconds": 2.2333,
+     "value": 0.45
+    },
+    {
+     "shape": "Happy",
+     "frame": 68,
+     "seconds": 2.2333,
+     "value": 0.9
+    },
+    {
+     "shape": "Blink",
+     "frame": 90,
+     "seconds": 2.9667,
+     "value": 0.45
+    },
+    {
+     "shape": "Happy",
+     "frame": 92,
+     "seconds": 3.0333,
+     "value": 0.9
+    },
+    {
+     "shape": "Blink",
+     "frame": 98,
+     "seconds": 3.2333,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 104,
+     "seconds": 3.4333,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Gag_CockNod_v03_Face",
+   "grounding_hips_shift_m": [
+    0.0011,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "v03 on the big wrench: brings it up across his chest like a rifle at port arms, turns it to look at the front jaw (left fist on the hip), \"cocks\" it with a sharp flick of the wrist (the wrench jolts), then a smug slow nod with half-closed eyes; back to the carry.",
+   "revision": "v03"
+  },
+  {
+   "role": "MechWork/Bench",
+   "state": "Mech_Work_InspectPart",
+   "file": "Mech_Work_InspectPart_v03.fbx",
+   "take": "Mech_Work_InspectPart_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Work_InspectPart_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    168
+   ],
+   "fps": 30,
+   "seconds": 5.5667,
+   "events": {
+    "PartUp": {
+     "frame": 22,
+     "seconds": 0.7,
+     "fraction": 0.1257
+    },
+    "Tap": {
+     "frame": 80,
+     "seconds": 2.6333,
+     "fraction": 0.4731
+    },
+    "Tap2": {
+     "frame": 88,
+     "seconds": 2.9,
+     "fraction": 0.521
+    },
+    "PartDown": {
+     "frame": 130,
+     "seconds": 4.3,
+     "fraction": 0.7725
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Blink",
+     "frame": 30,
+     "seconds": 0.9667,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 34,
+     "seconds": 1.1,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 40,
+     "seconds": 1.3,
+     "value": 0.35
+    },
+    {
+     "shape": "Worried",
+     "frame": 42,
+     "seconds": 1.3667,
+     "value": 0.3
+    },
+    {
+     "shape": "Blink",
+     "frame": 66,
+     "seconds": 2.1667,
+     "value": 0.35
+    },
+    {
+     "shape": "Worried",
+     "frame": 66,
+     "seconds": 2.1667,
+     "value": 0.3
+    },
+    {
+     "shape": "Blink",
+     "frame": 72,
+     "seconds": 2.3667,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 74,
+     "seconds": 2.4333,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 98,
+     "seconds": 3.2333,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 106,
+     "seconds": 3.5,
+     "value": 0.6
+    },
+    {
+     "shape": "Happy",
+     "frame": 124,
+     "seconds": 4.1,
+     "value": 0.6
+    },
+    {
+     "shape": "Happy",
+     "frame": 136,
+     "seconds": 4.5,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Work_InspectPart_v03_Face",
+   "grounding_hips_shift_m": [
+    -0.0007,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "At the workbench (bench top ~0.92 m, 0.45 m in front): picks up a small part with the left hand, holds it up to his eyes and turns it, taps it twice with the rear jaw of the big wrench (the long part pointing down and away to his right), a satisfied nod, puts it back. No part prop in the model: the left hand mimes it (a small prop on mixamorig:LeftHand can be shown between PartUp and PartDown).",
+   "revision": "v03"
+  },
+  {
+   "role": "MechWork/Shelf",
+   "state": "Mech_Work_WipeBench",
+   "file": "Mech_Work_WipeBench_v03.fbx",
+   "take": "Mech_Work_WipeBench_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Work_WipeBench_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    186
+   ],
+   "fps": 30,
+   "seconds": 6.1667,
+   "events": {
+    "PatRag": {
+     "frame": 19,
+     "seconds": 0.6,
+     "fraction": 0.0973
+    },
+    "WipeStart": {
+     "frame": 36,
+     "seconds": 1.1667,
+     "fraction": 0.1892
+    },
+    "WipeEnd": {
+     "frame": 102,
+     "seconds": 3.3667,
+     "fraction": 0.5459
+    },
+    "HandWipe": {
+     "frame": 140,
+     "seconds": 4.6333,
+     "fraction": 0.7514
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Blink",
+     "frame": 40,
+     "seconds": 1.3,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 44,
+     "seconds": 1.4333,
+     "value": 0.25
+    },
+    {
+     "shape": "Blink",
+     "frame": 100,
+     "seconds": 3.3,
+     "value": 0.25
+    },
+    {
+     "shape": "Blink",
+     "frame": 104,
+     "seconds": 3.4333,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 112,
+     "seconds": 3.7,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 118,
+     "seconds": 3.9,
+     "value": 0.5
+    },
+    {
+     "shape": "Worried",
+     "frame": 128,
+     "seconds": 4.2333,
+     "value": 0.5
+    },
+    {
+     "shape": "Worried",
+     "frame": 134,
+     "seconds": 4.4333,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Work_WipeBench_v03_Face",
+   "grounding_hips_shift_m": [
+    -0.0007,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "At a shelf / bench top (~0.92 m, 0.45 m in front): pats the rag in his back pocket, wipes the surface in three circles with the flat left hand (right fist with the wrench resting on the bench edge), looks at his palm, wipes the hand on his trouser leg twice; back to idle. The rag mesh stays on the pocket (no extra prop).",
+   "revision": "v03"
+  },
+  {
+   "role": "MechWork/BaySide",
+   "state": "Mech_Work_CheckBay",
+   "file": "Mech_Work_CheckBay_v03.fbx",
+   "take": "Mech_Work_CheckBay_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Work_CheckBay_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    168
+   ],
+   "fps": 30,
+   "seconds": 5.5667,
+   "events": {
+    "Knock": {
+     "frame": 44,
+     "seconds": 1.4333,
+     "fraction": 0.2575
+    },
+    "Knock2": {
+     "frame": 56,
+     "seconds": 1.8333,
+     "fraction": 0.3293
+    },
+    "Knock3": {
+     "frame": 68,
+     "seconds": 2.2333,
+     "fraction": 0.4012
+    },
+    "Nod": {
+     "frame": 104,
+     "seconds": 3.4333,
+     "fraction": 0.6168
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Worried",
+     "frame": 70,
+     "seconds": 2.3,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink_R",
+     "frame": 78,
+     "seconds": 2.5667,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 78,
+     "seconds": 2.5667,
+     "value": 0.35
+    },
+    {
+     "shape": "Blink_R",
+     "frame": 82,
+     "seconds": 2.7,
+     "value": 0.4
+    },
+    {
+     "shape": "Blink_R",
+     "frame": 98,
+     "seconds": 3.2333,
+     "value": 0.4
+    },
+    {
+     "shape": "Worried",
+     "frame": 98,
+     "seconds": 3.2333,
+     "value": 0.35
+    },
+    {
+     "shape": "Blink_R",
+     "frame": 102,
+     "seconds": 3.3667,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 102,
+     "seconds": 3.3667,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 104,
+     "seconds": 3.4333,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 110,
+     "seconds": 3.6333,
+     "value": 0.6
+    },
+    {
+     "shape": "Happy",
+     "frame": 130,
+     "seconds": 4.3,
+     "value": 0.6
+    },
+    {
+     "shape": "Happy",
+     "frame": 142,
+     "seconds": 4.7,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Work_CheckBay_v03_Face",
+   "grounding_hips_shift_m": [
+    -0.0198,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "At the side of the repair bay (outside the vehicle/lift footprint): bends down with the left hand on his knee, knocks three times with the wrench at knee height in front of him (a wheel / a panel), listens with his head tilted, a satisfied nod, straightens up and pats his thigh; back to idle.",
+   "revision": "v03"
+  },
+  {
+   "role": "MechAttend/Enter",
+   "state": "Mech_Attend_Enter",
+   "file": "Mech_Attend_Enter_v03.fbx",
+   "take": "Mech_Attend_Enter_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Attend_Enter_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    24
+   ],
+   "fps": 30,
+   "seconds": 0.7667,
+   "events": {},
+   "face_cues": [
+    {
+     "shape": "Surprised",
+     "frame": 2,
+     "seconds": 0.0333,
+     "value": 0.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 7,
+     "seconds": 0.2,
+     "value": 0.35
+    },
+    {
+     "shape": "Surprised",
+     "frame": 16,
+     "seconds": 0.5,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Attend_Enter_v03_Face",
+   "grounding_hips_shift_m": [
+    0.0011,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "Notices the player (brows up), straightens, lifts the big wrench to hold it angled at his right side (long part back, near horizontal) and hooks his left thumb in the belt. Ends on the first frame of Mech_Attend_Loop_v03.",
+   "revision": "v03"
+  },
+  {
+   "role": "MechAttend/Loop",
+   "state": "Mech_Attend_Loop",
+   "file": "Mech_Attend_Loop_v03.fbx",
+   "take": "Mech_Attend_Loop_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Attend_Loop_v03.fbx",
+   "loop": true,
+   "frames": [
+    1,
+    120
+   ],
+   "fps": 30,
+   "seconds": 3.9667,
+   "events": {
+    "ShoulderTap": {
+     "frame": 68,
+     "seconds": 2.2333,
+     "fraction": 0.563
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Blink",
+     "frame": 38,
+     "seconds": 1.2333,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 40,
+     "seconds": 1.3,
+     "value": 1.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 43,
+     "seconds": 1.4,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 98,
+     "seconds": 3.2333,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 100,
+     "seconds": 3.3,
+     "value": 1.0
+    },
+    {
+     "shape": "Blink",
+     "frame": 103,
+     "seconds": 3.4,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Attend_Loop_v03_Face",
+   "grounding_hips_shift_m": [
+    0.0011,
+    0.0011
+   ],
+   "seam_deviation_mm": 0.0,
+   "note": "Listening to the player: the big wrench held angled at his right side, thumb in the belt, slow head tilts and blinks, at 2.2 s a little impatient bounce of the wrench (event name kept: ShoulderTap); seamless loop.",
+   "revision": "v03"
+  },
+  {
+   "role": "MechAttend/Exit",
+   "state": "Mech_Attend_Exit",
+   "file": "Mech_Attend_Exit_v03.fbx",
+   "take": "Mech_Attend_Exit_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Attend_Exit_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    21
+   ],
+   "fps": 30,
+   "seconds": 0.6667,
+   "events": {},
+   "face_cues": [],
+   "face_track_blend": null,
+   "grounding_hips_shift_m": [
+    0.0011,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "From the attention pose (Mech_Attend_Loop_v03 frame 1) back to the standing carry.",
+   "revision": "v03"
+  },
+  {
+   "role": "MechUpgrade",
+   "state": "Mech_Upgrade_Perform",
+   "file": "Mech_Upgrade_Perform_v03.fbx",
+   "take": "Mech_Upgrade_Perform_v03",
+   "source": "ArtSource/Characters/MECHANIC_W86/Animations_v03/Mech_Upgrade_Perform_v03.fbx",
+   "loop": false,
+   "frames": [
+    1,
+    138
+   ],
+   "fps": 30,
+   "seconds": 4.5667,
+   "events": {
+    "AimStart": {
+     "frame": 25,
+     "seconds": 0.8,
+     "fraction": 0.1752
+    },
+    "Poof": {
+     "frame": 52,
+     "seconds": 1.7,
+     "fraction": 0.3723
+    },
+    "Release": {
+     "frame": 58,
+     "seconds": 1.9,
+     "fraction": 0.4161
+    },
+    "Pleased": {
+     "frame": 92,
+     "seconds": 3.0333,
+     "fraction": 0.6642
+    },
+    "Done": {
+     "frame": 130,
+     "seconds": 4.3,
+     "fraction": 0.9416
+    }
+   },
+   "face_cues": [
+    {
+     "shape": "Happy",
+     "frame": 3,
+     "seconds": 0.0667,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 7,
+     "seconds": 0.2,
+     "value": 0.4
+    },
+    {
+     "shape": "Happy",
+     "frame": 13,
+     "seconds": 0.4,
+     "value": 0.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 14,
+     "seconds": 0.4333,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 16,
+     "seconds": 0.5,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 21,
+     "seconds": 0.6667,
+     "value": 1.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 21,
+     "seconds": 0.6667,
+     "value": 0.4
+    },
+    {
+     "shape": "Worried",
+     "frame": 49,
+     "seconds": 1.6,
+     "value": 0.4
+    },
+    {
+     "shape": "Surprised",
+     "frame": 50,
+     "seconds": 1.6333,
+     "value": 0.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 52,
+     "seconds": 1.7,
+     "value": 0.4
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 54,
+     "seconds": 1.7667,
+     "value": 1.0
+    },
+    {
+     "shape": "Worried",
+     "frame": 55,
+     "seconds": 1.8,
+     "value": 0.0
+    },
+    {
+     "shape": "Blink_L",
+     "frame": 58,
+     "seconds": 1.9,
+     "value": 0.0
+    },
+    {
+     "shape": "Surprised",
+     "frame": 60,
+     "seconds": 1.9667,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 78,
+     "seconds": 2.5667,
+     "value": 0.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 90,
+     "seconds": 2.9667,
+     "value": 1.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 118,
+     "seconds": 3.9,
+     "value": 1.0
+    },
+    {
+     "shape": "Happy",
+     "frame": 132,
+     "seconds": 4.3667,
+     "value": 0.0
+    }
+   ],
+   "face_track_blend": "Mech_Upgrade_Perform_v03_Face",
+   "grounding_hips_shift_m": [
+    0.001,
+    0.0011
+   ],
+   "seam_deviation_mm": 5.14,
+   "note": "v03 upgrade performance on the 0.84 m wrench (the game turns him to face the van first): \"watch this\" nod, shoulders the wrench like a rifle (bladed stance, the wrench horizontal at the van, right fist next to the rear jaw, left palm under the shank behind the front jaw), aims ~1 s, a tiny recoil-free flick at Poof (the van puff and the purchased change happen on that event, driven by the server, 1.70 s as v01/v02), lets go with the left hand, lowers it to the carry, pleased grin, nod and a left thumbs-up; back to idle.",
+   "revision": "v03"
+  }
+ ]
+}

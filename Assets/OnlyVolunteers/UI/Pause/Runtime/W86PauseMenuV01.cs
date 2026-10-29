@@ -11,7 +11,8 @@ namespace OnlyVolunteers.UI.Pause
 {
     /// <summary>
     /// W86 pause menu (Fedya 25.10, brief escape-pause-menu-graphics-settings): Escape opens a centred overlay with
-    /// "Настройки графики" (working) and placeholder buttons (Звук, Управление, Главное меню, Выход: hover/press feedback, no action).
+    /// "Настройки графики" (working), Главное меню / Выход (29.10: save the world, then the start menu / quit) and placeholder
+    /// buttons (Звук — its sliders are in the start menu's Настройки; Управление: hover/press feedback, no action).
     /// The graphics page edits a draft of <see cref="GfxValues"/>; Apply saves and applies it (W86GraphicsSettingsV01), Back
     /// discards it, Defaults loads the approved defaults into the draft. Display mode changes ask Keep/Revert (15 s, unscaled).
     /// Input: one owner while open (OvMenuGate.Blocking; gameplay scripts return early). Escape is taken only when no context used
@@ -45,6 +46,9 @@ namespace OnlyVolunteers.UI.Pause
         CursorLockMode savedLock; bool savedVisible;
         KccFirstPersonInput walker; bool savedMoveLock, savedLookSuspend;
         GameObject ownedEventSystem;
+        /// <summary>PLAYER stage: set while the start menu has this overlay open straight on the graphics page; Back/Escape
+        /// from that page closes the overlay and calls it (one graphics implementation, same Apply/Keep/Revert).</summary>
+        Action menuReturn;
 
         sealed class Row
         {
@@ -58,6 +62,7 @@ namespace OnlyVolunteers.UI.Pause
         void Start()
         {
             W86GraphicsSettingsV01.ApplySavedAtStartup();
+            W86AudioSettingsV01.ApplySavedAtStartup(); // PLAYER stage: the saved master volume
             applied = W86GraphicsSettingsV01.Load();
             Build();
             canvasGo.SetActive(false);
@@ -89,6 +94,18 @@ namespace OnlyVolunteers.UI.Pause
             else if (gfxPage.activeSelf) ShowRoot();
             else Close();
         }
+
+        /// <summary>PLAYER stage: the start menu's "Графика" — the overlay opens directly on the graphics page; leaving that
+        /// page (Back, Escape, "Назад без сохранения") closes the overlay and calls <paramref name="onClosed"/>.</summary>
+        public void OpenGraphicsFromMenu(Action onClosed)
+        {
+            if (open || canvasGo == null) return;
+            Open();
+            menuReturn = onClosed ?? delegate { };
+            ShowGraphics();
+        }
+
+        public bool IsOpen => open;
 
         // ---------------------------------------------------------------- open / close
         void Open()
@@ -123,6 +140,30 @@ namespace OnlyVolunteers.UI.Pause
             else { Cursor.lockState = savedLock; Cursor.visible = savedVisible; }
             OvMenuGate.Blocking = false;
             EventSystem.current?.SetSelectedGameObject(null);
+            var back = menuReturn; menuReturn = null;
+            back?.Invoke();
+        }
+
+        /// <summary>Главное меню / Выход (29.10): the host's world is saved first (CaptureDirector.Save; refused while a failed
+        /// load blocks writing, as everywhere), the overlay is closed (time scale, audio, cursor back), then the start menu
+        /// loads (networking stops with the map) or the game quits.</summary>
+        void LeaveWorld(bool quit)
+        {
+            var capture = OnlyVolunteers.Capture.CaptureDirector.Instance;
+            var nm = FishNet.InstanceFinder.NetworkManager;
+            bool host = nm == null || nm.IsServerStarted;
+            if (capture != null && host && capture.Loaded && !capture.WriteBlocked) capture.Save(false);
+            Close();
+            if (quit)
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+                return;
+            }
+            OnlyVolunteers.Session.WorldLaunchV01.ReturnToMenu();
         }
 
         static bool IsSolo()
@@ -149,6 +190,7 @@ namespace OnlyVolunteers.UI.Pause
         // ---------------------------------------------------------------- pages
         void ShowRoot()
         {
+            if (menuReturn != null) { Close(); return; } // opened by the start menu: its graphics page is the whole visit
             draft = applied;
             rootPage.SetActive(true); gfxPage.SetActive(false); confirmBox.SetActive(false);
             Select(rootPage);
@@ -323,7 +365,11 @@ namespace OnlyVolunteers.UI.Pause
             ((RectTransform)list.transform).Anchor(0, 0, 1, 1, 58, 46, -58, -150);
             var v = list.AddComponent<VerticalLayoutGroup>(); v.spacing = 14; v.childControlHeight = true; v.childControlWidth = true; v.childForceExpandHeight = false;
             Btn(list.transform, "Настройки графики", ShowGraphics, true, 66, true);
-            foreach (var p in new[] { "Звук", "Управление", "Главное меню", "Выход" }) Btn(list.transform, p, null, false, 60); // placeholders: no action yet
+            Btn(list.transform, "Звук", null, false, 60); // placeholder: the sound sliders live in the start menu's Настройки → Звук
+            Btn(list.transform, "Управление", null, false, 60); // placeholder: no rebinding exists
+            // 29.10: the start menu exists now — save the world, then leave to it / quit
+            Btn(list.transform, "Главное меню", () => LeaveWorld(false), true, 60);
+            Btn(list.transform, "Выход", () => LeaveWorld(true), true, 60);
 
             // graphics page
             gfxPage = CamoPanel(canvasGo.transform, "Graphics", 1180, 920, 23);

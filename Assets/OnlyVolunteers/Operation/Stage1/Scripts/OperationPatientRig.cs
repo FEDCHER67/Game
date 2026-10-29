@@ -45,6 +45,11 @@ namespace OnlyVolunteers.Operation.Stage1
         public readonly float[] LimbMotion = new float[5];
         public float Twitch;
         public float HeadShake;
+        /// <summary>K10: target weight (0/1) of the doomed run pose (hunched, hands on the opened belly; OperationBellyClutch),
+        /// set every frame by the presentation; blended in/out here.</summary>
+        public float BellyClutch;
+        private float clutchWeight;
+        private Transform[] clutchUpper, clutchFore, clutchHand;
         public Transform Head => head;
         public Transform HeadTop => headTop != null ? headTop : head;
         public Animator Animator => animator;
@@ -251,6 +256,12 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             if (head != null && HeadShake > 0f)
                 head.rotation = Quaternion.AngleAxis(Mathf.Sin(time * 13f) * 18f * HeadShake, along) * head.rotation;
+            clutchWeight = Mathf.MoveTowards(clutchWeight, Mathf.Clamp01(BellyClutch), Time.deltaTime / 0.2f);
+            if (clutchWeight > 0.001f)
+            {
+                if (clutchUpper == null) { clutchUpper = new[] { armL, armR }; clutchFore = new[] { foreL, foreR }; clutchHand = new[] { handL, handR }; }
+                OperationBellyClutch.Apply(hips, spine, spine2, head, clutchUpper, clutchFore, clutchHand, clutchWeight, time);
+            }
         }
         private static void Swing(Transform bone, float amount, Vector3 up, Vector3 along, float degrees, float phase, float offset)
         {

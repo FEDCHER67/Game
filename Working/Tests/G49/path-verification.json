@@ -1,0 +1,2904 @@
+{
+  "allExistUnderGame": true,
+  "count": 414,
+  "files": [
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Core\\BuyerCatalog.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d67972b6fabb36a3c00dcd85efd574ef7a3ce3e6f48dc4818761eb77f24324e4",
+      "reason": "G49: один интерфейс/lookup цен с разрешённым fallback; изменения G48 сохранены."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Core\\BuyerRules.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3e2fb2d574515be7d6f2b705899fdbefe3a381c213bc03052eb10997da8ff72c",
+      "reason": "Снят запрет второй продажи порции в шприце."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Core\\BuyerState.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "42be3bf8cd62d479b202cff7475480f0f524e4a57b3bced161933ecbe97a7224",
+      "reason": "Добавлены идентификаторы порции и физического шприца в проекцию товара."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Core\\BuyerTransactions.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bffb48e48e801169ebd57615a745ab9533123b828b45debc74a43246ce0aea40",
+      "reason": "Повторная цена C01 и запрет повторной продажи PortionId, без изменений проводки денег."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Tests\\BuyerPriceAndProgressionTests.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bfd984669797677823268457f4d4d518aff8904b4c650cc984eb1a1c33560754",
+      "reason": "Прежнее одноразовое ожидание обновлено по прямому разрешению под $10→$8."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Tests\\BuyerSyringeTests.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8f0ed052a346831e3bed834412815852e0bb130053d1e4a90311d6b863285f14",
+      "reason": "Новые регрессии повторной продажи и общего PortionId."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Buyers\\Tests\\BuyerSyringeTests.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0288616f9e12600b445f909781967c1c9d8df801f77049b13b33278078c4d8af",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Capture\\Scripts\\CaptureFieldKit.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8cc93708d5b59f1cbb37202dc9a3db0c1d57eb87d81aed63b7eccad09b282924",
+      "reason": "Проверка экземпляра до действий, прогресс/отмена/упаковка, убраны бесплатные запасы."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Capture\\Scripts\\CaptureNpc.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bb08b4bbad04b43380ed9ee253ff92a41466328088913978bfe63ded051ad73b",
+      "reason": "Адаптер существующего забора к проверяемому экземпляру, сохранён timestamp анимации."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Capture\\Scripts\\CaptureSyringeBindings.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "900e84db1b590618f96f88f09cf2d76c32cd17657c0a3f50adef98c051401bb4",
+      "reason": "Новая часть FieldKit: серверная проверка выбранного экземпляра и восстановление привязки."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Capture\\Scripts\\CaptureSyringeBindings.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "516f0f6448acdc6da06df1f7418683697e01b657713d708d895d4e7ddbd37f73",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\InventoryModel.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "640020c05a46ef1d1f186816a372b37cb31c1c9d8f36d99bd2b4f316a11e76f7",
+      "reason": "Перенос того же экземпляра, запрет merge/повторного добавления ItemId."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\ItemStack.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9e89c53923c57fd8a936f6b2c3c31408f4ee49a2cb44fca0d3d91ca7b11aa616",
+      "reason": "Метаданные экземпляра и тип шприца в per-type информации."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\OnlyVolunteers.Inventory.Core.asmdef",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5dd192fdcb93e6456efb9435093f1d79a57026997010db3664cef8235cdba370",
+      "reason": "Ссылка на существующий Buyers Core для единственного API цен; engine-free сохранён."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\SyringeInstance.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "af94b272041cfb3b7fa929c40d9fb74121bd42a3f807ce7df90d35cd04b1e303",
+      "reason": "Новые данные экземпляра/порции и чистые правила привязки/отмены/упаковки."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\SyringeInstance.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5299800bef445062b50bda76785ec8fdbc04a04408bc470a096246ec6532e2b0",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\SyringeSaveBlock.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "41782ef5dad06d59a7b790df2bfdbf1b45c1abdb26d7e57d46f187a160662316",
+      "reason": "Новый блок существующего сейва, включая данные мировых drops; без денег."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\SyringeSaveBlock.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "12be865559fb28da1f487438618f77ce4edb187e3240fb638b4755ab1a02f797",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\SyringeSaleRules.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eb6f64b936bf82586004d286db4a5446b25951aa92ac01e691fd4fc5f663fbed",
+      "reason": "Новый pure C01 confirm/receipt, возврат/списание, один вызов payout."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\SyringeSaleRules.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "265a0bd61f8ab8ebc8ff6f84ae5003d19a6b998290182b826d0b38732f15615c",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\DailySyringeFindRules.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "054f74e58805ea4403bdae980a08e6b6d1f13c4ff9785e132f755e16d05d7bfa",
+      "reason": "Новая ежедневная выдача 06:00 и данные авторских дополнительных точек."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\DailySyringeFindRules.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4a4e7168755a9e167dc396ec1d81cc8b593df92030dce021805297e994ab8547",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\G48SyringePriceLookup.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7fa3f64a19aeba78c81bae90751b8a16a20ff2fde2f4d4a7b5fa1f160a52cb87",
+      "reason": "Новый адаптер одного lookup G48 с aliases C01."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Core\\G48SyringePriceLookup.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4aa82c559b4d5a8d754e4638f5369659c5b69abb984db4288d5611b814880bf2",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Items\\ItemDatabase.asset",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6ce6c4c8e4c88cce43965569f74bfbf0e034f4479f1d116f64233c7645d413d7",
+      "reason": "Добавлены ссылки на два новых определения шприцев."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Items\\Item_SyringeBlood_G49.asset",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d2564c41bd0c7fb26c4d8f2f50535d9a7947ff64caa33925407ff5fecb951548",
+      "reason": "Новое определение 303, blood, размер 1, stack 1, цена из API."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Items\\Item_SyringeBlood_G49.asset.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "db355d750f9186a86cc975bc213cf6c1553074701f4c2e3650c8c297380bb59a",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Items\\Item_SyringeAnaesthesia_G49.asset",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "84bf4501a205bbff822746f0672e0dba2312e6a336b83c6c03024d631b292ece",
+      "reason": "Новое определение 304, anaesthesia, размер 1, stack 1, цена из API."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Items\\Item_SyringeAnaesthesia_G49.asset.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ab6294cfbc1f14dcd50219edd7672d1e28dd2bf2c0ce6c377c9bffc23ac836dd",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Runtime\\ItemDefinition.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "84e6c280df821c9f09a20687862b3848f0a0647e1c6f48741e65414ac2f0826f",
+      "reason": "Тип шприца, ограничение stack и чтение цены по ID."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Runtime\\ItemStackSerializers.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "48551b16d623e23745cf6d8a19339122563f40ed7c8ce1dce18dfb02d0617993",
+      "reason": "FishNet round-trip экземпляра, PersonId, PortionId и состояния содержимого."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Runtime\\LocalInventory.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "87363c52e7588943241156e1f2688020f190890b069f87db4d592b3638db9e5a",
+      "reason": "Pickup/drop переносит метаданные вместо создания нового экземпляра."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Runtime\\OfflineWorldItem.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b11f7d77ff218914d1762ec36a22abf3f4c38ec2079412aa2c534c1434058a4b",
+      "reason": "Хранение и выдача того же экземпляра локального drop."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Runtime\\WorldItem.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "16e714cf9970e0190be348ebf3107ced1b6e030e59ec416153b31403c8b5865c",
+      "reason": "Серверные метаданные экземпляра для защищённого NetworkInventory hook."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Tests\\EditMode\\OnlyVolunteers.Inventory.Tests.asmdef",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0ae40a459b7e10502cc613e0297469d5182375919f50222eb6cee90bafdaf2e1",
+      "reason": "Ссылка для тестирования реального API цен Buyers."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Tests\\EditMode\\SyringeRulesTests.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d38814ebc664625f96b22087b3ab0b542a97073086e7d0b7b7a069785e73faad",
+      "reason": "25 новых EditMode случаев правил, payout, save/load, находок и G48."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Inventory\\Tests\\EditMode\\SyringeRulesTests.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ce7d2bb04a20d2cc55cdb443d024c9bb25eec0dc8ddf89eb34a5be434764c77f",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Core\\OnlyVolunteers.Operation.Core.asmdef",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e9de0928f7de3dd6a2c6098535b59e42464435ec78220663180c90de65a693c5",
+      "reason": "Ссылка на engine-free данные предметных экземпляров."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Core\\OperationState.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c244bce47abd1f99e196733e5e7b358f13bde517e10eca03c4ad2ba6da5b1f10",
+      "reason": "Состояние экземпляров/порций в существующем сейве; запрещён забор из трупа."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Core\\OperationTargets.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a05a4f2c824813e8452114057e00ae206705d047e89b631322135e3676fb862a",
+      "reason": "Добавлены причины отказа без перенумерации старых enum."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Core\\OperationSyringeRules.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "016083c8d5ba0b4a0ae7746f271ec16c6b3f811e226bba3b2c33cc9ee8774297",
+      "reason": "Новые проверяемые входы перед FillBlood и инъекцией, без сброса счётчика."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Core\\OperationSyringeRules.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0cb3188682985db971e4dd0191db967b1d9ef9d141a7c4cf1b121fada309d977",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Scripts\\NetworkOperationTable.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cbca88d4c62bb4cf8db93b0dc135a335cbabc0a6d8fd701817e6fd0a6fac87d2",
+      "reason": "Минимальные серверные проверки, перенос PortionId в пакет и сохранение экземпляра при смене NPC."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Scripts\\OperationHud.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2dff063b094644e36150457a2eedf635b34160e87822175b0cf06873a9a4364d",
+      "reason": "Текст двух отказов, без изменения UI layout."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Scripts\\OperationPhysicalItem.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "75037c7c886876a0536aeb0d6b9b4856604a96e31de291c2e3baa565718b5fbd",
+      "reason": "Метаданные физического экземпляра в snapshot и подпись пустого шприца."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Tests\\OnlyVolunteers.Operation.Tests.asmdef",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fb1f0db7b8e32dc84530bf74a3ed9e6d7b7e603d2966c1d8bc07bcd67486bf91",
+      "reason": "Ссылка на экземпляры для реальных operation-тестов."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Tests\\OperationRulesTests.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d75b4c2f73fe9498d1ce5fa836fa5ead86cbe007a247a1d4d31a3ae9e605c101",
+      "reason": "Прежнее ожидание забора из трупа исправлено по прямому разрешению."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Tests\\OperationSyringeTests.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "001fa56bd235006e728cc2e4499f31724f299c614f34c35d18c3698295db13f7",
+      "reason": "6 новых тестов применения/лимитов/отмены/операционного сейва."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Assets\\OnlyVolunteers\\Operation\\Stage1\\Tests\\OperationSyringeTests.cs.meta",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "770d9ed211ffa9a1d1a5508fceb085393b755f06a536985c20b70cf63c6a73da",
+      "reason": "Новая Unity identity соответствующего файла; старые GUID не менялись."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\G49.Tests.csproj",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5b6ce10d11aa800e378bff427f81c6f8bc98153fa1c6cd5644691d8d6aba7aae",
+      "reason": "Связанные оригинальные исходники Buyers/Inventory для чистых .NET проверок."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Compile-G49.py",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4f89e5e209895a59b3eb62221d4751806473f0fd44f0d977e3c080ddcb14ecb3",
+      "reason": "Roslyn-проверка реальных исходников с текущими asmdef в памяти, без второго Unity."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Verify-G49Files.py",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7d1184ec080a9639d50c0b131f2ec5607b81b9ac06066e2c61ee5ae06fae3499",
+      "reason": "Этот проверяющий скрипт; абсолютные пути и sha256 исходников."
+    },
+    {
+      "path": "C:\\Dev\\Game\\docs\\reports\\SYRINGE_RULE_G49_RU.md",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6149dae59144ea82d18fd198fef40187bc7e2aa1753c52326e4e7bc0ee400f64",
+      "reason": "Основной отчёт для Феди, правила → тесты, ограничения и плейтест."
+    },
+    {
+      "path": "C:\\Dev\\Game\\docs\\reports\\SYRINGE_RULE_G49_HOOKS_RU.md",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b11ba5dce999962171d5b32fca314dcbaebafc75f38192763e8a9aba642d6c1c",
+      "reason": "Часть отчёта: точные НЕ применённые вставки для Claude."
+    },
+    {
+      "path": "C:\\Dev\\Game\\docs\\reports\\SYRINGE_RULE_G49_FILES.md",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6ef20fc5b5ee2a8351fa87d2d09fb57301906f90a1a6b84cda44c0082bf502b9",
+      "reason": "Этот перечень всех файлов и причин изменений."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\path-verification.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": null,
+      "reason": "Машиночитаемая проверка существования и границы C:/Dev/Game."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.TestPlatform.Utilities.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a4d547b17a1caa7f447968b048c7e81219ab7cca1f51b2c70c0bf89df3ece194",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\it\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "842af45d08c86cecc5a0760e51b78ed31d89a2e86efa9b61ab956d176a7a2cc8",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_2728_20261028_170354_990.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "508762aaaa8e0a96bf75a238c1cfb4fe49483765e72b8a9081eb003de97548d0",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_23268_20261028_165622_459.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a8e1a5154529b72f64c29040dd054278810e059df030eda7c0de82f43248c30c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_17684_20261028_170400_470.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "64aad615817c5b7aad11beae15e28fdea4dbfa9288ae343bc85a3f64e7386557",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "efe8ad0e4fd01d45bc83119b624a549c1d25d735b3f316e61c4337ab025181f7",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "74f64e7f70be2a987498f709d41e5e2f510eb437cbc55f69fef43f100d013456",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\2\\Unity.UIToolkit.SourceGenerator.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "debbfa48c761f374869350fc5fe9a69d4988ba2f872b84ca0cdf643555085ea8",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\4\\Unity.Analyzers.LongLiving.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "83ff8db32b112d027e182a0d4ec2bebdb05c9d39408fff32ffcc78803966baff",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\de\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c857799c4fc2220a58ed30f2cd7e8531a145ca1b074437be94202bf8601a849a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2a965defa8807218416055cc085fd4eb9cfbb649387b50ec5722b36d5bb8e4e4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_25104_20261028_171323_510.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "71993b2c158c91c450fba5051769a1d9f588270ce5b71eaab3569b00ee9ce5ce",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ru\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "43ca5331f395c841af45b172414b658700aee483b01e670a32b83cff01ed0e79",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d9ce67d761d08a466093120143c1d305b2c36c64972b91aecb9bd84f8a92e270",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_25352_20261028_170406_678.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4fc10bf761c22af5b3038e56e1f2110104391ed32b234931e62e0fc8a5f40218",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\refint\\G49.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "87e0da6baa1cd2d32c82025423656c0daf7f052bf58e90784285b477df68f5f1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\TelemetryStorageService\\20261028141612_de379f7e4e874331949806f0505be1ec.trn",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c5195f10b87e4b67f1b7119b59051f78d08f0885f528fbefab13b038a17b0e06",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.TestPlatform.PlatformAbstractions.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dc94115de32657885b7d2e719cf0c1396be76268842e49118fe544632973ae05",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\mtymcya4.t1g\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5adf618ee42960b4e806beff09a4f0ae035aa012f6f2d2631e78066e8c82bf19",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Inventory.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "57561480d6b830dd9a5dca2f616bda77161637593bb31a77881f128a6a5c51a2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "99e0eeb04ad533c8474cd0d656f3eebdff39fc1f09c9145d8ca4081514519d8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\.workloadAdvertisingManifestSentinel10.0.400",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "99e0eeb04ad533c8474cd0d656f3eebdff39fc1f09c9145d8ca4081514519d8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Inventory.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "405d913482bd7e426d8ce8f3ea784b99f151d5315b26066a902b8c4f4d85d322",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hant\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "535576e03793bdedf60347d9ae4e9323bcf664944424ae1096be0bb8458e7d7e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "35c38d49f9f1535550507eea8e3499b549a8dd8fbd757f8a2335a1b430001937",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "47326535d62491c93f631fadd6e13fab831523f11929e930b5a81d2e751d4750",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\5\\Microsoft.Extensions.Logging.Generators.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ac4680341915fcdbc1ab47a40cde367e72328849587939a0999a228225153010",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Inventory.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f4702ad2a75c27ad5100ed5ec0bbd6da9fc2d0e451fb303ca636139aad7160ed",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "66fb412f386a6f493342ef83d59bc513c855b0f44a3fe3fbe6334e76c782b1eb",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "13ffcd10eef2d9f2235d03e62c6af3188f55bf3661b63209f50d8380a386fac1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "405d913482bd7e426d8ce8f3ea784b99f151d5315b26066a902b8c4f4d85d322",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "efed8346a631e1359c1861755c72865c273f3a974bf286e903ed5b19fd690447",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "566eac620045899c98d7d134ac8784ece8836f26b5e71a146bb16db9e7152424",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "918bc7903c073723cc27790e66bf2131fd17496f7266878c30ba1c7554ad15c1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "33268283e3e1938faf5dd3cb21420eb049d1ab411d9463f35ece8239bd9fd0cc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_22564_20261028_165433_882.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "34df2995a820e0ffa7d306dee74da3b106040578ec5c75610f36d3f3c4ae2740",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "540777f886f278aabf6454b533b5e8cc343a038117ee938dc3bee5ef2d4f8b75",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_4088_20261028_165624_071.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fcabbc43af6431923b14db2bd1b70c1af486c10b0ee4f9be5b748f343e6ca564",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7efb5463c71caf2a54a65b4e9cfbc7d99e0550837468948bf72a167c66a3b804",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\G49.Tests.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "333c3d9d13d2a4fd694233130e13a70f69d5ab3ee725fd2f10b3b5f673bd1925",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bd91d5a1e7000d0bc85f3739cf46d69c7004fca002a3001f94a69e641a21bb19",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a7b6b78fcbb69291d31f237c3119daffe14f4827aecd28834e71871d9dbb5a33",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\G49.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "64feb49223546c7a044fb8d079c0db4a2587342a4525400d41c6b98fc95413d4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6cda6c8d2865339a1df972b09333598166a7174b427c8d16944af34a56209c3b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\cs\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "81ec7935dd7a03cb5ad8c77070afe536063a4727371c5af70d8cc4d53cebf69c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\plpfkfkm.tar\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "94d27e126620e533bc0fb3c7cc4b4e9c28982d3129122dc6ec41b3bdf472d4db",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3123031ed918f5a03254ab09f515658777c17bf7c297c72523f4f56b73ab2a7a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\pxvqtqmz.oce\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\10.0.401.toolpath.sentinel",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_20088_20261028_165627_243.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "aad4694797fe6a855ce07a66ef7b9459a0e8c3a60c52be0f0cdb0db5d73f4b80",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "03e095f593f6de08f0d309ea5cd24f25555a648ef93d121bfcaaff21d0b6cc8c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Results\\pure-after-hooks.trx",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e520eec9501c04a84eadeb7c14d3f281a05134c57b48a124b861b3939917e66f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pt-BR\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "da441c5437bf119856a5d7de0b10984200693a6b8e19d0818bb3bb34a450cef8",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Economy.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "10261a9c9b31ac77e8f09c0f27895b0779739c1189f93f433628cf09d36b2588",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\testhost.exe",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d2eb1420117e8096f505ed0786c47e32e2e2e16cb80f90c4c308b1ef61a8e24e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\de\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "871c957707ea65ca68674001da69c76cf120368f484425725ecd9d97cf18f8cf",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dd830da319710f52ebdf1353059c0c44614859c99cb5f259cf05587966759eed",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3275abaa21d310e69dc4e49be96a450811c56ca40b2d1a9cac8dd9dc7d85b08b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_23028_20261028_164828_881.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3180a804a57f7dc2e19faf180f75fa993f4bbcbfbe55d1aa17a5ac0d894f4b2c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\tr\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "97734925b97bb7cb459fed10d3fa4f9bdb66a87b31ea88589437b7745fed2c32",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6acdf82277ed68b6abe070c950d89b15842156d6ffc6145abe3bc7903214d45d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\testcentric.engine.metadata.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "55efa956cb6b9682e6508dbcef41d7506030e660796e29c87cc42f4c1e043e34",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f4702ad2a75c27ad5100ed5ec0bbd6da9fc2d0e451fb303ca636139aad7160ed",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7b7b4873fb32aba21c7665e485067e416cb2229057a318d2e9ff9ed039ced342",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\testhost.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d3817a1f17e00b7f7b1040ab01e7aae73378f80c32aa4f62cb99c2aeed3cd5ad",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "43c50cd5b74df9155f3207fecf4cc2d00bcd8dcbb72a6e9643c784db27e78a58",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "815d015f8ff529a40179cbb304a8edc75e6f4a503932abc2d7a6f519fe66dd34",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\10.0.401.aspNetCertificateSentinel",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\3\\Unity.Analyzers.Common.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "03516cb86fd003fbe507ebdd77995d47196d6be360e84d6c18075b55d289304a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\c1h35yuj.4ys\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.VisualStudio.CodeCoverage.Shim.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6aac89994cb9e4a7d528191fdd5b679a2fc8de05bfe61175c9f869c9cf7753ab",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "94fd7bc04bd397a1b4930ee1566fec8a8548228595be42f2531c6f8bf72751b3",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8e6bb2ef3037218ebe689b8d1741c0e0fa4ad30ae28fe7d4e90ecfec23faa9b3",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\es\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9a92fbb178190798e2887964d78e814771891a791f7cfaa30e9f7c46d4089978",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_24780_20261028_165621_012.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "44a849d0264a595cde254250f6c318d17cb5c0b991569f7ac75f65a127536d9e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e6020797f3bac54915d02646b0700a981b95ccb256eccf4232933176a5658f4f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hant\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cb88fe318d4e351f0fe9e896591199c169c43df82c8a0578308c0278f0e9a9cc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Results\\unity-editmode-final.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2ff52892935c9253ab9a1ceb9587797cea69b365496ea88ce5d7678797731982",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\cs\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "84d18427d6d6208019e69e8fbdaeac4c3bcb24bbc640eb12cd1268078968b7bb",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\sdk-advertising\\10.0.400\\microsoft.net.workloads\\10.0.403\\microsoft.net.workloads.workloadset.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "102c4c4fb5a6fa0a3cd11eec850c1a19c5e58a75664ae5a8deccc66638576861",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8adcac3f19308e4cd8c6e200797dbe6a7dfc32db359373e5f8242a570d1ed54b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_23908_20261028_171317_358.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b0473bf833369a78aec4db7afd3c869734099f89bd2c2f5c8414f65295047281",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\de\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "147a1aae64a232ce9de3c908deb7a24d0865c79011af9ff23866bb5e7919cf69",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_24864_20261028_170356_833.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d704fbfe769a00f6720f556fca68699948e03a73cb253d71e658302200be728f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e5e8fcc2c81bf263a91e447dc2ad36dd6d53aaad47f46825f3a8bd4e2a93987b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\G49.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cd68140875961294b957c470479fae63401e4923e2dcab9a1d2a0b08858f8b2f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\it\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a1ecf9ec22f9a16ed3d53d16f67a961a7090e05cdb0b9f6087ba1a1681a49a5d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Inventory.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e6020797f3bac54915d02646b0700a981b95ccb256eccf4232933176a5658f4f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "99e0eeb04ad533c8474cd0d656f3eebdff39fc1f09c9145d8ca4081514519d8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\tr\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2ae060291b5f84460a43aa48569a7292d75318eba3bfa0160ec2d2db53b1f9f7",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\de\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fbb6fb0702fc660f495a032cbe5e6ca06725c2e0c21ef5c14c4b983eee38710d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\sdk-advertising\\10.0.400\\microsoft.net.workloads\\AdvertisedManifestFeatureBand.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "37c503199b0c0a4a8068bafbabaa8290c2f9e012e2eb97a4470ed79f4d74ffba",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ja\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "898fff59e603ef80d17d9618aa1dc4ae21aaa809c35632a5dc265a184b3439fc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ko\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ec8a8e1b688fda7c7ad331013123d5a34207c6fcb3581f71ba27a34abb745e6f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_14772_20261028_165442_712.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7da1f3a78b288df5e167dc6e5a89e8d858e471a60ca5e9c5a6732c4eb5dfe840",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\10.0.401_MachineId.dotnetUserLevelCache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "257473c2d3d2ae64986cc01a68ed79c8484d949f38c5722eb72499e9c53fd946",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\10.0.401_IsDockerContainer.dotnetUserLevelCache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "60a33e6cf5151f2d52eddae9685cfa270426aa89d8dbc7dfb854606f1d1a40fe",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8f6f36e05b3a9e5d44c0ee10e0b0fc06e03ae20fdf5a5cb3a437c87c8fc7cf5e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "96fcd040de973829741b098af204648891e6f403636f0e299b27683cba2f1529",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "64feb49223546c7a044fb8d079c0db4a2587342a4525400d41c6b98fc95413d4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.genruntimeconfig.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7dda25012c2d319ccf5f5cb22b775f31d84c5551e511a79f504a7a52e54e2874",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\es\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b3485c92240a69d3e8b5ebdb4fd702a9173e0c0c8b110f86b690130ad091d5ae",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c2d04fae7e2dd65bea24edd8c03ca3bb7ad12bb5af63c8deb86f438823530ded",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\cs\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6aed1a94417c8637a92e731c3f5aef59fee71f15dee3cf3c3cccf739237bea98",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.AssemblyInfo.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "13375dbd90bc7f8ef212efee799c8944ef66dee51f82a18a907e75dabe25c5d3",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ko\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2113b81232f308e212977e686acc20f97ef728f1787adef6a41569577474335c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\Assembly-CSharp.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dd830da319710f52ebdf1353059c0c44614859c99cb5f259cf05587966759eed",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Results\\pure-before-hooks.trx",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5bca9c6d47b54a4ad0c139f5a612f0947fa9343dedbe984cf349ca178bc8ad70",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hans\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b9433e3ae2518608e04b5277f27797fca04a32b212cb382dfddf98a1c3d7ef42",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d6bbf463863498d9fbfb07df98852a09d0f70c34698ce512d1835dcb1c2471f4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fcef4c1691008b22c8e6a16387d7fd7dc42603a0f8b4afe97362df157f690811",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\szwfgij5.op2\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a0c0ae32fcb318263c65ffe476f1eea6aadcbf355c22299632f72f9fa9ff7d17",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b050c335c9e6886070a2214776bdd8d7d37fabab0f39aba57b7b77f66e080bcc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b8bac7a7f35a56b149dacbaeec3925a5bf3efa3cf130d4aecfe8646fe95d5154",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\fr\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9e3b02fb8d7832f7ea76f6265d96b1bfef13a9150c3154521a1268cbdc783034",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_23028_20261028_164828_950.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "50563284d259ef04dfd0a4d9a22ea24df9d8c17e110d7b761c7604daa937c220",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "74f64e7f70be2a987498f709d41e5e2f510eb437cbc55f69fef43f100d013456",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\tr\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e698426c200b0b9e91b887de7fe28e6047bae2dab83d46054945e4e01ad76bc2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Capture.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6b70d7a449eb45352d9f43474ce7c5e4b66ef83aa18a302f3abd3e8e7bef4369",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_21716_20261028_165626_468.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b4b52514c5a5f36418384640c1cca8a265eaca4145e72c8202087b8dcf23bf56",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_5856_20261028_170405_807.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4a73eb23dc2037a148a685a3b26d1f8cb5ec616d5791e1de3aa71625a6b13fd5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0278bc356ced1e7a1056072e04034e87d608a6d9ef17764d1672ddc3d95c9aa4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "037bf295e775bbd257790eda87a7fb070a4a4920e66e5dcac8109abce875ec4f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f70322d8831d5423bcfdde4ab1a8571ca3ae602fec51829f9386fc1edd8a2b0d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9fad3a40d9e1f803b8de0c737a951cdf8dd3af43054255adb117250b1f758830",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\fr\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "16a6580904908810fb31e0c08c8ba0522bb1e9b589ebc29178fde80309294e2b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\http-cache\\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\\vuln_data_base.dat",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a7a2245867868fb5930856a3b6a1776615ca236ee355c709ec4dd0d94c8bb604",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ec584edd74d354e0e6eaf7ef3fbb7205343c7fdc136a9974a7787d17e16ccc6a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6c123c19a8b8f7ab58faf5ef32480a2bb1ab84f4e093aa6cace8be33d13e1fe6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.TestPlatform.CommunicationUtilities.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4af79cd0ad77cee8821a19bb27126be6d60ff7e6ddfce75f33036a02945c7214",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_24924_20261028_165621_770.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "44832dba27dffaf8eb817588e0c706949fba140fbfd888e13b74af0f010d516c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\5\\System.Text.Json.SourceGeneration.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "89423fd31e045aa20834b620a19972d464d651cd2c9bc6f32b5033d8ab60f32c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\it\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6aaf6cb3c42d42842cac7c8e0da98f418c3dad13d29951aed9e22195079fb451",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a9f5882a0aae8dc4e1ded481959eb3370c83ed507189304c7e00a0cfbe672219",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "1a34f16a5a5e4ce387f290c3936295eed37af68886118206f3682d4b58e1c1fc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Operation.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cd2a9ad1a2ccd89a5da6bceec8d7610b4689e8ea59e27ad241a76f4d70ddae65",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_9808_20261028_165628_025.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0d7ca559b58db7a156cbc7db2a410e3706314920ed1e69e758486a14687a76d3",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ef3ec656b2f55520d10db8251dd7e96ff7fe63b5b4d38a5d42d210f7e452d1b9",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8abc83d0cdf98a2efb8ba7cab62983436cfe74ec1464c0ed3e2b6e08ddd1b19f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Economy.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5916648cf8bdec2c945516bf22c532d362dee1804e671b45134ddd763c921ed2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.TestPlatform.CoreUtilities.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "24c64fa3c37d613f91ff5d700144b718292e926e70dfed71aa8d2f7455d2d38a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f3d3d98fa9f50b83f4758b30d30a85689142fdbec475eb4301405dfd2b9ec7e5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_25244_20261028_164419_826.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cf622f30a0eeb27a6faaa1dfdeb089f13bc337557d090fa9a830f8bb90cb08b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "88c8028fbe1c32a61db93ca325197c469b3f3a2e069f8f612f73ff322667e260",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\fr\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c164d3204b5563dcd8a9c9750cb77cbe9ae4702d69bb3431743c80e7338800b9",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\http-cache\\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\\service_index.dat",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cea4d74624be767e0569c891597c0e6f5329f19f6c9b7fcf8b8c9e9f4933a4bb",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_13936_20261028_171324_272.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "51e63cd55051f9b4aa2aea30b1e95c7b815d058dc00c99a2a50178c8ddc30cec",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_25144_20261028_165437_263.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d4c048f473518eb99ce4227427a5f443c69c8d83f5052bc9b68a10655e99658c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pt-BR\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "94dcb8754a43be2b490b917d6a1ab0e5f4bbee748fa33512b9a82e0a75e4d2bc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b537e781db08732df550734037ebe3eb472df989b58b839fceee201da6da8386",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ja\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3494cad84460f9b3cf82d6a9f49c91e16353f9f24b8b8e4cc3827b752a52f6d6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Buyers.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dbe9b346819b45bd5458b73e4d57826e4722eeafe007774165902863a380fde8",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Results\\unity-editmode-all.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "20483fa69b3e20da89a10b63f7ef3bd94e2d42fe16671ad63ecdf262829cbc5a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Buyers.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fcef4c1691008b22c8e6a16387d7fd7dc42603a0f8b4afe97362df157f690811",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_23364_20261028_170359_581.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "7310e9ca8b1de1bf0626afd067d3c28837f23de1e9d2ea35996e15ef73d96561",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_21596_20261028_165624_852.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2399fae863ebceaa0e63c9bcf326ff280cc6c202a3cafcc0a065f25159d5262f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0278bc356ced1e7a1056072e04034e87d608a6d9ef17764d1672ddc3d95c9aa4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pt-BR\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "be63bd40dd8c93b8de849cf8814d8ac64a5b2845c1ea831c87d9600419140a88",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\5ke5bjbb.vey\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cd68140875961294b957c470479fae63401e4923e2dcab9a1d2a0b08858f8b2f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "601055a803e9658073dbec1485bdc840dab3b440c2b037f66394856ee3fdfb31",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hans\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "56ca7ba918ce468daa8c46010f4b4a2cb99dc611dc2b74ca2828d071bdaadfe6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0278bc356ced1e7a1056072e04034e87d608a6d9ef17764d1672ddc3d95c9aa4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "aa6393ea063312bdfc13ccd0fc54a16b25d6dabc34ece7769e920aa9f2276d8f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0ee654dbc3c328949d0f4cabdbc1c88a61a2dc4472a8cb2ccf84656739c95b18",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4786becc399ed2a27375532a9d517537c7d95db42d69e1746f8dac2e7d8cc25a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ko\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "510ad16f474a1d14f670662b4595d44c25f540ed27110c73d59fc55d365c6f26",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d2024b0c0d536058b8c51f4cc21dac01a6e29743fd134c2453c8c0d6390553de",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\G49.Tests.deps.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "89c709df34fd6d4e228643aa9b812184c61e0176f00fce1cb18ecbda699b8d01",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\it\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bfc5b99eb61b3c639cedc9d2ddd85419437eb2aa630c501d0f303840663ebaad",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\fr\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cd9c7cac39f6819a918a547ba0c1012cae0de358a76cdaffb1c7fed284e5559d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "034f3d3edfa12ca6f7a998aac06cc20d49f3b53413044aed6140b1ae5367a254",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\G49.Tests.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cbbdc0983bb9ae1b7e48574bfa6d859ac15a1ba60933e19cba0e0e9aba08f45c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_17684_20261028_170400_470_510a233a02152a4c99ed330e257c6add-x64_AdminInstall.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a03436d8e63f84c16cb72350abda215ad1adad8a36ee8f297185bc889d677d58",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "05ed7035dbcf4994d39ed52482511c2687dc6913af3446e9d03ac748d7c00574",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\2\\Unity.SourceGenerators.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "af14b37592cd77213ea6cfc74cd4ec3f8bed122ffdffab33c5748186d03938d7",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\G49.Tests.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a6a585f6abcff5b094e09c0eb169582bc6bb924097da8be075f690397f66d631",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "46495be904a59369f82ec7196f1df97b647aeb055b45b954f757decd9ef4b52f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "076afd7b99d69acbeca7005b415c50066414cb0b41e69132e6e6d2a85ed8387d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Operation.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "918bc7903c073723cc27790e66bf2131fd17496f7266878c30ba1c7554ad15c1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d2024b0c0d536058b8c51f4cc21dac01a6e29743fd134c2453c8c0d6390553de",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\es\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4a74a9c83dfcad73fc81769368f39d453f77fcaf4b92514a0b3aaa397112767e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\sdk-advertising\\10.0.400\\microsoft.net.workloads\\workloadVersion.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c74985ac4e8492a82f2d75e9916059de5bb5bafb9c9c16ea0a17cf7dc4877b2d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5bd03c92d3e0a6a2e2355cefd571281b31f5b4dc38efde361462218e37db2490",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\nunit.engine.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "db2b63463095553afb00234db64e351fe768ea289a2124ec3cc7aa00a920bd4b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cc3e8f8808a414e1d2e5d346413c54cd07f09d50b08d30ee545e980cf2217417",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b664d043577f81d142c1c171b0440eec0a4ddbfdafcad1728cd1ec2e10a6fc30",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\ref\\G49.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "87e0da6baa1cd2d32c82025423656c0daf7f052bf58e90784285b477df68f5f1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5d03370d74611d74321100969cfb7a36894efb74c8df181b04a87c3a2411924c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\ywrbmyxz.0fs\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "58fbff5f048c51ea7d4990d1f2ed2983c8d109382cca0a5fd436ab8f3ed04066",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "19d98fd8a9d3739a46b6994364313597f94f18bdf19235e766d5947cc51a1b8b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c39402d6a541e1f594b59fc0b164f2db07204eb5601ecf0010335c09d865aae6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_22604_20261028_165256_074.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cef2489464b9d9d3e5c747c5814a1d9ae64d5d63bf09c52c90e360f9816cc7dc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6f85fc3ed2ab516b5a58a9ae92a0d8f8e154292f6dfef1e4a4c2f9c322f1731d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\Assembly-CSharp.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f70322d8831d5423bcfdde4ab1a8571ca3ae602fec51829f9386fc1edd8a2b0d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\es\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3162c15f53814ca99db585a6f7af4da3c03e56c5fbcd57f9f3124cec1d06957a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ja\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f65695ce935f1941afc88a2c6046dd8ede33840c6a8e0614d7d9de7d1982e0a9",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ru\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "38fe372c30ab1c62685f996075151c7357fc97826fbf34e2f0b35cb5d69e966c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Buyers.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "aa6393ea063312bdfc13ccd0fc54a16b25d6dabc34ece7769e920aa9f2276d8f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eccd681144411c635e91852c602d8c74db18fa3a7b219411559b86968d358272",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\aalw542j.ipp\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "94d27e126620e533bc0fb3c7cc4b4e9c28982d3129122dc6ec41b3bdf472d4db",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dbe9b346819b45bd5458b73e4d57826e4722eeafe007774165902863a380fde8",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\10.0.401.dotnetFirstUseSentinel",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\nunit.engine.core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "01edd28c472338bbad320733a068db0d08c3c9c208df39a04602837fcc23924c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\1\\Microsoft.Unity.Analyzers.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "71a4b37053f9b19426af94c951c69ed2f1fac2770058cfa7fbe420c31b4c5ad4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.AssemblyInfoInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b7573821f06f55aaf84211f82e7e8713deb6660af2cbf1dc4e8be29529642b90",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Newtonsoft.Json.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "72cf291d4bab0edd08a9b07c6173e1e7ad1abb7ab727fd7044bf6305d7515661",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fb24803260658db3d1f684b930b751735f8cd350910e320248b4d19678ca068c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\1nzxwmfe.pli\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2ee7fb109983fe4cff38e5eee50be862a702a0e9fe7cd81df64ece025e6ffc88",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\MachineId.v1.dotnetUserLevelCache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "257473c2d3d2ae64986cc01a68ed79c8484d949f38c5722eb72499e9c53fd946",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8774112dca80e8e319c1af846ee2ec6344ab4c02816d583e78dbbfb0cc1fe407",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "815d015f8ff529a40179cbb304a8edc75e6f4a503932abc2d7a6f519fe66dd34",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "10261a9c9b31ac77e8f09c0f27895b0779739c1189f93f433628cf09d36b2588",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\TelemetryStorageService\\20261028141612_b8573b735d0045cb9d4f12f1f15cca7a.trn",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c18116b3196be243fa3b71a9579bd016a8098f5ef13ad25e1b1a3b8288041208",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_10972_20261028_165623_271.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "79cf3a1946450c76d2e3404c0decba1dec8b8ef438526f0625ba5385b03c5d70",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "07851600330ebc1885c506942b269b3e2c0adb920af2f5363ed911b6ace69a3f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\x5uo4xyb.tjp\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\OnlyVolunteers.Buyers.Tests.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bd529554cf1c46e8f0f4f0ee240f4a075c36a49b434f3ec03cf1848ff276566f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0f8637e8a91bee7585d77ca0d9f1420c19519bcf96e4c5a1f958fff7db5ed9bc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\tr\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d26d2882572eddec4f2f064252994a2dbb5a41a9ef0e699e1d90c51a49e50b48",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\http-cache\\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\\vuln_index.dat",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3bdc54f07bf7015b4eced95f14a120bbbf9fc63139c052135c1987a12c0aa766",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0ff0db5ee63b7013576a629d9e87221e4f2500f29cb0919f53c3fd78a4905a36",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_29488_20261028_171325_132.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "64c45fc429738a06ec34b43a38084b6bb8d10685bf4d34aceb654793a2b4b41a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "168dc66ff9b2cbcfd2c4290b107ea7c013f2dcd9899181ee931927083043c79d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\OnlyVolunteers.Inventory.Tests.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_18720_20261028_171318_088.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3b97d8499356bd01c11ce30aec898da513a7af2d721f4da9ab397051a37ae162",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Inventory.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c39402d6a541e1f594b59fc0b164f2db07204eb5601ecf0010335c09d865aae6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\http-cache\\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\\vuln_data_update.dat",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "17e53bedd41377a2e1fafe8b1b51687a0cb684b3901a96d173128a874227723c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\Results\\pure-final.trx",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e7dedd499fc043d564f8baf01c308d54e1867ce3d0e8e1d7b46598ba9655f8a8",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ko\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3cfdb1574c7f16ac766cabd32c0c6080635fcc9ec63da6860bd3f98ed788e9b9",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_24920_20261028_164420_735.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0b82b127d161ad2202f66a33df2dd0308240dbbb526b2405c73ca460622925b2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "205471d86a0d397878fb11861148a3a838f900fdb72a0a2904ffb59f516cd85c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6b70d7a449eb45352d9f43474ce7c5e4b66ef83aa18a302f3abd3e8e7bef4369",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ru\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "caa9ddbbc1af5c9643c6a6b942f04942020183f3d0424cf37d7492a5a273b08f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Tests\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eb12f236dc87acb024e07a775697912c36502bb2e383f5676aa92eb38cc5943b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "763d676e77dd33152068a1a91c390681d0eb1f353ee092642100171931ec32b9",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\TelemetryStorageService\\20261028141612_e03d54e8675349f3a70489e109f13ced.trn",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e46dff3f514f69d17dc6d875ef969f5ad76c6faefb5e0945f181e0714f451020",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "57561480d6b830dd9a5dca2f616bda77161637593bb31a77881f128a6a5c51a2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hans\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "15c887a38d91fee1c8c31ec0ced4e5a5b82b2d5b6618def0efe411ec5f8e249f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Economy.Core\\OnlyVolunteers.Economy.Core.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5916648cf8bdec2c945516bf22c532d362dee1804e671b45134ddd763c921ed2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\http-cache\\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\\repository_signatures_5.0.0.dat",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5f45cbf2d7f8a4b57fea6e43bb603d29a0682058a71eb61d900db74860d210b0",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "592b21c5bf673b05416663fdc4b254da3e9770c6850415738366dced716682ff",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\OnlyVolunteers.Capture.Core.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "99e0eeb04ad533c8474cd0d656f3eebdff39fc1f09c9145d8ca4081514519d8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\tr\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "a698e9b94bdad001bebea2107f01741b8b3b18792397040aebef2a7d047d893d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\2\\Unity.Properties.SourceGenerator.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ebb6c9276f1dee7a3333aae59ee5326fb349c6fea2ae152976d03e097982a2bc",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.VisualStudio.TestPlatform.Common.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dd0a26502c57b1f889173dbbdf9d256ab085a92477f6b51845f075058e33f192",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hans\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3b53e8ca1476998896098e38601c6d81c333e4901a5f8f07df442518317c35ec",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pl\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dc441ecac9d8ea1c9eb9969b8edcca33e13ecf880b83938923864e54fc16bf7f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4244b44b31230c29f0fa77067531624e36f3b5982983631a5e33133876be5001",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\NUnit3.TestAdapter.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2c7efee4a7ec7361fe94ab9ca04502f4ddd35c95d8e9e9095818e2127b73eae4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\es\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2c8b17e3fbb8387c0d10addb9c3c779c02526c214b5e5abae1d438e4d8cb3893",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_17376_20261028_171610_840.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "1be3638447d2ddfff49a6617838d1c2caface6b1c8063dd90d9917e97dcffb5e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_22660_20261028_170358_524.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "153c5e9355aaa05c804e0f45042c379425e62b606fded67ac42f171f7634ea21",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_21320_20261028_165619_942.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b812f7ac7530a3e3614a70586eb3b6a60cf9007a84f4b10bc23debfbad44e298",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_7792_20261028_165440_397.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "152031d077fe00145ca5a0285ab1a7ad3da1bd8d69dbee63838c9889fed51c01",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_28864_20261028_171320_583.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "835d1854117003e3a633afd522dcc73577dc212b17571f1149995f874cb11c88",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_27672_20261028_170404_857.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "df29a23fa6a9dce6ae9dea15ec0518c89cd54b8db394bfecb3981baba6eb1dc3",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5dfb9cb403e719dc1be56d88d1a95067ee921b661ce2fae34fd466dfa087bb90",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_15408_20261028_165433_171.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8fa20b1b644a85c86d30593059dd6cd95ae6b48b1e71ecde888999e198391136",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\nunit.framework.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d0332e30ba73e560288eadbefdf0f494ece6731e07cd85367585291a6837d834",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pl\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "aa492571ff64357cda010ec10a54d29938d13cdec7fd385ce14c01780dc443c7",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\NUnit3.TestAdapter.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "3b9601d74c1c7625acd9240f90a8f8a8cf3960d0781533f73dfd942c47328ac1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_17536_20261028_165238_388.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ed870674bd451759ec88d5c5c0cdd22de4faa458acfc7fb3dc2890de4febfcad",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "fe9da79e39af21113900b35f5f3d4d4c12da1bd7d2af909b3aa4a58d818d4b9c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "4a132c8700b6940c5b6dfab679718250a2e9d0545e06d08aadfda7ded18fbd03",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_24728_20261028_171321_407.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "964f4eb85ca1e16cfec2f0c2f5ffa2b76c38496c6302fc54d0283666c606ad3d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9f46c360ca7a9038fbffd23be2b633be22953b510347c58b14086581508f443f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.csproj.AssemblyReference.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2ddb8afb5ad6fad581e6c22d4a7b4433e52ca73a06d9a9236b42581b4463e555",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.GeneratedMSBuildEditorConfig.editorconfig",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f85da0b69d8ae17e1058c62fe2376303369681ab7e326a95d87dc62f68f86724",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Operation.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bc9dfe3da420c1c151f294d0be08e3407d0ae11d4882cf68e5152ab671446420",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\cs\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d4f2292f58d94621c002378cf60314961569f1c6748feb65eec723dbc0bb3fa4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\Microsoft.TestPlatform.CrossPlatEngine.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5d82805edda54ff20990f0b875566d4b667b6b3287152fda3c9c1630f373d56a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ce6cc67a3c87135d0235dfa181af7949773f55b986b5622e4bc88bbaf4d5a796",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_27440_20261028_171318_824.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "be8178f8a019aed036efddb593dc5a9b2792790861222dc25adb9924ba9b1614",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\de\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3d64b483c298eff3057f5e27bf185f95894e126b766af818341348e04103609",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bc9dfe3da420c1c151f294d0be08e3407d0ae11d4882cf68e5152ab671446420",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\it\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bb2fefc420dbec897e0c58ed7592411305c1d3f2b41e59b7c5b827df4b930151",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_8208_20261028_165438_491.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e1b589b98ea27c908d320c50ea3b5eff460a999189a3ea2a949bba3a023ae05a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "44f81e3997eb06eaace2fa4bdb883fc29937f00d364ee94d99d4c65e1e37760a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\cs\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8dc2961d7d1b35013ae72eca243ac5489728630bdfad05de1da97130bbea3a73",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ko\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "abd591378d6b2db0decece3cc94318c046d078a481104c852f1a712ef7f7b8a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_11984_20261028_171319_732.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "8f01c2348e99ff71d9d9d231429183809972a51b3c3947c98c083510afcc19b4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory.Core\\OnlyVolunteers.Inventory.Core.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\VBCSCompiler\\AnalyzerAssemblyLoader\\a343366ded57488aa04a0775e0038120\\6\\FishNet.CodeAnalysis.Analyzers.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "77b3125ac62df8f91e6319b9848ce6a325d8d912cc48654c1bd30e7eef66bbd1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pl\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "70470705976073d0fae94b89a5729223aad977b9f5491dba0aac180b9bf3d4df",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\lwtuv2jj.5vq\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "bbf534351e2e6913f71783e299ed91428453298a7aedbe3951a12284656664a7",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pl\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f530ff64799fcc679c7b68b61066a6ada87635c83da3cc9a7c6f5d663bdd397e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.pdb",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cd2a9ad1a2ccd89a5da6bceec8d7610b4689e8ea59e27ad241a76f4d70ddae65",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Capture.Core\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Tests\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0d64a2d3aee0677c5c23fae4a9f5a38064f82c6616a2ec002866fe239b0a5549",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\nunit.engine.api.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "de0b384c30e0d8238226fc80f862cd009beb0c40b077b3ddbf5cc48be6d51b0e",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ru\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "f837a497e83508d98d0364709971cfbbe4f42d335d65a791366a1f6c8de6aefe",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Inventory.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b664d043577f81d142c1c171b0440eec0a4ddbfdafcad1728cd1ec2e10a6fc30",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.csproj.FileListAbsolute.txt",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "18f414595989f8a746e5d8cc8ec5c698add1a7fd4b0fe20da344c4e5e9705f3f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\2h3iqj0l.ola\\microsoft.net.workloads.10.0.400.msi.x64\\10.403.0\\microsoft.net.workloads.10.0.400.msi.x64.10.403.0.nupkg",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2ee7fb109983fe4cff38e5eee50be862a702a0e9fe7cd81df64ece025e6ffc88",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "99e0eeb04ad533c8474cd0d656f3eebdff39fc1f09c9145d8ca4081514519d8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "31d9f3a16e8a0e8a2c72e229f4d2b818da1f1a4d17a5b06e209b73592cf96eaf",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ru\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e297a5b77246e2ce10d0a8a51164e4d3b216f07bad340de74a521ad2889e03c6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ja\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "795802998b0784f14f90b6d01aab38299e0faab2e4d60290ae534921a523dab9",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_4496_20261028_165434_592.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c03b5b40b79b37318e66bb1a7a7863a280aebe9c3804f89a715affb82c732ecf",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.csproj.CoreCompileInputs.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6128453251315c3795365c5224bbda5f22d637741a91c504c792947ebf694f08",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_24468_20261028_165436_041.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e548b5128714b206d38078ac21b7237007898d77b1e879ae06e13046bae27076",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hant\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "33534dac170f6b86e09a9a2cd358afcf62d6e123b52de69fd939a4b4b1e8568b",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9df5e2852397db1a320d6e598cda4ca1702be7e540ad8ef748968047feff1db2",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\project.assets.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "dd54db613fafc57a77a8b22ad2d94148a4861fbe6141d92962e65b58a806b607",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\fr\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "cdc4b16f1e873e64cdc2eca2c06d35a7215a6646a776a165974e234cfe2965d4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Buyers.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "6c123c19a8b8f7ab58faf5ef32480a2bb1ab84f4e093aa6cace8be33d13e1fe6",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pt-BR\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "234158d16c78ded247b070d2476fad3f3300d92202a98bd14e75b972135cffce",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hant\\Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2b311289cc8f50409c6608a45d7ef523139a98f28d25f9cdabf31b1a67cd81b7",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Core\\OnlyVolunteers.Operation.Core.csproj.nuget.dgspec.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "288c4d62126b6aba575ef3335091e845151d4149b4522c48e3e84441424d4a24",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pt-BR\\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "aef9e9f490e6535c648cf8abefe6e5d1ce488f8af9f14e5f3da389c88540b186",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\G49.Tests.runtimeconfig.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "28329cf08f6505e73806b17558b187c02f0c1c516fe47ebfb7a013d082aaa306",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\project.nuget.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c30e8b17c0c97c62e8c2919964c97616eb7a842e8dde4f5d780540e101765225",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Operation.Tests.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5d03370d74611d74321100969cfb7a36894efb74c8df181b04a87c3a2411924c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\obj\\Release\\net8.0\\G49.Tests.csproj.Up2Date",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\Assembly-CSharp.csproj.nuget.g.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Buyers.Core\\OnlyVolunteers.Buyers.Core.assets.cache",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5d5e8ce04993f09db135513953c6c29ecc7454d5264e25e3cf3236bcc4ff5bce",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\pl\\Microsoft.TestPlatform.CoreUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "9d02a74ef047e1f9f70b2bdf8ff874b27c1570e66837ff5ca6ced3993d7e1399",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hans\\Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "0dfda0aec925eefab4ee6e901bb13f993ca18beea607dc4a990d5e49f6388aa1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_20972_20261028_164839_187.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "e8218362cba7eefffb847c16cc2c1aac7f8a3e7735737fe5dcdc2d090038f25c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\zh-Hant\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "5295c55ad50cfbeaac7feeaa55f560947868342969bbbe2bc5dd6d9c3edf9c8c",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Operation.Tests\\OnlyVolunteers.Operation.Tests.csproj.nuget.g.props",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "99e0eeb04ad533c8474cd0d656f3eebdff39fc1f09c9145d8ca4081514519d8a",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\Assembly-CSharp\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "ca85dce5e69aea7c3577051d1f7107b6672c07f0217ddc08077d4d0d1ed6635d",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\bin\\Debug\\OnlyVolunteers.Capture.Core.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "2a965defa8807218416055cc085fd4eb9cfbb649387b50ec5722b36d5bb8e4e4",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\bin\\Release\\net8.0\\ja\\Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "b6e003f2a0fd8c5cdab2065ef65afcdc43cd9dcbbdf6356bf5cdfe27ade6c395",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\obj\\OnlyVolunteers.Inventory\\OnlyVolunteers.Inventory.sourcelink.json",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "eadd89793407a6c16553ef8b1dfbbcf7afff0b802f54174ab94d3752823735a1",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\unity-compile-check\\f82bf4c7afc2.targets",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "c245b55cb8e1bea76e66c464dbd6d50eda256eea15c731fd764522e1dc248b01",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Working\\Tests\\G49\\.dotnet\\.dotnet\\TelemetryStorageService\\20261028141612_922e611efe8a4662bd11c9db73a008fa.trn",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "d376548d00ca3d1e2c50e839db8b0129593a86f5802029362217cb233ddc5b3f",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    },
+    {
+      "path": "C:\\Dev\\Game\\Temp\\G49\\Microsoft.NET.Workload_20136_20261028_165441_473.log",
+      "exists": true,
+      "insideGame": true,
+      "sha256": "26a785f7ef350df0b8f3c57fd52e82adc05a66e400494a79ebaae76e673bb153",
+      "reason": "Локальный результат/служебный файл проверок; не игровой исходник."
+    }
+  ]
+}

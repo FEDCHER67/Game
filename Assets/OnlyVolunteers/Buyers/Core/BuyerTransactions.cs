@@ -12,6 +12,10 @@ namespace OnlyVolunteers.Buyers
             ConfirmationId = r == null ? "" : r.ConfirmationId, Error = error, ProblemItemId = item };
         private static bool WrongMerchandise(SaleError error) => error == SaleError.WrongKind || error == SaleError.WrongNpc ||
             error == SaleError.LowQuality || error == SaleError.PackagingRequired;
+        /// <summary>The economy transaction key of one confirmed sale (one fund line, its XP, its flags).</summary>
+        public static string SaleKey(string confirmationId) => "sale:buyers:" + confirmationId;
+        private static string SaleTitle(string buyerId, List<BuyerItemState> goods) =>
+            (buyerId == BuyerCatalog.BloodBuyer ? "Покупатель крови" : "Скупщик органов") + ": " + goods.Count + " шт. (" + goods[0].Kind + ")";
 
         private SaleResult BuildQuote(BuyerWorldState s, SaleRequest r, out List<BuyerItemState> goods)
         {
@@ -38,17 +42,23 @@ namespace OnlyVolunteers.Buyers
                 n = m.Negotiations.Find(x => x.Kind == m.ActiveGroup.Value);
                 if (n == null || n.Phase != NegotiationPhase.Agreed || Counter(buyer, n.Kind).BannedUntil > s.LastGameSeconds) return Error(r, SaleError.Unavailable);
             }
+            var portionIds = new HashSet<string>(StringComparer.Ordinal);
             foreach (string id in r.ItemIds)
             {
                 var item = Item(s, id);
                 if (item == null) return Error(r, SaleError.MissingItem, id);
                 if (item.Sold) return Error(r, SaleError.AlreadySold, id);
+                if (!BuyerCatalog.IsOrgan(item.Kind) && item.BloodPortionId != "" && !portionIds.Add(item.BloodPortionId))
+                    return Error(r, SaleError.InvalidRequest, id);
+                if (!BuyerCatalog.IsOrgan(item.Kind) && item.BloodPortionId != "" &&
+                    s.Items.Exists(other => other.Sold && other.BloodPortionId == item.BloodPortionId))
+                    return Error(r, SaleError.AlreadySold, id);
                 if (order != null ? item.StashOrderId != order.Id || item.MeetingId != "" : item.MeetingId != m.Id || item.StashOrderId != "")
                     return Error(r, SaleError.NotReserved, id);
                 SaleError mismatch = order == null ? (!Accepts(buyer.Id, item.Kind) ? SaleError.WrongKind :
                     item.Kind != n.Kind ? SaleError.InvalidRequest : SaleError.None) : OrderMismatch(order, item);
                 if (mismatch != SaleError.None) return Error(r, mismatch, id);
-                if (item.Kind == ProductKind.IntroSyringe && (s.IntroSyringeSold || r.ItemIds.Length != 1)) return Error(r, SaleError.Unavailable, id);
+                if (item.Kind == ProductKind.IntroSyringe && r.ItemIds.Length != 1) return Error(r, SaleError.InvalidRequest, id);
                 goods.Add(item);
             }
             goods.Sort((a, b) => { int quality = b.Quality.CompareTo(a.Quality); return quality != 0 ? quality : string.CompareOrdinal(a.Id, b.Id); });
@@ -56,7 +66,9 @@ namespace OnlyVolunteers.Buyers
             int units = order != null || !BuyerCatalog.IsOrgan(goods[0].Kind) ? 0 : Counter(buyer, goods[0].Kind).Units;
             foreach (var item in goods)
             {
-                total += BuyerCatalog.UnitPrice(item.Kind, item.Quality, order == null ? n.AgreedPercent : order.AgreedPercent,
+                total += item.Kind == ProductKind.IntroSyringe
+                    ? BuyerCatalog.SyringePrice(s.IntroSyringeSold ? "c01_blood_repeat" : "c01_blood_first")
+                    : BuyerCatalog.UnitPrice(item.Kind, item.Quality, order == null ? n.AgreedPercent : order.AgreedPercent,
                     order != null && !order.LatePenaltyApplied, item.DeliveredCooled, units, order != null);
                 if (BuyerCatalog.IsOrgan(item.Kind)) units = Math.Min(6, units + 1);
             }
@@ -89,21 +101,18 @@ namespace OnlyVolunteers.Buyers
                 {
                     var buyer = Buyer(next, r.BuyerId);
                     var order = r.OrderId == "" ? null : next.ActiveOrder;
-                    long xp = 0;
+                    var booking = new BuyerSaleBooking { Key = SaleKey(r.ConfirmationId), Amount = result.Total, Title = SaleTitle(buyer.Id, goods) };
                     foreach (var item in goods)
                     {
+                        booking.Units.Add(item.Kind);
                         if (BuyerCatalog.IsOrgan(item.Kind))
                         {
-                            xp = checked(xp + 20);
-                            if (!next.FirstOrganTypes.Contains(item.Kind)) { next.FirstOrganTypes.Add(item.Kind); xp = checked(xp + BuyerCatalog.FirstTypeBonus(item.Kind)); }
                             if (!buyer.SoldOrganTypes.Contains(item.Kind)) { buyer.SoldOrganTypes.Add(item.Kind); Respect(buyer, 2); }
                             else Respect(buyer, 1);
                             if (order == null) Counter(buyer, item.Kind).Units = Math.Min(6, Counter(buyer, item.Kind).Units + 1);
                         }
                         else
                         {
-                            xp = checked(xp + 5);
-                            if (!next.FirstBloodSold) { next.FirstBloodSold = true; xp = checked(xp + 50); }
                             Respect(buyer, buyer.BloodSold ? 1 : 2); buyer.BloodSold = true;
                             if (item.Kind == ProductKind.IntroSyringe) next.IntroSyringeSold = true;
                             next.OrganContactUnlocked = true;
@@ -113,18 +122,20 @@ namespace OnlyVolunteers.Buyers
                     }
                     if (order != null)
                     {
-                        if (!order.LatePenaltyApplied) { Respect(buyer, 5); xp = checked(xp + 150); next.NextContactUnlocked = true; }
+                        if (!order.LatePenaltyApplied) { Respect(buyer, 5); booking.TimelyOrder = true; next.NextContactUnlocked = true; }
                         if (!next.CompletedOrders.Contains(order.Template)) next.CompletedOrders.Add(order.Template);
                         ReleaseStash(next, order.Id); next.ActiveOrder = null;
                     }
                     else { buyer.Meeting.HadSale = true; buyer.Meeting.ActiveGroup = null; }
-                    result.XpEach = xp;
                     result.Participants = new List<string>(next.PresentParticipants);
-                    result.TeamXp = checked(xp * result.Participants.Count);
-                    foreach (string id in result.Participants) Player(next, id).PersonalXp = checked(Player(next, id).PersonalXp + xp);
-                    next.LifetimeXp = checked(next.LifetimeXp + result.TeamXp);
-                    next.FreeXp = checked(next.FreeXp + result.TeamXp);
-                    next.SharedFunds = checked(next.SharedFunds + result.Total);
+                    booking.Participants = new List<string>(result.Participants);
+                    // WP02: money, XP and the first-of-a-kind / first-blood flags are booked in the economy in ONE transaction
+                    // before anything here is published. Overflow throws (nothing booked, nothing published); a refusal
+                    // publishes nothing either (the goods stay unsold and reserved).
+                    BuyerBookingResult booked = economy.Book(booking);
+                    if (!booked.Ok) return Error(r, SaleError.PaymentRefused);
+                    result.XpEach = booked.XpEach;
+                    result.TeamXp = booked.TeamXp;
                 }
                 else if (WrongMerchandise(result.Error))
                 {

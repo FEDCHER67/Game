@@ -34,7 +34,7 @@ namespace OnlyVolunteers.Map.W85
     // + map height sampler + G44 NPC type templates, WaterQuery -> the map's WaterData (through the ambience scene data, as
     // i10 does), fog van headlights, FishNet scene ids regenerated for the new scene path. Generated files go into a folder
     // named like the play scene, next to it. Everything is logged; "missing:" lines name what could not be connected.
-    public static class W85PlayIntegrator
+    public static partial class W85PlayIntegrator   // + W85PlayIntegrator.Pharmacy.cs (city pharmacy, step 8b)
     {
         public const string SourceScene = "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity";
         const string MapScene = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Build_v01.unity";
@@ -354,6 +354,12 @@ namespace OnlyVolunteers.Map.W85
                 foreach (var life in scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<OnlyVolunteers.Map.Look.V3.DistrictLife19V02>(true)))
                     if (life.wornLamps != null && life.wornLamps.Length > 0 && (life.calmAreas == null || life.calmAreas.Length == 0))
                     { life.calmAreas = new[] { W85Builder.DowntownCalmRect }; EditorUtility.SetDirty(life); Note("lamps: Downtown calm flicker area set"); }
+                // ECONOMY spec v01 §6.3 + STORY M06 (lead 28.10): the W86 workshop building at Fedya's red mark (prefab Workshop_W86_v01,
+                // ground fitted, reversible), its anchors (repair zone over the pit, mechanic, rival hand-in in the western bay) + story anchors.
+                PlaceWorkshopZone(scene, dataDir, GroundNew);
+                // Fedya 28.10: the city pharmacy in the ground-floor west bays of Rough 04-H3 (prefab Pharmacy_W86_v01, house cut
+                // along the unit, front path, cash desk / staff routine / van stop anchors); W85PlayIntegrator.Pharmacy.cs.
+                PlacePharmacy(scene, sideDir);
             }
 
             // 9. Missing scripts carried from i10 (G20 painting HUD) would warn every load.
@@ -431,6 +437,931 @@ namespace OnlyVolunteers.Map.W85
                 }
             }
             return $"T1 retexture {root.name}: {n} renderers, {meshes} metre-UV box meshes";
+        }
+
+        // ------------------------------------------------------------------ ECONOMY + STORY: workshop and mission anchors
+        /// <summary>ECONOMY spec v01 §6.3 + STORY_MISSIONS_SPEC v01 §9 / §17.2 (lead 28.10). The workshop is the W86 building
+        /// Workshop_W86_v01 (prefab <see cref="WorkshopPrefabPath"/>, art ArtSource/Buildings/Workshop_W86, palette A) at Fedya's
+        /// red mark (28.10: the meadow north of Stroyka, south of the Rough, east of the river, beside the curved road
+        /// hamlet_to_rough), pose <see cref="WorkshopPos"/> / <see cref="WorkshopYaw"/>, doors and apron facing that road.
+        /// The step places the building (find-or-create by name), fits the ground to it (<see cref="FitWorkshopGround"/>: local
+        /// grading, a terrain hole for the pit, a gravel forecourt to the road, trees and baked grass cleared; undone and redone
+        /// on every run through a backup beside the play scene) and moves the root <see cref="WorkshopAnchorsName"/> onto the
+        /// building's pose, its children at the building-local points of Workshop_W86_anchors_v01.json: the van repair zone
+        /// (OnlyVolunteers.Economy.WorkshopZone, middle bay over the pit), the mechanic point (StoryAnchor Workshop.Mechanic,
+        /// beside the desk) and the M06 rival receiving zone (StoryAnchor M06.RivalHandIn, inside the western bay). The old
+        /// 03-01-workshop on Stroyka stays as plain scenery with no function (no second workshop).
+        /// A second root <see cref="StoryAnchorsName"/> carries the anchors that do not move with the workshop: the rival's
+        /// occupied canopy on Stroyka (08:00-18:00), his off-shift spot and C01's placeholder arrival point at base 2.
+        /// Idempotent: roots and children found by name (duplicates and the older single-zone root removed), every field re-set.</summary>
+        public const string WorkshopAnchorsName = "W86_Workshop_Anchors";
+        public const string StoryAnchorsName = "W86_Story_Anchors";
+        /// <summary>The single-zone root of the first integration (28.10 morning); removed when found.</summary>
+        public const string WorkshopZoneName = "[Economy] Workshop repair zone (03-01-workshop, middle bay)";
+        // Story anchors on Stroyka / base 2 (world plan metres; placeholder poses).
+        static readonly Vector2 RivalCanopyFallback = new(624.2f, 397.0f);    // beside 03-01-van (van on jacks), north side
+        static readonly Vector2 RivalOffShiftAt = new(642.44f, 451.4f);       // in front of the dormitory door (03-08-dorm)
+        static readonly Vector2 C01ArrivalAt = new(251.5f, 515.0f);           // in front of the B02 shed, west of the van spawn
+
+        /// <summary>The workshop / story anchor step on the open play scene (building, ground, anchors; the scene is marked dirty,
+        /// not saved; the terrain / grass assets and the ground backup are saved): no full Make needed.</summary>
+        public static string PlaceWorkshopZoneInOpenScene(string mapTag, string ver)
+        {
+            Log.Clear();
+            if (EditorApplication.isPlaying) return Fail("leave Play mode first");
+            var scene = SceneManager.GetActiveScene();
+            var roots = scene.GetRootGameObjects();
+            string dataDir = DataDir(mapTag, ver, out _);
+            Terrain terrain = roots.SelectMany(g => g.GetComponentsInChildren<Terrain>(true)).OrderBy(t => t.GetComponent<TerrainCollider>() ? 0 : 1).FirstOrDefault();
+            MapHeightSampler sampler = roots.SelectMany(g => g.GetComponentsInChildren<MapHeightSampler>(true)).FirstOrDefault();
+            var skip = new HashSet<Transform>(roots.Where(g => Carry.Contains(g.name)).Select(g => g.transform));
+            PlaceWorkshopZone(scene, dataDir, (x, z) => Ground(scene, sampler, terrain, skip, x, z));
+            EditorSceneManager.MarkSceneDirty(scene);
+            AssetDatabase.SaveAssets();
+            return Log.ToString();
+        }
+
+        static void PlaceWorkshopZone(Scene scene, string dataDir, Func<float, float, float> ground)
+        {
+            Physics.SyncTransforms();
+            // the rival's canopy stays on Stroyka, beside 03-01-van of the construction data
+            string file = dataDir != null && Directory.Exists(dataDir + "/districts") ? Directory.GetFiles(dataDir + "/districts", "construction_*.json").FirstOrDefault() : null;
+            var district = file != null ? MiniJson.Parse(File.ReadAllText(file)) as Dictionary<string, object> : null;
+            Vector2 canopy = RivalCanopyFallback;
+            var van = List(district, "props").OfType<Dictionary<string, object>>().FirstOrDefault(p => Str(p, "id") == "03-01-van");
+            Vector2[] vanPos = van != null && van.TryGetValue("pos", out var vp) ? Pts(new List<object> { vp }) : null;
+            if (vanPos != null && vanPos.Length == 1) canopy = vanPos[0] + new Vector2(0f, 2.55f);
+
+            // ---- the building at the red mark, its ground, then its anchors
+            var A = WorkshopAnchorsData();
+            if (A == null) { Note("missing: " + WorkshopAnchorsJsonPath + " (workshop not placed, anchors left where they are)"); return; }
+            var building = PlaceWorkshopBuilding(scene);
+            Note(FitWorkshopGround(scene, dataDir));
+            Physics.SyncTransforms();
+            Quaternion rot = Quaternion.Euler(0f, WorkshopYaw, 0f);
+            Vector3 centre = WorkshopPos;
+
+            foreach (var old in scene.GetRootGameObjects().Where(g => g.name == WorkshopZoneName).ToList()) Object.DestroyImmediate(old);
+            GameObject root = UniqueRoot(scene, WorkshopAnchorsName);
+            root.transform.SetPositionAndRotation(centre, rot);
+            root.transform.localScale = Vector3.one;
+            EditorUtility.SetDirty(root);
+
+            var zj = WsObj(A, "middle_bay_repair_zone");
+            Vector3 zoneLocal = WsV3(zj, "position"), zoneSize = WsV3(zj, "size");
+            if (zoneSize.x < .5f) zoneSize = new Vector3(3.2f, 3f, 6.4f);
+            GameObject zoneGo = UniqueChild(root.transform, "RepairZone (middle bay)");
+            zoneGo.transform.localPosition = zoneLocal;
+            zoneGo.transform.localRotation = Quaternion.Euler(0f, WsNum(zj != null && zj.TryGetValue("yaw", out var zy) ? zy : null), 0f);
+            zoneGo.transform.localScale = Vector3.one;
+            var zone = zoneGo.GetComponent<OnlyVolunteers.Economy.WorkshopZone>();
+            if (!zone) zone = zoneGo.AddComponent<OnlyVolunteers.Economy.WorkshopZone>();
+            zone.Size = zoneSize;
+            zone.Title = "Мастерская — ремонтная зона";
+            zone.ShowMarkers = true;
+            EditorUtility.SetDirty(zone);
+            EditorUtility.SetDirty(zoneGo);
+
+            var hj = WsObj(A, "west_bay_handin_zone");
+            Vector3 handSize = WsV3(hj, "size");
+            var handIn = Anchor(root.transform, "RivalHandInZone (western bay)", OnlyVolunteers.Story.StoryAnchor.RivalHandIn,
+                "Приём конкурента (M06)", WsV3(hj, "position"), handSize, true, new Color(1f, 0.45f, 0.3f));
+            var mj = WsObj(A, "mechanic_standing_point");
+            // the mechanic is a character now (WorkshopMechanicV01): no placeholder post / title over his point
+            var mechanic = Anchor(root.transform, "MechanicPoint", OnlyVolunteers.Story.StoryAnchor.WorkshopMechanic,
+                "Механик", WsV3(mj, "position"), Vector3.zero, false, new Color(0.45f, 0.85f, 1f));
+            mechanic.transform.localRotation = Quaternion.Euler(0f, WsNum(mj != null && mj.TryGetValue("yaw", out var my) ? my : null), 0f);
+            Note(PlaceWorkshopLift(root, building, zone, mechanic.transform, A));
+
+            // ---- story anchors that stay where they are when the workshop moves ----
+            GameObject story = UniqueRoot(scene, StoryAnchorsName);
+            story.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            story.transform.localScale = Vector3.one;
+            EditorUtility.SetDirty(story);
+            var canopyA = WorldAnchor(scene, story.transform, "RivalCanopy (Stroyka, 08-18)", OnlyVolunteers.Story.StoryAnchor.RivalCanopy,
+                "Навес конкурента (заглушка)", canopy, 180f, true, new Color(1f, 0.6f, 0.2f), ground);
+            var offShift = WorldAnchor(scene, story.transform, "RivalOffShift (dorm)", OnlyVolunteers.Story.StoryAnchor.RivalOffShift,
+                "", RivalOffShiftAt, 0f, false, new Color(1f, 0.6f, 0.2f), ground);
+            var c01 = WorldAnchor(scene, story.transform, "C01Arrival (base 2, placeholder)", OnlyVolunteers.Story.StoryAnchor.C01ArrivalB02,
+                "C01 — скупщик крови (заглушка)", C01ArrivalAt, 270f, true, new Color(0.85f, 0.25f, 0.3f), ground);
+
+            // ---- checks: van parked over the pit, both drive-ins, the hand-in floor, the partition doorway; ground under them ----
+            Physics.SyncTransforms();
+            Vector3 L(float x, float z) => root.transform.TransformPoint(new Vector3(x, 0f, z));
+            Vector3 vanC = root.transform.TransformPoint(WsV3(WsObj(A, "van_park_point"), "position"));
+            Vector3 handC = handIn.transform.position;
+            string vanIn = Inside(scene, vanC, rot, new Vector3(2.2f, 2.4f, 5.4f));
+            string midDrive = Inside(scene, L(0f, 10.5f), rot, new Vector3(2.4f, 2.4f, 9f));
+            string westDrive = Inside(scene, L(-8.175f, 10.5f), rot, new Vector3(2.4f, 2.4f, 9f));
+            string handInside = Inside(scene, handC, rot, handSize);
+            string doorway = Inside(scene, L(-4.5f, -1.0f), rot, new Vector3(.5f, 1.8f, .8f));
+            float mechGround = GroundRay(scene, mechanic.transform.position.x, mechanic.transform.position.z, ground) - mechanic.transform.position.y;
+            Note($"workshop anchors: root {WorkshopAnchorsName} = building {(building ? building.name : "MISSING")} at {F(centre)} yaw {WorkshopYaw:0.#} (Fedya's red mark, north of Stroyka by hamlet_to_rough)");
+            Note($"  repair zone {zoneSize.x:0.#} x {zoneSize.z:0.#} m at {F(zoneGo.transform.position)} (middle bay over the pit), ground {Spread(scene, zoneGo.transform.position, rot, zoneSize, ground)}; " +
+                 (vanIn.Length > 0 ? "WARNING van box over the pit blocked by: " + vanIn : "van box over the pit clear") +
+                 (midDrive.Length > 0 ? "; WARNING middle drive-in blocked by: " + midDrive : "; middle drive-in 2.4 x 9 m clear"));
+            Note($"  rival hand-in {handSize.x:0.##} x {handSize.z:0.#} m at {F(handC)} (inside the western bay), ground {Spread(scene, handC, rot, handSize, ground)}" +
+                 (handInside.Length > 0 ? "; WARNING inside: " + handInside : "; clear") +
+                 (westDrive.Length > 0 ? "; WARNING west drive-in blocked by: " + westDrive : "; west drive-in 2.4 x 9 m clear") +
+                 (doorway.Length > 0 ? "; WARNING partition doorway blocked by: " + doorway : "; partition doorway to the mechanic clear"));
+            Note($"  mechanic point at {F(mechanic.transform.position)}, ground {mechGround:+0.00;-0.00} m");
+            Note($"story anchors: canopy {F(canopyA.transform.position)} (beside 03-01-van, Stroyka), off-shift {F(offShift.transform.position)}, C01 {F(c01.transform.position)}; " +
+                 $"canopy to hand-in {Vector3.Distance(canopyA.transform.position, handC):0.0} m, hand-in to repair {Vector3.Distance(handC, zoneGo.transform.position):0.0} m");
+        }
+
+        /// <summary>The lift session and the mechanic on W86_Workshop_Anchors (Fedya 29.10): the van park point (lift centre,
+        /// yaw 180) and the control box point from Workshop_W86_lift_v01.json, WorkshopServiceV01 with the six moving nodes of
+        /// the lift in the building instance (two carriages, four arms + their swing-in yaw), travel from the JSON, the zone
+        /// switched to lift-only buying; WorkshopMechanicV01 at the mechanic point. Idempotent (found by name, fields re-set).</summary>
+        static string PlaceWorkshopLift(GameObject root, GameObject building, OnlyVolunteers.Economy.WorkshopZone zone, Transform mechanic, Dictionary<string, object> A)
+        {
+            var L = WorkshopLiftData();
+            var park = UniqueChild(root.transform, "VanParkPoint (lift centre, nose to the back wall)");
+            Vector3 parkLocal = L != null ? WsV3(WsObj(L, "placement"), "lift_centre") : WsV3(WsObj(A, "van_park_point"), "position");
+            park.transform.localPosition = parkLocal;
+            park.transform.localRotation = Quaternion.Euler(0f, WsNum(WsObj(A, "van_park_point") is Dictionary<string, object> vp && vp.TryGetValue("yaw", out var vy) ? vy : null, 180f), 0f);
+            var cb = WsObj(L, "control_box");
+            var control = UniqueChild(root.transform, "MechanicControlPoint (lift control box)");
+            control.transform.localPosition = cb != null ? WsV3(cb, "interaction_point") : parkLocal + new Vector3(-2.55f, 0f, 0f);
+            control.transform.localRotation = Quaternion.Euler(0f, WsNum(cb != null && cb.TryGetValue("interaction_yaw", out var iy) ? iy : null, 90f), 0f);
+
+            var service = root.GetComponent<OnlyVolunteers.Economy.WorkshopServiceV01>();
+            if (!service) service = root.AddComponent<OnlyVolunteers.Economy.WorkshopServiceV01>();
+            service.Zone = zone;
+            service.VanPark = park.transform;
+            service.ControlPoint = control.transform;
+            service.Mechanic = mechanic;
+            var liftRoot = building ? building.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Workshop_W86_lift_v01") : null;
+            var moving = liftRoot ? WsLiftMoving.Select(n => liftRoot.Cast<Transform>().FirstOrDefault(t => t.name == n)).Where(t => t).ToArray() : new Transform[0];
+            var parts = WsObj(L, "moving_parts");
+            var arms = moving.Where(t => t.name.StartsWith("Lift_Arms_")).ToArray();
+            service.LiftParts = moving;
+            service.LiftArms = arms;
+            service.ArmEngagedYaw = arms.Select(a => WsNum(WsObj(parts, a.name) is Dictionary<string, object> pj && pj.TryGetValue("engaged_local_yaw", out var ey) ? ey : null)).ToArray();
+            var travel = WsObj(L, "travel");
+            service.LiftTravel = WsNum(travel != null && travel.TryGetValue("max", out var tm) ? tm : null, OnlyVolunteers.Economy.LiftSession.DefaultTravel);
+            service.LiftSeconds = WsLiftSeconds;
+            service.ArmSwingSeconds = WsArmSwingSeconds;
+            EditorUtility.SetDirty(service);
+            if (zone) { zone.LiftOnly = moving.Length > 0; EditorUtility.SetDirty(zone); }
+
+            var talk = root.GetComponent<OnlyVolunteers.Economy.WorkshopMechanicV01>();
+            if (!talk) talk = root.AddComponent<OnlyVolunteers.Economy.WorkshopMechanicV01>();
+            talk.Spot = mechanic;
+            EditorUtility.SetDirty(talk);
+            Note(PlaceWorkshopMechanic(root)); // MECHANIC_W86 v01: model, route, brain (W85PlayIntegrator.Mechanic.cs)
+            // checks: the van box on the park point is clear with the arms stowed, the control point stands on the floor
+            Physics.SyncTransforms();
+            Vector3 pc = park.transform.position;
+            var hits = Physics.OverlapBox(pc + Vector3.up * 1.25f, new Vector3(1.0f, 1.0f, 2.6f), park.transform.rotation, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)
+                .Where(c => c.gameObject.scene == root.scene && !(c is TerrainCollider) && c.transform.root.name != "Van").Select(c => PathOf(c.transform)).Distinct().ToList();
+            return $"workshop lift: {(liftRoot ? liftRoot.name : "NO LIFT ART in the building instance")} - {moving.Length}/6 moving nodes, arms {string.Join(", ", arms.Select((a, i) => a.name + " " + service.ArmEngagedYaw[i].ToString("+0.0;-0.0", CultureInfo.InvariantCulture)))}, " +
+                   $"travel {service.LiftTravel:0.##} m in {service.LiftSeconds:0.#} s (arms {service.ArmSwingSeconds:0.#} s); van park {F(pc)} yaw {park.transform.eulerAngles.y:0}, control box point {F(control.transform.position)}; " +
+                   (hits.Count == 0 ? "van box (2.0 x 2.0 x 5.2 m, sills up) on the park point clear" : "WARNING van box hits: " + string.Join(", ", hits.Take(6))) +
+                   $"; zone {(zone && zone.LiftOnly ? "lift-only" : "direct buying")}; mechanic WorkshopMechanicV01 at {F(mechanic.position)} (id {OnlyVolunteers.Economy.WorkshopMechanicV01.MechanicId})";
+        }
+
+        // ------------------------------------------------------------------ W86 workshop building (Workshop_W86_v01)
+        public const string WorkshopBuildingName = "W86_Workshop_Building (Workshop_W86_v01)";
+        public const string WorkshopArtDir = "Assets/OnlyVolunteers/Art/Buildings/Workshop_W86";
+        public const string WorkshopPrefabPath = WorkshopArtDir + "/Workshop_W86_v01.prefab";
+        const string WorkshopAnchorsJsonPath = WorkshopArtDir + "/Workshop_W86_anchors_v01.json";
+        const string WorkshopMaterialsJsonPath = WorkshopArtDir + "/Workshop_W86_materials_v01.json";
+        const string WorkshopGroundBackup = "workshop_W86_ground_backup_v01.bytes";
+        /// <summary>Building root = floor level at the footprint centre, yaw about +Y (0 = doors facing +Z). Red mark 28.10: the
+        /// meadow SE of the road hamlet_to_rough, doors and apron towards it (road axis ~25 m from the centre: a ~6.5 m gravel
+        /// forecourt between the apron and the road edge). Floor 5.6 m: the road there lies at ~6.05, the meadow at 4.7-5.9.</summary>
+        public static readonly Vector3 WorkshopPos = new(628.7f, 5.6f, 593.5f);
+        public const float WorkshopYaw = -57.3f;
+        /// <summary>true = the step also clears / re-seats the play scene's baked tall grass under the site (reversible through
+        /// the backup). false = the grass file is left alone (blades then stand in the workshop).</summary>
+        public static bool WorkshopClearGrass = true;
+        /// <summary>True: ignore the old ground backup and take the CURRENT terrain (and grass) as the original - for a terrain /
+        /// grass asset replaced from outside (e.g. Vadim's newer TerrainData): the fit is then made on his ground and a fresh
+        /// backup written. False (default): the backup is restored first, but only where the terrain still holds exactly what
+        /// the last fit wrote; anything else (a rebuilt or replaced terrain) is detected and the current ground is taken as
+        /// original automatically.</summary>
+        public static bool WorkshopRecaptureGround = false;
+        const float WsStripIntensity = 6f, WsBulkheadIntensity = 3f, WsWallSpotIntensity = 20f, WsEmission = 2.5f;
+
+        // site shapes in the building frame (x along the front, z out of the doors; metres)
+        static readonly Rect WsBuildingRect = Rect.MinMaxRect(-12.3f, -6.7f, 12.3f, 6.02f);
+        static readonly Rect WsApronRect = Rect.MinMaxRect(-16f, 6.02f, 16f, 15f);
+        static readonly Vector2[] WsDrive = { new(-14f, 15f), new(6f, 15f), new(12f, 27f), new(-20f, 27f) };   // forecourt, clipped at the road
+        static readonly Vector2[] WsPit = { new(-.5f, -1.65f), new(.5f, -1.65f), new(.5f, 3.45f), new(-.5f, 3.45f) };  // pit opening + 5 cm
+        const float WsBlend = 6f, WsRoadKeep = .4f;
+        static readonly string[] WsFbx = { "Workshop_W86_building_v01.fbx", "Workshop_W86_props_v01.fbx", "Workshop_W86_apron_v01.fbx", "Workshop_W86_westdoor_curtain_v01.fbx", "Workshop_W86_lift_v01.fbx" };
+        /// <summary>The two-post lift over the pit (ArtSource/Buildings/Workshop_W86, red palette, Fedya 29.10): its data JSON
+        /// (moving nodes, travel, arm swing, park point, control box) drives the prefab and WorkshopServiceV01.</summary>
+        const string WorkshopLiftJsonPath = WorkshopArtDir + "/Workshop_W86_lift_v01.json";
+        static readonly string[] WsLiftMoving = { "Lift_Carriage_L", "Lift_Carriage_R", "Lift_Arms_FL", "Lift_Arms_FR", "Lift_Arms_RL", "Lift_Arms_RR" };
+        /// <summary>The lift's rise (Fedya's brief: about 4 s; the art JSON suggests 8 s, the brief wins) and the arm swing.</summary>
+        const float WsLiftSeconds = 4f, WsArmSwingSeconds = 1.5f;
+
+        static Dictionary<string, object> WorkshopLiftData() =>
+            File.Exists(WorkshopLiftJsonPath) ? MiniJson.Parse(File.ReadAllText(WorkshopLiftJsonPath)) as Dictionary<string, object> : null;
+
+        static Dictionary<string, object> WorkshopAnchorsData() =>
+            File.Exists(WorkshopAnchorsJsonPath) ? MiniJson.Parse(File.ReadAllText(WorkshopAnchorsJsonPath)) as Dictionary<string, object> : null;
+        static Dictionary<string, object> WsObj(Dictionary<string, object> d, string key) => d != null && d.TryGetValue(key, out var v) ? v as Dictionary<string, object> : null;
+        static float WsNum(object o, float fallback = 0f) => o == null || o is string ? fallback : Convert.ToSingle(o, CultureInfo.InvariantCulture);
+        static Vector3 WsV3(Dictionary<string, object> d, string key) =>
+            d != null && d.TryGetValue(key, out var v) && v is List<object> l && l.Count >= 3 ? new Vector3(WsNum(l[0]), WsNum(l[1]), WsNum(l[2])) : Vector3.zero;
+
+        /// <summary>Imports the workshop art (FBX importer settings + material remap), builds the URP Lit materials from
+        /// Workshop_W86_materials_v01.json (matte: smoothness capped at .3 except glass / oil) and saves the prefab
+        /// <see cref="WorkshopPrefabPath"/>: building (LODGroup LOD0 / LOD1) + props (per-prop LODGroup) + apron, UCX_ hulls as
+        /// box / convex colliders without renderers, lights at the anchors JSON points, static flags like the map buildings.</summary>
+        public static string BuildWorkshopPrefab()
+        {
+            var sb = new StringBuilder();
+            if (EditorApplication.isPlaying) return "workshop prefab: leave Play mode first";
+            var mats = WorkshopMaterials(sb);
+            if (mats.Count == 0) return sb.Append("workshop prefab: no materials").ToString();
+            foreach (string f in WsFbx)
+            {
+                string p = WorkshopArtDir + "/" + f;
+                if (!(AssetImporter.GetAtPath(p) is ModelImporter mi)) { sb.AppendLine("missing: " + p); continue; }
+                mi.globalScale = 1f; mi.useFileScale = true;
+                mi.importAnimation = false; mi.animationType = ModelImporterAnimationType.None;
+                mi.importCameras = false; mi.importLights = false; mi.importBlendShapes = false; mi.importVisibility = false;
+                mi.isReadable = true; mi.addCollider = false; mi.generateSecondaryUV = false;
+                mi.meshCompression = ModelImporterMeshCompression.Off;
+                mi.importNormals = ModelImporterNormals.Import; mi.importTangents = ModelImporterTangents.CalculateMikk;
+                mi.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
+                mi.materialLocation = ModelImporterMaterialLocation.InPrefab;
+                foreach (var kv in mats) mi.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material), kv.Key), kv.Value);
+                mi.SaveAndReimport();
+            }
+            var anchors = WorkshopAnchorsData();
+            var stage = EditorSceneManager.NewPreviewScene();
+            try
+            {
+                var root = new GameObject("Workshop_W86_v01");
+                SceneManager.MoveGameObjectToScene(root, stage);
+                GameObject Inst(string f)
+                {
+                    var src = AssetDatabase.LoadAssetAtPath<GameObject>(WorkshopArtDir + "/" + f);
+                    if (!src) return null;
+                    var g = (GameObject)PrefabUtility.InstantiatePrefab(src, stage);
+                    PrefabUtility.UnpackPrefabInstance(g, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                    g.transform.SetParent(root.transform, false);
+                    g.transform.localPosition = Vector3.zero; g.transform.localRotation = Quaternion.identity; g.transform.localScale = Vector3.one;
+                    return g;
+                }
+                var building = Inst(WsFbx[0]); var props = Inst(WsFbx[1]); var apron = Inst(WsFbx[2]);
+                if (!building || !props || !apron) return sb.Append("workshop prefab: FBX missing").ToString();
+                var lift = Inst(WsFbx[4]);   // optional: the prefab still builds without the lift art
+                if (lift) lift.name = "Workshop_W86_lift_v01";
+                foreach (var g in new[] { props, apron, lift }) { if (!g) continue; var imp = g.GetComponent<LODGroup>(); if (imp) Object.DestroyImmediate(imp); }   // the importer's file-level group would own the props' LODs
+
+                // UCX_ hulls -> colliders (box when the hull is an axis-aligned box, else a convex mesh); no renderers
+                int boxes = 0, hulls = 0;
+                foreach (var t in root.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("UCX_")).ToList())
+                {
+                    var mf = t.GetComponent<MeshFilter>(); var mesh = mf ? mf.sharedMesh : null;
+                    var mr = t.GetComponent<MeshRenderer>(); if (mr) Object.DestroyImmediate(mr);
+                    if (mesh)
+                    {
+                        if (IsBoxHull(mesh)) { var bc = t.gameObject.AddComponent<BoxCollider>(); bc.center = mesh.bounds.center; bc.size = mesh.bounds.size; boxes++; }
+                        else { var mc = t.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; mc.convex = true; hulls++; }
+                    }
+                    if (mf) Object.DestroyImmediate(mf);
+                }
+
+                // LODs: building LOD0 / LOD1 (shell + interior), large props LOD0 / LOD1, every prop culled when small on screen
+                Renderer[] Rs(Transform p, string suffix) => p.GetComponentsInChildren<Renderer>(true).Where(r => r.name.EndsWith(suffix)).ToArray();
+                var lg = building.GetComponent<LODGroup>(); if (!lg) lg = building.AddComponent<LODGroup>();   // the importer may add one (_LOD0 / _LOD1 names)
+                lg.SetLODs(new[] { new LOD(.12f, Rs(building.transform, "_LOD0")), new LOD(.006f, Rs(building.transform, "_LOD1")) });
+                lg.RecalculateBounds();
+                int propLods = 0, propCull = 0;
+                foreach (Transform h in lift ? props.transform.Cast<Transform>().Concat(lift.transform.Cast<Transform>()).ToList() : props.transform.Cast<Transform>().ToList())
+                {
+                    var r0 = Rs(h, "_LOD0"); var r1 = Rs(h, "_LOD1");
+                    var plg = h.GetComponent<LODGroup>(); if (!plg) plg = h.gameObject.AddComponent<LODGroup>();
+                    if (r0.Length > 0 && r1.Length > 0) { plg.SetLODs(new[] { new LOD(.15f, r0), new LOD(.025f, r1) }); propLods++; }
+                    else { plg.SetLODs(new[] { new LOD(.012f, h.GetComponentsInChildren<Renderer>(true)) }); propCull++; }
+                    plg.RecalculateBounds();
+                }
+
+                // lights at the anchors JSON points: ceiling strips + bulkhead (points), wall lamps (spots down); no shadows
+                var lightsRoot = new GameObject("Lights").transform;
+                lightsRoot.SetParent(root.transform, false);
+                int nl = 0;
+                foreach (var o in List(anchors, "lights").OfType<Dictionary<string, object>>())
+                {
+                    string name = Str(o, "name"), type = Str(o, "type");
+                    var go = new GameObject(name);
+                    go.transform.SetParent(lightsRoot, false);
+                    go.transform.localPosition = WsV3(o, "position");
+                    var l = go.AddComponent<Light>();
+                    l.color = ColorUtility.TryParseHtmlString(Str(o, "colour"), out Color col) ? col : Color.white;
+                    l.shadows = LightShadows.None;
+                    var sug = WsObj(o, "suggested");
+                    if (type.StartsWith("spot"))
+                    {
+                        l.type = LightType.Spot;
+                        l.range = WsNum(sug != null && sug.TryGetValue("spot_range_m", out var sr) ? sr : null, 9f);
+                        l.spotAngle = WsNum(sug != null && sug.TryGetValue("spot_angle_deg", out var sa) ? sa : null, 100f);
+                        l.innerSpotAngle = l.spotAngle * .55f;
+                        l.intensity = WsWallSpotIntensity;
+                        go.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                    }
+                    else
+                    {
+                        l.type = LightType.Point;
+                        l.range = WsNum(sug != null && sug.TryGetValue("point_range_m", out var pr) ? pr : null, 7f);
+                        l.intensity = name.Contains("Bulkhead") ? WsBulkheadIntensity : WsStripIntensity;
+                    }
+                    nl++;
+                }
+
+                // static like the map buildings / props (W85Builder: batching + occludee; the shell also occluder); lights not
+                const StaticEditorFlags prop = StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic;
+                foreach (var t in root.GetComponentsInChildren<Transform>(true))
+                    if (!t.IsChildOf(lightsRoot)) GameObjectUtility.SetStaticEditorFlags(t.gameObject, prop);
+                // the lift's carriages and arms move (WorkshopServiceV01): never static, never batched
+                int liftMoving = 0;
+                if (lift)
+                    foreach (Transform node in lift.transform)
+                        if (WsLiftMoving.Contains(node.name))
+                        {
+                            foreach (var t in node.GetComponentsInChildren<Transform>(true)) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
+                            liftMoving++;
+                        }
+                foreach (var r in Rs(building.transform, "").Where(r => r.name.StartsWith("WS_Building_Shell")))
+                    GameObjectUtility.SetStaticEditorFlags(r.gameObject, prop | StaticEditorFlags.OccluderStatic);
+
+                PrefabUtility.SaveAsPrefabAsset(root, WorkshopPrefabPath, out bool ok);
+                sb.AppendLine($"workshop prefab {(ok ? "saved" : "FAILED")}: {WorkshopPrefabPath}; colliders {boxes} box + {hulls} convex (UCX_, renderers off); " +
+                              $"LODGroups: building LOD0/LOD1, {propLods} props + lift parts LOD0/LOD1, {propCull} cull-only; {nl} lights; " +
+                              (lift ? $"lift {lift.name}: {liftMoving}/6 moving nodes (not static)" : "no lift art (" + WsFbx[4] + " missing)"));
+            }
+            finally { EditorSceneManager.ClosePreviewScene(stage); }
+            return sb.ToString();
+        }
+
+        static bool IsBoxHull(Mesh m)
+        {
+            var v = m.vertices; var b = m.bounds;
+            var uniq = new HashSet<Vector3Int>();
+            foreach (var p in v)
+            {
+                uniq.Add(Vector3Int.RoundToInt(p * 1000f));
+                bool Edge(float x, float lo, float hi) => Mathf.Abs(x - lo) < 1e-3f || Mathf.Abs(x - hi) < 1e-3f;
+                if (!Edge(p.x, b.min.x, b.max.x) || !Edge(p.y, b.min.y, b.max.y) || !Edge(p.z, b.min.z, b.max.z)) return false;
+            }
+            return uniq.Count == 8;
+        }
+
+        static Dictionary<string, Material> WorkshopMaterials(StringBuilder sb)
+        {
+            var res = new Dictionary<string, Material>();
+            if (!File.Exists(WorkshopMaterialsJsonPath)) { sb.AppendLine("missing: " + WorkshopMaterialsJsonPath); return res; }
+            var all = WsObj(MiniJson.Parse(File.ReadAllText(WorkshopMaterialsJsonPath)) as Dictionary<string, object>, "materials");
+            if (all == null) { sb.AppendLine("no materials in " + WorkshopMaterialsJsonPath); return res; }
+            var shader = Shader.Find("Universal Render Pipeline/Lit");
+            Folder(WorkshopArtDir + "/Materials");
+            // the roller-door texture is new in this art set: repeating colour texture
+            string doorTex = WorkshopArtDir + "/Workshop_rollerdoor_v01.png";
+            if (AssetImporter.GetAtPath(doorTex) is TextureImporter ti && (ti.wrapMode != TextureWrapMode.Repeat || ti.anisoLevel != 4 || !ti.sRGBTexture))
+            { ti.textureType = TextureImporterType.Default; ti.sRGBTexture = true; ti.wrapMode = TextureWrapMode.Repeat; ti.mipmapEnabled = true; ti.anisoLevel = 4; ti.SaveAndReimport(); }
+            foreach (var kv in all)
+            {
+                if (!(kv.Value is Dictionary<string, object> m)) continue;
+                string key = kv.Key.StartsWith("MAT_WS_") ? kv.Key.Substring(7) : kv.Key;
+                // the metals get own names so the W86 look's runtime "metal_dark" rule (smoothness .42 / metallic .55) keeps off them (matte)
+                string asset = key == "metal_dark" ? "steel_dark" : key == "metal_worn" ? "steel_worn" : key;
+                string path = $"{WorkshopArtDir}/Materials/WS86_{asset}_v01.mat";
+                var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (!mat) { mat = new Material(shader); AssetDatabase.CreateAsset(mat, path); }
+                if (mat.shader != shader) mat.shader = shader;
+                string alb = m.TryGetValue("albedo", out var av) ? av as string : null;
+                if (alb != null && alb.StartsWith("ArtSource/")) alb = WorkshopArtDir + "/" + Path.GetFileName(alb);
+                var albT = alb != null ? AssetDatabase.LoadAssetAtPath<Texture2D>(alb) : null;
+                if (alb != null && !albT) sb.AppendLine("missing texture " + alb);
+                mat.SetTexture("_BaseMap", albT);
+                string nrm = m.TryGetValue("normal", out var nv) ? nv as string : null;
+                var nrmT = nrm != null ? AssetDatabase.LoadAssetAtPath<Texture2D>(nrm) : null;
+                if (nrmT && AssetImporter.GetAtPath(nrm) is TextureImporter nti && nti.textureType != TextureImporterType.NormalMap) { sb.AppendLine("normal map not imported as NormalMap, skipped: " + nrm); nrmT = null; }
+                mat.SetTexture("_BumpMap", nrmT);
+                if (nrmT) { mat.EnableKeyword("_NORMALMAP"); mat.SetFloat("_BumpScale", 1f); } else mat.DisableKeyword("_NORMALMAP");
+                float tiling = WsNum(m.TryGetValue("unity_tiling", out var tv) ? tv : null, 1f);
+                mat.SetTextureScale("_BaseMap", new Vector2(tiling, tiling));
+                mat.SetTextureOffset("_BaseMap", Vector2.zero);
+                Color tint = ColorUtility.TryParseHtmlString(Str(m, "tint"), out Color tc) ? tc : Color.white;
+                float alpha = m.TryGetValue("alpha", out var al) && al != null ? WsNum(al, 1f) : 1f;
+                tint.a = alpha;
+                mat.SetColor("_BaseColor", tint);
+                // matte (lead 28.10): smoothness capped at .3 (glass and oil keep their sheen), painted metal and cladding barely metallic
+                float smooth = WsNum(m.TryGetValue("smoothness", out var sv) ? sv : null, .2f), metal = WsNum(m.TryGetValue("metallic", out var mv) ? mv : null);
+                bool painted = key == "red_steel" || key == "yellow_rail" || key.StartsWith("rollerdoor");
+                smooth = key == "glass" ? smooth : key == "oil" ? Mathf.Min(smooth, .5f) : Mathf.Min(smooth, .3f);
+                metal = painted || key == "corrugated_grey" ? Mathf.Min(metal, .1f) : Mathf.Min(metal, .35f);   // the cladding in shade otherwise mirrors the brown ground
+                mat.SetFloat("_Smoothness", smooth);
+                mat.SetFloat("_Metallic", metal);
+                mat.SetFloat("_SmoothnessTextureChannel", 0f);
+                string em = m.TryGetValue("emission", out var ev) ? ev as string : null;
+                if (em != null && ColorUtility.TryParseHtmlString(em, out Color ec))
+                { mat.EnableKeyword("_EMISSION"); mat.SetColor("_EmissionColor", ec * WsEmission); mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive; }
+                else
+                { mat.DisableKeyword("_EMISSION"); mat.SetColor("_EmissionColor", Color.black); mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack; }
+                if (alpha < .99f)
+                {
+                    mat.SetFloat("_Surface", 1f); mat.SetFloat("_Blend", 0f); mat.SetOverrideTag("RenderType", "Transparent");
+                    mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha); mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    mat.SetFloat("_SrcBlendAlpha", (float)UnityEngine.Rendering.BlendMode.One); mat.SetFloat("_DstBlendAlpha", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    mat.SetFloat("_ZWrite", 0f); mat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                    mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+                }
+                else
+                {
+                    mat.SetFloat("_Surface", 0f); mat.SetOverrideTag("RenderType", "Opaque");
+                    mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.One); mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.Zero);
+                    mat.SetFloat("_SrcBlendAlpha", (float)UnityEngine.Rendering.BlendMode.One); mat.SetFloat("_DstBlendAlpha", (float)UnityEngine.Rendering.BlendMode.Zero);
+                    mat.SetFloat("_ZWrite", 1f); mat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                    mat.renderQueue = -1;
+                }
+                EditorUtility.SetDirty(mat);
+                res[kv.Key] = mat;
+            }
+            AssetDatabase.SaveAssets();
+            sb.AppendLine($"workshop materials: {res.Count} URP Lit in {WorkshopArtDir}/Materials");
+            return res;
+        }
+
+        static GameObject PlaceWorkshopBuilding(Scene scene)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(WorkshopPrefabPath);
+            // a prefab from before the lift art (or without it) is rebuilt once the lift FBX is there
+            bool liftArt = File.Exists(WorkshopArtDir + "/" + WsFbx[4]);
+            bool liftInPrefab = prefab && prefab.GetComponentsInChildren<Transform>(true).Any(t => t.name == "Workshop_W86_lift_v01");
+            if (!prefab || liftArt && !liftInPrefab) { Note(BuildWorkshopPrefab()); prefab = AssetDatabase.LoadAssetAtPath<GameObject>(WorkshopPrefabPath); }
+            if (!prefab) { Note("missing: " + WorkshopPrefabPath + " (workshop building not placed)"); return null; }
+            GameObject go = null;
+            int removed = 0;
+            foreach (var g in scene.GetRootGameObjects().Where(g => g.name == WorkshopBuildingName).ToList())
+            {
+                bool mine = go == null && PrefabUtility.IsOutermostPrefabInstanceRoot(g) && PrefabUtility.GetCorrespondingObjectFromSource(g) == prefab;
+                if (mine) go = g; else { Object.DestroyImmediate(g); removed++; }
+            }
+            bool reused = go != null;
+            if (go) PrefabUtility.RevertPrefabInstance(go, InteractionMode.AutomatedAction);
+            else
+            {
+                go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, scene);
+                if (go.transform.parent) go.transform.SetParent(null, true);
+            }
+            go.name = WorkshopBuildingName;
+            go.transform.SetPositionAndRotation(WorkshopPos, Quaternion.Euler(0f, WorkshopYaw, 0f));
+            go.transform.localScale = Vector3.one;
+            EditorUtility.SetDirty(go);
+            Note($"workshop building: {(reused ? "kept and reverted" : "placed")} {WorkshopBuildingName} ({WorkshopPrefabPath}) at {F(WorkshopPos)} yaw {WorkshopYaw:0.#}" + (removed > 0 ? $"; {removed} stale copy(ies) removed" : ""));
+            return go;
+        }
+
+        // ---- ground fit: reversible local grading (backup beside the play scene) ----
+        sealed class WsRoad { public Vector2[] Pts; public float Half; }
+        sealed class WsBackup
+        {
+            public int Hx, Hz, Hw, Hh; public float[,] HOrig, HNew;
+            public int Ax, Az, Aw, Ah, Al; public byte[] AOrig, ANew;
+            public int Ox, Oz, Ow, Oh; public bool[,] Holes;
+            public List<TreeInstance> Trees = new();
+            public string GrassPath = "";
+            public List<(int i, float oy, float oh, float ny, float nh)> Blades = new();
+        }
+
+        struct WsSite { public Vector2 L; public float DB, DA, DD, RE; public bool Same; }
+
+        static List<WsRoad> WsRoads(string dataDir)
+        {
+            var res = new List<WsRoad>();
+            string f = dataDir != null ? dataDir + "/roads_v85.json" : null;
+            if (f == null || !File.Exists(f) || !(MiniJson.Parse(File.ReadAllText(f)) is Dictionary<string, object> rj)) return res;
+            var c = new Vector2(WorkshopPos.x, WorkshopPos.z);
+            foreach (var r in List(rj, "roads").OfType<Dictionary<string, object>>())
+            {
+                var pts = Pts(r.TryGetValue("points", out var p) ? p : null);
+                if (pts.Length < 2 || DistToPolyline(pts, c, out _) > 150f) continue;
+                res.Add(new WsRoad { Pts = pts, Half = WsNum(r.TryGetValue("width_m", out var w) ? w : null, 6.4f) * .5f });
+            }
+            return res;
+        }
+
+        static float WsSmooth(float x) { x = Mathf.Clamp01(x); return x * x * (3f - 2f * x); }
+
+        static float WsDistPoly(Vector2[] poly, Vector2 p)
+        {
+            if (InsidePoly(poly, p, 0f)) return 0f;
+            float best = float.MaxValue;
+            for (int i = 0, j = poly.Length - 1; i < poly.Length; j = i++)
+            {
+                Vector2 a = poly[j], ab = poly[i] - a;
+                float t = Mathf.Clamp01(Vector2.Dot(p - a, ab) / ab.sqrMagnitude);
+                best = Mathf.Min(best, Vector2.Distance(p, a + ab * t));
+            }
+            return best;
+        }
+
+        static bool WsOverlap(Vector2[] a, Vector2[] b)
+        {
+            foreach (var poly in new[] { a, b })
+                for (int i = 0, j = poly.Length - 1; i < poly.Length; j = i++)
+                {
+                    Vector2 e = poly[i] - poly[j], n = new(-e.y, e.x);
+                    float amin = float.MaxValue, amax = float.MinValue, bmin = float.MaxValue, bmax = float.MinValue;
+                    foreach (var p in a) { float d = Vector2.Dot(p, n); amin = Mathf.Min(amin, d); amax = Mathf.Max(amax, d); }
+                    foreach (var p in b) { float d = Vector2.Dot(p, n); bmin = Mathf.Min(bmin, d); bmax = Mathf.Max(bmax, d); }
+                    if (amax <= bmin || bmax <= amin) return false;
+                }
+            return true;
+        }
+
+        /// <summary>Fits the map terrain to the workshop: the footprint 0.30 m under the floor, the apron 0.05 m under its top,
+        /// a gravel forecourt ramping from the apron to the road edge (the road band itself untouched), all blended into the
+        /// original ground over 6 m; a terrain hole over the inspection pit; gravel / worn grass painted around; terrain trees
+        /// under or against the building, apron and forecourt removed, the rest re-seated; the play scene's baked grass blades
+        /// cleared there and re-seated where the ground moved. The previous fit is undone first from the backup
+        /// (<see cref="WorkshopGroundBackup"/> beside the play scene) while the terrain still holds exactly what it wrote, so a
+        /// rerun gives the same ground and a moved pose leaves nothing behind. The TerrainData is the map build's (shared with
+        /// Map_W85_Build_v02): a full map rebuild resets it, the next run of this step fits it again.</summary>
+        static string FitWorkshopGround(Scene scene, string dataDir)
+        {
+            var ter = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Terrain>(true)).FirstOrDefault(t => t.GetComponent<TerrainCollider>());
+            if (!ter) return "workshop ground: missing the map terrain (not fitted)";
+            if (string.IsNullOrEmpty(scene.path)) return "workshop ground: unsaved scene (no place for the backup; not fitted)";
+            var td = ter.terrainData; Vector3 tp = ter.transform.position, size = td.size;
+            string backup = scene.path.Substring(0, scene.path.Length - ".unity".Length) + "/" + WorkshopGroundBackup;
+            var sb = new StringBuilder("workshop ground: ");
+            var grass = WorkshopClearGrass ? scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<W85GrassRenderer>(true)).FirstOrDefault(g => g.data && g.data.instances) : null;
+            string grassPath = grass ? AssetDatabase.GetAssetPath(grass.data.instances) : "";
+            byte[] gb = grass && File.Exists(grassPath) ? File.ReadAllBytes(grassPath) : null;
+            bool grassDirty = false;
+
+            // 1. undo the previous fit (or, asked to recapture, take the current ground as the original)
+            if (File.Exists(backup) && WorkshopRecaptureGround) sb.Append("backup ignored (WorkshopRecaptureGround): the current terrain and grass are the original; ");
+            else if (File.Exists(backup)) sb.Append(WsRestore(ter, backup, grassPath, gb, ref grassDirty)).Append("; ");
+
+            // 2. the site in the building frame
+            float H = WorkshopPos.y;
+            var rot = Quaternion.Euler(0f, WorkshopYaw, 0f); var inv = Quaternion.Inverse(rot);
+            var c2 = new Vector2(WorkshopPos.x, WorkshopPos.z);
+            Vector2 Loc(Vector2 w) { var l = inv * new Vector3(w.x - c2.x, 0f, w.y - c2.y); return new Vector2(l.x, l.z); }
+            Vector2 Wld(Vector2 l) { var w = rot * new Vector3(l.x, 0f, l.y); return new Vector2(w.x + c2.x, w.z + c2.y); }
+            var roads = WsRoads(dataDir);
+            if (roads.Count == 0) sb.Append("WARNING no road data (road band not protected); ");
+            WsSite Site(Vector2 w)
+            {
+                var s = new WsSite { L = Loc(w), RE = 999f, Same = true };
+                foreach (var r in roads)
+                {
+                    float d = DistToPolyline(r.Pts, w, out var q) - r.Half;
+                    if (d < s.RE) { s.RE = d; s.Same = Vector2.Dot(w - q, c2 - q) > 0f; }
+                }
+                s.DB = DistToRect(WsBuildingRect, s.L); s.DA = DistToRect(WsApronRect, s.L); s.DD = WsDistPoly(WsDrive, s.L);
+                return s;
+            }
+            bool InDrive(in WsSite s) => s.DD <= 0f && s.Same && s.RE > WsRoadKeep;
+            float Target(in WsSite s, float o, out float wgt)
+            {
+                float s0 = Mathf.Max(0f, s.L.y - WsApronRect.yMax), r0 = Mathf.Max(0f, s.RE - WsRoadKeep);
+                float tt = s0 / (s0 + r0 + 1e-3f);
+                float drive = Mathf.Lerp(H - .05f, o, Mathf.Lerp(tt, WsSmooth(tt), .5f));   // half eased: no steep middle on the ramp
+                wgt = 1f;
+                if (s.DB <= 0f) return H - .30f;            // under the floor (foundation band to -0.8 hides the edge)
+                if (s.DA <= 0f) return H - .05f;            // under the apron top (bevel to -0.05, skirt to -0.6)
+                if (InDrive(s)) return drive;               // forecourt: apron level -> the ground at the road edge
+                float wB = 1f / (s.DB + .3f), wA = 1f / (s.DA + .3f), wD = 1f / (s.DD + .3f);
+                float pad = H - (.18f * wB + .08f * wA) / (wB + wA);
+                float d = Mathf.Min(Mathf.Min(s.DB, s.DA), s.DD);
+                wgt = s.Same ? WsSmooth(1f - d / WsBlend) * WsSmooth((s.RE - WsRoadKeep) / 2f) : 0f;
+                return (pad * (wB + wA) + drive * wD) / (wB + wA + wD);
+            }
+            float Gravel(in WsSite s)
+            {
+                if (!s.Same || s.RE < 0f) return 0f;
+                if (s.DB <= 0f || s.DA <= 0f) return 1f;
+                return Mathf.Max(1f - WsSmooth(s.DD / 1.5f), .8f * (1f - WsSmooth(Mathf.Min(s.DB, s.DA) / 2f)));
+            }
+            float Worn(in WsSite s, float g) => s.Same && s.RE >= 0f ? .45f * (1f - WsSmooth(Mathf.Min(Mathf.Min(s.DB, s.DA), s.DD) / 4.5f)) * (1f - g) : 0f;
+
+            var lpts = new List<Vector2>();
+            foreach (var r in new[] { WsBuildingRect, WsApronRect }) lpts.AddRange(new[] { new Vector2(r.xMin, r.yMin), new Vector2(r.xMax, r.yMin), new Vector2(r.xMin, r.yMax), new Vector2(r.xMax, r.yMax) });
+            lpts.AddRange(WsDrive);
+            (float x0, float z0, float x1, float z1) Box(float e)
+            {
+                var w = lpts.SelectMany(p => new[] { Wld(p + new Vector2(-e, -e)), Wld(p + new Vector2(e, -e)), Wld(p + new Vector2(-e, e)), Wld(p + new Vector2(e, e)) }).ToList();
+                return (w.Min(p => p.x), w.Min(p => p.y), w.Max(p => p.x), w.Max(p => p.y));
+            }
+            var box = Box(WsBlend + 1.5f);
+            var bk = new WsBackup { GrassPath = grassPath };
+
+            // 3. heights
+            int R = td.heightmapResolution; float hdx = size.x / (R - 1), hdz = size.z / (R - 1);
+            bk.Hx = Mathf.Clamp(Mathf.FloorToInt((box.x0 - tp.x) / hdx), 0, R - 1); bk.Hz = Mathf.Clamp(Mathf.FloorToInt((box.z0 - tp.z) / hdz), 0, R - 1);
+            bk.Hw = Mathf.Clamp(Mathf.CeilToInt((box.x1 - tp.x) / hdx), 0, R - 1) - bk.Hx + 1; bk.Hh = Mathf.Clamp(Mathf.CeilToInt((box.z1 - tp.z) / hdz), 0, R - 1) - bk.Hz + 1;
+            bk.HOrig = td.GetHeights(bk.Hx, bk.Hz, bk.Hw, bk.Hh);
+            var nh = new float[bk.Hh, bk.Hw];
+            int moved = 0; float maxCut = 0f, maxFill = 0f;
+            for (int j = 0; j < bk.Hh; j++)
+                for (int i = 0; i < bk.Hw; i++)
+                {
+                    float o = bk.HOrig[j, i] * size.y + tp.y;
+                    var s = Site(new Vector2(tp.x + (bk.Hx + i) * hdx, tp.z + (bk.Hz + j) * hdz));
+                    float t = Target(s, o, out float wgt), v = Mathf.Lerp(o, t, wgt);
+                    nh[j, i] = Mathf.Clamp01((v - tp.y) / size.y);
+                    if (Mathf.Abs(v - o) > .01f) { moved++; maxCut = Mathf.Max(maxCut, o - v); maxFill = Mathf.Max(maxFill, v - o); }
+                }
+            td.SetHeights(bk.Hx, bk.Hz, nh);
+            bk.HNew = td.GetHeights(bk.Hx, bk.Hz, bk.Hw, bk.Hh);
+            float Delta(float x, float z)
+            {
+                float fx = Mathf.Clamp((x - tp.x) / hdx - bk.Hx, 0f, bk.Hw - 1.001f), fz = Mathf.Clamp((z - tp.z) / hdz - bk.Hz, 0f, bk.Hh - 1.001f);
+                int i0 = (int)fx, j0 = (int)fz; float u = fx - i0, v = fz - j0;
+                float D(int jj, int ii) => (bk.HNew[jj, ii] - bk.HOrig[jj, ii]) * size.y;
+                return Mathf.Lerp(Mathf.Lerp(D(j0, i0), D(j0, i0 + 1), u), Mathf.Lerp(D(j0 + 1, i0), D(j0 + 1, i0 + 1), u), v);
+            }
+
+            // 4. pit hole (every terrain quad that overlaps the pit opening)
+            int HR = td.holesResolution; float odx = size.x / HR, odz = size.z / HR;
+            var pitW = WsPit.Select(Wld).ToArray();
+            bk.Ox = Mathf.Clamp(Mathf.FloorToInt((pitW.Min(p => p.x) - tp.x) / odx) - 1, 0, HR - 1); bk.Oz = Mathf.Clamp(Mathf.FloorToInt((pitW.Min(p => p.y) - tp.z) / odz) - 1, 0, HR - 1);
+            bk.Ow = Mathf.Clamp(Mathf.CeilToInt((pitW.Max(p => p.x) - tp.x) / odx) + 1, 0, HR - 1) - bk.Ox + 1; bk.Oh = Mathf.Clamp(Mathf.CeilToInt((pitW.Max(p => p.y) - tp.z) / odz) + 1, 0, HR - 1) - bk.Oz + 1;
+            bk.Holes = td.GetHoles(bk.Ox, bk.Oz, bk.Ow, bk.Oh);
+            var holes = (bool[,])bk.Holes.Clone();
+            int cut = 0;
+            for (int j = 0; j < bk.Oh; j++)
+                for (int i = 0; i < bk.Ow; i++)
+                {
+                    float qx = tp.x + (bk.Ox + i) * odx, qz = tp.z + (bk.Oz + j) * odz;
+                    var quad = new[] { new Vector2(qx, qz), new Vector2(qx + odx, qz), new Vector2(qx + odx, qz + odz), new Vector2(qx, qz + odz) };
+                    if (WsOverlap(quad, pitW)) { if (holes[j, i]) cut++; holes[j, i] = false; }
+                }
+            td.SetHoles(bk.Ox, bk.Oz, holes);
+
+            // 5. gravel forecourt / ring + worn grass (texels of the pad, forecourt and 5 m around)
+            int AR = td.alphamapResolution, AL = td.alphamapLayers;
+            int gl = Array.FindIndex(td.terrainLayers, t => t && t.name.ToLowerInvariant().Contains("gravel"));
+            int wl = Array.FindIndex(td.terrainLayers, t => t && t.name.ToLowerInvariant().Contains("worn_grass"));
+            int painted = 0;
+            if (gl >= 0 && wl >= 0)
+            {
+                float adx = size.x / AR, adz = size.z / AR;
+                var abox = Box(5f);
+                bk.Ax = Mathf.Clamp(Mathf.FloorToInt((abox.x0 - tp.x) / adx), 0, AR - 1); bk.Az = Mathf.Clamp(Mathf.FloorToInt((abox.z0 - tp.z) / adz), 0, AR - 1);
+                bk.Aw = Mathf.Clamp(Mathf.CeilToInt((abox.x1 - tp.x) / adx), 0, AR - 1) - bk.Ax + 1; bk.Ah = Mathf.Clamp(Mathf.CeilToInt((abox.z1 - tp.z) / adz), 0, AR - 1) - bk.Az + 1; bk.Al = AL;
+                var a = td.GetAlphamaps(bk.Ax, bk.Az, bk.Aw, bk.Ah);
+                bk.AOrig = WsPack(a);
+                for (int j = 0; j < bk.Ah; j++)
+                    for (int i = 0; i < bk.Aw; i++)
+                    {
+                        var s = Site(new Vector2(tp.x + (bk.Ax + i + .5f) * adx, tp.z + (bk.Az + j + .5f) * adz));
+                        float g = Gravel(s), w = Worn(s, g);
+                        if (g + w < .004f) continue;
+                        float keep = 1f - g - w;
+                        for (int l = 0; l < AL; l++) a[j, i, l] *= keep;
+                        a[j, i, gl] += g; a[j, i, wl] += w;
+                        painted++;
+                    }
+                td.SetAlphamaps(bk.Ax, bk.Az, a);
+                bk.ANew = WsPack(td.GetAlphamaps(bk.Ax, bk.Az, bk.Aw, bk.Ah));
+            }
+            else sb.Append("WARNING no gravel / worn_grass terrain layer (not painted); ");
+
+            // 6. terrain trees: off the building (+4.5 m), apron (+2 m) and forecourt (+2 m); the rest re-seated on the new ground
+            var keepTrees = new List<TreeInstance>(td.treeInstanceCount); int seated = 0;
+            foreach (var t0 in td.treeInstances)
+            {
+                var t = t0;
+                float wx = t.position.x * size.x + tp.x, wz = t.position.z * size.z + tp.z;
+                if (wx < box.x0 || wx > box.x1 || wz < box.z0 || wz > box.z1) { keepTrees.Add(t); continue; }
+                var s = Site(new Vector2(wx, wz));
+                if (s.DB < 4.5f || s.DA < 2f || (s.Same && s.RE > 0f && s.DD < 2f)) { bk.Trees.Add(t); continue; }
+                float gy = td.GetInterpolatedHeight(t.position.x, t.position.z) / size.y;
+                if (Mathf.Abs(gy - t.position.y) > 1e-6f) { t.position = new Vector3(t.position.x, gy, t.position.z); seated++; }
+                keepTrees.Add(t);
+            }
+            if (bk.Trees.Count > 0 || seated > 0) td.SetTreeInstances(keepTrees.ToArray(), false);
+
+            // 7. baked tall grass (the play scene's W85GrassRenderer data): cleared on the pad / forecourt / gravel, re-seated where the ground moved
+            int gCleared = 0, gSeated = 0;
+            if (gb != null)
+            {
+                foreach (var ch in grass.data.chunks)
+                {
+                    if (ch.centre.x + ch.extents.x < box.x0 || ch.centre.x - ch.extents.x > box.x1 || ch.centre.z + ch.extents.z < box.z0 || ch.centre.z - ch.extents.z > box.z1) continue;
+                    for (uint k = ch.start; k < ch.start + ch.count && (k + 1) * 32 <= gb.Length; k++)
+                    {
+                        int off = (int)k * 32;
+                        float x = BitConverter.ToSingle(gb, off), y = BitConverter.ToSingle(gb, off + 4), z = BitConverter.ToSingle(gb, off + 8), h = BitConverter.ToSingle(gb, off + 12);
+                        if (x < box.x0 || x > box.x1 || z < box.z0 || z > box.z1 || h <= 0f) continue;
+                        var s = Site(new Vector2(x, z));
+                        float ny = y, nhh = h;
+                        if (s.DB < .6f || s.DA < .6f || (s.Same && s.RE > -.2f && s.DD < .4f) || Gravel(s) > .45f) { nhh = 0f; gCleared++; }
+                        else { float d = Delta(x, z); if (Mathf.Abs(d) > .005f) { ny = y + d; gSeated++; } }
+                        if (ny == y && nhh == h) continue;
+                        Buffer.BlockCopy(BitConverter.GetBytes(ny), 0, gb, off + 4, 4);
+                        Buffer.BlockCopy(BitConverter.GetBytes(nhh), 0, gb, off + 12, 4);
+                        bk.Blades.Add(((int)k, y, h, ny, nhh));
+                        grassDirty = true;
+                    }
+                }
+            }
+            if (grassDirty) { File.WriteAllBytes(grassPath, gb); AssetDatabase.ImportAsset(grassPath, ImportAssetOptions.ForceUpdate); }
+
+            EditorUtility.SetDirty(td);
+            foreach (var tex in td.alphamapTextures) EditorUtility.SetDirty(tex);
+            ter.Flush();
+            Folder(Path.GetDirectoryName(backup).Replace('\\', '/'));
+            WsWrite(backup, bk);
+            AssetDatabase.ImportAsset(backup);
+            sb.Append($"floor {H:0.00} m, {moved} height samples moved (cut <= {maxCut:0.00} m, fill <= {maxFill:0.00} m, blend {WsBlend:0} m, road band kept), " +
+                      $"pit hole {cut} quad(s), {painted} texels gravel / worn grass, {bk.Trees.Count} tree(s) removed, {seated} re-seated, " +
+                      (gb != null ? $"grass {gCleared} blade(s) cleared, {gSeated} re-seated ({grassPath})" : "grass untouched") + $"; backup {backup}");
+            return sb.ToString();
+        }
+
+        static byte[] WsPack(float[,,] a)
+        {
+            int h = a.GetLength(0), w = a.GetLength(1), l = a.GetLength(2); var r = new byte[h * w * l]; int k = 0;
+            for (int j = 0; j < h; j++) for (int i = 0; i < w; i++) for (int c = 0; c < l; c++) r[k++] = (byte)Mathf.Clamp(Mathf.RoundToInt(a[j, i, c] * 255f), 0, 255);
+            return r;
+        }
+
+        static float[,,] WsUnpack(byte[] b, int h, int w, int l)
+        {
+            var r = new float[h, w, l]; int k = 0;
+            for (int j = 0; j < h; j++) for (int i = 0; i < w; i++) for (int c = 0; c < l; c++) r[j, i, c] = b[k++] / 255f;
+            return r;
+        }
+
+        static string WsRestore(Terrain ter, string path, string grassPath, byte[] gb, ref bool grassDirty)
+        {
+            var td = ter.terrainData; Vector3 tp = ter.transform.position, size = td.size;
+            WsBackup bk;
+            try { bk = WsRead(path); } catch (Exception e) { return "backup unreadable (" + e.Message + "), ignored"; }
+            int R = td.heightmapResolution;
+            if (bk.Hx + bk.Hw > R || bk.Hz + bk.Hh > R) return "backup does not fit this terrain, ignored";
+            var cur = td.GetHeights(bk.Hx, bk.Hz, bk.Hw, bk.Hh);
+            for (int j = 0; j < bk.Hh; j++)
+                for (int i = 0; i < bk.Hw; i++)
+                    if (Mathf.Abs(cur[j, i] - bk.HNew[j, i]) > 2e-6f) return "backup stale (the terrain changed since the last fit, e.g. a map rebuild): the current ground is taken as original";
+            td.SetHeights(bk.Hx, bk.Hz, bk.HOrig);
+            string alpha = "";
+            if (bk.AOrig != null && bk.ANew != null && bk.Al == td.alphamapLayers)
+            {
+                var a = WsPack(td.GetAlphamaps(bk.Ax, bk.Az, bk.Aw, bk.Ah)); int diff = 0;
+                for (int k = 0; k < a.Length; k++) if (Mathf.Abs(a[k] - bk.ANew[k]) > 1) diff++;
+                if (diff == 0) td.SetAlphamaps(bk.Ax, bk.Az, WsUnpack(bk.AOrig, bk.Ah, bk.Aw, bk.Al)); else alpha = $", paint changed since ({diff} values): kept";
+            }
+            if (bk.Holes != null) td.SetHoles(bk.Ox, bk.Oz, bk.Holes);
+            if (bk.Trees.Count > 0) td.SetTreeInstances(td.treeInstances.Concat(bk.Trees).ToArray(), false);
+            // re-seat the trees of the old region on the restored ground
+            float x0 = tp.x + bk.Hx * size.x / (R - 1), x1 = tp.x + (bk.Hx + bk.Hw) * size.x / (R - 1), z0 = tp.z + bk.Hz * size.z / (R - 1), z1 = tp.z + (bk.Hz + bk.Hh) * size.z / (R - 1);
+            var trees = td.treeInstances; int seat = 0;
+            for (int k = 0; k < trees.Length; k++)
+            {
+                float wx = trees[k].position.x * size.x + tp.x, wz = trees[k].position.z * size.z + tp.z;
+                if (wx < x0 || wx > x1 || wz < z0 || wz > z1) continue;
+                float gy = td.GetInterpolatedHeight(trees[k].position.x, trees[k].position.z) / size.y;
+                if (Mathf.Abs(gy - trees[k].position.y) > 1e-6f) { trees[k].position = new Vector3(trees[k].position.x, gy, trees[k].position.z); seat++; }
+            }
+            if (seat > 0) td.SetTreeInstances(trees, false);
+            int blades = 0;
+            if (gb != null && bk.GrassPath == grassPath)
+                foreach (var b in bk.Blades)
+                {
+                    int off = b.i * 32; if (off + 32 > gb.Length) continue;
+                    float y = BitConverter.ToSingle(gb, off + 4), h = BitConverter.ToSingle(gb, off + 12);
+                    if (y != b.ny || h != b.nh) continue;
+                    Buffer.BlockCopy(BitConverter.GetBytes(b.oy), 0, gb, off + 4, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(b.oh), 0, gb, off + 12, 4);
+                    blades++;
+                }
+            grassDirty |= blades > 0;
+            return $"previous fit undone ({bk.Hw} x {bk.Hh} heights, {bk.Trees.Count} trees back, {blades} grass blades{alpha})";
+        }
+
+        static void WsWrite(string path, WsBackup b)
+        {
+            using var w = new BinaryWriter(File.Create(path));
+            w.Write("WSG1");
+            w.Write(b.Hx); w.Write(b.Hz); w.Write(b.Hw); w.Write(b.Hh);
+            for (int j = 0; j < b.Hh; j++) for (int i = 0; i < b.Hw; i++) { w.Write(b.HOrig[j, i]); w.Write(b.HNew[j, i]); }
+            w.Write(b.Ax); w.Write(b.Az); w.Write(b.Aw); w.Write(b.Ah); w.Write(b.Al);
+            w.Write(b.AOrig?.Length ?? 0); if (b.AOrig != null) { w.Write(b.AOrig); w.Write(b.ANew); }
+            w.Write(b.Ox); w.Write(b.Oz); w.Write(b.Ow); w.Write(b.Oh);
+            for (int j = 0; j < b.Oh; j++) for (int i = 0; i < b.Ow; i++) w.Write(b.Holes[j, i]);
+            w.Write(b.Trees.Count);
+            foreach (var t in b.Trees)
+            {
+                w.Write(t.position.x); w.Write(t.position.y); w.Write(t.position.z); w.Write(t.widthScale); w.Write(t.heightScale); w.Write(t.rotation);
+                w.Write(t.color.r); w.Write(t.color.g); w.Write(t.color.b); w.Write(t.color.a);
+                w.Write(t.lightmapColor.r); w.Write(t.lightmapColor.g); w.Write(t.lightmapColor.b); w.Write(t.lightmapColor.a); w.Write(t.prototypeIndex);
+            }
+            w.Write(b.GrassPath ?? ""); w.Write(b.Blades.Count);
+            foreach (var x in b.Blades) { w.Write(x.i); w.Write(x.oy); w.Write(x.oh); w.Write(x.ny); w.Write(x.nh); }
+        }
+
+        static WsBackup WsRead(string path)
+        {
+            using var r = new BinaryReader(File.OpenRead(path));
+            if (r.ReadString() != "WSG1") throw new InvalidDataException("not a workshop ground backup");
+            var b = new WsBackup { Hx = r.ReadInt32(), Hz = r.ReadInt32(), Hw = r.ReadInt32(), Hh = r.ReadInt32() };
+            b.HOrig = new float[b.Hh, b.Hw]; b.HNew = new float[b.Hh, b.Hw];
+            for (int j = 0; j < b.Hh; j++) for (int i = 0; i < b.Hw; i++) { b.HOrig[j, i] = r.ReadSingle(); b.HNew[j, i] = r.ReadSingle(); }
+            b.Ax = r.ReadInt32(); b.Az = r.ReadInt32(); b.Aw = r.ReadInt32(); b.Ah = r.ReadInt32(); b.Al = r.ReadInt32();
+            int an = r.ReadInt32(); if (an > 0) { b.AOrig = r.ReadBytes(an); b.ANew = r.ReadBytes(an); }
+            b.Ox = r.ReadInt32(); b.Oz = r.ReadInt32(); b.Ow = r.ReadInt32(); b.Oh = r.ReadInt32();
+            b.Holes = new bool[b.Oh, b.Ow];
+            for (int j = 0; j < b.Oh; j++) for (int i = 0; i < b.Ow; i++) b.Holes[j, i] = r.ReadBoolean();
+            int nt = r.ReadInt32();
+            for (int k = 0; k < nt; k++)
+                b.Trees.Add(new TreeInstance
+                {
+                    position = new Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle()), widthScale = r.ReadSingle(), heightScale = r.ReadSingle(), rotation = r.ReadSingle(),
+                    color = new Color32(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte()), lightmapColor = new Color32(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte()), prototypeIndex = r.ReadInt32(),
+                });
+            b.GrassPath = r.ReadString();
+            int nb = r.ReadInt32();
+            for (int k = 0; k < nb; k++) b.Blades.Add((r.ReadInt32(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle()));
+            return b;
+        }
+
+        static string Inside(Scene scene, Vector3 c, Quaternion r, Vector3 size) => string.Join(", ",
+            Physics.OverlapBox(c + Vector3.up * (size.y * .5f + .3f), new Vector3(size.x * .5f, size.y * .5f, size.z * .5f), r, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)
+                .Where(x => x.gameObject.scene == scene && !(x is TerrainCollider) && x.transform.root.name != "Van").Select(x => PathOf(x.transform)).Distinct());
+
+        static string Spread(Scene scene, Vector3 c, Quaternion r, Vector3 size, Func<float, float, float> ground)
+        {
+            float lo = float.MaxValue, hi = float.MinValue;
+            for (int k = 0; k < 4; k++)
+            {
+                Vector3 q = c + r * new Vector3(((k & 1) == 0 ? -.5f : .5f) * size.x, 0f, ((k & 2) == 0 ? -.5f : .5f) * size.z);
+                float y = GroundRay(scene, q.x, q.z, ground);
+                lo = Mathf.Min(lo, y - c.y); hi = Mathf.Max(hi, y - c.y);
+            }
+            return $"{lo:+0.00;-0.00}..{hi:+0.00;-0.00} m";
+        }
+
+        static GameObject UniqueRoot(Scene scene, string name)
+        {
+            var found = scene.GetRootGameObjects().Where(g => g.name == name).ToList();
+            foreach (var extra in found.Skip(1)) Object.DestroyImmediate(extra);
+            GameObject go = found.FirstOrDefault();
+            if (!go) { go = new GameObject(name); SceneManager.MoveGameObjectToScene(go, scene); }
+            return go;
+        }
+
+        static GameObject UniqueChild(Transform parent, string name)
+        {
+            var found = parent.Cast<Transform>().Where(t => t.name == name).Select(t => t.gameObject).ToList();
+            foreach (var extra in found.Skip(1)) Object.DestroyImmediate(extra);
+            GameObject go = found.FirstOrDefault();
+            if (!go) { go = new GameObject(name); go.transform.SetParent(parent, false); }
+            return go;
+        }
+
+        static OnlyVolunteers.Story.StoryAnchor Anchor(Transform parent, string name, string id, string title, Vector3 local, Vector3 size, bool markers, Color color)
+        {
+            GameObject go = UniqueChild(parent, name);
+            go.transform.localPosition = local;
+            go.transform.localRotation = Quaternion.identity;
+            go.transform.localScale = Vector3.one;
+            var a = go.GetComponent<OnlyVolunteers.Story.StoryAnchor>();
+            if (!a) a = go.AddComponent<OnlyVolunteers.Story.StoryAnchor>();
+            a.Id = id; a.Title = title; a.Size = size; a.ShowMarkers = markers; a.MarkerColor = color;
+            EditorUtility.SetDirty(a);
+            EditorUtility.SetDirty(go);
+            return a;
+        }
+
+        static OnlyVolunteers.Story.StoryAnchor WorldAnchor(Scene scene, Transform parent, string name, string id, string title, Vector2 at, float yaw, bool markers, Color color, Func<float, float, float> ground)
+        {
+            var a = Anchor(parent, name, id, title, Vector3.zero, Vector3.zero, markers, color);
+            a.transform.SetPositionAndRotation(new Vector3(at.x, GroundRay(scene, at.x, at.y, ground), at.y), Quaternion.Euler(0f, yaw, 0f));
+            return a;
+        }
+
+        /// <summary>Ground under a plan point by a downward ray: the terrain hit, raised to a wide flat surface outside
+        /// buildings lying on it (a yard / pad / road, at most 0.5 m above the terrain; roofs, vehicles and props do not
+        /// count); the ground sampler when the ray meets no terrain.</summary>
+        static float GroundRay(Scene scene, float x, float z, Func<float, float, float> fallback)
+        {
+            var hits = Physics.RaycastAll(new Vector3(x, 400f, z), Vector3.down, 800f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)
+                .Where(h => h.collider.gameObject.scene == scene).ToArray();
+            var terrainHits = hits.Where(h => h.collider is TerrainCollider).ToArray();
+            if (terrainHits.Length == 0) return fallback(x, z);
+            float best = terrainHits.Max(h => h.point.y), terrainY = best;
+            foreach (var h in hits)
+            {
+                var c = h.collider;
+                if (c is TerrainCollider || h.normal.y < .7f || h.point.y <= best || h.point.y > terrainY + .5f) continue;
+                if (InBuilding(c.transform) || Mathf.Max(c.bounds.size.x, c.bounds.size.z) < 2f || c.transform.root.name == "Van") continue;
+                best = h.point.y;
+            }
+            return best;
         }
 
         // ------------------------------------------------------------------ W86 sale: the first buyer's crate

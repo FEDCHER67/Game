@@ -208,10 +208,15 @@ namespace OnlyVolunteers.Inventory
             if (item.TryGetComponent<IPhysicalInventoryItem>(out _)) { ServerHoldPhysical(item); return; }
             int itemId = item.Definition.Id;
             int unitValue = item.UnitValue;
-            int added = model.TryAdd(itemId, item.Count, unitValue);
+            // G49: the picked-up instance keeps its identity (ItemId, PersonId, portion); an authored syringe without
+            // provenance is legacy (blocked from use), never a clean new syringe.
+            var picked = item.Stack;
+            if (picked.Syringe == null && item.Definition.SyringeKind != SyringeKind.None)
+                picked.Syringe = SyringeSaveBlock.Legacy(System.Guid.NewGuid().ToString("N"), item.Definition.SyringeKind);
+            int added = picked.Syringe != null ? model.TryAdd(picked) : model.TryAdd(itemId, item.Count, unitValue);
             if (added <= 0) return;
             item.ServerTake(added);
-            ServerPickedUp?.Invoke(new ItemStack(itemId, added, unitValue));
+            ServerPickedUp?.Invoke(new ItemStack(itemId, added, unitValue, picked.Syringe));
         }
 
         [ServerRpc]
@@ -263,6 +268,7 @@ namespace OnlyVolunteers.Inventory
             WorldItem worldItem = instance.GetComponent<WorldItem>();
             worldItem.ServerSetDefinition(definition);
             worldItem.ServerSetContents(dropped.Count, dropped.UnitValue);
+            worldItem.ServerSetSyringe(dropped.Syringe); // G49: the same instance lies in the world
             Spawn(instance);
             ServerDropped?.Invoke(dropped, worldItem);
         }
@@ -283,17 +289,45 @@ namespace OnlyVolunteers.Inventory
             return model.TryAdd(definition.Id, count, unitValue);
         }
 
+        /// <summary>Server, G49: hand-over / return of an EXISTING stack (a syringe keeps its instance). The receiver refusing
+        /// (0) means the caller gives the same stack back to the sender.</summary>
+        public int ServerTryAdd(ItemStack existing) =>
+            IsServerInitialized && model != null ? model.TryAdd(existing) : 0;
+
+        /// <summary>Server, G49: re-publishes a slot after the server changed its syringe in place (binding / fill).</summary>
+        public void ServerRefreshSyringeSlot(int slot)
+        {
+            if (!IsServerInitialized || model == null || slot < 0 || slot >= model.SlotCount) return;
+            var stack = model.GetSlot(slot);
+            stack.Syringe = stack.Syringe?.Copy();
+            slots[slot] = stack;
+        }
+
         /// <summary>Server: removes up to count items from a slot (e.g. a sale). Returns what was taken.</summary>
         public ItemStack ServerTakeFromSlot(int slot, int count) =>
             IsServerInitialized && model != null ? model.TakeFromSlot(slot, count) : ItemStack.Empty;
 
+        /// <summary>Legacy money API. ECONOMY spec v01 §3.1: with a team economy running, money is the ONE shared fund, so
+        /// this forwards there (a fresh key per call: callers that can be repeated must use TeamEconomy with their own
+        /// transaction key). Without an economy (old test scenes) the old per-player cash is used.</summary>
         public void ServerAddCash(int amount)
         {
-            if (IsServerInitialized && model != null) model.AddCash(amount);
+            if (!IsServerInitialized || amount <= 0) return;
+            if (OnlyVolunteers.Economy.EconomyServerHooks.Credit != null)
+            {
+                OnlyVolunteers.Economy.EconomyServerHooks.Credit(amount, "Зачисление (" + name + ")", "legacy:credit:" + Guid.NewGuid().ToString("N"));
+                return;
+            }
+            if (model != null) model.AddCash(amount);
         }
 
-        public bool ServerTrySpendCash(int amount) =>
-            IsServerInitialized && model != null && model.TrySpendCash(amount);
+        public bool ServerTrySpendCash(int amount)
+        {
+            if (!IsServerInitialized || amount < 0) return false;
+            if (OnlyVolunteers.Economy.EconomyServerHooks.Charge != null)
+                return amount == 0 || OnlyVolunteers.Economy.EconomyServerHooks.Charge(amount, "Списание (" + name + ")", "legacy:charge:" + Guid.NewGuid().ToString("N"));
+            return model != null && model.TrySpendCash(amount);
+        }
 
         /// <summary>Server: one unit of the most expensive carried item (not removed), or empty.</summary>
         public ItemStack ServerMostValuableItem() =>

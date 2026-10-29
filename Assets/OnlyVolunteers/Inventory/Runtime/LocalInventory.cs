@@ -72,7 +72,11 @@ namespace OnlyVolunteers.Inventory
             OfflineWorldItem item = OfflineWorldItem.Nearest(transform.position, reach);
             if (item == null || item.Definition == null) return false;
             int unitValue = item.UnitValue > 0 ? item.UnitValue : item.Definition.BaseValue;
-            int added = model.TryAdd(item.Definition.Id, item.Count, unitValue);
+            var stack = item.Stack; stack.UnitValue = unitValue;
+            // An authored syringe without provenance is legacy; only explicit new-item spawns mint a clean instance.
+            if (stack.Syringe == null && item.Definition.SyringeKind != SyringeKind.None)
+                stack.Syringe = SyringeSaveBlock.Legacy(System.Guid.NewGuid().ToString("N"), item.Definition.SyringeKind);
+            int added = model.TryAdd(stack);
             if (added <= 0) return false;
             item.Take(added);
             return true;
@@ -103,7 +107,7 @@ namespace OnlyVolunteers.Inventory
                 velocity = new Vector3(x, y, z);
             }
             OfflineWorldItem.Spawn(database.Get(taken.ItemId), 1, taken.UnitValue,
-                transform.position + forward + Vector3.up * 1.1f, velocity);
+                transform.position + forward + Vector3.up * 1.1f, velocity).SetSyringe(taken.Syringe);
             return true;
         }
     }

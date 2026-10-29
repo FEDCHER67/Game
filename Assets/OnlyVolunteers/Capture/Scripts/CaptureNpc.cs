@@ -47,7 +47,8 @@ namespace OnlyVolunteers.Capture
         private static WeaponStun slumpWeapon;
         private readonly Transform[] wrist = new Transform[2], ankle = new Transform[2];
         private readonly Transform[] upperArm = new Transform[2], foreArm = new Transform[2];
-        private Transform hips, spine2;
+        private Transform hips, spine, spine2, head;
+        private float clutch;
         private GameObject[] bands;
         private LineRenderer handLink, footLink;
         private float behindBack;
@@ -64,7 +65,31 @@ namespace OnlyVolunteers.Capture
             FindBones();
             if (!All.Contains(this)) All.Add(this);
             ApplyTies(true);
+            ApplyClutchRun();
         }
+
+        /// <summary>K10 (Fedya 29.10): the doomed runner (belly opened, not sewn) runs the Escape_Panic_v02 belly-clutch loop
+        /// (Esc_Run_BellyClutch_Loop_Panic_v02: in place at 3.2 m/s like his own run clips) instead of his run clips: an
+        /// override of HIS animator's controller only (made at Bind, before he moves, so nothing resets mid-run). Ordinary
+        /// escapees keep their run. Without the imported clip he keeps his run plus the procedural clutch (LateUpdate).</summary>
+        private void ApplyClutchRun()
+        {
+            if (clutchRun || State == null || !State.ShockRun || Rules == null || Rules.Tuning == null) return;
+            AnimationClip loop = Rules.Tuning.escapeRunClutchClip;
+            Animator animator = Npc != null ? Npc.GetComponentInChildren<Animator>(true) : null;
+            if (loop == null || animator == null || animator.runtimeAnimatorController == null) return;
+            var over = new AnimatorOverrideController(animator.runtimeAnimatorController) { name = "K10 belly-clutch run (" + PatientId + ")" };
+            var pairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+            foreach (AnimationClip run in over.animationClips)
+                if (run != null && (run.name == "Run" || run.name == "Flee_Run" || run.name == "Cop_Run" || run.name == "Cop_Run_Fat"))
+                    pairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(run, loop));
+            if (pairs.Count == 0) return;
+            over.ApplyOverrides(pairs);
+            animator.runtimeAnimatorController = over;
+            clutchRun = true;
+            Debug.Log($"[CAPTURE] K10 {PatientId}: belly-clutch run loop on {pairs.Count} run clips");
+        }
+        private bool clutchRun;
 
         private void OnEnable() { if (Facts != null && !All.Contains(this)) All.Add(this); }
         private void OnDisable() => All.Remove(this);
@@ -89,6 +114,12 @@ namespace OnlyVolunteers.Capture
             bool done = Rules.FillBlood(ref fill, seconds);
             if (done) Debug.Log($"[CAPTURE] blood portion {State.bloodPortions} from {PatientId} alive={State.alive}");
             return done;
+        }
+        public OnlyVolunteers.Inventory.SyringeUseResult DrawSyringe(OnlyVolunteers.Inventory.SyringeInstance syringe, float seconds, out bool completed)
+        {
+            var result = Rules.FillSyringe(syringe, seconds, CanDrawBlood() == FieldRefusal.None, out completed);
+            if (result == OnlyVolunteers.Inventory.SyringeUseResult.Success) LastBloodAt = Time.time;
+            return result;
         }
 
         public FieldRefusal CanDrawBlood() =>
@@ -118,11 +149,13 @@ namespace OnlyVolunteers.Capture
             float dose = pendingDose;
             pendingDose = 0f;
             Rules.Tick(Time.fixedDeltaTime, dose, false);
+            TrackShockRun();
             Facts.condition = Npc.Condition;
             if (wasAlive && !State.alive)
             {
-                Debug.Log($"[CAPTURE] {PatientId} died in the field: {State.deathCause}");
-                CaptureDirector.Instance?.Toast("Он больше не дышит… передоз", CaptureHud.Bad);
+                Debug.Log($"[CAPTURE] {PatientId} died in the field: {State.deathCause}" +
+                          (State.deathCause == DeathCause.Shock ? $" (K10 run {State.shockRunCovered:F1}/{State.shockRunMeters:F1} m, {State.shockRunTime:F1} s)" : ""));
+                CaptureDirector.Instance?.Toast(State.deathCause == DeathCause.Shock ? "Далеко не убежал… болевой шок" : "Он больше не дышит… передоз", CaptureHud.Bad);
             }
             wasAlive = State.alive;
             Restraints r = Facts.restraints;
@@ -130,6 +163,30 @@ namespace OnlyVolunteers.Capture
             if (!CaptureRules.CanLeaveVanAlone(r) && Npc.InCargo) Npc.CrawlToward = false;
             TieSprings(r);
         }
+
+        /// <summary>K10 (Fedya 29.10, variant В): he ran off the table with the belly opened and not sewn. Only his OWN escape
+        /// locomotion counts toward the pain-shock distance rolled once at the table (2..20 m, saved in his OperationState):
+        /// on his feet, or crawling away Groggy. Carried, in the van, lying stunned (Out), getting up or asleep: nothing
+        /// counts, and the start point is re-anchored, so being carried or teleported (respawn, put down) never adds metres.</summary>
+        private void TrackShockRun()
+        {
+            bool counts = false;
+            if (State.ShockRun && !State.Sleeping)
+            {
+                INpcBody body = Npc.PhysicalBody;
+                bool carried = body != null && body.Active && body.HolderCount > 0;
+                bool onFeet = Npc.State == NpcState.Free;
+                bool crawling = Npc.State == NpcState.Down && Npc.Phase == StunPhase.Groggy;
+                counts = OperationRules.ShockRunCounts(onFeet, crawling, carried, Npc.InCargo);
+            }
+            if (!counts) { shockRunFromSet = false; return; }
+            Vector3 at = Npc.Center;
+            float metres = shockRunFromSet ? OperationRules.ShockRunStep(shockRunFrom, at) : 0f;
+            shockRunFrom = at; shockRunFromSet = true;
+            Rules.AdvanceShockRun(metres, Time.fixedDeltaTime);
+        }
+        private Vector3 shockRunFrom;
+        private bool shockRunFromSet;
 
         private void Update()
         {
@@ -143,7 +200,8 @@ namespace OnlyVolunteers.Capture
         {
             bool dead = !State.alive;
             bool sleeping = State.Sleeping;
-            if ((dead || sleeping) && Npc.State != NpcState.Down && Npc.State != NpcState.Free && (dead || State.sleepRemaining >= SlumpSleep))
+            // K10: a doomed runner dies on his feet (Free, running): he falls on in his run too (GreyboxNpc.Hit, Upright).
+            if (Npc.State != NpcState.Down && (dead || (sleeping && Npc.State != NpcState.Free && State.sleepRemaining >= SlumpSleep)))
                 Slump();
             if (Npc.State != NpcState.Down) return;
             if (dead)
@@ -235,6 +293,8 @@ namespace OnlyVolunteers.Capture
                     case "mixamorig:RightForeArm": foreArm[1] = t; break;
                     case "mixamorig:Hips": hips = t; break;
                     case "mixamorig:Spine2": spine2 = t; break;
+                    case "mixamorig:Spine": spine = t; break;
+                    case "mixamorig:Head": head = t; break;
                 }
             }
         }
@@ -299,6 +359,14 @@ namespace OnlyVolunteers.Capture
             float want = Facts.restraints.hands && State.alive && animated ? 1f : 0f;
             behindBack = Mathf.MoveTowards(behindBack, want, Time.deltaTime / 0.25f);
             if (behindBack > 0.001f && hips != null) CaptureTieVisuals.ArmsBehindBack(hips, spine2, upperArm, foreArm, wrist, behindBack);
+            // K10: the doomed runner (belly opened, not sewn): hunched, both hands pressed to the belly, on his feet. Tied hands
+            // keep the behind-the-back pose; the collapse is the ordinary death slump (ragdoll).
+            bool upright = Npc.State == NpcState.Free || Npc.State == NpcState.GettingUp;
+            // With the imported belly-clutch run loop the clip itself clutches: the procedural layer only covers getting up.
+            bool clutchClip = clutchRun && Npc.State == NpcState.Free;
+            float clutchWant = State.ShockRun && animated && upright && !clutchClip && !Facts.restraints.hands ? 1f : 0f;
+            clutch = Mathf.MoveTowards(clutch, clutchWant, Time.deltaTime / 0.2f);
+            if (clutch > 0.001f) OperationBellyClutch.Apply(hips, spine, spine2, head, upperArm, foreArm, wrist, clutch, Time.time);
             CaptureTieVisuals.UpdateLinks(handLink, footLink, wrist, ankle, Facts.restraints);
         }
 

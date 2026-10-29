@@ -13,12 +13,14 @@ namespace OnlyVolunteers.Inventory
         public int ItemId;
         public int Count;
         public int UnitValue;
+        public SyringeInstance Syringe;
 
-        public ItemStack(int itemId, int count, int unitValue)
+        public ItemStack(int itemId, int count, int unitValue, SyringeInstance syringe = null)
         {
             ItemId = itemId;
             Count = count;
             UnitValue = unitValue;
+            Syringe = syringe;
         }
 
         public static ItemStack Empty => default;
@@ -26,7 +28,8 @@ namespace OnlyVolunteers.Inventory
         public long TotalValue => (long)UnitValue * Count;
 
         public bool Equals(ItemStack other) =>
-            ItemId == other.ItemId && Count == other.Count && UnitValue == other.UnitValue;
+            ItemId == other.ItemId && Count == other.Count && UnitValue == other.UnitValue &&
+            ReferenceEquals(Syringe, other.Syringe);
         public override bool Equals(object obj) => obj is ItemStack other && Equals(other);
         public override int GetHashCode() => HashCode.Combine(ItemId, Count, UnitValue);
         public override string ToString() => IsEmpty ? "(empty)" : $"{ItemId} x{Count} @{UnitValue}";
@@ -38,12 +41,14 @@ namespace OnlyVolunteers.Inventory
         public readonly int Id;
         public readonly int Size;
         public readonly int MaxStack;
+        public readonly SyringeKind SyringeKind;
 
-        public ItemInfo(int id, int size, int maxStack)
+        public ItemInfo(int id, int size, int maxStack, SyringeKind syringeKind = SyringeKind.None)
         {
             Id = id;
             Size = size;
             MaxStack = maxStack;
+            SyringeKind = syringeKind;
         }
     }
 

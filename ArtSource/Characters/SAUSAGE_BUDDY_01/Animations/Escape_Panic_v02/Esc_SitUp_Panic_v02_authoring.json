@@ -1,0 +1,162 @@
+{
+  "clip": "Esc_SitUp_Panic_v02",
+  "action": "Esc_SitUp_Panic_v02",
+  "take": "Buddy_Rig_Mixamo65|Esc_SitUp_Panic_v02",
+  "variant_of": "Esc_SitUp_v01",
+  "v01_duration_s": 1.0,
+  "duration_vs_v01_pct": 20.0,
+  "frames": [
+    1,
+    37
+  ],
+  "fps": 30,
+  "duration_s": 1.2,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "LIE",
+  "end_pose_key": "SIT",
+  "preconditions": {
+    "closed": [],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R"
+    ],
+    "any": [
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ]
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [
+    {
+      "name": "BellyGrab",
+      "t": 0.42,
+      "norm": 0.35,
+      "frame": 13.6
+    }
+  ],
+  "next": [
+    "Esc_Sit_UnbuckleLegsBoth_Panic_v02 / _LegL_ / _LegR_ (a leg strap closed)",
+    "Esc_SwingOff_R/L_Panic_v02 (all open)"
+  ],
+  "beats": [
+    "0.05 jolt, 0.10 glimpses his belly",
+    "0.13-0.32 jackknifes up WAY too fast, overshoots face to the knees",
+    "0.42 both hands slap onto the open belly, hunched, panting",
+    "0.53-0.86 wobbles side to side like a weeble",
+    "0.95-1.12 catches himself: palms slap down on the pad, quick look around",
+    "1.20 SIT"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0381,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "hand_L": 0.0162,
+      "hand_R": 0.0162
+    },
+    "hand_ik_overreach_at_s": {
+      "hand_L": 0.1,
+      "hand_R": 0.1
+    },
+    "contact_root_lift_max_m": 0.0247,
+    "free_leg_pad_lift_max_deg": 0.0,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightHand": 18,
+      "mixamorig:LeftHand": 19
+    },
+    "root_height_smoothing_max_m": 0.0067,
+    "inbetween_lift_max_m": 0.0,
+    "seam_eval_vs_pose_key_mm": {
+      "t0": 0.001,
+      "tEnd": 0.001
+    }
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.91,
+    "max_key_step_bone": "mixamorig:RightArm",
+    "pad_gap_min_mm": {
+      "head": 3.26,
+      "chest": 0.55,
+      "pelvis": 0.0,
+      "arm_Left": 1.63,
+      "leg_Left": 3.5,
+      "arm_Right": 0.71,
+      "leg_Right": 0.42
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.0,
+      "chest": 0.0,
+      "pelvis": 0.233,
+      "arm_Left": 0.025,
+      "leg_Left": 0.233,
+      "arm_Right": 0.1,
+      "leg_Right": 0.233
+    },
+    "floor_min_mm": 656.0,
+    "floor_min_at_s": 0.025,
+    "closed_strap_drift_mm": {
+      "leg_L": 26.2,
+      "leg_R": 26.2
+    },
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+      "LIE": 0.0,
+      "SIT": 0.0
+    },
+    "seam_step_start_mm": {
+      "hand_Left": 7.7,
+      "hand_Right": 7.7,
+      "foot_Left": 0.0,
+      "foot_Right": 0.0,
+      "Head": 7.5,
+      "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+      "hand_Left": 0.0,
+      "hand_Right": 0.0,
+      "foot_Left": 0.0,
+      "foot_Right": 0.0,
+      "Head": 2.8,
+      "Hips": 0.1
+    },
+    "max_step_mm": {
+      "hand_Left": 71.0,
+      "hand_Right": 71.0,
+      "foot_Left": 6.4,
+      "foot_Right": 6.4,
+      "Head": 92.9,
+      "Hips": 5.0
+    },
+    "closed_strap_drift_at_s": {
+      "leg_L": 0.317,
+      "leg_R": 0.317
+    },
+    "max_step_at_s": {
+      "hand_Left": 0.167,
+      "hand_Right": 0.167,
+      "foot_Left": 0.267,
+      "foot_Right": 0.267,
+      "Head": 0.267,
+      "Hips": 0.267
+    },
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_SitUp_Panic_v02",
+    "fbx_bones": 65
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend",
+  "pose_keys_file": "esc_pose_keys_v01.json (Escape_v01)"
+}

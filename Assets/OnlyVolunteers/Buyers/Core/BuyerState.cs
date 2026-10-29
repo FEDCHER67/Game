@@ -10,7 +10,9 @@ namespace OnlyVolunteers.Buyers
     public enum MeetingPhase { Scheduled, Waiting, Expired, Cancelled, Completed }
     public enum OrderTemplate { HamletKidney, StreamerBrain }
     public enum SaleError { None, InvalidRequest, NotPresent, NotNegotiator, Unavailable, NotReserved,
-        MissingItem, AlreadySold, WrongKind, WrongNpc, LowQuality, PackagingRequired, PriceChanged }
+        MissingItem, AlreadySold, WrongKind, WrongNpc, LowQuality, PackagingRequired, PriceChanged,
+        /// <summary>WP02: the team economy refused to book the sale (nothing sold, nothing paid).</summary>
+        PaymentRefused }
 
     /// <summary>Saved active-world seconds, with time 0 = 00:00. Never supply wall-clock or offline elapsed time.</summary>
     public interface IBuyerClock { long GameSeconds { get; } }
@@ -92,6 +94,8 @@ namespace OnlyVolunteers.Buyers
         public ProductKind Kind;
         public QualityTier Quality = QualityTier.Acceptable;
         public string SourceNpcId = "";
+        public string BloodPortionId = "";
+        public string SyringeItemId = "";
         public string SourceNpcType = "";
         public bool Packaged;
         public bool DeliveredCooled;
@@ -106,7 +110,12 @@ namespace OnlyVolunteers.Buyers
     public sealed class ParticipantState
     {
         public string Id = "";
+        /// <summary>LEGACY slot (before WP02): read once by the migration into the team economy, 0 afterwards. The bought
+        /// bargaining rank lives in the economy (IBuyerEconomy.BargainRank), keyed by the participant's stable id.</summary>
+        [Obsolete("Legacy save slot, migrated once: use IBuyerEconomy.BargainRank")]
         public int NegotiationLevel;
+        /// <summary>LEGACY slot (before WP02): read once by the migration, 0 afterwards. Personal XP is the economy's statistic.</summary>
+        [Obsolete("Legacy save slot, migrated once: personal XP lives in the team economy")]
         public long PersonalXp;
         public ParticipantState Copy() => (ParticipantState)MemberwiseClone();
     }
@@ -187,14 +196,21 @@ namespace OnlyVolunteers.Buyers
     }
 
     /// <summary>Snapshot DTO. Persist the whole object, including receipts/tombstones; restore with a
-    /// clock starting at LastGameSeconds. Only one BuyerRules authority may own a save at a time.</summary>
+    /// clock starting at LastGameSeconds. Only one BuyerRules authority may own a save at a time.
+    /// WP02: no money and no XP here. The shared fund, lifetime / free XP, first-of-a-kind / first-blood flags and the
+    /// bargaining ranks live in the team economy (IBuyerEconomy over EconomyState). The old fields below keep their
+    /// names only so an old snapshot still deserializes; BuyerRules moves them into the economy once and zeroes them.</summary>
     [Serializable]
     public sealed class BuyerWorldState
     {
         public long LastGameSeconds;
+        [Obsolete("Legacy save slot, migrated once into the team fund")]
         public decimal SharedFunds;
+        [Obsolete("Legacy save slot, migrated once into the team economy XP")]
         public long LifetimeXp;
+        [Obsolete("Legacy save slot, migrated once into the team economy XP")]
         public long FreeXp;
+        [Obsolete("Legacy save slot, migrated once: the first-blood flag lives in the team economy")]
         public bool FirstBloodSold;
         public bool IntroSyringeSold;
         public bool OrganContactUnlocked;
@@ -205,6 +221,7 @@ namespace OnlyVolunteers.Buyers
         public List<ParticipantState> Participants = new List<ParticipantState>();
         public List<BuyerState> Buyers = new List<BuyerState>();
         public List<BuyerItemState> Items = new List<BuyerItemState>();
+        [Obsolete("Legacy save slot, migrated once: the first-of-a-kind flags live in the team economy")]
         public List<ProductKind> FirstOrganTypes = new List<ProductKind>();
         public List<string> UsedMeetingIds = new List<string>();
         public List<string> OpenStashes = new List<string>();
@@ -214,6 +231,7 @@ namespace OnlyVolunteers.Buyers
         public List<WrongItemAttempt> WrongItemAttempts = new List<WrongItemAttempt>();
         public List<SaleResult> Receipts = new List<SaleResult>();
 
+#pragma warning disable CS0618 // the legacy slots are copied as they are (the migration reads them)
         public BuyerWorldState Copy()
         {
             var copy = (BuyerWorldState)MemberwiseClone();
@@ -231,5 +249,27 @@ namespace OnlyVolunteers.Buyers
             copy.Receipts = Receipts.ConvertAll(r => r.Copy());
             return copy;
         }
+
+        /// <summary>The legacy money / XP / ranks / first flags this snapshot still carries (empty for a WP02 snapshot).</summary>
+        public BuyerLegacyProgress TakeLegacy()
+        {
+            var legacy = new BuyerLegacyProgress
+            {
+                SharedFunds = SharedFunds, LifetimeXp = LifetimeXp, FreeXp = FreeXp, FirstBloodSold = FirstBloodSold,
+                FirstOrganTypes = new List<ProductKind>(FirstOrganTypes ?? new List<ProductKind>()),
+            };
+            foreach (var p in Participants ?? new List<ParticipantState>())
+                if (p != null) legacy.Participants.Add(new BuyerLegacyProgress.ParticipantLegacy { Id = p.Id, PersonalXp = p.PersonalXp, NegotiationLevel = p.NegotiationLevel });
+            return legacy;
+        }
+
+        /// <summary>After the migration: the snapshot carries no money or XP of its own any more.</summary>
+        public void ClearLegacy()
+        {
+            SharedFunds = 0; LifetimeXp = 0; FreeXp = 0; FirstBloodSold = false;
+            FirstOrganTypes = new List<ProductKind>();
+            foreach (var p in Participants ?? new List<ParticipantState>()) if (p != null) { p.PersonalXp = 0; p.NegotiationLevel = 0; }
+        }
+#pragma warning restore CS0618
     }
 }

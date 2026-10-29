@@ -125,12 +125,18 @@ namespace OnlyVolunteers.Capture
         public float bloodFill;
         public int bloodBags;
         public int tool;
+        /// <summary>G49: the syringe instances the field kit was holding (identity, PersonId, portion); null = none / legacy.</summary>
+        public OnlyVolunteers.Inventory.SyringeInstance bloodSyringe;
+        public OnlyVolunteers.Inventory.SyringeInstance anaesthesiaSyringe;
     }
 
     [Serializable]
     public sealed class CaptureSaveData
     {
-        public const int CurrentVersion = 1;
+        /// <summary>2 (ECONOMY spec v01, 2026-10-28): + the team economy block. Version 1 saves still load: their cash is
+        /// migrated into the shared fund once (FundMigration).</summary>
+        public const int CurrentVersion = 2;
+        public const int OldestLoadableVersion = 1;
         public int version = CurrentVersion;
         public string scene = "";
         public string savedUtc = "";
@@ -154,6 +160,18 @@ namespace OnlyVolunteers.Capture
         /// a save written before cash was saved: the load keeps the cash he has and restores the rest as before.</summary>
         public bool hasCash;
         public int cash;
+        /// <summary>v2: the team's shared fund, its history and transaction keys, paid van tiers, workshop / story flags,
+        /// owned bases and equipment deliveries (OnlyVolunteers.Economy). blockVersion 0 = absent (a v1 save). From v2 on
+        /// hasCash / cash are no longer written (false / 0): this block is the only money source.</summary>
+        public OnlyVolunteers.Economy.EconomySaveData economy = new OnlyVolunteers.Economy.EconomySaveData();
+        /// <summary>G49 (same atomic file as the fund): syringe instances in the host's hotbar (Items) and lying in the
+        /// world (WorldItems), the C01 sale record (receipts, sold portions, first-sale flag) and the one daily-find record.
+        /// Absent in older saves: empty defaults, no syringe is invented for them.</summary>
+        public OnlyVolunteers.Inventory.SyringeSaveBlock syringes = new OnlyVolunteers.Inventory.SyringeSaveBlock();
+        /// <summary>PLAYER stage (29.10): the world profile — the immutable Solo/Multiplayer mode and the opening/tutorial
+        /// state (OnlyVolunteers.Session.WorldSessionV01). blockVersion 0 = absent (an older save): a legacy world, flagged
+        /// for the owner's one-time mode choice, never assigned a mode silently.</summary>
+        public OnlyVolunteers.Session.WorldProfileSaveBlock world = new OnlyVolunteers.Session.WorldProfileSaveBlock();
     }
 
     /// <summary>Dev/test hooks in the Core assembly so PlayMode tests (which cannot see Assembly-CSharp) can drive the

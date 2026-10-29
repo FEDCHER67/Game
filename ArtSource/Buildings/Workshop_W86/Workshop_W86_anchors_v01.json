@@ -1,0 +1,977 @@
+{
+ "revision": "v01",
+ "units": "metres",
+ "coordinate_system": "Unity local space of the building root: +Y up, +Z = front (door side), pivot = floor level at the footprint centre. Converted from Blender (x, y, z) as (-x, z, -y). The same points exist as ANCHOR_* empties in Workshop_W86_building_v01.fbx; if the importer axes differ, trust the empties.",
+ "yaw": "degrees about Unity +Y, 0 = facing +Z (out of the doors)",
+ "footprint": {
+  "size": [
+   24.0,
+   5.3,
+   12.0
+  ],
+  "floor_y": 0.0,
+  "foundation_bottom_y": -0.8,
+  "note": "Foundation band is finished concrete down to -0.8 m: the floor may sit 0.3-0.6 m above lower terrain on a slope. Terrain must be below y=0 inside the footprint."
+ },
+ "bays": {
+  "East": {
+   "x_range_unity": [
+    4.6,
+    11.75
+   ],
+   "state": "closed, storage"
+  },
+  "Middle": {
+   "x_range_unity": [
+    -4.4,
+    4.4
+   ],
+   "state": "open, repair bay with pit"
+  },
+  "West": {
+   "x_range_unity": [
+    -11.75,
+    -4.6
+   ],
+   "state": "open (curtain optional), M06 hand-in"
+  }
+ },
+ "van": {
+  "length": 5.2,
+  "width": 2.0,
+  "height": 2.4,
+  "middle_door_clear": {
+   "width": 3.8,
+   "height": 3.48
+  },
+  "bollard_gap_middle": 4.7
+ },
+ "apron": {
+  "file": "Workshop_W86_apron_v01.fbx",
+  "position": [
+   0,
+   0,
+   0
+  ],
+  "extent_unity": {
+   "x": [
+    -16.0,
+    16.0
+   ],
+   "z": [
+    6.02,
+    15.0
+   ]
+  },
+  "top_y": 0.0,
+  "edge_bevel": 0.4,
+  "skirt_bottom_y": -0.6,
+  "note": "Same root transform as the building. Top flush with the floor; 0.4 m bevel to -0.05 then a skirt to -0.6 for sinking into terrain."
+ },
+ "props": {
+  "file": "Workshop_W86_props_v01.fbx",
+  "note": "Place the imported props model at the building root transform. Each prop is a top-level node WS_P_* at its base point and yaw (pivot = base centre on the floor/apron, or the wall plane for wall-mounted items) with children *_Mesh or *_LOD0/*_LOD1 and UCX_* (large props only).",
+  "items": {
+   "WS_P_Shelving_Parts": {
+    "position": [
+     4.07,
+     0.0,
+     4.3
+    ],
+    "yaw": -90.0,
+    "builder": "shelving_parts",
+    "area": "middle_bay"
+   },
+   "WS_P_ToolChest_A": {
+    "position": [
+     4.1,
+     0.0,
+     2.6
+    ],
+    "yaw": -90.0,
+    "builder": "toolchest",
+    "area": "middle_bay"
+   },
+   "WS_P_Workbench_A": {
+    "position": [
+     4.0,
+     0.0,
+     0.8
+    ],
+    "yaw": -90.0,
+    "builder": "workbench",
+    "area": "middle_bay"
+   },
+   "WS_P_ToolBoard_A": {
+    "position": [
+     4.4,
+     1.25,
+     0.8
+    ],
+    "yaw": -90.0,
+    "builder": "toolboard",
+    "area": "middle_bay"
+   },
+   "WS_P_Shelving_Boxes_A": {
+    "position": [
+     4.07,
+     0.0,
+     -2.9
+    ],
+    "yaw": -90.0,
+    "builder": "shelving_boxes",
+    "area": "middle_bay"
+   },
+   "WS_P_TyreStack_Corner": {
+    "position": [
+     3.95,
+     0.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "builder": "tyre_stack4",
+    "area": "middle_bay"
+   },
+   "WS_P_Compressor": {
+    "position": [
+     2.75,
+     0.0,
+     -5.42
+    ],
+    "yaw": 0.0,
+    "builder": "compressor",
+    "area": "middle_bay"
+   },
+   "WS_P_Cabinet_Dark": {
+    "position": [
+     1.4,
+     0.0,
+     -5.47
+    ],
+    "yaw": 0.0,
+    "builder": "cabinet_dark",
+    "area": "middle_bay"
+   },
+   "WS_P_ToolChest_B": {
+    "position": [
+     -0.55,
+     0.0,
+     -5.49
+    ],
+    "yaw": 0.0,
+    "builder": "toolchest",
+    "area": "middle_bay"
+   },
+   "WS_P_Jerry_Back": {
+    "position": [
+     -1.25,
+     0.0,
+     -5.45
+    ],
+    "yaw": 0.0,
+    "builder": "oil_group",
+    "area": "middle_bay"
+   },
+   "WS_P_Sofa": {
+    "position": [
+     -3.2,
+     0.0,
+     -5.3
+    ],
+    "yaw": 0.0,
+    "builder": "sofa",
+    "area": "middle_bay"
+   },
+   "WS_P_Filing": {
+    "position": [
+     -4.05,
+     0.0,
+     -4.55
+    ],
+    "yaw": 90.0,
+    "builder": "filing",
+    "area": "middle_bay"
+   },
+   "WS_P_Desk": {
+    "position": [
+     -4.03,
+     0.0,
+     -3.35
+    ],
+    "yaw": 90.0,
+    "builder": "desk",
+    "area": "middle_bay"
+   },
+   "WS_P_OfficeChair": {
+    "position": [
+     -3.35,
+     0.0,
+     -3.35
+    ],
+    "yaw": -90.0,
+    "builder": "office_chair",
+    "area": "middle_bay"
+   },
+   "WS_P_Phone": {
+    "position": [
+     -4.12,
+     0.75,
+     -3.85
+    ],
+    "yaw": 90.0,
+    "builder": "phone",
+    "area": "middle_bay"
+   },
+   "WS_P_DeskLamp": {
+    "position": [
+     -4.2,
+     0.75,
+     -2.8
+    ],
+    "yaw": 90.0,
+    "builder": "desk_lamp",
+    "area": "middle_bay"
+   },
+   "WS_P_Mugs": {
+    "position": [
+     -3.9,
+     0.75,
+     -3.05
+    ],
+    "yaw": 90.0,
+    "builder": "mugs",
+    "area": "middle_bay"
+   },
+   "WS_P_ToolBoard_B": {
+    "position": [
+     -4.4,
+     1.12,
+     -3.0
+    ],
+    "yaw": 90.0,
+    "builder": "toolboard",
+    "area": "middle_bay"
+   },
+   "WS_P_Calendar": {
+    "position": [
+     -4.4,
+     1.95,
+     -4.1
+    ],
+    "yaw": 90.0,
+    "builder": "calendar",
+    "area": "middle_bay"
+   },
+   "WS_P_WasteBin": {
+    "position": [
+     -4.05,
+     0.0,
+     -2.3
+    ],
+    "yaw": 0.0,
+    "builder": "waste_bin",
+    "area": "middle_bay"
+   },
+   "WS_P_TyreStack_Front": {
+    "position": [
+     -3.9,
+     0.0,
+     4.9
+    ],
+    "yaw": -20.0,
+    "builder": "tyre_stack4",
+    "area": "middle_bay"
+   },
+   "WS_P_OilCans": {
+    "position": [
+     -3.95,
+     0.0,
+     3.95
+    ],
+    "yaw": 90.0,
+    "builder": "oil_group",
+    "area": "middle_bay"
+   },
+   "WS_P_TrolleyJack": {
+    "position": [
+     2.9,
+     0.0,
+     4.6
+    ],
+    "yaw": -35.0,
+    "builder": "jack",
+    "area": "middle_bay"
+   },
+   "WS_P_TyreRack_Indoor": {
+    "position": [
+     8.85,
+     0.0,
+     -5.45
+    ],
+    "yaw": 0.0,
+    "builder": "tyre_rack",
+    "area": "east_bay"
+   },
+   "WS_P_Shelving_Boxes_B": {
+    "position": [
+     11.42,
+     0.0,
+     -1.35
+    ],
+    "yaw": -90.0,
+    "builder": "shelving_boxes_b",
+    "area": "east_bay"
+   },
+   "WS_P_Drum_East_1": {
+    "position": [
+     11.15,
+     0.0,
+     -4.95
+    ],
+    "yaw": 0.0,
+    "builder": "drum_grey",
+    "area": "east_bay"
+   },
+   "WS_P_Drum_East_2": {
+    "position": [
+     10.5,
+     0.0,
+     -5.1
+    ],
+    "yaw": -40.0,
+    "builder": "drum_red",
+    "area": "east_bay"
+   },
+   "WS_P_Workbench_B": {
+    "position": [
+     5.0,
+     0.0,
+     -3.6
+    ],
+    "yaw": 90.0,
+    "builder": "workbench",
+    "area": "east_bay"
+   },
+   "WS_P_Crates_East": {
+    "position": [
+     11.05,
+     0.0,
+     4.9
+    ],
+    "yaw": -90.0,
+    "builder": "crates_yard",
+    "area": "east_bay"
+   },
+   "WS_P_Chair_West": {
+    "position": [
+     -8.6,
+     0.0,
+     -5.33
+    ],
+    "yaw": 0.0,
+    "builder": "chair_plain",
+    "area": "west_bay"
+   },
+   "WS_P_Crate_Military": {
+    "position": [
+     -11.2,
+     0.0,
+     -5.2
+    ],
+    "yaw": -8.0,
+    "builder": "crate_military",
+    "area": "west_bay"
+   },
+   "WS_P_Shelving_West": {
+    "position": [
+     -11.42,
+     0.0,
+     -2.25
+    ],
+    "yaw": 90.0,
+    "builder": "shelving_boxes",
+    "area": "west_bay"
+   },
+   "WS_P_TyreStack_West": {
+    "position": [
+     -11.15,
+     0.0,
+     4.95
+    ],
+    "yaw": 0.0,
+    "builder": "tyre_stack3",
+    "area": "west_bay"
+   },
+   "WS_P_TyreRack_Yard": {
+    "position": [
+     14.0,
+     0.0,
+     8.2
+    ],
+    "yaw": -90.0,
+    "builder": "tyre_rack",
+    "area": "yard"
+   },
+   "WS_P_TyreStack_Yard_A": {
+    "position": [
+     12.95,
+     0.0,
+     6.75
+    ],
+    "yaw": -10.0,
+    "builder": "tyre_stack4",
+    "area": "yard"
+   },
+   "WS_P_TyreStack_Yard_B": {
+    "position": [
+     13.0,
+     0.0,
+     10.1
+    ],
+    "yaw": 0.0,
+    "builder": "tyre_stack3",
+    "area": "yard"
+   },
+   "WS_P_Crates_Yard": {
+    "position": [
+     14.55,
+     0.0,
+     11.1
+    ],
+    "yaw": -15.0,
+    "builder": "crates_yard",
+    "area": "yard"
+   },
+   "WS_P_Drum_Yard_Red": {
+    "position": [
+     -12.85,
+     0.0,
+     6.62
+    ],
+    "yaw": 0.0,
+    "builder": "drum_red",
+    "area": "yard"
+   },
+   "WS_P_Drum_Yard_Grey_1": {
+    "position": [
+     -13.5,
+     0.0,
+     6.65
+    ],
+    "yaw": -30.0,
+    "builder": "drum_grey",
+    "area": "yard"
+   },
+   "WS_P_Drum_Yard_Grey_2": {
+    "position": [
+     -13.15,
+     0.0,
+     7.25
+    ],
+    "yaw": -75.0,
+    "builder": "drum_grey",
+    "area": "yard"
+   },
+   "WS_P_Canisters_Yard": {
+    "position": [
+     -12.65,
+     0.0,
+     7.85
+    ],
+    "yaw": -90.0,
+    "builder": "canisters",
+    "area": "yard"
+   },
+   "WS_P_OutdoorBench": {
+    "position": [
+     -14.85,
+     0.0,
+     8.0
+    ],
+    "yaw": 90.0,
+    "builder": "outdoor_bench",
+    "area": "yard"
+   },
+   "WS_P_WasteContainer": {
+    "position": [
+     -14.6,
+     0.0,
+     10.6
+    ],
+    "yaw": 90.0,
+    "builder": "waste_container",
+    "area": "yard"
+   },
+   "WS_P_Sign": {
+    "position": [
+     -0.0,
+     4.28,
+     5.985
+    ],
+    "yaw": 0.0,
+    "builder": "sign",
+    "area": "facade"
+   },
+   "WS_P_WallLight_East": {
+    "position": [
+     8.175,
+     4.55,
+     5.985
+    ],
+    "yaw": 0.0,
+    "builder": "wall_light",
+    "area": "facade"
+   },
+   "WS_P_WallLight_West": {
+    "position": [
+     -8.175,
+     4.55,
+     5.985
+    ],
+    "yaw": 0.0,
+    "builder": "wall_light",
+    "area": "facade"
+   },
+   "WS_P_WallLight_SideW": {
+    "position": [
+     -11.985,
+     3.3,
+     4.5
+    ],
+    "yaw": -90.0,
+    "builder": "wall_light",
+    "area": "facade"
+   },
+   "WS_P_WallLight_SideE": {
+    "position": [
+     11.985,
+     3.3,
+     4.5
+    ],
+    "yaw": 90.0,
+    "builder": "wall_light",
+    "area": "facade"
+   },
+   "WS_P_Bollard_01": {
+    "position": [
+     10.4,
+     0.0,
+     6.55
+    ],
+    "yaw": 0.0,
+    "builder": "bollard",
+    "area": "facade"
+   },
+   "WS_P_Bollard_02": {
+    "position": [
+     5.95,
+     0.0,
+     6.55
+    ],
+    "yaw": 0.0,
+    "builder": "bollard",
+    "area": "facade"
+   },
+   "WS_P_Bollard_03": {
+    "position": [
+     2.45,
+     0.0,
+     6.55
+    ],
+    "yaw": 0.0,
+    "builder": "bollard",
+    "area": "facade"
+   },
+   "WS_P_Bollard_04": {
+    "position": [
+     -2.45,
+     0.0,
+     6.55
+    ],
+    "yaw": 0.0,
+    "builder": "bollard",
+    "area": "facade"
+   },
+   "WS_P_Bollard_05": {
+    "position": [
+     -5.65,
+     0.0,
+     6.55
+    ],
+    "yaw": 0.0,
+    "builder": "bollard",
+    "area": "facade"
+   },
+   "WS_P_Bollard_06": {
+    "position": [
+     -10.7,
+     0.0,
+     6.55
+    ],
+    "yaw": 0.0,
+    "builder": "bollard",
+    "area": "facade"
+   }
+  }
+ },
+ "middle_bay_repair_zone": {
+  "position": [
+   -0.0,
+   0.0,
+   2.55
+  ],
+  "size": [
+   3.2,
+   3.0,
+   6.4
+  ],
+  "yaw": 0.0,
+  "note": "Box (bottom-centre position). Covers the van parked over the pit, door line to the pit stairs."
+ },
+ "van_park_point": {
+  "position": [
+   -0.0,
+   0.0,
+   2.4
+  ],
+  "yaw": 180.0,
+  "note": "Van centre on the floor, nose toward the back wall (Unity -Z); front bumper at the pit stairs, wheels straddle the pit."
+ },
+ "pit": {
+  "position": [
+   -0.0,
+   0.0,
+   0.9
+  ],
+  "size": [
+   0.9,
+   1.5,
+   5.0
+  ],
+  "depth": 1.5,
+  "floor_y": -1.5,
+  "stairs_top_edge": [
+   -0.0,
+   0.0,
+   -1.6
+  ],
+  "stairs_bottom": [
+   -0.0,
+   -1.5,
+   -0.3
+  ],
+  "note": "Opening at floor level; stairs (5 steps, 0.25 rise) at the back end, descending toward the door. The pit shell reaches y=-1.7 (colliders): terrain under it must be cut (terrain hole) or lowered below -1.7, otherwise terrain shows inside the pit."
+ },
+ "mechanic_standing_point": {
+  "position": [
+   -2.85,
+   0.0,
+   -2.2
+  ],
+  "yaw": 0.0,
+  "note": "Beside the desk/pit stairs, facing the door (Unity +Z)."
+ },
+ "mechanic_desk_seat": {
+  "position": [
+   -3.35,
+   0.0,
+   -3.35
+  ],
+  "yaw": -90.0,
+  "note": "Office chair in front of the desk; seated mechanic faces the desk/partition."
+ },
+ "west_bay_handin_zone": {
+  "position": [
+   -8.175,
+   0.0,
+   2.8
+  ],
+  "size": [
+   3.55,
+   2.8,
+   5.0
+  ],
+  "yaw": 0.0,
+  "note": "Clear floor 3.55 x 5.0 m, outlined in yellow; reached through the open west door."
+ },
+ "doors": {
+  "East": {
+   "position": [
+    8.175,
+    0.0,
+    6.0
+   ],
+   "width": 3.4,
+   "height": 3.6,
+   "clear_height": 3.6,
+   "state": "closed"
+  },
+  "Middle": {
+   "position": [
+    -0.0,
+    0.0,
+    6.0
+   ],
+   "width": 3.8,
+   "height": 3.6,
+   "clear_height": 3.48,
+   "state": "open"
+  },
+  "West": {
+   "position": [
+    -8.175,
+    0.0,
+    6.0
+   ],
+   "width": 4.0,
+   "height": 3.6,
+   "clear_height": 3.48,
+   "state": "open_openable",
+   "note": "Open in the building FBX. Optional closing curtain: Workshop_W86_westdoor_curtain_v01.fbx (pivot top of opening)."
+  }
+ },
+ "partition_doorways": {
+  "Middle_to_West": {
+   "position": [
+    -4.5,
+    0.0,
+    -1.0
+   ],
+   "width": 1.1,
+   "height": 2.2
+  },
+  "Middle_to_East": {
+   "position": [
+    4.5,
+    0.0,
+    -1.0
+   ],
+   "width": 1.1,
+   "height": 2.2
+  }
+ },
+ "lights": [
+  {
+   "name": "Light_Strip_01",
+   "position": [
+    2.055,
+    3.82,
+    2.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_02",
+   "position": [
+    -2.055,
+    3.82,
+    2.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_03",
+   "position": [
+    2.055,
+    3.82,
+    -2.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_04",
+   "position": [
+    -2.055,
+    3.82,
+    -2.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_05",
+   "position": [
+    -6.02,
+    3.82,
+    3.0
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_06",
+   "position": [
+    -10.33,
+    3.82,
+    3.0
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_07",
+   "position": [
+    -6.02,
+    3.82,
+    -1.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_08",
+   "position": [
+    -10.33,
+    3.82,
+    -1.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_09",
+   "position": [
+    10.03,
+    3.82,
+    -0.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Strip_10",
+   "position": [
+    6.32,
+    3.82,
+    -0.5
+   ],
+   "type": "area/point down",
+   "colour": "#FFF3DA",
+   "suggested": {
+    "point_range_m": 7,
+    "intensity_lm": 1800
+   }
+  },
+  {
+   "name": "Light_Bulkhead_West",
+   "position": [
+    -9.4,
+    2.6,
+    -5.55
+   ],
+   "type": "point",
+   "colour": "#FFE2B0",
+   "suggested": {
+    "point_range_m": 5,
+    "intensity_lm": 500
+   }
+  },
+  {
+   "name": "Light_WS_P_WallLight_East",
+   "position": [
+    8.175,
+    4.37,
+    6.385
+   ],
+   "type": "spot down",
+   "colour": "#FFE2B0",
+   "suggested": {
+    "spot_range_m": 9,
+    "spot_angle_deg": 100,
+    "intensity_lm": 900
+   }
+  },
+  {
+   "name": "Light_WS_P_WallLight_West",
+   "position": [
+    -8.175,
+    4.37,
+    6.385
+   ],
+   "type": "spot down",
+   "colour": "#FFE2B0",
+   "suggested": {
+    "spot_range_m": 9,
+    "spot_angle_deg": 100,
+    "intensity_lm": 900
+   }
+  },
+  {
+   "name": "Light_WS_P_WallLight_SideW",
+   "position": [
+    -12.385,
+    3.12,
+    4.5
+   ],
+   "type": "spot down",
+   "colour": "#FFE2B0",
+   "suggested": {
+    "spot_range_m": 9,
+    "spot_angle_deg": 100,
+    "intensity_lm": 900
+   }
+  },
+  {
+   "name": "Light_WS_P_WallLight_SideE",
+   "position": [
+    12.385,
+    3.12,
+    4.5
+   ],
+   "type": "spot down",
+   "colour": "#FFE2B0",
+   "suggested": {
+    "spot_range_m": 9,
+    "spot_angle_deg": 100,
+    "intensity_lm": 900
+   }
+  }
+ ],
+ "phone": {
+  "position": [
+   -4.12,
+   0.75,
+   -3.85
+  ],
+  "yaw": 90.0
+ }
+}

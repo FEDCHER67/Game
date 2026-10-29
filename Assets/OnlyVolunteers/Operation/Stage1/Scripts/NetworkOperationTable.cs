@@ -27,6 +27,9 @@ namespace OnlyVolunteers.Operation.Stage1
         public int[] pullers = new int[3];
         /// <summary>The escape clip (Op_EscapeFall) is playing: the root stays on PatientRest until it lands.</summary>
         public bool falling;
+        /// <summary>WP05: the table's closing supplies left.</summary>
+        public int sutureKits;
+        public int patches;
     }
 
     /// <summary>One authoritative operating table (a pushable gurney). Clients only send intents: the selected tool,
@@ -73,15 +76,31 @@ namespace OnlyVolunteers.Operation.Stage1
         /// <summary>The transfer's source is a player's field blood syringe (stage A), not the table's own syringe.</summary>
         private const int FieldClient = -2;
         private System.Action<float> fieldFill;
+        private SyringeInstance fieldTransferSyringe;
+        public SyringeInstance TableBloodSyringe => world == null ? null : world.bloodSyringe ??=
+            SyringeSaveBlock.Legacy("table-blood", SyringeKind.Blood);
+        public SyringeInstance TableAnaesthesiaSyringe => world == null ? null : world.anesthesiaSyringe ??=
+            SyringeSaveBlock.Legacy("table-anaesthesia", SyringeKind.Anaesthesia);
+        public bool ServerInstallSyringe(SyringeInstance item)
+        {
+            if (!IsServerInitialized || world == null || item == null || item.Discarded || transferBag >= 0) return false;
+            // Caller transfers an owned physical instance; never creates a replacement here.
+            if (item.Kind == SyringeKind.Blood) { world.bloodSyringe = item; world.bloodFill = item.Fill; return true; }
+            if (item.Kind == SyringeKind.Anaesthesia) { world.anesthesiaSyringe = item; world.anesthesiaBarrel = item.Fill; return true; }
+            return false;
+        }
+        private static OpHint SyringeHint(SyringeUseResult result) => result == SyringeUseResult.OtherPerson
+            ? OpHint.SyringeOtherPerson : result == SyringeUseResult.InvalidTarget ? OpHint.PatientDead : OpHint.SyringeUnavailable;
         /// <summary>Server: the empty bag slot 'bag' can take blood now (not used, no transfer running).</summary>
         public bool BagFree(int bag) => IsServerInitialized && world != null && bag >= 0 && bag < tuning.bloodBagCount && (world.bagsUsedMask & (1 << bag)) == 0 && transferBag < 0;
         /// <summary>Server, stage A (Fedya round 2): a player walks up with the blood syringe he filled in the field and
         /// empties it into an empty table bag: the same smooth transfer as the table's own syringe (the plunger goes down
         /// through 'setFieldFill' 1 → 0 while the bag fills by the same amount, synced), then the bag is sealed into one
         /// blood item. The portion was already counted on the NPC when it was drawn; the bag value is counted once here.</summary>
-        public bool ServerFieldTransfer(int bag, System.Action<float> setFieldFill)
+        public bool ServerFieldTransfer(int bag, System.Action<float> setFieldFill, SyringeInstance syringe = null)
         {
-            if (!BagFree(bag) || setFieldFill == null) return false;
+            if (!BagFree(bag) || setFieldFill == null || syringe?.Portion == null || !syringe.Portion.Saleable) return false;
+            fieldTransferSyringe = syringe;
             transferBag = bag; transferClient = FieldClient; transferProgress = 0f; fieldFill = setFieldFill;
             Debug.Log($"[OPS] BLOOD TRANSFER (field syringe) start bag={bag}");
             return true;
@@ -93,7 +112,7 @@ namespace OnlyVolunteers.Operation.Stage1
         /// rule (alive, on the table and aligned, an injection site: arm, shoulder or neck); the dose joins the next rules
         /// tick exactly like the table syringe's (same residual, sleep and overdose model). Returns the amount accepted
         /// (at most a tenth of a second's push per call); 'refusal' says why nothing was.</summary>
-        public float ServerFieldDose(BodyPart part, float amount, out OpHint refusal)
+        public float ServerFieldDose(BodyPart part, float amount, out OpHint refusal, SyringeInstance syringe = null)
         {
             refusal = OpHint.None;
             if (!IsServerInitialized || !admissionMode || !HasPatient) { refusal = OpHint.NotOnTable; return 0f; }
@@ -102,16 +121,21 @@ namespace OnlyVolunteers.Operation.Stage1
             if (!new OpTarget(TargetKind.Body, (int)part).IsInjectionSite) { refusal = OpHint.WrongSpot; return 0f; }
             if (!OperationRules.Finite(amount) || amount <= 0f) return 0f;
             float accepted = Mathf.Min(amount, tuning.dosePerSecond * 0.1f);
+            var use = rules.DoseSyringe(syringe, accepted, true, out accepted);
+            if (use != SyringeUseResult.Success) { refusal = SyringeHint(use); return 0f; }
             fieldDose += accepted;
             return accepted;
         }
         /// <summary>Server, stage A (round 3): the field blood syringe on the table patient's arm: the table's own rule
         /// (OperationRules.CanDrawBlood: asleep, held down, that arm strapped, or dead; a portion left) and FillBlood
         /// (portions, weakness, death cues), the fill living in the player's syringe. 'portion' is true when it filled.</summary>
-        public OpHint ServerFieldDrawBlood(BodyPart part, ref float fill, float seconds, out bool portion)
+        public OpHint ServerFieldDrawBlood(BodyPart part, ref float fill, float seconds, out bool portion, SyringeInstance syringe = null)
         {
             portion = false;
             if (!IsServerInitialized || !admissionMode || !HasPatient) return OpHint.NotOnTable;
+            if (!State.alive) return OpHint.PatientDead;
+            var binding = SyringeRules.Check(syringe, SyringeKind.Blood, State.patientId, State.alive, true);
+            if (binding != SyringeUseResult.Success) return SyringeHint(binding);
             int arm = new OpTarget(TargetKind.Body, (int)part).ArmSide;
             if (arm < 0) return OpHint.WrongSpot;
             if (!State.onTable || !State.aligned) return OpHint.NotOnTable;
@@ -119,7 +143,9 @@ namespace OnlyVolunteers.Operation.Stage1
             if (State.bloodPortions >= tuning.fatalPortion) return OpHint.NoBloodLeft;
             if (!rules.CanDrawBlood(arm)) return OpHint.Squirming;
             if (!OperationRules.Finite(seconds) || seconds <= 0f) return OpHint.None;
-            portion = rules.FillBlood(ref fill, Mathf.Min(seconds, 0.1f));
+            var use = rules.FillSyringe(syringe, Mathf.Min(seconds, 0.1f), true, out portion);
+            if (use != SyringeUseResult.Success) return SyringeHint(use);
+            fill = syringe.Fill;
             if (portion) nextSnapshot = 0f;
             return OpHint.None;
         }
@@ -137,6 +163,9 @@ namespace OnlyVolunteers.Operation.Stage1
             if (!IsServerInitialized || !admissionMode || !HasPatient || (falling && !runOff)) return null;
             var s = rules.State;
             if (!s.alive || s.onTable || patient.HasHolder) return null;
+            // K10 (Fedya 29.10, variant В): leaving the table alive with the belly opened and not sewn (escape, fall, carried
+            // off) dooms him; the field NPC keeps the same state and dies of pain shock within ~20 m (CaptureNpc feeds it).
+            if (rules.ArmShockRun()) Debug.Log($"[OPS] K10 doomed run patient={s.patientId} metres={s.shockRunMeters:F1} covered={s.shockRunCovered:F1}");
             Transform hips = null, head = null;
             foreach (Transform t in patient.GetComponentsInChildren<Transform>(true))
             {
@@ -420,6 +449,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (admissionMode)
             {
                 world = new OperationWorldState { v02 = true, anesthesiaStock = tuning.anesthesiaStock, anesthesiaBarrel = tuning.syringeCapacity };
+                EnsureSupplies(world);
                 SpawnTools();
                 Publish();
                 Debug.Log("[OPS] WORLD admission mode: empty table, waiting for a captured patient");
@@ -429,6 +459,7 @@ namespace OnlyVolunteers.Operation.Stage1
             bool load = wantLoad && ClinicSave.TryReadOperation(out world, out _);
             if (!load) world = FreshWorld();
             else MigrateLoaded(world);
+            EnsureSupplies(world);
             if (registry == null) registry = GetComponent<PatientRegistry>();
             StartWorld();
             Debug.Log($"[OPS] WORLD patient={world.patient.patientId} restored={load} outputs={items.Count} slot={ClinicSave.OperationFilePath}");
@@ -462,10 +493,42 @@ namespace OnlyVolunteers.Operation.Stage1
             }
             if (w.patient.onTable && w.patient.aligned) w.patient.knockedOut = false;
         }
+        /// <summary>WP05: a table world from before the closing supplies gets the starting stock once (never per patient).</summary>
+        private void EnsureSupplies(OperationWorldState w)
+        {
+            if (w == null || w.hasSupplies) return;
+            w.hasSupplies = true;
+            w.sutureKits = Mathf.Max(0, tuning.startSutureKits);
+            w.patches = Mathf.Max(0, tuning.startPatches);
+        }
+
+        /// <summary>WP05: the rules take closing supplies from this table's stock (server; the view publishes the counts).</summary>
+        private sealed class TableSupplies : IOperationSupplies
+        {
+            private readonly NetworkOperationTable table;
+            public TableSupplies(NetworkOperationTable owner) { table = owner; }
+            public bool TryTake(string supplyId)
+            {
+                var w = table.world;
+                if (w == null) return false;
+                if (supplyId == OperationSupplies.SutureKitId && w.sutureKits > 0) { w.sutureKits--; Log(supplyId, w.sutureKits); return true; }
+                if (supplyId == OperationSupplies.PatchId && w.patches > 0) { w.patches--; Log(supplyId, w.patches); return true; }
+                return false;
+            }
+            private void Log(string id, int left)
+            {
+                table.nextSnapshot = 0f;
+                Debug.Log($"[OPS] SUPPLY {id} used patient={table.State?.patientId} left={left}");
+            }
+        }
+        private TableSupplies supplies;
+        private IOperationSupplies Supplies => supplies ??= new TableSupplies(this);
+
         private void StartWorld()
         {
             record = registry != null ? registry.EnsureOperationPatient(world.patient.patientId, world.patient) : null;
             rules = new OperationRules(record != null ? record.Operation : world.patient, tuning);
+            rules.Supplies = Supplies;
             rules.MigrateSharedOpening();
             world.patient = rules.State;
             rules.Cue += Hook;
@@ -503,7 +566,7 @@ namespace OnlyVolunteers.Operation.Stage1
             state.onTable = false; state.aligned = false; state.knockedOut = true; state.escapeProgress = 0f;
             world.patient = state;
             world.patientPosition = position; world.patientRotation = rotation;
-            world.anesthesiaStock = tuning.anesthesiaStock; world.anesthesiaBarrel = tuning.syringeCapacity; world.bloodFill = 0f; world.bagsUsedMask = 0;
+            world.anesthesiaBarrel = TableAnaesthesiaSyringe?.Fill ?? 0f; world.bloodFill = TableBloodSyringe?.Fill ?? 0f; world.bagsUsedMask = 0;
             BindRules(state);
             alignStartSet = false; falling = false; serverView.falling = false; noAlignUntil = 0f;
             SpawnPatient();
@@ -516,6 +579,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             record = registry != null ? registry.EnsureOperationPatient(state.patientId, state) : null;
             rules = new OperationRules(record != null && record.Operation != null ? record.Operation : state, tuning);
+            rules.Supplies = Supplies;
             rules.MigrateSharedOpening();
             world.patient = rules.State;
             rules.Cue += Hook;
@@ -542,7 +606,9 @@ namespace OnlyVolunteers.Operation.Stage1
             foreach (bool closed in State.restraints) if (closed) return null;
             var body = patient;
             State.onTable = false; State.aligned = false; noAlignUntil = float.PositiveInfinity;
-            rules.PatchIfOpen(); // round 4: the plain skin patch is state now (a scalpel stroke reopens it on the table)
+            // round 4: the plain skin patch is state now (a scalpel stroke reopens it on the table); WP05: one patch from the stock
+            if (State.zoneOpened && !State.sutured && !State.skinPatched && !rules.PatchIfOpen())
+                Debug.Log($"[OPS] no patch left: patient={State.patientId} leaves the table with an open belly");
             ApplyPatientPhysics();
             GetComponent<OperationPresentation>()?.ReleasePatientVisuals();
             Abdomen?.ReleasePatientVisuals();
@@ -561,6 +627,7 @@ namespace OnlyVolunteers.Operation.Stage1
             world = saved;
             world.v02 = true;
             world.items ??= new List<OperationItemState>();
+            EnsureSupplies(world);
             if (world.hasTablePose && tableBody != null)
             {
                 // The gurney first, then its patient and outputs (saved in world space) land on it, not beside it.
@@ -688,6 +755,16 @@ namespace OnlyVolunteers.Operation.Stage1
             noAlignUntil = fallEndsAt + 1f;
             serverView.falling = true; nextSnapshot = 0f;
         }
+        /// <summary>K10 (server, dev scene only): the operation dev scene has no field NPC to run, so a doomed (opened) patient
+        /// lying awake off the table, held by nobody, counts as trying to get away: the seconds feed the pain-shock backstop
+        /// and he dies by the table. In admission mode (the map) the capture bridge hands him to the field at once and the
+        /// field NPC feeds his real run (CaptureNpc); carrying him never counts.</summary>
+        private void TrackShockRun(OperationState s, float dt)
+        {
+            if (admissionMode || patient == null || s.onTable || falling || !s.ShockRun || patient.HasHolder) return;
+            if (rules.AdvanceShockRun(0f, dt))
+                Debug.Log($"[OPS] K10 pain shock by the table (dev) patient={s.patientId} after {s.shockRunTime:F1} s");
+        }
         /// <summary>Round 4: where the field NPC takes over after HopRun (RUN0 / RUN0_L, on the floor) and his run direction.</summary>
         public Vector3 RunOffPoint(int side, out Vector3 forward)
         {
@@ -752,6 +829,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             serverView.patient = State; serverView.stock = world.anesthesiaStock; serverView.barrel = world.anesthesiaBarrel;
             serverView.blood = world.bloodFill; serverView.bagsUsedMask = world.bagsUsedMask;
+            serverView.sutureKits = world.sutureKits; serverView.patches = world.patches;
             if (bagFills.Length != tuning.bloodBagCount) bagFills = new float[tuning.bloodBagCount];
             serverView.bagFill = bagFills;
             snapshot.Value = JsonUtility.ToJson(serverView);
@@ -946,7 +1024,11 @@ namespace OnlyVolunteers.Operation.Stage1
             patient = null;
             if (rules != null) rules.Cue -= Hook;
             Array.Clear(yankLatched, 0, 3);
+            var blood = world?.bloodSyringe; var anaesthesia = world?.anesthesiaSyringe;
             world = FreshWorld();
+            EnsureSupplies(world); // dev reset: a fresh dev table kit
+            world.bloodSyringe = blood; world.anesthesiaSyringe = anaesthesia;
+            world.bloodFill = blood?.Fill ?? 0; world.anesthesiaBarrel = anaesthesia?.Fill ?? 0;
             StartWorld();
             foreach (var tool in tools) if (tool != null) tool.ServerDock();
             Debug.Log($"[OPS] RESET new patient={world.patient.patientId}");
@@ -957,6 +1039,8 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             if (p.tool == null) return;
             var tool = p.tool; p.tool = null;
+            if (tool.Kind == OperationToolKind.BloodSyringe && TableBloodSyringe?.Portion == null)
+            { SyringeRules.CancelDraw(TableBloodSyringe); world.bloodFill = 0; }
             tool.ServerDock();
             if (tool.Kind == OperationToolKind.Syringe) Refill(p);
         }
@@ -967,6 +1051,7 @@ namespace OnlyVolunteers.Operation.Stage1
             float add = Mathf.Min(missing, world.anesthesiaStock);
             if (add <= 0f) { if (p != null) Hint(p, OpHint.StockEmpty); return; }
             world.anesthesiaStock -= add; world.anesthesiaBarrel += add;
+            if (TableAnaesthesiaSyringe != null) TableAnaesthesiaSyringe.Fill = world.anesthesiaBarrel;
             if (p != null) Hint(p, OpHint.Refilled);
         }
         private void ReleaseParticipant(Participant p, bool stopping)
@@ -1016,6 +1101,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (bag < 0 || bag >= tuning.bloodBagCount) return;
             if (p.tool == null || p.tool.Kind != OperationToolKind.BloodSyringe) { Hint(p, OpHint.SyringeNotFull); return; }
             if (world.bloodFill < 1f) { Hint(p, OpHint.SyringeNotFull); return; }
+            if (TableBloodSyringe?.Portion == null || !TableBloodSyringe.Portion.Saleable) { Hint(p, OpHint.SyringeUnavailable); return; }
             if ((world.bagsUsedMask & (1 << bag)) != 0) { Hint(p, OpHint.NoBags); return; }
             if (transferBag >= 0) return; // one syringe, one transfer at a time
             transferBag = bag; transferClient = p.id; transferProgress = 0f;
@@ -1039,10 +1125,15 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         private void CompleteBag(Participant p, int bag, bool field = false)
         {
+            var source = field ? fieldTransferSyringe : TableBloodSyringe;
+            var portion = SyringeRules.Pack(source);
+            fieldTransferSyringe = null;
+            if (portion == null) return;
             world.bagsUsedMask |= 1 << bag; if (!field) world.bloodFill = 0f; world.bloodBagged++;
             if (bag < bagFills.Length) bagFills[bag] = 0f;
             var pose = BagPose(bag);
             var data = new OperationItemState { id = (field ? "field" : State != null ? State.patientId : "blood") + "/blood/" + world.bloodBagged, kind = 2, grade = 0, sealedBlood = true, position = pose.position + pose.up * 0.04f, rotation = pose.rotation };
+            data.portionId = portion.Id; data.personId = portion.PersonId;
             SpawnItem(data, null);
             if (p != null) Hint(p, OpHint.BagReady);
             int client = p != null ? p.id : transferClient;
@@ -1083,6 +1174,7 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         private void FixedUpdate()
         {
+            if (IsServerInitialized && world != null) SyringeRules.TickFreshness(TableBloodSyringe, Time.fixedDeltaTime);
             // A field-syringe transfer runs with or without a patient on the table.
             if (IsServerInitialized && transferBag >= 0 && transferClient == FieldClient) TickTransfer(Time.fixedDeltaTime);
             if (!IsServerInitialized || rules == null) return;
@@ -1144,7 +1236,12 @@ namespace OnlyVolunteers.Operation.Stage1
                                                 (p.tool.Kind == OperationToolKind.Syringe && p.pressTarget.IsInjectionSite));
                     p.tool.ServerHoldAt(HeldToolPose(p.tool.Kind, world, transform.up, inSkin));
                 }
-                if (!p.pressed) { p.pressStart = false; continue; }
+                if (!p.pressed)
+                {
+                    if (p.tool != null && p.tool.Kind == OperationToolKind.BloodSyringe && TableBloodSyringe?.Portion == null)
+                    { SyringeRules.CancelDraw(TableBloodSyringe); this.world.bloodFill = 0; }
+                    p.pressStart = false; continue;
+                }
                 var slot = p.tool != null ? p.tool.Slot : ToolSlot.Hands;
                 ctxClient = p.id;
                 switch (slot)
@@ -1157,6 +1254,7 @@ namespace OnlyVolunteers.Operation.Stage1
             dose += fieldDose; fieldDose = 0f; // round 3: the field syringe of a player by the table
             UpdateEscapeSide();
             rules.Tick(dt, dose, false);
+            TrackShockRun(s, dt);
 
             // Patient pose: slide onto the rest pose, then follow the (possibly moving) gurney.
             if (patient != null && s.onTable)
@@ -1219,18 +1317,26 @@ namespace OnlyVolunteers.Operation.Stage1
 
         private float Inject(Participant p, float dt)
         {
+            var binding = SyringeRules.Check(TableAnaesthesiaSyringe, SyringeKind.Anaesthesia, State.patientId, State.alive, true);
+            if (binding != SyringeUseResult.Success) { Hint(p, SyringeHint(binding)); return 0f; }
             if (!p.pressTarget.IsInjectionSite) { if (p.pressStart && p.pressTarget.kind == TargetKind.Body) Hint(p, OpHint.WrongSpot); return 0f; }
             if (!State.alive) { Hint(p, OpHint.PatientDead); return 0f; }
             if (!rules.CanInject) { Hint(p, OpHint.NotOnTable); return 0f; }
             if (!ValidBodyPoint(p.pressTarget.Part, p.point)) return 0f;
             if (world.anesthesiaBarrel <= 0.0001f) { Hint(p, OpHint.SyringeEmpty); return 0f; }
             float amount = Mathf.Min(world.anesthesiaBarrel, tuning.dosePerSecond * dt);
+            var use = rules.DoseSyringe(TableAnaesthesiaSyringe, amount, true, out amount);
+            if (use != SyringeUseResult.Success) return 0f;
             world.anesthesiaBarrel -= amount;
+            TableAnaesthesiaSyringe.Fill = world.anesthesiaBarrel;
             serverView.injecting = true;
             return amount;
         }
         private void DrawBlood(Participant p, float dt)
         {
+            if (!State.alive) { Hint(p, OpHint.PatientDead); return; }
+            var binding = SyringeRules.Check(TableBloodSyringe, SyringeKind.Blood, State.patientId, State.alive, true);
+            if (binding != SyringeUseResult.Success) { Hint(p, SyringeHint(binding)); return; }
             int arm = p.pressTarget.ArmSide;
             if (arm < 0) { if (p.pressStart && p.pressTarget.kind == TargetKind.Body) Hint(p, OpHint.WrongSpot); return; }
             if (!State.onTable || !State.aligned) { Hint(p, OpHint.NotOnTable); return; }
@@ -1239,7 +1345,9 @@ namespace OnlyVolunteers.Operation.Stage1
             if (!rules.CanDrawBlood(arm)) { Hint(p, OpHint.Squirming); return; }
             if (!ValidBodyPoint(p.pressTarget.Part, p.point)) return;
             serverView.drawing = arm;
-            rules.FillBlood(ref world.bloodFill, dt);
+            var use = rules.FillSyringe(TableBloodSyringe, dt, true, out _);
+            if (use != SyringeUseResult.Success) { Hint(p, SyringeHint(use)); return; }
+            world.bloodFill = TableBloodSyringe.Fill;
         }
         private bool ValidBodyPoint(BodyPart part, Vector3 local)
         {
@@ -1356,7 +1464,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 p.strokeOrgan = SutureStrokeId;
             }
             ctxClient = p.id;
-            if (rules.Suture(g.x, g.y, dt) == CutStep.Completed) { Debug.Log($"[OPS] SUTURED patient={s.patientId} client={p.id}"); nextSnapshot = 0f; }
+            CutStep step = rules.Suture(g.x, g.y, dt);
+            if (step == CutStep.Completed) { Debug.Log($"[OPS] SUTURED patient={s.patientId} client={p.id}"); nextSnapshot = 0f; }
+            else if (step == CutStep.NoSupply) { p.strokeRejected = true; Hint(p, OpHint.NoSutureKit); }
             ctxClient = -1;
         }
         private void Hands(Participant p)

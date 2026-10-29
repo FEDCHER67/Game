@@ -1,5 +1,6 @@
 using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Clinic;
+using OnlyVolunteers.Economy;
 using OnlyVolunteers.Inventory;
 using OnlyVolunteers.Map;
 using OnlyVolunteers.Map.Crowd;
@@ -11,7 +12,7 @@ namespace OnlyVolunteers.Capture
     /// <summary>Save and quit (D13, CD-09): the player, the van and its cargo doors, every captured NPC not yet on the
     /// table (identity, OperationState with sleep / residual / blood / grades, ties, condition, stun, where his pelvis lies
     /// and which way his head points, van-local when in the bay), the table (patient and outputs, stock), the field kit
-    /// the time of day and (W86) the host player's cash. Timers are saved values: nothing runs while the game is closed. Escaped NPCs (back on their
+    /// the time of day and (v2) the team economy block (shared fund, van tiers, bases, deliveries). Timers are saved values: nothing runs while the game is closed. Escaped NPCs (back on their
     /// feet and free) are part of the crowd again and are not saved. One JSON file in persistentDataPath/OnlyVolunteers.</summary>
     public static class CaptureSave
     {
@@ -39,7 +40,10 @@ namespace OnlyVolunteers.Capture
             {
                 if (c == null || c.Admitted || c.Npc == null || !c.Npc.isActiveAndEnabled || c.Facts == null) continue;
                 GreyboxNpc npc = c.Npc;
-                if (npc.State == NpcState.Free) continue;
+                // K10: a doomed runner (belly opened, not sewn) is no ordinary escapee: he is saved on his feet with his run
+                // (the rolled distance and what he covered), so a load neither frees him nor loses the body.
+                bool doomedRunner = npc.State == NpcState.Free && c.State != null && c.State.ShockRun;
+                if (npc.State == NpcState.Free && !doomedRunner) continue;
                 var s = new CaptureNpcSave
                 {
                     facts = c.Facts,
@@ -48,6 +52,7 @@ namespace OnlyVolunteers.Capture
                     stunLeft = npc.State == NpcState.Down ? npc.StunLeft : 2f,
                     stunTotal = npc.State == NpcState.Down ? npc.StunTotal : 2f,
                     inCargo = npc.InCargo && van != null,
+                    standing = doomedRunner,
                 };
                 c.Facts.condition = npc.Condition;
                 PatientRecord record = d.Registry.Get(c.PatientId);
@@ -86,38 +91,44 @@ namespace OnlyVolunteers.Capture
                 data.tablePatient = d.Table.HasPatient ? d.Bridge.PatientFacts : null;
             }
             data.kit = d.Kit.Snapshot();
+            WriteSyringes(d, data);
             if (d.Disposal != null) { data.bodyBags = d.Disposal.Stock; data.corpses = d.Disposal.Snapshot(); }
             var clock = Object.FindAnyObjectByType<OnlyVolunteers.Sky22V04.SkyClock22>();
             data.timeOfDay = clock != null ? clock.Hour : -1f;
             data.completedPatients.AddRange(d.Registry.Completed);
-            // W86: the host player's money (server model of his NetworkInventory; the sale path pays into it).
-            InventoryModel wallet = Wallet(d);
-            data.hasCash = wallet != null;
-            data.cash = wallet != null ? wallet.Cash : 0;
+            // ECONOMY spec v01 §3.1 / §10: the money is the team's shared fund (with its history, transaction keys, van
+            // tiers, flags, bases and deliveries) in one block. The old per-player hasCash / cash fields are not written
+            // any more (v2), so nothing can migrate twice.
+            data.hasCash = false;
+            data.cash = 0;
+            EconomySaveData economy = TeamEconomy.Instance != null ? TeamEconomy.Instance.ServerSaveBlock() : null;
+            if (economy != null) data.economy = economy;
+            else Debug.LogWarning("[CAPTURE] no team economy on this server: the save carries no fund");
+            // PLAYER stage: the world's immutable mode + opening/tutorial state, in the same atomic file as the fund.
+            data.world = OnlyVolunteers.Session.WorldSessionV01.ServerSaveBlock();
         }
 
-        /// <summary>The server-side cash model of the host player (the map pawn's NetworkInventory), or null.</summary>
-        private static InventoryModel Wallet(CaptureDirector d)
+        /// <summary>The shared fund from the save (§10.3): a v2 block is restored as it is; a v1 save has none, so the
+        /// host's legacy cash (hasCash / cash, W86) moves into the fund exactly once and the migrated block is written
+        /// back at once. The per-player NetworkInventory cash is no longer a money store (its legacy API forwards here).</summary>
+        private static void RestoreEconomy(CaptureSaveData data)
         {
-            var inventory = d.Pawn != null ? d.Pawn.GetComponent<NetworkInventory>() : null;
-            return inventory != null ? inventory.ServerModel : null;
-        }
-
-        /// <summary>W86: sets the host player's cash to the saved amount through the model's own add / spend (its
-        /// CashChanged mirrors it to the HUD). A save without the field (older than W86) keeps the current cash.</summary>
-        private static void RestoreCash(CaptureDirector d, CaptureSaveData data)
-        {
-            if (!data.hasCash) { Debug.Log("[CAPTURE] the save has no cash (older save): cash kept"); return; }
-            InventoryModel wallet = Wallet(d);
-            if (wallet == null) { Debug.LogWarning("[CAPTURE] cash not restored: the player's NetworkInventory is not running on the server"); return; }
-            int target = Mathf.Max(0, data.cash), now = wallet.Cash;
-            if (target > now) wallet.AddCash(target - now);
-            else if (target < now) wallet.TrySpendCash(now - target);
-            Debug.Log($"[CAPTURE] cash restored: ${wallet.Cash} (saved ${data.cash})");
+            TeamEconomy economy = TeamEconomy.Instance;
+            if (economy == null || !economy.IsServer) { Debug.LogWarning("[CAPTURE] fund not restored: no team economy on the server"); return; }
+            economy.ServerLoad(data.economy, data.hasCash, data.cash);
+            // WP02: one first-blood flag per world. An older save may hold it only in the C01 syringe record: the economy takes
+            // it once, and the record mirrors the economy (so the next C01 quote shows the XP the economy grants).
+            var sales = data.syringes != null ? data.syringes.Sales : null;
+            if (economy.ServerState != null && sales != null)
+            {
+                economy.ServerState.ReconcileFirstBlood(sales.FirstBloodXpGranted);
+                sales.FirstBloodXpGranted |= economy.ServerState.FirstBloodGranted;
+            }
         }
 
         public static void Read(CaptureDirector d, CaptureSaveData data)
         {
+            OnlyVolunteers.Session.WorldSessionV01.ServerLoad(data.world); // PLAYER stage: mode + opening/tutorial first
             var van = d.Van;
             if (van != null)
             {
@@ -143,10 +154,89 @@ namespace OnlyVolunteers.Capture
                 d.Table.ServerRestore(data.table);
             }
             d.Kit.Restore(data.kit);
+            ReadSyringes(d, data);
             d.Disposal?.Restore(data.corpses, data.bodyBags);
-            RestoreCash(d, data);
+            RestoreEconomy(data);
             var clock = Object.FindAnyObjectByType<OnlyVolunteers.Sky22V04.SkyClock22>();
             if (clock != null && data.timeOfDay >= 0f) clock.SetHour(data.timeOfDay);
+        }
+
+        /// <summary>G49 snapshot: the kit's two syringe references, every syringe instance in the host's hotbar (Items) and
+        /// lying free in the world (WorldItems, with pose), the C01 sale record and the daily-find record. Table syringes are
+        /// saved by the table snapshot itself (not listed twice). Deep copies: the live objects keep running.</summary>
+        private static void WriteSyringes(CaptureDirector d, CaptureSaveData data)
+        {
+            data.kit.bloodSyringe = d.Kit.BloodSyringe?.Copy();
+            data.kit.anaesthesiaSyringe = d.Kit.AnaesthesiaSyringe?.Copy();
+            data.syringes = JsonUtility.FromJson<SyringeSaveBlock>(JsonUtility.ToJson(d.Syringes));
+            data.syringes.Items.Clear();
+            var inv = d.Kit.Inventory != null ? d.Kit.Inventory.Model : null;
+            if (inv != null)
+                for (int slot = 0; slot < inv.SlotCount; slot++)
+                {
+                    var syringe = inv.GetSlot(slot).Syringe;
+                    if (syringe != null && !syringe.Discarded) data.syringes.Items.Add(syringe.Copy());
+                }
+            data.syringes.WorldItems.Clear();
+            foreach (var drop in Object.FindObjectsByType<OfflineWorldItem>())
+            {
+                if (drop.Syringe == null || drop.Syringe.Discarded || drop.Definition == null || drop.Count <= 0) continue;
+                if (d.Syringes.Daily.Uncollected != null && drop.Syringe.ItemId == d.Syringes.Daily.Uncollected.ItemId) continue; // the find record owns it
+                var p = drop.transform.position;
+                var q = drop.transform.rotation;
+                data.syringes.WorldItems.Add(new SyringeWorldSave { DefinitionId = drop.Definition.Id, Item = drop.Syringe.Copy(), X = p.x, Y = p.y, Z = p.z, Qx = q.x, Qy = q.y, Qz = q.z, Qw = q.w });
+            }
+        }
+
+        /// <summary>G49 restore: the same instances come back (TryAdd(instance), never TryAdd(type id), which would mint a NEW
+        /// syringe); one already present is not added twice; a save without the block restores nothing and invents nothing.</summary>
+        private static void ReadSyringes(CaptureDirector d, CaptureSaveData data)
+        {
+            d.Syringes = data.syringes ?? new SyringeSaveBlock();
+            d.Syringes.Items ??= new System.Collections.Generic.List<SyringeInstance>();
+            d.Syringes.WorldItems ??= new System.Collections.Generic.List<SyringeWorldSave>();
+            d.Syringes.Sales ??= new SyringeSalesSave();
+            d.Syringes.Daily ??= new DailySyringeFindSave();
+            d.Kit.RestoreSyringes(data.kit?.bloodSyringe, data.kit?.anaesthesiaSyringe);
+            var inv = d.Kit.Inventory != null ? d.Kit.Inventory.Model : null;
+            if (inv != null)
+                foreach (var syringe in d.Syringes.Items)
+                {
+                    if (syringe == null || syringe.Discarded || HasSyringe(inv, syringe.ItemId)) continue;
+                    int definition = syringe.Kind == SyringeKind.Blood ? SyringeRules.BloodDefinitionId : SyringeRules.AnaesthesiaDefinitionId;
+                    int price;
+                    try { price = SyringeRules.Price(syringe.Kind); } catch (System.Exception) { price = 0; }
+                    var copy = syringe.Copy();
+                    if (inv.TryAdd(new ItemStack(definition, 1, price, copy)) != 1)
+                        Debug.LogWarning($"[CAPTURE] syringe {syringe.ItemId} kept in the save record: no hotbar space");
+                    // the kit's own references point at the live hotbar instances again (same ids)
+                    if (d.Kit.BloodSyringe != null && d.Kit.BloodSyringe.ItemId == copy.ItemId) d.Kit.RestoreSyringes(copy, d.Kit.AnaesthesiaSyringe);
+                    if (d.Kit.AnaesthesiaSyringe != null && d.Kit.AnaesthesiaSyringe.ItemId == copy.ItemId) d.Kit.RestoreSyringes(d.Kit.BloodSyringe, copy);
+                }
+            var database = d.Kit.Inventory != null ? d.Kit.Inventory.Database : null;
+            foreach (var saved in d.Syringes.WorldItems)
+            {
+                if (saved?.Item == null || saved.Item.Discarded) continue;
+                bool present = false;
+                foreach (var drop in Object.FindObjectsByType<OfflineWorldItem>())
+                    if (drop.Syringe != null && drop.Syringe.ItemId == saved.Item.ItemId) { present = true; break; }
+                if (present) continue;
+                var definition = database != null ? database.Get(saved.DefinitionId) : null;
+                if (definition == null) { Debug.LogWarning($"[CAPTURE] saved world syringe {saved.Item.ItemId}: definition {saved.DefinitionId} missing (kept in the record)"); continue; }
+                int price;
+                try { price = SyringeRules.Price(saved.Item.Kind); } catch (System.Exception) { price = 0; }
+                var item = OfflineWorldItem.Spawn(definition, 1, price, new Vector3(saved.X, saved.Y, saved.Z));
+                item.transform.rotation = new Quaternion(saved.Qx, saved.Qy, saved.Qz, saved.Qw);
+                item.SetSyringe(saved.Item.Copy());
+            }
+            Debug.Log($"[CAPTURE] syringes restored: hotbar {d.Syringes.Items.Count}, world {d.Syringes.WorldItems.Count}, C01 sold portions {d.Syringes.Sales.SoldPortions.Count}, first sale {d.Syringes.Sales.FirstSyringeSold}");
+        }
+
+        private static bool HasSyringe(InventoryModel inv, string itemId)
+        {
+            for (int i = 0; i < inv.SlotCount; i++)
+                if (inv.GetSlot(i).Syringe != null && inv.GetSlot(i).Syringe.ItemId == itemId) return true;
+            return false;
         }
 
         /// <summary>A captured NPC again: a fresh copy of his crowd template, his identity, down where he lay.</summary>
@@ -172,7 +262,9 @@ namespace OnlyVolunteers.Capture
             PatientRecord record = d.Registry.Ensure(npc);
             record.Operation = s.operation;
             // Round 4: a former patient keeps the patient look (trunks, his skin and face), in the field and after a load.
-            if (s.facts.undressed && d.Table != null && d.Table.PatientPrefab != null) CaptureUndress.Apply(go, d.Table.PatientPrefab.gameObject);
+            if (s.facts.undressed && d.Table != null && d.Table.PatientPrefab != null && CaptureUndress.Apply(go, d.Table.PatientPrefab.gameObject))
+                // K10 (Fedya 29.10): the belly as it left the table: the open wound (opened, not sewn) or the seam / patch.
+                OperationBodyWound.Attach(go, d.Table.Tuning, s.operation, d.Table.PatientPrefab.gameObject);
             CaptureNpc c = d.Ensure(npc);
             if (s.standing && !s.inCargo) c.StandAt(Ground(pelvis), head);
             else c.PutDownAt(Ground(pelvis), head, s.faceUp, s.stunLeft, s.stunTotal);

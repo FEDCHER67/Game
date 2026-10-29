@@ -55,6 +55,10 @@ namespace OnlyVolunteers.Phone
         public MapApp Map { get; private set; }
         public BankApp Bank { get; private set; }
         public MarketApp Market { get; private set; }
+        /// <summary>ECONOMY spec v01 §4, §7.1, §11: team purchases (equipment delivery, property) through the shared fund.</summary>
+        public ShopApp Shop { get; private set; }
+        /// <summary>STORY_MISSIONS_SPEC v01: the team journal (missions M01-M13, retained story messages), display only.</summary>
+        public JournalApp Journal { get; private set; }
 
         public static PhoneController Create(Camera viewCamera, KccFirstPersonInput input)
         {
@@ -80,7 +84,9 @@ namespace OnlyVolunteers.Phone
             Map = Add(new MapApp());
             Bank = Add(new BankApp());
             Market = Add(new MarketApp());
-            foreach (var app in new PhoneApp[] { Messages, CameraApp, Gallery, Map, Bank, Market })
+            Shop = Add(new ShopApp());
+            Journal = Add(new JournalApp());
+            foreach (var app in new PhoneApp[] { Messages, CameraApp, Gallery, Map, Bank, Market, Shop, Journal })
                 Home.Place(app);
 
             current = Home;

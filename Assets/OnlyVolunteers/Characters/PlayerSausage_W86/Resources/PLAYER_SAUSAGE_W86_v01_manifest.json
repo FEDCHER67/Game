@@ -1,0 +1,1101 @@
+{
+ "asset": "PLAYER_SAUSAGE_W86",
+ "revision": "v01",
+ "note": "The player as a customisable Sausage Buddy (Fedya 2026-10-29). Same Buddy_Rig_Mixamo65 (65 Mixamo bones, BASE rest pose) as every Sausage Buddy NPC: every shared NPC clip plays on it. One option per aspect is worn at a time. The game shows the base meshes, the chosen option mesh of each aspect, and hides every Body_* region listed in hides_body_regions of the chosen top and bottom. While a headwear option with hair_under_hat = true is worn, the hair option shows mesh_under_hat instead of mesh.",
+ "files": {
+  "blend": "PLAYER_SAUSAGE_W86_v01.blend",
+  "fbx_base": "PLAYER_SAUSAGE_W86_v01_base.fbx",
+  "fbx_parts": "PLAYER_SAUSAGE_W86_v01_parts.fbx",
+  "validation": "validation_PLAYER_SAUSAGE_W86_v01.json"
+ },
+ "rig": {
+  "name": "Buddy_Rig_Mixamo65",
+  "bones": 65,
+  "axes": "FBX -Z forward, Y up (as the NPC types)",
+  "fbx_clip": "Idle only, like the NPC types; the game plays the shared clips (Animations/clips.json roles)"
+ },
+ "lod_naming": "<mesh>_LOD0 / _LOD1 / _LOD2 (Unity LOD import convention). Toggle all three LODs of an option together. Suggested LODGroup screen heights as the NPC crowd: LOD0 > 0.10, LOD1 > 0.037, LOD2 > 0.01.",
+ "unity_notes": [
+  "Both FBX files carry the same rig with the same bone names and rest pose: either rebind the parts' SkinnedMeshRenderer.bones to the base skeleton by bone name, or instance the parts FBX under the same Animator.",
+  "Colours are material tints: one material per slot shared by every option of an aspect (PLAYER_Top_Main / _Trim / _Accent, PLAYER_Bottom_Main / _Trim / _Accent); set them per renderer (MaterialPropertyBlock or material instance) from the swatch.",
+  "Skin: tint Buddy_Skin, Buddy_Skin_Nose, Buddy_Skin_Inner and Buddy_Eye_Rim from the skin tone (Body_* regions and Face).",
+  "Face blend shapes as the NPCs: Blink, Blink_L, Blink_R, Surprised, Worried, Happy (GreyboxFace).",
+  "Hair, beards and headwear are rigid on mixamorig:Head; nothing is a Props_*Hand mesh (NpcHeldProps must not touch the player)."
+ ],
+ "base": {
+  "meshes": [
+   "Body_Head",
+   "Body_Hands",
+   "Body_Torso",
+   "Body_Pelvis",
+   "Body_ArmUpper",
+   "Body_ArmMid",
+   "Body_ArmLower",
+   "Body_Thigh",
+   "Body_Knee",
+   "Body_Shin",
+   "Shoes",
+   "Socks",
+   "Face"
+  ],
+  "always_on": [
+   "Shoes",
+   "Socks",
+   "Face",
+   "Body_Head",
+   "Body_Hands"
+  ],
+  "body_regions": [
+   {
+    "mesh": "Body_Head",
+    "name_ru": "Голова, уши, нос (никогда не скрывается)",
+    "tris": {
+     "lod0": 2032,
+     "lod1": 938,
+     "lod2": 412
+    },
+    "hidden_by": []
+   },
+   {
+    "mesh": "Body_Hands",
+    "name_ru": "Кисти и запястья (никогда не скрываются)",
+    "tris": {
+     "lod0": 2216,
+     "lod1": 1004,
+     "lod2": 448
+    },
+    "hidden_by": []
+   },
+   {
+    "mesh": "Body_Torso",
+    "name_ru": "Грудь, живот, спина",
+    "tris": {
+     "lod0": 160,
+     "lod1": 160,
+     "lod2": 54
+    },
+    "hidden_by": [
+     "Top_01",
+     "Top_02",
+     "Top_03",
+     "Top_04",
+     "Top_05"
+    ]
+   },
+   {
+    "mesh": "Body_Pelvis",
+    "name_ru": "Таз и верх бёдер",
+    "tris": {
+     "lod0": 112,
+     "lod1": 112,
+     "lod2": 62
+    },
+    "hidden_by": [
+     "Bottom_01",
+     "Bottom_02",
+     "Bottom_03",
+     "Bottom_04",
+     "Bottom_05"
+    ]
+   },
+   {
+    "mesh": "Body_ArmUpper",
+    "name_ru": "Плечи",
+    "tris": {
+     "lod0": 168,
+     "lod1": 144,
+     "lod2": 144
+    },
+    "hidden_by": [
+     "Top_01",
+     "Top_02",
+     "Top_03",
+     "Top_04",
+     "Top_05"
+    ]
+   },
+   {
+    "mesh": "Body_ArmMid",
+    "name_ru": "Руки от плеча до локтя",
+    "tris": {
+     "lod0": 96,
+     "lod1": 96,
+     "lod2": 96
+    },
+    "hidden_by": [
+     "Top_02",
+     "Top_03",
+     "Top_04",
+     "Top_05"
+    ]
+   },
+   {
+    "mesh": "Body_ArmLower",
+    "name_ru": "Предплечья",
+    "tris": {
+     "lod0": 96,
+     "lod1": 96,
+     "lod2": 96
+    },
+    "hidden_by": [
+     "Top_02",
+     "Top_03",
+     "Top_04"
+    ]
+   },
+   {
+    "mesh": "Body_Thigh",
+    "name_ru": "Верх бёдер",
+    "tris": {
+     "lod0": 128,
+     "lod1": 128,
+     "lod2": 128
+    },
+    "hidden_by": [
+     "Bottom_01",
+     "Bottom_02",
+     "Bottom_03",
+     "Bottom_04",
+     "Bottom_05"
+    ]
+   },
+   {
+    "mesh": "Body_Knee",
+    "name_ru": "Бёдра над коленом (под шортами остаются видны в штанине)",
+    "tris": {
+     "lod0": 64,
+     "lod1": 64,
+     "lod2": 64
+    },
+    "hidden_by": [
+     "Bottom_01",
+     "Bottom_02",
+     "Bottom_03",
+     "Bottom_05"
+    ]
+   },
+   {
+    "mesh": "Body_Shin",
+    "name_ru": "Колени и голени (ниже верха носков тело удалено: там всегда носки и кеды)",
+    "tris": {
+     "lod0": 192,
+     "lod1": 192,
+     "lod2": 130
+    },
+    "hidden_by": [
+     "Bottom_01",
+     "Bottom_02",
+     "Bottom_03",
+     "Bottom_05"
+    ]
+   }
+  ],
+  "tris": {
+   "Shoes": {
+    "lod0": 1928,
+    "lod1": 872,
+    "lod2": 394
+   },
+   "Socks": {
+    "lod0": 288,
+    "lod1": 288,
+    "lod2": 288
+   },
+   "Face": {
+    "lod0": 1672,
+    "lod1": 758,
+    "lod2": 344
+   }
+  }
+ },
+ "aspects": {
+  "hair": {
+   "name_ru": "Причёска",
+   "default": "Hair_03",
+   "options": [
+    {
+     "id": "Hair_01",
+     "name_ru": "Лысый",
+     "mesh": null,
+     "lods": [],
+     "hides_body_regions": [],
+     "tris": null,
+     "mesh_under_hat": null,
+     "lods_under_hat": [],
+     "tris_under_hat": null
+    },
+    {
+     "id": "Hair_02",
+     "name_ru": "Ёжик",
+     "mesh": "Hair_02",
+     "lods": [
+      "Hair_02_LOD0",
+      "Hair_02_LOD1",
+      "Hair_02_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 1024,
+      "lod1": 468,
+      "lod2": 206
+     },
+     "mesh_under_hat": "Hair_02_Hat",
+     "lods_under_hat": [
+      "Hair_02_Hat_LOD0",
+      "Hair_02_Hat_LOD1",
+      "Hair_02_Hat_LOD2"
+     ],
+     "tris_under_hat": {
+      "lod0": 524,
+      "lod1": 236,
+      "lod2": 106
+     }
+    },
+    {
+     "id": "Hair_03",
+     "name_ru": "Пробор",
+     "mesh": "Hair_03",
+     "lods": [
+      "Hair_03_LOD0",
+      "Hair_03_LOD1",
+      "Hair_03_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 1026,
+      "lod1": 462,
+      "lod2": 206
+     },
+     "mesh_under_hat": "Hair_03_Hat",
+     "lods_under_hat": [
+      "Hair_03_Hat_LOD0",
+      "Hair_03_Hat_LOD1",
+      "Hair_03_Hat_LOD2"
+     ],
+     "tris_under_hat": {
+      "lod0": 524,
+      "lod1": 236,
+      "lod2": 106
+     }
+    },
+    {
+     "id": "Hair_04",
+     "name_ru": "Чёлка",
+     "mesh": "Hair_04",
+     "lods": [
+      "Hair_04_LOD0",
+      "Hair_04_LOD1",
+      "Hair_04_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 1132,
+      "lod1": 518,
+      "lod2": 228
+     },
+     "mesh_under_hat": "Hair_04_Hat",
+     "lods_under_hat": [
+      "Hair_04_Hat_LOD0",
+      "Hair_04_Hat_LOD1",
+      "Hair_04_Hat_LOD2"
+     ],
+     "tris_under_hat": {
+      "lod0": 524,
+      "lod1": 236,
+      "lod2": 106
+     }
+    },
+    {
+     "id": "Hair_05",
+     "name_ru": "Кок",
+     "mesh": "Hair_05",
+     "lods": [
+      "Hair_05_LOD0",
+      "Hair_05_LOD1",
+      "Hair_05_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 1024,
+      "lod1": 468,
+      "lod2": 206
+     },
+     "mesh_under_hat": "Hair_05_Hat",
+     "lods_under_hat": [
+      "Hair_05_Hat_LOD0",
+      "Hair_05_Hat_LOD1",
+      "Hair_05_Hat_LOD2"
+     ],
+     "tris_under_hat": {
+      "lod0": 524,
+      "lod1": 236,
+      "lod2": 106
+     }
+    }
+   ]
+  },
+  "beard": {
+   "name_ru": "Борода и усы",
+   "default": "Beard_01",
+   "options": [
+    {
+     "id": "Beard_01",
+     "name_ru": "Без бороды",
+     "mesh": null,
+     "lods": [],
+     "hides_body_regions": [],
+     "tris": null
+    },
+    {
+     "id": "Beard_02",
+     "name_ru": "Щетина",
+     "mesh": "Beard_02",
+     "lods": [
+      "Beard_02_LOD0",
+      "Beard_02_LOD1",
+      "Beard_02_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 330,
+      "lod1": 150,
+      "lod2": 150
+     }
+    },
+    {
+     "id": "Beard_03",
+     "name_ru": "Усы",
+     "mesh": "Beard_03",
+     "lods": [
+      "Beard_03_LOD0",
+      "Beard_03_LOD1",
+      "Beard_03_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 240,
+      "lod1": 108,
+      "lod2": 48
+     }
+    },
+    {
+     "id": "Beard_04",
+     "name_ru": "Борода",
+     "mesh": "Beard_04",
+     "lods": [
+      "Beard_04_LOD0",
+      "Beard_04_LOD1",
+      "Beard_04_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 668,
+      "lod1": 300,
+      "lod2": 134
+     }
+    },
+    {
+     "id": "Beard_05",
+     "name_ru": "Эспаньолка",
+     "mesh": "Beard_05",
+     "lods": [
+      "Beard_05_LOD0",
+      "Beard_05_LOD1",
+      "Beard_05_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 444,
+      "lod1": 200,
+      "lod2": 90
+     }
+    }
+   ]
+  },
+  "top": {
+   "name_ru": "Верх",
+   "default": "Top_01",
+   "options": [
+    {
+     "id": "Top_01",
+     "name_ru": "Футболка",
+     "mesh": "Top_01",
+     "lods": [
+      "Top_01_LOD0",
+      "Top_01_LOD1",
+      "Top_01_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Torso",
+      "Body_ArmUpper"
+     ],
+     "tris": {
+      "lod0": 1248,
+      "lod1": 940,
+      "lod2": 272
+     },
+     "default_swatch": "Sw_01",
+     "coverage_check": {
+      "Body_Torso": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 3
+      },
+      "Body_ArmUpper": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 5
+      }
+     }
+    },
+    {
+     "id": "Top_02",
+     "name_ru": "Худи",
+     "mesh": "Top_02",
+     "lods": [
+      "Top_02_LOD0",
+      "Top_02_LOD1",
+      "Top_02_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Torso",
+      "Body_ArmUpper",
+      "Body_ArmMid",
+      "Body_ArmLower"
+     ],
+     "tris": {
+      "lod0": 2976,
+      "lod1": 1896,
+      "lod2": 1318
+     },
+     "default_swatch": "Sw_02",
+     "coverage_check": {
+      "Body_Torso": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 2
+      },
+      "Body_ArmUpper": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 0
+      },
+      "Body_ArmMid": {
+       "escaping_verts_max": 1,
+       "poked_verts_max": 0
+      },
+      "Body_ArmLower": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Top_03",
+     "name_ru": "Рабочая куртка",
+     "mesh": "Top_03",
+     "lods": [
+      "Top_03_LOD0",
+      "Top_03_LOD1",
+      "Top_03_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Torso",
+      "Body_ArmUpper",
+      "Body_ArmMid",
+      "Body_ArmLower"
+     ],
+     "tris": {
+      "lod0": 2802,
+      "lod1": 1548,
+      "lod2": 620
+     },
+     "default_swatch": "Sw_08",
+     "coverage_check": {
+      "Body_Torso": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 2
+      },
+      "Body_ArmUpper": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 6
+      },
+      "Body_ArmMid": {
+       "escaping_verts_max": 1,
+       "poked_verts_max": 0
+      },
+      "Body_ArmLower": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Top_04",
+     "name_ru": "Олимпийка",
+     "mesh": "Top_04",
+     "lods": [
+      "Top_04_LOD0",
+      "Top_04_LOD1",
+      "Top_04_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Torso",
+      "Body_ArmUpper",
+      "Body_ArmMid",
+      "Body_ArmLower"
+     ],
+     "tris": {
+      "lod0": 2508,
+      "lod1": 2164,
+      "lod2": 1180
+     },
+     "default_swatch": "Sw_03",
+     "coverage_check": {
+      "Body_Torso": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 2
+      },
+      "Body_ArmUpper": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 5
+      },
+      "Body_ArmMid": {
+       "escaping_verts_max": 1,
+       "poked_verts_max": 0
+      },
+      "Body_ArmLower": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Top_05",
+     "name_ru": "Рубашка",
+     "mesh": "Top_05",
+     "lods": [
+      "Top_05_LOD0",
+      "Top_05_LOD1",
+      "Top_05_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Torso",
+      "Body_ArmUpper",
+      "Body_ArmMid"
+     ],
+     "tris": {
+      "lod0": 1998,
+      "lod1": 1410,
+      "lod2": 674
+     },
+     "default_swatch": "Sw_05",
+     "coverage_check": {
+      "Body_Torso": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 3
+      },
+      "Body_ArmUpper": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 5
+      },
+      "Body_ArmMid": {
+       "escaping_verts_max": 2,
+       "poked_verts_max": 0
+      }
+     }
+    }
+   ]
+  },
+  "bottom": {
+   "name_ru": "Низ",
+   "default": "Bottom_01",
+   "options": [
+    {
+     "id": "Bottom_01",
+     "name_ru": "Джинсы",
+     "mesh": "Bottom_01",
+     "lods": [
+      "Bottom_01_LOD0",
+      "Bottom_01_LOD1",
+      "Bottom_01_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Pelvis",
+      "Body_Thigh",
+      "Body_Knee",
+      "Body_Shin"
+     ],
+     "tris": {
+      "lod0": 932,
+      "lod1": 804,
+      "lod2": 686
+     },
+     "default_swatch": "Sw_05",
+     "coverage_check": {
+      "Body_Pelvis": {
+       "escaping_verts_max": 16,
+       "poked_verts_max": 4
+      },
+      "Body_Thigh": {
+       "escaping_verts_max": 20,
+       "poked_verts_max": 2
+      },
+      "Body_Knee": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      },
+      "Body_Shin": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Bottom_02",
+     "name_ru": "Спортивные штаны",
+     "mesh": "Bottom_02",
+     "lods": [
+      "Bottom_02_LOD0",
+      "Bottom_02_LOD1",
+      "Bottom_02_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Pelvis",
+      "Body_Thigh",
+      "Body_Knee",
+      "Body_Shin"
+     ],
+     "tris": {
+      "lod0": 1096,
+      "lod1": 853,
+      "lod2": 637
+     },
+     "default_swatch": "Sw_03",
+     "coverage_check": {
+      "Body_Pelvis": {
+       "escaping_verts_max": 16,
+       "poked_verts_max": 8
+      },
+      "Body_Thigh": {
+       "escaping_verts_max": 20,
+       "poked_verts_max": 0
+      },
+      "Body_Knee": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      },
+      "Body_Shin": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Bottom_03",
+     "name_ru": "Карго",
+     "mesh": "Bottom_03",
+     "lods": [
+      "Bottom_03_LOD0",
+      "Bottom_03_LOD1",
+      "Bottom_03_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Pelvis",
+      "Body_Thigh",
+      "Body_Knee",
+      "Body_Shin"
+     ],
+     "tris": {
+      "lod0": 1204,
+      "lod1": 1204,
+      "lod2": 588
+     },
+     "default_swatch": "Sw_06",
+     "coverage_check": {
+      "Body_Pelvis": {
+       "escaping_verts_max": 16,
+       "poked_verts_max": 4
+      },
+      "Body_Thigh": {
+       "escaping_verts_max": 20,
+       "poked_verts_max": 0
+      },
+      "Body_Knee": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      },
+      "Body_Shin": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Bottom_04",
+     "name_ru": "Шорты",
+     "mesh": "Bottom_04",
+     "lods": [
+      "Bottom_04_LOD0",
+      "Bottom_04_LOD1",
+      "Bottom_04_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Pelvis",
+      "Body_Thigh"
+     ],
+     "tris": {
+      "lod0": 740,
+      "lod1": 740,
+      "lod2": 230
+     },
+     "default_swatch": "Sw_08",
+     "coverage_check": {
+      "Body_Pelvis": {
+       "escaping_verts_max": 18,
+       "poked_verts_max": 4
+      },
+      "Body_Thigh": {
+       "escaping_verts_max": 20,
+       "poked_verts_max": 0
+      }
+     }
+    },
+    {
+     "id": "Bottom_05",
+     "name_ru": "Рабочие брюки",
+     "mesh": "Bottom_05",
+     "lods": [
+      "Bottom_05_LOD0",
+      "Bottom_05_LOD1",
+      "Bottom_05_LOD2"
+     ],
+     "hides_body_regions": [
+      "Body_Pelvis",
+      "Body_Thigh",
+      "Body_Knee",
+      "Body_Shin"
+     ],
+     "tris": {
+      "lod0": 1044,
+      "lod1": 910,
+      "lod2": 668
+     },
+     "default_swatch": "Sw_02",
+     "coverage_check": {
+      "Body_Pelvis": {
+       "escaping_verts_max": 16,
+       "poked_verts_max": 4
+      },
+      "Body_Thigh": {
+       "escaping_verts_max": 20,
+       "poked_verts_max": 2
+      },
+      "Body_Knee": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      },
+      "Body_Shin": {
+       "escaping_verts_max": 0,
+       "poked_verts_max": 0
+      }
+     }
+    }
+   ]
+  },
+  "head": {
+   "name_ru": "Головной убор / аксессуар",
+   "default": "Head_01",
+   "options": [
+    {
+     "id": "Head_01",
+     "name_ru": "Ничего",
+     "mesh": null,
+     "lods": [],
+     "hides_body_regions": [],
+     "tris": null,
+     "hair_under_hat": false
+    },
+    {
+     "id": "Head_02",
+     "name_ru": "Кепка",
+     "mesh": "Head_02",
+     "lods": [
+      "Head_02_LOD0",
+      "Head_02_LOD1",
+      "Head_02_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 604,
+      "lod1": 286,
+      "lod2": 128
+     },
+     "hair_under_hat": true
+    },
+    {
+     "id": "Head_03",
+     "name_ru": "Шапка",
+     "mesh": "Head_03",
+     "lods": [
+      "Head_03_LOD0",
+      "Head_03_LOD1",
+      "Head_03_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 480,
+      "lod1": 230,
+      "lod2": 104
+     },
+     "hair_under_hat": true
+    },
+    {
+     "id": "Head_04",
+     "name_ru": "Бандана",
+     "mesh": "Head_04",
+     "lods": [
+      "Head_04_LOD0",
+      "Head_04_LOD1",
+      "Head_04_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 924,
+      "lod1": 416,
+      "lod2": 187
+     },
+     "hair_under_hat": true
+    },
+    {
+     "id": "Head_05",
+     "name_ru": "Очки",
+     "mesh": "Head_05",
+     "lods": [
+      "Head_05_LOD0",
+      "Head_05_LOD1",
+      "Head_05_LOD2"
+     ],
+     "hides_body_regions": [],
+     "tris": {
+      "lod0": 470,
+      "lod1": 212,
+      "lod2": 93
+     },
+     "hair_under_hat": false
+    }
+   ]
+  }
+ },
+ "skin_tones": {
+  "name_ru": "Цвет кожи",
+  "default": "Skin_02",
+  "materials": {
+   "skin": "Buddy_Skin",
+   "nose": "Buddy_Skin_Nose",
+   "inner": "Buddy_Skin_Inner",
+   "rim": "Buddy_Eye_Rim"
+  },
+  "options": [
+   {
+    "id": "Skin_01",
+    "name_ru": "Светлая",
+    "skin": "#F4B094",
+    "nose": "#EC8C74",
+    "inner": "#D4725A",
+    "rim": "#B8705A"
+   },
+   {
+    "id": "Skin_02",
+    "name_ru": "Сосисочная (как у NPC)",
+    "skin": "#EC986A",
+    "nose": "#E2805E",
+    "inner": "#CC7050",
+    "rim": "#965C46"
+   },
+   {
+    "id": "Skin_03",
+    "name_ru": "Смуглая",
+    "skin": "#CE8A60",
+    "nose": "#D47050",
+    "inner": "#B26046",
+    "rim": "#88523C"
+   },
+   {
+    "id": "Skin_04",
+    "name_ru": "Тёмная",
+    "skin": "#A06646",
+    "nose": "#A85A40",
+    "inner": "#8C4C38",
+    "rim": "#663C2A"
+   },
+   {
+    "id": "Skin_05",
+    "name_ru": "Очень тёмная",
+    "skin": "#68422E",
+    "nose": "#744230",
+    "inner": "#603628",
+    "rim": "#42281C"
+   }
+  ]
+ },
+ "clothing_swatches": {
+  "name_ru": "Цвет одежды",
+  "applies_to": {
+   "top": [
+    "PLAYER_Top_Main",
+    "PLAYER_Top_Trim",
+    "PLAYER_Top_Accent"
+   ],
+   "bottom": [
+    "PLAYER_Bottom_Main",
+    "PLAYER_Bottom_Trim",
+    "PLAYER_Bottom_Accent"
+   ]
+  },
+  "default_top": "Sw_01",
+  "default_bottom": "Sw_05",
+  "options": [
+   {
+    "id": "Sw_01",
+    "name_ru": "Белый",
+    "main": "#EAE8E2",
+    "trim": "#CECCC6",
+    "accent": "#34363A"
+   },
+   {
+    "id": "Sw_02",
+    "name_ru": "Серый",
+    "main": "#80848A",
+    "trim": "#686C72",
+    "accent": "#ECECE8"
+   },
+   {
+    "id": "Sw_03",
+    "name_ru": "Чёрный",
+    "main": "#2C2E32",
+    "trim": "#1E2024",
+    "accent": "#ECECE8"
+   },
+   {
+    "id": "Sw_04",
+    "name_ru": "Красный",
+    "main": "#B23A2C",
+    "trim": "#922C22",
+    "accent": "#F0EEE8"
+   },
+   {
+    "id": "Sw_05",
+    "name_ru": "Синий",
+    "main": "#3A5692",
+    "trim": "#2C4274",
+    "accent": "#ECECE8"
+   },
+   {
+    "id": "Sw_06",
+    "name_ru": "Зелёный",
+    "main": "#526E46",
+    "trim": "#405836",
+    "accent": "#ECECE8"
+   },
+   {
+    "id": "Sw_07",
+    "name_ru": "Жёлтый",
+    "main": "#E8B836",
+    "trim": "#CC9A26",
+    "accent": "#303236"
+   },
+   {
+    "id": "Sw_08",
+    "name_ru": "Бежевый",
+    "main": "#B09C74",
+    "trim": "#94825E",
+    "accent": "#383632"
+   }
+  ]
+ },
+ "fixed_materials": {
+  "PLAYER_Hair": "#5C402E",
+  "PLAYER_Hair_Part": "#463022",
+  "PLAYER_Stubble": "#6E5242",
+  "PLAYER_Cap": "#344268",
+  "PLAYER_Cap_Peak": "#283454",
+  "PLAYER_Beanie": "#3C3E44",
+  "PLAYER_Bandana": "#B23A2C",
+  "PLAYER_Bandana_Dots": "#F4F0E8",
+  "PLAYER_Glasses": "#222226",
+  "PLAYER_Socks": "#ECEAE4",
+  "PLAYER_Shoe_Upper": "#E2E2DE",
+  "PLAYER_Shoe_Sole": "#46484E",
+  "PLAYER_Shoe_Lace": "#F4F4F0"
+ },
+ "default_selection": {
+  "hair": "Hair_03",
+  "beard": "Beard_01",
+  "top": "Top_01",
+  "bottom": "Bottom_01",
+  "head": "Head_01",
+  "skin": "Skin_02",
+  "top_swatch": "Sw_01",
+  "bottom_swatch": "Sw_05"
+ },
+ "outfit_tris": {
+  "lod0": {
+   "combinations": 3125,
+   "max": 14586,
+   "heaviest": [
+    "Hair_04",
+    "Beard_04",
+    "Top_02",
+    "Bottom_03",
+    "Head_05"
+   ],
+   "mean": 12974,
+   "min": 10508,
+   "lightest": [
+    "Hair_01",
+    "Beard_01",
+    "Top_01",
+    "Bottom_01",
+    "Head_01"
+   ]
+  },
+  "lod1": {
+   "combinations": 3125,
+   "max": 8258,
+   "heaviest": [
+    "Hair_04",
+    "Beard_04",
+    "Top_04",
+    "Bottom_03",
+    "Head_05"
+   ],
+   "mean": 7110,
+   "min": 5796,
+   "lightest": [
+    "Hair_01",
+    "Beard_01",
+    "Top_01",
+    "Bottom_01",
+    "Head_01"
+   ]
+  },
+  "lod2": {
+   "combinations": 3125,
+   "max": 4361,
+   "heaviest": [
+    "Hair_04",
+    "Beard_02",
+    "Top_02",
+    "Bottom_01",
+    "Head_05"
+   ],
+   "mean": 3662,
+   "min": 2774,
+   "lightest": [
+    "Hair_01",
+    "Beard_01",
+    "Top_01",
+    "Bottom_04",
+    "Head_01"
+   ]
+  },
+  "crowd_lod0_average": 14653
+ }
+}

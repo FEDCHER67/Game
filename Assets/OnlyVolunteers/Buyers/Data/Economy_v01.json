@@ -1,0 +1,1500 @@
+{
+  "schemaVersion": 1,
+  "id": "economy_v01",
+  "spec": "ECONOMY_SALES_PROGRESSION_SPEC_2026-10-25_v01;15 overrides earlier sections",
+  "entries": [
+    {
+      "id": "syringe_blood",
+      "category": "consumable",
+      "spec": "4;5",
+      "price": 2,
+      "unit": "syringe",
+      "quantity": 1,
+      "effect_note": "Reusable only on the same PersonId; blood only.",
+      "where_sold": "pharmacy; authored world finds",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "syringe_anaesthesia",
+      "category": "consumable",
+      "spec": "4;5",
+      "price": 2,
+      "unit": "empty_syringe",
+      "quantity": 1,
+      "effect_note": "Reusable only on the same PersonId; anaesthetic bought separately.",
+      "where_sold": "pharmacy; suitable authored world finds",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "zip_tie",
+      "category": "consumable",
+      "spec": "4",
+      "price": 5,
+      "unit": "tie",
+      "quantity": 1,
+      "effect_note": "Hands OR legs of one NPC.",
+      "where_sold": "pharmacy; underground_supplier",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "zip_tie_pack_4",
+      "category": "consumable",
+      "spec": "4",
+      "price": 20,
+      "unit": "pack",
+      "quantity": 4,
+      "effect_note": "Fully restrains two NPCs; no volume discount.",
+      "where_sold": "pharmacy; underground_supplier",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "blood_bag_empty",
+      "category": "consumable",
+      "spec": "4",
+      "price": 5,
+      "unit": "bag",
+      "quantity": 1,
+      "effect_note": "One blood portion.",
+      "where_sold": "pharmacy after introductory mission",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "organ_bag",
+      "category": "consumable",
+      "spec": "4",
+      "price": 10,
+      "unit": "bag",
+      "quantity": 1,
+      "effect_note": "Seals one organ item; does not cool or restore quality.",
+      "where_sold": "pharmacy",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "body_bag",
+      "category": "consumable",
+      "spec": "4",
+      "price": 5,
+      "unit": "bag",
+      "quantity": 1,
+      "effect_note": "Existing body rules apply.",
+      "where_sold": "pharmacy",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "trash_bag",
+      "category": "consumable",
+      "spec": "4",
+      "price": 5,
+      "unit": "bag",
+      "quantity": 1,
+      "effect_note": "Eight eligible trash items; not eight bodies.",
+      "where_sold": "pharmacy",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "head_bag",
+      "category": "consumable",
+      "spec": "4",
+      "price": 10,
+      "unit": "bag",
+      "quantity": 1,
+      "effect_note": "CAPTURE section 5; does not kill by itself.",
+      "where_sold": "underground_supplier",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "anaesthesia_basic",
+      "category": "consumable",
+      "spec": "4",
+      "price": 200,
+      "unit": "vial",
+      "quantity": 1,
+      "effect_note": "About ten nominal uses; no separately sold dose.",
+      "where_sold": "pharmacy",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "anaesthesia_improved",
+      "category": "consumable",
+      "spec": "4",
+      "price": 400,
+      "unit": "vial",
+      "quantity": 1,
+      "effect_note": "Requires the improved formula unlocked with XP; no separately sold dose.",
+      "where_sold": "pharmacy",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "anaesthesia_late",
+      "category": "consumable",
+      "spec": "4",
+      "price": 800,
+      "unit": "vial",
+      "quantity": 1,
+      "effect_note": "Requires the late formula unlocked with XP; no separately sold dose.",
+      "where_sold": "pharmacy",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "knife",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 100,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Reusable replacement basic knife.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "patient_restraints",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 500,
+      "unit": "set",
+      "quantity": 5,
+      "effect_note": "Set of five reusable table restraints; not capture zip ties.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "work_lamp",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 250,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Workplace lighting.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "saw",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 1500,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Procedure also requires story unlock; buying does not unlock brain extraction.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "hammer",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 300,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Chest procedure; G40 hammer/osteotome contract.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "osteotome",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 100,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Separate G40 item; not a replacement for the hammer. Initial author balance.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "tray",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 100,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Storage without cooling.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "tool_trolley",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 500,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Transports physically accessible tools.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "portable_fridge",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 1000,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "8 items; both hands; spoilage step every 25 active minutes.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "stationary_fridge",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 5000,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "24 items; spoilage stops while electricity is paid.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "mop_bucket",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 100,
+      "unit": "set",
+      "quantity": 1,
+      "effect_note": "G40; water is not consumed.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "operating_table",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 1500,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Physical placement within base capacity.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "rare_equipment",
+      "category": "equipment",
+      "spec": "4;4.1",
+      "price": 90000,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Appraisal/rare equipment; functions/resources belong to OPERATIONS; not an automatic VIP generator.",
+      "where_sold": "underground_supplier (special tools); phone_delivery (large equipment); exact per-item storefront open",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "direct_to_bag",
+      "category": "reserve",
+      "spec": "4.1",
+      "price": 1500,
+      "unit": "upgrade",
+      "quantity": 1,
+      "effect_note": "Balance reserve only; functional contract not approved.",
+      "where_sold": "",
+      "status": "reserved",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "quick_release",
+      "category": "reserve",
+      "spec": "4.1",
+      "price": 2000,
+      "unit": "upgrade",
+      "quantity": 1,
+      "effect_note": "Balance reserve only; functional contract not approved.",
+      "where_sold": "",
+      "status": "reserved",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "delivery_game_hours",
+      "category": "parameter",
+      "spec": "4.1;15.A19",
+      "price": null,
+      "unit": "game_hour",
+      "quantity": 1,
+      "effect_note": "Large equipment; one physical crate on an owned base.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 1
+      },
+      "refs": {}
+    },
+    {
+      "id": "van_engine_0",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 0,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 0,
+        "speed_kmh": 70,
+        "torque_multiplier": 1
+      },
+      "refs": {
+        "branch": "engine"
+      }
+    },
+    {
+      "id": "van_engine_1",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 1500,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 1,
+        "speed_kmh": 85,
+        "torque_multiplier": 1.12
+      },
+      "refs": {
+        "branch": "engine"
+      }
+    },
+    {
+      "id": "van_engine_2",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 2250,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 2,
+        "speed_kmh": 100,
+        "torque_multiplier": 1.25
+      },
+      "refs": {
+        "branch": "engine"
+      }
+    },
+    {
+      "id": "van_engine_3",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 3250,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 3,
+        "speed_kmh": 115,
+        "torque_multiplier": 1.4
+      },
+      "refs": {
+        "branch": "engine"
+      }
+    },
+    {
+      "id": "van_handling_0",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 0,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 0,
+        "lateral_grip_multiplier": 1,
+        "anti_roll_multiplier": 1,
+        "steering_response_multiplier": 1,
+        "high_speed_steering_add_degrees": 0
+      },
+      "refs": {
+        "branch": "handling"
+      }
+    },
+    {
+      "id": "van_handling_1",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 1000,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 1,
+        "lateral_grip_multiplier": 1.06,
+        "anti_roll_multiplier": 1.12,
+        "steering_response_multiplier": 1.1,
+        "high_speed_steering_add_degrees": 1
+      },
+      "refs": {
+        "branch": "handling"
+      }
+    },
+    {
+      "id": "van_handling_2",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 1750,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 2,
+        "lateral_grip_multiplier": 1.12,
+        "anti_roll_multiplier": 1.25,
+        "steering_response_multiplier": 1.2,
+        "high_speed_steering_add_degrees": 2
+      },
+      "refs": {
+        "branch": "handling"
+      }
+    },
+    {
+      "id": "van_handling_3",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 2750,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 3,
+        "lateral_grip_multiplier": 1.2,
+        "anti_roll_multiplier": 1.4,
+        "steering_response_multiplier": 1.3,
+        "high_speed_steering_add_degrees": 3
+      },
+      "refs": {
+        "branch": "handling"
+      }
+    },
+    {
+      "id": "van_brakes_0",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 0,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 0,
+        "brake_torque_multiplier": 1,
+        "handbrake_multiplier": 1,
+        "longitudinal_grip_multiplier": 1
+      },
+      "refs": {
+        "branch": "brakes"
+      }
+    },
+    {
+      "id": "van_brakes_1",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 750,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 1,
+        "brake_torque_multiplier": 1.15,
+        "handbrake_multiplier": 1.08,
+        "longitudinal_grip_multiplier": 1.05
+      },
+      "refs": {
+        "branch": "brakes"
+      }
+    },
+    {
+      "id": "van_brakes_2",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 1250,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 2,
+        "brake_torque_multiplier": 1.3,
+        "handbrake_multiplier": 1.16,
+        "longitudinal_grip_multiplier": 1.1
+      },
+      "refs": {
+        "branch": "brakes"
+      }
+    },
+    {
+      "id": "van_brakes_3",
+      "category": "van_tier",
+      "spec": "6.1;15.A32",
+      "price": 2000,
+      "unit": "tier",
+      "quantity": 1,
+      "effect_note": "Relative to new tier 0; independent branches; sequential purchases; first playtest preset.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 3,
+        "brake_torque_multiplier": 1.45,
+        "handbrake_multiplier": 1.24,
+        "longitudinal_grip_multiplier": 1.15
+      },
+      "refs": {
+        "branch": "brakes"
+      }
+    },
+    {
+      "id": "van_storage",
+      "category": "cargo",
+      "spec": "6.2",
+      "price": 1500,
+      "unit": "upgrade",
+      "quantity": 1,
+      "effect_note": "No fridges included; does not add NPC capacity or cooling.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "small_slots": 12,
+        "fridge_mounts": 2,
+        "mounted_fridge_items_total": 16
+      },
+      "refs": {}
+    },
+    {
+      "id": "van_capacity_1",
+      "category": "cargo",
+      "spec": "6.2",
+      "price": 2000,
+      "unit": "upgrade",
+      "quantity": 1,
+      "effect_note": "3 to 4 lying NPCs.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "from_npcs": 3,
+        "to_npcs": 4
+      },
+      "refs": {}
+    },
+    {
+      "id": "van_capacity_2",
+      "category": "cargo",
+      "spec": "6.2",
+      "price": 4000,
+      "unit": "upgrade",
+      "quantity": 1,
+      "effect_note": "4 to 5 lying NPCs; requires capacity I.",
+      "where_sold": "workshop",
+      "status": "confirmed",
+      "numbers": {
+        "from_npcs": 4,
+        "to_npcs": 5
+      },
+      "refs": {
+        "requires": "van_capacity_1"
+      }
+    },
+    {
+      "id": "van_initial_purchase",
+      "category": "purchase",
+      "spec": "2",
+      "price": 400,
+      "unit": "van_and_hamlet_base",
+      "quantity": 1,
+      "effect_note": "Peaceful grandfather branch only; alternative branch remains. Intro battery/tyres already in yard.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "base_wagon",
+      "category": "base",
+      "spec": "7.1;7.2;15.C5",
+      "price": 0,
+      "unit": "premises",
+      "quantity": 1,
+      "effect_note": "Free blood prologue; not an organ laboratory.",
+      "where_sold": "story",
+      "status": "confirmed",
+      "numbers": {
+        "table_capacity": 0,
+        "electricity_per_game_day": 0
+      },
+      "refs": {}
+    },
+    {
+      "id": "base_hamlet",
+      "category": "base",
+      "spec": "7.1;7.2;15.C5",
+      "price": 0,
+      "unit": "premises",
+      "quantity": 1,
+      "effect_note": "Included with van in either branch; old table and rusty knife; no lamp/restraints.",
+      "where_sold": "story",
+      "status": "confirmed",
+      "numbers": {
+        "table_capacity": 1,
+        "electricity_per_game_day": 50
+      },
+      "refs": {}
+    },
+    {
+      "id": "base_rough",
+      "category": "base",
+      "spec": "7.1;7.2;15.C5",
+      "price": 8100,
+      "unit": "premises",
+      "quantity": 1,
+      "effect_note": "Empty room; equipment separate.",
+      "where_sold": "phone_property_catalog",
+      "status": "confirmed",
+      "numbers": {
+        "table_capacity": 2,
+        "electricity_per_game_day": 100
+      },
+      "refs": {}
+    },
+    {
+      "id": "base_downtown",
+      "category": "base",
+      "spec": "7.1;7.2;15.C5",
+      "price": 33750,
+      "unit": "premises",
+      "quantity": 1,
+      "effect_note": "Empty room; equipment separate.",
+      "where_sold": "phone_property_catalog",
+      "status": "confirmed",
+      "numbers": {
+        "table_capacity": 3,
+        "electricity_per_game_day": 200
+      },
+      "refs": {}
+    },
+    {
+      "id": "base_lab",
+      "category": "base",
+      "spec": "7.1;7.2;15.C5",
+      "price": 135000,
+      "unit": "premises",
+      "quantity": 1,
+      "effect_note": "Quiet Valley; no fixed design table limit; actual space/performance still apply.",
+      "where_sold": "phone_property_catalog",
+      "status": "confirmed",
+      "numbers": {
+        "table_capacity": null,
+        "electricity_per_game_day": 500
+      },
+      "refs": {}
+    },
+    {
+      "id": "staff_assistant",
+      "category": "staff",
+      "spec": "7.3",
+      "price": 60000,
+      "unit": "initial_hire",
+      "quantity": 1,
+      "effect_note": "Moves/prepares/removes patients; no surgery/cleaning/outdoor disposal.",
+      "where_sold": "phone_staff_catalog; equipped owned base",
+      "status": "confirmed",
+      "numbers": {
+        "profit_share": 0.1,
+        "one_step_error_probability": null
+      },
+      "refs": {}
+    },
+    {
+      "id": "staff_specialist",
+      "category": "staff",
+      "spec": "7.3",
+      "price": 120000,
+      "unit": "initial_hire",
+      "quantity": 1,
+      "effect_note": "One-step error probability per extraction.",
+      "where_sold": "phone_staff_catalog; equipped owned base",
+      "status": "confirmed",
+      "numbers": {
+        "profit_share": 0.2,
+        "one_step_error_probability": 0.05
+      },
+      "refs": {}
+    },
+    {
+      "id": "staff_specialist_flawless",
+      "category": "staff",
+      "spec": "7.3",
+      "price": 180000,
+      "unit": "initial_hire",
+      "quantity": 1,
+      "effect_note": "No execution errors; does not improve innate quality.",
+      "where_sold": "phone_staff_catalog; equipped owned base",
+      "status": "confirmed",
+      "numbers": {
+        "profit_share": 0.2,
+        "one_step_error_probability": 0
+      },
+      "refs": {}
+    },
+    {
+      "id": "electricity_day_real_minutes",
+      "category": "parameter",
+      "spec": "7.2",
+      "price": null,
+      "unit": "active_real_minute",
+      "quantity": 1,
+      "effect_note": "One game day of active world time; no offline billing.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 45
+      },
+      "refs": {}
+    },
+    {
+      "id": "electricity_prepay_1",
+      "category": "parameter",
+      "spec": "7.2",
+      "price": null,
+      "unit": "game_day",
+      "quantity": 1,
+      "effect_note": "Prepay separately per base.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 1
+      },
+      "refs": {}
+    },
+    {
+      "id": "electricity_prepay_3",
+      "category": "parameter",
+      "spec": "7.2",
+      "price": null,
+      "unit": "game_day",
+      "quantity": 1,
+      "effect_note": "Prepay separately per base.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 3
+      },
+      "refs": {}
+    },
+    {
+      "id": "electricity_prepay_7",
+      "category": "parameter",
+      "spec": "7.2",
+      "price": null,
+      "unit": "game_day",
+      "quantity": 1,
+      "effect_note": "Prepay separately per base.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 7
+      },
+      "refs": {}
+    },
+    {
+      "id": "electricity_warning_6",
+      "category": "parameter",
+      "spec": "7.2",
+      "price": null,
+      "unit": "game_hour_before_cutoff",
+      "quantity": 1,
+      "effect_note": "Phone warning.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 6
+      },
+      "refs": {}
+    },
+    {
+      "id": "electricity_warning_1",
+      "category": "parameter",
+      "spec": "7.2",
+      "price": null,
+      "unit": "game_hour_before_cutoff",
+      "quantity": 1,
+      "effect_note": "Phone warning.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 1
+      },
+      "refs": {}
+    },
+    {
+      "id": "portable_fridge_capacity",
+      "category": "parameter",
+      "spec": "4;6.2",
+      "price": null,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Physical capacity; blood occupies slots too.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 8
+      },
+      "refs": {}
+    },
+    {
+      "id": "portable_fridge_hands",
+      "category": "parameter",
+      "spec": "4",
+      "price": null,
+      "unit": "hand",
+      "quantity": 1,
+      "effect_note": "Both hands occupied.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 2
+      },
+      "refs": {}
+    },
+    {
+      "id": "portable_fridge_spoil_minutes",
+      "category": "parameter",
+      "spec": "4",
+      "price": null,
+      "unit": "active_real_minute",
+      "quantity": 1,
+      "effect_note": "One spoilage step.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 25
+      },
+      "refs": {}
+    },
+    {
+      "id": "stationary_fridge_capacity",
+      "category": "parameter",
+      "spec": "4",
+      "price": null,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Cooling requires paid electricity.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 24
+      },
+      "refs": {}
+    },
+    {
+      "id": "trash_bag_capacity",
+      "category": "parameter",
+      "spec": "4",
+      "price": null,
+      "unit": "eligible_trash_item",
+      "quantity": 1,
+      "effect_note": "Not body capacity.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 8
+      },
+      "refs": {}
+    },
+    {
+      "id": "anaesthesia_basic_nominal_uses",
+      "category": "parameter",
+      "spec": "4",
+      "price": null,
+      "unit": "approximate_use",
+      "quantity": 1,
+      "effect_note": "Approximate; not a separately sold dose.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 10
+      },
+      "refs": {}
+    },
+    {
+      "id": "special_order_game_hours",
+      "category": "parameter",
+      "spec": "9.1",
+      "price": null,
+      "unit": "game_hour",
+      "quantity": 1,
+      "effect_note": "Deadline begins on explicit acceptance after negotiation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 48
+      },
+      "refs": {}
+    },
+    {
+      "id": "special_order_on_time_multiplier",
+      "category": "parameter",
+      "spec": "3.3;9.1",
+      "price": null,
+      "unit": "multiplier",
+      "quantity": 1,
+      "effect_note": "No saturation; late loses only on-time uplift.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 1.25
+      },
+      "refs": {}
+    },
+    {
+      "id": "uncooled_multiplier",
+      "category": "parameter",
+      "spec": "3.3",
+      "price": null,
+      "unit": "multiplier",
+      "quantity": 1,
+      "effect_note": "Cooled delivery uses 1.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "value": 0.9
+      },
+      "refs": {}
+    },
+    {
+      "id": "buyer_blood",
+      "category": "buyer",
+      "spec": "8.1;15.B2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Organ coefficient and quality floor are inapplicable to blood. Existing core ID, when assigned, is metadata only.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "coefficient": null,
+        "minimum_tier": null
+      },
+      "refs": {
+        "existing_core_id": "C01"
+      }
+    },
+    {
+      "id": "buyer_first",
+      "category": "buyer",
+      "spec": "8.1;15.B2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Organ coefficient and quality floor are inapplicable to blood. Existing core ID, when assigned, is metadata only.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "coefficient": 1,
+        "minimum_tier": 1
+      },
+      "refs": {
+        "existing_core_id": "ORGANS_01"
+      }
+    },
+    {
+      "id": "buyer_medic",
+      "category": "buyer",
+      "spec": "8.1;15.B2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Organ coefficient and quality floor are inapplicable to blood. Existing core ID, when assigned, is metadata only.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "coefficient": 1.5,
+        "minimum_tier": 2
+      },
+      "refs": {
+        "existing_core_id": ""
+      }
+    },
+    {
+      "id": "buyer_mafia",
+      "category": "buyer",
+      "spec": "8.1;15.B2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Organ coefficient and quality floor are inapplicable to blood. Existing core ID, when assigned, is metadata only.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "coefficient": 2.2,
+        "minimum_tier": 3
+      },
+      "refs": {
+        "existing_core_id": ""
+      }
+    },
+    {
+      "id": "kidney",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 250,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "liver",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 350,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "eyes",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 200,
+      "unit": "paired_item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "brain",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 1200,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "heart",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 1000,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "lungs",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 450,
+      "unit": "paired_item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "blood_bag_sealed",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 50,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "blood_syringe_first",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 10,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "blood_syringe_repeat",
+      "category": "sale_product",
+      "spec": "3.2;3.3;5.3",
+      "price": 8,
+      "unit": "item",
+      "quantity": 1,
+      "effect_note": "Sale base value, not a shop purchase. Eyes/lungs are indivisible pairs.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "quality_damaged",
+      "category": "quality",
+      "spec": "3.2",
+      "price": null,
+      "unit": "discrete_tier",
+      "quantity": 1,
+      "effect_note": "",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 1,
+        "percent_label": 20,
+        "multiplier": 0.5
+      },
+      "refs": {}
+    },
+    {
+      "id": "quality_acceptable",
+      "category": "quality",
+      "spec": "3.2",
+      "price": null,
+      "unit": "discrete_tier",
+      "quantity": 1,
+      "effect_note": "",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 2,
+        "percent_label": 40,
+        "multiplier": 1
+      },
+      "refs": {}
+    },
+    {
+      "id": "quality_good",
+      "category": "quality",
+      "spec": "3.2",
+      "price": null,
+      "unit": "discrete_tier",
+      "quantity": 1,
+      "effect_note": "",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 3,
+        "percent_label": 60,
+        "multiplier": 1.5
+      },
+      "refs": {}
+    },
+    {
+      "id": "quality_perfect",
+      "category": "quality",
+      "spec": "3.2",
+      "price": null,
+      "unit": "discrete_tier",
+      "quantity": 1,
+      "effect_note": "",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 4,
+        "percent_label": 80,
+        "multiplier": 2.6
+      },
+      "refs": {}
+    },
+    {
+      "id": "quality_perfect_plus",
+      "category": "quality",
+      "spec": "3.2",
+      "price": null,
+      "unit": "discrete_tier",
+      "quantity": 1,
+      "effect_note": "",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "tier": 5,
+        "percent_label": 100,
+        "multiplier": 6
+      },
+      "refs": {}
+    },
+    {
+      "id": "mission_medic_case",
+      "category": "mission",
+      "spec": "9.3;15.B12;15.B13",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Fixed reward, no deadline, no organ formula/commission; replacements never debit money.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "fixed_reward": 1000,
+        "replacement_deduction": 200
+      },
+      "refs": {
+        "reward_kind": "courier"
+      }
+    },
+    {
+      "id": "mission_kidney_order",
+      "category": "mission",
+      "spec": "9.1;9.2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "One individually sealed organ from the required PersonId; base organ formula plus on-time-only fixed bonus; no saturation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "minimum_tier": 3,
+        "on_time_fixed_bonus": 0
+      },
+      "refs": {
+        "reward_kind": "organ",
+        "buyer": "buyer_first",
+        "product": "kidney",
+        "target_npc_type": "HAMLET_BODYBUILDER"
+      }
+    },
+    {
+      "id": "mission_streamer_order",
+      "category": "mission",
+      "spec": "9.1;9.2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "One individually sealed organ from the required PersonId; base organ formula plus on-time-only fixed bonus; no saturation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "minimum_tier": 4,
+        "on_time_fixed_bonus": 0
+      },
+      "refs": {
+        "reward_kind": "organ",
+        "buyer": "buyer_medic",
+        "product": "brain",
+        "target_npc_type": "OLD_STREAMER"
+      }
+    },
+    {
+      "id": "mission_vip_beastman",
+      "category": "mission",
+      "spec": "9.4;15.D5;15.D6",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "One individually sealed organ from the required PersonId; base organ formula plus on-time-only fixed bonus; no saturation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "minimum_tier": 4,
+        "on_time_fixed_bonus": 15000
+      },
+      "refs": {
+        "reward_kind": "organ",
+        "buyer": "buyer_mafia",
+        "product": "heart",
+        "target_npc_type": "VIP_BEASTMAN"
+      }
+    },
+    {
+      "id": "mission_vip_speedster",
+      "category": "mission",
+      "spec": "9.4;15.D5;15.D6",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "One individually sealed organ from the required PersonId; base organ formula plus on-time-only fixed bonus; no saturation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "minimum_tier": 3,
+        "on_time_fixed_bonus": 10000
+      },
+      "refs": {
+        "reward_kind": "organ",
+        "buyer": "buyer_mafia",
+        "product": "lungs",
+        "target_npc_type": "VIP_SPEEDSTER"
+      }
+    },
+    {
+      "id": "mission_vip_blindfold",
+      "category": "mission",
+      "spec": "9.4;15.D5;15.D6",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "One individually sealed organ from the required PersonId; base organ formula plus on-time-only fixed bonus; no saturation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "minimum_tier": 4,
+        "on_time_fixed_bonus": 15000
+      },
+      "refs": {
+        "reward_kind": "organ",
+        "buyer": "buyer_mafia",
+        "product": "eyes",
+        "target_npc_type": "VIP_BLINDFOLD"
+      }
+    },
+    {
+      "id": "mission_vip_altgirl",
+      "category": "mission",
+      "spec": "9.4;15.D5;15.D6",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "One individually sealed organ from the required PersonId; base organ formula plus on-time-only fixed bonus; no saturation.",
+      "where_sold": "",
+      "status": "confirmed",
+      "numbers": {
+        "minimum_tier": 3,
+        "on_time_fixed_bonus": 10000
+      },
+      "refs": {
+        "reward_kind": "organ",
+        "buyer": "buyer_mafia",
+        "product": "brain",
+        "target_npc_type": "BAD_ALTGIRL"
+      }
+    },
+    {
+      "id": "van_glass_price",
+      "category": "open",
+      "spec": "14.1",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Protection, durability and price require a transport/police contract.",
+      "where_sold": "",
+      "status": "open",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "van_hidden_compartment_price",
+      "category": "open",
+      "spec": "14.1",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Effect and price not assigned; not an active shop upgrade.",
+      "where_sold": "",
+      "status": "open",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "unpacked_blood_freshness_seconds",
+      "category": "open",
+      "spec": "5.2",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "Proposed 120 seconds in source is explicitly not confirmed here.",
+      "where_sold": "",
+      "status": "open",
+      "numbers": {},
+      "refs": {}
+    },
+    {
+      "id": "streamer_search_hours",
+      "category": "open",
+      "spec": "9.2;14.1",
+      "price": null,
+      "unit": "",
+      "quantity": 1,
+      "effect_note": "NPC content dependency; do not reuse bodybuilder hours.",
+      "where_sold": "",
+      "status": "open",
+      "numbers": {},
+      "refs": {}
+    }
+  ]
+}

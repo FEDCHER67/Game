@@ -5,19 +5,25 @@ namespace OnlyVolunteers.Buyers
 {
     /// <summary>Pure, deterministic, single-host rules. All public operations serialize on one gate.
     /// Snapshot and input objects are copied; callers never receive live mutable state.
-    /// A sale is prepared on a private snapshot and published once, including its receipt.</summary>
+    /// A sale is prepared on a private snapshot and published once, including its receipt.
+    /// WP02: money and XP are never kept here. A sale is booked in the team economy (IBuyerEconomy: fund, XP, first-of-a-
+    /// kind / first-blood flags in one transaction) before the snapshot is published; the bargaining ranks are the
+    /// economy's (bought from the team's free XP, per participant id). An old snapshot's money / XP / ranks move into the
+    /// economy once when the rules are built from it.</summary>
     public sealed partial class BuyerRules
     {
         private readonly object gate = new object();
         private readonly IBuyerClock clock;
         private readonly IBuyerRandom random;
+        private readonly IBuyerEconomy economy;
         private readonly BuyerTuning tuning;
         private BuyerWorldState state;
 
-        public BuyerRules(IBuyerClock clock, IBuyerRandom random, BuyerWorldState saved = null, BuyerTuning tuning = null)
+        public BuyerRules(IBuyerClock clock, IBuyerRandom random, IBuyerEconomy economy, BuyerWorldState saved = null, BuyerTuning tuning = null)
         {
             this.clock = clock ?? throw new ArgumentNullException(nameof(clock));
             this.random = random ?? throw new ArgumentNullException(nameof(random));
+            this.economy = economy ?? throw new ArgumentNullException(nameof(economy));
             this.tuning = (tuning ?? new BuyerTuning()).Copy();
             state = saved == null ? new BuyerWorldState() : saved.Copy();
             if (saved == null)
@@ -25,6 +31,11 @@ namespace OnlyVolunteers.Buyers
                 state.Buyers.Add(new BuyerState { Id = BuyerCatalog.BloodBuyer });
                 state.Buyers.Add(new BuyerState { Id = BuyerCatalog.OrganBuyer });
             }
+            // Once-only migration: the economy books the legacy amounts under fixed keys (a repeat books nothing), then the
+            // snapshot forgets them, so later snapshots carry no money or XP of their own.
+            BuyerLegacyProgress legacy = state.TakeLegacy();
+            if (!legacy.Empty) economy.MigrateLegacy(legacy);
+            state.ClearLegacy();
             Synchronize(state);
         }
 
@@ -113,18 +124,19 @@ namespace OnlyVolunteers.Buyers
         }
         private static bool IsAvailable(BuyerWorldState s, string id) => id == BuyerCatalog.BloodBuyer || id == BuyerCatalog.OrganBuyer && s.OrganContactUnlocked;
         public bool IsBuyerAvailable(string id) { lock (gate) { Synchronize(state); return IsAvailable(state, id); } }
+        /// <summary>A present participant buys his next personal bargaining rank from the team's free XP (in the economy).</summary>
         public bool BuyNegotiationUpgrade(string playerId, int nextLevel)
         {
             lock (gate)
             {
                 Synchronize(state);
-                var player = Player(state, playerId);
-                if (!Present(state, playerId) || nextLevel != player.NegotiationLevel + 1 || nextLevel < 1 || nextLevel > 3) return false;
-                int cost = BuyerCatalog.UpgradeCost(nextLevel);
-                if (state.FreeXp < cost) return false;
-                state.FreeXp -= cost; player.NegotiationLevel = nextLevel; return true;
+                Player(state, playerId);
+                if (!Present(state, playerId) || nextLevel < 1 || nextLevel > 3 || nextLevel != economy.BargainRank(playerId) + 1) return false;
+                return economy.TryBuyBargainRank(playerId, nextLevel);
             }
         }
+        /// <summary>The participant's bargaining rank (the economy's record).</summary>
+        public int NegotiationLevel(string playerId) => economy.BargainRank(playerId);
         public void SetProgression(bool hasSaw, bool downtownAccess)
         {
             lock (gate) { Synchronize(state); state.HasSaw = hasSaw; state.HasDowntownAccess = downtownAccess; }
@@ -227,7 +239,6 @@ namespace OnlyVolunteers.Buyers
                 if (m.Phase != MeetingPhase.Waiting || Counter(buyer, kind).BannedUntil > state.LastGameSeconds) return false;
                 var n = m.Negotiations.Find(x => x.Kind == kind);
                 if (n != null && (n.Phase == NegotiationPhase.Failed || n.Phase == NegotiationPhase.Left)) return false;
-                if (kind == ProductKind.IntroSyringe && state.IntroSyringeSold) return false;
                 if (n == null)
                 {
                     n = new NegotiationState { Kind = kind, NegotiatorId = negotiatorId };
@@ -282,7 +293,8 @@ namespace OnlyVolunteers.Buyers
             if (!Present(state, playerId) || n.NegotiatorId != playerId || n.Kind == ProductKind.IntroSyringe ||
                 n.Phase != NegotiationPhase.Open && n.Phase != NegotiationPhase.CounterOffered ||
                 n.AttemptsUsed >= 2 || n.AttemptsUsed > 0 && ask >= n.LastAsk || ask != 5 && ask != 10 && ask != 20) return false;
-            int chance = BuyerCatalog.NegotiationChance(buyer.Respect, Player(state, playerId).NegotiationLevel, ask);
+            Player(state, playerId);
+            int chance = BuyerCatalog.NegotiationChance(buyer.Respect, Math.Max(0, Math.Min(3, economy.BargainRank(playerId))), ask);
             bool accepted = Roll() < chance;
             n.AttemptsUsed++; n.LastAsk = ask;
             if (accepted) { n.AgreedPercent = ask; n.Phase = NegotiationPhase.Agreed; }

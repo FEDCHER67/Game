@@ -44,7 +44,9 @@ namespace OnlyVolunteers.Operation.Stage1
         None, Squirming, PatientDead, NotOnTable, ToolBusy, HandsFull, SyringeEmpty, SyringeFull, SyringeNotFull, NoBags,
         StartAtDot, NeedScalpel, CutCordsFirst, NoBloodLeft, WrongSpot, StockEmpty, Refilled, BagReady,
         // Round 3: a living patient with an open belly keeps his straps; suturing before the opening / after the seam.
-        SutureFirst, NothingToSuture, StitchFromTop
+        SutureFirst, NothingToSuture, StitchFromTop, SyringeOtherPerson, SyringeUnavailable,
+        // WP05: no suture kit left for a new closure.
+        NoSutureKit
     }
 
     /// <summary>Round 3 (Fedya): the straps in play. The torso strap is off for now (OperationTuning.torsoStrap); old saves

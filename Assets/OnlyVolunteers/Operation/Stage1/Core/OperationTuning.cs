@@ -44,6 +44,15 @@ namespace OnlyVolunteers.Operation.Stage1
         [Tooltip("Round 4: escape clips (bit = OperationEscape id) not imported (the v01b left-side, edge-slump and stumble clips need a " +
                  "local bpy rebuild). Missing exits fall back to his right side, missing slumps to Esc_Slump_Sit.")]
         public int escapeMissingClips;
+        [Tooltip("K10 (Fedya 29.10): panic v02 variants (bit = OperationEscape id - FirstPanic) not imported; set by OnlyVolunteers/" +
+                 "Operation/Integrate escape panic clips v02. All missing by default: the opened patient then uses the v01 clips.")]
+        public int escapePanicMissing = -1;
+        [Tooltip("K10: authored timings of the panic v02 variants, 3 per variant (seconds, StrapOpen A, StrapOpen B; 0 = the v01 " +
+                 "value), written from escape_clips_manifest_v02.json by the same menu item.")]
+        public float[] escapePanicTiming = new float[0];
+        [Tooltip("K10: the doomed runner's field run (Esc_Run_BellyClutch_Loop_Panic_v02: hunched, both hands on the belly, 3.2 m/s in " +
+                 "place like Flee_Run_v01). Set by the same menu item; null = his ordinary run with the procedural belly clutch.")]
+        public AnimationClip escapeRunClutchClip;
         [Tooltip("Length of Op_EscapeFall_v01 at authored speed: the root stays on PatientRest while it plays (divided by escapeSpeed).")]
         public float escapeFallSeconds = 3f;
         /// <summary>Round 4: real seconds of the EscapeFall clip at escapeSpeed.</summary>
@@ -53,6 +62,15 @@ namespace OnlyVolunteers.Operation.Stage1
                  "the mirror of validation_op_v01.json cross_contracts (-1.5, -0.66, 0.36).")]
         public Vector3 escapeLandingOffset = new Vector3(1.5f, -0.66f, 0.36f);
         public float rescueSeconds = 8f;
+        [Tooltip("K10 (Fedya 29.10, variant В): a living patient who leaves the table with the belly opened and not sewn gets up and runs, " +
+                 "then dies of pain shock after a server-rolled (once, saved) distance in [shockRunMinMeters, shockRunMaxMeters] metres of his own escape travel.")]
+        public float shockRunMinMeters = 2f;
+        [Tooltip("Fedya 29.10 (К10, option б): 12 m, so he dies inside the B02 yard (the base circle is 14 m from the table, he starts ~2 m from it).")]
+        public float shockRunMaxMeters = 12f;
+        [Tooltip("K10 backstop: ...or after this many seconds of his own escape locomotion (running / crawling away), whichever first: " +
+                 "he got stuck. 12 m at the field NPC's 4.5 m/s flee is ~2.7 s, plus ~1.3 s Groggy after a stumble. Carried / in the van / " +
+                 "lying stunned / asleep does not count (recapture stays possible).")]
+        public float shockRunMaxSeconds = 7f;
         [Header("Anesthesia (units: 1.0 = the centre of the suitable range)")]
         public float dosePerSecond = 0.5f;
         public float suitableMinimum = 0.8f;
@@ -86,8 +104,13 @@ namespace OnlyVolunteers.Operation.Stage1
                  "second kidney, kills him at once (chance 1). Only the first kidney keeps its roll (+ blood portions).")]
         public bool liverOrBothKidneysFatal = true;
         public float bloodChancePerPortion = 0.1f;
+        [Tooltip("WP05: the ONE spoilage clock of a patient (first opening or death, whichever first): grace seconds, then one grade per corpseGradeSeconds.")]
         public float corpseGraceSeconds = 45f;
         public float corpseGradeSeconds = 40f;
+        [Tooltip("WP05 (Proposed): the table's starting stock of suture kits (one per closure) and patches, given once per table " +
+                 "world (not per patient). Bought ones are added later by the catalogue / pharmacy (ids in OperationSupplies).")]
+        public int startSutureKits = 10;
+        public int startPatches = 10;
         public int earlyOverdoseLoss = 2;
         [Header("Incisions (marker-local metres)")]
         [Tooltip("v04: one shared belly opening; the original v01/v02 assets keep their per-organ guides.")]

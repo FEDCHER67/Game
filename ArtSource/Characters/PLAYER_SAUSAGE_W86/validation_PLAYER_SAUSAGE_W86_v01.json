@@ -1,0 +1,7723 @@
+{
+ "asset": "PLAYER_SAUSAGE_W86_v01",
+ "source_build": "PLAYER_SAUSAGE_W86_v01.blend",
+ "build": {
+  "height_m": 1.748,
+  "bones": 65,
+  "total_triangles": 36778,
+  "actions": {
+   "Idle": [
+    1,
+    60
+   ],
+   "Panic_Run_Loop": [
+    1,
+    18
+   ],
+   "Panic_TurnFlee": [
+    1,
+    150
+   ],
+   "DoubleTake_Flee": [
+    1,
+    150
+   ],
+   "PlayDead_Fall": [
+    1,
+    60
+   ],
+   "PlayDead_Loop": [
+    1,
+    240
+   ],
+   "PlayDead_GetUp": [
+    1,
+    100
+   ],
+   "TripFall": [
+    1,
+    150
+   ],
+   "PoliceCall": [
+    1,
+    210
+   ],
+   "FakeSurrender_Flee": [
+    1,
+    150
+   ],
+   "Hide_Enter": [
+    1,
+    70
+   ],
+   "Hide_Loop": [
+    1,
+    180
+   ],
+   "LookBack_Bonk": [
+    1,
+    150
+   ]
+  }
+ },
+ "test_clips": {
+  "Idle_Stand_v04": "ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Idle_Knock_v03\\Idle_Stand_v04.blend",
+  "Walk": "ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Locomotion_v02\\Walk_v04.blend",
+  "Flee_Panic_Run": "ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Crowd_v01\\Flee_Panic_Run_v01.blend",
+  "Cargo_Sit_Idle_v05": "ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Idle_Knock_v03\\Cargo_Sit_Idle_v05.blend",
+  "Cop_Aim_v01": "ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Escape_Police_v01\\Cop_Aim_v01.blend",
+  "Hit_React_Head_v01": "ArtSource\\Characters\\SAUSAGE_BUDDY_01\\Animations\\Escape_Police_v01\\Hit_React_Head_v01.blend",
+  "Test_Crouch": "procedural (no crouch clip exists): KCC crouch, deep knee bend",
+  "Test_Carry": "procedural (no carry clip exists): arms forward at chest height"
+ },
+ "face_interior": {
+  "tris_removed": 456,
+  "hidden_tris": 758,
+  "kept_for_normals_tris": 302,
+  "states": 137,
+  "seconds": 18.6
+ },
+ "body_regions": {
+  "tris": {
+   "Body_Head": 2032,
+   "Body_Hands": 2216,
+   "Body_Torso": 160,
+   "Body_Pelvis": 112,
+   "Body_ArmUpper": 168,
+   "Body_ArmMid": 96,
+   "Body_ArmLower": 96,
+   "Body_Thigh": 128,
+   "Body_Knee": 64,
+   "Body_Shin": 192
+  },
+  "removed_faces_inside_socks": 96
+ },
+ "checks": {
+  "poses": [
+   "tpose T-pose f0",
+   "idle Idle_Stand_v04 f1",
+   "idle Idle_Stand_v04 f76",
+   "walk Walk f1",
+   "walk Walk f6",
+   "walk Walk f11",
+   "walk Walk f16",
+   "run Flee_Panic_Run f1",
+   "run Flee_Panic_Run f4",
+   "run Flee_Panic_Run f6",
+   "run Flee_Panic_Run f8",
+   "crouch Test_Crouch f1",
+   "carry Test_Carry f1",
+   "sit Cargo_Sit_Idle_v05 f1",
+   "aim Cop_Aim_v01 f31",
+   "hit_head Hit_React_Head_v01 f9",
+   "panic_run Panic_Run_Loop f6"
+  ],
+  "coverage": {
+   "Top_01": {
+    "Body_Torso": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 3,
+     "verts": 96,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmUpper": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 5,
+     "verts": 98,
+     "worst_pose": "tpose T-pose f0"
+    }
+   },
+   "Top_02": {
+    "Body_Torso": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 2,
+     "verts": 96,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmUpper": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 0,
+     "verts": 98,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmMid": {
+     "escaping_verts_max": 1,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": "run Flee_Panic_Run f1"
+    },
+    "Body_ArmLower": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": null
+    }
+   },
+   "Top_03": {
+    "Body_Torso": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 2,
+     "verts": 96,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmUpper": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 6,
+     "verts": 98,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmMid": {
+     "escaping_verts_max": 1,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": "run Flee_Panic_Run f1"
+    },
+    "Body_ArmLower": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": null
+    }
+   },
+   "Top_04": {
+    "Body_Torso": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 2,
+     "verts": 96,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmUpper": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 5,
+     "verts": 98,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmMid": {
+     "escaping_verts_max": 1,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": "run Flee_Panic_Run f1"
+    },
+    "Body_ArmLower": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": null
+    }
+   },
+   "Top_05": {
+    "Body_Torso": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 3,
+     "verts": 96,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmUpper": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 5,
+     "verts": 98,
+     "worst_pose": "tpose T-pose f0"
+    },
+    "Body_ArmMid": {
+     "escaping_verts_max": 2,
+     "poked_verts_max": 0,
+     "verts": 72,
+     "worst_pose": "run Flee_Panic_Run f1"
+    }
+   },
+   "Bottom_01": {
+    "Body_Pelvis": {
+     "escaping_verts_max": 16,
+     "poked_verts_max": 4,
+     "verts": 83,
+     "worst_pose": "panic_run Panic_Run_Loop f6"
+    },
+    "Body_Thigh": {
+     "escaping_verts_max": 20,
+     "poked_verts_max": 2,
+     "verts": 96,
+     "worst_pose": "crouch Test_Crouch f1"
+    },
+    "Body_Knee": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 64,
+     "worst_pose": null
+    },
+    "Body_Shin": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 128,
+     "worst_pose": null
+    }
+   },
+   "Bottom_02": {
+    "Body_Pelvis": {
+     "escaping_verts_max": 16,
+     "poked_verts_max": 8,
+     "verts": 83,
+     "worst_pose": "panic_run Panic_Run_Loop f6"
+    },
+    "Body_Thigh": {
+     "escaping_verts_max": 20,
+     "poked_verts_max": 0,
+     "verts": 96,
+     "worst_pose": "crouch Test_Crouch f1"
+    },
+    "Body_Knee": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 64,
+     "worst_pose": null
+    },
+    "Body_Shin": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 128,
+     "worst_pose": null
+    }
+   },
+   "Bottom_03": {
+    "Body_Pelvis": {
+     "escaping_verts_max": 16,
+     "poked_verts_max": 4,
+     "verts": 83,
+     "worst_pose": "panic_run Panic_Run_Loop f6"
+    },
+    "Body_Thigh": {
+     "escaping_verts_max": 20,
+     "poked_verts_max": 0,
+     "verts": 96,
+     "worst_pose": "crouch Test_Crouch f1"
+    },
+    "Body_Knee": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 64,
+     "worst_pose": null
+    },
+    "Body_Shin": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 128,
+     "worst_pose": null
+    }
+   },
+   "Bottom_04": {
+    "Body_Pelvis": {
+     "escaping_verts_max": 18,
+     "poked_verts_max": 4,
+     "verts": 83,
+     "worst_pose": "panic_run Panic_Run_Loop f6"
+    },
+    "Body_Thigh": {
+     "escaping_verts_max": 20,
+     "poked_verts_max": 0,
+     "verts": 96,
+     "worst_pose": "crouch Test_Crouch f1"
+    }
+   },
+   "Bottom_05": {
+    "Body_Pelvis": {
+     "escaping_verts_max": 16,
+     "poked_verts_max": 4,
+     "verts": 83,
+     "worst_pose": "panic_run Panic_Run_Loop f6"
+    },
+    "Body_Thigh": {
+     "escaping_verts_max": 20,
+     "poked_verts_max": 2,
+     "verts": 96,
+     "worst_pose": "crouch Test_Crouch f1"
+    },
+    "Body_Knee": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 64,
+     "worst_pose": null
+    },
+    "Body_Shin": {
+     "escaping_verts_max": 0,
+     "poked_verts_max": 0,
+     "verts": 128,
+     "worst_pose": null
+    }
+   }
+  },
+  "clipping": [
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_02",
+    "note": "body",
+    "inner_verts_under_outer": 241,
+    "overlap_tris_tpose": 187,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 60,
+    "overlap_tris_max": 187,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_02_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 59,
+    "overlap_tris_tpose": 34,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 15,
+    "overlap_tris_max": 34,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_02_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_02_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_02_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_02_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_02_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_03",
+    "note": "body",
+    "inner_verts_under_outer": 243,
+    "overlap_tris_tpose": 5,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 5,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_03_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 59,
+    "overlap_tris_tpose": 34,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 15,
+    "overlap_tris_max": 34,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_03_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_03_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_03_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_03_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_03_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_04",
+    "note": "body",
+    "inner_verts_under_outer": 254,
+    "overlap_tris_tpose": 36,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 7,
+    "overlap_tris_max": 36,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_04_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 67,
+    "overlap_tris_tpose": 96,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 9,
+    "overlap_tris_max": 96,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_04_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_04_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_04_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_04_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_04_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_05",
+    "note": "body",
+    "inner_verts_under_outer": 238,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Hair_05_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 50,
+    "overlap_tris_tpose": 8,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 12,
+    "overlap_tris_max": 8,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Hair_05_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Hair_05_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Hair_05_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Hair_05_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Hair_05_Hat",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Beard_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Beard_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 1,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Beard_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Beard_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Beard_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Beard_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Beard_03",
+    "note": "body",
+    "inner_verts_under_outer": 12,
+    "overlap_tris_tpose": 88,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 88,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Beard_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Beard_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Beard_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Beard_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Beard_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Beard_04",
+    "note": "body",
+    "inner_verts_under_outer": 22,
+    "overlap_tris_tpose": 74,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 74,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Beard_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 215,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Beard_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Beard_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 2,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Beard_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Beard_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Beard_05",
+    "note": "body",
+    "inner_verts_under_outer": 11,
+    "overlap_tris_tpose": 72,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 72,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Beard_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Beard_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Beard_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Beard_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Beard_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Top_01",
+    "note": "body",
+    "inner_verts_under_outer": 114,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 96,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Top_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Top_01",
+    "note": "body",
+    "inner_verts_under_outer": 24,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 30,
+    "worst_pose": "walk Walk f16"
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Top_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 10,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Top_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 35,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Top_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Top_02",
+    "note": "body",
+    "inner_verts_under_outer": 112,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 2,
+    "overlap_tris_max": 227,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Top_02",
+    "note": "body",
+    "inner_verts_under_outer": 91,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 7.1,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 101,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Top_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 142,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Top_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 252,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Top_03",
+    "note": "body",
+    "inner_verts_under_outer": 85,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 187,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Top_03",
+    "note": "body",
+    "inner_verts_under_outer": 24,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 4,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Top_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 109,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Top_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 223,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Top_04",
+    "note": "body",
+    "inner_verts_under_outer": 85,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 1,
+    "overlap_tris_max": 331,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Top_04",
+    "note": "body",
+    "inner_verts_under_outer": 91,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 7.1,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 101,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Top_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 55,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Top_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 252,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Top_05",
+    "note": "body",
+    "inner_verts_under_outer": 114,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 169,
+    "worst_pose": "crouch Test_Crouch f1"
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Top_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Top_05",
+    "note": "body",
+    "inner_verts_under_outer": 24,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 102,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Top_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 35,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Top_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 104,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Bottom_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Bottom_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 137,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Bottom_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 31,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Bottom_01",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 58,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Bottom_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Bottom_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 143,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Bottom_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 35,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Bottom_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 76,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Bottom_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Bottom_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 208,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Bottom_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 49,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Bottom_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 74,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Bottom_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Bottom_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Bottom_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 56,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Bottom_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Bottom_04",
+    "note": "body",
+    "inner_verts_under_outer": 64,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Bottom_04",
+    "note": "body",
+    "inner_verts_under_outer": 32,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 46,
+    "worst_pose": "run Flee_Panic_Run f8"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Bottom_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Bottom_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 133,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Bottom_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 57,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Bottom_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 105,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Head_02",
+    "note": "body",
+    "inner_verts_under_outer": 208,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Head_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Head_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Head_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Head_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Head_02",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Head_03",
+    "note": "body",
+    "inner_verts_under_outer": 199,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Head_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Head_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Head_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Head_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Head_03",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Head_04",
+    "note": "body",
+    "inner_verts_under_outer": 195,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Head_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Head_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Head_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Head_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Head_04",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Head_05",
+    "note": "body",
+    "inner_verts_under_outer": 13,
+    "overlap_tris_tpose": 72,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 72,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Head_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Head_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Head_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Head_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Head_05",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Shoes",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Shoes",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Shoes",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Shoes",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Shoes",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Shoes",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Head",
+    "outer": "Socks",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Hands",
+    "outer": "Socks",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmMid",
+    "outer": "Socks",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_ArmLower",
+    "outer": "Socks",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Knee",
+    "outer": "Socks",
+    "note": "body",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Body_Shin",
+    "outer": "Socks",
+    "note": "body",
+    "inner_verts_under_outer": 32,
+    "overlap_tris_tpose": 104,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 112,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_01",
+    "outer": "Top_01",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 84,
+    "overlap_tris_tpose": 51,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 150,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_02",
+    "outer": "Top_01",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 84,
+    "overlap_tris_tpose": 24,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 125,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_03",
+    "outer": "Top_01",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 84,
+    "overlap_tris_tpose": 51,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 140,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_04",
+    "outer": "Top_01",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 84,
+    "overlap_tris_tpose": 51,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 144,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_05",
+    "outer": "Top_01",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 84,
+    "overlap_tris_tpose": 51,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 150,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Hair_02",
+    "outer": "Top_01",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Hair_02",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03",
+    "outer": "Top_01",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Hair_03",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04",
+    "outer": "Top_01",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Hair_04",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05",
+    "outer": "Top_01",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Hair_05",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Top_01",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Beard_02",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Top_01",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Beard_03",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Top_01",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Beard_04",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Top_01",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_01",
+    "outer": "Beard_05",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Bottom_01",
+    "outer": "Top_02",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 101,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 680,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_02",
+    "outer": "Top_02",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 145,
+    "overlap_tris_tpose": 88,
+    "poke_verts_max": 4,
+    "poke_depth_mm_max": 20.1,
+    "coplanar_verts_max": 4,
+    "overlap_tris_max": 712,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_03",
+    "outer": "Top_02",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 106,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.5,
+    "coplanar_verts_max": 2,
+    "overlap_tris_max": 787,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_04",
+    "outer": "Top_02",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 108,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.6,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 488,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_05",
+    "outer": "Top_02",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 101,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 743,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Hair_02",
+    "outer": "Top_02",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Hair_02",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03",
+    "outer": "Top_02",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Hair_03",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04",
+    "outer": "Top_02",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Hair_04",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05",
+    "outer": "Top_02",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Hair_05",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Top_02",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 3,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Beard_02",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 3,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Top_02",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Beard_03",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Top_02",
+    "note": "beard / top",
+    "inner_verts_under_outer": 6,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 74,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Beard_04",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 74,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Top_02",
+    "note": "beard / top",
+    "inner_verts_under_outer": 4,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 30,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_02",
+    "outer": "Beard_05",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 30,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Bottom_01",
+    "outer": "Top_03",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 132,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 568,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_02",
+    "outer": "Top_03",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 134,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 1,
+    "poke_depth_mm_max": 20.8,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 588,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_03",
+    "outer": "Top_03",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 136,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 557,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_04",
+    "outer": "Top_03",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 136,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 377,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_05",
+    "outer": "Top_03",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 132,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 653,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Hair_02",
+    "outer": "Top_03",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Hair_02",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03",
+    "outer": "Top_03",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Hair_03",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04",
+    "outer": "Top_03",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Hair_04",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05",
+    "outer": "Top_03",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Hair_05",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Top_03",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Beard_02",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Top_03",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Beard_03",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Top_03",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 42,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Beard_04",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 42,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Top_03",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 7,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_03",
+    "outer": "Beard_05",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 7,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Bottom_01",
+    "outer": "Top_04",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 87,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 565,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_02",
+    "outer": "Top_04",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 145,
+    "overlap_tris_tpose": 74,
+    "poke_verts_max": 4,
+    "poke_depth_mm_max": 20.1,
+    "coplanar_verts_max": 4,
+    "overlap_tris_max": 609,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_03",
+    "outer": "Top_04",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 92,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.5,
+    "coplanar_verts_max": 2,
+    "overlap_tris_max": 684,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_04",
+    "outer": "Top_04",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 94,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.6,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 381,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_05",
+    "outer": "Top_04",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 137,
+    "overlap_tris_tpose": 87,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 17.0,
+    "coplanar_verts_max": 3,
+    "overlap_tris_max": 628,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Hair_02",
+    "outer": "Top_04",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Hair_02",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03",
+    "outer": "Top_04",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Hair_03",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04",
+    "outer": "Top_04",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Hair_04",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05",
+    "outer": "Top_04",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Hair_05",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Top_04",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 15,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Beard_02",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 15,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Top_04",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Beard_03",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Top_04",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 74,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Beard_04",
+    "note": "top / beard",
+    "inner_verts_under_outer": 9,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 74,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Top_04",
+    "note": "beard / top",
+    "inner_verts_under_outer": 1,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 36,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Top_04",
+    "outer": "Beard_05",
+    "note": "top / beard",
+    "inner_verts_under_outer": 5,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 36,
+    "worst_pose": "hit_head Hit_React_Head_v01 f9"
+   },
+   {
+    "inner": "Bottom_01",
+    "outer": "Top_05",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 106,
+    "overlap_tris_tpose": 107,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 9,
+    "overlap_tris_max": 370,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_02",
+    "outer": "Top_05",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 108,
+    "overlap_tris_tpose": 81,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 5,
+    "overlap_tris_max": 424,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_03",
+    "outer": "Top_05",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 106,
+    "overlap_tris_tpose": 107,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 9,
+    "overlap_tris_max": 465,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_04",
+    "outer": "Top_05",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 106,
+    "overlap_tris_tpose": 107,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 9,
+    "overlap_tris_max": 313,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_05",
+    "outer": "Top_05",
+    "note": "bottom under top",
+    "inner_verts_under_outer": 106,
+    "overlap_tris_tpose": 107,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 9,
+    "overlap_tris_max": 438,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Hair_02",
+    "outer": "Top_05",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Hair_02",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03",
+    "outer": "Top_05",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Hair_03",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04",
+    "outer": "Top_05",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Hair_04",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05",
+    "outer": "Top_05",
+    "note": "hair / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Hair_05",
+    "note": "top / hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Top_05",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Beard_02",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Top_05",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Beard_03",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Top_05",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Beard_04",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Top_05",
+    "note": "beard / top",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Top_05",
+    "outer": "Beard_05",
+    "note": "top / beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Socks",
+    "outer": "Bottom_01",
+    "note": "socks under bottom",
+    "inner_verts_under_outer": 48,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Shoes",
+    "outer": "Bottom_01",
+    "note": "shoes under bottom",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Bottom_01",
+    "outer": "Shoes",
+    "note": "bottom in shoes",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Socks",
+    "outer": "Bottom_02",
+    "note": "socks under bottom",
+    "inner_verts_under_outer": 48,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Shoes",
+    "outer": "Bottom_02",
+    "note": "shoes under bottom",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Bottom_02",
+    "outer": "Shoes",
+    "note": "bottom in shoes",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Socks",
+    "outer": "Bottom_03",
+    "note": "socks under bottom",
+    "inner_verts_under_outer": 72,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Shoes",
+    "outer": "Bottom_03",
+    "note": "shoes under bottom",
+    "inner_verts_under_outer": 8,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 68,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_03",
+    "outer": "Shoes",
+    "note": "bottom in shoes",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 68,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Socks",
+    "outer": "Bottom_04",
+    "note": "socks under bottom",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Shoes",
+    "outer": "Bottom_04",
+    "note": "shoes under bottom",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Bottom_04",
+    "outer": "Shoes",
+    "note": "bottom in shoes",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Socks",
+    "outer": "Bottom_05",
+    "note": "socks under bottom",
+    "inner_verts_under_outer": 72,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Shoes",
+    "outer": "Bottom_05",
+    "note": "shoes under bottom",
+    "inner_verts_under_outer": 20,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 2,
+    "poke_depth_mm_max": 7.1,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 70,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Bottom_05",
+    "outer": "Shoes",
+    "note": "bottom in shoes",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 70,
+    "worst_pose": "sit Cargo_Sit_Idle_v05 f1"
+   },
+   {
+    "inner": "Hair_02_Hat",
+    "outer": "Head_02",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 51,
+    "overlap_tris_tpose": 12,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 12,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03_Hat",
+    "outer": "Head_02",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 51,
+    "overlap_tris_tpose": 12,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 12,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04_Hat",
+    "outer": "Head_02",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 48,
+    "overlap_tris_tpose": 14,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 14,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05_Hat",
+    "outer": "Head_02",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 52,
+    "overlap_tris_tpose": 16,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 16,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Head_02",
+    "note": "face under headwear",
+    "inner_verts_under_outer": 70,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Head_02",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Head_02",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Head_02",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Head_02",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_02_Hat",
+    "outer": "Head_03",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 49,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03_Hat",
+    "outer": "Head_03",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 49,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04_Hat",
+    "outer": "Head_03",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 47,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05_Hat",
+    "outer": "Head_03",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 51,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Head_03",
+    "note": "face under headwear",
+    "inner_verts_under_outer": 10,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Head_03",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Head_03",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Head_03",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Head_03",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_02_Hat",
+    "outer": "Head_04",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 43,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03_Hat",
+    "outer": "Head_04",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 43,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04_Hat",
+    "outer": "Head_04",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 41,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05_Hat",
+    "outer": "Head_04",
+    "note": "hair under hat",
+    "inner_verts_under_outer": 43,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Head_04",
+    "note": "face under headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Head_04",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Head_04",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Head_04",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Head_04",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_02",
+    "outer": "Head_05",
+    "note": "hair / glasses",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Head_05",
+    "outer": "Hair_02",
+    "note": "glasses / hair",
+    "inner_verts_under_outer": 1,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_03",
+    "outer": "Head_05",
+    "note": "hair / glasses",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Head_05",
+    "outer": "Hair_03",
+    "note": "glasses / hair",
+    "inner_verts_under_outer": 1,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_04",
+    "outer": "Head_05",
+    "note": "hair / glasses",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Head_05",
+    "outer": "Hair_04",
+    "note": "glasses / hair",
+    "inner_verts_under_outer": 2,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Hair_05",
+    "outer": "Head_05",
+    "note": "hair / glasses",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Head_05",
+    "outer": "Hair_05",
+    "note": "glasses / hair",
+    "inner_verts_under_outer": 1,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Head_05",
+    "note": "face under headwear",
+    "inner_verts_under_outer": 39,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_02",
+    "outer": "Head_05",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_03",
+    "outer": "Head_05",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_04",
+    "outer": "Head_05",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Beard_05",
+    "outer": "Head_05",
+    "note": "beard / headwear",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Hair_02",
+    "note": "face under hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Hair_03",
+    "note": "face under hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Hair_04",
+    "note": "face under hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Hair_05",
+    "note": "face under hair",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Beard_02",
+    "note": "face under beard",
+    "inner_verts_under_outer": 0,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Beard_03",
+    "note": "face under beard",
+    "inner_verts_under_outer": 34,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Beard_04",
+    "note": "face under beard",
+    "inner_verts_under_outer": 35,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   },
+   {
+    "inner": "Face",
+    "outer": "Beard_05",
+    "note": "face under beard",
+    "inner_verts_under_outer": 28,
+    "overlap_tris_tpose": 0,
+    "poke_verts_max": 0,
+    "poke_depth_mm_max": 0.0,
+    "coplanar_verts_max": 0,
+    "overlap_tris_max": 0,
+    "worst_pose": null
+   }
+  ],
+  "face_states": {
+   "Head_02": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 20,
+     "depth_mm": 10.2,
+     "overlap_tris": 154
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 46
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 14,
+     "depth_mm": 8.6,
+     "overlap_tris": 128
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Head_03": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 59
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 32
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Head_04": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 56
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 32
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Head_05": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Hair_02": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Hair_03": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Hair_04": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 60
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 26
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Hair_05": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Beard_02": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 12
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 16
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Beard_03": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 1,
+     "depth_mm": 18.9,
+     "overlap_tris": 60
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Beard_04": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 1,
+     "depth_mm": 21.5,
+     "overlap_tris": 30
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   },
+   "Beard_05": {
+    "{}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Surprised\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 20
+    },
+    "{\"Happy\": 1.0}": {
+     "poke": 1,
+     "depth_mm": 17.5,
+     "overlap_tris": 20
+    },
+    "{\"Worried\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    },
+    "{\"Blink\": 1.0}": {
+     "poke": 0,
+     "depth_mm": 0.0,
+     "overlap_tris": 0
+    }
+   }
+  },
+  "seconds": 1.4
+ },
+ "tris_lod0": {
+  "Body_Head": 2032,
+  "Body_Hands": 2216,
+  "Body_Torso": 160,
+  "Body_Pelvis": 112,
+  "Body_ArmUpper": 168,
+  "Body_ArmMid": 96,
+  "Body_ArmLower": 96,
+  "Body_Thigh": 128,
+  "Body_Knee": 64,
+  "Body_Shin": 192,
+  "Shoes": 1928,
+  "Socks": 288,
+  "Face": 1672,
+  "Hair_02": 1024,
+  "Hair_02_Hat": 524,
+  "Hair_03": 1026,
+  "Hair_03_Hat": 524,
+  "Hair_04": 1132,
+  "Hair_04_Hat": 524,
+  "Hair_05": 1024,
+  "Hair_05_Hat": 524,
+  "Beard_02": 330,
+  "Beard_03": 240,
+  "Beard_04": 668,
+  "Beard_05": 444,
+  "Top_01": 1248,
+  "Top_02": 2976,
+  "Top_03": 2802,
+  "Top_04": 2508,
+  "Top_05": 1998,
+  "Bottom_01": 932,
+  "Bottom_02": 1096,
+  "Bottom_03": 1204,
+  "Bottom_04": 740,
+  "Bottom_05": 1044,
+  "Head_02": 604,
+  "Head_03": 480,
+  "Head_04": 924,
+  "Head_05": 470
+ },
+ "outfit_tris_lod0": {
+  "combinations": 3125,
+  "max": 14586,
+  "heaviest": [
+   "Hair_04",
+   "Beard_04",
+   "Top_02",
+   "Bottom_03",
+   "Head_05"
+  ],
+  "mean": 12974,
+  "min": 10508,
+  "lightest": [
+   "Hair_01",
+   "Beard_01",
+   "Top_01",
+   "Bottom_01",
+   "Head_01"
+  ]
+ },
+ "crowd_lod0_average": 14653,
+ "lods": {
+  "Body_Head": {
+   "1": {
+    "tris": 938,
+    "ok": true,
+    "p99_mm": 6.24,
+    "max_mm": 8.09,
+    "over_limit_verts": 0,
+    "locked_verts": 143,
+    "hem_locked_verts": 48,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 2240,
+     "from_source": 2240
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 412,
+    "ok": true,
+    "p99_mm": 17.91,
+    "max_mm": 22.5,
+    "over_limit_verts": 0,
+    "locked_verts": 24,
+    "hem_locked_verts": 16,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1096,
+     "from_source": 1096
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Body_Hands": {
+   "1": {
+    "tris": 1004,
+    "ok": true,
+    "p99_mm": 1.23,
+    "max_mm": 1.6,
+    "over_limit_verts": 0,
+    "locked_verts": 72,
+    "hem_locked_verts": 72,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 2372,
+     "from_source": 2372
+    },
+    "weights": {
+     "fixed_vertices": 117,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 448,
+    "ok": true,
+    "p99_mm": 2.83,
+    "max_mm": 3.27,
+    "over_limit_verts": 0,
+    "locked_verts": 26,
+    "hem_locked_verts": 24,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1166,
+     "from_source": 1166
+    },
+    "weights": {
+     "fixed_vertices": 88,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Body_Torso": {
+   "1": {
+    "tris": 160,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 96,
+    "hem_locked_verts": 96,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 320,
+     "from_source": 320
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 54,
+    "ok": true,
+    "p99_mm": 19.23,
+    "max_mm": 19.41,
+    "over_limit_verts": 0,
+    "locked_verts": 36,
+    "hem_locked_verts": 32,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 1,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 128,
+     "from_source": 128
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   }
+  },
+  "Body_Pelvis": {
+   "1": {
+    "tris": 112,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 82,
+    "hem_locked_verts": 82,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 272,
+     "from_source": 272
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 62,
+    "ok": true,
+    "p99_mm": 12.77,
+    "max_mm": 13.82,
+    "over_limit_verts": 0,
+    "locked_verts": 50,
+    "hem_locked_verts": 48,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 1,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 168,
+     "from_source": 168
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Body_ArmUpper": {
+   "1": {
+    "tris": 144,
+    "ok": true,
+    "p99_mm": 5.25,
+    "max_mm": 5.25,
+    "over_limit_verts": 0,
+    "locked_verts": 72,
+    "hem_locked_verts": 72,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 308,
+     "from_source": 308
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 144,
+    "ok": true,
+    "p99_mm": 5.25,
+    "max_mm": 5.25,
+    "over_limit_verts": 0,
+    "locked_verts": 96,
+    "hem_locked_verts": 24,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "note": "collapse within limits was heavier than LOD1: copy of LOD1",
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 308,
+     "from_source": 308
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Body_ArmMid": {
+   "1": {
+    "tris": 96,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 72,
+    "hem_locked_verts": 72,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 192,
+     "from_source": 192
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 96,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 50,
+    "hem_locked_verts": 48,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 192,
+     "from_source": 192
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Body_ArmLower": {
+   "1": {
+    "tris": 96,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 72,
+    "hem_locked_verts": 72,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 192,
+     "from_source": 192
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 96,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 50,
+    "hem_locked_verts": 48,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 192,
+     "from_source": 192
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Body_Thigh": {
+   "1": {
+    "tris": 128,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 96,
+    "hem_locked_verts": 96,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 256,
+     "from_source": 256
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 128,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 66,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 256,
+     "from_source": 256
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Body_Knee": {
+   "1": {
+    "tris": 64,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 64,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 128,
+     "from_source": 128
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 64,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 64,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 128,
+     "from_source": 128
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Body_Shin": {
+   "1": {
+    "tris": 192,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 128,
+    "hem_locked_verts": 128,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 384,
+     "from_source": 384
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 130,
+    "ok": true,
+    "p99_mm": 18.38,
+    "max_mm": 20.15,
+    "over_limit_verts": 0,
+    "locked_verts": 66,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 264,
+     "from_source": 264
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Shoes": {
+   "1": {
+    "tris": 872,
+    "ok": true,
+    "p99_mm": 2.68,
+    "max_mm": 2.7,
+    "over_limit_verts": 0,
+    "locked_verts": 26,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 2048,
+     "from_source": 2048
+    },
+    "weights": {
+     "fixed_vertices": 5,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 394,
+    "ok": true,
+    "p99_mm": 4.33,
+    "max_mm": 4.79,
+    "over_limit_verts": 0,
+    "locked_verts": 26,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1040,
+     "from_source": 1040
+    },
+    "weights": {
+     "fixed_vertices": 4,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Socks": {
+   "1": {
+    "tris": 288,
+    "ok": true,
+    "note": "not decimated: copy of LOD0",
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 576,
+     "from_source": 480
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 288,
+    "ok": true,
+    "note": "not decimated: copy of LOD0",
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 576,
+     "from_source": 480
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Face": {
+   "1": {
+    "tris": 758,
+    "ok": true,
+    "p99_mm": 3.33,
+    "max_mm": 4.46,
+    "over_limit_verts": 0,
+    "locked_verts": 24,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": "computed",
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 344,
+    "ok": true,
+    "p99_mm": 5.09,
+    "max_mm": 6.14,
+    "over_limit_verts": 0,
+    "locked_verts": 24,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": "computed",
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_02": {
+   "1": {
+    "tris": 468,
+    "ok": true,
+    "p99_mm": 2.15,
+    "max_mm": 2.59,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 1,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1068,
+     "from_source": 1068
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 206,
+    "ok": true,
+    "p99_mm": 4.05,
+    "max_mm": 4.45,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 548,
+     "from_source": 548
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_02_Hat": {
+   "1": {
+    "tris": 236,
+    "ok": true,
+    "p99_mm": 1.73,
+    "max_mm": 1.82,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 560,
+     "from_source": 560
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 106,
+    "ok": true,
+    "p99_mm": 3.92,
+    "max_mm": 5.05,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 276,
+     "from_source": 272
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_03": {
+   "1": {
+    "tris": 462,
+    "ok": true,
+    "p99_mm": 1.87,
+    "max_mm": 2.65,
+    "over_limit_verts": 0,
+    "locked_verts": 7,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1074,
+     "from_source": 1074
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 206,
+    "ok": true,
+    "p99_mm": 5.14,
+    "max_mm": 5.54,
+    "over_limit_verts": 0,
+    "locked_verts": 7,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 534,
+     "from_source": 534
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_03_Hat": {
+   "1": {
+    "tris": 236,
+    "ok": true,
+    "p99_mm": 1.73,
+    "max_mm": 1.82,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 560,
+     "from_source": 560
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 106,
+    "ok": true,
+    "p99_mm": 3.92,
+    "max_mm": 5.05,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 276,
+     "from_source": 272
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_04": {
+   "1": {
+    "tris": 518,
+    "ok": true,
+    "p99_mm": 2.03,
+    "max_mm": 3.1,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 1,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1210,
+     "from_source": 1206
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 228,
+    "ok": true,
+    "p99_mm": 6.29,
+    "max_mm": 8.63,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 620,
+     "from_source": 620
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_04_Hat": {
+   "1": {
+    "tris": 236,
+    "ok": true,
+    "p99_mm": 1.75,
+    "max_mm": 1.99,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 556,
+     "from_source": 556
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 106,
+    "ok": true,
+    "p99_mm": 3.85,
+    "max_mm": 4.07,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 278,
+     "from_source": 274
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_05": {
+   "1": {
+    "tris": 468,
+    "ok": true,
+    "p99_mm": 2.0,
+    "max_mm": 2.46,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 1,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1094,
+     "from_source": 1094
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 206,
+    "ok": true,
+    "p99_mm": 4.79,
+    "max_mm": 6.48,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 530,
+     "from_source": 530
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Hair_05_Hat": {
+   "1": {
+    "tris": 236,
+    "ok": true,
+    "p99_mm": 1.65,
+    "max_mm": 1.7,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 544,
+     "from_source": 544
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 106,
+    "ok": true,
+    "p99_mm": 3.46,
+    "max_mm": 3.59,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 274,
+     "from_source": 274
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Beard_02": {
+   "1": {
+    "tris": 150,
+    "ok": true,
+    "p99_mm": 1.21,
+    "max_mm": 2.15,
+    "over_limit_verts": 0,
+    "locked_verts": 3,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 1,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 450,
+     "from_source": 450
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 150,
+    "ok": true,
+    "p99_mm": 17.75,
+    "max_mm": 18.94,
+    "over_limit_verts": 0,
+    "locked_verts": 188,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 6,
+    "note": "collapse within limits was heavier than LOD1: copy of LOD1",
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 450,
+     "from_source": 450
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Beard_03": {
+   "1": {
+    "tris": 108,
+    "ok": true,
+    "p99_mm": 3.38,
+    "max_mm": 3.7,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 274,
+     "from_source": 274
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 48,
+    "ok": true,
+    "p99_mm": 9.64,
+    "max_mm": 10.17,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 128,
+     "from_source": 128
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Beard_04": {
+   "1": {
+    "tris": 300,
+    "ok": true,
+    "p99_mm": 2.22,
+    "max_mm": 2.45,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 720,
+     "from_source": 705
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 134,
+    "ok": true,
+    "p99_mm": 5.04,
+    "max_mm": 5.85,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 366,
+     "from_source": 359
+    },
+    "weights": {
+     "fixed_vertices": 1,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Beard_05": {
+   "1": {
+    "tris": 200,
+    "ok": true,
+    "p99_mm": 2.09,
+    "max_mm": 2.69,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 502,
+     "from_source": 502
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   },
+   "2": {
+    "tris": 90,
+    "ok": true,
+    "p99_mm": 6.1,
+    "max_mm": 6.3,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 250,
+     "from_source": 250
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 2
+    }
+   }
+  },
+  "Top_01": {
+   "1": {
+    "tris": 940,
+    "ok": true,
+    "p99_mm": 7.16,
+    "max_mm": 8.53,
+    "over_limit_verts": 0,
+    "locked_verts": 425,
+    "hem_locked_verts": 312,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1988,
+     "from_source": 1700
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "2": {
+    "tris": 272,
+    "ok": true,
+    "p99_mm": 19.65,
+    "max_mm": 22.38,
+    "over_limit_verts": 0,
+    "locked_verts": 112,
+    "hem_locked_verts": 104,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 700,
+     "from_source": 640
+    },
+    "weights": {
+     "fixed_vertices": 14,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   }
+  },
+  "Top_02": {
+   "1": {
+    "tris": 1896,
+    "ok": true,
+    "p99_mm": 7.79,
+    "max_mm": 13.46,
+    "over_limit_verts": 0,
+    "locked_verts": 737,
+    "hem_locked_verts": 312,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 4130,
+     "from_source": 3842
+    },
+    "weights": {
+     "fixed_vertices": 2,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "2": {
+    "tris": 1318,
+    "ok": true,
+    "p99_mm": 16.28,
+    "max_mm": 49.2,
+    "over_limit_verts": 1,
+    "locked_verts": 419,
+    "hem_locked_verts": 104,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 3014,
+     "from_source": 2925
+    },
+    "weights": {
+     "fixed_vertices": 7,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   }
+  },
+  "Top_03": {
+   "1": {
+    "tris": 1548,
+    "ok": true,
+    "p99_mm": 6.97,
+    "max_mm": 12.2,
+    "over_limit_verts": 0,
+    "locked_verts": 476,
+    "hem_locked_verts": 312,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 3474,
+     "from_source": 3219
+    },
+    "weights": {
+     "fixed_vertices": 12,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "2": {
+    "tris": 620,
+    "ok": true,
+    "p99_mm": 17.92,
+    "max_mm": 34.42,
+    "over_limit_verts": 0,
+    "locked_verts": 254,
+    "hem_locked_verts": 104,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 2,
+     "faces_removed": 2,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1514,
+     "from_source": 1393
+    },
+    "weights": {
+     "fixed_vertices": 22,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   }
+  },
+  "Top_04": {
+   "1": {
+    "tris": 2164,
+    "ok": true,
+    "p99_mm": 6.28,
+    "max_mm": 16.8,
+    "over_limit_verts": 1,
+    "locked_verts": 983,
+    "hem_locked_verts": 504,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 12,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 4610,
+     "from_source": 4322
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "2": {
+    "tris": 1180,
+    "ok": true,
+    "p99_mm": 18.43,
+    "max_mm": 49.2,
+    "over_limit_verts": 1,
+    "locked_verts": 543,
+    "hem_locked_verts": 168,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 2,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 1,
+     "faces_removed": 1,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 2790,
+     "from_source": 2701
+    },
+    "weights": {
+     "fixed_vertices": 8,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   }
+  },
+  "Top_05": {
+   "1": {
+    "tris": 1410,
+    "ok": true,
+    "p99_mm": 7.21,
+    "max_mm": 11.48,
+    "over_limit_verts": 0,
+    "locked_verts": 586,
+    "hem_locked_verts": 312,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 3066,
+     "from_source": 2806
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   },
+   "2": {
+    "tris": 674,
+    "ok": true,
+    "p99_mm": 19.28,
+    "max_mm": 29.55,
+    "over_limit_verts": 0,
+    "locked_verts": 294,
+    "hem_locked_verts": 104,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1610,
+     "from_source": 1584
+    },
+    "weights": {
+     "fixed_vertices": 8,
+     "unweighted": 0,
+     "max_influences": 4
+    }
+   }
+  },
+  "Bottom_01": {
+   "1": {
+    "tris": 804,
+    "ok": true,
+    "p99_mm": 6.87,
+    "max_mm": 10.27,
+    "over_limit_verts": 0,
+    "locked_verts": 380,
+    "hem_locked_verts": 200,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 3,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1710,
+     "from_source": 1518
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 686,
+    "ok": true,
+    "p99_mm": 8.24,
+    "max_mm": 34.25,
+    "over_limit_verts": 0,
+    "locked_verts": 319,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 1,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1464,
+     "from_source": 1361
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Bottom_02": {
+   "1": {
+    "tris": 853,
+    "ok": true,
+    "p99_mm": 7.79,
+    "max_mm": 16.34,
+    "over_limit_verts": 2,
+    "locked_verts": 446,
+    "hem_locked_verts": 168,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 3,
+    "rounds": 6,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1877,
+     "from_source": 1811
+    },
+    "weights": {
+     "fixed_vertices": 10,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 637,
+    "ok": true,
+    "p99_mm": 13.44,
+    "max_mm": 16.52,
+    "over_limit_verts": 0,
+    "locked_verts": 263,
+    "hem_locked_verts": 56,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1421,
+     "from_source": 1421
+    },
+    "weights": {
+     "fixed_vertices": 7,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Bottom_03": {
+   "1": {
+    "tris": 1204,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 409,
+    "hem_locked_verts": 200,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 10,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 2636,
+     "from_source": 2448
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 588,
+    "ok": true,
+    "p99_mm": 14.9,
+    "max_mm": 35.71,
+    "over_limit_verts": 0,
+    "locked_verts": 243,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1326,
+     "from_source": 1229
+    },
+    "weights": {
+     "fixed_vertices": 1,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Bottom_04": {
+   "1": {
+    "tris": 740,
+    "ok": true,
+    "p99_mm": 0.0,
+    "max_mm": 0.0,
+    "over_limit_verts": 0,
+    "locked_verts": 283,
+    "hem_locked_verts": 200,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 3,
+    "rounds": 10,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1532,
+     "from_source": 1344
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 230,
+    "ok": true,
+    "p99_mm": 17.14,
+    "max_mm": 27.39,
+    "over_limit_verts": 0,
+    "locked_verts": 72,
+    "hem_locked_verts": 64,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 570,
+     "from_source": 489
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Bottom_05": {
+   "1": {
+    "tris": 910,
+    "ok": true,
+    "p99_mm": 7.06,
+    "max_mm": 10.69,
+    "over_limit_verts": 0,
+    "locked_verts": 440,
+    "hem_locked_verts": 272,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 4,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 2064,
+     "from_source": 2000
+    },
+    "weights": {
+     "fixed_vertices": 2,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   },
+   "2": {
+    "tris": 668,
+    "ok": true,
+    "p99_mm": 14.13,
+    "max_mm": 16.69,
+    "over_limit_verts": 0,
+    "locked_verts": 265,
+    "hem_locked_verts": 72,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 5,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1456,
+     "from_source": 1428
+    },
+    "weights": {
+     "fixed_vertices": 2,
+     "unweighted": 0,
+     "max_influences": 3
+    }
+   }
+  },
+  "Head_02": {
+   "1": {
+    "tris": 286,
+    "ok": true,
+    "p99_mm": 3.33,
+    "max_mm": 3.78,
+    "over_limit_verts": 0,
+    "locked_verts": 100,
+    "hem_locked_verts": 96,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 654,
+     "from_source": 654
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 128,
+    "ok": true,
+    "p99_mm": 6.39,
+    "max_mm": 6.62,
+    "over_limit_verts": 0,
+    "locked_verts": 40,
+    "hem_locked_verts": 32,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 340,
+     "from_source": 340
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Head_03": {
+   "1": {
+    "tris": 230,
+    "ok": true,
+    "p99_mm": 5.7,
+    "max_mm": 5.84,
+    "over_limit_verts": 0,
+    "locked_verts": 100,
+    "hem_locked_verts": 96,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 518,
+     "from_source": 518
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 104,
+    "ok": true,
+    "p99_mm": 8.71,
+    "max_mm": 10.24,
+    "over_limit_verts": 0,
+    "locked_verts": 36,
+    "hem_locked_verts": 32,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 274,
+     "from_source": 274
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Head_04": {
+   "1": {
+    "tris": 416,
+    "ok": true,
+    "p99_mm": 2.81,
+    "max_mm": 3.06,
+    "over_limit_verts": 0,
+    "locked_verts": 7,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 1064,
+     "from_source": 1064
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 187,
+    "ok": true,
+    "p99_mm": 8.83,
+    "max_mm": 9.46,
+    "over_limit_verts": 0,
+    "locked_verts": 7,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 527,
+     "from_source": 527
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  },
+  "Head_05": {
+   "1": {
+    "tris": 212,
+    "ok": true,
+    "p99_mm": 3.32,
+    "max_mm": 4.47,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 0,
+     "faces_removed": 0,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 542,
+     "from_source": 530
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   },
+   "2": {
+    "tris": 93,
+    "ok": true,
+    "p99_mm": 7.09,
+    "max_mm": 8.61,
+    "over_limit_verts": 0,
+    "locked_verts": 4,
+    "hem_locked_verts": 0,
+    "seam_locked_verts": 0,
+    "stray_verts_snapped_max": 0,
+    "rounds": 4,
+    "cleanup": {
+     "zero_area_faces": 0,
+     "duplicate_faces": 1,
+     "faces_removed": 1,
+     "loose_verts": 0,
+     "loose_edges": 0
+    },
+    "shading": {
+     "corners": 265,
+     "from_source": 265
+    },
+    "weights": {
+     "fixed_vertices": 0,
+     "unweighted": 0,
+     "max_influences": 1
+    }
+   }
+  }
+ },
+ "lod_seconds": 22.8,
+ "tris_lod1": {
+  "Body_Head": 938,
+  "Body_Hands": 1004,
+  "Body_Torso": 160,
+  "Body_Pelvis": 112,
+  "Body_ArmUpper": 144,
+  "Body_ArmMid": 96,
+  "Body_ArmLower": 96,
+  "Body_Thigh": 128,
+  "Body_Knee": 64,
+  "Body_Shin": 192,
+  "Shoes": 872,
+  "Socks": 288,
+  "Face": 758,
+  "Hair_02": 468,
+  "Hair_02_Hat": 236,
+  "Hair_03": 462,
+  "Hair_03_Hat": 236,
+  "Hair_04": 518,
+  "Hair_04_Hat": 236,
+  "Hair_05": 468,
+  "Hair_05_Hat": 236,
+  "Beard_02": 150,
+  "Beard_03": 108,
+  "Beard_04": 300,
+  "Beard_05": 200,
+  "Top_01": 940,
+  "Top_02": 1896,
+  "Top_03": 1548,
+  "Top_04": 2164,
+  "Top_05": 1410,
+  "Bottom_01": 804,
+  "Bottom_02": 853,
+  "Bottom_03": 1204,
+  "Bottom_04": 740,
+  "Bottom_05": 910,
+  "Head_02": 286,
+  "Head_03": 230,
+  "Head_04": 416,
+  "Head_05": 212
+ },
+ "tris_lod2": {
+  "Body_Head": 412,
+  "Body_Hands": 448,
+  "Body_Torso": 54,
+  "Body_Pelvis": 62,
+  "Body_ArmUpper": 144,
+  "Body_ArmMid": 96,
+  "Body_ArmLower": 96,
+  "Body_Thigh": 128,
+  "Body_Knee": 64,
+  "Body_Shin": 130,
+  "Shoes": 394,
+  "Socks": 288,
+  "Face": 344,
+  "Hair_02": 206,
+  "Hair_02_Hat": 106,
+  "Hair_03": 206,
+  "Hair_03_Hat": 106,
+  "Hair_04": 228,
+  "Hair_04_Hat": 106,
+  "Hair_05": 206,
+  "Hair_05_Hat": 106,
+  "Beard_02": 150,
+  "Beard_03": 48,
+  "Beard_04": 134,
+  "Beard_05": 90,
+  "Top_01": 272,
+  "Top_02": 1318,
+  "Top_03": 620,
+  "Top_04": 1180,
+  "Top_05": 674,
+  "Bottom_01": 686,
+  "Bottom_02": 637,
+  "Bottom_03": 588,
+  "Bottom_04": 230,
+  "Bottom_05": 668,
+  "Head_02": 128,
+  "Head_03": 104,
+  "Head_04": 187,
+  "Head_05": 93
+ },
+ "outfit_tris_lod1": {
+  "combinations": 3125,
+  "max": 8258,
+  "heaviest": [
+   "Hair_04",
+   "Beard_04",
+   "Top_04",
+   "Bottom_03",
+   "Head_05"
+  ],
+  "mean": 7110,
+  "min": 5796,
+  "lightest": [
+   "Hair_01",
+   "Beard_01",
+   "Top_01",
+   "Bottom_01",
+   "Head_01"
+  ]
+ },
+ "outfit_tris_lod2": {
+  "combinations": 3125,
+  "max": 4361,
+  "heaviest": [
+   "Hair_04",
+   "Beard_02",
+   "Top_02",
+   "Bottom_01",
+   "Head_05"
+  ],
+  "mean": 3662,
+  "min": 2774,
+  "lightest": [
+   "Hair_01",
+   "Beard_01",
+   "Top_01",
+   "Bottom_04",
+   "Head_01"
+  ]
+ },
+ "problems": [],
+ "face_keys_at_export": {
+  "Face": {},
+  "Face_LOD1": {},
+  "Face_LOD2": {}
+ },
+ "fbx": {
+  "PLAYER_SAUSAGE_W86_v01_base.fbx": {
+   "armatures": 1,
+   "bones": 65,
+   "meshes": {
+    "Body_ArmLower_LOD0": {
+     "tris": 96,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_ArmLower_LOD1": {
+     "tris": 96,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_ArmLower_LOD2": {
+     "tris": 96,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_ArmMid_LOD0": {
+     "tris": 96,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_ArmMid_LOD1": {
+     "tris": 96,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_ArmMid_LOD2": {
+     "tris": 96,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_ArmUpper_LOD0": {
+     "tris": 168,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Body_ArmUpper_LOD1": {
+     "tris": 144,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Body_ArmUpper_LOD2": {
+     "tris": 144,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Body_Hands_LOD0": {
+     "tris": 2216,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 28
+    },
+    "Body_Hands_LOD1": {
+     "tris": 1004,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 16
+    },
+    "Body_Hands_LOD2": {
+     "tris": 448,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 16
+    },
+    "Body_Head_LOD0": {
+     "tris": 2032,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Body_Head_LOD1": {
+     "tris": 938,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Body_Head_LOD2": {
+     "tris": 412,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Body_Knee_LOD0": {
+     "tris": 64,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Body_Knee_LOD1": {
+     "tris": 64,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Body_Knee_LOD2": {
+     "tris": 64,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Body_Pelvis_LOD0": {
+     "tris": 112,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_Pelvis_LOD1": {
+     "tris": 112,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_Pelvis_LOD2": {
+     "tris": 62,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_Shin_LOD0": {
+     "tris": 192,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_Shin_LOD1": {
+     "tris": 192,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_Shin_LOD2": {
+     "tris": 130,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 4
+    },
+    "Body_Thigh_LOD0": {
+     "tris": 128,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 3
+    },
+    "Body_Thigh_LOD1": {
+     "tris": 128,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 3
+    },
+    "Body_Thigh_LOD2": {
+     "tris": 128,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 3
+    },
+    "Body_Torso_LOD0": {
+     "tris": 160,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Body_Torso_LOD1": {
+     "tris": 160,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Body_Torso_LOD2": {
+     "tris": 54,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Face_LOD0": {
+     "tris": 1672,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1,
+     "shape_keys": [
+      "Basis",
+      "Blink",
+      "Blink_L",
+      "Blink_R",
+      "Surprised",
+      "Worried",
+      "Happy"
+     ],
+     "shape_key_values_nonzero": {}
+    },
+    "Face_LOD1": {
+     "tris": 758,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1,
+     "shape_keys": [
+      "Basis",
+      "Blink",
+      "Blink_L",
+      "Blink_R",
+      "Surprised",
+      "Worried",
+      "Happy"
+     ],
+     "shape_key_values_nonzero": {}
+    },
+    "Face_LOD2": {
+     "tris": 344,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1,
+     "shape_keys": [
+      "Basis",
+      "Blink",
+      "Blink_L",
+      "Blink_R",
+      "Surprised",
+      "Worried",
+      "Happy"
+     ],
+     "shape_key_values_nonzero": {}
+    },
+    "Shoes_LOD0": {
+     "tris": 1928,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Shoes_LOD1": {
+     "tris": 872,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Shoes_LOD2": {
+     "tris": 394,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Socks_LOD0": {
+     "tris": 288,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Socks_LOD1": {
+     "tris": 288,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Socks_LOD2": {
+     "tris": 288,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 2
+    }
+   },
+   "actions": [
+    "Buddy_Rig_Mixamo65|Scene"
+   ]
+  },
+  "PLAYER_SAUSAGE_W86_v01_parts.fbx": {
+   "armatures": 1,
+   "bones": 65,
+   "meshes": {
+    "Beard_02_LOD0": {
+     "tris": 330,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Beard_02_LOD1": {
+     "tris": 150,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Beard_02_LOD2": {
+     "tris": 150,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Beard_03_LOD0": {
+     "tris": 240,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Beard_03_LOD1": {
+     "tris": 108,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Beard_03_LOD2": {
+     "tris": 48,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Beard_04_LOD0": {
+     "tris": 668,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Beard_04_LOD1": {
+     "tris": 300,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Beard_04_LOD2": {
+     "tris": 134,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Beard_05_LOD0": {
+     "tris": 444,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Beard_05_LOD1": {
+     "tris": 200,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Beard_05_LOD2": {
+     "tris": 90,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 2
+    },
+    "Bottom_01_LOD0": {
+     "tris": 932,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_01_LOD1": {
+     "tris": 804,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_01_LOD2": {
+     "tris": 686,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_02_LOD0": {
+     "tris": 1096,
+     "max_infl": 2,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Bottom_02_LOD1": {
+     "tris": 853,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Bottom_02_LOD2": {
+     "tris": 637,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 5
+    },
+    "Bottom_03_LOD0": {
+     "tris": 1204,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_03_LOD1": {
+     "tris": 1204,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_03_LOD2": {
+     "tris": 588,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_04_LOD0": {
+     "tris": 740,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_04_LOD1": {
+     "tris": 740,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_04_LOD2": {
+     "tris": 230,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_05_LOD0": {
+     "tris": 1044,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_05_LOD1": {
+     "tris": 910,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Bottom_05_LOD2": {
+     "tris": 668,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 6
+    },
+    "Hair_02_Hat_LOD0": {
+     "tris": 524,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_02_Hat_LOD1": {
+     "tris": 236,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_02_Hat_LOD2": {
+     "tris": 106,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_02_LOD0": {
+     "tris": 1024,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_02_LOD1": {
+     "tris": 468,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_02_LOD2": {
+     "tris": 206,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_03_Hat_LOD0": {
+     "tris": 524,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_03_Hat_LOD1": {
+     "tris": 236,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_03_Hat_LOD2": {
+     "tris": 106,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_03_LOD0": {
+     "tris": 1026,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_03_LOD1": {
+     "tris": 462,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_03_LOD2": {
+     "tris": 206,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_04_Hat_LOD0": {
+     "tris": 524,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_04_Hat_LOD1": {
+     "tris": 236,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_04_Hat_LOD2": {
+     "tris": 106,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_04_LOD0": {
+     "tris": 1132,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_04_LOD1": {
+     "tris": 518,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_04_LOD2": {
+     "tris": 228,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_05_Hat_LOD0": {
+     "tris": 524,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_05_Hat_LOD1": {
+     "tris": 236,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_05_Hat_LOD2": {
+     "tris": 106,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_05_LOD0": {
+     "tris": 1024,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_05_LOD1": {
+     "tris": 468,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Hair_05_LOD2": {
+     "tris": 206,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_02_LOD0": {
+     "tris": 604,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_02_LOD1": {
+     "tris": 286,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_02_LOD2": {
+     "tris": 128,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_03_LOD0": {
+     "tris": 480,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_03_LOD1": {
+     "tris": 230,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_03_LOD2": {
+     "tris": 104,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_04_LOD0": {
+     "tris": 924,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_04_LOD1": {
+     "tris": 416,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_04_LOD2": {
+     "tris": 187,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_05_LOD0": {
+     "tris": 470,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_05_LOD1": {
+     "tris": 212,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Head_05_LOD2": {
+     "tris": 93,
+     "max_infl": 1,
+     "unweighted": 0,
+     "groups": 1
+    },
+    "Top_01_LOD0": {
+     "tris": 1248,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 10
+    },
+    "Top_01_LOD1": {
+     "tris": 940,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 10
+    },
+    "Top_01_LOD2": {
+     "tris": 272,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 10
+    },
+    "Top_02_LOD0": {
+     "tris": 2976,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_02_LOD1": {
+     "tris": 1896,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_02_LOD2": {
+     "tris": 1318,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_03_LOD0": {
+     "tris": 2802,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_03_LOD1": {
+     "tris": 1548,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_03_LOD2": {
+     "tris": 620,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_04_LOD0": {
+     "tris": 2508,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_04_LOD1": {
+     "tris": 2164,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_04_LOD2": {
+     "tris": 1180,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 14
+    },
+    "Top_05_LOD0": {
+     "tris": 1998,
+     "max_infl": 3,
+     "unweighted": 0,
+     "groups": 12
+    },
+    "Top_05_LOD1": {
+     "tris": 1410,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 12
+    },
+    "Top_05_LOD2": {
+     "tris": 674,
+     "max_infl": 4,
+     "unweighted": 0,
+     "groups": 12
+    }
+   },
+   "actions": [
+    "Buddy_Rig_Mixamo65|Scene"
+   ]
+  }
+ },
+ "seconds": 45.0
+}

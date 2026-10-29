@@ -32,9 +32,60 @@ MonoBehaviour:
   escapeSpeed: 1.5
   escapeClips: 1
   escapeMissingClips: 0
+  escapePanicMissing: 256
+  escapePanicTiming:
+  - 3
+  - 1.4
+  - 0
+  - 3
+  - 1.4
+  - 0
+  - 2
+  - 0
+  - 0
+  - 2
+  - 0
+  - 0
+  - 1.2
+  - 0
+  - 0
+  - 2.4
+  - 1.35
+  - 0
+  - 2.4
+  - 1.35
+  - 0
+  - 2.8
+  - 1.08
+  - 1.42
+  - 0
+  - 0
+  - 0
+  - 1.4
+  - 0
+  - 0
+  - 1.4
+  - 0
+  - 0
+  - 1.8
+  - 0
+  - 0
+  - 1.8
+  - 0
+  - 0
+  - 1.5
+  - 0
+  - 0
+  - 1.5
+  - 0
+  - 0
+  escapeRunClutchClip: {fileID: -6154285707212826443, guid: 0b8143ad4efd87a41bd55f0bbad8ea24, type: 3}
   escapeFallSeconds: 3
   escapeLandingOffset: {x: 1.5, y: -0.66, z: 0.36}
   rescueSeconds: 8
+  shockRunMinMeters: 2
+  shockRunMaxMeters: 12
+  shockRunMaxSeconds: 7
   dosePerSecond: 0.5
   suitableMinimum: 0.8
   suitableMaximum: 1.25
@@ -60,6 +111,8 @@ MonoBehaviour:
   bloodChancePerPortion: 0.1
   corpseGraceSeconds: 45
   corpseGradeSeconds: 40
+  startSutureKits: 10
+  startPatches: 10
   earlyOverdoseLoss: 2
   sharedAbdomen: 1
   anatomicalLayout: 1

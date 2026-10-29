@@ -1,0 +1,170 @@
+{
+  "clip": "Esc_SwingOff_R_Panic_v02",
+  "action": "Esc_SwingOff_R_Panic_v02",
+  "take": "Buddy_Rig_Mixamo65|Esc_SwingOff_R_Panic_v02",
+  "variant_of": "Esc_SwingOff_R_v01",
+  "v01_duration_s": 1.2,
+  "duration_vs_v01_pct": 16.7,
+  "frames": [
+    1,
+    43
+  ],
+  "fps": 30,
+  "duration_s": 1.4,
+  "loop": false,
+  "sampling": "half-frame keys (60 Hz), linear interpolation",
+  "start_pose_key": "SIT",
+  "end_pose_key": "EDGE_R",
+  "preconditions": {
+    "closed": [],
+    "open": [
+      "STRAP_ARM_L",
+      "STRAP_ARM_R",
+      "STRAP_LEG_L",
+      "STRAP_LEG_R"
+    ],
+    "any": []
+  },
+  "straps_after": {},
+  "strap_animation": {},
+  "events": [
+    {
+      "name": "BellyGrab",
+      "t": 0.19,
+      "norm": 0.1357,
+      "frame": 6.7
+    },
+    {
+      "name": "SlipOffEdge",
+      "t": 0.86,
+      "norm": 0.6143,
+      "frame": 26.8
+    },
+    {
+      "name": "CatchPalms",
+      "t": 0.95,
+      "norm": 0.6786,
+      "frame": 29.5
+    }
+  ],
+  "next": [
+    "Esc_HopRun_R_BellyClutch_v02 / Esc_HopRun_R_v01"
+  ],
+  "beats": [
+    "0.06 sees the belly, 0.19 both hands clutch it",
+    "0.27 double-take at his right edge",
+    "0.19-0.42 knees tuck, no hands: rocks back",
+    "0.51-0.69 wriggles round on his butt, legs pedalling",
+    "0.77-0.86 overshoots and slides over the edge: nearly falls, arms fly up",
+    "0.95 catches himself: palms slap onto the pad",
+    "1.07 hauls back onto the edge, 1.16 glance at the belly",
+    "1.40 EDGE_R (interrupt rule unchanged: before 0.76 SlumpSit, after 0.76 SlumpEdge)"
+  ],
+  "root_motion": "none: rig object at PatientRest, the Hips curves place the body (Apply Root Motion off)",
+  "authoring_stats": {
+    "rail_slide_max_m": 0.0155,
+    "rail_miss_max_m": 0.0,
+    "ik_overreach_max_m": {
+      "hand_L": 0.0184
+    },
+    "hand_ik_overreach_at_s": {
+      "hand_L": 0.95
+    },
+    "contact_root_lift_max_m": 0.0377,
+    "free_leg_pad_lift_max_deg": 11.16,
+    "head_pillow_lift_max_deg": 0.0,
+    "step_limiter_bones": {
+      "mixamorig:RightArm": 17,
+      "mixamorig:RightForeArm": 22,
+      "mixamorig:RightHand": 25,
+      "mixamorig:LeftArm": 24,
+      "mixamorig:LeftForeArm": 27,
+      "mixamorig:LeftHand": 25
+    },
+    "root_height_smoothing_max_m": 0.0067,
+    "inbetween_lift_max_m": 0.0,
+    "seam_eval_vs_pose_key_mm": {
+      "t0": 0.001,
+      "tEnd": 0.001
+    }
+  },
+  "validation": {
+    "seam_start_err": 0.0,
+    "seam_end_err": 0.0,
+    "max_key_step_deg": 20.6,
+    "max_key_step_bone": "mixamorig:LeftHand",
+    "pad_gap_min_mm": {
+      "head": 344.28,
+      "chest": 223.19,
+      "pelvis": 1.38,
+      "arm_Left": 2.1,
+      "leg_Left": 0.89,
+      "arm_Right": -1.65,
+      "leg_Right": 2.96
+    },
+    "pad_gap_min_at_s": {
+      "head": 0.183,
+      "chest": 0.5,
+      "pelvis": 0.825,
+      "arm_Left": 1.008,
+      "leg_Left": 0.625,
+      "arm_Right": 0.033,
+      "leg_Right": 0.508
+    },
+    "floor_min_mm": 45.34,
+    "floor_min_at_s": 0.867,
+    "closed_strap_drift_mm": {},
+    "self_penetration_mm": {
+      "arm_Left_in_trunk": 0.0,
+      "arm_Left_in_head": 0.0,
+      "arm_Right_in_trunk": 0.0,
+      "arm_Right_in_head": 0.0,
+      "leg_Left_in_head": 0.0,
+      "leg_Right_in_head": 0.0
+    },
+    "self_penetration_at_s": {},
+    "seam_vs_esc_pose_keys_v01_raw_max": {
+      "SIT": 0.0,
+      "EDGE_R": 0.0
+    },
+    "seam_step_start_mm": {
+      "hand_Left": 6.7,
+      "hand_Right": 0.0,
+      "foot_Left": 0.0,
+      "foot_Right": 0.0,
+      "Head": 5.4,
+      "Hips": 0.0
+    },
+    "seam_step_end_mm": {
+      "hand_Left": 0.0,
+      "hand_Right": 0.0,
+      "foot_Left": 1.0,
+      "foot_Right": 1.2,
+      "Head": 0.3,
+      "Hips": 0.0
+    },
+    "max_step_mm": {
+      "hand_Left": 67.3,
+      "hand_Right": 105.4,
+      "foot_Left": 72.9,
+      "foot_Right": 71.2,
+      "Head": 32.1,
+      "Hips": 23.9
+    },
+    "closed_strap_drift_at_s": {},
+    "max_step_at_s": {
+      "hand_Left": 0.117,
+      "hand_Right": 0.1,
+      "foot_Left": 0.733,
+      "foot_Right": 0.383,
+      "Head": 0.733,
+      "Hips": 0.733
+    },
+    "fbx_bind_err": 1.627206802368164e-05,
+    "fbx_bone_pos_err_m": 1e-06,
+    "fbx_take_imported": "Buddy_Rig_Mixamo65.001|Buddy_Rig_Mixamo65|Esc_SwingOff_R_Panic_v02",
+    "fbx_bones": 65
+  },
+  "source_patient": "ArtSource/Characters/SAUSAGE_BUDDY_01/Patient_v05/SAUSAGE_BUDDY_PATIENT_v05.blend",
+  "pose_keys_file": "esc_pose_keys_v01.json (Escape_v01)"
+}

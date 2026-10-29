@@ -18,6 +18,7 @@ namespace OnlyVolunteers.Phone
             public int Price;
             public string StubText;
             public float Progress = -1f;
+            public bool Paying;
             public PhoneApp Installed;
             public Text ButtonLabel;
             public Button Button;
@@ -88,8 +89,21 @@ namespace OnlyVolunteers.Phone
                 Phone.OpenApp(listing.Installed);
                 return;
             }
-            if (listing.Progress >= 0f)
+            if (listing.Progress >= 0f || listing.Paying)
                 return;
+            // ECONOMY spec v01: with the team fund the host charges it (by the app's name, never a client amount); the
+            // install starts only after its answer.
+            if (listing.Price > 0 && Phone.Wallet.HasTeamFund && OnlyVolunteers.Economy.TeamEconomy.Instance != null)
+            {
+                listing.Paying = true;
+                OnlyVolunteers.Economy.TeamEconomy.Instance.Request(OnlyVolunteers.Economy.EconomyRequestKind.PhoneApp, listing.Name, "", 0, (ok, message) =>
+                {
+                    listing.Paying = false;
+                    if (ok) listing.Progress = 0f;
+                    else Phone.Toast(message);
+                });
+                return;
+            }
             if (listing.Price > 0 && !Phone.Wallet.TryPay(listing.Price, "PayMarket", listing.Name))
             {
                 Phone.Toast("Not enough money. Go volunteer.");

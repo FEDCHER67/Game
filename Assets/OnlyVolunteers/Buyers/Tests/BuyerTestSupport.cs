@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using OnlyVolunteers.Economy;
 
 namespace OnlyVolunteers.Buyers.Tests
 {
@@ -20,15 +21,39 @@ namespace OnlyVolunteers.Buyers.Tests
         protected TestRandom rng;
         protected BuyerRules rules;
         protected int sequence;
+        /// <summary>WP02: the team economy of the test world (the ONE money / XP store; BuyerWorldState keeps none).</summary>
+        protected EconomyState economyState;
+        protected EconomyBuyerLedger economy;
 
         [SetUp]
         public void Setup()
         {
             clock = new TestClock(); rng = new TestRandom(); sequence = 0;
-            rules = new BuyerRules(clock, rng, Seed());
+            rules = NewWorld(Seed());
         }
-        protected static BuyerWorldState Seed(int respect = 30, long xp = 0) => new BuyerWorldState {
-            OrganContactUnlocked = true, FreeXp = xp, LifetimeXp = xp,
+        /// <summary>A new world: a fresh economy and buyer rules from the seed; xp = team XP already earned (free).</summary>
+        protected BuyerRules NewWorld(BuyerWorldState seed, long xp = 0)
+        {
+            economyState = EconomyState.NewGame();
+            economy = new EconomyBuyerLedger(economyState);
+            if (xp > 0) GrantXp(xp);
+            return new BuyerRules(clock, rng, economy, seed);
+        }
+        /// <summary>The same world reloaded: the buyer snapshot again, the economy as it is.</summary>
+        protected BuyerRules Reload(BuyerWorldState saved) => new BuyerRules(clock, rng, economy, saved);
+        protected void GrantXp(long xp, string who = "seed") =>
+            economyState.CommitSale(1, "test", "test XP", "test:xp:" + ++sequence, "test", (int)xp, new[] { who });
+        /// <summary>A participant who already bought bargaining ranks 1..rank (with XP earned for them).</summary>
+        protected void GiveBargainRank(string who, int rank)
+        {
+            for (int r = 1; r <= rank; r++)
+            {
+                GrantXp(EconomyState.SkillCost(EconomyState.SkillBargain, r));
+                Assert.That(economy.TryBuyBargainRank(who, r), Is.True);
+            }
+        }
+        protected static BuyerWorldState Seed(int respect = 30) => new BuyerWorldState {
+            OrganContactUnlocked = true,
             PresentParticipants = { "p1", "p2" },
             Participants = { new ParticipantState { Id = "p1" }, new ParticipantState { Id = "p2" } },
             Buyers = { new BuyerState { Id = Blood }, new BuyerState { Id = Organ, Respect = respect } } };
@@ -83,6 +108,6 @@ namespace OnlyVolunteers.Buyers.Tests
             string id = Add(kind, tier, cooled, packaged, npc: npc, npcType: npcType);
             Assert.That(rules.DepositInStash("order", id, "p1"), Is.True); return id;
         }
-        protected void Respect40() { rules = new BuyerRules(clock, rng, Seed(40)); }
+        protected void Respect40() { rules = NewWorld(Seed(40)); }
     }
 }

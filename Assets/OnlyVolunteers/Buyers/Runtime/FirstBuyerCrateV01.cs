@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FishNet;
 using FishNet.Object;
 using OnlyVolunteers.Capture;
-using OnlyVolunteers.Inventory;
+using OnlyVolunteers.Economy;
 using OnlyVolunteers.Operation.Stage1;
 using UnityEngine;
 
@@ -11,11 +11,14 @@ namespace OnlyVolunteers.Buyers.Runtime
 {
     /// <summary>W86 minimal first buyer (a reversible playtest stand-in, not sales Stage A). SALES SG-D27: the first organ
     /// buyer's Hamlet surface is a wide wooden crate by the shed. An organ (OperationPhysicalItem, kidney or liver) that
-    /// lies free on/in the crate's sale zone for SettleSeconds is bought at once: price = BuyerCatalog.UnitPrice (base price
-    /// x quality tier, no haggle, not cooled = x0.9 because no cooler exists yet, saturation -5 % per unit of the kind
-    /// already sold this session), paid with NetworkInventory.ServerAddCash to the nearest player (solo host = you), the
-    /// item is despawned and a short HUD toast shows the sale. Server only; no phone, buyer NPC, car, meeting, XP or
-    /// save of the sold count. SaleEnabled off (or the object off) = the crate is a plain prop.</summary>
+    /// lies free on/in the crate's sale zone for SettleSeconds is bought at once: price = BuyerCatalog.UnitPrice over the
+    /// bound G48 catalogue (buyer_first: base price x G48 quality multiplier x buyer coefficient, no haggle, not cooled =
+    /// G48 uncooled multiplier because no cooler exists yet, saturation -5 % per unit of the kind already sold this
+    /// session; no catalogue = no sale), paid ONCE into the team's shared fund (TeamEconomy, ECONOMY spec v01 §3.1; key = the
+    /// organ's id, never per player), the item is despawned and a short HUD toast shows the sale. Server only; no phone, buyer NPC, car, meeting, XP or
+    /// save of the sold count. SaleEnabled off (or the object off) = the crate is a plain prop. It is NOT the C01 blood
+    /// buyer (blood is refused here; C01's placeholder sale is OnlyVolunteers.Story.StoryDirector). Its first committed
+    /// organ purchase also counts as the team's acquaintance with the first organ buyer (M05, once).</summary>
     [DisallowMultipleComponent]
     public sealed class FirstBuyerCrateV01 : MonoBehaviour
     {
@@ -63,7 +66,11 @@ namespace OnlyVolunteers.Buyers.Runtime
             tier = (QualityTier)Mathf.Clamp(item.Grade + 1, 1, 5);
             if (!item.IsOrgan) return -1;
             soldOfKind.TryGetValue(kind, out int already);
-            decimal price = BuyerCatalog.UnitPrice(kind, tier, 0, false, DeliveredCooled, already, false);
+            EconomyCatalog catalog = EconomyCatalogSource.Ensure();
+            if (catalog == null) return -2; // the ONE price source is unavailable: no sale, never a fallback table
+            decimal price;
+            try { price = BuyerCatalog.UnitPrice(catalog, "buyer_first", kind, tier, 0, false, DeliveredCooled, already, false); }
+            catch (ArgumentOutOfRangeException) { return -1; } // below the buyer's quality floor
             return (int)Math.Round(price, MidpointRounding.AwayFromZero);
         }
 
@@ -89,20 +96,30 @@ namespace OnlyVolunteers.Buyers.Runtime
         private void TrySell(OperationPhysicalItem item)
         {
             int price = PriceOf(item, out ProductKind kind, out QualityTier tier);
+            if (price == -2) { if (refused.Add(item)) Toast("Скупщик: цены не загружены (каталог G48) — продажа недоступна", CaptureHud.Bad); return; }
             if (price < 0)
             {
-                if (refused.Add(item)) Toast("Скупщик: «Кровь не беру — только органы»", CaptureHud.Warn);
+                if (refused.Add(item)) Toast(item.IsOrgan ? "Скупщик: «Такое качество не беру»" : "Скупщик: «Кровь не беру — только органы» (кровь берёт C01)", CaptureHud.Warn);
                 return;
             }
-            NetworkInventory payee = Payee();
-            if (payee == null) { if (refused.Add(item)) Toast("Скупщик: «Некому платить» (нет игрока рядом)", CaptureHud.Bad); return; }
+            // ECONOMY spec v01 §3.1: the sale pays the team's shared fund once (any team size), not a player's pocket. The
+            // organ's own id is the transaction key: the same organ can never be paid twice. The save is still loading:
+            // the organ stays on the crate and sells a moment later.
+            TeamEconomy economy = TeamEconomy.Instance;
+            if (economy == null || !economy.IsServer) { if (refused.Add(item)) Toast("Скупщик: «Некуда платить» (нет общего фонда)", CaptureHud.Bad); return; }
+            if (!economy.ServerCanCommit) return;
             string title = item.Title;
-            payee.ServerAddCash(price);
+            string key = "sale:first-buyer:" + (string.IsNullOrEmpty(item.Identity) ? "noid:" + Guid.NewGuid().ToString("N") : item.Identity);
+            if (!TryPaySale(price, $"Скупщик: {title} · {BuyerCatalog.QualityLabel(tier)}", key, kind, out FundResult paid, out int xpEach)) { if (refused.Add(item)) Toast("Скупщик: оплата не прошла", CaptureHud.Bad); return; }
+            // M05 (STORY spec §8): a committed purchase proves the acquaintance with this buyer (an early valid world action
+            // is reconciled, once). Locked before C01's referral: the sale still stands, the story fact waits.
+            economy.ServerState?.CommitFirstOrganBuyerAcquaintance("first organ purchase at the crate " + key);
+            if (paid.Replayed) Debug.LogWarning($"[SALE] {key} was already paid: the organ is taken without a second payment", this);
             soldOfKind[kind] = (soldOfKind.TryGetValue(kind, out int n) ? n : 0) + 1;
-            SoldCount++; EarnedTotal += price;
+            SoldCount++; EarnedTotal += paid.Replayed ? 0 : price;
             since.Remove(item);
-            LastSale = $"{title} · {BuyerCatalog.QualityLabel(tier)} → +${price}";
-            Debug.Log($"[SALE] first buyer crate: {item.Identity} {kind} {tier} -> ${price} to {payee.name} (cash now {payee.Cash}, sold {SoldCount}, total ${EarnedTotal})", this);
+            LastSale = $"{title} · {BuyerCatalog.QualityLabel(tier)} → +${price}" + (!paid.Replayed && xpEach > 0 ? $" · +{xpEach} XP" : "");
+            Debug.Log($"[SALE] first buyer crate: {item.Identity} {kind} {tier} -> ${price} to the team fund (fund now ${paid.Balance}, sold {SoldCount}, total ${EarnedTotal})", this);
             if (item.NetworkObject != null && item.IsSpawned) InstanceFinder.ServerManager.Despawn(item.NetworkObject, DespawnType.Destroy);
             else Destroy(item.gameObject);
             Toast("Скупщик забрал: " + LastSale, CaptureHud.Good);
@@ -110,23 +127,26 @@ namespace OnlyVolunteers.Buyers.Runtime
             StartCoroutine(SnapshotNextFrame());
         }
 
+        /// <summary>The crate's ONE fund path (G49 hook 4): every purchase of this buyer credits the shared fund here, once
+        /// per key. Ok = paid now or already paid under this key (Replayed). WP02: the same commit grants the organ's XP
+        /// (20 each present participant, + the world's first-of-a-kind bonus once) in the team economy's one XP store.</summary>
+        private bool TryPaySale(int price, string title, string key, ProductKind kind, out FundResult paid, out int xpEach)
+        {
+            paid = default;
+            xpEach = 0;
+            TeamEconomy economy = TeamEconomy.Instance;
+            if (economy == null || !economy.IsServer || !economy.ServerCanCommit) return false;
+            SaleCommit commit = economy.ServerCommitSale(price, title, key, new[] { kind });
+            paid = commit.Fund;
+            xpEach = commit.XpEach;
+            return paid.Ok;
+        }
+
         private System.Collections.IEnumerator SnapshotNextFrame()
         {
             yield return null;
             var table = CaptureDirector.Instance != null ? CaptureDirector.Instance.Table : null;
             if (table != null) table.Save();
-        }
-
-        private NetworkInventory Payee()
-        {
-            NetworkInventory best = null; float bestD = float.MaxValue;
-            foreach (var inv in FindObjectsByType<NetworkInventory>())
-            {
-                if (inv == null || !inv.IsSpawned) continue;
-                float d = (inv.transform.position - transform.position).sqrMagnitude;
-                if (d < bestD) { bestD = d; best = inv; }
-            }
-            return best;
         }
 
         private static void Toast(string text, Color color)

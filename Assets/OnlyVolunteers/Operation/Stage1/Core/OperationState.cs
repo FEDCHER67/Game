@@ -14,10 +14,29 @@ namespace OnlyVolunteers.Operation.Stage1
         Stitch, Sutured, Unbuckled,
         // Round 4 (Claude): a closed belly cut open again; an escape clip step started; an escape interrupted (slump);
         // the patient ran off the table on his feet (HopRun hand-off, no fall).
-        Reopened, EscapeStep, EscapeSlump, RanOff
+        Reopened, EscapeStep, EscapeSlump, RanOff,
+        // WP05: the patient's ONE spoilage clock started with the first opening of the body (the warning; a start by death
+        // has its own Death cue and no extra one).
+        SpoilageStarted
     }
     public enum DeathCause { None, Blood, Extraction, Overdose, Shock, FailedEscape }
-    public enum CutStep { None, Advanced, OffLine, Completed }
+    public enum CutStep { None, Advanced, OffLine, Completed, /* WP05: no suture kit for this closure */ NoSupply }
+
+    /// <summary>WP05: the closing supplies (OPERATIONS_BASES_INTEGRATION v01 §3: suture kit $5 per closure, patch $5 each).
+    /// The ONE place of their catalogue ids: the G53 catalogue (Economy_v02.json) is not in the project yet, so these are
+    /// the placeholder ids "suture_kit" / "patch"; change them here when the catalogue lands.</summary>
+    public static class OperationSupplies
+    {
+        public const string SutureKitId = "suture_kit";
+        public const string PatchId = "patch";
+    }
+
+    /// <summary>WP05: where the server takes closing supplies from (the table's stock). TryTake removes one unit and says
+    /// whether there was one. No source (null) = closing is not gated (rule tests, the dev operation scene).</summary>
+    public interface IOperationSupplies
+    {
+        bool TryTake(string supplyId);
+    }
 
     [Serializable]
     public sealed class OrganState
@@ -71,8 +90,19 @@ namespace OnlyVolunteers.Operation.Stage1
         public float panicRemaining = -1f;
         public float escapeProgress;
         public int escapes;
+        /// <summary>Seconds since death (information; spoilage runs on spoilAge).</summary>
         public float deathAge;
+        /// <summary>Grade steps already applied by spoilage (WP05: by the one clock below; older saves: since death).</summary>
         public int corpseLoss;
+        /// <summary>WP05 (OPS v01 §4): ONE spoilage clock per patient, started by the earlier of the first opening of the body
+        /// and death (also for a living patient), never restarted. spoilAge = active seconds since that start; spoilCause =
+        /// OperationRules.SpoilByOpening / SpoilByDeath / SpoilByMigration (an older save).</summary>
+        public bool spoilStarted;
+        public float spoilAge;
+        public int spoilCause;
+        /// <summary>WP05: a suture kit is taken for the current closure (kept over interruptions, other players and loads;
+        /// a completed reopening frees it, so the next closure takes a new kit).</summary>
+        public bool sutureKitReserved;
         public DeathCause deathCause;
         public int extracted;
         public int kidneysExtracted;
@@ -106,13 +136,27 @@ namespace OnlyVolunteers.Operation.Stage1
         public int escapeSide;
         /// <summary>Round 4: he left the table running (HopRun), not falling: the field NPC starts on his feet.</summary>
         public bool ranOff;
+        /// <summary>K10 (Fedya 29.10, variant В): a LIVING patient who left the table with the belly opened and not sewn is
+        /// doomed: he gets up and runs, and pain shock kills him after shockRunMeters of his own escape travel (rolled once
+        /// by the server in tuning.shockRunMinMeters..shockRunMaxMeters, 2..12 m, saved, never re-rolled) or shockRunTime
+        /// seconds of that locomotion (tuning.shockRunMaxSeconds, stuck), whichever first (OperationRules.AdvanceShockRun).
+        /// 0 = not doomed.</summary>
+        public float shockRunMeters;
+        public float shockRunCovered;
+        public float shockRunTime;
+        /// <summary>K10: alive and on the doomed run.</summary>
+        public bool ShockRun => alive && shockRunMeters > 0f;
+        /// <summary>PLAYER stage (Fedya 29.10): the authored severe drug-intoxication condition and its ONE shared extraction
+        /// (one blood portion OR one organ, then ordinary death). Ordinary donors: unused. Absent in older saves = ordinary.</summary>
+        public DonorBudget donor = new DonorBudget();
         /// <summary>Opened belly closed again (seam finished, seam begun, or the dead-body patch): the scalpel reopens it.</summary>
         public bool BellyClosed => zoneOpened && (sutured || skinPatched || zoneSuture > 0f);
         public bool Sleeping => alive && sleepRemaining > 0f;
         public bool Dazed => alive && onTable && dazedRemaining > 0f;
         public bool Torso => restraints.Length > 4 && restraints[4];
         public bool LimbsStrapped => restraints[0] && restraints[1] && restraints[2] && restraints[3];
-        /// <summary>The belly is open and not sewn up yet: organs reachable, a living patient may not leave.</summary>
+        /// <summary>The belly is open and not sewn up yet: organs reachable; a living patient who leaves the table now is on
+        /// the doomed run (K10).</summary>
         public bool CavityOpen => zoneOpened && !sutured && !skinPatched;
         public bool Panicking => alive && panicRemaining >= 0f;
     }
@@ -129,6 +173,9 @@ namespace OnlyVolunteers.Operation.Stage1
         public float freshness;
         public bool sealedBlood;
         public bool expired;
+        public string portionId = "";
+        public string personId = "";
+        public OnlyVolunteers.Inventory.SyringeInstance syringe;
     }
 
     [Serializable]
@@ -143,9 +190,16 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool v02;
         public float anesthesiaStock;
         public float anesthesiaBarrel;
+        /// <summary>WP05: the table's closing supplies (suture kits, patches). hasSupplies false = a save from before them:
+        /// the table gives its starting stock once (OperationTuning.startSutureKits / startPatches). Not refilled per patient.</summary>
+        public bool hasSupplies;
+        public int sutureKits;
+        public int patches;
         public float bloodFill;
         public int bagsUsedMask;
         public int bloodBagged;
+        public OnlyVolunteers.Inventory.SyringeInstance bloodSyringe;
+        public OnlyVolunteers.Inventory.SyringeInstance anesthesiaSyringe;
         /// <summary>Round 2: where the (now movable) gurney stood; its outputs are saved in world space, so it is put back
         /// there first. Absent in older saves (the gurney then stays at its spawn).</summary>
         public bool hasTablePose;
@@ -166,8 +220,63 @@ namespace OnlyVolunteers.Operation.Stage1
             State = state; tuning = config;
             // Round 3: without the torso strap an old save's closed torso strap simply is not there any more.
             if (State != null && State.restraints != null && State.restraints.Length > 4 && tuning != null && !tuning.torsoStrap) State.restraints[4] = false;
+            MigrateSpoilage();
         }
         public OperationTuning Tuning => tuning;
+        /// <summary>WP05: the closing supplies of this table (null = not gated).</summary>
+        public IOperationSupplies Supplies { get; set; }
+
+        // ---------- spoilage: one clock per patient (WP05, OPS v01 §4) ----------
+        public const int SpoilByOpening = 1, SpoilByDeath = 2, SpoilByMigration = 3;
+
+        /// <summary>An older save had no spoilage clock: a dead body continues its death clock (its applied steps stay), a
+        /// living body that is already open starts now. Silent (no warning cue). Idempotent.</summary>
+        private void MigrateSpoilage()
+        {
+            if (State == null || State.spoilStarted) return;
+            if (!State.alive)
+            {
+                State.spoilStarted = true; State.spoilCause = SpoilByMigration;
+                State.spoilAge = Mathf.Max(0f, State.deathAge);
+                return;
+            }
+            bool opened = State.zoneOpened;
+            if (State.organs != null) foreach (var organ in State.organs) if (organ != null && organ.cut >= 1f) opened = true;
+            if (opened) { State.spoilStarted = true; State.spoilCause = SpoilByMigration; State.spoilAge = 0f; }
+        }
+
+        /// <summary>The first opening of the body or death, whichever comes first, starts the clock; later events never
+        /// restart it. Only the opening raises the warning cue (death has its own).</summary>
+        private void StartSpoilage(int cause)
+        {
+            if (State.spoilStarted) return;
+            State.spoilStarted = true; State.spoilAge = 0f; State.spoilCause = cause;
+            if (cause == SpoilByOpening) Emit(PatientCue.SpoilageStarted);
+        }
+
+        /// <summary>45 s grace, then one grade off every remaining (not extracted) organ every 40 s: the first step at +85 s,
+        /// then +125 / +165 (the existing corpseGraceSeconds / corpseGradeSeconds). Steps already applied are counted in
+        /// corpseLoss, so a load or a second rules object never applies one twice.</summary>
+        private void Spoil(float seconds)
+        {
+            State.spoilAge += seconds;
+            int loss = SpoilSteps(State.spoilAge, tuning);
+            int delta = loss - State.corpseLoss;
+            if (delta <= 0) return;
+            foreach (var organ in State.organs) if (!organ.removed) organ.damage += delta;
+            State.corpseLoss = loss;
+        }
+
+        public static int SpoilSteps(float age, OperationTuning t) =>
+            Mathf.Max(0, Mathf.FloorToInt((age - t.corpseGraceSeconds) / Mathf.Max(0.01f, t.corpseGradeSeconds) + 1e-4f));
+
+        /// <summary>Seconds until the next grade step of a started clock (for the HUD).</summary>
+        public static float SecondsToNextSpoil(OperationState s, OperationTuning t)
+        {
+            if (s == null || !s.spoilStarted) return -1f;
+            float next = t.corpseGraceSeconds + (SpoilSteps(s.spoilAge, t) + 1) * t.corpseGradeSeconds;
+            return Mathf.Max(0f, next - s.spoilAge);
+        }
         public static OperationState Create(string id, OperationTuning config)
         {
             var state = new OperationState { patientId = id, organs = new OrganState[3] };
@@ -212,7 +321,9 @@ namespace OnlyVolunteers.Operation.Stage1
         }
         /// <summary>Held down on the table: the torso strap (when it exists) or, round 3, all four limb straps.</summary>
         public bool Held => OperationStraps.Held(State, tuning);
-        /// <summary>Round 3 (lead rule): a living patient with an open, unsutured belly is not released: no strap opens, no escape.</summary>
+        /// <summary>Round 3 (lead rule): a PLAYER may not unbuckle a living patient with an open, unsutured belly (no strap
+        /// opens by hand). K10 (Fedya 29.10, variant В): his own escape is no longer blocked by it: with a free strap he tries
+        /// (OB-02), gets up and runs, and pain shock kills him within 2..12 m (ArmShockRun / AdvanceShockRun).</summary>
         public bool MustSutureBeforeRelease => State.alive && State.CavityOpen;
         public bool CanOperate(bool held) => State.onTable && State.aligned && (!State.alive || State.Sleeping || Held || held);
         public bool CanInject => State.alive && State.onTable && State.aligned;
@@ -227,7 +338,9 @@ namespace OnlyVolunteers.Operation.Stage1
                 State.alignment = Mathf.Max(0, State.alignment - seconds);
                 if (State.alignment == 0) FinishAlignment();
             }
-            if (!State.alive) { Decay(seconds); return; }
+            // WP05: the one spoilage clock runs for the living (opened) and the dead alike.
+            if (State.spoilStarted) Spoil(seconds);
+            if (!State.alive) { State.deathAge += seconds; return; }
             State.residual = Mathf.Max(0, State.residual - seconds * tuning.residualPerSecond);
             bool wasSleeping = State.Sleeping;
             State.sleepRemaining = Mathf.Max(0, State.sleepRemaining - seconds);
@@ -260,12 +373,13 @@ namespace OnlyVolunteers.Operation.Stage1
             if (clips)
             {
                 bool wasOnTable = State.onTable;
-                if (State.panicRemaining < 0f) TickEscapeClips(seconds, awakeOnTable && !MustSutureBeforeRelease);
+                // K10 (variant В): an open, unsutured belly no longer keeps him on the table; leaving it dooms him (RunOff).
+                if (State.panicRemaining < 0f) TickEscapeClips(seconds, awakeOnTable);
                 else if (OperationEscape.Valid(State.escapeClip)) StopEscapeClips();
                 if (wasOnTable && !State.onTable) return; // ran off this tick
             }
             // Round 3: a free hand unbuckles the other straps one by one (the per-strap escape steps; clips hook Unbuckled).
-            else if (awakeOnTable && !tuning.torsoStrap && !MustSutureBeforeRelease && NextUnbuckle(out int strap, out int hand))
+            else if (awakeOnTable && !tuning.torsoStrap && NextUnbuckle(out int strap, out int hand))
             {
                 State.unbuckleProgress += seconds / Mathf.Max(0.1f, tuning.unbuckleSeconds);
                 if (State.unbuckleProgress >= 1f)
@@ -299,9 +413,9 @@ namespace OnlyVolunteers.Operation.Stage1
 
         private bool AnyStrapClosed { get { for (int i = 0; i < OperationStraps.Count(tuning); i++) if (State.restraints[i]) return true; return false; } }
 
-        /// <summary>Free to slide off: with the torso strap, it open; without it, every limb strap open. Never with an
-        /// open, unsutured belly (round 3 lead rule).</summary>
-        public bool CanEscape => !MustSutureBeforeRelease && (tuning.torsoStrap ? !State.Torso : !AnyStrapClosed);
+        /// <summary>Free to slide off: with the torso strap, it open; without it, every limb strap open. K10 (variant В): also
+        /// with an open, unsutured belly, but then the run is doomed (Escape arms it).</summary>
+        public bool CanEscape => tuning.torsoStrap ? !State.Torso : !AnyStrapClosed;
 
         /// <summary>The escape steps (hook for strap-combination clips): the next strap a FREE hand unbuckles and which hand
         /// (0 left, 1 right). Order: the other arm first, then the left leg, the right leg. None while both arms are strapped.</summary>
@@ -318,6 +432,7 @@ namespace OnlyVolunteers.Operation.Stage1
         {
             State.onTable = State.aligned = false; State.knockedOut = true; State.escapeProgress = 0f; State.escapes++; State.unbuckleProgress = 0f;
             Array.Clear(State.restraints, 0, 5);
+            ArmShockRun(); // K10: off the table with the belly open: pain shock within 2..12 m
             Emit(PatientCue.FailedEscapeFall); Emit(PatientCue.Escaped);
         }
         public void Die(DeathCause cause)
@@ -330,30 +445,32 @@ namespace OnlyVolunteers.Operation.Stage1
             if (cause == DeathCause.FailedEscape) Emit(PatientCue.FailedEscapeFall);
             if (cause == DeathCause.Shock) Emit(PatientCue.ShockDeath);
             Emit(PatientCue.Death);
-        }
-        private void Decay(float seconds)
-        {
-            State.deathAge += seconds;
-            int loss = Mathf.Max(0, Mathf.FloorToInt((State.deathAge - tuning.corpseGraceSeconds) / tuning.corpseGradeSeconds));
-            int delta = loss - State.corpseLoss;
-            if (delta <= 0) return;
-            foreach (var organ in State.organs) if (!organ.removed) organ.damage += delta;
-            State.corpseLoss = loss;
+            StartSpoilage(SpoilByDeath); // WP05: death starts the clock only if no opening did before
         }
 
         // ---------- blood ----------
         /// <summary>Asleep, torso or that arm strapped, or dead; and the body still has a portion to give.</summary>
-        public bool CanDrawBlood(int arm) => State.onTable && State.aligned && State.bloodPortions < tuning.fatalPortion &&
-            (!State.alive || State.Sleeping || Held || (arm >= 0 && arm < 2 && State.restraints[arm]));
-        /// <summary>Fills one syringe; when it is full one portion counts (2nd weakens, 3rd kills a living patient).</summary>
+        public bool CanDrawBlood(int arm) => State.alive && State.onTable && State.aligned && State.bloodPortions < tuning.fatalPortion &&
+            DonorAllows(DonorExtraction.Blood) && (State.Sleeping || Held || (arm >= 0 && arm < 2 && State.restraints[arm]));
+        /// <summary>Fills one syringe; when it is full one portion counts (2nd weakens, 3rd kills a living patient; a severely
+        /// drug-intoxicated donor dies at his one portion).</summary>
         public bool FillBlood(ref float fill, float seconds)
         {
-            if (fill >= 1f || seconds <= 0f || !Finite(seconds) || State.bloodPortions >= tuning.fatalPortion) return false;
+            if (!FillBloodPortion(ref fill, seconds)) return false;
+            CommitDonorBlood();
+            return true;
+        }
+        /// <summary>The portion itself: counts it and applies the ordinary donors' weakened/fatal rules. A one-extraction donor's
+        /// spend and death are committed by the caller AFTER the portion exists (FillBlood, FillSyringe).</summary>
+        private bool FillBloodPortion(ref float fill, float seconds)
+        {
+            if (!State.alive || fill >= 1f || seconds <= 0f || !Finite(seconds) || State.bloodPortions >= tuning.fatalPortion ||
+                !DonorAllows(DonorExtraction.Blood)) return false;
             fill = Mathf.Min(1f, fill + seconds / tuning.bloodSeconds);
             if (fill < 1f - 0.00001f) return false;
             fill = 1f; State.bloodPortions++;
             Emit(PatientCue.BloodPortion);
-            if (State.alive)
+            if (State.alive && !DonorBudgetRules.LimitsToOne(State.donor))
             {
                 if (State.bloodPortions == tuning.weakenedPortion) Emit(PatientCue.Weakened);
                 if (State.bloodPortions >= tuning.fatalPortion) Die(DeathCause.Blood);
@@ -397,6 +514,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (!organ.sloppyApplied && organ.sloppyCut + organ.offLine * tuning.offLineWeight > tuning.sloppyFraction)
             { organ.damage += tuning.sloppyLoss; organ.sloppyApplied = true; Emit(PatientCue.SloppyCut); }
             Emit(PatientCue.IncisionOpened);
+            StartSpoilage(SpoilByOpening); // WP05: the first opening of the body
             return CutStep.Completed;
         }
         /// <summary>Cursor travel off the line during a stroke, in incision lengths.</summary>
@@ -452,13 +570,15 @@ namespace OnlyVolunteers.Operation.Stage1
         public bool Extract(int index, float random)
         {
             if (tuning.sharedAbdomen && !State.CavityOpen) return false;
+            if (!DonorAllows(DonorExtraction.Organ)) return false; // a spent one-extraction donor gives nothing more
             var organ = State.organs[index];
             if (organ.removed || organ.cut < 1 || !organ.Released || organ.pull < tuning.pullDistance) return false;
             organ.removed = true; organ.outputId = State.patientId + "/organ/" + index;
             if (State.conditionLoss > 0) organ.damage += State.conditionLoss; // D8: condition loss lands at extraction
             State.extracted++;
             if (index < 2) State.kidneysExtracted++;
-            if (State.alive)
+            // PLAYER stage: a severely drug-intoxicated donor is spent by this one organ (a living one dies, no roll)
+            if (!CommitDonorOrgan(organ) && State.alive)
             {
                 // Lead decision 2026-10-18: the liver, or the second kidney, is a vital removal: death at once, no roll.
                 bool vital = tuning.liverOrBothKidneysFatal && (index == 2 || State.kidneysExtracted >= 2);

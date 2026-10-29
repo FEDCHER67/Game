@@ -7,6 +7,7 @@ using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Transporting;
 using OnlyVolunteers.Clinic;
+using OnlyVolunteers.Economy;
 using OnlyVolunteers.Map;
 using OnlyVolunteers.Map.Crowd;
 using OnlyVolunteers.Network;
@@ -59,6 +60,11 @@ namespace OnlyVolunteers.Capture
         public bool Loaded { get; private set; }
         public string LastSaveNote { get; private set; } = "";
         public readonly Dictionary<string, CaptureFacts> Facts = new Dictionary<string, CaptureFacts>();
+        /// <summary>G49: the world's syringe record (C01 sales, daily find); saved in CaptureSaveData.syringes.</summary>
+        public SyringeSaveBlock Syringes = new SyringeSaveBlock();
+        private OfflineWorldItem dailyFindItem;
+        private float nextDailyCheck;
+        private bool warnedDailyAnchor;
 
         private NetworkManager manager;
         private float nextAutosave;
@@ -67,14 +73,30 @@ namespace OnlyVolunteers.Capture
         private bool tableMode;
         private float playTime;
 
-        /// <summary>The player's save; editor sessions and automated runs never touch it (their own slots).</summary>
-        public string SavePath => Path.Combine(Application.persistentDataPath, "OnlyVolunteers",
+        /// <summary>The player's save file name; editor sessions and automated runs never touch it (their own slots).</summary>
+        public string BaseSavePath => Path.Combine(Application.persistentDataPath, "OnlyVolunteers",
+            // the start menu's world slot (29.10) first, then the test / editor overrides, then the scene's default file
+            OnlyVolunteers.Session.WorldLaunchV01.Active && !string.IsNullOrEmpty(OnlyVolunteers.Session.WorldLaunchV01.SlotFile) ? OnlyVolunteers.Session.WorldLaunchV01.SlotFile :
             !string.IsNullOrEmpty(CaptureTestHooks.SaveSlot) ? CaptureTestHooks.SaveSlot :
 #if UNITY_EDITOR
             "capture_stageA_editor.json");
 #else
             SaveFileName);
 #endif
+        /// <summary>The file this session reads and writes: the base file, or the new file the player chose after a save
+        /// that would not load (WP01, CaptureSaveStore.ResolveActive).</summary>
+        public string SavePath => CaptureSaveStore.ResolveActive(BaseSavePath);
+
+        /// <summary>WP01 (SV-13): the save did not load (newer version, corrupt, too old, failed while applying). Nothing
+        /// is written until the player picks a way out on the prompt; the file itself is never written, moved or deleted.</summary>
+        public bool WriteBlocked => blockedProbe != null;
+        public SaveFileProbe BlockedSave => blockedProbe;
+        private SaveFileProbe blockedProbe;
+        private SaveFileProbe recoveryBackup;
+        private string blockedText = "";
+        private bool loadStarted;
+        private OnlyVolunteers.Player.KccFirstPersonInput promptWalker;
+        private bool promptSavedMove, promptSavedLook;
 
         // ---------- lifecycle ----------
 
@@ -135,6 +157,8 @@ namespace OnlyVolunteers.Capture
         private void OnDestroy()
         {
             GreyboxNpc.Incident -= OnIncident;
+            TeamEconomy.ServerCommitted -= OnEconomyCommitted;
+            TeamEconomy.Notice -= OnEconomyNotice;
             if (manager != null)
             {
                 manager.ServerManager.OnServerConnectionState -= ServerState;
@@ -151,19 +175,35 @@ namespace OnlyVolunteers.Capture
             manager.ServerManager.OnServerConnectionState += ServerState;
             manager.SceneManager.OnClientLoadedStartScenes += ClientLoaded;
             manager.ClientManager.OnClientConnectionState += ClientState;
+            TeamEconomy.ServerCommitted += OnEconomyCommitted;
+            TeamEconomy.Notice += OnEconomyNotice;
             StartHost();
         }
+
+        /// <summary>ECONOMY spec v01 §10.4: an economic commit (sale, purchase, delivery step) is written at once, not left for
+        /// the autosave. Before the save is loaded nothing is written (that would overwrite the player's save).</summary>
+        private void OnEconomyCommitted()
+        {
+            if (Ready && Loaded && !WriteBlocked) Save(false);
+        }
+
+        private void OnEconomyNotice(string text) => Toast(text, CaptureHud.Neutral, 4f);
 
         private void StartHost()
         {
             if (manager.ServerManager.Started) return;
-            ushort port = (ushort)(Port + portTries);
+            // 29.10: a co-op world from the start menu listens on every interface on the menu's port; anything else stays the
+            // loopback solo host it always was (a solo world is never offered on the network)
+            bool coop = OnlyVolunteers.Session.WorldLaunchV01.Active && OnlyVolunteers.Session.WorldLaunchV01.Role == OnlyVolunteers.Session.LaunchRole.CoopHost;
+            ushort basePort = coop ? OnlyVolunteers.Session.WorldLaunchV01.Port : Port;
+            ushort port = (ushort)(basePort + portTries);
             // Skip ports another process (an operations build, a stale editor socket) holds: no "server failed" error.
-            while (portTries < 10 && !UdpPortFree(port)) { portTries++; port = (ushort)(Port + portTries); }
-            manager.TransportManager.Transport.SetMaximumClients(4);
-            manager.TransportManager.Transport.SetServerBindAddress("127.0.0.1", IPAddressType.IPv4);
+            while (portTries < 10 && !UdpPortFree(port)) { portTries++; port = (ushort)(basePort + portTries); }
+            string bind = coop ? "0.0.0.0" : "127.0.0.1";
+            manager.TransportManager.Transport.SetMaximumClients(coop ? 4 : 1);
+            manager.TransportManager.Transport.SetServerBindAddress(bind, IPAddressType.IPv4);
             bool ok = manager.ServerManager.StartConnection(port);
-            Debug.Log($"[CAPTURE] solo host: server on 127.0.0.1:{port} start={ok}");
+            Debug.Log($"[CAPTURE] {(coop ? "co-op" : "solo")} host: server on {bind}:{port} start={ok}");
         }
 
         private static bool UdpPortFree(ushort port)
@@ -182,6 +222,8 @@ namespace OnlyVolunteers.Capture
             if (args.ConnectionState == LocalConnectionState.Started)
             {
                 hostStarted = true;
+                // The team's shared fund (ECONOMY spec v01): host-authoritative; the save restores / migrates it.
+                TeamEconomy.Ensure(manager)?.ServerBegin(waitForExternalLoad: LoadOnStart);
                 SpawnTable();
                 manager.ClientManager.StartConnection("127.0.0.1", manager.TransportManager.Transport.GetPort());
             }
@@ -195,11 +237,20 @@ namespace OnlyVolunteers.Capture
         private void ClientState(ClientConnectionStateArgs args)
         {
             Debug.Log($"[CAPTURE] local client {args.ConnectionState}");
+            if (args.ConnectionState == LocalConnectionState.Started) TeamEconomy.Ensure(manager);
         }
 
         private void ClientLoaded(NetworkConnection connection, bool asServer)
         {
             if (!asServer || PawnNetworkObject == null || !connection.IsActive) return;
+            // 29.10: the scene pawn is the HOST's body; a remote client must never be given it (that took the host's player
+            // away). Players of remote clients on the map are network milestone M1 (NETWORK_MAP_PLAN_v01): refused for now.
+            if (!connection.IsLocalClient && !connection.IsHost)
+            {
+                Debug.LogWarning($"[CAPTURE] remote client {connection.ClientId} refused: co-op on the map needs network milestone M1 (players on the map)");
+                manager.ServerManager.Kick(connection, FishNet.Managing.Server.KickReason.UnexpectedProblem);
+                return;
+            }
             if (!PawnNetworkObject.IsSpawned) manager.ServerManager.Spawn(PawnNetworkObject, connection);
             else PawnNetworkObject.GiveOwnership(connection);
             Debug.Log($"[CAPTURE] map pawn is the host player now (client {connection.ClientId})");
@@ -235,10 +286,21 @@ namespace OnlyVolunteers.Capture
         public float LoadedAt { get; private set; }
         private void LoadAfterStart()
         {
-            Loaded = true; LoadedAt = Time.time;
-            if (Array.IndexOf(Environment.GetCommandLineArgs(), "-capture-fresh") >= 0) { Toast("Новая игра", CaptureHud.Neutral); return; }
-            if (File.Exists(SavePath)) Load();
-            else Toast("Поймай кого-нибудь в Хуторе и привези в сарай у хижины деда", CaptureHud.Neutral, 6f);
+            if (loadStarted) return;
+            loadStarted = true;
+            LoadedAt = Time.time;
+            if (Array.IndexOf(Environment.GetCommandLineArgs(), "-capture-fresh") >= 0) { Loaded = true; TeamEconomy.Instance?.ServerMarkReady(); Toast("Новая игра", CaptureHud.Neutral); return; }
+            if (!File.Exists(SavePath))
+            {
+                // New game: the shared fund starts empty (ES-01), the van at paid tier 0.
+                Loaded = true;
+                TeamEconomy.Instance?.ServerMarkReady();
+                Toast("Поймай кого-нибудь в Хуторе и привези в сарай у хижины деда", CaptureHud.Neutral, 6f);
+                return;
+            }
+            // WP01: a save that does not load is NOT a new game over it. Loaded stays false (no autosave, no commit save,
+            // no quit save, the story waits) and the prompt offers the newest valid backup or a new game in a new file.
+            if (Load()) Loaded = true;
         }
 
         // ---------- capture identities ----------
@@ -354,6 +416,8 @@ namespace OnlyVolunteers.Capture
         private void Update()
         {
             playTime += Time.deltaTime;
+            if (WriteBlocked) { UpdatePrompt(); return; }
+            if (Ready && Loaded && Time.unscaledTime >= nextDailyCheck) { nextDailyCheck = Time.unscaledTime + 1f; TickDailySyringe(); }
             // Safety net: a downed NPC that missed the incident (e.g. already lying at load) still gets an identity.
             foreach (GreyboxNpc npc in GreyboxNpc.All)
                 if (npc != null && npc.isActiveAndEnabled && (npc.State == NpcState.Down || npc.InCargo) && !npc.TryGetComponent(out CaptureNpc _))
@@ -381,28 +445,79 @@ namespace OnlyVolunteers.Capture
             foreach (var c in CaptureNpc.All) if (c != null && !c.Admitted && c.Npc != null) { captured++; if (c.Npc.InCargo) inVan++; }
             string table = Table != null && Table.HasPatient ? "на столе: пациент" : "стол свободен";
             float dist = Table != null && Pawn != null && Pawn.Controlled ? Vector3.Distance(Pawn.Position, Table.transform.position) : -1f;
-            return $"<b>{BaseName}</b>{(dist >= 0f ? $" · {dist:0} м" : "")}\nпоймано {captured} · в бусике {inVan} · {table}\nK — сохранить · Shift+K — новая игра";
+            EconomySnapshot snap = EconomyClientView.Current;
+            string fund = snap != null ? $"\nобщий фонд <b>{EconomyState.Money(snap.balance)}</b> · XP {snap.lifetimeXp} (свободно {snap.freeXp}) · уровень {snap.level}" : "";
+            return $"<b>{BaseName}</b>{(dist >= 0f ? $" · {dist:0} м" : "")}\nпоймано {captured} · в бусике {inVan} · {table}{fund}\nK — сохранить · Shift+K — новая игра";
+        }
+
+        /// <summary>G49 daily find (economy §5.2, A24/A31): the ONE saved morning record advances on the active world's
+        /// saved calendar (TeamEconomy, frozen while closed) — start, load and the 06:00 tick use this same call. A created
+        /// syringe is materialized only at an authored anchor "WagonSyringeFind" (none is authored yet: the record keeps the
+        /// uncollected instance and its id, nothing is invented). Picking it up moves the same instance into the hotbar.</summary>
+        private void TickDailySyringe()
+        {
+            var economy = TeamEconomy.Instance;
+            EconomyState state = economy != null ? economy.ServerState : null;
+            if (state == null || !economy.ServerReady || state.TimeOfDay < 0) return;
+            var daily = Syringes.Daily;
+            if (string.IsNullOrEmpty(daily.WorldId)) daily.WorldId = Guid.NewGuid().ToString("N");
+            if (DailySyringeFindRules.Advance(daily, daily.WorldId, (long)(state.AbsoluteHours * 3600.0), true))
+                Debug.Log($"[CAPTURE] daily syringe find: morning {daily.LastMorning}, uncollected {daily.Uncollected?.ItemId}");
+            if (daily.Uncollected == null) return;
+            if (dailyFindItem != null)
+            {
+                if (dailyFindItem.Syringe == null || dailyFindItem.Count <= 0) dailyFindItem = null;
+                else return;
+            }
+            var model = Kit != null && Kit.Inventory != null ? Kit.Inventory.Model : null;
+            if (model != null)
+                for (int i = 0; i < model.SlotCount; i++)
+                    if (model.GetSlot(i).Syringe != null && model.GetSlot(i).Syringe.ItemId == daily.Uncollected.ItemId)
+                    {
+                        DailySyringeFindRules.Collect(daily, daily.Uncollected.ItemId);
+                        Debug.Log("[CAPTURE] daily syringe collected (same instance in the hotbar)");
+                        return;
+                    }
+            var anchor = OnlyVolunteers.Story.StoryAnchor.Find("WagonSyringeFind");
+            ItemDefinition definition = Kit != null && Kit.Inventory != null && Kit.Inventory.Database != null ? Kit.Inventory.Database.Get(SyringeRules.BloodDefinitionId) : null;
+            if (anchor == null || definition == null)
+            {
+                if (!warnedDailyAnchor) { warnedDailyAnchor = true; Debug.Log("[CAPTURE] daily syringe recorded but not placed: no authored WagonSyringeFind anchor in this scene"); }
+                return;
+            }
+            foreach (var drop in FindObjectsByType<OfflineWorldItem>())
+                if (drop.Syringe != null && drop.Syringe.ItemId == daily.Uncollected.ItemId) { dailyFindItem = drop; return; }
+            int price;
+            try { price = SyringeRules.Price(SyringeKind.Blood); } catch (Exception) { price = 0; }
+            dailyFindItem = OfflineWorldItem.Spawn(definition, 1, price, anchor.transform.position + Vector3.up * 0.1f);
+            dailyFindItem.SetSyringe(daily.Uncollected.Copy());
         }
 
         private void OnApplicationQuit()
         {
             // Quitting saves the game (D13); automated runs keep their own explicit saves.
-            if (Ready && Loaded && string.IsNullOrEmpty(CaptureTestHooks.SaveSlot)) Save(false);
+            if (Ready && Loaded && !WriteBlocked && string.IsNullOrEmpty(CaptureTestHooks.SaveSlot)) Save(false);
         }
 
         // ---------- save / load (D13) ----------
 
+        /// <summary>Writes the world (WP01: through CaptureSaveStore: checked text, three rotating backups, atomic replace,
+        /// never over a newer-version file). Refused while the save is not loaded yet or a failed load blocks writing.
+        /// A failure keeps the previous file and says so; it never reports "Сохранено".</summary>
         public bool Save(bool announce)
         {
+            if (WriteBlocked || !Loaded)
+            {
+                LastSaveNote = WriteBlocked ? "save blocked: the save on disk did not load (" + blockedProbe.Status + ")" : "save refused: the save is not loaded yet";
+                Debug.LogWarning("[CAPTURE] " + LastSaveNote);
+                if (announce) Toast(WriteBlocked ? "Сохранение выключено: сначала выбери, что делать со старым файлом" : "Сохранение ещё загружается — не сохраняю", CaptureHud.Warn);
+                return false;
+            }
             try
             {
                 var data = new CaptureSaveData { scene = SceneManager.GetActiveScene().path, savedUtc = DateTime.UtcNow.ToString("o"), playTime = playTime };
                 CaptureSave.Write(this, data);
-                Directory.CreateDirectory(Path.GetDirectoryName(SavePath));
-                string tmp = SavePath + ".tmp";
-                File.WriteAllText(tmp, JsonUtility.ToJson(data, true));
-                if (File.Exists(SavePath)) File.Replace(tmp, SavePath, SavePath + ".bak");
-                else File.Move(tmp, SavePath);
+                CaptureSaveStore.Write(SavePath, JsonUtility.ToJson(data, true));
                 LastSaveNote = $"saved {data.npcs.Count} NPCs, table patient={(data.table != null && data.table.patient != null ? data.table.patient.patientId : "-")}";
                 Debug.Log($"[CAPTURE] {LastSaveNote} -> {SavePath}");
                 if (announce) Toast("Сохранено", CaptureHud.Neutral, 1.5f);
@@ -417,33 +532,51 @@ namespace OnlyVolunteers.Capture
             }
         }
 
+        /// <summary>Loads the active save. v1 (before the shared fund) still loads: its cash is migrated into the fund once
+        /// (FundMigration). WP01: a newer, too old or corrupt file, or one that fails while being applied, blocks writing
+        /// and opens the prompt (returns false); it is never replaced by a new game.</summary>
         public bool Load()
         {
+            string path = SavePath;
+            SaveFileProbe probe = CaptureSaveStore.Probe(path);
+            if (!probe.Loadable)
+            {
+                Debug.LogError($"[CAPTURE] save not loaded ({probe.Status} v{probe.Version} {probe.Error}): {path} — writing blocked, the file is left as it is");
+                BlockWrites(probe, CaptureSaveStore.Explain(probe));
+                return false;
+            }
+            var data = probe.Data;
             try
             {
-                var data = JsonUtility.FromJson<CaptureSaveData>(File.ReadAllText(SavePath));
-                if (data == null || data.version != CaptureSaveData.CurrentVersion) { Toast("Сохранение не подходит — новая игра", CaptureHud.Warn); return false; }
                 CaptureSave.Read(this, data);
-                Toast($"Загружено: поймано {data.npcs.Count}" + (data.table != null && data.table.patient != null ? ", на столе пациент" : ""), CaptureHud.Neutral);
-                Debug.Log($"[CAPTURE] loaded {data.npcs.Count} NPCs from {SavePath}");
-                return true;
             }
             catch (Exception e)
             {
-                Debug.LogError("[CAPTURE] load failed: " + e);
-                Toast("Сохранение не читается — новая игра", CaptureHud.Warn);
+                Debug.LogError("[CAPTURE] load failed while applying the save — writing blocked, the file is left as it is: " + e);
+                probe.Error = e.Message;
+                string message = (e.Message ?? "").Replace('\n', ' ');
+                if (message.Length > 90) message = message.Substring(0, 90) + "…";
+                BlockWrites(probe, "Сохранение не загрузилось целиком (" + message + ").");
                 return false;
             }
+            Toast($"Загружено: поймано {data.npcs.Count}" + (data.table != null && data.table.patient != null ? ", на столе пациент" : ""), CaptureHud.Neutral);
+            Debug.Log($"[CAPTURE] loaded {data.npcs.Count} NPCs from {path}");
+            return true;
         }
 
+        /// <summary>Shift+K. A normal new game deletes the active file and its backups. While a failed load blocks writing,
+        /// the file that failed is not deleted: this is the prompt's "new game in a new file".</summary>
         public void NewGame()
         {
-            try
-            {
-                if (File.Exists(SavePath)) File.Delete(SavePath);
-                if (File.Exists(SavePath + ".bak")) File.Delete(SavePath + ".bak");
-            }
+            if (WriteBlocked) { ChooseNewFile(); return; }
+            try { CaptureSaveStore.DeleteWithBackups(SavePath); }
             catch (Exception e) { Debug.LogWarning("[CAPTURE] could not delete the save: " + e.Message); }
+            ReloadScene();
+        }
+
+        private void ReloadScene()
+        {
+            ClosePrompt();
             Loaded = false;
             if (manager != null)
             {
@@ -451,6 +584,119 @@ namespace OnlyVolunteers.Capture
                 if (manager.ServerManager.Started) manager.ServerManager.StopConnection(true);
             }
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex >= 0 ? SceneManager.GetActiveScene().buildIndex : 0);
+        }
+
+        // ---------- WP01: a save that did not load ----------
+
+        private void BlockWrites(SaveFileProbe probe, string reason)
+        {
+            blockedProbe = probe;
+            recoveryBackup = CaptureSaveStore.NewestValidBackup(probe.Path);
+            string file = Path.GetFileName(probe.Path);
+            var text = new System.Text.StringBuilder();
+            text.Append(reason).Append('\n');
+            text.Append("Файл <b>").Append(file).Append("</b> не тронут, сохранение и автосохранение выключены.\n\n");
+            if (recoveryBackup != null)
+                text.Append("<b>1</b> — загрузить резервную копию от ").Append(recoveryBackup.WhenText()).Append(" (сыгранное после неё пропадёт)\n");
+            else
+                text.Append("<color=#9AA3AE>Целой резервной копии нет.</color>\n");
+            text.Append("<b>2</b> — новая игра в новом файле (старый файл остаётся как есть)\n");
+            text.Append("<b>3</b> — выйти из игры, ничего не меняя");
+            blockedText = text.ToString();
+            Debug.LogWarning("[CAPTURE] save prompt: backup " + (recoveryBackup != null ? recoveryBackup.Path + " (" + recoveryBackup.SavedUtc + ")" : "none"));
+            OpenPrompt();
+        }
+
+        private void OpenPrompt()
+        {
+            Hud?.Prompt("Сохранение не загружено", blockedText);
+            if (promptWalker == null)
+            {
+                foreach (var k in FindObjectsByType<OnlyVolunteers.Player.KccFirstPersonInput>())
+                    if (k.isActiveAndEnabled) { promptWalker = k; break; }
+                if (promptWalker != null)
+                {
+                    promptSavedMove = promptWalker.MovementLocked; promptSavedLook = promptWalker.LookSuspended;
+                    promptWalker.MovementLocked = true; promptWalker.LookSuspended = true;
+                }
+            }
+            OnlyVolunteers.UI.OvMenuGate.Blocking = true;
+        }
+
+        private void ClosePrompt()
+        {
+            if (Hud != null) Hud.HidePrompt();
+            if (promptWalker != null)
+            {
+                promptWalker.MovementLocked = promptSavedMove;
+                promptWalker.LookSuspended = promptSavedLook;
+                promptWalker = null;
+            }
+            if (blockedProbe != null) OnlyVolunteers.UI.OvMenuGate.Blocking = false;
+        }
+
+        /// <summary>The prompt owns the keyboard while it is up: 1 backup, 2 new file, 3 quit. Escape does not open the
+        /// pause menu over it (the menu would hand the input back to the game).</summary>
+        private void UpdatePrompt()
+        {
+            OnlyVolunteers.UI.OvMenuGate.Blocking = true;
+            if (Hud != null && !Hud.PromptVisible) Hud.Prompt("Сохранение не загружено", blockedText);
+            Hud?.SetVisible(false);
+            Keyboard key = OpsInput.Keyboard;
+            if (key == null) return;
+            if (key.escapeKey.wasPressedThisFrame) OnlyVolunteers.UI.OvMenuGate.ConsumeEscape();
+            if (recoveryBackup != null && (key.digit1Key.wasPressedThisFrame || key.numpad1Key.wasPressedThisFrame)) ChooseBackup();
+            else if (key.digit2Key.wasPressedThisFrame || key.numpad2Key.wasPressedThisFrame) ChooseNewFile();
+            else if (key.digit3Key.wasPressedThisFrame || key.numpad3Key.wasPressedThisFrame) QuitUntouched();
+        }
+
+        /// <summary>Prompt 1: the newest valid backup is copied into a new file that becomes the active save; the scene
+        /// reloads and loads it. The failed file and its backups stay as they are.</summary>
+        public bool ChooseBackup()
+        {
+            if (!WriteBlocked || recoveryBackup == null) return false;
+            try
+            {
+                string path = CaptureSaveStore.RestoreBackupToNewFile(BaseSavePath, recoveryBackup.Path, DateTime.UtcNow);
+                Debug.Log($"[CAPTURE] save prompt: backup {recoveryBackup.Path} copied to {path}; reloading");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("[CAPTURE] could not restore the backup: " + e);
+                Toast("Резервная копия не скопировалась: " + e.Message, CaptureHud.Bad, 5f);
+                return false;
+            }
+            ReloadScene();
+            return true;
+        }
+
+        /// <summary>Prompt 2: a new game whose first save goes to a new file; the failed file is not touched.</summary>
+        public bool ChooseNewFile()
+        {
+            if (!WriteBlocked) return false;
+            try
+            {
+                string path = CaptureSaveStore.StartNewFile(BaseSavePath, DateTime.UtcNow);
+                Debug.Log($"[CAPTURE] save prompt: new game in {path}; reloading");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("[CAPTURE] could not start a new save file: " + e);
+                Toast("Новый файл не создался: " + e.Message, CaptureHud.Bad, 5f);
+                return false;
+            }
+            ReloadScene();
+            return true;
+        }
+
+        private void QuitUntouched()
+        {
+            Debug.Log("[CAPTURE] save prompt: quit, nothing written");
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 

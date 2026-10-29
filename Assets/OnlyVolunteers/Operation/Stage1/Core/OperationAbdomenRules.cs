@@ -98,6 +98,7 @@ namespace OnlyVolunteers.Operation.Stage1
                     Emit(PatientCue.SloppyCut);
                 }
                 Emit(PatientCue.IncisionOpened);
+                StartSpoilage(SpoilByOpening); // WP05: the first opening of the body starts the one spoilage clock
                 return CutStep.Completed;
             }
             // The direction stays open for the first few centimetres (a wiggle either way is harmless), then locks.
@@ -127,17 +128,24 @@ namespace OnlyVolunteers.Operation.Stage1
             State.zoneReopen = Mathf.Min(1f, previous + delta);
             if (State.zoneReopen < 0.995f) return CutStep.Advanced;
             State.sutured = false; State.skinPatched = false; State.zoneSuture = 0f; State.zoneReopen = 0f;
+            State.sutureKitReserved = false; // WP05: the used kit is not returned; the next closure takes a new one
             Emit(PatientCue.Reopened);
             return CutStep.Completed;
         }
         private float lastSeconds;
 
-        /// <summary>Round 4: a dead body leaving the table opened and unsewn gets the plain skin patch (no stitches).</summary>
-        public void PatchIfOpen()
+        /// <summary>Round 4: a dead body leaving the table opened and unsewn gets the plain skin patch (no stitches).
+        /// WP05: the patch is one supply unit, taken once (true = patched now); with none left the body stays open.</summary>
+        public bool PatchIfOpen()
         {
-            if (!State.zoneOpened || State.sutured) return;
+            if (!State.zoneOpened || State.sutured || State.skinPatched) return false;
+            if (Supplies != null && !Supplies.TryTake(OperationSupplies.PatchId)) return false;
             State.skinPatched = true; State.zoneSuture = 0f; State.zoneReopen = 0f;
+            return true;
         }
+
+        /// <summary>WP05: a closure needs one suture kit, taken at its first stitch progress and reserved for this closure.</summary>
+        public bool SutureKitReady => State.sutureKitReserved || Supplies == null;
 
         // ---------- suturing (round 3: every operation ends with sewing the incision up) ----------
         /// <summary>Stitches done (0..tuning.sutureStitches), from the seam progress.</summary>
@@ -162,6 +170,13 @@ namespace OnlyVolunteers.Operation.Stage1
             float delta = Mathf.Min(Mathf.Clamp01(along) - previous,
                 seconds * tuning.sutureSpeed / OperationAbdomenGeometry.GuideLength(tuning, OperationAbdomenGeometry.ZoneGuide));
             if (delta <= 0f) return CutStep.None;
+            // WP05 (OPS v01 §3): the first progress of a closure takes one suture kit and reserves it for this patient/cut;
+            // resuming (after a pause, by another player, after a load) uses the same kit. No kit: no stitch.
+            if (!State.sutureKitReserved)
+            {
+                if (Supplies != null && !Supplies.TryTake(OperationSupplies.SutureKitId)) return CutStep.NoSupply;
+                State.sutureKitReserved = true;
+            }
             int before = Stitches;
             State.zoneSuture = Mathf.Min(1f, previous + delta);
             if (State.zoneSuture >= 0.995f) State.zoneSuture = 1f;
@@ -169,6 +184,7 @@ namespace OnlyVolunteers.Operation.Stage1
             for (int k = before; k < after; k++) Emit(PatientCue.Stitch);
             if (State.zoneSuture < 1f) return CutStep.Advanced;
             State.sutured = true; State.unbuckleProgress = 0f;
+            ClearShockRun(); // K10: sewn up, a later escape is a normal one
             Emit(PatientCue.Sutured);
             return CutStep.Completed;
         }

@@ -1,0 +1,371 @@
+{
+ "revision": "v02",
+ "shader": "URP/Lit",
+ "uv": "UV0 in metres (1 UV = 1 m) except MAT_PH_labels (atlas). Unity tiling = 1 / tile_m. Tints were chosen as target colour / texture mean so the average surface colour matches the concept swatches.",
+ "textures_new": [
+  "ArtSource/Buildings/Pharmacy_W86/Pharmacy_labels_v01.png (2048 sRGB, mip-mapped, Clamp)"
+ ],
+ "atlas_regions": "ArtSource/Buildings/Pharmacy_W86/Pharmacy_labels_v01_regions.json",
+ "materials": {
+  "MAT_PH_tile_floor": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_tile_facade_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_tile_facade_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_tile_facade_normal.png",
+   "tile_m": 6.0,
+   "unity_tiling": 0.16667,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#E8DAC0",
+   "smoothness": 0.25,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Sales floor + stockroom floor. 10x10 tiles per texture -> 0.6 m tiles at tile 6 m. UVs are offset so grout lines start at the inner wall faces."
+  },
+  "MAT_PH_wall_turquoise": {
+   "albedo": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "albedo_from_art_root": "TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#66A9AA",
+   "smoothness": 0.22,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference B faded turquoise: sales-floor dado, skirting, dado rail, cornice band, shelving frames, counter bases, cash desk, staff door (sales face)."
+  },
+  "MAT_PH_wall_cream": {
+   "albedo": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "albedo_from_art_root": "TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFF6CC",
+   "smoothness": 0.12,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference B warm cream: sales-floor upper walls."
+  },
+  "MAT_PH_facade_greyblue": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#A5BBD3",
+   "smoothness": 0.38,
+   "metallic": 0.2,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference C muted grey-blue: storefront frames, risers with inset panels, fascia, pier, plinths, rear plinth."
+  },
+  "MAT_PH_offwhite": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_plaster_whitewash_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_plaster_whitewash_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_plaster_whitewash_normal.png",
+   "tile_m": 3.0,
+   "unity_tiling": 0.33333,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#E8E8E4",
+   "smoothness": 0.12,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference C/A dirty off-white: pilasters, cornice, sills, reveals, ceilings, stockroom upper walls, shelf boards, counter tops, rear facade."
+  },
+  "MAT_PH_green": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_painted_metal_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_painted_metal_albedo.png",
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#5FA076",
+   "smoothness": 0.35,
+   "metallic": 0.1,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference A muted green: stockroom dado + skirting, steel shelving, rear door + frame, staff door (stock face), chair seat, cross-sign body."
+  },
+  "MAT_PH_glass": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#A9C6CA",
+   "smoothness": 0.9,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": 0.28,
+   "uv": "metres",
+   "note": "Shop windows, door glazing, counter vitrine, fridge door. Panes are two single-sided quads 4 mm apart. URP Lit Transparent alpha ~0.28 (opaque acceptable)."
+  },
+  "MAT_PH_metal": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/6b_lightly_weathered_metal/6b_lightly_weathered_metal_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFFFFF",
+   "smoothness": 0.45,
+   "metallic": 0.6,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Brushed / galvanised steel: handles, thresholds, posts, brackets, pipes, tap, lamp end caps, canopy, ceiling T-bars, bars."
+  },
+  "MAT_PH_wood": {
+   "albedo": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_albedo.png",
+   "albedo_from_art_root": "StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/StyleKit_v3/Textures/5a_wood_planks_fences/5a_wood_planks_fences_v07_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFFFFF",
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Mop / broom handles, pallet slats."
+  },
+  "MAT_PH_cardboard": {
+   "albedo": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "albedo_from_art_root": "TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#CDA06B",
+   "smoothness": 0.08,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Plain carton faces (printed side and taped top use MAT_PH_labels)."
+  },
+  "MAT_PH_labels": {
+   "albedo": "ArtSource/Buildings/Pharmacy_W86/Pharmacy_labels_v01.png",
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFFFFF",
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "atlas",
+   "note": "Atlas material (UV0 is atlas space, tiling 1, offset 0): price cards, STAFF ONLY signs, package faces, labels, posters, solid swatches."
+  },
+  "MAT_PH_turquoise_paint": {
+   "albedo": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "albedo_from_art_root": "TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#69A9AA",
+   "smoothness": 0.4,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference B painted furniture: shelving uprights, counter base + frame, cash desk, gate, fridge body, staff door (sales face) + frame."
+  },
+  "MAT_PH_wall_green": {
+   "albedo": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "albedo_from_art_root": "TextureTest_v01/Source_v03/TT_acg_Plaster001_neutral_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/TextureTest_v01/Source_v03/TT_acg_Plaster001_normal.png",
+   "tile_m": 2.0,
+   "unity_tiling": 0.5,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#5E9A70",
+   "smoothness": 0.18,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Reference A green wall paint: stockroom dado and skirting."
+  },
+  "MAT_PH_laminate": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#F2EFE6",
+   "smoothness": 0.45,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "White laminate / enamel: shelf boards + lips, counter tops, worktop, display platform, cabinet carcasses, lamp housings, switch boxes, conduit."
+  },
+  "MAT_PH_rubber": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#232426",
+   "smoothness": 0.08,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Rubber: toe kicks, chair feet, entrance mat, bucket base, door seals."
+  },
+  "MAT_PH_concrete": {
+   "albedo": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_light_albedo.png",
+   "albedo_from_art_root": "MapTextures_W86/T1/Textures/T1_concrete_light_albedo.png",
+   "normal": "Assets/OnlyVolunteers/Art/MapTextures_W86/T1/Textures/T1_concrete_light_normal.png",
+   "tile_m": 3.0,
+   "unity_tiling": 0.33333,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFFFFF",
+   "smoothness": 0.18,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Street-door step, rear landing ramp."
+  },
+  "MAT_PH_ceramic": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#EEEDE7",
+   "smoothness": 0.75,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Stockroom sink."
+  },
+  "MAT_PH_dark": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#2C2E31",
+   "smoothness": 0.3,
+   "metallic": 0.0,
+   "emission": null,
+   "alpha": null,
+   "uv": "metres",
+   "note": "Black plastic / rubber: register, chair legs, bins, door seals, hinges, body and trash bags."
+  },
+  "MAT_PH_emissive": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#FFF1D8",
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": "#FFF1D8",
+   "alpha": null,
+   "uv": "metres",
+   "note": "Lamp diffusers, fridge light strip. Emission 2-4 (HDR); pair with real lights at the light anchors."
+  },
+  "MAT_PH_cross_glow": {
+   "albedo": null,
+   "albedo_from_art_root": null,
+   "normal": null,
+   "tile_m": 1.0,
+   "unity_tiling": 1.0,
+   "unity_offset": [
+    0,
+    0
+   ],
+   "tint": "#45C46C",
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": "#45C46C",
+   "alpha": null,
+   "uv": "metres",
+   "note": "Faces of the projecting green cross sign (wordless storefront). Emission ~3."
+  }
+ }
+}

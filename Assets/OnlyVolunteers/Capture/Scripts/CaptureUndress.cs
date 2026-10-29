@@ -79,6 +79,14 @@ namespace OnlyVolunteers.Capture
             }
             foreach (var smr in npc.GetComponentsInChildren<SkinnedMeshRenderer>(true))
                 if (smr.name == "Outfit" || smr.name.StartsWith("Outfit")) smr.enabled = false;
+            // K10 (Fedya 29.10): he stays the table patient: nothing of the type's props either (hats, backpacks, things in
+            // hand: Props_Head / Props_Spine2 / Props_*Hand and their LODs), and no held-props drop when he runs.
+            foreach (var r in npc.GetComponentsInChildren<Renderer>(true))
+                if (r.name.StartsWith("Props_")) r.enabled = false;
+            foreach (var held in npc.GetComponentsInChildren<OnlyVolunteers.Characters.NpcHeldProps>(true))
+            {
+                if (Application.isPlaying) Object.Destroy(held); else Object.DestroyImmediate(held);
+            }
             return true;
         }
 

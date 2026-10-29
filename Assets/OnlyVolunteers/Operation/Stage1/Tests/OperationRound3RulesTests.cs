@@ -86,17 +86,16 @@ namespace OnlyVolunteers.Operation.Stage1.Tests
             Assert.False(rules.SnipCord(1, 0, 10f), "no cord cutting through a sewn belly");
             Assert.False(rules.Extract(0, 0.5f));
         }
-        [Test] public void Suture_LivingPatientKeepsHisStrapsUntilSewn_DeadOneDoesNot()
+        /// <summary>K10 (Fedya 29.10, variant В) changed the second half of this round-3 rule: a free hand of the living,
+        /// opened patient now does unbuckle and he escapes, but the run is doomed (OperationK10RulesTests). A PLAYER still
+        /// cannot open his straps before the belly is sewn.</summary>
+        [Test] public void Suture_PlayerCannotUnstrapAnOpenLivingPatient_DeadOneMay()
         {
             Open(); state.sleepRemaining = 0f; state.dazedRemaining = 0f; state.restraints[0] = false;
             Assert.True(rules.MustSutureBeforeRelease);
-            Assert.False(rules.ToggleRestraint(1), "a strap of a living patient with an open belly does not open");
+            Assert.False(rules.ToggleRestraint(1), "a player does not open a strap of a living patient with an open belly");
             Assert.True(state.restraints[1]);
             Assert.True(rules.ToggleRestraint(0), "closing one is fine");
-            state.restraints[0] = false; // a free hand...
-            rules.Tick(30f, 0f, false);
-            Assert.True(state.restraints[1] && state.restraints[2] && state.restraints[3], "...does not unbuckle anything while the belly is open");
-            Assert.True(state.onTable, "and he does not escape");
             SewAll();
             Assert.False(rules.MustSutureBeforeRelease);
             Assert.True(rules.ToggleRestraint(1), "sewn up: the straps open again");

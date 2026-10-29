@@ -19,6 +19,9 @@ namespace OnlyVolunteers.Inventory
         public ItemDefinition Definition => definition;
         public int Count => count;
         public int UnitValue => unitValue;
+        public SyringeInstance Syringe { get; private set; }
+        public ItemStack Stack => new ItemStack(definition != null ? definition.Id : 0, count, unitValue, Syringe);
+        public void SetSyringe(SyringeInstance instance) { Syringe = instance; }
 
         public void Set(ItemDefinition itemDefinition, int itemCount, int value)
         {

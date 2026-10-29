@@ -225,6 +225,55 @@ namespace OnlyVolunteers.Capture
             toastUntil = Time.unscaledTime + seconds;
         }
 
+        // ---------- WP01: the save prompt (a save that would not load) ----------
+
+        private GameObject promptCanvas;
+        private Text promptTitle, promptBody;
+
+        /// <summary>A centred panel on its own canvas (shown even while the HUD group is hidden): the reason a save did not
+        /// load and the keys of the choices. Keyboard only; the director reads the keys.</summary>
+        public void Prompt(string title, string body)
+        {
+            if (promptCanvas == null) BuildPrompt();
+            promptTitle.text = title ?? "";
+            promptBody.text = body ?? "";
+            promptCanvas.SetActive(true);
+        }
+
+        public void HidePrompt()
+        {
+            if (promptCanvas != null) promptCanvas.SetActive(false);
+        }
+
+        public bool PromptVisible => promptCanvas != null && promptCanvas.activeSelf;
+        public string PromptText => promptCanvas != null ? promptTitle.text + "\n" + promptBody.text : "";
+
+        private void BuildPrompt()
+        {
+            promptCanvas = new GameObject("[Capture] Save prompt", typeof(Canvas), typeof(CanvasScaler));
+            promptCanvas.transform.SetParent(transform, false);
+            var c = promptCanvas.GetComponent<Canvas>();
+            c.renderMode = RenderMode.ScreenSpaceOverlay;
+            c.sortingOrder = 120;
+            var scaler = promptCanvas.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920, 1080);
+            scaler.matchWidthOrHeight = 0.5f;
+            var root = (RectTransform)promptCanvas.transform;
+            var shade = PhoneUi.Panel(root, "Shade", new Color(0f, 0f, 0f, 0.55f));
+            shade.rectTransform.Stretch();
+            shade.raycastTarget = false;
+            var panel = PhoneUi.Panel(root, "Panel", new Color(0.07f, 0.08f, 0.1f, 0.94f), 18);
+            panel.raycastTarget = false;
+            Place(panel.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1060, 470));
+            promptTitle = PhoneUi.Label(panel.rectTransform, "", 34, Warn, TextAnchor.UpperLeft, true);
+            Place(promptTitle.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -46), new Vector2(980, 50));
+            promptBody = PhoneUi.Label(panel.rectTransform, "", 23, Neutral, TextAnchor.UpperLeft);
+            promptBody.supportRichText = true;
+            Place(promptBody.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -260), new Vector2(980, 360));
+            promptCanvas.SetActive(false);
+        }
+
         public void Hint(string text) => hintText.text = text ?? "";
         public void Corner(string text) => cornerText.text = text ?? "";
         public string LastHint => hintText != null ? hintText.text : "";

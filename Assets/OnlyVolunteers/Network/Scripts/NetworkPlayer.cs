@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using FishNet.Component.Transforming;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using KinematicCharacterController.Examples;
 using OnlyVolunteers.Phone;
 using OnlyVolunteers.Player;
 using OnlyVolunteers.Player.Debugging;
 using OnlyVolunteers.Player.Physics;
+using OnlyVolunteers.Session;
 using UnityEngine;
 
 namespace OnlyVolunteers.Network
@@ -30,6 +32,14 @@ namespace OnlyVolunteers.Network
         private GameObject localCrosshair;
         private PhoneController phone;
         private float nextViewSend;
+        /// <summary>PLAYER stage: this player's look as the server accepted it (AppearanceRules wire text). Only the server
+        /// writes it, only from the OWNER's own submission; observers and late joiners receive it with the object, so every
+        /// friend sees each player's own look and a rejoin never copies the host's.</summary>
+        private readonly SyncVar<string> appearanceWire = new SyncVar<string>("");
+
+        /// <summary>The look of this player (default until the server accepted his own).</summary>
+        public PlayerAppearance Appearance { get; private set; } = AppearanceRules.Default();
+        public event Action<NetworkPlayer> AppearanceChanged;
 
         public bool LocalControlEnabled => input != null && input.enabled;
         // The phone occupies the hands: no grabbing while it is out.
@@ -61,8 +71,11 @@ namespace OnlyVolunteers.Network
             visualRoot = character != null && character.Motor != null
                 ? character.Motor.transform.Find("RemoteVisual") : null;
             visualHead = visualRoot != null ? visualRoot.Find("Head") : null;
+            appearanceWire.OnChange += OnAppearanceWire;
             if (!externalControl) SetLocalControl(false);
         }
+
+        private void OnDestroy() => appearanceWire.OnChange -= OnAppearanceWire;
 
         public bool ExternalControl => externalControl;
 
@@ -72,7 +85,7 @@ namespace OnlyVolunteers.Network
             if (externalControl)
             {
                 Debug.Log($"[OV Network] observed external-control player={OwnerId}, owner={IsOwner}, motor={MotorPosition}");
-                if (IsOwner) NetworkSession.Active?.LocalPlayerChanged(this);
+                if (IsOwner) { NetworkSession.Active?.LocalPlayerChanged(this); ServerSubmitAppearance(AppearanceProfileV01.LocalWire); }
                 return;
             }
             SetLocalControl(IsOwner);
@@ -90,10 +103,12 @@ namespace OnlyVolunteers.Network
                 phone = PhoneController.Create(viewCamera, input);
                 phone.OpenChanged += open => { if (localCrosshair != null) localCrosshair.SetActive(!open); };
                 NetworkSession.Active?.LocalPlayerChanged(this);
+                ServerSubmitAppearance(AppearanceProfileV01.LocalWire); // my own look, from my own profile
             }
             else
             {
                 ApplyDebugColor();
+                if (!string.IsNullOrEmpty(appearanceWire.Value)) OnAppearanceWire("", appearanceWire.Value, false); // late join
             }
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (Array.Exists(Environment.GetCommandLineArgs(), x => x == "-ov-smoke-move"))
@@ -139,6 +154,46 @@ namespace OnlyVolunteers.Network
             nextViewSend = Time.unscaledTime + 0.1f;
             ServerViewOrientation(Mathf.DeltaAngle(0f, viewCamera.transform.eulerAngles.x),
                 viewCamera.transform.eulerAngles.y, Channel.Unreliable);
+        }
+
+        /// <summary>Owner → server: his own look. Validated (unknown cosmetics → defaults, garbage → the default look, never
+        /// another player's), recorded under his stable participant id, then replicated to everyone through the SyncVar.</summary>
+        [ServerRpc]
+        private void ServerSubmitAppearance(string wire)
+        {
+            if (Owner == null || !Owner.IsActive) return;
+            AppearanceRules.TryDecode(wire, out var look);
+            string encoded = AppearanceRules.Encode(look);
+            var economy = OnlyVolunteers.Economy.TeamEconomy.Instance;
+            string playerId = economy != null ? economy.ServerParticipantId(Owner) : (Owner.IsLocalClient ? PlayerIds.Host : "client:" + Owner.ClientId);
+            AppearanceProfileV01.ServerBook.Submit(playerId, encoded, out _); // a not-yet-identified client ("client:N") is not stored
+            appearanceWire.Value = encoded;
+            Debug.Log($"[OV Network] appearance player={OwnerId} id={playerId}: {encoded}");
+        }
+
+        private void OnAppearanceWire(string previous, string next, bool asServer)
+        {
+            if (asServer) return; // the host also gets the client-side callback; a dedicated server has nothing to show
+            AppearanceRules.TryDecode(next, out var look);
+            Appearance = look;
+            ApplyAppearanceToRemoteVisual();
+            AppearanceChanged?.Invoke(this);
+        }
+
+        /// <summary>First pass until the chosen avatar model exists: the remote placeholder body wears the top colour and
+        /// the head the skin colour. The avatar binding (stage 2) replaces this with real parts.</summary>
+        private void ApplyAppearanceToRemoteVisual()
+        {
+            if (visualRoot == null || IsOwner) return;
+            var block = new MaterialPropertyBlock();
+            Color top = AppearanceProfileV01.Swatch(Appearance, AppearanceSlot.TopColour, Color.grey);
+            Color skin = AppearanceProfileV01.Swatch(Appearance, AppearanceSlot.Skin, Color.white);
+            foreach (var renderer in visualRoot.GetComponentsInChildren<Renderer>(true))
+            {
+                bool head = visualHead != null && renderer.transform.IsChildOf(visualHead);
+                block.SetColor("_BaseColor", head ? skin : top);
+                renderer.SetPropertyBlock(block);
+            }
         }
 
         [ServerRpc]
