@@ -652,6 +652,7 @@ namespace OnlyVolunteers.Map
             if (fist != null) return fist;
             EnsureDataDir();
             fist = ScriptableObject.CreateInstance<WeaponStun>();
+            WeaponStun.ConfigureAsFist(fist); // 30.10: the fist's cooldown and repeat-contact table, not the field defaults
             AssetDatabase.CreateAsset(fist, FistPath);
             AssetDatabase.SaveAssets();
             return fist;

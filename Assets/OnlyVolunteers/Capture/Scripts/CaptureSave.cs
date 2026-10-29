@@ -53,6 +53,9 @@ namespace OnlyVolunteers.Capture
                     stunTotal = npc.State == NpcState.Down ? npc.StunTotal : 2f,
                     inCargo = npc.InCargo && van != null,
                     standing = doomedRunner,
+                    // fist repeat resistance (30.10): remaining active seconds, never a clock time
+                    fistContacts = npc.Fist.contacts,
+                    fistRecoverLeft = FistResistanceRulesV01.RecoverLeft(npc.Fist, npc.FistRecoverySeconds),
                 };
                 c.Facts.condition = npc.Condition;
                 PatientRecord record = d.Registry.Get(c.PatientId);
@@ -258,6 +261,7 @@ namespace OnlyVolunteers.Capture
             go.SetActive(true);
             var npc = go.GetComponent<GreyboxNpc>();
             npc.Condition = s.facts.condition;
+            npc.Fist = FistResistanceRulesV01.FromSave(s.fistContacts, s.fistRecoverLeft, npc.FistRecoverySeconds);
             d.Facts[s.facts.patientId] = s.facts;
             PatientRecord record = d.Registry.Ensure(npc);
             record.Operation = s.operation;

@@ -99,6 +99,21 @@ namespace OnlyVolunteers.Player.Physics
         public Rigidbody GrabbedBody => grabbedBody;
         public bool IsHolding => grabbedBody != null;
 
+        /// <summary>PLAYER HANDS v01 (read-only, presentation only): the held point in world space as drawn this frame
+        /// (the transform pose, interpolated), where the player's hands reach to. Nothing in the hold reads it.</summary>
+        public Vector3 HeldWorldPoint
+        {
+            get
+            {
+                if (grabbedBody == null) return transform.position;
+                Transform held = grabbedBody.transform;
+                return pointTarget != null ? held.position + held.rotation * localGrabPoint : held.TransformPoint(localGrabPoint);
+            }
+        }
+
+        /// <summary>PLAYER HANDS v01 (read-only): a point target (an NPC body) is held, not a plain rigidbody.</summary>
+        public bool IsPointHold => grabbedBody != null && pointTarget != null;
+
         private void Reset()
         {
             var input = GetComponent<KccFirstPersonInput>();

@@ -8,6 +8,7 @@ using KinematicCharacterController.Examples;
 using OnlyVolunteers.Phone;
 using OnlyVolunteers.Player;
 using OnlyVolunteers.Player.Debugging;
+using OnlyVolunteers.Player.Hands;
 using OnlyVolunteers.Player.Physics;
 using OnlyVolunteers.Session;
 using UnityEngine;
@@ -41,6 +42,22 @@ namespace OnlyVolunteers.Network
         public PlayerAppearance Appearance { get; private set; } = AppearanceRules.Default();
         public event Action<NetworkPlayer> AppearanceChanged;
 
+        /// <summary>PLAYER HANDS v01: the last arm state this player's owner sent (other clients only; Idle until the first
+        /// packet). PlayerArmsV01 draws it on the remote sausage.</summary>
+        public ArmsStateV01 RemoteArms { get; private set; } = ArmsStateV01.Idle;
+        /// <summary>Unscaled time the last arm packet arrived (-1 = none yet).</summary>
+        public float RemoteArmsTime { get; private set; } = -1f;
+        /// <summary>The last view pitch received from the owner (other clients), degrees, + = looking down.</summary>
+        public float RemotePitch { get; private set; }
+        public event Action<NetworkPlayer> ArmsReceived;
+        /// <summary>PLAYER HANDS v02 (Fedya 30.10): a friend's accepted Q swing, presentation only (PlayerArmsV01 plays the
+        /// swing on his body and bursts the stars of a landed hit once per cue sequence).</summary>
+        public event Action<NetworkPlayer, PunchCueV01> PunchReceived;
+        private float lastPunchRelay = -999f;
+        /// <summary>The placeholder body of the network prefab (null on the map pawn).</summary>
+        public Transform RemoteVisualRoot => visualRoot;
+        private ArmsStateV01 lastArmsKey = ArmsStateV01.Idle;
+
         public bool LocalControlEnabled => input != null && input.enabled;
         // The phone occupies the hands: no grabbing while it is out.
         public bool HandsBusy => phone != null && phone.IsOpen;
@@ -73,6 +90,8 @@ namespace OnlyVolunteers.Network
             visualHead = visualRoot != null ? visualRoot.Find("Head") : null;
             appearanceWire.OnChange += OnAppearanceWire;
             if (!externalControl) SetLocalControl(false);
+            // PLAYER HANDS v01: the visible sausage body and arms (presentation only, see Player/Hands).
+            if (GetComponent<PlayerArmsV01>() == null) gameObject.AddComponent<PlayerArmsV01>();
         }
 
         private void OnDestroy() => appearanceWire.OnChange -= OnAppearanceWire;
@@ -209,11 +228,88 @@ namespace OnlyVolunteers.Network
         [ObserversRpc(ExcludeOwner = true)]
         private void ObserversViewOrientation(float pitch, float yaw, Channel channel = Channel.Unreliable)
         {
+            RemotePitch = pitch;
             if (visualRoot != null)
                 visualRoot.rotation = Quaternion.Euler(0f, yaw, 0f);
             if (visualHead != null)
                 visualHead.localRotation = Quaternion.Euler(pitch, 0f, 0f);
         }
+
+        // ---------- PLAYER HANDS v01: arm state sync contract ----------
+        // Owner → server → every other client, visual only (nothing in gameplay reads it). A change of hands, pose or
+        // two-handedness and a keyframe about once a second go reliably and buffered (a late joiner gets the last one);
+        // the stream in between is unreliable. A stream packet whose shape differs from the last reliable one is stale
+        // (it was overtaken by the reliable change) and dropped.
+
+        /// <summary>Owner only: this player's arm state (PlayerArmsV01 throttles the calls).</summary>
+        public void SubmitArms(in ArmsStateV01 state, bool reliable)
+        {
+            if (!IsSpawned || !IsOwner) return;
+            ArmsWireV01.Pack(state, out ulong a, out ulong b);
+            if (reliable) ServerArmsKey(a, b);
+            else ServerArmsStream(a, b, Channel.Unreliable);
+        }
+
+        [ServerRpc]
+        private void ServerArmsKey(ulong a, ulong b)
+        {
+            if (Owner == null || !Owner.IsActive) return;
+            ArmsWireV01.Sanitize(ref a, ref b);
+            ObserversArmsKey(a, b);
+        }
+
+        [ServerRpc]
+        private void ServerArmsStream(ulong a, ulong b, Channel channel = Channel.Unreliable)
+        {
+            if (Owner == null || !Owner.IsActive) return;
+            ArmsWireV01.Sanitize(ref a, ref b);
+            ObserversArmsStream(a, b, Channel.Unreliable);
+        }
+
+        [ObserversRpc(ExcludeOwner = true, BufferLast = true)]
+        private void ObserversArmsKey(ulong a, ulong b) => ReceiveArms(a, b, true);
+
+        [ObserversRpc(ExcludeOwner = true)]
+        private void ObserversArmsStream(ulong a, ulong b, Channel channel = Channel.Unreliable) => ReceiveArms(a, b, false);
+
+        private void ReceiveArms(ulong a, ulong b, bool key)
+        {
+            var state = ArmsWireV01.Unpack(a, b);
+            if (key) lastArmsKey = state;
+            else if (!state.SameShape(lastArmsKey)) return;
+            RemoteArms = state;
+            RemoteArmsTime = Time.unscaledTime;
+            ArmsReceived?.Invoke(this);
+        }
+
+        // ---------- PLAYER HANDS v02: punch cue (Fedya 30.10) ----------
+        // Owner -> server -> every other client, reliable, not buffered (a late joiner never replays an old swing). Visual
+        // only: the hit itself, its stun and every consequence belong to the existing interactor / NPC code on the
+        // authority; this only tells friends "he swung (and it landed there)". The server re-clamps the data and drops
+        // cues closer together than half the shortest swing interval (a spamming client cannot flood friends with stars).
+
+        /// <summary>Owner only: one accepted swing (PlayerArmsV01.LocalPunch).</summary>
+        public void SubmitPunch(in PunchCueV01 cue)
+        {
+            if (!IsSpawned || !IsOwner) return;
+            ServerPunch(cue.Sequence, cue.Side, cue.Landed, cue.Strength, cue.Offset);
+        }
+
+        [ServerRpc]
+        private void ServerPunch(ushort sequence, byte side, bool landed, float strength, Vector3 offset)
+        {
+            if (Owner == null || !Owner.IsActive) return;
+            float now = Time.unscaledTime;
+            if (now - lastPunchRelay < 0.3f) return;
+            lastPunchRelay = now;
+            if (float.IsNaN(strength)) strength = 0f;
+            if (float.IsNaN(offset.x) || float.IsNaN(offset.y) || float.IsNaN(offset.z)) offset = Vector3.zero;
+            ObserversPunch(sequence, (byte)(side & 1), landed, Mathf.Clamp01(strength), Vector3.ClampMagnitude(offset, ArmsWireV01.Range));
+        }
+
+        [ObserversRpc(ExcludeOwner = true)]
+        private void ObserversPunch(ushort sequence, byte side, bool landed, float strength, Vector3 offset) =>
+            PunchReceived?.Invoke(this, new PunchCueV01 { Sequence = sequence, Side = side, Landed = landed, Strength = strength, Offset = offset });
 
         private void ApplyDebugColor()
         {

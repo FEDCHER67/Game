@@ -22,6 +22,9 @@ namespace OnlyVolunteers.Capture
         /// <summary>The instanced syringe models (for tests: the needle must point away from the camera).</summary>
         public GameObject Model(FieldTool tool) => models[(int)tool];
         public const float PlungerZ0V02 = 0.0797f, PlungerTravelV02 = 0.04839f;
+        /// <summary>Where the kit sits in the camera (the right hand holds it there). Fedya 30.10: the hands' viewmodel moved
+        /// 25% farther and 25% lower, so the item moved with the hand (was 0.24, -0.21, 0.46).</summary>
+        public static readonly Vector3 Rest = new Vector3(0.24f, -0.2625f, 0.575f);
         private float push;
 
         public CaptureViewModel(Camera camera, GameObject anesthesiaModel, GameObject bloodModel)
@@ -29,7 +32,7 @@ namespace OnlyVolunteers.Capture
             if (camera == null) return;
             root = new GameObject("[Capture] Field kit view model").transform;
             root.SetParent(camera.transform, false);
-            root.localPosition = new Vector3(0.24f, -0.21f, 0.46f);
+            root.localPosition = Rest;
             root.localRotation = Quaternion.Euler(8f, -14f, 0f);
             models[(int)FieldTool.Ties] = ZipTie(root);
             models[(int)FieldTool.Anesthesia] = Syringe(root, anesthesiaModel, "Anesthesia", (int)FieldTool.Anesthesia);
@@ -152,7 +155,7 @@ namespace OnlyVolunteers.Capture
             if (root == null) return;
             push = Mathf.MoveTowards(push, used ? 1f : 0f, Time.deltaTime * 6f);
             float bob = used ? Mathf.Sin(Time.time * 18f) * 0.004f : 0f;
-            root.localPosition = new Vector3(0.24f - push * 0.06f, -0.21f + push * 0.04f + bob, 0.46f + push * 0.12f);
+            root.localPosition = Rest + new Vector3(-push * 0.06f, push * 0.04f + bob, push * 0.12f);
             int i = (int)tool;
             if (i <= 0 || i >= models.Length) return;
             shown[i] = Mathf.MoveTowards(shown[i], Mathf.Clamp01(fill), Time.deltaTime * 3f);

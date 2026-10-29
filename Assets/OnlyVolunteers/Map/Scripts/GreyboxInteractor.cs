@@ -8,7 +8,11 @@ namespace OnlyVolunteers.Map
 {
     // On-foot keys for the grey-box pawn (on pawn.Body, next to InventoryInput, which leaves E to this script).
     // NPC capture stage 1: no carry or load key any more; downed NPCs are physical bodies.
-    // Q hits with the current weapon (WeaponStun, the fist for now). The first-person KCC player hits what the camera ray
+    // Q swings the current weapon (WeaponStun, the fist for now) through one swing gate per player (30.10: the fist's 1.0 s
+    // between accepted swing starts, a miss included, presses while it cools down dropped; FistSwingGateV01); a landed
+    // swing is one authorised contact on the NPC (GreyboxNpc.FistHit: its shared repeat sequence, 100/70/45/25/10/0 % of the
+    // normal stun), and the arms play the swing and the cartoon stars from that one result (PlayerArmsV01.LocalPunch).
+    // The first-person KCC player hits what the camera ray
     // finds within the weapon's reach (OvLayers.ShootMask skips our own capsule), and the height of that point on the NPC
     // picks the zone (head / torso / limbs), which sets how long it stays down. The third-person walker has no crosshair:
     // it hits the nearest NPC in a cone in front, as a torso hit. The player only ever sees the weapon's strength as dots.
@@ -45,7 +49,7 @@ namespace OnlyVolunteers.Map
 
         private static readonly RaycastHit[] SweepHits = new RaycastHit[16];
 
-        private float _nextHit;
+        private readonly OnlyVolunteers.Capture.FistSwingGateV01 _swingGate = new();
         private Act _act;
         private Act _afterItem; // what E does instead when the item pickup fails (inventory full, cursor free)
         private IGreyboxUse _use; // Act.Use: the GreyboxUses entry that offered it (the Field Clinic table)
@@ -76,14 +80,16 @@ namespace OnlyVolunteers.Map
 
             WeaponStun weapon = CurrentWeapon;
             _canHit = FindHit(weapon, out GreyboxNpc target, out HitZone zone, out Vector3 point);
-            if (Input.GetKeyDown(KeyCode.Q) && Time.time >= _nextHit)
+            if (Input.GetKeyDown(KeyCode.Q) && _swingGate.TryAccept(_swingGate.NextRequestId(), Time.time, weapon.Cooldown))
             {
-                _nextHit = Time.time + weapon.Cooldown;
+                float strength = 0f;
                 if (_canHit)
                 {
-                    target.Hit(weapon, zone, Pawn.Position, point);
+                    OnlyVolunteers.Capture.FistContactV01 contact = target.FistHit(weapon, zone, Pawn.Position, point);
+                    strength = contact.Multiplier;
                     Sfx.PlayAt(HitSound(zone), point);
                 }
+                OnlyVolunteers.Player.Hands.PlayerArmsV01.LocalPunch(_canHit, _canHit ? point : MissPoint(weapon), strength);
             }
 
             _grabHint = GrabHint();
@@ -204,6 +210,14 @@ namespace OnlyVolunteers.Map
                 best = hit.distance;
             }
             return npc != null;
+        }
+
+        // Where a swing that hits nothing ends (the arms' target): along the view at the weapon's reach, else ahead of the walker.
+        private Vector3 MissPoint(WeaponStun weapon)
+        {
+            Camera view = Pawn.ViewCamera;
+            if (view != null) return view.transform.position + view.transform.forward * weapon.Reach;
+            return Pawn.Position + Vector3.up * 1.2f + Flat(Pawn.Body.forward).normalized * weapon.Reach;
         }
 
         private static string HitSound(HitZone zone) => zone switch

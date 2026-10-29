@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411b1d6397d5aca4aa7f944d55e1c323, type: 3}
+  m_Name: PlayerArmsTuningV01
+  m_EditorClassIdentifier: OnlyVolunteers.Player.Hands::OnlyVolunteers.Player.Hands.PlayerArmsTuningV01
+  BodyPrefab: {fileID: 193904360529789998, guid: 21c500b22dcccb74cb5799772ee02a06, type: 3}
+  BodyScale: 1
+  IdleState: Idle
+  WalkState: Walk
+  RunState: Run
+  WalkClipSpeed: 1.5
+  RunClipSpeed: 3.2
+  RunAbove: 5.2
+  HeadPitchShare: 0.45
+  FpScale: 1.15
+  FpShoulders: {x: 0, y: -0.35, z: 0.11}
+  FpPark: {x: 0.27, y: -0.86, z: 0.12}
+  FpHideAfter: 0.45
+  FpPole: {x: 0.55, y: -0.9, z: -0.25}
+  SwayGain: 0.012
+  SwayMax: 4.5
+  SwayRoll: 0.006
+  SwayHz: 7
+  SwayDamping: 0.55
+  BobAmplitude: {x: 0.011, y: 0.016}
+  BobCyclesPerMeter: 0.36
+  BobReferenceSpeed: 4.7
+  BreathAmplitude: 0.004
+  BreathHz: 0.32
+  WallProbe: 0.55
+  FpPunchCock: {x: 0.27, y: -0.29, z: 0.42}
+  FpPunchStrike: {x: 0.09, y: -0.14, z: 0.6}
+  TpPunchReach: 0.8
+  StarCount: 8
+  StarSize: 0.12
+  StarLife: 0.6
+  Matte: 1
+  TpPole: {x: 0.5, y: -0.9, z: -0.2}
+  MaxStretch: 3.53
+  SagPerHeft: 0.17
+  Comfort: 0.95
+  KeepGripBeyondCap: 0
+  MinThickness: 0.6
+  Springs:
+    TrackHz: 9
+    TrackDamping: 0.62
+    ReleaseHz: 5.2
+    ReleaseDamping: 0.3
+    ReleaseTime: 0.8
+    StretchHz: 6.5
+    StretchDamping: 0.4
+    MinStretch: 0.87
+    BlendTime: 0.16
+  SendRate: 20
+  KeyframeInterval: 1

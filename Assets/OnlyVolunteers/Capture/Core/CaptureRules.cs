@@ -114,6 +114,10 @@ namespace OnlyVolunteers.Capture
         public bool faceUp = true;
         /// <summary>Round 4: re-created on his feet (he ran off the table): 'pelvis' is the floor point, 'headDirection' his facing.</summary>
         public bool standing;
+        /// <summary>Fist repeat resistance (Fedya 30.10, FistResistanceRulesV01): contacts in the NPC's current sequence and
+        /// the active seconds still needed for its quiet time. Older saves have neither: 0 = a fresh sequence.</summary>
+        public int fistContacts;
+        public float fistRecoverLeft;
     }
 
     [Serializable]

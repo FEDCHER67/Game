@@ -34,12 +34,19 @@ namespace OnlyVolunteers.Network
         private bool smokeHolding;
         private Vector3 smokeTarget;
         private float nextSend;
+        // PLAYER HANDS v01 (presentation only): the grab's hit point in the held object's space, for the hands.
+        private Vector3 pendingGrabLocal;
+        private Vector3 clientGrabLocal;
 
         public Collider PlayerCollider => player != null ? player.PlayerCollider : null;
         public Vector3 MotorPosition => player != null ? player.MotorPosition : Vector3.positiveInfinity;
         public bool IsValidHolder => IsServerStarted && Owner != null && Owner.IsActive;
         /// <summary>Local hand interaction is temporarily owned by an operation tool/view.</summary>
         public bool InputSuppressed { get; set; }
+        /// <summary>PLAYER HANDS v01 (read-only, owner side): the object this player's hand holds now (null = none).</summary>
+        public NetworkObject ClientHeld => clientHeld;
+        /// <summary>PLAYER HANDS v01 (read-only, owner side): where on it the hand grabbed, world space this frame.</summary>
+        public Vector3 ClientHeldPoint => clientHeld != null ? clientHeld.transform.TransformPoint(clientGrabLocal) : Vector3.zero;
 
         // Legacy Input OR the Input System mouse the operation table reads (the same physical button in play; the
         // dev scenario driver's virtual mouse in automated runs). Grab tuning is unchanged.
@@ -168,6 +175,7 @@ namespace OnlyVolunteers.Network
                             new Vector2(hit.point.x, hit.point.z))
                         : hit.distance;
                     pendingHoldHeight = hit.point.y;
+                    pendingGrabLocal = networkBody.NetworkObject.transform.InverseTransformPoint(hit.point);
                     pending = true;
                     Debug.Log($"[OV Grab] request sent owner={OwnerId}, body={networkBody.name}");
                     ServerTryGrab(pendingId, networkBody.NetworkObject, ray.origin, ray.direction);
@@ -267,6 +275,7 @@ namespace OnlyVolunteers.Network
                 clientHoldDistance = pendingHoldDistance;
                 clientHoldHeight = pendingHoldHeight;
                 clientGroundPlaneFollow = pendingGroundPlaneFollow;
+                clientGrabLocal = pendingGrabLocal;
                 targetSequence = 0;
                 nextSend = 0f;
             }

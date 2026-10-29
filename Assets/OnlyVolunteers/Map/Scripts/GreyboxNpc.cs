@@ -145,6 +145,12 @@ namespace OnlyVolunteers.Map
         [System.NonSerialized] public bool Stumbling;
         // Kicks while Groggy (both bodies) and holds they tore loose: plain counters for the smoke test and the notes.
         [System.NonSerialized] public int Kicks, Tears;
+        // Fist anti-spam (Fedya 30.10): this NPC's repeat-contact sequence, shared by every attacker (FistHit; the rules
+        // are OnlyVolunteers.Capture.FistResistanceRulesV01). Kept through every body (capsule, ragdoll, seated) since it
+        // lives here; a captured NPC carries it in his save (CaptureNpcSave.fistContacts / fistRecoverLeft).
+        [System.NonSerialized] public OnlyVolunteers.Capture.FistResistanceV01 Fist;
+        // The recovery time of the weapon that last advanced the sequence (the fist's 8 s).
+        [System.NonSerialized] public float FistRecoverySeconds = OnlyVolunteers.Capture.FistResistanceRulesV01.DefaultRecoverySeconds;
 
         public static readonly List<GreyboxNpc> All = new();
         // Raised when a free NPC goes down (before its body switches on) and when it becomes loaded in a cargo bay.
@@ -370,6 +376,8 @@ namespace OnlyVolunteers.Map
 
         private void Update()
         {
+            // Fist resistance: active time passes; a quiet NPC with no stun or get-up left starts its sequence over.
+            if (Fist.contacts > 0) OnlyVolunteers.Capture.FistResistanceRulesV01.Tick(ref Fist, Time.deltaTime, FistBusy, FistRecoverySeconds);
             if (InCargo && Carrier == null) RecoverCarrier();
             if (InCargo != _wasInCargo)
             {
@@ -484,11 +492,61 @@ namespace OnlyVolunteers.Map
 
         // ---------- Going down ----------
 
-        /// <summary>A hit (Q now, other weapons later) from 'from' landing at 'point'. Stuns for the weapon's duration in
-        /// that zone, never shortening what is left, and pushes 60 N·s at the point. Works free, lying or sitting.</summary>
+        /// <summary>A hit (scripts, the anesthesia slump, scenarios; the player's Q goes through FistHit) from 'from'
+        /// landing at 'point'. Stuns for the weapon's duration in that zone, never shortening what is left, and pushes 60 N·s
+        /// at the point. Works free, lying or sitting.</summary>
         public void Hit(WeaponStun weapon, HitZone zone, Vector3 from, Vector3 point)
         {
             if (weapon == null) weapon = WeaponStun.Fist;
+            HitCore(weapon, zone, from, point, weapon.Duration(zone));
+        }
+
+        /// <summary>Stun or get-up still running: the fist sequence cannot recover yet.</summary>
+        public bool FistBusy => (State == NpcState.Down && StunLeft > 0f) || State == NpcState.GettingUp;
+
+        /// <summary>One successful, authorised fist contact (GreyboxInteractor's Q, on the authority, after its swing gate):
+        /// advances this NPC's shared repeat sequence and stuns for the weapon/zone/spread result times the sequence's
+        /// multiplier (100/70/45/25/10/0 % for the fist), with the existing non-additive rule: a weak contact never shortens
+        /// the stun already running. A zero contact adds no stun, does not knock down, restart a get-up or reset the stun
+        /// phase, and costs no Condition; a lying body still takes the push and the NPC its hurt sound.</summary>
+        public OnlyVolunteers.Capture.FistContactV01 FistHit(WeaponStun weapon, HitZone zone, Vector3 from, Vector3 point)
+        {
+            if (weapon == null) weapon = WeaponStun.Fist;
+            FistRecoverySeconds = weapon.RepeatRecoverySeconds;
+            float multiplier = OnlyVolunteers.Capture.FistResistanceRulesV01.Contact(ref Fist, FistBusy, weapon.RepeatRecoverySeconds,
+                weapon.RepeatMultipliers, out int index);
+            float stun = multiplier > 0f ? weapon.Duration(zone) * multiplier : 0f; // the zone/spread roll once, multiplied once
+            var contact = new OnlyVolunteers.Capture.FistContactV01
+            {
+                Index = index, Multiplier = multiplier, Stun = stun, Stunned = OnlyVolunteers.Capture.FistResistanceRulesV01.Stuns(stun),
+            };
+            if (contact.Stunned) HitCore(weapon, zone, from, point, stun);
+            else ZeroContact(weapon, from, point);
+            return contact;
+        }
+
+        // A fist contact worth no stun any more: no knockdown, no stun change, no Condition cost, the get-up and the stun
+        // phase untouched; only what a touch does: a lying body is pushed, the NPC flinches and makes its hurt sound.
+        private void ZeroContact(WeaponStun weapon, Vector3 from, Vector3 point)
+        {
+            if (State == NpcState.Down && Down != null && Down.Active)
+            {
+                Vector3 push = Flat(point - from);
+                if (push.sqrMagnitude < 1e-4f) push = Flat(-transform.forward);
+                if (push.sqrMagnitude < 1e-4f) push = Vector3.forward;
+                Down.Push(push.normalized * HitImpulse, point);
+            }
+            _flashUntil = Time.time + 0.3f;
+            if (Time.time >= _nextHurt)
+            {
+                _nextHurt = Time.time + 0.35f;
+                Sfx.PlayAt(SfxIds.NpcHurt, VoicePoint, Mathf.Lerp(0.8f, 1f, (weapon.Strength - 1) / 4f));
+            }
+        }
+
+        // The hit itself with an already computed stun duration (> 0).
+        private void HitCore(WeaponStun weapon, HitZone zone, Vector3 from, Vector3 point, float duration)
+        {
             bool alreadyOut = State == NpcState.Down && Phase == StunPhase.Out;
             // Re-stunning one that is already caught (lying, sitting, escaping) works but costs Condition (never kills);
             // one getting up is not caught any more.
@@ -497,7 +555,7 @@ namespace OnlyVolunteers.Map
             // A running NPC falls on in its run; a lying or sitting one keeps the velocity it has (e.g. the van's).
             if (Upright) GoDown(_controller.enabled ? _controller.velocity : Vector3.zero, Vector3.zero);
             else GoDown(null, null);
-            ExtendStun(weapon.Duration(zone));
+            ExtendStun(duration);
             Vector3 push = Flat(point - from);
             if (push.sqrMagnitude < 1e-4f) push = Flat(-transform.forward);
             if (push.sqrMagnitude < 1e-4f) push = Vector3.forward;

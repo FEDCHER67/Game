@@ -26,8 +26,10 @@ namespace OnlyVolunteers.Map
 
     // How long a weapon stuns (NPC capture stage 1, canon section 151): a base duration, a multiplier per hit zone and a
     // random spread. The player never sees seconds, only Strength: 1-5 dots from the mean duration over the three zones.
-    // The field defaults are the fist (Q); WeaponStun.Fist is the same fist built in code for scenes without the asset
-    // (Map/Data/Fist.asset, made by MapGreyboxBuilder).
+    // The field defaults are the fist (Q) of before 30.10; WeaponStun.Fist is the fist built in code for scenes without the
+    // asset (Map/Data/Fist.asset, made by MapGreyboxBuilder) and ConfigureAsFist gives it the fist's own anti-spam tuning
+    // (Fedya 30.10, initial values delegated): a 1.0 s swing cooldown and the repeat-contact stun table, which the field
+    // defaults leave off so a future weapon does not inherit them by accident.
     [CreateAssetMenu(menuName = "VOLUNTEERS ONLY/Weapon Stun")]
     public sealed class WeaponStun : ScriptableObject
     {
@@ -43,6 +45,15 @@ namespace OnlyVolunteers.Map
         [Tooltip("Metres from the eye (first person) or the body (third person).")]
         public float Reach = 2f;
 
+        [Header("Repeat contacts (fist anti-spam, Fedya 30.10)")]
+        [Tooltip("Share of the normal stun of the 1st, 2nd, ... successful contact on the same NPC in one sequence (every " +
+                 "attacker counts on the same NPC); the last value repeats. Empty = every contact stuns fully. The fist: " +
+                 "1, 0.7, 0.45, 0.25, 0.1, 0.")]
+        public float[] RepeatMultipliers = new float[0];
+        [Tooltip("The NPC's sequence starts over after this many active seconds without a contact, once it has no stun and " +
+                 "no get-up left.")]
+        public float RepeatRecoverySeconds = OnlyVolunteers.Capture.FistResistanceRulesV01.DefaultRecoverySeconds;
+
         private static WeaponStun _fist;
 
         /// <summary>The fist with the default numbers, made once in code (not an asset, never saved).</summary>
@@ -54,8 +65,19 @@ namespace OnlyVolunteers.Map
                 _fist = CreateInstance<WeaponStun>();
                 _fist.name = "Fist (code)";
                 _fist.hideFlags = HideFlags.DontSave;
+                ConfigureAsFist(_fist);
                 return _fist;
             }
+        }
+
+        /// <summary>The fist's own tuning on top of the field defaults (the code fallback and a freshly made Fist.asset):
+        /// 1.0 s between accepted swings, the repeat-contact table 100/70/45/25/10/0 % and 8 s recovery.</summary>
+        public static void ConfigureAsFist(WeaponStun w)
+        {
+            if (w == null) return;
+            w.Cooldown = 1f;
+            w.RepeatMultipliers = (float[])OnlyVolunteers.Capture.FistResistanceRulesV01.DefaultMultipliers.Clone();
+            w.RepeatRecoverySeconds = OnlyVolunteers.Capture.FistResistanceRulesV01.DefaultRecoverySeconds;
         }
 
         public float Multiplier(HitZone zone) => zone switch
