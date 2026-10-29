@@ -76,9 +76,9 @@ namespace OnlyVolunteers.Player.Hands
         [Tooltip("Share of the arm's reach it keeps as a slight bend before it starts to stretch (v01 0.92 = 8.7% slack in " +
                  "every stretched arm; 0.95 = 5.3%, part of the droop / 1.7).")]
         [Range(0.85f, 0.99f)] public float Comfort = 0.95f;
-        [Tooltip("Off (Fedya 30.10 default): beyond the cap the hands stop short of a far grip (NPC point holds farther than " +
-                 "~1.5 m from the shoulder). On: a holding arm may grow past the cap just enough to touch its grip, straight, " +
-                 "without extra sag (presentation only; for Fedya's A/B if contact matters more than the shorter arms).")]
+        [Tooltip("On in the asset (Fedya 30.10: «руки дотягивают»): a holding arm may grow past the cap just enough to touch " +
+                 "its grip, straight, without extra sag (presentation only). Off: beyond the cap the hands stop short of a far " +
+                 "grip (NPC point holds farther than ~1.5 m from the shoulder).")]
         public bool KeepGripBeyondCap;
         [Tooltip("Thinnest cross-section of a fully stretched arm.")]
         [Range(0.1f, 1f)] public float MinThickness = 0.6f;
