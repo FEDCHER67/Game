@@ -19,7 +19,7 @@ namespace OnlyVolunteers.Capture
                 Color c = new Color(0.07f, 0.07f, 0.08f);
                 plastic.color = c;
                 if (plastic.HasProperty("_BaseColor")) plastic.SetColor("_BaseColor", c);
-                if (plastic.HasProperty("_Smoothness")) plastic.SetFloat("_Smoothness", 0.55f);
+                if (plastic.HasProperty("_Smoothness")) plastic.SetFloat("_Smoothness", 0.55f * OnlyVolunteers.Art.OvGlossV01.Factor); // Fedya 30.10: ~67 % less gloss
                 return plastic;
             }
         }

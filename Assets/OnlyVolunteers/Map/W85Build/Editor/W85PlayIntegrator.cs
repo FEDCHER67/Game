@@ -858,6 +858,8 @@ namespace OnlyVolunteers.Map.W85
                 bool painted = key == "red_steel" || key == "yellow_rail" || key.StartsWith("rollerdoor");
                 smooth = key == "glass" ? smooth : key == "oil" ? Mathf.Min(smooth, .5f) : Mathf.Min(smooth, .3f);
                 metal = painted || key == "corrugated_grey" ? Mathf.Min(metal, .1f) : Mathf.Min(metal, .35f);   // the cladding in shade otherwise mirrors the brown ground
+                // Fedya 30.10: all models ~67 % less shiny; the capped JSON value is the baseline, applied once (OvGlossV01)
+                smooth *= key == "glass" ? OnlyVolunteers.Art.OvGlossV01.GlassFactor : OnlyVolunteers.Art.OvGlossV01.Factor;
                 mat.SetFloat("_Smoothness", smooth);
                 mat.SetFloat("_Metallic", metal);
                 mat.SetFloat("_SmoothnessTextureChannel", 0f);

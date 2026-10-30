@@ -452,7 +452,7 @@ namespace OnlyVolunteers.Vehicles
             if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", c);
             if (m.HasProperty("_Color")) m.SetColor("_Color", c);
             if (m.HasProperty("_Metallic")) m.SetFloat("_Metallic", metallic);
-            if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", smoothness);
+            if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", smoothness * OnlyVolunteers.Art.OvGlossV01.Factor); // Fedya 30.10: ~67 % less gloss (absolute, once)
             if (m.HasProperty("_BaseMap")) m.SetTexture("_BaseMap", null);
         }
 

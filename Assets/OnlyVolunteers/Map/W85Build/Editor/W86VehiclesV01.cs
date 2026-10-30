@@ -63,7 +63,10 @@ namespace OnlyVolunteers.Map.W85
             mat.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dir + "W86_VehiclePalette_v01.png")); mat.SetColor("_BaseColor", Color.white);
             mat.SetTexture("_MetallicGlossMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dir + "W86_VehicleSurface_v02.png"));
             mat.EnableKeyword("_METALLICSPECGLOSSMAP"); mat.SetFloat("_SmoothnessTextureChannel", 0f);
-            mat.SetFloat("_Smoothness", .9f); // gloss scale over the map's A channel; surface v02 already carries matte paint (.30-.35, metallic .05), glass stays .85
+            // gloss scale over the map's A channel (URP Lit: smoothness = A x _Smoothness); surface v02 carries matte paint (.30-.35,
+            // metallic .05), chrome .5, glass .85. Fedya 30.10 (all models ~67 % less shiny): the scale, not the map, takes the
+            // reduction, once: .9 x OvGlossV01.Factor = .297 (the map stays v02, so nothing is reduced twice).
+            mat.SetFloat("_Smoothness", .9f * OnlyVolunteers.Art.OvGlossV01.Factor);
             mat.enableInstancing = true;
             EditorUtility.SetDirty(mat);
             return mat;

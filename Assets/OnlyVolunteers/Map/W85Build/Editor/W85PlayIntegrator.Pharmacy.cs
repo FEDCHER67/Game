@@ -271,6 +271,8 @@ namespace OnlyVolunteers.Map.W85
                 float smooth = WsNum(m.TryGetValue("smoothness", out var sv) ? sv : null, .2f), metal = WsNum(m.TryGetValue("metallic", out var mv) ? mv : null);
                 smooth = key == "glass" ? smooth : key == "ceramic" ? Mathf.Min(smooth, .55f) : key == "metal" || key == "laminate" ? Mathf.Min(smooth, .4f) : Mathf.Min(smooth, .32f);
                 metal = Mathf.Min(metal, key == "metal" ? .4f : .12f);   // indoor steel must not mirror the sky cube
+                // Fedya 30.10: all models ~67 % less shiny; the capped JSON value is the baseline, applied once (OvGlossV01)
+                smooth *= key == "glass" ? OnlyVolunteers.Art.OvGlossV01.GlassFactor : OnlyVolunteers.Art.OvGlossV01.Factor;
                 mat.SetFloat("_Smoothness", smooth);
                 mat.SetFloat("_Metallic", metal);
                 mat.SetFloat("_SmoothnessTextureChannel", 0f);

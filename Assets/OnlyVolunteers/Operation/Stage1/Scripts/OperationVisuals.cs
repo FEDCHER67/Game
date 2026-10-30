@@ -21,7 +21,7 @@ namespace OnlyVolunteers.Operation.Stage1
             if (LitTemplate != null) m = new Material(LitTemplate);
             else { lit ??= Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard"); m = new Material(lit); }
             m.name = "Ops_" + key; m.hideFlags = HideFlags.DontSave;
-            m.SetColor(BaseColor, color); m.color = color; m.SetFloat("_Smoothness", smoothness);
+            m.SetColor(BaseColor, color); m.color = color; m.SetFloat("_Smoothness", smoothness * OnlyVolunteers.Art.OvGlossV01.Factor); // Fedya 30.10: ~67 % less gloss, once per cached material
             Cache["L" + key] = m; return m;
         }
         /// <summary>Unlit, optionally transparent (guides, glows, hover discs).</summary>

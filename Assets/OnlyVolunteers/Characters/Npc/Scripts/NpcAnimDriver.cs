@@ -297,6 +297,8 @@ namespace OnlyVolunteers.Characters.Npc
                     GameObject probe = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                     _propMesh = probe.GetComponent<MeshFilter>().sharedMesh;
                     _propMaterial = new Material(probe.GetComponent<MeshRenderer>().sharedMaterial) { color = new Color(0.95f, 0.93f, 0.88f) };
+                    // Fedya 30.10: ~67 % less gloss (OvGlossV01); a fresh copy of the default material, so it is reduced once
+                    if (_propMaterial.HasProperty("_Smoothness")) _propMaterial.SetFloat("_Smoothness", OnlyVolunteers.Art.OvGlossV01.Scale(_propMaterial.GetFloat("_Smoothness")));
                     Destroy(probe);
                 }
                 _prop = new GameObject("ActivityProp_" + prop.Activity);

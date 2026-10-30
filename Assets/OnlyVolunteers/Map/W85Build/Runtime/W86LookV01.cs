@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using OnlyVolunteers.Art;
 
 namespace OnlyVolunteers.Map.W85
 {
@@ -52,7 +53,8 @@ namespace OnlyVolunteers.Map.W85
 
         [Header("Materials (first matching rule wins; the code table, not serialized)")]
         [NonSerialized] public Rule[] Rules = DefaultRules();
-        [Tooltip("Extra smoothness on masonry/render inside District_downtown (Fedya 25.10: Downtown still too matte).")]
+        [Tooltip("SUPERSEDED (Fedya 30.10: every model ~67 % less shiny, OvGlossV01): no longer applied. Was extra smoothness " +
+                 "on masonry/render inside District_downtown (Fedya 25.10: Downtown still too matte). Kept so the scene's value loads.")]
         public float DowntownBoost = .14f;
 
         [Header("LOD (Fedya 25.10: visible switches, far shimmer of thin trims, CPU cost)")]
@@ -73,24 +75,27 @@ namespace OnlyVolunteers.Map.W85
         [Tooltip("Sun intensity at which the balance starts / is full (Rough runs ~0.2, Downtown ~1.1).")]
         public Vector2 ClearSunRange = new Vector2(.45f, .85f);
 
+        // Smoothness = the 25.10 tuned value x OvGlossV01.Factor (Fedya 30.10: all models ~67 % less shiny); metallic unchanged.
+        // Absolute values on fresh copies of the source materials: applying the rules again never compounds.
+        const float G = OvGlossV01.Factor, GG = OvGlossV01.GlassFactor;
         public static Rule[] DefaultRules() => new[]
         {
             // vehicles first (renderer rules): painted bodies with a controlled sheen
-            new Rule { Material = "SK_Palette|T1_SK_Palette", Renderer = "car_|-car|sedan|taxi|pickup", Smoothness = .62f, Metallic = .25f },
-            new Rule { Material = "MW86_Machines|MW86_Military", Renderer = "", Smoothness = .45f, Metallic = .2f },
-            // glass: clear reflections everywhere (also Rough)
-            new Rule { Material = "glass", Smoothness = .95f, Metallic = 0f, InRough = true },
+            new Rule { Material = "SK_Palette|T1_SK_Palette", Renderer = "car_|-car|sedan|taxi|pickup", Smoothness = .62f * G, Metallic = .25f },
+            new Rule { Material = "MW86_Machines|MW86_Military", Renderer = "", Smoothness = .45f * G, Metallic = .2f },
+            // glass: reflections everywhere (also Rough)
+            new Rule { Material = "glass", Smoothness = .95f * GG, Metallic = 0f, InRough = true },
             // metals
-            new Rule { Material = "Metal_Galv|flat_metal|chrome", Smoothness = .55f, Metallic = .7f },
-            new Rule { Material = "Metal_Dark", Smoothness = .42f, Metallic = .55f },
-            new Rule { Material = "Metal_Paint|Window_Frame|trapez", Smoothness = .45f, Metallic = .15f },
-            new Rule { Material = "flat_gloss", Smoothness = .7f, Metallic = 0f },
+            new Rule { Material = "Metal_Galv|flat_metal|chrome", Smoothness = .55f * G, Metallic = .7f },
+            new Rule { Material = "Metal_Dark", Smoothness = .42f * G, Metallic = .55f },
+            new Rule { Material = "Metal_Paint|Window_Frame|trapez", Smoothness = .45f * G, Metallic = .15f },
+            new Rule { Material = "flat_gloss", Smoothness = .7f * G, Metallic = 0f },
             // masonry and render: restrained variation per building
-            new Rule { Material = "Stone", Smoothness = .24f, Metallic = 0f, Vary = .06f },
-            new Rule { Material = "plaster|stucco|TT_flat|TT_trim", Smoothness = .2f, Metallic = 0f, Vary = .05f },
-            new Rule { Material = "brick", Smoothness = .16f, Metallic = 0f, Vary = .04f },
-            new Rule { Material = "Concrete", Smoothness = .18f, Metallic = 0f, Vary = .03f },
-            new Rule { Material = "white_plastic|T2P_white|T2P_c_", Smoothness = .5f, Metallic = 0f },
+            new Rule { Material = "Stone", Smoothness = .24f * G, Metallic = 0f, Vary = .06f * G },
+            new Rule { Material = "plaster|stucco|TT_flat|TT_trim", Smoothness = .2f * G, Metallic = 0f, Vary = .05f * G },
+            new Rule { Material = "brick", Smoothness = .16f * G, Metallic = 0f, Vary = .04f * G },
+            new Rule { Material = "Concrete", Smoothness = .18f * G, Metallic = 0f, Vary = .03f * G },
+            new Rule { Material = "white_plastic|T2P_white|T2P_c_", Smoothness = .5f * G, Metallic = 0f },
         };
 
         readonly Dictionary<(Material, int, int), Material> copies = new();
@@ -279,7 +284,7 @@ namespace OnlyVolunteers.Map.W85
                 if (mf && mf.sharedMesh && r.sharedMaterials.Length > mf.sharedMesh.subMeshCount) continue;
                 string district = District(r.transform);
                 bool inRough = district == "district_rough";
-                float boost = district == "district_downtown" ? DowntownBoost : 0f;
+                const float boost = 0f; // the Downtown sheen boost is superseded (OvGlossV01, Fedya 30.10)
                 string rn = (r.name + " " + (r.transform.parent ? r.transform.parent.name : "")).ToLowerInvariant();
                 var mats = r.sharedMaterials; bool changed = false;
                 for (int k = 0; k < mats.Length; k++)
