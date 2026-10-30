@@ -25,6 +25,10 @@ No model or map build before steps 1–3: it wastes Claude tokens and gets redon
 
 Nothing on screen may shimmer, crawl or blink while you walk, drive or turn the camera: no grainy "old TV" noise (SSAO noise, dithering), no jagged shadow edges that crawl or tremble (shadow acne, cascade swimming, a moving vehicle's own shadows on its interior), no flickering floor or z-fighting (the old builds' floor blinked). Before showing any build, walk and drive in it, look at the van interior, the dashboard and the floor in motion, and fix any shimmer first. Prefer removing the effect (shadow receiving off on interiors, SSAO off) to tuning it.
 
+## Details are 3D, not painted (Vadim, 2026-10-30)
+
+Handles, latches, rims, planks, boards, ribs, slats, frames, vents and plate thickness are modelled as geometry (chunky low-poly bevels). Textures only add colour, wear and fine variation; they never fake a shape on a flat box or plane. Check every new prop and surface up close before showing it.
+
 ## Map rebuild quality (Vadim, 2026-10-25)
 
 Every time the map is changed or rebuilt, check it before the build and before showing it:
