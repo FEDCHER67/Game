@@ -18,6 +18,7 @@ namespace OnlyVolunteers.EditorTools
             if (only == "Map_W86") Build("Map_W86", "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_v02.unity");
             if (only == "VanLab") Build("VanLab", VadimVanLab.Dst); // van + NPC test floor (VadimVanLab.Run builds the scene)
             if (only == "VanOnly") Build("VanOnly", VadimVanLab.VanOnlyDst); // only the van on the floor (VadimVanLab.RunVanOnly)
+            if (only == "Hangar") Build("Hangar", VadimHangarLab.Dst); // the base hangar greybox (VadimHangarLab.Run)
             if (only == null || only == "Map_v19") Build("Map_v19", "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity");
         }
 

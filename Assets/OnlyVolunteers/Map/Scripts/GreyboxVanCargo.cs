@@ -233,11 +233,14 @@ namespace OnlyVolunteers.Map
 
         // Nearest cargo door whose outside point is within reach of 'position' (flat distance), or -1. Only from that
         // door's side: the rear reach overlaps the driver-door area along the back of the left side.
+        // Not from the roof (as GreyboxVanSeat.NearDoor): the back of the roof is within reach of the rear doors' outside
+        // point, so E up there offered to open them. The feet must be near the ground the wheels stand on (van-local).
         public int NearestDoor(Vector3 position)
         {
             int best = -1;
             float bestDistance = DoorReach;
             Vector3 local = transform.InverseTransformPoint(position);
+            if (local.y - WheelGroundY() > DoorMaxFeetHeight) return -1;
             for (int door = 0; door < DoorOutside.Length; door++)
             {
                 if (door == SlideDoor ? Slide == null : RearLeft == null && RearRight == null) continue;
@@ -251,6 +254,25 @@ namespace OnlyVolunteers.Map
                 }
             }
             return best;
+        }
+
+        private const float DoorMaxFeetHeight = 1.0f;
+        private float? _wheelGroundY;
+
+        // Van-local height of the ground under the wheels at rest (as GreyboxVanSeat.WheelGroundY): the wheel collider's
+        // centre, minus the suspension sag at its target position, minus the radius; the lowest wheel. No wheels: the root.
+        private float WheelGroundY()
+        {
+            if (_wheelGroundY is float cached) return cached;
+            float y = float.PositiveInfinity;
+            foreach (WheelCollider w in GetComponentsInChildren<WheelCollider>(true))
+            {
+                float centre = transform.InverseTransformPoint(w.transform.TransformPoint(w.center)).y;
+                y = Mathf.Min(y, centre - w.suspensionDistance * (1f - w.suspensionSpring.targetPosition) - w.radius);
+            }
+            if (float.IsPositiveInfinity(y)) y = 0f;
+            _wheelGroundY = y;
+            return y;
         }
 
         /// <summary>Whether a pawn standing at 'feet' is in the cargo bay within reach of the sliding door's inside handle.</summary>
