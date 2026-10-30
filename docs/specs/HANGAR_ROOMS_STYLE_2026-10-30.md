@@ -10,7 +10,7 @@ Shared base (every room and the hall):
 | --- | --- | --- |
 | Floor | hangar concrete, texture 01 | the same floor in all rooms (bay may add oil/tyre marks) |
 | Structure, frames, trims | graphite #3A3B3D (texture 04) | door/window frames, shelf posts, counters' edges |
-| Walls outside the rooms | warm wood cladding (texture 07) | room boxes look the same from the hall |
+| Walls outside the rooms | each room its own exterior (Vadim 30.10 night: no shared wood cladding) | workshop keeps its v1 corrugated grey; pharmacy and gear their own |
 | Light neutrals | warm off-white #D9CDB4 | never pure white |
 | Warning | signal yellow #E0A824 + hazard stripe (06) | small doses |
 | Crates, pallets | olive crate (11), light wood (12) | some in every room |
@@ -58,3 +58,4 @@ Vadim, looking at the hangar crates: a box with handles, latches and rims painte
 - Hall walls use the v1 workshop wall texture he likes (WS86_corrugated_grey_v01: T7_metal_trapez albedo + normal), tinted to the hall's cozy-dark grey.
 - Floor markings, lettering and arrows are crisp at eye height and read as clear yellow under the warm light (hue about 45-55°, not orange).
 - Each room is told apart at a glance by its own surfaces and accent colour.
+- Hall walls stay dark (one even dark graphite), and the hall floor is a touch darker than in build d7ffafb7.
