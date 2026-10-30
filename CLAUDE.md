@@ -15,7 +15,7 @@ Project skills: `.claude/skills/fc-*` (four general craft skills; written for th
 
 ## New models, textures and places: order (Vadim, 2026-10-27)
 
-1. References first in ChatGPT, never by Claude itself: prompt folder `C:\Users\chern_0eqkb03\Desktop\GAME\V2_НОВАЯ_ИГРА\ПРОМПТ_ChatGPT\NN_name` + zip on the Desktop; Claude sends it via computer use to the ChatGPT app (chat «Референсы Work Chat»), results land in `Desktop\NN_name_v01`, Claude watches the folder and opens them itself.
+1. References first in ChatGPT, never by Claude itself: prompt folder `C:\Users\chern_0eqkb03\Desktop\GAME\V2_НОВАЯ_ИГРА\ПРОМПТ_ChatGPT\NN_name` + zip in `C:\Users\chern_0eqkb03\Desktop\ChatGPT` (nothing loose on the Desktop); Vadim sends it to the ChatGPT app, results land in `Desktop\ChatGPT\NN_name_v01`, Claude watches the folder and opens them itself.
 2. Vadim picks a reference.
 3. Textures: a labelled texture sheet for Vadim's «да».
 4. Only then the model (Blender script) / the place in Unity, built from the chosen reference and texture.
