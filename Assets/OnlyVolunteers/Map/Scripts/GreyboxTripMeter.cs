@@ -97,12 +97,13 @@ namespace OnlyVolunteers.Map
             float t = Time.time - _tripStart;
             float avg = t > 0.5f ? _tripDistance / t * 3.6f : 0f;
             // Bottom-right, so it does not cover the van's key help in the top-left on narrow game views.
-            float h = 64 + 18 * Mathf.Min(Spots.Length, 8);
+            // No spots (VanOnly: none of the map's places exist there): the trip lines only, no teleport list.
+            float h = Spots.Length > 0 ? 64 + 18 * Mathf.Min(Spots.Length, 8) : 46;
             var r = new Rect(Screen.width - 330, Screen.height - h - 12, 318, h);
             GUI.Box(r, GUIContent.none);
             GUI.Label(new Rect(r.x + 8, r.y + 4, 300, 20), $"Поездка: {t / 60f:0}:{t % 60f:00.0}  {_tripDistance:0} м  ср. {avg:0} км/ч");
             GUI.Label(new Rect(r.x + 8, r.y + 22, 300, 20), $"T — сброс, старт от: {_lastSpot}");
-            GUI.Label(new Rect(r.x + 8, r.y + 40, 300, 20), "Телепорт:");
+            if (Spots.Length > 0) GUI.Label(new Rect(r.x + 8, r.y + 40, 300, 20), "Телепорт:");
             for (int i = 0; i < Spots.Length && i < 8; i++)
                 GUI.Label(new Rect(r.x + 16, r.y + 58 + 18 * i, 300, 20), $"F{i + 1} — {Spots[i].Name}");
         }

@@ -118,8 +118,31 @@ namespace OnlyVolunteers.Map
 
         // Not from inside the cargo bay: most of the bay is within EnterDistance of the driver door, and getting in from
         // there would be a free way out through the cab partition (a shut bay must stay shut).
+        // Nor from the roof or the bonnet: the front of the roof is within EnterDistance of the door too, and E up there
+        // seated the player, E again put them by the driver door (felt like a teleport off the roof). The feet must be near
+        // the ground the wheels stand on (van-local, so it holds on a slope; a kerb or the rear step is fine).
         private bool NearDoor() => Pawn != null && Pawn.Controlled &&
-            Vector3.Distance(Pawn.Position, transform.TransformPoint(DoorPoint)) <= EnterDistance && !InCargoBay(Pawn.Position);
+            Vector3.Distance(Pawn.Position, transform.TransformPoint(DoorPoint)) <= EnterDistance && !InCargoBay(Pawn.Position) &&
+            transform.InverseTransformPoint(Pawn.Position).y - WheelGroundY() <= EnterMaxFeetHeight;
+
+        private const float EnterMaxFeetHeight = 1.0f;
+        private float? _wheelGroundY;
+
+        // Van-local height of the ground under the wheels at rest (Van.prefab v02 and Van_v05 alike): the wheel collider's
+        // centre, minus the suspension sag at its target position, minus the radius; the lowest wheel. No wheels: the root.
+        private float WheelGroundY()
+        {
+            if (_wheelGroundY is float cached) return cached;
+            float y = float.PositiveInfinity;
+            foreach (WheelCollider w in GetComponentsInChildren<WheelCollider>(true))
+            {
+                float centre = transform.InverseTransformPoint(w.transform.TransformPoint(w.center)).y;
+                y = Mathf.Min(y, centre - w.suspensionDistance * (1f - w.suspensionSpring.targetPosition) - w.radius);
+            }
+            if (float.IsPositiveInfinity(y)) y = 0f;
+            _wheelGroundY = y;
+            return y;
+        }
 
         // The pawn's position is at its feet on the floor: test half a metre up (as GreyboxVanCargo.AtInsideHandle).
         private bool InCargoBay(Vector3 feet) =>

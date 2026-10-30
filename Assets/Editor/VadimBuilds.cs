@@ -16,6 +16,8 @@ namespace OnlyVolunteers.EditorTools
             var only = System.Environment.GetEnvironmentVariable("OV_BUILD_ONLY");
             if (only == null || only == "Map_W85") Build("Map_W85", "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_v01.unity");
             if (only == "Map_W86") Build("Map_W86", "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_v02.unity");
+            if (only == "VanLab") Build("VanLab", VadimVanLab.Dst); // van + NPC test floor (VadimVanLab.Run builds the scene)
+            if (only == "VanOnly") Build("VanOnly", VadimVanLab.VanOnlyDst); // only the van on the floor (VadimVanLab.RunVanOnly)
             if (only == null || only == "Map_v19") Build("Map_v19", "Assets/OnlyVolunteers/Scenes/Map/Map_Look_v19_Play_i10_capture_delivery.unity");
         }
 
@@ -36,8 +38,11 @@ namespace OnlyVolunteers.EditorTools
             // render scripts switch the game cameras off; a prefab camera saved off (Player_KCC_Baseline) gives a grey game
             foreach (var cam in Object.FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None))
                 if (!cam.enabled && PrefabUtility.IsPartOfPrefabInstance(cam)) { cam.enabled = true; Debug.Log("[VadimBuilds] camera on: " + cam.name); }
-            var copy = "Assets/VadimLocal/Build_" + name + ".unity";
-            EditorSceneManager.SaveScene(scene, copy, true);
+            // W86 ships Fedya's full game: the main menu loads the map by its real path (WorldLaunchV01.MapScenePath), so the cleaned
+            // scene is saved in place and built after the menu instead of a VadimLocal copy
+            bool full = name == "Map_W86";
+            var copy = full ? scenePath : "Assets/VadimLocal/Build_" + name + ".unity";
+            if (full) EditorSceneManager.SaveScene(scene); else EditorSceneManager.SaveScene(scene, copy, true);
             // other sessions build previews/renders from this project and may leave the fog capture pipeline or a windowed mode behind:
             // the game always ships with PC_RPAsset and borderless fullscreen at native resolution
             var rp = AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.RenderPipelineAsset>("Assets/Settings/PC_RPAsset.asset");
@@ -47,7 +52,7 @@ namespace OnlyVolunteers.EditorTools
             Debug.Log("[VadimBuilds] pipeline " + (rp ? rp.name : "null") + ", quality " + QualitySettings.names[QualitySettings.GetQualityLevel()] + ", " + PlayerSettings.fullScreenMode);
             var opt = new BuildPlayerOptions
             {
-                scenes = new[] { copy },
+                scenes = full ? new[] { "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity", copy } : new[] { copy },
                 locationPathName = Root + name + @"\VolunteersOnly_" + name + ".exe",
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.None

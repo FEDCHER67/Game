@@ -40,6 +40,8 @@ namespace OnlyVolunteers.Vehicles
     // Boxes are given in the model's Blender coordinates (min..max, Z up, -Y forward, +X = vehicle left), mapped to
     // van-root space like VanSetupBuilder: root = (-bx, bz, -by) + offset, the offset read off the prefab's "Floor" box
     // (0, 0, -0.02 for VAN-TIER0 v02), so the boxes follow a re-imported model.
+    // ModelRevision picks the table set: 2 = v02 (Van.prefab, every existing scene, the default), 5 = v05 (Van_v05.prefab,
+    // Vadim 30.10: v02 stretched to 6.15 x 2.16 x 2.6 m, bulkhead behind the seats; VanOnly scene). Same boxes, v05 sizes.
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-200)]
     public sealed class VanInteriorColliders : MonoBehaviour
@@ -54,6 +56,10 @@ namespace OnlyVolunteers.Vehicles
         [Tooltip("Stage 9 (Fedya's playtest 2026-10-11): the NPC body slide works only while a rear door is open and the van " +
                  "is slower than this (m/s).")]
         public float SlideMaxSpeed = 1f;
+        [Tooltip("Model layout the boxes follow: 2 = VAN-TIER0-ASTRA-001 v02 (Van.prefab), 5 = v05 (Van_v05.prefab). Set before " +
+                 "Build (the prefab bakes it).")]
+        public int ModelRevision = 2;
+
         /// <summary>Test hook (RagdollSmokeTest's before rows): the body slide always on, as before 2026-10-11.</summary>
         public static bool LegacyBodySlide;
 
@@ -113,6 +119,36 @@ namespace OnlyVolunteers.Vehicles
         private const float SmoothFriction = 0.3f;
         private static PhysicsMaterial _smooth;
 
+        // v05 (build_van.py --revision 5): floor 0.557, skin x +-1.081, inner walls +-1.031, inner roof 2.54, bulkhead
+        // y -0.534..-0.494, sliding door y -0.492..1.054, rear wall y 3.116, rear sill 0.65, bumper to y 3.315, doors x +-0.92.
+        private static readonly Vector3 FloorMinV05 = new(-1.081f, -1.9915f, 0.2895f);
+        private static readonly Vector3 FloorMaxV05 = new(1.081f, 3.1156f, 0.5566f);
+        private static readonly (string name, Vector3 min, Vector3 max, bool step)[] AddedV05 =
+        {
+            ("StepSlide", new(-1.321f, -0.492f, 0.20f), new(-1.081f, 1.0544f, 0.28f), true),
+            ("StepRear", new(-0.92f, 3.3147f, 0.20f), new(0.92f, 3.5147f, 0.30f), true),
+            ("Partition", new(-1.031f, -0.534f, 0.5566f), new(1.031f, -0.494f, 2.54f), false),
+        };
+        private static readonly (string name, Vector3 min, Vector3 max)[] ResizedV05 =
+        {
+            ("LeftWallLow", new(1.031f, -0.535f, 0.5566f), new(1.151f, 3.1156f, 1.5583f)),
+            ("RightWallLow", new(-1.151f, 1.0544f, 0.5566f), new(-1.031f, 3.1156f, 1.5583f)),
+            ("Roof", new(-0.92f, -1.1598f, 2.54f), new(0.92f, 3.1156f, 2.65f)),
+        };
+        // RampSlide through the step's outer top edge (-1.321, 0.28) and the floor edge (-1.081, 0.557), 49 degrees; RampRear
+        // 55 degrees down from the bumper's outer top edge (3.315, 0.65), 6 cm over the step's outer edge.
+        private static readonly (string name, Vector3 low, Vector3 high, Vector3 halfWidth)[] RampsV05 =
+        {
+            ("RampSlide", new(-1.564f, 0.2812f, 0f), new(-1.081f, 0.2812f, 0.5566f), new(0f, 0.7732f, 0f)),
+            ("RampRear", new(0f, 3.77f, 0f), new(0f, 3.3147f, 0.6501f), new(0.92f, 0f, 0f)),
+        };
+        private static readonly (string name, Vector3 low, Vector3 high, Vector3 halfWidth)[] BodySlidesV05 =
+        {
+            ("SlideRear", new(0f, 3.885f, 0f), new(0f, 3.275f, 0.655f), new(0.92f, 0f, 0f)),
+        };
+
+        private bool V05 => ModelRevision >= 5;
+
         private Vector3 _offset = new(0f, 0f, -0.02f);
 
         private void Awake() => Build();
@@ -127,15 +163,15 @@ namespace OnlyVolunteers.Vehicles
                 container.SetParent(transform, false);
             }
             if (container.Find("Floor") is Transform floor && floor.TryGetComponent(out BoxCollider floorBox))
-                _offset = RootCentre(floorBox) - Axes((FloorMin + FloorMax) * 0.5f);
+                _offset = RootCentre(floorBox) - Axes(V05 ? (FloorMinV05 + FloorMaxV05) * 0.5f : (FloorMin + FloorMax) * 0.5f);
 
             Material stepMaterial = ShowSteps ? FindMaterial(StepMaterial) : null;
-            foreach ((string name, Vector3 min, Vector3 max, bool step) in Added)
+            foreach ((string name, Vector3 min, Vector3 max, bool step) in V05 ? AddedV05 : Added)
             {
                 if (step && ShowSteps) VisibleBox(container, name, min, max, stepMaterial);
                 else ColliderBox(container, name, min, max);
             }
-            foreach ((string name, Vector3 min, Vector3 max) in Resized)
+            foreach ((string name, Vector3 min, Vector3 max) in V05 ? ResizedV05 : Resized)
                 if (container.Find(name) is Transform t && t.TryGetComponent(out BoxCollider box))
                     SetBox(box, min, max);
             if (Application.isPlaying)
@@ -180,7 +216,7 @@ namespace OnlyVolunteers.Vehicles
             body.useGravity = false;
             body.interpolation = RigidbodyInterpolation.None;
             holder.gameObject.layer = layer;
-            foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in BodySlides)
+            foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in V05 ? BodySlidesV05 : BodySlides)
             {
                 Ramp(holder, name, low, high, halfWidth, layer);
                 if (!Application.isPlaying || !(holder.Find(name) is Transform t) || !t.TryGetComponent(out BoxCollider box)) continue;
@@ -255,7 +291,7 @@ namespace OnlyVolunteers.Vehicles
             if (layer < 0)
                 Debug.LogWarning($"[Van] Layer '{RampLayerName}' is missing (ProjectSettings/TagManager); the step ramps are off.");
             holder.gameObject.layer = layer >= 0 ? layer : 0;
-            foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in Ramps)
+            foreach ((string name, Vector3 low, Vector3 high, Vector3 halfWidth) in V05 ? RampsV05 : Ramps)
                 Ramp(holder, name, low, high, halfWidth, layer);
         }
 

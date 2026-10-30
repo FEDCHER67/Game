@@ -38,6 +38,10 @@ namespace OnlyVolunteers.Capture
         public Transform TableSpawn;
         public NetworkObject PawnNetworkObject;
         public string BaseName = "База B02 — сарай у хижины деда";
+        [Tooltip("The top-left status lines (base, caught, fund, K save). Off in scenes without the v1 loop (VanOnly).")]
+        public bool ShowStatusCorner = true;
+        [Tooltip("The new-game objective toast. Empty = none (VanOnly: no Khutor, no hut).")]
+        public string NewGameObjective = "Поймай кого-нибудь в Хуторе и привези в сарай у хижины деда";
         [Tooltip("Operation tuning (dose, blood, death rules): the table prefab's own asset.")]
         public OperationTuning Tuning;
         [Header("Network")]
@@ -295,7 +299,7 @@ namespace OnlyVolunteers.Capture
                 // New game: the shared fund starts empty (ES-01), the van at paid tier 0.
                 Loaded = true;
                 TeamEconomy.Instance?.ServerMarkReady();
-                Toast("Поймай кого-нибудь в Хуторе и привези в сарай у хижины деда", CaptureHud.Neutral, 6f);
+                if (!string.IsNullOrEmpty(NewGameObjective)) Toast(NewGameObjective, CaptureHud.Neutral, 6f);
                 return;
             }
             // WP01: a save that does not load is NOT a new game over it. Loaded stays false (no autosave, no commit save,
@@ -436,7 +440,7 @@ namespace OnlyVolunteers.Capture
             Hud.SetVisible(!tableMode && Pawn != null && Pawn.Controlled);
             string corner = Bridge != null ? Bridge.RemoveHint : null;
             if (Bridge != null && Bridge.RemoveProgress > 0.01f) Hud.Ring(Bridge.RemoveProgress, CaptureHud.Warn, "упаковываю тело…");
-            Hud.Corner(StatusLine() + (corner != null ? "\n<color=#FFB13B>" + corner + "</color>" : ""));
+            Hud.Corner((ShowStatusCorner ? StatusLine() : "") + (corner != null ? "\n<color=#FFB13B>" + corner + "</color>" : ""));
         }
 
         private string StatusLine()

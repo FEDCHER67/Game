@@ -10,19 +10,122 @@ namespace OnlyVolunteers.Vehicles.EditorTools
 {
     // Rebuilds the van prefab (materials, colliders, wheels, doors) from the imported FBX and the
     // standalone VanDriveTest scene. Re-run after importing a new numbered van revision.
+    // Two model layouts: v02 (Van.prefab, the W86 map, VanLab, VanDriveTest; BuildAll) and v05 (Van_v05.prefab, Vadim 30.10:
+    // v02's design stretched to 6.15 x 2.16 x 2.6 m, a bulkhead with a mesh window, two front seats; BuildV05Prefab, used
+    // by VadimVanLab.RunVanOnly). Building v05 never touches Van.prefab, the v02 model or the shared VAN_* materials (it
+    // only adds its own _NoShadow interior materials).
     public static class VanSetupBuilder
     {
         private const string Root = "Assets/OnlyVolunteers/Vehicles/Van";
-        private const string ModelPath = Root + "/Model/VAN-TIER0-ASTRA-001_v02.fbx";
         private const string MaterialDir = Root + "/Materials";
-        private const string PrefabPath = Root + "/Prefabs/Van.prefab";
         private const string ScenePath = "Assets/OnlyVolunteers/Scenes/VanDriveTest.unity";
+        public const string V05PrefabPath = Root + "/Prefabs/Van_v05.prefab";
 
-        // Blender-space reference points (Z up, -Y forward, +X = vehicle left) used to map collider boxes.
-        private static readonly Vector3 BFrontLeft = new(0.80f, -1.60f, 0.37f);
-        private static readonly Vector3 BFrontRight = new(-0.80f, -1.60f, 0.37f);
-        private static readonly Vector3 BRearLeft = new(0.80f, 1.56f, 0.37f);
-        private static readonly Vector3 BEye = new(0.48f, -0.78f, 1.60f);
+        // One model layout. Blender-space numbers (Z up, -Y forward, +X = vehicle left), as in ArtSource build_van.py.
+        private sealed class Layout
+        {
+            public string ModelPath, PrefabPath;
+            // Reference points used to map collider boxes: wheel centres and the driver's eye.
+            public Vector3 FrontLeft, FrontRight, RearLeft, Eye;
+            public (string name, Vector3 min, Vector3 max)[] Boxes;
+            // Slanted slabs (windshield, roof cap): top edge, bottom edge (centre line), width across.
+            public (string name, Vector3 top, Vector3 bottom, float width)[] Slabs;
+            public float SlideTravel;
+            public int InteriorRevision;       // VanInteriorColliders.ModelRevision
+            public Bounds? CargoBox;           // VanCargoSpace.LocalBox (null = the component's v02 default)
+            public bool UpdateMaterials;       // v02 keeps rewriting the shared VAN_* materials as before; v05 only loads them
+            // Interior-only FBX materials remapped to "<name>_NoShadow.mat" copies that receive no shadows (null: none).
+            public string[] NoShadowMaterials;
+            // Body paint of this layout only: FBX material -> its own asset and colour (null: the shared VAN_* materials).
+            public Dictionary<string, (string asset, Color32 color, float smooth)> Paint;
+        }
+
+        private static readonly Layout V02 = new()
+        {
+            ModelPath = Root + "/Model/VAN-TIER0-ASTRA-001_v02.fbx",
+            PrefabPath = Root + "/Prefabs/Van.prefab",
+            FrontLeft = new(0.80f, -1.60f, 0.37f),
+            FrontRight = new(-0.80f, -1.60f, 0.37f),
+            RearLeft = new(0.80f, 1.56f, 0.37f),
+            Eye = new(0.48f, -0.78f, 1.60f),
+            Boxes = new (string, Vector3, Vector3)[]
+            {
+                ("Floor", new(-0.94f, -1.70f, 0.35f), new(0.94f, 2.19f, 0.55f)),
+                ("Roof", new(-0.80f, -0.99f, 1.98f), new(0.80f, 2.19f, 2.08f)),
+                ("Nose", new(-0.94f, -2.29f, 0.35f), new(0.94f, -1.70f, 1.08f)),
+                ("Hood", new(-0.92f, -2.20f, 1.08f), new(0.92f, -1.72f, 1.30f)),
+                ("Dashboard", new(-0.88f, -1.72f, 0.55f), new(0.88f, -1.40f, 1.30f)),
+                ("BumperFront", new(-0.97f, -2.42f, 0.28f), new(0.97f, -2.23f, 0.62f)),
+                ("BumperRear", new(-0.97f, 2.13f, 0.28f), new(0.97f, 2.36f, 0.62f)),
+                ("LeftWallLow", new(0.89f, -0.44f, 0.55f), new(0.94f, 2.19f, 1.30f)),
+                ("LeftWallHigh", new(0.80f, -0.44f, 1.30f), new(0.90f, 2.19f, 1.98f)),
+                ("RightWallLow", new(-0.94f, 0.90f, 0.55f), new(-0.89f, 2.19f, 1.30f)),
+                ("RightWallHigh", new(-0.90f, 0.90f, 1.30f), new(-0.80f, 2.19f, 1.98f)),
+                ("RearPillarLeft", new(0.80f, 2.13f, 0.55f), new(0.94f, 2.19f, 1.98f)),
+                ("RearPillarRight", new(-0.94f, 2.13f, 0.55f), new(-0.80f, 2.19f, 1.98f)),
+                ("SeatDriver", new(0.26f, -1.06f, 0.55f), new(0.72f, -0.50f, 0.98f)),
+                ("SeatDriverBack", new(0.26f, -0.62f, 0.98f), new(0.72f, -0.50f, 1.66f)),
+                ("SeatBench", new(-0.82f, -1.06f, 0.55f), new(-0.10f, -0.50f, 0.98f)),
+                ("SeatBenchBack", new(-0.82f, -0.62f, 0.98f), new(-0.10f, -0.50f, 1.66f)),
+                ("HousingRearLeft", new(0.52f, 1.10f, 0.55f), new(0.89f, 2.02f, 0.85f)),
+                ("HousingRearRight", new(-0.89f, 1.10f, 0.55f), new(-0.52f, 2.02f, 0.85f)),
+            },
+            // Windshield: slanted slab from the roof edge down to the cowl.
+            Slabs = new (string, Vector3, Vector3, float)[] { ("Windshield", new(0f, -0.99f, 2.08f), new(0f, -1.69f, 1.38f), 1.72f) },
+            SlideTravel = 1.02f,
+            InteriorRevision = 2,
+            CargoBox = null,
+            UpdateMaterials = true,
+        };
+
+        // v05 (build_van.py --revision 5, Vadim 30.10): v02's design stretched (x 1.15, y 1.1715, z 1.3356 z - 0.178) and the
+        // cargo section 0.55 m longer (everything behind y 1.15 moved back): body 5.80 m (6.15 with bumpers) x 2.16 x 2.60,
+        // floor 0.557, inner roof 2.54, inner walls x +-1.031 (+-0.879 under the roof), wheels R 0.44 at x +-0.92, axles
+        // y -1.874 / 2.378, two front seats (x +-0.10..+-0.90), a bulkhead at y -0.534..-0.494, sliding door y -0.492..1.054
+        // up to 2.46, rear doors x +-0.92 from 0.65 to 2.50 at y 3.116. Interior materials get their own _NoShadow copies
+        // with shadow receiving off (no shadow shimmer in the cab and the bay).
+        private static readonly Layout V05 = new()
+        {
+            ModelPath = Root + "/Model/VAN-TIER0-ASTRA-001_v05.fbx",
+            PrefabPath = V05PrefabPath,
+            FrontLeft = new(0.92f, -1.8744f, 0.44f),
+            FrontRight = new(-0.92f, -1.8744f, 0.44f),
+            RearLeft = new(0.92f, 2.3775f, 0.44f),
+            Eye = new(0.552f, -0.9138f, 1.959f),
+            Boxes = new (string, Vector3, Vector3)[]
+            {
+                ("Floor", new(-1.081f, -1.9915f, 0.2895f), new(1.081f, 3.1156f, 0.5566f)),
+                ("Roof", new(-0.92f, -1.1598f, 2.54f), new(0.92f, 3.1156f, 2.6f)),
+                ("Nose", new(-1.081f, -2.6827f, 0.2895f), new(1.081f, -1.9915f, 1.2644f)),
+                ("Hood", new(-1.058f, -2.5773f, 1.2644f), new(1.058f, -2.015f, 1.5583f)),
+                ("Dashboard", new(-1.012f, -2.015f, 0.5566f), new(1.012f, -1.6401f, 1.5583f)),
+                ("BumperFront", new(-1.1155f, -2.835f, 0.196f), new(1.1155f, -2.6124f, 0.6501f)),
+                ("BumperRear", new(-1.1155f, 3.0453f, 0.196f), new(1.1155f, 3.3147f, 0.6501f)),
+                ("LeftWallLow", new(1.031f, -0.535f, 0.5566f), new(1.081f, 3.1156f, 1.5583f)),
+                ("LeftWallHigh", new(0.8793f, -0.535f, 1.5583f), new(1.041f, 3.1156f, 2.54f)),
+                ("RightWallLow", new(-1.081f, 1.0544f, 0.5566f), new(-1.031f, 3.1156f, 1.5583f)),
+                ("RightWallHigh", new(-1.041f, 1.0544f, 1.5583f), new(-0.8793f, 3.1156f, 2.54f)),
+                ("RearPillarLeft", new(0.92f, 3.0453f, 0.5566f), new(1.081f, 3.1156f, 2.54f)),
+                ("RearPillarRight", new(-1.081f, 3.0453f, 0.5566f), new(-0.92f, 3.1156f, 2.54f)),
+                ("SeatBench", new(-0.90f, -1.2418f, 0.5566f), new(0.90f, -0.5857f, 1.1309f)),
+                ("SeatBenchBack", new(-0.90f, -0.7263f, 1.1309f), new(0.90f, -0.5857f, 1.8f)),
+                ("HousingRearLeft", new(0.598f, 1.8275f, 0.5566f), new(1.031f, 2.9275f, 0.99f)),
+                ("HousingRearRight", new(-1.031f, 1.8275f, 0.5566f), new(-0.598f, 2.9275f, 0.99f)),
+            },
+            Slabs = new (string, Vector3, Vector3, float)[] { ("Windshield", new(0f, -1.1598f, 2.6f), new(0f, -1.9798f, 1.6651f), 1.98f) },
+            SlideTravel = 1.195f,
+            InteriorRevision = 5,
+            // floor 0.557 to inner roof 2.54, inner walls (x +-0.92), rear wall (z -2.794) to the bulkhead (z 0.746)
+            CargoBox = new Bounds(new Vector3(0f, 1.548f, -1.024f), new Vector3(1.84f, 1.983f, 3.539f)),
+            UpdateMaterials = false,
+            NoShadowMaterials = new[] { "VAN_Interior", "VAN_Dash", "VAN_Seat", "VAN_Seat_Fabric", "VAN_Interior_Black" },
+            // Vadim 30.10: a muted cartoon military olive, matte; bumpers, trim, lights, glass, tyres and hubs stay as they are
+            Paint = new()
+            {
+                ["VAN_Body_Cream"] = ("VAN_Body_Olive_v05", new Color32(118, 128, 82, 255), 0.12f),
+                ["VAN_Body_Crease"] = ("VAN_Body_Crease_Olive_v05", new Color32(98, 107, 68, 255), 0.10f),
+            },
+        };
 
         private static readonly Dictionary<string, (Color32 color, float smooth, float alpha)> Materials = new()
         {
@@ -38,35 +141,83 @@ namespace OnlyVolunteers.Vehicles.EditorTools
             ["VAN_Hub_Cream"] = (new Color32(214, 205, 186, 255), 0.2f, 1f),
             ["VAN_Tire"] = (new Color32(44, 44, 46, 255), 0.05f, 1f),
             ["VAN_Seat"] = (new Color32(70, 72, 78, 255), 0.05f, 1f),
+            // v05 interior-only names (their _NoShadow copies are made in ConfigureModel; v02 has none of these)
+            ["VAN_Dash"] = (new Color32(62, 63, 66, 255), 0.15f, 1f),
+            ["VAN_Interior_Black"] = (new Color32(34, 35, 37, 255), 0.1f, 1f),
+            ["VAN_Seat_Fabric"] = (new Color32(112, 117, 128, 255), 0.05f, 1f),
         };
+        private static readonly HashSet<string> V05OnlyMaterials = new() { "VAN_Dash", "VAN_Interior_Black", "VAN_Seat_Fabric" };
 
         [MenuItem("OnlyVolunteers/Van/Rebuild Van Prefab And Test Scene")]
         public static void BuildAll()
         {
-            ConfigureModel();
-            GameObject prefab = BuildPrefab();
+            ConfigureModel(V02);
+            GameObject prefab = BuildPrefab(V02);
             BuildScene(prefab);
             Debug.Log("[Van] prefab and VanDriveTest scene rebuilt");
         }
 
-        private static void ConfigureModel()
+        /// <summary>Van_v05.prefab from VAN-TIER0-ASTRA-001_v05.fbx: the same parts and behaviour as Van.prefab, v05 sizes.
+        /// No test scene; VadimVanLab.RunVanOnly puts it into the VanOnly scene.</summary>
+        [MenuItem("OnlyVolunteers/Van/Build Van v05 Prefab")]
+        public static GameObject BuildV05Prefab()
+        {
+            ConfigureModel(V05);
+            GameObject prefab = BuildPrefab(V05);
+            Debug.Log("[Van] " + V05.PrefabPath + " rebuilt");
+            return prefab;
+        }
+
+        private static void ConfigureModel(Layout layout)
         {
             Directory.CreateDirectory(MaterialDir);
-            var importer = (ModelImporter)AssetImporter.GetAtPath(ModelPath);
+            var importer = (ModelImporter)AssetImporter.GetAtPath(layout.ModelPath);
+            if (importer == null) throw new FileNotFoundException("[Van] model not imported: " + layout.ModelPath);
             importer.animationType = ModelImporterAnimationType.None;
             importer.importAnimation = false;
             importer.importCameras = false;
             importer.importLights = false;
             importer.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
             foreach (var kv in Materials)
-                importer.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material), kv.Key), GetOrCreateMaterial(kv.Key, kv.Value));
+            {
+                if (layout.NoShadowMaterials == null && V05OnlyMaterials.Contains(kv.Key)) continue; // v02 keeps its remaps
+                Material m = layout.Paint != null && layout.Paint.TryGetValue(kv.Key, out var paint)
+                    ? GetOrCreateMaterial(paint.asset, (paint.color, paint.smooth, 1f))
+                    : layout.NoShadowMaterials != null && System.Array.IndexOf(layout.NoShadowMaterials, kv.Key) >= 0
+                    ? NoShadowMaterial(kv.Key, kv.Value)
+                    : GetOrCreateMaterial(kv.Key, kv.Value, layout.UpdateMaterials);
+                importer.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material), kv.Key), m);
+            }
             importer.SaveAndReimport();
         }
 
-        private static Material GetOrCreateMaterial(string name, (Color32 color, float smooth, float alpha) spec)
+        // "<name>_NoShadow.mat": the interior twin of a VAN_* material that receives no shadows. Inside the van every surface is
+        // in the body's own shadow, and the shadow-map edges and filtering on it crawl and shimmer while the van moves.
+        private static Material NoShadowMaterial(string name, (Color32 color, float smooth, float alpha) spec)
+        {
+            string path = $"{MaterialDir}/{name}_NoShadow.mat";
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (mat == null)
+            {
+                mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                AssetDatabase.CreateAsset(mat, path);
+            }
+            Color c = spec.color;
+            c.a = 1f;
+            mat.SetColor("_BaseColor", c);
+            mat.SetFloat("_Smoothness", spec.smooth);
+            mat.SetFloat("_Metallic", 0f);
+            mat.SetFloat("_ReceiveShadows", 0f);
+            mat.EnableKeyword("_RECEIVE_SHADOWS_OFF");
+            EditorUtility.SetDirty(mat);
+            return mat;
+        }
+
+        private static Material GetOrCreateMaterial(string name, (Color32 color, float smooth, float alpha) spec, bool update = true)
         {
             string path = $"{MaterialDir}/{name}.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (mat != null && !update) return mat;
             if (mat == null)
             {
                 mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
@@ -91,13 +242,13 @@ namespace OnlyVolunteers.Vehicles.EditorTools
             return mat;
         }
 
-        private static GameObject BuildPrefab()
+        private static GameObject BuildPrefab(Layout layout)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));
+            Directory.CreateDirectory(Path.GetDirectoryName(layout.PrefabPath));
             var root = new GameObject("Van");
             try
             {
-                var modelAsset = AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath);
+                var modelAsset = AssetDatabase.LoadAssetAtPath<GameObject>(layout.ModelPath);
                 var model = (GameObject)PrefabUtility.InstantiatePrefab(modelAsset, root.transform);
                 model.name = "Model";
 
@@ -118,7 +269,7 @@ namespace OnlyVolunteers.Vehicles.EditorTools
 
                 // Blender -> van-root affine map from four non-coplanar reference points.
                 Transform eye = Find(model.transform, "SOCKET_DriverEye");
-                Matrix4x4 map = SolveMap(fl.position, fr.position, rl.position, eye.position);
+                Matrix4x4 map = SolveMap(layout, fl.position, fr.position, rl.position, eye.position);
 
                 var body = root.AddComponent<Rigidbody>();
                 body.mass = 1800f;
@@ -127,7 +278,7 @@ namespace OnlyVolunteers.Vehicles.EditorTools
                 body.interpolation = RigidbodyInterpolation.Interpolate;
                 body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-                BuildBodyColliders(root.transform, map);
+                BuildBodyColliders(root.transform, map, layout);
                 var controller = root.AddComponent<VanController>();
                 controller.Front.Left = MakeWheel(root.transform, "WheelCollider_FrontLeft", fl, radius);
                 controller.Front.Right = MakeWheel(root.transform, "WheelCollider_FrontRight", fr, radius);
@@ -147,16 +298,19 @@ namespace OnlyVolunteers.Vehicles.EditorTools
                 SetupDoor(model.transform, root.transform, "VAN_Door_Rear_Right", VanDoor.Kind.Hinge, 100f, Vector3.back);
                 VanDoor slide = SetupDoor(model.transform, root.transform, "VAN_Door_Slide", VanDoor.Kind.Slide, 0f, Vector3.right);
                 slide.SlidePop = new Vector3(0.07f, 0f, 0f);
-                slide.SlideTravel = new Vector3(0.07f, 0f, -1.02f);
+                slide.SlideTravel = new Vector3(0.07f, 0f, -layout.SlideTravel);
                 slide.Duration = 0.6f; // NPC capture stage 1: the driver's button opens it in ~0.6 s (was 1.1)
 
                 // NPC capture stage 1: the cargo bay as a carrier (riding, loading), and the extra colliders (steps under
                 // the cargo doors, cab partition, thicker walls) with every van collider on layer Vehicle. Baked here; the
                 // same component rebuilds them idempotently at runtime on older prefab instances.
-                root.AddComponent<VanCargoSpace>();
-                root.AddComponent<VanInteriorColliders>().Build();
+                var space = root.AddComponent<VanCargoSpace>();
+                if (layout.CargoBox is Bounds cargo) space.LocalBox = cargo;
+                var interior = root.AddComponent<VanInteriorColliders>();
+                interior.ModelRevision = layout.InteriorRevision;
+                interior.Build();
 
-                return PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
+                return PrefabUtility.SaveAsPrefabAsset(root, layout.PrefabPath);
             }
             finally
             {
@@ -164,18 +318,18 @@ namespace OnlyVolunteers.Vehicles.EditorTools
             }
         }
 
-        private static Matrix4x4 SolveMap(Vector3 uFl, Vector3 uFr, Vector3 uRl, Vector3 uEye)
+        private static Matrix4x4 SolveMap(Layout layout, Vector3 uFl, Vector3 uFr, Vector3 uRl, Vector3 uEye)
         {
             var b = Matrix4x4.identity;
-            b.SetColumn(0, BFrontRight - BFrontLeft);
-            b.SetColumn(1, BRearLeft - BFrontLeft);
-            b.SetColumn(2, BEye - BFrontLeft);
+            b.SetColumn(0, layout.FrontRight - layout.FrontLeft);
+            b.SetColumn(1, layout.RearLeft - layout.FrontLeft);
+            b.SetColumn(2, layout.Eye - layout.FrontLeft);
             var u = Matrix4x4.identity;
             u.SetColumn(0, uFr - uFl);
             u.SetColumn(1, uRl - uFl);
             u.SetColumn(2, uEye - uFl);
             Matrix4x4 m = u * b.inverse;
-            Vector3 t = uFl - m.MultiplyVector(BFrontLeft);
+            Vector3 t = uFl - m.MultiplyVector(layout.FrontLeft);
             m.SetColumn(3, new Vector4(t.x, t.y, t.z, 1f));
             return m;
         }
@@ -191,43 +345,29 @@ namespace OnlyVolunteers.Vehicles.EditorTools
             box.size = new Vector3(Mathf.Abs(s.x), Mathf.Abs(s.y), Mathf.Abs(s.z));
         }
 
-        private static void BuildBodyColliders(Transform root, Matrix4x4 map)
+        private static void BuildBodyColliders(Transform root, Matrix4x4 map, Layout layout)
         {
             var col = new GameObject("Colliders").transform;
             col.SetParent(root, false);
-            Box(col, map, "Floor", new(-0.94f, -1.70f, 0.35f), new(0.94f, 2.19f, 0.55f));
-            Box(col, map, "Roof", new(-0.80f, -0.99f, 1.98f), new(0.80f, 2.19f, 2.08f));
-            Box(col, map, "Nose", new(-0.94f, -2.29f, 0.35f), new(0.94f, -1.70f, 1.08f));
-            Box(col, map, "Hood", new(-0.92f, -2.20f, 1.08f), new(0.92f, -1.72f, 1.30f));
-            Box(col, map, "Dashboard", new(-0.88f, -1.72f, 0.55f), new(0.88f, -1.40f, 1.30f));
-            Box(col, map, "BumperFront", new(-0.97f, -2.42f, 0.28f), new(0.97f, -2.23f, 0.62f));
-            Box(col, map, "BumperRear", new(-0.97f, 2.13f, 0.28f), new(0.97f, 2.36f, 0.62f));
-            Box(col, map, "LeftWallLow", new(0.89f, -0.44f, 0.55f), new(0.94f, 2.19f, 1.30f));
-            Box(col, map, "LeftWallHigh", new(0.80f, -0.44f, 1.30f), new(0.90f, 2.19f, 1.98f));
-            Box(col, map, "RightWallLow", new(-0.94f, 0.90f, 0.55f), new(-0.89f, 2.19f, 1.30f));
-            Box(col, map, "RightWallHigh", new(-0.90f, 0.90f, 1.30f), new(-0.80f, 2.19f, 1.98f));
-            Box(col, map, "RearPillarLeft", new(0.80f, 2.13f, 0.55f), new(0.94f, 2.19f, 1.98f));
-            Box(col, map, "RearPillarRight", new(-0.94f, 2.13f, 0.55f), new(-0.80f, 2.19f, 1.98f));
-            Box(col, map, "SeatDriver", new(0.26f, -1.06f, 0.55f), new(0.72f, -0.50f, 0.98f));
-            Box(col, map, "SeatDriverBack", new(0.26f, -0.62f, 0.98f), new(0.72f, -0.50f, 1.66f));
-            Box(col, map, "SeatBench", new(-0.82f, -1.06f, 0.55f), new(-0.10f, -0.50f, 0.98f));
-            Box(col, map, "SeatBenchBack", new(-0.82f, -0.62f, 0.98f), new(-0.10f, -0.50f, 1.66f));
-            Box(col, map, "HousingRearLeft", new(0.52f, 1.10f, 0.55f), new(0.89f, 2.02f, 0.85f));
-            Box(col, map, "HousingRearRight", new(-0.89f, 1.10f, 0.55f), new(-0.52f, 2.02f, 0.85f));
+            foreach ((string name, Vector3 min, Vector3 max) in layout.Boxes)
+                Box(col, map, name, min, max);
 
-            // Windshield: slanted slab from the roof edge down to the cowl.
-            var ws = new GameObject("Windshield").transform;
-            ws.SetParent(col, false);
-            Vector3 top = map.MultiplyPoint3x4(new Vector3(0f, -0.99f, 2.08f));
-            Vector3 bottom = map.MultiplyPoint3x4(new Vector3(0f, -1.69f, 1.38f));
-            Vector3 slope = top - bottom;
-            Vector3 side = map.MultiplyVector(Vector3.right).normalized;
-            Vector3 normal = Vector3.Cross(slope.normalized, side).normalized;
-            if (Vector3.Dot(normal, Vector3.up) < 0f) normal = -normal;
-            ws.localPosition = (top + bottom) * 0.5f - normal * 0.03f;
-            ws.localRotation = Quaternion.LookRotation(slope.normalized, normal);
-            var wsBox = ws.gameObject.AddComponent<BoxCollider>();
-            wsBox.size = new Vector3(1.72f, 0.06f, slope.magnitude);
+            // Slanted slabs (the windshield): from the top edge down to the bottom edge.
+            foreach ((string name, Vector3 bTop, Vector3 bBottom, float width) in layout.Slabs)
+            {
+                var ws = new GameObject(name).transform;
+                ws.SetParent(col, false);
+                Vector3 top = map.MultiplyPoint3x4(bTop);
+                Vector3 bottom = map.MultiplyPoint3x4(bBottom);
+                Vector3 slope = top - bottom;
+                Vector3 side = map.MultiplyVector(Vector3.right).normalized;
+                Vector3 normal = Vector3.Cross(slope.normalized, side).normalized;
+                if (Vector3.Dot(normal, Vector3.up) < 0f) normal = -normal;
+                ws.localPosition = (top + bottom) * 0.5f - normal * 0.03f;
+                ws.localRotation = Quaternion.LookRotation(slope.normalized, normal);
+                var wsBox = ws.gameObject.AddComponent<BoxCollider>();
+                wsBox.size = new Vector3(width, 0.06f, slope.magnitude);
+            }
         }
 
         private static WheelCollider MakeWheel(Transform root, string name, Transform visual, float radius)
