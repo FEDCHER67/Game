@@ -143,9 +143,11 @@ ArtSource/Dev/WorkInventory_staging/tmp/
 ArtSource/Dev/WorkInventory_staging/**/bin/
 ArtSource/Dev/WorkInventory_staging/**/obj/
 
-# Project folders (30.10.2026): only ПРОЧТИ.md and empty folders (.gitkeep) are tracked; the heavy files stay on Vadim's PC
-/_Папки_проекта/**
-!/_Папки_проекта/**/
-!/_Папки_проекта/**/ПРОЧТИ.md
-!/_Папки_проекта/**/.gitkeep
-/_Папки_проекта/V1_старая_игра/*/
+# GAME split into two parts (30.10.2026): V2_НОВАЯ_ИГРА (new game) and V1_СТАРАЯ_ИГРА (old game, full copy in GAME_v1).
+# Only ПРОЧТИ.md and empty folders (.gitkeep) are tracked; the heavy files stay on the PC (LFS quota)
+/V2_НОВАЯ_ИГРА/**
+!/V2_НОВАЯ_ИГРА/**/
+!/V2_НОВАЯ_ИГРА/**/ПРОЧТИ.md
+!/V2_НОВАЯ_ИГРА/**/.gitkeep
+/V1_СТАРАЯ_ИГРА/*
+!/V1_СТАРАЯ_ИГРА/ПРОЧТИ.md

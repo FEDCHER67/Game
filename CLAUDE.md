@@ -1,6 +1,6 @@
 # CLAUDE.md — VOLUNTEERS ONLY
 
-**V2 since 30.10.2026** (Vadim + Fedya): the game is now base → mission location → stuff people into the van → they come out as soldiers → beat the enemy waves → money → van upgrades. No organs, no open world. Canon: docs/PRODUCT.md. Old game v1: tag `v1-final`, branch `archive/v1-organs-openworld`, docs in docs/_archive_v1/ (take assets from it, not its rules). Project folders: `_Папки_проекта/` (V2_новая_игра = where we work now, V1_старая_игра = the old game; see its ПРОЧТИ.md). The map rules below still apply to the mission locations.
+**V2 since 30.10.2026** (Vadim + Fedya): the game is now base → mission location → stuff people into the van → they come out as soldiers → beat the enemy waves → money → van upgrades. No organs, no open world. Canon: docs/PRODUCT.md. Old game v1: tag `v1-final`, branch `archive/v1-organs-openworld`, docs in docs/_archive_v1/ (take assets from it, not its rules). GAME has two parts: `V2_НОВАЯ_ИГРА/` (the new game, work only here: references, characters, van...) and `V1_СТАРАЯ_ИГРА/` (the old game; full copy in `V1_СТАРАЯ_ИГРА/GAME_v1`). See their ПРОЧТИ.md. The map rules below still apply to the mission locations.
 
 Read these before working in this repository:
 
@@ -12,7 +12,7 @@ Project skills: `.claude/skills/fc-*`. Field Clinic kit: `Tools/FieldClinicBrief
 
 ## New models, textures and places: order (Vadim, 2026-10-27)
 
-1. References first in ChatGPT, never by Claude itself: prompt folder `C:\Users\chern_0eqkb03\Desktop\GAME\_Папки_проекта\V2_новая_игра\ПРОМПТ_ChatGPT\NN_name` + zip on the Desktop; Claude sends it via computer use to the ChatGPT app (chat «Референсы Work Chat»), results land in `Desktop\NN_name_v01`, Claude watches the folder and opens them itself.
+1. References first in ChatGPT, never by Claude itself: prompt folder `C:\Users\chern_0eqkb03\Desktop\GAME\V2_НОВАЯ_ИГРА\ПРОМПТ_ChatGPT\NN_name` + zip on the Desktop; Claude sends it via computer use to the ChatGPT app (chat «Референсы Work Chat»), results land in `Desktop\NN_name_v01`, Claude watches the folder and opens them itself.
 2. Vadim picks a reference.
 3. Textures: a labelled texture sheet for Vadim's «да».
 4. Only then the model (Blender script) / the place in Unity, built from the chosen reference and texture.
