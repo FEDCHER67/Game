@@ -1,14 +1,17 @@
 # CLAUDE.md — VOLUNTEERS ONLY
 
-**V2 since 30.10.2026** (Vadim + Fedya): the game is now base → mission location → stuff people into the van → they come out as soldiers → beat the enemy waves → money → van upgrades. No organs, no open world. Canon: docs/PRODUCT.md. Old game v1: tag `v1-final`, branch `archive/v1-organs-openworld`, docs in docs/_archive_v1/ (take assets from it, not its rules). GAME has two parts: `V2_НОВАЯ_ИГРА/` (the new game, work only here: references, characters, van...) and `V1_СТАРАЯ_ИГРА/` (the old game; full copy in `V1_СТАРАЯ_ИГРА/GAME_v1`). See their ПРОЧТИ.md. The map rules below still apply to the mission locations.
+**V2 since 30.10.2026** (Vadim + Fedya): the game is now base → mission location → stuff people into the van → they come out as soldiers → beat the enemy waves → money → van upgrades. No organs, no open world. Canon: docs/PRODUCT.md. v1 code and assets still in Assets/ may be reused, not v1 rules. GAME has two parts: `V2_НОВАЯ_ИГРА/` (the new game, work only here: references, characters, van...) and `V1_СТАРАЯ_ИГРА/` (the old game, archive). The map rules below still apply to the mission locations.
+
+**Archives: ask first.** `C:\Dev\Game_Archive\`, `V1_СТАРАЯ_ИГРА/` and old Git versions of removed paths (tags `archive/pre-v2-cleanup-2026-10-30`, `v1-final`, old branches) are outside the default scope: without direct permission from Fedya or Vadim naming the topic or path, do not list, search, read, import, run or delegate access to them; ask with the exact material and purpose. Full rule: AGENTS.md «Archives».
 
 Read these before working in this repository:
 
-1. AGENTS.md — project rules and the AI team.
-2. docs/AgentRules.md — shared agent rules (verification, one bridge per category, versions/licences, .meta, safety, first-loop focus).
-3. docs/CURRENT_STATE.md and docs/ARCHITECTURE.md — before gameplay work (they describe the code as of v1; docs/_archive_v1/Progress.md and NextAction.md are the v1 loop).
+1. docs/INDEX.md — where things are and what to read for which task.
+2. AGENTS.md — project rules and the AI team.
+3. docs/AgentRules.md — shared agent rules (verification, one bridge per category, versions/licences, .meta, safety).
+4. docs/CURRENT_STATE.md (V2 state) and docs/ARCHITECTURE.md — before gameplay work.
 
-Project skills: `.claude/skills/fc-*`. Field Clinic kit: `Tools/FieldClinicBrief/` (start with 00_AUTOSTART.md).
+Project skills: `.claude/skills/fc-*` (four general craft skills; written for the v1 game, so the canon wins where they differ).
 
 ## New models, textures and places: order (Vadim, 2026-10-27)
 

@@ -26,7 +26,7 @@ WORK_SYNC.md в корне — единственный специальный �
 
 В чате Вадима ассистент готовит изменения и TASK, но не выполняет git add, commit или push: Вадим всегда делает это сам. В конце давать команды для ВСЕХ неигнорируемых изменений из корня GAME:
 ```powershell
-git add .
+git add -- <each changed path>   # never git add . / -A / -u (blocked by the push guard)
 git commit -m "Describe completed task"
 git push origin main
 ```

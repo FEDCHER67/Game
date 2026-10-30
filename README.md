@@ -1,17 +1,16 @@
 # VOLUNTEERS ONLY
 
-3D first-person co-op for 1–4 players: funny people, physical chaos, business progression.
+3D first-person co-op for 1–4 players: drive the van, stuff funny people into it, they pop out as soldiers and beat enemy waves; upgrade the van at the base (V2 since 30.10.2026).
 
 - Unity **6000.5.11f1**, URP, FishNet/Tugboat, KinematicCharacterController.
 - Git LFS is required. Run `git lfs pull` before opening the project.
-- Development scene: `Assets/OnlyVolunteers/Scenes/NetworkTest.unity` (host/client, cubes, table, scalpel).
-- Local checks: ControllerTest for movement, PhysicsInteractionTest for grabbing.
-- NPC capture, van loading and the business loop are not implemented yet.
+- V2 test scene: `Assets/OnlyVolunteers/Scenes/Dev/VanOnly_v01.unity` (only the van and the player). Main menu: `Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity`.
+- State and what is implemented: docs/CURRENT_STATE.md. Navigation for agents: docs/INDEX.md.
 
 ## Project documentation
 
 - [Рабочая спецификация](docs/PRODUCT.md)
-- [Подробный канон](docs/VOLUNTEERS_ONLY_GAME_SPEC_AND_LORE_CURRENT_CANON.md)
+- [Навигация](docs/INDEX.md)
 - [Состояние и проверки](docs/CURRENT_STATE.md)
 - [Архитектура](docs/ARCHITECTURE.md)
 - [Работа вдвоём и синхронизация](docs/TEAM_WORKFLOW.md)
