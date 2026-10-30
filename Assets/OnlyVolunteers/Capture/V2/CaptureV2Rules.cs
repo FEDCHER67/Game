@@ -16,28 +16,33 @@ namespace OnlyVolunteers.Capture.V2
     [Serializable]
     public sealed class CaptureV2Tuning
     {
-        [Header("Slap (LMB: hold to charge, release to slap; Vadim 31.10)")]
+        [Header("Slap (LMB: hold to charge, release to slap; Vadim 31.10: short, snappy, never tiring)")]
         public float ChargeMax = 1f;          // s of holding LMB for the full charge
         public float ClickSeconds = 0.12f;    // held up to this long: a plain click (no charge)
-        public float MinWindup = 0.2f;        // a quick click still cocks the arm this long before the strike
+        public float MinWindup = 0.12f;       // a quick click still cocks the arm this long before the swipe (CaptureV2Palm.Entry)
         public float ChargeAutoRelease = 3f;  // held this long: it fires by itself (he is not frozen forever)
-        public float ChargeHitStopGain = 1.5f; // full charge: hit-stop x(1 + gain): 0.08 -> 0.2 s
-        public float ChargeShakeGain = 2f;    // full charge: shake x(1 + gain)
+        public float ChargeHitStopGain = 0.8f; // full charge: hit-stop x(1 + gain): 0.05 -> 0.09 s
+        public float ChargeShakeGain = 1f;    // full charge: shake x(1 + gain)
         public float ChargeSpinExtra = 180f;  // full charge: he spins this much further (a whole turn)
         public float ChargeFlySpeed = 4.5f;   // full charge: m/s along the smack as he drops (flies a little)
         public float ChargeFlyUp = 2.2f;      // full charge: m/s up
-        public float ChargeKnockOutGain = 0.4f; // full charge: out cold x(1 + gain): 2.5 -> 3.5 s
-        public float SlapCooldown = 0.25f;    // after the smack
+        public float ChargeKnockOutGain = 0.4f; // full charge: out cold x(1 + gain): 5 -> 7 s
+        public float SlapCooldown = 0.2f;     // after the smack
         public float SlapReach = 2.3f;        // the target must be this close when LMB is pressed
         public float SlapLungeReach = 3.2f;   // and still this close at the smack (he freezes in shock meanwhile)
-        public float SlapHitStop = 0.08f;
-        public float SlapShake = 0.8f;        // degrees
-        public float SpinSeconds = 0.3f;      // the half turn before he drops
+        public float SlapHitStop = 0.05f;     // the contact frame held (real seconds)
+        public float SlapShake = 0.25f;       // degrees, pitch/yaw only (no roll), ~0.07 s
+        public float SlapKickYaw = 0.9f;      // degrees: the view snaps this way along the swipe (x(1 + charge))
+        public float SlapPushIn = 3.5f;       // degrees of field of view the charge narrows (toward his face)
+        public float HeadSnapDegrees = 50f;   // the head whips this far along the swipe first (+25 % charged), then the body follows
+        public float HeadSnapSeconds = 0.045f;
+        public float SpinDelay = 0.06f;       // the body starts turning this long after the head
+        public float SpinSeconds = 0.28f;     // the half turn before he drops
         public float SpinDegrees = 180f;
         public float SackImpulse = 18f;       // N·s at the smack (the stock fist pushes 60: he flies, here he drops)
 
-        [Header("Knock-out")]
-        public float[] KnockOutLadder = { 2.5f, 1.5f, 0.7f }; // 1st, 2nd, 3rd and later slap of one catch
+        [Header("Knock-out (Vadim 31.10: time to grab him and throw him in)")]
+        public float[] KnockOutLadder = { 5f, 3f, 2f, 1f }; // 1st, 2nd, 3rd, 4th and later slap of one catch
         public float HuhBefore = 0.5f;        // the "huh?" face this long before waking
         public float LadderReset = 12f;       // s free and unslapped: the ladder starts over
 
@@ -110,11 +115,11 @@ namespace OnlyVolunteers.Capture.V2
         public static ThrowStyleV2 Style(GrabPointV2 g) =>
             IsLeg(g) ? ThrowStyleV2.Hammer : IsArm(g) ? ThrowStyleV2.Spin : ThrowStyleV2.OverHead;
 
-        /// <summary>Seconds out cold for the slap with this index in one catch (0 = first): 2.5 / 1.5 / 0.7 / 0.7 ...</summary>
+        /// <summary>Seconds out cold for the slap with this index in one catch (0 = first): 5 / 3 / 2 / 1 / 1 ...</summary>
         public static float KnockOut(CaptureV2Tuning t, int slapIndex)
         {
             float[] l = t.KnockOutLadder;
-            if (l == null || l.Length == 0) return 2.5f;
+            if (l == null || l.Length == 0) return 5f;
             return l[Mathf.Clamp(slapIndex, 0, l.Length - 1)];
         }
 

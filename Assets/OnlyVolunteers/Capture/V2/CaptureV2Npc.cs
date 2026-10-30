@@ -7,8 +7,11 @@ using Kind = OnlyVolunteers.Characters.Npc.NpcRagdollProfile.Kind;
 
 namespace OnlyVolunteers.Capture.V2
 {
-    /// <summary>V2 capture, one NPC (spec §1-§5, §7): the slap (frozen in shock, half a turn, then the ragdoll drops like a
-    /// sack), out cold for the knock-out ladder (2.5 / 1.5 / 0.7 s) with X eyes, the tongue out and stars round the head,
+    /// <summary>V2 capture, one NPC (spec §1-§5, §7): the slap (frozen in shock; the head whips along the swipe first, the
+    /// body follows half a turn, then the ragdoll drops like a sack; a red handprint stays on the struck cheek for the
+    /// mission, in the van too; full charge: a few spit drops), out cold for the knock-out ladder (5 / 3 / 2 / 1 s, x1.4
+    /// fully charged) with X eyes, the tongue out and stars round the head; getting up he can be slapped or grabbed down
+    /// again (Redrop),
     /// "huh?" 0.5 s before waking, waking in the hands with the escape meter, clinging to things nearby (§4: the hands
     /// yank him off), the E throw into the van (swing per grab, flight, landing in a seat, belt) and bouncing back from a
     /// full van. Runs before GreyboxNpc (order -10), whose stun timer, ragdoll and seated capsule it drives through their
@@ -20,7 +23,7 @@ namespace OnlyVolunteers.Capture.V2
     public sealed class CaptureV2Npc : MonoBehaviour
     {
         public enum Mode : byte { Idle, Frozen, Spinning, KnockedOut, Awake, Clinging, Swing, Flight, Seated }
-        private enum Face : byte { None, Shocked, Out, Huh, Awake, Cling, Nooo, Flight, Land }
+        private enum Face : byte { None, Shocked, Out, Huh, Awake, Cling, Nooo, Flight, Land, Smacked }
 
         [System.NonSerialized] public CaptureV2Rig Rig;
         public Mode Current { get; private set; }
@@ -40,6 +43,13 @@ namespace OnlyVolunteers.Capture.V2
         public Collider ClingCollider { get; private set; }
         // plain counters for the test and the notes
         public int Escapes, Pops, Seatings, Bounces, Clings, Slaps;
+        /// <summary>Handprints on his cheeks (0..2; they stay for the mission).</summary>
+        public int Handprints { get; private set; }
+        /// <summary>The struck cheek's handprint (tests: close-up shots), null before the first.</summary>
+        public Transform LastHandprint { get; private set; }
+        /// <summary>When the last smack landed (Time.time; tests).</summary>
+        public float LastSmackTime { get; private set; } = -10f;
+        public float HeadSnapNow { get; private set; }
         public bool BeltOn => _belt != null;
         public float SwingProgress => Current == Mode.Swing ? Mathf.Clamp01((Time.fixedTime - _swingStart) / Mathf.Max(0.05f, T.SwingSeconds)) : 0f;
         public ThrowStyleV2 ThrowStyle => _style;
@@ -56,6 +66,10 @@ namespace OnlyVolunteers.Capture.V2
         private Vector3 _lastPelvis;
         private float _lastSlap = -100f, _frozenUntil;
         private float _spinStart, _spinYaw0, _spinDir, _charge;
+        private Vector3 _swipe;
+        private bool _snapping;
+        private int _printSides;
+        private readonly List<(Transform t, Vector3 v, float end)> _spit = new();
         private Vector3 _smackFrom, _smackPoint;
         private HitZone _smackZone;
         private Face _face;
@@ -122,6 +136,9 @@ namespace OnlyVolunteers.Capture.V2
         private void OnDestroy()
         {
             if (_starsRoot != null) Destroy(_starsRoot.gameObject);
+            StopSnap();
+            foreach (var s in _spit) if (s.t != null) Destroy(s.t.gameObject);
+            _spit.Clear();
         }
 
         // ---------- the slap ----------
@@ -144,11 +161,15 @@ namespace OnlyVolunteers.Capture.V2
         /// charged, then he flies a little), then down as the ragdoll. Lying (out cold, awake in the hands, clinging: the
         /// slap on the hands): out cold again for the next step of the ladder. Out a bit longer when charged. False:
         /// nothing to slap.</summary>
-        public bool Smack(object who, Vector3 from, Vector3 point, HitZone zone, float charge)
+        public bool Smack(object who, Vector3 from, Vector3 point, HitZone zone, float charge, Vector3 swipe = default)
         {
             if (Busy || Current == Mode.Seated || Current == Mode.Spinning) return false;
             Slaps++;
             _charge = Mathf.Clamp01(charge);
+            swipe.y = 0f;
+            if (swipe.sqrMagnitude < 1e-4f) swipe = Vector3.Cross(Vector3.up, Flat(point - from)); // no swipe given: across the blow
+            _swipe = swipe.sqrMagnitude > 1e-4f ? swipe.normalized : transform.right;
+            LastSmackTime = Time.time;
             if (Npc.State == NpcState.Free)
             {
                 LearnFace();
@@ -156,23 +177,170 @@ namespace OnlyVolunteers.Capture.V2
                 Current = Mode.Spinning;
                 _spinStart = Time.time;
                 _spinYaw0 = transform.eulerAngles.y;
-                Vector3 side = Vector3.Cross(Vector3.up, point - from);
-                _spinDir = Vector3.Dot(side, transform.forward) >= 0f ? 1f : -1f;
+                // positive yaw turns his face toward up x forward: the head whips (and the body turns) along the swipe
+                _spinDir = Vector3.Dot(Vector3.Cross(Vector3.up, transform.forward), _swipe) >= 0f ? 1f : -1f;
                 _smackFrom = from;
                 _smackPoint = point;
                 _smackZone = zone;
-                SetFace(Face.Shocked, 0f, Face.None);
+                SetFace(Face.Smacked, 0f, Face.None);
+                StartSnap();
+                AddHandprint();
+                if (_charge >= 0.98f) Spit();
                 return true;
+            }
+            if (Npc.State == NpcState.GettingUp)
+            {
+                // rising is no hiding place (Vadim 31.10): down again, out cold for the next step of the ladder
+                LearnFace();
+                KnockOut(from, point, zone, true);
+                AddHandprint();
+                if (_charge >= 0.98f) Spit();
+                return Npc.IsDown;
             }
             if (!Npc.IsDown) return false;
             if (Current == Mode.Clinging) EndCling();
             KnockOut(from, point, zone, true);
+            AddHandprint();
+            SnapLyingHead();
+            if (_charge >= 0.98f) Spit();
             return true;
+        }
+
+        /// <summary>LMB on him while he gets up and is still low: down again as the ragdoll, out cold for the next step of
+        /// the ladder, so the hands can take him at once. False when he is not getting up.</summary>
+        public bool Redrop(object who, Vector3 from, Vector3 swipe)
+        {
+            if (Npc.State != NpcState.GettingUp || Busy || Current == Mode.Seated) return false;
+            _charge = 0f;
+            LearnFace();
+            KnockOut(from, Npc.Center, HitZone.Torso, true);
+            Debug.Log($"[CaptureV2] {name}: grabbed while getting up, down again");
+            return Npc.IsDown;
+        }
+
+        // ---------- the head whip, the handprint, the spit ----------
+
+        private void StartSnap()
+        {
+            HeadSnapNow = 0f;
+            if (_snapping || _headBone == null) return;
+            _snapping = true;
+            CaptureV2Juice.LateTick += HeadSnapLate;
+        }
+
+        private void StopSnap()
+        {
+            if (!_snapping) return;
+            _snapping = false;
+            CaptureV2Juice.LateTick -= HeadSnapLate;
+        }
+
+        // After his animator and everything else (CaptureV2Juice's LateUpdate): the head whips along the swipe a bit over
+        // the top (ease-out-back) and tilts, the neck takes a share; it lets go as the body catches up with the turn.
+        private void HeadSnapLate()
+        {
+            if (this == null || _headBone == null || Current != Mode.Spinning)
+            {
+                HeadSnapNow = 0f;
+                StopSnap();
+                return;
+            }
+            float t = Time.time - _spinStart;
+            float body = Mathf.Clamp01((t - T.SpinDelay) / Mathf.Max(0.05f, T.SpinSeconds + 0.06f * _charge));
+            float u = Mathf.Clamp01(t / Mathf.Max(0.01f, T.HeadSnapSeconds)) - 1f;
+            float whip = 1f + 2.70158f * u * u * u + 1.70158f * u * u; // ease-out-back: ~10 % past, then back
+            float deg = T.HeadSnapDegrees * (1f + 0.25f * _charge) * whip * (1f - 0.7f * body) * _spinDir;
+            HeadSnapNow = deg;
+            Transform neck = _headBone.parent;
+            if (neck != null) neck.rotation = Quaternion.AngleAxis(deg * 0.35f, Vector3.up) * neck.rotation;
+            _headBone.rotation = Quaternion.AngleAxis(deg * 0.65f, Vector3.up) * Quaternion.AngleAxis(-deg * 0.2f, transform.forward) * _headBone.rotation;
+        }
+
+        // A lying head turns away along the swipe (the ragdoll's own joints limit it).
+        private void SnapLyingHead()
+        {
+            if (Ragdoll == null || !Ragdoll.Active || Ragdoll.Profile == null || _headBone == null) return;
+            Rigidbody rb = Ragdoll.BodyOf(Ragdoll.Profile.IndexOf(Kind.Head));
+            if (rb == null) return;
+            Vector3 axis = Vector3.Cross(_headBone.rotation * _fNormal, _swipe);
+            if (axis.sqrMagnitude > 1e-4f) rb.AddTorque(axis.normalized * 12f, ForceMode.VelocityChange);
+        }
+
+        /// <summary>The red handprint on the cheek the palm arrived at (once per cheek; it stays for the mission: under the
+        /// head bone, so it rides the ragdoll and the seated figure alike).</summary>
+        private void AddHandprint()
+        {
+            if (Rig == null) return;
+            if (_props == null) BuildProps();
+            if (_headBone == null || _props == null) return;
+            Vector3 rightW = _headBone.rotation * _fRight;
+            float side = Vector3.Dot(rightW, -_swipe) >= 0f ? 1f : -1f; // his right cheek faces where the palm came from
+            int bit = side > 0f ? 1 : 2;
+            if ((_printSides & bit) != 0) return;
+            _printSides |= bit;
+            Vector3 mid = (_eyeL + _eyeR) * 0.5f;
+            float r = HeadRadius();
+            Vector3 centre = mid - _fNormal * (r * 0.8f);
+            const float yaw = 58f * Mathf.Deg2Rad;
+            Vector3 dir = (_fNormal * Mathf.Cos(yaw) + _fRight * (side * Mathf.Sin(yaw)) - _fUp * 0.5f).normalized;
+            Vector3 at = centre + dir * (r * PrintRadius + 0.003f);
+            Vector3 up = (_fUp - _fNormal * 0.25f).normalized;
+            Quaternion rot = Quaternion.LookRotation(dir, up) * Quaternion.Euler(0f, 0f, side * 12f);
+            float size = Mathf.Clamp(r * 1.25f, 0.085f, 0.15f) / 0.1f;
+            // the thumb (the mesh's +x) toward his nose on either cheek
+            Transform print = CaptureV2Rig.Prop("v2 handprint", _props, Rig.HandprintMesh, Rig.Handprint, at, rot,
+                new Vector3(side > 0f ? -size : size, size, size)).transform;
+            LastHandprint = print;
+            Handprints++;
+            Debug.Log($"[CaptureV2] {name}: handprint on the {(side > 0f ? "right" : "left")} cheek (head r {r:0.000} m)");
+        }
+
+        /// <summary>How far out from the head centre the print sits, x head radius (tuned on the render).</summary>
+        public static float PrintRadius = 1f;
+
+        private float HeadRadius()
+        {
+            NpcRagdollProfile p = Ragdoll != null ? Ragdoll.Profile : null;
+            int head = p != null ? p.IndexOf(Kind.Head) : -1;
+            float r = head >= 0 && _headBone != null ? p.Parts[head].Radius * Mathf.Abs(_headBone.lossyScale.x) : 0.1f;
+            return Mathf.Clamp(r, 0.06f, 0.2f);
+        }
+
+        // Full charge only: a few small spit drops out of the mouth along the swipe.
+        private void Spit()
+        {
+            if (Rig == null || _headBone == null) return;
+            Vector3 mouth = _headBone.position + _headBone.rotation * _mouth;
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject go = CaptureV2Rig.Prop("v2 spit", null, Rig.Ball, Rig.Spit, mouth, Quaternion.identity, Vector3.one * Random.Range(0.012f, 0.02f));
+                Vector3 v = _swipe * Random.Range(1.4f, 2.6f) + Vector3.up * Random.Range(0.5f, 1.3f) + Random.insideUnitSphere * 0.45f;
+                _spit.Add((go.transform, v, Time.time + Random.Range(0.3f, 0.45f)));
+            }
+        }
+
+        private void TickSpit()
+        {
+            if (_spit.Count == 0) return;
+            float dt = Time.deltaTime;
+            for (int i = _spit.Count - 1; i >= 0; i--)
+            {
+                var s = _spit[i];
+                if (s.t == null || Time.time >= s.end)
+                {
+                    if (s.t != null) Destroy(s.t.gameObject);
+                    _spit.RemoveAt(i);
+                    continue;
+                }
+                s.v += Physics.gravity * dt;
+                s.t.position += s.v * dt;
+                _spit[i] = s;
+            }
         }
 
         private void Spin()
         {
-            float u = Mathf.Clamp01((Time.time - _spinStart) / Mathf.Max(0.05f, T.SpinSeconds + 0.12f * _charge));
+            float u = Mathf.Clamp01((Time.time - _spinStart - T.SpinDelay) / Mathf.Max(0.05f, T.SpinSeconds + 0.06f * _charge));
             float e = 1f - (1f - u) * (1f - u);
             transform.rotation = Quaternion.Euler(0f, _spinYaw0 + _spinDir * (T.SpinDegrees + T.ChargeSpinExtra * _charge) * e, 0f);
             if (u < 1f) return;
@@ -741,6 +909,7 @@ namespace OnlyVolunteers.Capture.V2
             switch (m)
             {
                 case Face.Shocked: Set(f, 0f, 100f, 35f, 0f, snap); break;
+                case Face.Smacked: Set(f, 75f, 100f, 45f, 0f, snap); break; // eyes squeezed, mouth popped open
                 case Face.Out: Set(f, 100f, 55f, 0f, 0f, snap); break;
                 case Face.Huh: Set(f, 30f, 45f, 55f, 0f, 400f); break;
                 case Face.Awake: f.Set("Worried", 100f, 600f); break;
@@ -1018,6 +1187,7 @@ namespace OnlyVolunteers.Capture.V2
         private void LateUpdate()
         {
             AnimateProps();
+            TickSpit();
             if (_landAnim && _visual != null) LandingAnimation();
         }
 

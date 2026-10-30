@@ -1,0 +1,85 @@
+Slap sound set - sources and licences (downloaded 2026-10-31)
+
+All sources: BigSoundBank (LaSonotheque), author Joseph SARDIN.
+Licence: CC0 (public domain) - free, royalty-free, commercial use allowed, no attribution required.
+Licence info: https://bigsoundbank.com/articles/download-use-sounds-and-music-f12.html
+
+Source files (WAV downloaded from https://bigsoundbank.com/UPLOAD/bwf-en/NNNN.wav):
+
+#0597 "Slaps" (13 face slaps)
+  https://bigsoundbank.com/slaps-s0597.html
+  Used in: Slap_Smack_01..06 (skin crack, takes 2,4,5,7,10,13; slight EQ, saturation, pitch +-6 %)
+
+#0444 "Punch #2" (9 punches)
+  https://bigsoundbank.com/punches-s0444.html
+  Used in: Slap_Smack_01..06 (low body under the crack, pitched down),
+           Slap_Thump_01..03 (pitched down ~0.6x, low-passed, plus a synthesised sine drop),
+           Slap_ChargedRing_01..02 (boom, pitched down 0.5x)
+
+#0572 "Whoosh #1" (11 whooshes)
+  https://bigsoundbank.com/whoosh-1-s0572.html
+  Used in: Slap_Whoosh_01..03 (pitched up 1.15-1.35x, high-passed)
+
+#2531 "Counter Bell #3"
+  https://bigsoundbank.com/counter-bell-3-s2531.html
+  Used in: Slap_ChargedRing_01..02 (short ding, forced decay ~0.12 s, low level)
+
+#1388 "Tinnitus"
+  https://bigsoundbank.com/tinnitus-s1388.html
+  Used in: Slap_ChargedRing_01..02 (faint ear-ring shimmer, 0.45 s, tremolo, very low level)
+
+Synthesised (no source): sine pitch-drop sub layers in Slap_Thump_* and Slap_ChargedRing_*.
+Build script (not in repo): scratchpad slap/build.py of the 2026-10-31 worker session.
+
+----------------------------------------------------------------
+Candidates/ (v02 hit candidates, 2026-10-31) - A_Slap_01..02, B_Slap_01..02, C_Slap_01..02
+Mixed from the sources below plus synthesised layers (sine pitch-drop sub, filtered noise snap/air).
+Build script (not in repo): %TEMP%\claude\slap_build2\build.py
+
+Mixkit (https://mixkit.co), Mixkit Sound Effects Free License
+  (https://mixkit.co/license/#sfxFree): free for commercial and non-commercial projects incl. games,
+  no attribution required; the sound may not be redistributed on its own / as a sound library.
+  WAV from https://assets.mixkit.co/active_storage/sfx/<id>/<id>.wav
+  #2165 "Short punch in the face"  - A_Slap_01 body
+  #2164 "Short boxing punch"       - A_Slap_02 body
+  #1511 "Fast whip strike"         - B_Slap_01 crack
+  #1512 "Game whip shot"           - B_Slap_02 crack
+  #2143 "Hard and quick punch"     - C_Slap_01 hit
+  #2153 "Body punch quick hit"     - C_Slap_02 hit
+  (downloaded but unused: #2167, #2048)
+
+BigSoundBank (Joseph SARDIN), CC0:
+  #0597 "Slaps"     https://bigsoundbank.com/slaps-s0597.html     - crack texture layer in A, B, C
+  #0444 "Punch #2"  https://bigsoundbank.com/punches-s0444.html   - extra body in A
+
+----------------------------------------------------------------
+Candidates/ H03_01..H03_10 (v03 hand-hit lineup, 2026-10-31) - one source recording each, no layering.
+Processing: trim, transient at 0, HPF 45 Hz, -3 dB at 330 Hz, gentle compression + tanh saturation,
+low shelf +2..4 dB @140 Hz on thin sources (04, 06, 08, 09), <=0.35 s, normalised -1 dBFS.
+Build script (not in repo): scratchpad h03/build.py of the 2026-10-31 worker session.
+Lineup: C:\Users\chern_0eqkb03\VolunteersBuilds\hangar_check\Hand_hit_lineup_v03.wav
+
+OpenGameArt, qubodup (Iwan Gabovitch), CC0 (page) / also MIT-zlib-BSD per info file:
+  "40 wet towel club/pound/hit/attack sounds" https://opengameart.org/content/40-wet-towel-clubpoundhitattack-sounds
+    H03_01 = wet_towel_on_body-25, H03_02 = -15, H03_03 = -22, H03_10 = -29
+  "12 wet towel hitting/falling/punching floor sounds" https://opengameart.org/content/12-wet-towel-hittingfallingpunching-floor-sounds
+    H03_05 = wet_towel_on_floor-03
+  "Thwack sounds" (thwack-1.0.zip, CC0) https://opengameart.org/content/thwack-sounds
+    H03_07 = thwack-06
+BigSoundBank (Joseph SARDIN), CC0: #0597 "Slaps" https://bigsoundbank.com/slaps-s0597.html
+    H03_04 = take 1 (t=0.27 s)
+SoundBible.com, Public Domain: "Banana Slap" https://soundbible.com/2047-Banana-Slap.html
+    H03_06
+Mixkit, Mixkit Sound Effects Free License (https://mixkit.co/license/#sfxFree):
+    H03_08 = #2167 "Short slap or clap"
+    H03_09 = #2147 "Karate fighter hitting" (first hit only)
+
+----------------------------------------------------------------
+Candidates/ Dizzy_01..03 (knocked-out "dizzy birds" loops, 2026-10-31), seamless loops 2.4-2.6 s,
+HPF 700 Hz + LPF 6.5 kHz (no harsh whistle), soft saturation, peak -9 dBFS.
+Build script (not in repo): scratchpad h03/dizzy.py. Preview:
+C:\Users\chern_0eqkb03\VolunteersBuilds\hangar_check\Dizzy_birds_preview_v01.wav
+All Mixkit, Mixkit Sound Effects Free License (https://mixkit.co/license/#sfxFree):
+    Dizzy_01 = #746 "Cartoon dazzle hit and birds" (bird tail only, hit removed)
+    Dizzy_02 = #1212 "Forest birds singing" (pitched up 1.2x)
+    Dizzy_03 = #21 "Double little bird chirp" + #23 "Little bird calling chirp" (pitched up, arranged)

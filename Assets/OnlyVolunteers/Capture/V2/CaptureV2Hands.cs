@@ -5,6 +5,7 @@ using OnlyVolunteers.Characters.Npc;
 using OnlyVolunteers.Map;
 using OnlyVolunteers.Operation.Stage1;
 using OnlyVolunteers.Player;
+using OnlyVolunteers.Player.Hands;
 using OnlyVolunteers.Player.Physics;
 using UnityEngine;
 using Handle = OnlyVolunteers.Characters.Npc.NpcRagdollProfile.Handle;
@@ -13,10 +14,14 @@ namespace OnlyVolunteers.Capture.V2
 {
     /// <summary>V2 capture, the player's hands (on the KCC player; Q and E are taken from GreyboxInteractor through
     /// GreyboxInteractor.HandsOverride, the PhysicsGrabber is driven from here: its own LMB is off):
-    /// - LMB is the slap (Vadim 31.10): hold to charge (up to ChargeMax 1 s: the view leans back further, he freezes in
-    ///   shock), release to slap (the arms' punch, hit-stop 0.08 s .. 0.2 s, shake, he spins further and flies a little
-    ///   when charged). Holding him: LMB slaps him again, out cold for less each time (2.5 / 1.5 / 0.7 s, longer when
-    ///   charged); while he clings it is the slap on the hands and he lets go. Q does nothing here (the stock fist is off).
+    /// - LMB is the slap (Vadim 31.10, rework: short, snappy, funny, never tiring): hold to charge (up to ChargeMax 1 s:
+    ///   the open palm draws back over the shoulder, trembling more and more, the view pushes in a few degrees, he freezes
+    ///   in shock), release to slap (CaptureV2Palm: the swipe across the screen in 3 frames with a smear, the contact
+    ///   frame held by the hit-stop 0.05 s .. 0.09 s, a tiny yaw kick along the swipe, the field of view pops back, no
+    ///   roll ever; his head whips first, then the body, then the sack drop, a red handprint on that cheek). Holding him:
+    ///   LMB slaps him again, out cold for less each time (5 / 3 / 2 / 1 s, x1.4 fully charged); while he clings it is
+    ///   the slap on the hands and he lets go. Getting up he is never safe: still low, LMB grabs him (down again), rising,
+    ///   LMB slaps him down. Q does nothing here (the stock fist is off).
     /// - the hold: LMB on a lying body grabs it (the existing grab of any ragdoll bone) and keeps it without holding the
     ///   button; RMB lets go. Classified as head / collar / arm L/R / leg L/R (torso for the hips and belly); the player
     ///   walks at that grab's share of the walk speed.
@@ -45,10 +50,11 @@ namespace OnlyVolunteers.Capture.V2
         private CaptureV2Npc _held;
         private GrabPointV2 _grab;
         private float _chargeStart = -1f, _strikeAt = -1f, _strikeLen, _charge, _cooldownUntil, _scriptReleaseAt;
-        private Vector3 _lean;
+        private float _pressAt = -10f, _swipeAt = -1f, _swipeCharge, _lastPoseAt = -10f;
+        private bool _whooshSent;
+        private PlayerArmsV01.FpArmPoseV01 _entryFrom, _lastPose;
         private CaptureV2Npc _slapTarget;
         private HitZone _slapZone;
-        private bool _punchSent;
         private CaptureV2Npc _throwNpc;
         private int _throwDoor = -1, _throwOffer = -1;
         private float _prevYaw, _prevPitch;
@@ -65,6 +71,10 @@ namespace OnlyVolunteers.Capture.V2
         public bool WindingUp => _chargeStart >= 0f || _strikeAt > 0f;
         public bool Charging => _chargeStart >= 0f;
         public float Charge => _charge;
+        /// <summary>Seconds since the palm's swipe began (contact at CaptureV2Palm.Swipe); negative when no slap is playing.</summary>
+        public float SwipeTime => _swipeAt > 0f ? Time.time - _swipeAt : -1f;
+        /// <summary>Whether the last smack landed on someone (tests).</summary>
+        public bool LastLanded { get; private set; }
         public Vector3 Feet => _pawn != null ? _pawn.Position : transform.position;
         public Vector2 Arrow { get; private set; } = Vector2.right;
         public float SpeedScale { get; private set; } = 1f;
@@ -95,7 +105,9 @@ namespace OnlyVolunteers.Capture.V2
             if (ReferenceEquals(GreyboxInteractor.HandsOverride, this)) GreyboxInteractor.HandsOverride = null;
             if (_kcc != null) OperationPlayerSpeed.Clear(_kcc, this);
             if (_grabber != null) _grabber.ScriptDriven = false;
-            _chargeStart = _strikeAt = -1f;
+            _chargeStart = _strikeAt = _swipeAt = -1f;
+            PlayerArmsV01.FpSlap = default;
+            CaptureV2Palm.Smear(-1f, 0f, 0);
         }
 
         private void Update()
@@ -122,6 +134,7 @@ namespace OnlyVolunteers.Capture.V2
             }
             else if (_chargeStart >= 0f && Time.time >= _scriptReleaseAt) ReleaseSlap();
             TickWindup();
+            UpdatePalm();
             TickThrow();
             if (_held != null && _held.Current == CaptureV2Npc.Mode.Clinging) ClingMouse();
             else _hasPrev = false;
@@ -200,34 +213,75 @@ namespace OnlyVolunteers.Capture.V2
                 BeginCharge(_held, HitZone.Head);
                 return;
             }
-            if (FindTarget(out GreyboxNpc npc, out _, out HitZone zone) && npc.State == NpcState.Free)
+            if (FindTarget(out GreyboxNpc npc, out _, out HitZone zone))
             {
-                BeginCharge(Rig.Ensure(npc), zone);
-                return;
+                if (npc.State == NpcState.Free)
+                {
+                    BeginCharge(Rig.Ensure(npc), zone);
+                    return;
+                }
+                // getting up he is never safe (Vadim 31.10): still low, the grab drops him again and takes him; rising, the slap
+                if (npc.State == NpcState.GettingUp)
+                {
+                    CaptureV2Npc up = Rig.Ensure(npc);
+                    if (StillLow(npc))
+                    {
+                        if (CaptureV2Authority.Redrop(up, this, Feet, SwipeDir()) && !_grabber.IsHolding)
+                        {
+                            Physics.SyncTransforms(); // the ragdoll it became this frame is where the ray looks
+                            _grabber.ScriptGrab();
+                        }
+                        return;
+                    }
+                    BeginCharge(up, zone);
+                    return;
+                }
             }
             if (!_grabber.IsHolding && _grabber.ScriptGrab()) return;
             BeginCharge(null, HitZone.Head);
+        }
+
+        /// <summary>Getting up but still low (settling as the ragdoll, or the first 40 % of the get-up clip): LMB grabs.</summary>
+        public static bool StillLow(GreyboxNpc npc)
+        {
+            NpcGetUp g = npc.GetUp;
+            if (g == null || g.Current == NpcGetUp.Step.Settling || (npc.Ragdoll != null && npc.Ragdoll.Active)) return true;
+            return g.ClipSeconds > 0f && g.ClipTime < g.ClipSeconds * 0.4f;
+        }
+
+        // The palm sweeps across the view: right hand right to left, the left hand the other way.
+        private float SideSign() => PlayerArmsV01.FpSlapSide == 1 ? -1f : 1f;
+
+        private Vector3 SwipeDir()
+        {
+            Vector3 r = View != null ? View.transform.right : transform.right;
+            r.y = 0f;
+            return r.sqrMagnitude > 1e-4f ? -r.normalized * SideSign() : -transform.right;
         }
 
         private void BeginCharge(CaptureV2Npc target, HitZone zone)
         {
             _slapTarget = target;
             _slapZone = zone;
-            _chargeStart = Time.time;
+            _chargeStart = _pressAt = Time.time;
             _charge = 0f;
-            _punchSent = false;
+            _entryFrom = _lastPose.Active && Time.time - _lastPoseAt < 0.12f ? _lastPose : CaptureV2Palm.Rest;
+            _swipeAt = -1f;
             if (target != null && target.Npc.State == NpcState.Free) CaptureV2Authority.Freeze(target, this);
         }
 
-        // LMB up: the strike. A quick click still cocks the arm MinWindup s; the arms' punch reaches him ContactTime later.
+        // LMB up: the strike. A quick click still cocks the palm MinWindup s; the swipe reaches him Swipe s later.
         private void ReleaseSlap()
         {
             if (_chargeStart < 0f) return;
             float held = Time.time - _chargeStart;
             _charge = CaptureV2Rules.Charge(T, held);
             _chargeStart = -1f;
-            _strikeLen = Mathf.Max(0f, T.MinWindup - held) + OnlyVolunteers.Player.Hands.ArmPunchV01.ContactTime;
+            _strikeLen = Mathf.Max(0f, T.MinWindup - held) + CaptureV2Palm.Swipe;
             _strikeAt = Time.time + _strikeLen;
+            _swipeAt = _strikeAt - CaptureV2Palm.Swipe;
+            _swipeCharge = _charge;
+            _whooshSent = false;
         }
 
         // What the crosshair finds within the slap reach: the exact ray first, then a fat sphere along it.
@@ -262,38 +316,65 @@ namespace OnlyVolunteers.Capture.V2
                     best = h.distance;
                 }
             }
+            if (npc == null)
+            {
+                // rising in a get-up clip it has no collider yet: near the ray is enough
+                float best = float.MaxValue;
+                foreach (GreyboxNpc c in GreyboxNpc.All)
+                {
+                    if (c == null || c.State != NpcState.GettingUp) continue;
+                    Vector3 at = c.transform.position + Vector3.up * 0.45f;
+                    float along = Vector3.Dot(at - ray.origin, ray.direction);
+                    if (along < 0f || along > reach + 0.4f || along >= best) continue;
+                    if (Vector3.Distance(ray.origin + ray.direction * along, at) > 0.7f) continue;
+                    npc = c;
+                    point = at;
+                    best = along;
+                }
+            }
             if (npc == null) return false;
             zone = npc.ZoneAlong(ray);
             return true;
         }
 
+        // The camera never rolls or leans for the slap (Vadim 31.10): charging pushes the view in a few degrees toward
+        // his face; the contact holds the frame (hit-stop), snaps a tiny yaw along the swipe with a short shake and pops
+        // the field of view back.
         private void TickWindup()
         {
             float now = Time.time;
             if (_chargeStart >= 0f)
             {
-                // charging: the view leans back, turns and tilts further the longer LMB is held; full: a tense tremble
                 _charge = CaptureV2Rules.Charge(T, now - _chargeStart);
-                float cock = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((now - _chargeStart) / 0.18f));
-                float shiver = _charge >= 1f ? Mathf.Sin(now * 70f) * 0.5f : 0f;
-                _lean = new Vector3(-5f * cock - 5f * _charge, -8f * cock - 9f * _charge + shiver, 7f * cock + 6f * _charge);
-                CaptureV2Juice.Lean(_lean);
+                float entry = Mathf.Clamp01((now - _pressAt) / CaptureV2Palm.Entry);
+                CaptureV2Juice.Fov(-T.SlapPushIn * (0.25f + 0.75f * _charge) * entry, 7f);
                 if (_slapTarget != null && _slapTarget.Current == CaptureV2Npc.Mode.Frozen) _slapTarget.HoldFrozen();
                 if (now - _chargeStart >= T.ChargeAutoRelease) ReleaseSlap();
                 return;
             }
             if (_strikeAt <= 0f) return;
-            // the strike: the lean snaps back forward
-            float k = Mathf.Clamp01((_strikeAt - now) / Mathf.Max(0.01f, _strikeLen));
-            CaptureV2Juice.Lean(_lean * (k * k));
+            if (now < _swipeAt) CaptureV2Juice.Fov(-T.SlapPushIn * (0.25f + 0.75f * _charge), 7f); // a quick click still cocking
             if (_slapTarget != null && _slapTarget.Current == CaptureV2Npc.Mode.Frozen) _slapTarget.HoldFrozen();
             Vector3 point = SlapPoint();
             float p = _charge;
-            if (!_punchSent && now >= _strikeAt - OnlyVolunteers.Player.Hands.ArmPunchV01.ContactTime)
+            if (!_whooshSent)
             {
-                _punchSent = true;
-                OnlyVolunteers.Player.Hands.PlayerArmsV01.LocalPunch(_slapTarget != null, point, 0.6f + 0.4f * p);
-                CaptureV2Sounds.Play(CaptureV2Sounds.Whoosh, View.transform.position + View.transform.forward * 0.6f, 0.5f + 0.4f * p, 1.35f - 0.35f * p);
+                // Vadim's hit sound (only it, 31.10) is started its peak's lead before the contact, so the peak lands on the
+                // contact frame (a part of the lead-in is skipped when the swipe is shorter); a swing at nothing only swishes
+                float lead = CaptureV2Sounds.SlapHitPeak(p), left = _strikeAt - now;
+                if (_slapTarget != null && CaptureV2Sounds.HasSlapHit)
+                {
+                    if (left <= lead)
+                    {
+                        _whooshSent = true;
+                        CaptureV2Sounds.PlaySlapHit(p, point, 0.85f + 0.15f * p, lead - left);
+                    }
+                }
+                else if (now >= _swipeAt)
+                {
+                    _whooshSent = true;
+                    CaptureV2Sounds.Play(CaptureV2Sounds.Whoosh, View.transform.position + View.transform.forward * 0.5f, 0.35f + 0.3f * p, 1.45f - 0.3f * p);
+                }
             }
             if (now < _strikeAt) return;
             _strikeAt = -1f;
@@ -304,14 +385,53 @@ namespace OnlyVolunteers.Capture.V2
                 Vector3 to = _slapTarget.Center - Feet;
                 to.y = 0f;
                 if (_slapTarget == _held || to.magnitude <= T.SlapLungeReach)
-                    landed = CaptureV2Authority.Slap(_slapTarget, this, Feet, point, _slapZone, p);
+                    landed = CaptureV2Authority.Slap(_slapTarget, this, Feet, point, _slapZone, p, SwipeDir());
             }
+            LastLanded = landed;
             if (!landed) return;
             CaptureV2Juice.HitStop(T.SlapHitStop * (1f + T.ChargeHitStopGain * p));
-            CaptureV2Juice.Shake(T.SlapShake * (1f + T.ChargeShakeGain * p), 0.25f + 0.2f * p);
-            CaptureV2Juice.Kick(1.5f + 2.5f * p, -2.5f - 3f * p, -4f - 4f * p);
-            CaptureV2Sounds.Play(CaptureV2Sounds.Smack, point, 1f, 1f - 0.22f * p);
-            Sfx.PlayAt(SfxIds.HitHead, point, 0.8f + 0.2f * p);
+            CaptureV2Juice.Shake(T.SlapShake * (1f + T.ChargeShakeGain * p), 0.07f + 0.04f * p);
+            CaptureV2Juice.KickFast(0.25f + 0.35f * p, -SideSign() * T.SlapKickYaw * (1f + p));
+            CaptureV2Juice.FovPop(0.7f + 0.8f * p);
+            if (!CaptureV2Sounds.HasSlapHit)
+            {
+                CaptureV2Sounds.Play(CaptureV2Sounds.Smack, point, 1f, 1f - 0.22f * p); // no recorded hit: the synthesised one
+                Sfx.PlayAt(SfxIds.HitHead, point, 0.8f + 0.2f * p);
+            }
+            if (p >= 0.98f)
+            {
+                // full charge only: a small burst of stars (the spit is his: CaptureV2Npc)
+                PlayerArmsTuningV01 at = PlayerArmsTuningV01.Load();
+                if (at != null) PunchStarsV01.Schedule(point, 0.55f, 0f, Mathf.Max(3, at.StarCount / 2), at.StarSize * 0.6f, at.StarLife * 0.7f);
+            }
+        }
+
+        // The first-person palm this frame (CaptureV2Palm): the wind-up while LMB is held or a quick click still cocks,
+        // then the swipe, the contact, the follow-through and away; with the smear behind the swipe.
+        private void UpdatePalm()
+        {
+            float now = Time.time;
+            PlayerArmsV01.FpArmPoseV01 pose = default;
+            float s = -1f;
+            if (_chargeStart >= 0f || (_strikeAt > 0f && now < _swipeAt))
+                pose = CaptureV2Palm.Cock((now - _pressAt) / CaptureV2Palm.Entry, _charge, now, true, _entryFrom);
+            else if (_swipeAt > 0f)
+            {
+                s = now - _swipeAt;
+                if (!CaptureV2Palm.Path(s, _swipeCharge, out pose))
+                {
+                    _swipeAt = -1f;
+                    s = -1f;
+                }
+            }
+            if (pose.Active)
+            {
+                pose.Frame = Time.frameCount;
+                _lastPose = pose;
+                _lastPoseAt = now;
+            }
+            PlayerArmsV01.FpSlap = pose;
+            CaptureV2Palm.Smear(s, _swipeCharge, PlayerArmsV01.FpSlapSide);
         }
 
         // Where the smack lands now: the clinging hand's anchor, a lying head, a standing face.
@@ -509,8 +629,12 @@ namespace OnlyVolunteers.Capture.V2
                 if (_throwOffer >= 0)
                     hint = Rig.Van.FreeSeat(_throwOffer) >= 0 ? "E — закинуть в бусик     " + hint : "E — закинуть (мест нет, отскочит!)     " + hint;
             }
-            else if (FindTarget(out GreyboxNpc npc, out _, out _) && npc.State == NpcState.Free) hint = "ЛКМ — шлёпнуть (зажми — сильнее)";
-            else if (FindTarget(out GreyboxNpc down, out _, out _) && down.State == NpcState.Down) hint = "ЛКМ — схватить";
+            else if (FindTarget(out GreyboxNpc npc, out _, out _))
+            {
+                if (npc.State == NpcState.Free) hint = "ЛКМ — шлёпнуть (зажми — сильнее)";
+                else if (npc.State == NpcState.Down) hint = "ЛКМ — схватить";
+                else if (npc.State == NpcState.GettingUp) hint = StillLow(npc) ? "ЛКМ — схватить, пока встаёт" : "ЛКМ — шлёпнуть, пока встаёт";
+            }
             if (_chargeStart >= 0f) hint = _charge >= 1f ? "ЗАМАХ НА ПОЛНУЮ!" : "замах...";
             if (Time.time - _popAt < 1.2f) hint = "ОТОРВАЛ!";
             if (_held == null && CaptureV2Rig.Instance != null)

@@ -319,6 +319,30 @@ namespace OnlyVolunteers.Player.Hands
             return arms != null ? arms.StartLocalPunch(landed, target, strength) : (ushort)0;
         }
 
+        /// <summary>A first-person arm pose given from outside (V2 capture's open-palm slap, CaptureV2Hands): the grip (palm
+        /// centre), finger and palm directions and the elbow pole, all in the first-person anchor's space for the RIGHT hand
+        /// (x is mirrored for the left), plus finger curl, finger spread (0..1) and the rubber stretch. Valid only in the frame
+        /// it was set (Frame == Time.frameCount), so a gone driver never leaves the arm stuck.</summary>
+        public struct FpArmPoseV01
+        {
+            public bool Active;
+            public int Frame;
+            public Vector3 Grip, Fingers, Palm, Pole;
+            public float Curl, Spread, Stretch;
+        }
+
+        /// <summary>V2 slap: set every frame while the slap arm should show (see <see cref="FpArmPoseV01"/>). It takes the free
+        /// arm (FirstPersonHandsRuleV01.PunchSide) and replaces the Q punch while it lasts.</summary>
+        public static FpArmPoseV01 FpSlap;
+        /// <summary>The arm the slap pose drives (0 right, 1 left), as last decided.</summary>
+        public static int FpSlapSide { get; private set; }
+        /// <summary>Finger fan of the slap palm (degrees at spread 1, about each finger root's local Z).</summary>
+        public static float SlapSpreadDeg = 17f, SlapSpreadThumb = -28f;
+        /// <summary>The local first-person anchor (child of the view camera), null when there are no first-person arms.</summary>
+        public Transform FirstPersonAnchor => anchor;
+        /// <summary>The first-person arms' layer (for things drawn with them).</summary>
+        public int FirstPersonLayer => view != null ? view.Transform.gameObject.layer : 0;
+
         /// <summary>The last local punch cue (review notes, tests).</summary>
         public PunchCueV01 LastPunch => punch;
         /// <summary>Dev (review shots): the local punch is drawn frozen this many seconds after its start; negative = off.</summary>
@@ -394,6 +418,12 @@ namespace OnlyVolunteers.Player.Hands
             // Fedya 30.10: no idle hands. Right: a one-hand item (or a two-hand hold); left: a two-hand hold only; the
             // swinging arm for its punch. Once nothing is engaged the arms drop out of view and are no longer drawn.
             int punchSide = punchT >= 0f ? punch.Side : -1;
+            bool slap = FpSlap.Active && FpSlap.Frame == Time.frameCount;
+            if (slap)
+            {
+                FpSlapSide = FirstPersonHandsRuleV01.PunchSide(intent.Right.Active, intent.Left.Active, intent.TwoHanded);
+                punchSide = FpSlapSide; // the slap arm replaces the punch while it lasts
+            }
             FirstPersonHandsRuleV01.Engaged(intent.Right.Active, intent.Left.Active, intent.TwoHanded, punchSide,
                 out bool engageRight, out bool engageLeft);
             bool engaged = allowed && (engageRight || engageLeft);
@@ -451,7 +481,8 @@ namespace OnlyVolunteers.Player.Hands
                 Vector3 pole = shoulder + anchor.rotation * Mirror(tuning.FpPole, sign);
                 if (i == punchSide)
                 {
-                    PunchFirstPerson(fp, ch, rig, side, sign, shoulder, pole, grip, punchT, blend);
+                    if (slap) SlapFirstPerson(fp, ch, rig, side, sign, shoulder);
+                    else PunchFirstPerson(fp, ch, rig, side, sign, shoulder, pole, grip, punchT, blend);
                     continue;
                 }
                 Vector3 reach = (grip - shoulder).sqrMagnitude > 1e-6f ? (grip - shoulder).normalized : forward;
@@ -511,6 +542,38 @@ namespace OnlyVolunteers.Player.Hands
             ch.Drive(wristLocal, stretch, 1f);
             rig.Solve(side, wrist, hand, pole, stretch, 1f);
             rig.Curl(side, ArmPunchV01.Curl(punchT), 1f);
+            fp.StretchShown[i] = stretch;
+        }
+
+        /// <summary>First person, the V2 open-palm slap: the arm goes exactly where FpSlap says (no spring: the timing is
+        /// the slap's own), fingers flat and fanned; the channel follows, so once the pose stops the arm springs home.</summary>
+        private void SlapFirstPerson(SausageArmsBodyV01 fp, ArmChannelV01 ch, StretchArmRigV01 rig, StretchArmRigV01.Side side,
+            float sign, Vector3 shoulder)
+        {
+            int i = (int)side;
+            FpArmPoseV01 s = FpSlap;
+            Quaternion hand = ArmStretchMath.HandRotation(anchor.rotation * Mirror(s.Fingers, sign), anchor.rotation * Mirror(s.Palm, sign));
+            fp.HandShown[i] = Quaternion.Inverse(anchor.rotation) * hand;
+            fp.HandShownSet[i] = true;
+            Vector3 wrist = rig.WristForGrip(side, anchor.TransformPoint(Mirror(s.Grip, sign)), hand);
+            Vector3 pole = shoulder + anchor.rotation * Mirror(s.Pole, sign);
+            float need = ArmStretchMath.SoftClamp(ArmStretchMath.NeededStretch(Vector3.Distance(wrist, shoulder), rig.RestReach(side), 0f, 0f), tuning.MaxStretch);
+            float stretch = Mathf.Max(0.85f, need * Mathf.Max(0.5f, s.Stretch));
+            ch.Drive(anchor.InverseTransformPoint(wrist), stretch, 1f);
+            rig.Solve(side, wrist, hand, pole, stretch, 1f);
+            rig.Curl(side, s.Curl, 1f);
+            if (s.Spread > 0f)
+            {
+                var a = rig[side];
+                for (int k = 0; k < a.Fingers.Length; k++)
+                {
+                    if (a.Segment[k] != 1) continue;
+                    string n = a.Fingers[k].name;
+                    float deg = a.Thumb[k] ? SlapSpreadThumb : n.Contains("Index") ? -SlapSpreadDeg : n.Contains("Middle") ? -SlapSpreadDeg * 0.3f
+                        : n.Contains("Ring") ? SlapSpreadDeg * 0.55f : n.Contains("Pinky") ? SlapSpreadDeg * 1.2f : 0f;
+                    a.Fingers[k].localRotation *= Quaternion.AngleAxis(deg * s.Spread, Vector3.forward);
+                }
+            }
             fp.StretchShown[i] = stretch;
         }
 

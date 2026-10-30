@@ -110,6 +110,14 @@ namespace OnlyVolunteers.Capture.V2
         public Material Yellow => _yellow != null ? _yellow : _yellow = Mat(new Color(1f, 0.86f, 0.15f), 0.6f);
         public Material Strap => _strap != null ? _strap : _strap = Mat(new Color(0.12f, 0.12f, 0.13f), 0f);
         public Material Buckle => _buckle != null ? _buckle : _buckle = Mat(new Color(0.72f, 0.72f, 0.74f), 0f, 0.8f);
+        /// <summary>The slap's handprint: a flat cartoon red, a little self-lit so it reads in the shade.</summary>
+        public Material Handprint => _handprint != null ? _handprint : _handprint = Mat(new Color(0.86f, 0.1f, 0.12f), 0.25f);
+        /// <summary>Spit drops of a full-charge slap.</summary>
+        public Material Spit => _spit != null ? _spit : _spit = Mat(new Color(0.86f, 0.94f, 1f), 0.35f);
+        private Material _handprint, _spit;
+
+        /// <summary>A placeholder material for other V2 capture bits (the slap smear).</summary>
+        public static Material MakeMaterial(Color color, float emission) => Mat(color, emission);
 
         private static Material Mat(Color color, float emission, float metallic = 0f)
         {
@@ -140,6 +148,63 @@ namespace OnlyVolunteers.Capture.V2
         public Mesh Box => _box != null ? _box : _box = MakeBox();
         public Mesh Star => _star != null ? _star : _star = MakeStar(5, 1f, 0.45f, 0.35f);
         public Mesh Ball => _ball != null ? _ball : _ball = MakeBall(10, 7);
+        /// <summary>A stylised flat handprint (palm, four fanned fingers, thumb on +x), about 0.1 m tall, fingers up (+y),
+        /// facing +z, curved a little to sit on a cheek; both windings.</summary>
+        public Mesh HandprintMesh => _handprintMesh != null ? _handprintMesh : _handprintMesh = MakeHandprint();
+        private Mesh _handprintMesh;
+
+        private static Mesh MakeHandprint()
+        {
+            var v = new List<Vector3>();
+            var t = new List<int>();
+            void Fan(Vector2 centre, Vector2 radius, float rot, int n)
+            {
+                int c = v.Count;
+                v.Add(centre);
+                for (int i = 0; i <= n; i++)
+                {
+                    float a = i / (float)n * Mathf.PI * 2f;
+                    Vector2 p = new(Mathf.Cos(a) * radius.x, Mathf.Sin(a) * radius.y);
+                    v.Add(centre + Rot(p, rot));
+                }
+                for (int i = 0; i < n; i++) { t.Add(c); t.Add(c + 1 + i); t.Add(c + 2 + i); }
+            }
+            // a finger: a capsule from 'root' along angle 'deg' (0 = up), length, width
+            void Finger(Vector2 root, float deg, float length, float width)
+            {
+                Vector2 dir = Rot(Vector2.up, deg);
+                Vector2 tip = root + dir * (length - width * 0.5f);
+                Vector2 side = new Vector2(dir.y, -dir.x) * (width * 0.5f);
+                int c = v.Count;
+                v.Add(root - side); v.Add(root + side); v.Add(tip + side); v.Add(tip - side);
+                t.Add(c); t.Add(c + 2); t.Add(c + 1); t.Add(c); t.Add(c + 3); t.Add(c + 2);
+                Fan(tip, new Vector2(width * 0.5f, width * 0.5f), 0f, 10);
+            }
+            Fan(new Vector2(0f, -0.012f), new Vector2(0.026f, 0.03f), 0f, 18);
+            Finger(new Vector2(-0.018f, 0.008f), -16f, 0.036f, 0.0105f); // little finger (on -x)
+            Finger(new Vector2(-0.0065f, 0.012f), -6f, 0.045f, 0.011f);
+            Finger(new Vector2(0.0055f, 0.013f), 3f, 0.048f, 0.0112f);
+            Finger(new Vector2(0.017f, 0.009f), 12f, 0.043f, 0.011f);  // index
+            Finger(new Vector2(0.022f, -0.022f), 62f, 0.034f, 0.0125f); // thumb (on +x)
+            // curved like a cheek: the edges a little back (-z)
+            for (int i = 0; i < v.Count; i++) { Vector3 p = v[i]; p.z = -6f * (p.x * p.x + p.y * p.y * 0.5f); v[i] = p; }
+            int count = t.Count;
+            for (int i = 0; i < count; i += 3) { t.Add(t[i]); t.Add(t[i + 2]); t.Add(t[i + 1]); }
+            var m = new Mesh { name = "v2 handprint" };
+            m.SetVertices(v);
+            m.SetTriangles(t, 0);
+            var n = new Vector3[v.Count];
+            for (int i = 0; i < n.Length; i++) n[i] = Vector3.forward;
+            m.normals = n;
+            m.RecalculateBounds();
+            return m;
+        }
+
+        private static Vector2 Rot(Vector2 p, float deg)
+        {
+            float r = -deg * Mathf.Deg2Rad, c = Mathf.Cos(r), s = Mathf.Sin(r);
+            return new Vector2(p.x * c - p.y * s, p.x * s + p.y * c);
+        }
 
         /// <summary>A child with a mesh and a material, no collider (props on ragdoll bones must never add colliders).</summary>
         public static GameObject Prop(string name, Transform parent, Mesh mesh, Material material, Vector3 localPosition, Quaternion localRotation, Vector3 scale)
@@ -239,8 +304,9 @@ namespace OnlyVolunteers.Capture.V2
     public static class CaptureV2Authority
     {
         public static void Freeze(CaptureV2Npc npc, object who) => npc?.Freeze(who);
-        public static bool Slap(CaptureV2Npc npc, object who, Vector3 from, Vector3 point, HitZone zone, float charge) =>
-            npc != null && npc.Smack(who, from, point, zone, charge);
+        public static bool Slap(CaptureV2Npc npc, object who, Vector3 from, Vector3 point, HitZone zone, float charge, Vector3 swipe = default) =>
+            npc != null && npc.Smack(who, from, point, zone, charge, swipe);
+        public static bool Redrop(CaptureV2Npc npc, object who, Vector3 from, Vector3 swipe) => npc != null && npc.Redrop(who, from, swipe);
         public static void Grabbed(CaptureV2Npc npc, object who, GrabPointV2 point, int part) => npc?.OnGrabbed(who, point, part);
         public static void Released(CaptureV2Npc npc, object who) => npc?.OnReleased(who);
         public static bool Throw(CaptureV2Npc npc, CaptureV2Hands who, CaptureV2Van van, int door) => npc != null && van != null && npc.BeginThrow(who, van, door);

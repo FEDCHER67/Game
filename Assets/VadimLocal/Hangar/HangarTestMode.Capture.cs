@@ -106,6 +106,180 @@ public sealed partial class HangarTestMode
         _walking = false;
     }
 
+    // ------------------------------------------------------------------ the slap rework (31.10): -hangarTest slap
+    // A full-charge slap with first-person frames (charge pose, smear, contact, follow-through), the head whip and the
+    // handprint from a witness camera, the knock-out ladder (7 s charged, then 3 / 2 / 1), the grab while he gets up and
+    // the slap while he rises. Game time runs at a fixed 1/120 s per frame (Time.captureDeltaTime), so the 3-frame swipe
+    // is caught however slow the shots are.
+    private IEnumerator SlapTest()
+    {
+        _lockYaw = float.NaN;
+        yield return Until(() => CaptureV2Rig.Instance != null && CaptureV2Rig.Instance.Hands != null, 15f);
+        var rig = CaptureV2Rig.Instance;
+        Check("V2 rig installed at runtime", rig != null && rig.Hands != null);
+        if (rig == null || rig.Hands == null) yield break;
+        _v2 = rig.Hands;
+        _v2.ScriptDriven = true;
+        _v2.Grabber.ScriptDriven = true;
+        CaptureV2Tuning T = rig.Tuning;
+        T.AutoCling = false;
+        var bank = CaptureV2Sounds.Bank;
+        Check($"slap hit sounds: {(bank != null ? $"light {bank.Light.Length}, medium {bank.Medium.Length}, heavy {bank.Heavy.Length}, fallback {(bank.Hit != null ? bank.Hit.name : "none")}" : "none (synthesised fallback)")}",
+            bank != null && bank.Light.Length == 3 && bank.Medium.Length == 3 && bank.Heavy.Length == 3 && bank.Hit != null);
+        var npcs = GreyboxNpc.All.Where(n => n != null && n.isActiveAndEnabled).OrderBy(n => n.name).ToList();
+        if (npcs.Count < 1) { Line("no NPC"); yield break; }
+        Time.captureDeltaTime = 1f / 120f;
+        CaptureV2Npc a = rig.Ensure(npcs[0]);
+        yield return Until(() => a.Npc.State == NpcState.Free, 8f);
+        Vector3 at = World(-14f, -2f);
+        a.TestPlaceStanding(at, 0f);
+        a.TestHold(true);
+        Vector3 front = a.transform.forward;
+        _pawn.Teleport(at + front * 1.25f, Quaternion.LookRotation(-front).eulerAngles.y);
+        yield return null;
+        yield return null;
+        _v2.Aim(at + Vector3.up * 1.45f);
+        yield return null;
+        _v2.Aim(at + Vector3.up * 1.45f);
+        yield return null;
+
+        // 1. the full-charge slap, frame by frame
+        _v2.ScriptSlap(1f);
+        float press = Time.time;
+        Check("charge: he freezes in shock", a.Current == CaptureV2Npc.Mode.Frozen, a.Current.ToString());
+        yield return UntilGame(() => Time.time - press >= 0.9f, 3f);
+        // the push-in eases in real (unscaled) time while this test runs fixed game time: only its direction is checked
+        Check($"charge: the view pushes in ({CaptureV2Juice.FovOffset:0.0} deg of fov, target {-T.SlapPushIn:0.0} at full charge)", CaptureV2Juice.FovOffset < -1f && CaptureV2Juice.FovOffset > -5f);
+        yield return FpShot("1_charge_pose");
+        int recorded0 = CaptureV2Sounds.PlayedRecorded;
+        yield return UntilGame(() => _v2.SwipeTime >= 0.032f, 3f);
+        float swipeAt = Time.time - _v2.SwipeTime;
+        yield return FpShot("2_smear_mid_swing");
+        yield return UntilGame(() => _v2.SwipeTime >= CaptureV2Palm.Swipe || !_v2.WindingUp, 1f);
+        yield return null;
+        Check($"contact {Time.time - swipeAt:0.000} s after the swipe began (want {CaptureV2Palm.Swipe:0.000}), landed", _v2.LastLanded && a.Current == CaptureV2Npc.Mode.Spinning, a.Current.ToString());
+        Check($"hit-stop on the contact frame (time scale {Time.timeScale:0.00})", Time.timeScale < 0.1f);
+        Check($"the hit sound started before the contact ({CaptureV2Sounds.LastSlapHit}, tier {CaptureV2Sounds.SlapTier(1f)})", CaptureV2Sounds.PlayedRecorded == recorded0 + 1 && CaptureV2Sounds.LastSlapHit.Contains("Heavy"));
+        yield return FpShot("3_contact_frame");
+        yield return UntilGame(() => Time.time - a.LastSmackTime >= 0.035f, 2f);
+        Check($"his head whips first ({a.HeadSnapNow:0} deg)", Mathf.Abs(a.HeadSnapNow) > 30f);
+        Vector3 head = at + Vector3.up * 1.55f;
+        Vector3 side = Vector3.Cross(Vector3.up, front);
+        yield return WShot("slap_5_head_snap", head + front * 1.5f + side * 1.1f + Vector3.up * 0.15f, head);
+        yield return UntilGame(() => _v2.SwipeTime >= CaptureV2Palm.Swipe + 0.045f || _v2.SwipeTime < 0f, 1f);
+        yield return FpShot("4_follow_through");
+        if (a.LastHandprint != null)
+        {
+            // the struck cheek, turned toward the player by the whip: the handprint close-up while he still stands
+            Transform p = a.LastHandprint;
+            yield return WShot("slap_6_handprint", p.position + p.forward * 0.5f + Vector3.up * 0.04f, p.position);
+        }
+        yield return UntilGame(() => a.Current == CaptureV2Npc.Mode.KnockedOut, 2f);
+        float koStart = Time.time;
+        float want = CaptureV2Rules.KnockOut(T, 0) * (1f + T.ChargeKnockOutGain);
+        Check($"full charge: out cold {a.LastKnockOut:0.00} s (want {want:0.00})", Mathf.Abs(a.LastKnockOut - want) < 0.01f);
+        Check($"handprint on the cheek ({a.Handprints})", a.Handprints == 1 && a.LastHandprint != null && a.LastHandprint.gameObject.activeInHierarchy);
+        yield return UntilGame(() => Time.time - koStart >= 1.2f, 3f);
+        if (a.LastHandprint != null)
+        {
+            Transform p = a.LastHandprint;
+            NpcRagdoll rd = a.Npc.Ragdoll;
+            Vector3 h = rd != null && rd.Active ? rd.Landmark(NpcLandmark.Head) : p.position;
+            yield return WShot("slap_6b_handprint_wide", h + p.forward * 1.3f + Vector3.up * 0.7f, h);
+        }
+        yield return UntilGame(() => a.Current != CaptureV2Npc.Mode.KnockedOut, 10f);
+        float lasted = Time.time - koStart;
+        Check($"knock-out lasted {lasted:0.00} s game time (want {want:0.00})", Mathf.Abs(lasted - want) < 0.25f);
+
+        // 2. the grab while he gets up: down again, ladder 2nd (3 s)
+        yield return UntilGame(() => a.Npc.State == NpcState.GettingUp, 2f);
+        Check($"he gets up ({a.Npc.State}, {a.Npc.GetUp?.Current})", a.Npc.State == NpcState.GettingUp);
+        yield return UntilGame(() => false, 0.1f);
+        NpcRagdoll r = a.Npc.Ragdoll;
+        Vector3 hips = r != null && r.Active ? r.Landmark(NpcLandmark.Pelvis) : a.transform.position + Vector3.up * 0.3f;
+        Vector3 off = Vector3.Cross(Vector3.up, (r != null && r.Active ? r.Landmark(NpcLandmark.Head) : a.transform.position + a.transform.forward) - hips);
+        off.y = 0f;
+        off = off.sqrMagnitude > 1e-4f ? off.normalized : Vector3.right;
+        _pawn.Teleport(new Vector3(hips.x, _hangar.position.y + 0.05f, hips.z) + off * 1.0f, Quaternion.LookRotation(-off).eulerAngles.y);
+        yield return null;
+        yield return null;
+        hips = r != null && r.Active ? r.Landmark(NpcLandmark.Pelvis) : a.transform.position + Vector3.up * 0.3f;
+        _v2.Aim(hips);
+        string step = $"{a.Npc.State}/{a.Npc.GetUp?.Current}, low {CaptureV2Hands.StillLow(a.Npc)}";
+        bool grabbed = _v2.ScriptLmbGrab();
+        yield return null;
+        Check($"grab while getting up ({step}): held, down again", grabbed && _v2.HeldNpc == a && a.Npc.IsDown, $"held {_v2.HeldNpc?.name}, {a.Npc.State}, {a.Current}");
+        Check($"grab while getting up: out cold {a.LastKnockOut:0.00} s (ladder 2nd {CaptureV2Rules.KnockOut(T, 1):0.00})", Mathf.Approximately(a.LastKnockOut, CaptureV2Rules.KnockOut(T, 1)));
+
+        // 3. re-slaps in the hands: 2 s, then 1 s
+        for (int k = 2; k <= 3; k++)
+        {
+            yield return UntilGame(() => !_v2.WindingUp, 1f);
+            yield return UntilGame(() => false, 0.3f);
+            int before = a.Slaps;
+            _v2.ScriptSlap(0f);
+            float t0 = Time.time;
+            yield return UntilGame(() => a.Slaps > before, 1f);
+            Check($"re-slap {k}: {Time.time - t0:0.000} s click-to-contact, out cold {a.LastKnockOut:0.00} s (want {CaptureV2Rules.KnockOut(T, k):0.00})",
+                a.Slaps > before && Mathf.Approximately(a.LastKnockOut, CaptureV2Rules.KnockOut(T, k)));
+        }
+
+        // 4. the slap while he rises: down again (ladder 1 s)
+        yield return UntilGame(() => !_v2.WindingUp, 1f);
+        _v2.Grabber.ScriptRelease();
+        a.Npc.StunLeft = 0.05f;
+        yield return UntilGame(() => a.Npc.State == NpcState.GettingUp && !CaptureV2Hands.StillLow(a.Npc), 8f);
+        Check($"he rises in the get-up clip ({a.Npc.GetUp?.Current}, {a.Npc.GetUp?.ClipTime:0.00}/{a.Npc.GetUp?.ClipSeconds:0.00} s)", a.Npc.State == NpcState.GettingUp && !CaptureV2Hands.StillLow(a.Npc));
+        Vector3 f2 = a.transform.forward;
+        f2.y = 0f;
+        f2 = f2.sqrMagnitude > 1e-4f ? f2.normalized : Vector3.forward;
+        _pawn.Teleport(new Vector3(a.transform.position.x, _hangar.position.y + 0.05f, a.transform.position.z) + f2 * 1.2f, Quaternion.LookRotation(-f2).eulerAngles.y);
+        yield return null;
+        _v2.Aim(a.transform.position + Vector3.up * 0.9f);
+        int slapsBefore = a.Slaps;
+        _v2.ScriptSlap(0f);
+        bool started = _v2.WindingUp;
+        yield return UntilGame(() => a.Slaps > slapsBefore, 1f);
+        yield return null;
+        Check($"slap while rising: down again (started {started}, {a.Npc.State}, {a.Current}, out {a.LastKnockOut:0.00} s)",
+            a.Slaps > slapsBefore && a.Npc.IsDown && a.Current == CaptureV2Npc.Mode.KnockedOut);
+
+        Time.captureDeltaTime = 0f;
+        if (_witness != null) Destroy(_witness.gameObject);
+        Line($"SLAP RESULT: {_pass} pass, {_fail} fail; sounds played {CaptureV2Sounds.Played} (recorded {CaptureV2Sounds.PlayedRecorded})");
+    }
+
+    private static IEnumerator UntilGame(System.Func<bool> done, float seconds)
+    {
+        float end = Time.time + seconds, real = Time.realtimeSinceStartup + seconds * 4f + 10f;
+        while (!done() && Time.time < end && Time.realtimeSinceStartup < real) yield return null;
+    }
+
+    // The player's own view (first-person arms, smear, field of view), 960 x 540.
+    private IEnumerator FpShot(string name)
+    {
+        Camera cam = _v2 != null ? _v2.View : Camera.main;
+        if (cam == null) { Line("no view camera for " + name); yield break; }
+        var rt = RenderTexture.GetTemporary(960, 540, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 2);
+        var prev = cam.targetTexture;
+        cam.targetTexture = rt;
+        cam.aspect = 16f / 9f;
+        cam.Render();
+        cam.targetTexture = prev;
+        cam.ResetAspect();
+        var active = RenderTexture.active;
+        RenderTexture.active = rt;
+        var tex = new Texture2D(960, 540, TextureFormat.RGB24, false);
+        tex.ReadPixels(new Rect(0, 0, 960, 540), 0, 0);
+        tex.Apply();
+        RenderTexture.active = active;
+        RenderTexture.ReleaseTemporary(rt);
+        File.WriteAllBytes(Path.Combine(_out, "cap_slap_" + name + ".png"), tex.EncodeToPNG());
+        Destroy(tex);
+        Line($"shot cap_slap_{name} (swipe t {_v2.SwipeTime:0.000}, fov {cam.fieldOfView:0.0})");
+        yield return null;
+    }
+
     // ------------------------------------------------------------------ the run
     private IEnumerator CaptureTest()
     {
@@ -173,7 +347,7 @@ public sealed partial class HangarTestMode
             yield return WShot("01_slap_spin", at + side * 3.2f + front * 1.0f + Vector3.up * 1.6f, at + Vector3.up * 1.0f + front * 0.5f);
         }
         yield return Until(() => npc.Current == CaptureV2Npc.Mode.KnockedOut, 2f);
-        float wantKo = 2.5f * (1f + CaptureV2Rig.Instance.Tuning.ChargeKnockOutGain * charge);
+        float wantKo = CaptureV2Rules.KnockOut(CaptureV2Rig.Instance.Tuning, 0) * (1f + CaptureV2Rig.Instance.Tuning.ChargeKnockOutGain * charge);
         Check($"{npc.name}: down as the ragdoll, out cold {npc.LastKnockOut:0.00} s (want {wantKo:0.00})", npc.Current == CaptureV2Npc.Mode.KnockedOut && npc.Npc.Ragdoll != null && npc.Npc.Ragdoll.Active && Mathf.Abs(npc.LastKnockOut - wantKo) < 0.01f);
         if (charge > 0.5f)
         {
@@ -329,7 +503,7 @@ public sealed partial class HangarTestMode
         {
             _v2.ScriptSlap();
             yield return Until(() => npc.Current == CaptureV2Npc.Mode.KnockedOut, 1.5f);
-            Check($"{tag}: re-slap while dragging: out cold {npc.LastKnockOut:0.0} s (ladder 2nd)", npc.Current == CaptureV2Npc.Mode.KnockedOut && Mathf.Approximately(npc.LastKnockOut, 1.5f));
+            Check($"{tag}: re-slap while dragging: out cold {npc.LastKnockOut:0.0} s (ladder 2nd)", npc.Current == CaptureV2Npc.Mode.KnockedOut && Mathf.Approximately(npc.LastKnockOut, CaptureV2Rules.KnockOut(CaptureV2Rig.Instance.Tuning, 1)));
             yield return new WaitForSecondsRealtime(0.3f);
         }
         bool thrown = _v2.ScriptThrow();

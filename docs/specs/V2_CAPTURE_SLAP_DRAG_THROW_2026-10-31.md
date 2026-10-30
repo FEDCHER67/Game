@@ -10,7 +10,8 @@ Core rule: this action repeats all game long, so it must never get boring. Keep 
 
 ## 2. Knocked out (agreed)
 
-- Out cold for a short time: **2.5 s** (tunable).
+- Out cold **5 s** (7 s after a full charge), long enough to grab him and reach the van; re-slaps 3 / 2 / 1 s. No invulnerability while he gets up: a click early in the get-up grabs him, later it slaps him down (Vadim 31.10).
+- Sound: Vadim's own hit, baked into Light / Medium / Heavy tiers by charge (3 variants each, no repeats, pitch +-3 %). Rising wind-up sound while charging and quiet dizzy birds while out cold: candidates in Audio/Slap/Candidates, Vadim picks.
 - Face as funny as possible while out: X or spiral eyes, tongue out to the side, stars circling the head (readable from far).
 - 0.5 s before waking the face changes to "huh?.." as a warning.
 

@@ -73,6 +73,7 @@ public sealed partial class HangarTestMode : MonoBehaviour
         if (mode == "cargo" || mode == "all") yield return CargoDoors();
         if (mode == "shimmer") yield return Shimmer();
         if (mode == "capture") yield return CaptureTest();
+        if (mode == "slap") yield return SlapTest();
         Done();
     }
 
