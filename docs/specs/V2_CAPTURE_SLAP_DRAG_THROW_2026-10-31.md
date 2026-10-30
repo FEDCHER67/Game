@@ -18,14 +18,14 @@ Core rule: this action repeats all game long, so it must never get boring. Keep 
 
 One player holds ONE point: the **head**, the **collar (shirt scruff)**, **one arm** (left or right), or **one leg** (left or right). Nobody holds two legs alone. Each point has its own carry animation, its own resistance animation and its own throw (left/right mirrored).
 
-Balance rule (Vadim 31.10): no grab is the best answer. **The part you hold is the part he resists with; the rest of his body hits and catches on things.** His head hitting things keeps him out longer; his free hands clinging stop you hard.
+Balance rule (Vadim 31.10): no grab is the best answer. **The part you hold is the part he resists with; the rest of his body hits and catches on things.** His head hitting things keeps him out longer (a hard bonk knocks him out again); his free hands clinging stop you hard. Out cold, he clings to nothing.
 
 | Grab | Speed | He resists with the held part | The rest of the body | Best when |
 | --- | --- | --- | --- | --- |
 | Head | fastest, easiest | **bites**: a readable "teeth" wind-up, you snap your hand away (quick mouse flick back) or get bitten (you drop him, shake the hand) | trails behind, feet snag weakly (a couple of flicks free them); his head never hits, so he wakes soonest; bites start even when groggy | short way, you have the reflexes |
 | Collar | medium | **grabs your wrist with both hands** and twists; once awake he wriggles free fastest | dragged on his back, heels dig in and brake; his hands are busy with you, so he **never clings** to the world and cannot bite | short way through clutter, while he is still out |
 | Arm | medium (a bit faster than the leg) | **legs**: feet shuffle and scrape along the ground, a constant brake | **one free hand** sometimes clings, less often and weaker (one hand, easy yank); holds best once he is awake; strongest throw | he is awake and kicking |
-| Leg | slowest | kicks with the held leg | face down, **head bonks** every bump (keeps him out longest); **both hands free**, clings very often and hard, you must keep tearing him off | the van is far |
+| Leg | slowest | kicks with the held leg | face down, **head bonks** every bump: a hard bonk can knock him out again, and **while he is out he clings to nothing**; awake, **both hands free**, he clings very often and hard, you must keep tearing him off | the van is far |
 | Two players (e.g. arm + leg) | full | only squirms | cannot cling; escape meter at half speed | always, if you have a mate |
 
 Clothes slipping off (shirt from the collar, shoe/trousers from the leg): later, Vadim "потом подумаем".
