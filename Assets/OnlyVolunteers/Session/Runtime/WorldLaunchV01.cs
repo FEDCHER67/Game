@@ -10,32 +10,28 @@ namespace OnlyVolunteers.Session
 {
     /// <summary>
     /// The five world slots of the start menu (29.10) as files next to the existing saves (persistentDataPath/OnlyVolunteers,
-    /// the same CaptureSaveStore format, backups and atomic writes). Slot 1 IS the existing map save (editor:
+    /// the same CaptureSaveStore format, backups and atomic writes). The file names follow the launching menu's edition
+    /// (<see cref="WorldLaunchTargetV01.SlotFileName"/>). V1 (MainMenu_v01): slot 1 IS the existing map save (editor:
     /// capture_stageA_editor_W85_v02.json, build: capture_stageA_W85_v02.json, the play scene's own names), so the world
-    /// Fedya already plays shows up as card 1 and is never lost or renamed. Slots 2–5 are new files (ov_world_N.json; the
-    /// editor uses ov_world_N_editor.json like the other editor saves). Cards read the file header only through
-    /// CaptureSaveStore.Probe: name, Solo/Co-op, date, play time. Delete removes ONE slot's file, its backups and pointer.
+    /// Fedya already plays shows up as card 1 and is never lost or renamed; slots 2–5 are ov_world_N.json (the editor uses
+    /// ov_world_N_editor.json like the other editor saves). V2 (MainMenu_V2_v01, 31.10): five own files ov_v2_world_1..5,
+    /// never the v1 map save. Cards read the file header only through CaptureSaveStore.Probe: name, Solo/Co-op, date, play
+    /// time. Delete removes ONE slot's file, its backups and pointer.
     /// </summary>
     public static class WorldSlotsV01
     {
         public const int Count = MainMenuFlowV2.SlotCount;
-#if UNITY_EDITOR
-        const string Slot1 = "capture_stageA_editor_W85_v02.json";
-#else
-        const string Slot1 = "capture_stageA_W85_v02.json";
-#endif
 
         public static string Folder => Path.Combine(Application.persistentDataPath, "OnlyVolunteers");
 
-        public static string FileName(int slot)
-        {
-            if (slot <= 0) return Slot1;
+        static GameEditionV01 Edition => WorldLaunchV01.Target.Edition;
+
+        public static string FileName(int slot) =>
 #if UNITY_EDITOR
-            return "ov_world_" + (slot + 1).ToString(CultureInfo.InvariantCulture) + "_editor.json";
+            WorldLaunchTargetV01.SlotFileName(Edition, slot, true);
 #else
-            return "ov_world_" + (slot + 1).ToString(CultureInfo.InvariantCulture) + ".json";
+            WorldLaunchTargetV01.SlotFileName(Edition, slot, false);
 #endif
-        }
 
         public static string BasePath(int slot) => Path.Combine(Folder, FileName(slot));
 
@@ -65,9 +61,10 @@ namespace OnlyVolunteers.Session
             if (data != null)
             {
                 if (data.world != null && !string.IsNullOrEmpty(data.world.worldName)) card.Name = data.world.worldName;
-                else if (slot == 0) card.Name = "Мир карты (старое сохранение)";
+                else if (slot == 0 && Edition == GameEditionV01.V1Map) card.Name = "Мир карты (старое сохранение)";
                 card.Mode = WorldModeRules.Status(data.world);
                 if (card.Mode == WorldModeStatus.NoWorld) card.Mode = WorldModeStatus.LegacyNeedsChoice;
+                if (Edition == GameEditionV01.V2 && card.Mode == WorldModeStatus.LegacyNeedsChoice) NoModeV2(card); // V2 has no old worlds
                 if (DateTime.TryParse(data.savedUtc, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime utc))
                 {
                     card.SavedTicksUtc = utc.ToUniversalTime().Ticks;
@@ -79,8 +76,18 @@ namespace OnlyVolunteers.Session
             {
                 card.Mode = WorldModeStatus.LegacyNeedsChoice;
                 try { card.SavedTicksUtc = File.GetLastWriteTimeUtc(path).Ticks; } catch (Exception) { }
+                if (Edition == GameEditionV01.V2) NoModeV2(card);
             }
             return card;
+        }
+
+        /// <summary>V2: every world is made with its mode; a file without one is shown but never loaded (no "old world" choice).</summary>
+        static void NoModeV2(WorldSlotCard card)
+        {
+            card.Mode = WorldModeStatus.NoWorld;
+            if (!card.Loadable) return;
+            card.Loadable = false;
+            card.Problem = "В сохранении нет режима мира: загрузить нельзя.";
         }
 
         public static string PlayTime(float seconds)
@@ -112,14 +119,36 @@ namespace OnlyVolunteers.Session
     /// <summary>
     /// What the start menu chose for the world it is about to load (29.10). The map reads it once: CaptureDirector saves to
     /// <see cref="SlotFile"/> (instead of the scene's default file) and hosts on all interfaces only for a co-op world;
-    /// <see cref="W86PrologueHookV01"/> starts the opening of a NEW world. Starting the map straight from the editor (no
-    /// menu) leaves everything as before (Active = false).
+    /// <see cref="W86PrologueHookV01"/> starts the opening of a NEW world (V1 only). Starting the map straight from the editor
+    /// (no menu) leaves everything as before (Active = false).
+    /// 31.10 (menu for V2): the start menu sets its <see cref="Target"/> on Awake (<see cref="Configure"/>): the game scene
+    /// Play loads, the menu the pause menu returns to, the slot files and the prologue flag. The default is V1 (the W86 map
+    /// and MainMenu_v01), so a menu that sets nothing behaves exactly as before.
     /// </summary>
     public static class WorldLaunchV01
     {
-        public const string MapScenePath = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_v02.unity";
-        public const string MenuScenePath = "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity";
+        /// <summary>The v1 (W86) map: V1's game scene and the only scene the prologue hook ever runs in.</summary>
+        public const string MapScenePath = WorldLaunchTargetV01.V1MapScene;
+        /// <summary>The v1 start menu (V1's return target).</summary>
+        public const string MenuScenePath = WorldLaunchTargetV01.V1MenuScene;
         public const ushort DefaultPort = 7791;
+
+        /// <summary>The launching menu's target (V1 until a menu configures another). Kept across Clear, so the pause menu
+        /// returns to the menu that launched the game.</summary>
+        public static WorldLaunchTargetV01 Target { get; private set; } = WorldLaunchTargetV01.V1;
+        /// <summary>The scene Play loads (V1: <see cref="MapScenePath"/>).</summary>
+        public static string GameScenePath => Target.GameScene;
+        /// <summary>The menu the pause menu's Главное меню loads (the launching menu).</summary>
+        public static string ReturnMenuPath => Target.MenuScene;
+        /// <summary>The v1 prologue may run (V1 only).</summary>
+        public static bool PrologueAllowed => Target.PrologueAllowed;
+
+        /// <summary>The start menu's Awake: which game it launches and where to come back.</summary>
+        public static void Configure(WorldLaunchTargetV01 target)
+        {
+            Target = target ?? WorldLaunchTargetV01.V1;
+            Debug.Log("[OV World] launch target " + Target);
+        }
 
         public static bool Active { get; private set; }
         public static int Slot { get; private set; } = -1;
@@ -135,7 +164,7 @@ namespace OnlyVolunteers.Session
         public static bool PrologueClaimed { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { Clear(); }
+        static void ResetStatics() { Clear(); Target = WorldLaunchTargetV01.V1; }
 
         static void Clear()
         {
@@ -149,6 +178,7 @@ namespace OnlyVolunteers.Session
             error = "";
             if (slot < 0 || slot >= WorldSlotsV01.Count) { error = "Нет такого слота."; return false; }
             if (File.Exists(WorldSlotsV01.ActivePath(slot))) { error = "Слот уже занят: новый мир не записывается поверх старого."; return false; }
+            if (!PrologueAllowed) skipIntro = true; // V2: no prologue at all (the hook checks PrologueAllowed as well)
             WorldSessionV01.BeginNewWorld(mode);
             if (WorldSessionV01.Current != null) WorldSessionV01.Current.worldName = MainMenuFlowV2.CleanName(name, slot);
             Set(slot, true, skipIntro, mode, participants, port, MainMenuFlowV2.CleanName(name, slot));
@@ -172,25 +202,28 @@ namespace OnlyVolunteers.Session
             Role = mode == WorldMode.Multiplayer ? LaunchRole.CoopHost : LaunchRole.SoloHost;
             Port = port == 0 ? DefaultPort : port; WorldName = name ?? ""; Participants = Mathf.Max(1, participants);
             PrologueClaimed = false;
-            Debug.Log($"[OV World] launch slot {slot + 1} ({SlotFile}) {(isNew ? "NEW" : "load")} as {Role}, port {Port}, participants {Participants}, skip intro {skip}");
+            Debug.Log($"[OV World] launch slot {slot + 1} ({SlotFile}) {(isNew ? "NEW" : "load")} as {Role}, port {Port}, participants {Participants}, skip intro {skip}, scene {GameScenePath}");
         }
 
         static bool Load(out string error)
         {
             error = "";
-            if (!Application.CanStreamedLevelBeLoaded(MapScenePath))
+            string scene = GameScenePath;
+            if (!Application.CanStreamedLevelBeLoaded(scene))
             {
-                error = "Сцена карты не добавлена в сборку (Build Settings).";
+                error = Target.Edition == GameEditionV01.V2 ? "Сцена игры не добавлена в сборку (Build Settings)." : "Сцена карты не добавлена в сборку (Build Settings).";
                 Clear();
                 return false;
             }
-            SceneManager.LoadScene(MapScenePath, LoadSceneMode.Single);
+            SceneManager.LoadScene(scene, LoadSceneMode.Single);
             return true;
         }
 
-        /// <summary>Pause menu → Главное меню: the caller saved the world first; networking stops with the map scene.</summary>
+        /// <summary>Pause menu → Главное меню: the caller saved the world first; networking stops with the map scene. Loads
+        /// the menu that launched the game (<see cref="ReturnMenuPath"/>; scene 0 when that menu is not in the build).</summary>
         public static void ReturnToMenu()
         {
+            string menu = ReturnMenuPath;
             Clear();
             var nm = FishNet.InstanceFinder.NetworkManager;
             if (nm != null)
@@ -200,7 +233,7 @@ namespace OnlyVolunteers.Session
             }
             Time.timeScale = 1f;
             AudioListener.pause = false;
-            if (Application.CanStreamedLevelBeLoaded(MenuScenePath)) SceneManager.LoadScene(MenuScenePath, LoadSceneMode.Single);
+            if (Application.CanStreamedLevelBeLoaded(menu)) SceneManager.LoadScene(menu, LoadSceneMode.Single);
             else SceneManager.LoadScene(0, LoadSceneMode.Single);
         }
     }

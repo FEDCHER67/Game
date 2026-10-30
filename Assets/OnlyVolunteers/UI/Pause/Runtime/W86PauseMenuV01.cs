@@ -317,8 +317,8 @@ namespace OnlyVolunteers.UI.Pause
             Section(content, "Качество");
             AddChoice(content, "Пресет", W86GraphicsSettingsV01.PresetNames, () => W86GraphicsSettingsV01.PresetOf(draft),
                 i => draft = W86GraphicsSettingsV01.Preset(i, draft),
-                () => W86GraphicsSettingsV01.PresetOf(draft) < 0 ? "Сейчас: свои настройки. «Высокое» — одобренные по умолчанию."
-                                                                 : "«Высокое» — одобренные настройки по умолчанию. Изменение строки ниже делает пресет «свои».");
+                () => W86GraphicsSettingsV01.PresetOf(draft) < 0 ? "Сейчас: свои настройки. По умолчанию — «Низкое»."
+                                                                 : "По умолчанию — «Низкое». Изменение строки ниже делает пресет «свои».");
             AddChoice(content, "Масштаб рендера", Array.ConvertAll(W86GraphicsSettingsV01.RenderScales, v => v + "%"),
                 () => Math.Max(0, Array.IndexOf(W86GraphicsSettingsV01.RenderScales, draft.RenderScale)), i => draft.RenderScale = W86GraphicsSettingsV01.RenderScales[i],
                 () => "Ниже 100% — больше FPS, картинка мягче.");

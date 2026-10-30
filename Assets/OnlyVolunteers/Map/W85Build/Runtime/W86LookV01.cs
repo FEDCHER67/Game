@@ -109,7 +109,7 @@ namespace OnlyVolunteers.Map.W85
         public int MaterialCopies => copies.Count;
 
         // ---- graphics options: PlayerPrefs keys, written by the pause menu's graphics page (W86GraphicsSettingsV01) ----
-        public const string PrefMsaa = "ov_gfx_msaa";             // 1 / 2 / 4 / 8 (default 8)
+        public const string PrefMsaa = "ov_gfx_msaa";             // 1 / 2 / 4 / 8 (default 4 = Low, 31.10)
         public const string PrefShadows = "ov_gfx_shadows";       // 0 off, 1 low (50 m, 2048), 2 high (120 m, 4096, faded edge) (default 2)
         // Reflection tiers (Fedya 25.10): the cube is re-rendered FacesPerTier[tier] faces a frame, so its update rate is a share of
         // the game's frame rate (at 120 FPS: ultra 120/s, very high ~80, high ~60, medium ~40, low ~20).
@@ -120,7 +120,7 @@ namespace OnlyVolunteers.Map.W85
         public const int ReflectionsDefault = 1; // Vadim 27.10: defaults = the Low preset (W86GraphicsSettingsV01.Preset(0))
         static readonly int[] FacesPerTier = { 0, 0, 1, 2, 3, 4, 6 };
         public const string PrefLod = "ov_gfx_lod";               // 0 near (more FPS), 1 normal, 2 far (default 1)
-        public const string PrefRenderScale = "ov_gfx_render_scale"; // percent, 50..100 (default 100)
+        public const string PrefRenderScale = "ov_gfx_render_scale"; // percent, 50..100 (default 100 = Low, 31.10)
         public const string PrefTextures = "ov_gfx_textures";     // mip limit: 0 full, 1 half, 2 quarter (default 0)
         static readonly float[] LodScale = { 1.6f, 1f, .6f };      // x BuildingLod0Height: near switches to LOD1 sooner
         int reflTier = ReflectionsDefault;
@@ -146,7 +146,7 @@ namespace OnlyVolunteers.Map.W85
                     savedShadowRes = rp.mainLightShadowmapResolution; savedRenderScale = rp.renderScale; savedMipLimit = QualitySettings.globalTextureMipmapLimit; savedBorder = rp.cascadeBorder;
                 }
 #endif
-                int msaa = PlayerPrefs.GetInt(PrefMsaa, 2);
+                int msaa = PlayerPrefs.GetInt(PrefMsaa, 4); // fallbacks = the Low preset (W86GraphicsSettingsV01.Preset(0), 31.10: no shimmer)
                 rp.msaaSampleCount = msaa >= 8 ? 8 : msaa >= 4 ? 4 : msaa >= 2 ? 2 : 1;
                 int sh = Mathf.Clamp(PlayerPrefs.GetInt(PrefShadows, 1), 0, 2);
                 if (sh <= 0) rp.shadowDistance = 0f;
@@ -155,7 +155,7 @@ namespace OnlyVolunteers.Map.W85
                 // W86 (Fedya 25.10, video_02): at night the moon throws the towers' shadow across the plaza and its far edge was the hard
                 // shadow-distance cut, a straight line riding with the camera. The last cascade now fades out over its last 35 %.
                 rp.cascadeBorder = .35f;
-                rp.renderScale = Mathf.Clamp(PlayerPrefs.GetInt(PrefRenderScale, 85), 50, 100) / 100f;
+                rp.renderScale = Mathf.Clamp(PlayerPrefs.GetInt(PrefRenderScale, 100), 50, 100) / 100f;
             }
             QualitySettings.globalTextureMipmapLimit = Mathf.Clamp(PlayerPrefs.GetInt(PrefTextures, 1), 0, 2);
             W85GrassRenderer.SetQuality((GrassQuality)Mathf.Clamp(PlayerPrefs.GetInt("ov_grass_quality", (int)GrassQuality.Low), 0, 3));

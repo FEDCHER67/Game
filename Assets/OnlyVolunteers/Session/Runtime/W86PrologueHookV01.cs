@@ -12,8 +12,8 @@ namespace OnlyVolunteers.Session
     /// cinematic), and until that cinematic exists stands in for it with a PLACEHOLDER: a short title card ("Пролог —
     /// заставка появится позже"), then the player is put by the forest wagon and gets control (FinishIntro; "без заставки"
     /// in the new-world screen = SkipIntro: the same tutorial start, no reward, nothing spawned twice). Loading a world,
-    /// a legacy world or the map started straight from the editor never runs it. Made by itself after the map scene
-    /// loads (no scene edit).
+    /// a legacy world or the map started straight from the editor never runs it, and neither does anything launched from
+    /// the V2 menu (WorldLaunchV01.PrologueAllowed = false, 31.10). Made by itself after the map scene loads (no scene edit).
     /// </summary>
     public sealed class W86PrologueHookV01 : MonoBehaviour
     {
@@ -46,8 +46,9 @@ namespace OnlyVolunteers.Session
 
         static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (!WorldLaunchV01.Active || !WorldLaunchV01.NewWorld || WorldLaunchV01.PrologueClaimed) return;
-            if (scene.path != WorldLaunchV01.MapScenePath) return;
+            // 31.10: only a V1 menu allows it (explicit flag; V2 never), and only on the v1 map
+            if (!WorldLaunchTargetV01.PrologueMayRun(WorldLaunchV01.PrologueAllowed, WorldLaunchV01.Active, WorldLaunchV01.NewWorld,
+                    WorldLaunchV01.PrologueClaimed, scene.path)) return;
             WorldLaunchV01.PrologueClaimed = true;
             new GameObject("[Session] Prologue hook (placeholder)").AddComponent<W86PrologueHookV01>();
         }

@@ -23,26 +23,31 @@ namespace OnlyVolunteers.UI.Pause
 
     /// <summary>The one owner of the graphics settings: load/save (the existing ov_gfx_* / ov_grass_quality PlayerPrefs, local to
     /// this machine, never in the game save), presets, and Apply. Quality goes through W86LookV01.ApplyGraphics (idempotent);
-    /// display mode, VSync and the FPS cap are applied here. Approved defaults (GRAPHICS_SETTINGS_NOTES_2026-10-25_RU.md):
-    /// MSAA 8x (+ SMAA High, always on), shadows high 90 m / 4096, reflections 4 high, LOD normal, grass high.</summary>
+    /// display mode, VSync and the FPS cap are applied here. The default is the Low preset (Vadim 27.10, Fedya 28.10).
+    /// Low without shimmer (Fedya 31.10, CLAUDE.md "No flicker"): render scale 100 % (85 % made thin edges crawl) and MSAA 4x
+    /// (+ SMAA High, always on); the rest of Low as before (shadows low 50 m / 2048, reflections on move, LOD near, grass low,
+    /// half textures). A player still on the old Low values (MSAA 2x, 85 %) is moved to the new Low once (MigrateOldLow).</summary>
     public static class W86GraphicsSettingsV01
     {
         public const string PrefVSync = "ov_gfx_vsync", PrefFpsCap = "ov_gfx_fps_cap", PrefScreenMode = "ov_gfx_screen_mode",
             PrefWidth = "ov_gfx_width", PrefHeight = "ov_gfx_height", PrefRefreshNum = "ov_gfx_refresh_num", PrefRefreshDen = "ov_gfx_refresh_den";
         const string PrefGrass = "ov_grass_quality";
+        /// <summary>Set once the saved settings were checked for the old Low (31.10).</summary>
+        const string PrefLowNoShimmer = "ov_gfx_low_noshimmer_v1";
 
         public static readonly int[] MsaaValues = { 1, 2, 4, 8 };
         public static readonly int[] RenderScales = { 50, 67, 75, 85, 100 };
         public static readonly int[] FpsCaps = { 0, 30, 60, 120, 144, 165, 240 }; // 0 = unlimited
         public static readonly string[] PresetNames = { "Низкое", "Среднее", "Высокое", "Ультра" };
 
-        /// <summary>Quality presets built from the documented options. High = the approved default.</summary>
+        /// <summary>Quality presets built from the documented options. Low (0) = the default (<see cref="Defaults"/>).</summary>
         public static GfxValues Preset(int i, GfxValues keepDisplay)
         {
             var v = keepDisplay;
             switch (i)
             {
-                case 0: v.Msaa = 2; v.Shadows = 1; v.Reflections = 1; v.Lod = 0; v.Grass = 1; v.RenderScale = 85; v.Textures = 1; break;
+                // Low: MSAA 4x and full render scale (31.10: no shimmer even on Low); was MSAA 2x at 85 %
+                case 0: v.Msaa = 4; v.Shadows = 1; v.Reflections = 1; v.Lod = 0; v.Grass = 1; v.RenderScale = 100; v.Textures = 1; break;
                 case 1: v.Msaa = 4; v.Shadows = 1; v.Reflections = 3; v.Lod = 1; v.Grass = 2; v.RenderScale = 100; v.Textures = 0; break;
                 case 2: v.Msaa = 8; v.Shadows = 2; v.Reflections = 4; v.Lod = 1; v.Grass = 3; v.RenderScale = 100; v.Textures = 0; break;
                 default: v.Msaa = 8; v.Shadows = 2; v.Reflections = 6; v.Lod = 2; v.Grass = 3; v.RenderScale = 100; v.Textures = 0; break;
@@ -78,8 +83,29 @@ namespace OnlyVolunteers.UI.Pause
             return v;
         }
 
+        /// <summary>Once per machine (31.10): saved settings that are exactly the OLD Low preset (MSAA 2x, render scale 85 %,
+        /// the rest as Low) become the new Low (MSAA 4x, 100 %). Any other saved choice is left as the player set it.</summary>
+        static void MigrateOldLow()
+        {
+            if (PlayerPrefs.GetInt(PrefLowNoShimmer, 0) == 1) return;
+            PlayerPrefs.SetInt(PrefLowNoShimmer, 1);
+            bool oldLow = PlayerPrefs.HasKey(W86LookV01.PrefMsaa) &&
+                          PlayerPrefs.GetInt(W86LookV01.PrefMsaa, 0) == 2 && PlayerPrefs.GetInt(W86LookV01.PrefRenderScale, 0) == 85 &&
+                          PlayerPrefs.GetInt(W86LookV01.PrefShadows, -1) == 1 && PlayerPrefs.GetInt(W86LookV01.PrefReflections, -1) == 1 &&
+                          PlayerPrefs.GetInt(W86LookV01.PrefLod, -1) == 0 && PlayerPrefs.GetInt(PrefGrass, -1) == 1 &&
+                          PlayerPrefs.GetInt(W86LookV01.PrefTextures, -1) == 1;
+            if (oldLow)
+            {
+                PlayerPrefs.SetInt(W86LookV01.PrefMsaa, 4);
+                PlayerPrefs.SetInt(W86LookV01.PrefRenderScale, 100);
+                Debug.Log("[OV Graphics] saved Low moved to the no-shimmer Low (MSAA 4x, render scale 100 %)");
+            }
+            PlayerPrefs.Save();
+        }
+
         public static GfxValues Load()
         {
+            MigrateOldLow();
             var d = Defaults();
             var v = d;
             v.Msaa = Snap(PlayerPrefs.GetInt(W86LookV01.PrefMsaa, d.Msaa), MsaaValues);

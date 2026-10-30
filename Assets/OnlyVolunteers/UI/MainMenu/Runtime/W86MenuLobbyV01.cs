@@ -225,7 +225,8 @@ namespace OnlyVolunteers.UI.MainMenu
                         Manager.ServerManager.Broadcast(c, new MenuLobbyNoticeBroadcast
                         {
                             Kind = 2,
-                            Text = "Хост запустил мир «" + WorldName + "». Совместная игра на карте появится с сетевым этапом M1 (игроки на карте): пока мир открыт только у хоста.",
+                            Text = WorldLaunchV01.Target.Edition == GameEditionV01.V2 ? MainMenuTextsV2.HostStartedNotice(WorldName)
+                                : "Хост запустил мир «" + WorldName + "». Совместная игра на карте появится с сетевым этапом M1 (игроки на карте): пока мир открыт только у хоста.",
                         }, false);
             StartCoroutine(StartThen(then, guests > 0 ? 0.4f : 0f));
         }

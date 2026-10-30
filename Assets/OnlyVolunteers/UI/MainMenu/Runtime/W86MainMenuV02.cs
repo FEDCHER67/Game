@@ -22,16 +22,28 @@ namespace OnlyVolunteers.UI.MainMenu
     /// default), Звук (the mixer buses, Apply / Revert), Управление (the current keys; no rebinding exists). The flow is the
     /// pure <see cref="MainMenuFlowV2"/>; worlds are <see cref="WorldSlotsV01"/> + <see cref="WorldLaunchV01"/>; the lobby
     /// is <see cref="W86MenuLobbyV01"/>. UI built in code (uGUI), no prefab.
+    /// 31.10 (menu for V2): <see cref="Edition"/> picks the game. V1Map (MainMenu_v01, the default) is unchanged. V2
+    /// (MainMenu_V2_v01): Играть loads <see cref="GameScenePath"/> (VanOnly_v01), own five slots, no prologue choice, no
+    /// "old world" screen, a plain dark gradient instead of the backdrop shot, no version label, the V2 controls and honest
+    /// co-op texts (<see cref="MainMenuTextsV2"/>). The menu sets <see cref="WorldLaunchV01.Target"/> on Awake.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class W86MainMenuV02 : MonoBehaviour
     {
         public W86MenuLobbyV01 Lobby;
         public W86AvatarPreviewV01 Preview;
-        [Tooltip("The backdrop shot (UI/MainMenu/Art/MenuBackdrop_Wagon_v01.jpg).")]
+        [Tooltip("The backdrop shot (V1: UI/MainMenu/Art/MenuBackdrop_Wagon_v01.jpg). Empty in V2: a plain dark gradient.")]
         public Texture2D Backdrop;
         public AudioClip ClickClip, HoverClip;
+        [Tooltip("Shown in the footer after the title; empty = none (V2).")]
         public string VersionLabel = "W86";
+        [Header("Game (31.10)")]
+        [Tooltip("V1Map = the W86 map menu (MainMenu_v01: the map, its old save, the prologue). V2 = MainMenu_V2_v01: VanOnly, own saves, no prologue.")]
+        public GameEditionV01 Edition = GameEditionV01.V1Map;
+        [Tooltip("The scene Играть loads; empty = the edition's default (V1: Map_W85_Play_v02, V2: VanOnly_v01). Must be in Build Settings.")]
+        public string GameScenePath = "";
+
+        bool V2 => Edition == GameEditionV01.V2;
 
         // the pause menu's camo palette
         static readonly Color Card = PhoneUi.Hex("#2B3022", .95f), Frame = PhoneUi.Hex("#9C8F5E"), Band = PhoneUi.Hex("#353B29", .96f),
@@ -60,6 +72,8 @@ namespace OnlyVolunteers.UI.MainMenu
 
         void Awake()
         {
+            // which game Играть starts and where the pause menu comes back to (this menu's own scene)
+            WorldLaunchV01.Configure(WorldLaunchTargetV01.For(Edition, GameScenePath, gameObject.scene.path));
             flow = new MainMenuFlowV2(() => cards);
             draft = AppearanceProfileV01.Load();
             if (Lobby != null) { Lobby.Report += Report; Lobby.Changed += OnLobbyChanged; }
@@ -242,6 +256,13 @@ namespace OnlyVolunteers.UI.MainMenu
                     Foot(body, ("Отмена", Back, false));
                     break;
                 }
+                case MenuScreenV2.LegacyModeChoice when V2: // V2 has no old worlds (WorldSlotsV01 never offers one); never shown
+                {
+                    var body = Panel("", 800, 320);
+                    Note(body, MainMenuTextsV2.NoWorldHere, Text1, 24);
+                    Foot(body, ("‹  Назад", Back, false));
+                    break;
+                }
                 case MenuScreenV2.LegacyModeChoice:
                 {
                     var body = Panel("Старый мир: выберите режим", 900, 560);
@@ -291,7 +312,7 @@ namespace OnlyVolunteers.UI.MainMenu
             var newest = flow.Newest();
             if (newest != null) MainButton("Продолжить", "«" + newest.Name + "» · " + newest.SavedText, () => Do(MenuActionV2.Continue), true);
             MainButton("Играть", "миры: новый, загрузить, удалить", () => Do(MenuActionV2.Play), newest == null);
-            MainButton("Присоединиться", "к миру друга по адресу", () => Do(MenuActionV2.Join), false);
+            MainButton("Присоединиться", V2 ? MainMenuTextsV2.JoinSub : "к миру друга по адресу", () => Do(MenuActionV2.Join), false);
             MainButton("Настройки", "графика, звук, управление", () => Do(MenuActionV2.Settings), false);
             MainButton("Выход", "", () => Do(MenuActionV2.Quit), false);
         }
@@ -313,7 +334,8 @@ namespace OnlyVolunteers.UI.MainMenu
                 {
                     var name = Label(row.transform, card.Name, 30, Text1, TextAnchor.LowerLeft, true);
                     name.rectTransform.Anchor(0, .5f, 1, 1, 110, 0, -420, -10);
-                    string mode = card.Mode == WorldModeStatus.Solo ? "СОЛО" : card.Mode == WorldModeStatus.Multiplayer ? "КООП" : "СТАРЫЙ МИР · режим не выбран";
+                    string mode = card.Mode == WorldModeStatus.Solo ? "СОЛО" : card.Mode == WorldModeStatus.Multiplayer ? "КООП"
+                        : V2 ? MainMenuTextsV2.NoModeChip : "СТАРЫЙ МИР · режим не выбран";
                     Chip(row.transform, mode, card.Mode == WorldModeStatus.Multiplayer ? Go : card.Mode == WorldModeStatus.Solo ? PhoneUi.Hex("#4F6B7A") : PhoneUi.Hex("#7A6B45"), 110, 16, mode.Length > 6 ? 330 : 96);
                     var meta = Label(row.transform, card.Loadable ? card.SavedText : card.Problem, 19, card.Loadable ? Text2 : Bad, TextAnchor.MiddleLeft);
                     meta.rectTransform.Anchor(0, 0, 1, .5f, mode.Length > 6 ? 452 : 218, 10, -420, -4);
@@ -341,9 +363,10 @@ namespace OnlyVolunteers.UI.MainMenu
             Note(body, "Сколько игроков — выбирается один раз: потом режим мира не меняется.", Accent, 20);
             var row = Row(body, 150);
             Big(row.transform, "Соло", "только вы; к соло-миру нельзя подключиться", () => { Report(MenuInputV2.WithMode(MenuActionV2.SetMode, WorldMode.Solo)); }, flow.DraftMode == WorldMode.Solo);
-            Big(row.transform, "Кооп (до 4)", "друзья подключаются к вашему миру; можно играть и одному", () => { Report(MenuInputV2.WithMode(MenuActionV2.SetMode, WorldMode.Multiplayer)); }, flow.DraftMode == WorldMode.Multiplayer);
-            Choice(body, "Вступление", new[] { "Показать", "Пропустить" }, flow.DraftSkipIntro ? 1 : 0,
-                i => Report(MenuInputV2.WithFlag(MenuActionV2.SetIntro, i == 0)), "Пролог у вагонов; пропуск ведёт к тому же обучению без наград.");
+            Big(row.transform, "Кооп (до 4)", V2 ? MainMenuTextsV2.CoopSub : "друзья подключаются к вашему миру; можно играть и одному", () => { Report(MenuInputV2.WithMode(MenuActionV2.SetMode, WorldMode.Multiplayer)); }, flow.DraftMode == WorldMode.Multiplayer);
+            if (!V2) // V2: no prologue (WorldLaunchV01 skips it and the hook never runs)
+                Choice(body, "Вступление", new[] { "Показать", "Пропустить" }, flow.DraftSkipIntro ? 1 : 0,
+                    i => Report(MenuInputV2.WithFlag(MenuActionV2.SetIntro, i == 0)), "Пролог у вагонов; пропуск ведёт к тому же обучению без наград.");
             if (!string.IsNullOrEmpty(flow.ErrorText)) Note(body, flow.ErrorText, Bad, 20);
             Foot(body, ("Далее — внешность  ›", () => Do(MenuActionV2.ConfirmNewWorld), true), ("‹  Назад", Back, false));
         }
@@ -416,6 +439,7 @@ namespace OnlyVolunteers.UI.MainMenu
                 Note(body, "Друзья: «Присоединиться» → адрес  " + where + "   порт  " + (Lobby != null ? Lobby.Port : WorldLaunchV01.DefaultPort), Accent, 21);
                 Note(body, "Через интернет — по внешнему IP с открытым портом (UDP). Steam-поиска пока нет.", Text2, 17);
             }
+            else if (V2) Note(body, MainMenuTextsV2.ClientLobbyNote(address + ":" + port), Text2, 19);
             else Note(body, "Вы в лобби хоста " + address + ":" + port + ". Нажмите «Готов», когда будете готовы.", Text2, 19);
             var roster = Lobby != null ? Lobby.Roster : null;
             if (roster == null || roster.Count == 0) Note(body, "Никого нет.", Dimmed, 20);
@@ -440,7 +464,7 @@ namespace OnlyVolunteers.UI.MainMenu
                 string why = "";
                 bool can = roster != null && roster.CanStart(out why);
                 if (!can && !string.IsNullOrEmpty(why)) Note(body, why, Bad, 19);
-                Note(body, "Пока совместная игра на карте не готова (сетевой этап M1), друзья увидят сообщение, а мир откроется у вас.", Dimmed, 16);
+                Note(body, V2 ? MainMenuTextsV2.HostLobbyNote : "Пока совместная игра на карте не готова (сетевой этап M1), друзья увидят сообщение, а мир откроется у вас.", Dimmed, 16);
                 Foot(body, ("Начать игру  ›", () => Do(MenuActionV2.StartSession), can), ("‹  Закрыть лобби", Back, false));
             }
             else Foot(body, (flow.LocalReady ? "Не готов" : "Готов", () => Do(MenuActionV2.ToggleReady), !flow.LocalReady), ("‹  Выйти из лобби", Back, false));
@@ -468,7 +492,7 @@ namespace OnlyVolunteers.UI.MainMenu
             }
             if (settingsTab == 0)
             {
-                Note(body, "Графика — та же страница, что в паузе: качество, тени, трава, дальность, сглаживание, режим экрана. «Применить» сохраняет, «По умолчанию» — пресет Низкое; новый режим экрана нужно «Оставить», иначе он вернётся через 15 с.", Text2, 20);
+                Note(body, V2 ? MainMenuTextsV2.GraphicsNote : "Графика — та же страница, что в паузе: качество, тени, трава, дальность, сглаживание, режим экрана. «Применить» сохраняет, «По умолчанию» — пресет Низкое; новый режим экрана нужно «Оставить», иначе он вернётся через 15 с.", Text2, 20);
                 var pause = FindAnyObjectByType<W86PauseMenuV01>();
                 var open = Btn(body, "Открыть настройки графики", () =>
                 {
@@ -495,6 +519,11 @@ namespace OnlyVolunteers.UI.MainMenu
                 }
                 if (!mixer) Note(body, "Микшер не найден: доступна только общая громкость.", Bad, 18);
                 Note(body, "Музыки в игре пока нет — её ползунок появится вместе с ней. Язык один (русский): переключателя нет.", Dimmed, 16);
+            }
+            else if (V2)
+            {
+                Note(body, MainMenuTextsV2.ControlsHeader, Accent, 20);
+                foreach (var (k, what) in MainMenuTextsV2.Controls) KeyRow(body, k, what);
             }
             else
             {
@@ -538,7 +567,7 @@ namespace OnlyVolunteers.UI.MainMenu
 
         void DriftBackdrop()
         {
-            if (backdrop == null || backdrop.texture == null) return;
+            if (backdrop == null || backdrop.texture == null || Backdrop == null) return; // the V2 gradient stays still
             float t = Time.unscaledTime;
             float texAspect = backdrop.texture.width / (float)Mathf.Max(1, backdrop.texture.height);
             float screenAspect = Screen.width / (float)Mathf.Max(1, Screen.height);
@@ -565,6 +594,7 @@ namespace OnlyVolunteers.UI.MainMenu
             var bg = new GameObject("Backdrop", typeof(RectTransform), typeof(RawImage)); bg.transform.SetParent(canvasGo.transform, false);
             backdrop = bg.GetComponent<RawImage>(); backdrop.texture = Backdrop; backdrop.raycastTarget = false;
             backdrop.color = Backdrop != null ? Color.white : PhoneUi.Hex("#1E2418");
+            if (Backdrop == null && V2) { backdrop.texture = GradientTexture; backdrop.color = Color.white; } // until the V2 backdrop picture exists
             Stretch((RectTransform)bg.transform);
             var sh = new GameObject("Shade", typeof(RectTransform), typeof(Image)); sh.transform.SetParent(canvasGo.transform, false);
             shade = sh.GetComponent<Image>(); shade.sprite = ShadeSprite(); shade.raycastTarget = false; shade.type = Image.Type.Simple;
@@ -577,7 +607,7 @@ namespace OnlyVolunteers.UI.MainMenu
             var strip = new GameObject("Camo", typeof(RectTransform), typeof(RawImage)); strip.transform.SetParent(title.transform, false);
             var sri = strip.GetComponent<RawImage>(); sri.texture = CamoTexture; sri.uvRect = new Rect(0, 0, 3.4f, .09f); sri.raycastTarget = false;
             ((RectTransform)strip.transform).Anchor(0, 0, 0, 0, 4, 64, 640, 82);
-            var t2 = Label(title.transform, "кооператив до 4 игроков · W86", 26, Text2, TextAnchor.UpperLeft, true);
+            var t2 = Label(title.transform, V2 ? MainMenuTextsV2.Subtitle : "кооператив до 4 игроков · W86", 26, Text2, TextAnchor.UpperLeft, true);
             t2.rectTransform.Anchor(0, 0, 1, 0, 6, 0, 0, 56);
 
             mainList = new GameObject("MainButtons", typeof(RectTransform)); mainList.transform.SetParent(canvasGo.transform, false);
@@ -587,7 +617,8 @@ namespace OnlyVolunteers.UI.MainMenu
 
             footer = new GameObject("Footer", typeof(RectTransform)); footer.transform.SetParent(canvasGo.transform, false);
             Stretch((RectTransform)footer.transform);
-            var ver = Label(footer.transform, "VOLUNTEERS ONLY · " + VersionLabel + " · v" + Application.version + " · " + BuildStamp(), 18, new Color(Text2.r, Text2.g, Text2.b, .8f), TextAnchor.LowerRight);
+            string label = string.IsNullOrEmpty(VersionLabel) ? "" : VersionLabel + " · ";
+            var ver = Label(footer.transform, "VOLUNTEERS ONLY · " + label + "v" + Application.version + " · " + BuildStamp(), 18, new Color(Text2.r, Text2.g, Text2.b, .8f), TextAnchor.LowerRight);
             ver.rectTransform.Anchor(1, 0, 1, 0, -900, 18, -28, 48);
             var hint = Label(footer.transform, "Esc — назад   ·   мышь или стрелки и Enter", 17, new Color(Text2.r, Text2.g, Text2.b, .7f), TextAnchor.LowerLeft);
             hint.rectTransform.Anchor(0, 0, 0, 0, 28, 18, 900, 48);
@@ -860,7 +891,28 @@ namespace OnlyVolunteers.UI.MainMenu
         }
 
         // ---------------------------------------------------------------- procedural art (no assets)
-        static Texture2D camoTex; static Sprite shadeSprite;
+        static Texture2D camoTex, gradientTex; static Sprite shadeSprite;
+
+        /// <summary>V2 backdrop placeholder (Fedya 31.10: a new picture comes later through references): a plain dark olive
+        /// gradient, lighter at the top; the shade sprite still darkens the left side under the buttons.</summary>
+        static Texture2D GradientTexture
+        {
+            get
+            {
+                if (gradientTex) return gradientTex;
+                const int H = 256;
+                gradientTex = new Texture2D(2, H, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear, name = "MenuGradientV2" };
+                Color top = PhoneUi.Hex("#2A3122"), bottom = PhoneUi.Hex("#0D100A");
+                var px = new Color[2 * H];
+                for (int y = 0; y < H; y++)
+                {
+                    float k = y / (H - 1f); k = k * k * (3f - 2f * k);
+                    px[y * 2] = px[y * 2 + 1] = Color.Lerp(bottom, top, k);
+                }
+                gradientTex.SetPixels(px); gradientTex.Apply(false, true);
+                return gradientTex;
+            }
+        }
         static readonly Color[] CamoColors = { PhoneUi.Hex("#3E4A2A"), PhoneUi.Hex("#5B6438"), PhoneUi.Hex("#7A6B45"), PhoneUi.Hex("#262C1B") };
 
         static Texture2D CamoTexture
