@@ -161,6 +161,14 @@ public sealed class HangarTestMode : MonoBehaviour
         ("16_left_wall", 0f, -4f, -25f, -4f, 2f),
         ("17_front_wall", 2f, 4f, 2f, -17f, 4f),
         ("18_back_right", 10f, -6f, 25f, 17f, 2f),
+        // texture checks (package 45): floor close, crates, the signs close, the parked gate leaf from outside
+        ("19_floor_close", -8f, -6f, -8f, 4f, 40f),
+        ("20_crates_left_wall", -20f, -6f, -24.5f, -8f, 15f),
+        ("21_pharmacy_sign", -0.6f, 6.5f, -0.6f, 11f, -15f),
+        ("22_bay_sign_roller", -16.5f, 1.5f, -16.5f, 7f, -25f),
+        ("23_gate_leaf_outside", 33f, -15f, 25.6f, -9f, 2f),
+        ("24_pharmacy_shelves", -1f, 13.2f, -1f, 17f, 8f),
+        ("25_crate_close", -22.4f, -8.6f, -24.2f, -9.5f, 28f),
     };
 
     private IEnumerator Shots()

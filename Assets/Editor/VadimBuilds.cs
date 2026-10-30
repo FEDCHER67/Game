@@ -54,7 +54,8 @@ namespace OnlyVolunteers.EditorTools
             var opt = new BuildPlayerOptions
             {
                 scenes = full ? new[] { "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity", copy } : new[] { copy },
-                locationPathName = Root + name + @"\VolunteersOnly_" + name + ".exe",
+                // OV_BUILD_DIR: another folder under VolunteersBuilds (e.g. Hangar_next while Vadim plays the Hangar exe)
+                locationPathName = Root + (System.Environment.GetEnvironmentVariable("OV_BUILD_DIR") ?? name) + @"\VolunteersOnly_" + name + ".exe",
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.None
             };

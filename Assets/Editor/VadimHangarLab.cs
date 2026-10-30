@@ -18,8 +18,8 @@ namespace OnlyVolunteers.EditorTools
     /// player, capture/network systems, the 1 km grey floor and the sky) with the hangar built around the van: 50 x 34 m
     /// inside, 9 m walls, a low gable roof (+2.5 m), steel trusses, three rooms along the back wall (VAN UPGRADES bay with a
     /// lift, PHARMACY and GEAR with door and window counter), a 14 x 7.5 m gate in the right gable wall, yellow floor
-    /// markings, a lounge corner, crates, string lights and pendant lamps. Flat matte colours, one material per surface type
-    /// (textures drop in later, GPT package 43). Meshes are generated here (world-scale UVs, 1 UV = 1 m) and saved to
+    /// markings, a lounge corner, crates, string lights and pendant lamps. One matte material per surface type, textured with
+    /// GPT package 45 (approved 30.10; Textures/). Meshes are generated here (world-scale UVs, 1 UV = 1 m) and saved to
     /// Assets/VadimLocal/Hangar. Lighting: see HangarLighting (rendering layers keep the sun outside). Re-run = rebuilt.</summary>
     public static class VadimHangarLab
     {
@@ -89,20 +89,38 @@ namespace OnlyVolunteers.EditorTools
 
         const int PX = 1, NX = 2, PY = 4, NY = 8, PZ = 16, NZ = 32, All = 63;
 
-        /// <summary>Oriented box: centre, full size, rotation; faces = which sides to emit.</summary>
-        static void Box(Acc a, Vector3 c, Vector3 s, Quaternion r, int faces = All)
+        /// <summary>Oriented box: centre, full size, rotation; faces = which sides to emit. UVs per face in the face's own frame
+        /// (u to the right seen from outside, v up; top and bottom: u along the box x, v along z): metric (1 UV = 1 m, continuous
+        /// across coplanar boxes, never stretched however the box is turned) or, with a Cell, one picture per face.</summary>
+        static void Box(Acc a, Vector3 c, Vector3 s, Quaternion r, int faces = All, Cell? cell = null)
         {
-            Vector3 hx = r * new Vector3(s.x * .5f, 0, 0), hy = r * new Vector3(0, s.y * .5f, 0), hz = r * new Vector3(0, 0, s.z * .5f);
-            Vector3 nx = r * Vector3.right, ny = r * Vector3.up, nz = r * Vector3.forward;
-            if ((faces & PX) != 0) Quad(a, c + hx - hy - hz, c + hx + hy - hz, c + hx + hy + hz, c + hx - hy + hz, nx);
-            if ((faces & NX) != 0) Quad(a, c - hx - hy - hz, c - hx - hy + hz, c - hx + hy + hz, c - hx + hy - hz, -nx);
-            if ((faces & PY) != 0) Quad(a, c + hy - hx - hz, c + hy - hx + hz, c + hy + hx + hz, c + hy + hx - hz, ny);
-            if ((faces & NY) != 0) Quad(a, c - hy - hx - hz, c - hy + hx - hz, c - hy + hx + hz, c - hy - hx + hz, -ny);
-            if ((faces & PZ) != 0) Quad(a, c + hz - hx - hy, c + hz + hx - hy, c + hz + hx + hy, c + hz - hx + hy, nz);
-            if ((faces & NZ) != 0) Quad(a, c - hz - hx - hy, c - hz - hx + hy, c - hz + hx + hy, c - hz + hx - hy, -nz);
+            void F(int bit, Vector3 ln, Vector3 lu)
+            {
+                if ((faces & bit) == 0) return;
+                Vector3 lr = Vector3.Cross(ln, lu);
+                float hw = Mathf.Abs(Vector3.Dot(lr, s)) * .5f, hh = Mathf.Abs(Vector3.Dot(lu, s)) * .5f, hd = Mathf.Abs(Vector3.Dot(ln, s)) * .5f;
+                Vector3 n = r * ln, rd = r * lr, ud = r * lu, fc = c + n * hd;
+                Vector3[] p = { fc - rd * hw - ud * hh, fc + rd * hw - ud * hh, fc + rd * hw + ud * hh, fc - rd * hw + ud * hh };
+                var uv = new Vector2[4];
+                if (cell is Cell cl)
+                {
+                    float fa = hw / Mathf.Max(hh, 1e-4f), uw = cl.R.width * .98f, vh = cl.R.height * .98f;
+                    if (fa < cl.Aspect) uw *= fa / cl.Aspect; else vh *= cl.Aspect / fa;
+                    Vector2 m = cl.R.center;
+                    uv[0] = m + new Vector2(-uw, -vh) * .5f; uv[1] = m + new Vector2(uw, -vh) * .5f;
+                    uv[2] = m + new Vector2(uw, vh) * .5f; uv[3] = m + new Vector2(-uw, vh) * .5f;
+                }
+                else
+                    for (int i = 0; i < 4; i++) uv[i] = new Vector2(Vector3.Dot(p[i], rd), Vector3.Dot(p[i], ud));
+                Quad(a, p[0], p[1], p[2], p[3], n, uv);
+            }
+            F(PX, Vector3.right, Vector3.up); F(NX, Vector3.left, Vector3.up);
+            F(PZ, Vector3.forward, Vector3.up); F(NZ, Vector3.back, Vector3.up);
+            F(PY, Vector3.up, Vector3.forward); F(NY, Vector3.down, Vector3.forward);
         }
 
-        static void BoxMM(Acc a, Vector3 min, Vector3 max, int faces = All) => Box(a, (min + max) * .5f, max - min, Quaternion.identity, faces);
+        static void BoxMM(Acc a, Vector3 min, Vector3 max, int faces = All, Cell? cell = null) =>
+            Box(a, (min + max) * .5f, max - min, Quaternion.identity, faces, cell);
 
         static void Col(string name, Vector3 c, Vector3 s, Quaternion r)
         {
@@ -118,9 +136,9 @@ namespace OnlyVolunteers.EditorTools
         static void ColMM(string name, Vector3 min, Vector3 max) => Col(name, (min + max) * .5f, max - min, Quaternion.identity);
 
         /// <summary>A solid axis-aligned box with its collider.</summary>
-        static void Solid(Acc a, string name, Vector3 min, Vector3 max, int faces = All)
+        static void Solid(Acc a, string name, Vector3 min, Vector3 max, int faces = All, Cell? cell = null)
         {
-            BoxMM(a, min, max, faces);
+            BoxMM(a, min, max, faces, cell);
             ColMM(name, min, max);
         }
 
@@ -140,8 +158,10 @@ namespace OnlyVolunteers.EditorTools
                 Vector3 d0 = new(Mathf.Cos(a0), 0, Mathf.Sin(a0)), d1 = new(Mathf.Cos(a1), 0, Mathf.Sin(a1)), dm = new(Mathf.Cos(am), 0, Mathf.Sin(am));
                 Vector3 p0 = b + d0 * r0, p1 = b + d1 * r0, p2 = b + d1 * r1 + Vector3.up * h, p3 = b + d0 * r1 + Vector3.up * h;
                 Vector3 n = (dm * h + Vector3.up * (r0 - r1)).normalized;
-                Quad(a, p0, p1, p2, p3, n);
-                if (inner) Quad(a, p0, p3, p2, p1, -n);
+                float sl = Mathf.Sqrt(h * h + (r0 - r1) * (r0 - r1));
+                var uv = new[] { new Vector2(a0 * r0, b.y), new Vector2(a1 * r0, b.y), new Vector2(a1 * r1, b.y + sl), new Vector2(a0 * r1, b.y + sl) };
+                Quad(a, p0, p1, p2, p3, n, uv);
+                if (inner) Quad(a, p0, p3, p2, p1, -n, new[] { uv[0], uv[3], uv[2], uv[1] });
                 if (top) Tri(a, b + Vector3.up * h, p3, p2, Vector3.up);
                 if (bottom) Tri(a, b, p1, p0, Vector3.down);
             }
@@ -159,11 +179,12 @@ namespace OnlyVolunteers.EditorTools
         }
 
         /// <summary>Corrugated sheet in a wall frame: local x = u along the wall, y up, z into the wall (the visible side
-        /// faces -z). Ribs every 0.6 m, 5 cm deep, phase from the absolute u, so pieces join seamlessly.</summary>
+        /// faces -z). Trapezoid ribs every 0.1875 m (as the v1 workshop), 3 cm deep, phase from the absolute u, so pieces join
+        /// seamlessly; texture 03's ribs are aligned to them (colour only).</summary>
         static void Sheet(Acc a, Vector3 origin, Quaternion rot, float u0, float u1, float y0, Func<Vector3, float> yTop)
         {
-            const float P = 0.6f, D = 0.05f;
-            float[] o = { 0f, .2f, .3f, .5f, .6f };
+            const float P = .1875f, D = .03f;
+            float[] o = { 0f, .0625f, .09375f, .15625f, .1875f };
             float[] dd = { 0f, 0f, D, D, 0f };
             Vector3 W(float u, float y, float d) => origin + rot * new Vector3(u, y, -d);
             for (int k = Mathf.FloorToInt(u0 / P) - 1; k <= Mathf.CeilToInt(u1 / P); k++)
@@ -234,21 +255,40 @@ namespace OnlyVolunteers.EditorTools
             if (!AssetDatabase.IsValidFolder(MatDir)) AssetDatabase.CreateFolder(Dir, "Materials");
             // palette from the reference (02_B): warm grey concrete, taupe corrugated walls, graphite steel, olive crates.
             // Material slots follow GPT texture package 45 (NN = its texture number); the rest stay flat colours.
-            mFloor = Mat("01_Floor_Concrete", new Color(.46f, .44f, .41f), .18f);
+            // textures: GPT package 45 (approved 30.10), tileable copies in Textures/ (made from the originals by prep_textures.py:
+            // cropped to whole plates / ribs / slats / boards, hazard repainted tileable, medical crosses recoloured green).
+            // World-scale tiling (the meshes carry 1 UV = 1 m); a grey tint keeps each surface as bright as its old flat colour.
+            mFloor = Mat("01_Floor_Concrete", new Color(.46f, .44f, .41f), .15f);
+            Textured(mFloor, Tex("01_Concrete"), 6f, 6f, 1f / 6f, 1f / 6f, .75f); // 3 x 3 plates of 2 m, joints on the walls (x 25, z 17)
             mWall = Mat("03_Wall_Corrugated", new Color(.42f, .38f, .33f), .2f, .1f);
+            Textured(mWall, Tex("03_Corrugated"), 1.3125f, 1.5f, -.171875f / 1.3125f, 0f, .68f); // its 7 ribs = 7 mesh ribs of 0.1875 m
             mSteel = Mat("04_Truss_Graphite", new Color(.17f, .17f, .17f), .25f, .3f);
+            Textured(mSteel, Tex("04_Graphite"), 2f, 2f, 0f, 0f, .71f);
             mRoofIn = Mat("04_Roof_Inside", new Color(.26f, .24f, .22f), .12f);
+            Textured(mRoofIn, Tex("04_Graphite"), 3f, 3f, 0f, 0f, 1f);
             mRoofOut = Mat("Roof_Outside", new Color(.36f, .35f, .34f), .2f, .1f);
             mRoller = Mat("05_RollerDoor_Gate", new Color(.42f, .42f, .40f), .25f, .2f);
+            Textured(mRoller, Tex("05_Roller"), 1.036f, 1f, 0f, 0f, .95f); // 10 slats of 10 cm
             mGate = mRoller;
             mYellow = Mat("06_Hazard_Stripe", new Color(.86f, .62f, .12f), .25f);
+            Textured(mYellow, Tex("06_Hazard"), 1f, 1f, 0f, 0f, 1f); // stripes 12.5 cm
             mWood = Mat("07_Room_WoodPanel", new Color(.46f, .36f, .26f), .15f);
+            Textured(mWood, Tex("07_WoodCladding"), 1.05f, 1.378f, 0f, 0f, .84f); // 6 boards of 17.5 cm
             mPeg = Mat("08_Tool_Pegboard", new Color(.36f, .31f, .25f), .12f);
+            // the pegboard is a plain board now: its tools are modelled (PegTools); texture 08's painted tools would fake shapes
+            foreach (var p in new[] { "_BaseMap", "_MainTex" }) { mPeg.SetTexture(p, null); mPeg.SetTextureScale(p, Vector2.one); mPeg.SetTextureOffset(p, Vector2.zero); }
+            mPeg.SetColor("_BaseColor", new Color(.42f, .36f, .28f));
             mShelf = Mat("09_Shelf_Locker", new Color(.30f, .34f, .31f), .25f, .2f);
+            Textured(mShelf, Tex("09_OliveMetal"), 1.5f, 1.5f, 0f, 0f, .87f);
             mCloth = Mat("10_Uniform_Camo", new Color(.31f, .33f, .19f), .05f);
+            Textured(mCloth, Tex("10_Camo"), 1f, 1f, 0f, 0f, .94f);
             mCrate = Mat("11_Crate_Military", new Color(.27f, .30f, .17f), .15f);
+            // crates are modelled (rims, latches, handles): plain olive metal (09) tinted to the crate olive of texture 11
+            Textured(mCrate, Tex("09_OliveMetal"), 1f, 1f, 0f, 0f, new Color(.78f, .80f, .67f));
             mPallet = Mat("12_Pallet_Wood", new Color(.58f, .45f, .29f), .1f);
+            Textured(mPallet, Tex("12_LightWood"), 1f, 1f, 0f, 0f, .72f); // planks are modelled: each shows one board (Cell UVs)
             mWhite = Mat("13_Medicine_Boxes", new Color(.82f, .82f, .80f), .2f);
+            Textured(mWhite, Tex("13_MedicalBoxes", true), 1f, 1f, 0f, 0f, 1f); // one label per box face (Cell UVs)
             mRug = Mat("Rug", new Color(.50f, .24f, .12f), .05f);
             mSofa = Mat("Sofa", new Color(.38f, .20f, .11f), .25f);
             mRed = Mat("Tool_Red", new Color(.58f, .12f, .08f), .3f, .2f);
@@ -258,11 +298,82 @@ namespace OnlyVolunteers.EditorTools
             mGlass = Transparent("Glass", new Color(.55f, .65f, .7f, .22f), .8f);
             mMark = Transparent("02_Marking_Decals", Color.white, .25f);
             mMark.SetTexture("_BaseMap", MarkingTexture());
-            mSign = Emissive("14_Signs", new Color(.75f, .7f, .62f), new Color(1f, .78f, .5f) * 2.4f);
-            var atlas = SignAtlas();
-            mSign.SetTexture("_BaseMap", atlas);
-            mSign.SetTexture("_EmissionMap", atlas);
+            // signs: GPT boards 14a-c cropped 3:1 and stacked in one atlas; only the lettering glows (emission mask), warm and dim
+            mSign = Emissive("14_Signs", new Color(.85f, .85f, .85f), new Color(1f, .66f, .36f) * 1.1f);
+            mSign.SetFloat("_Smoothness", .15f);
+            Textured(mSign, Tex("14_SignAtlas", true), 1f, 1f, 0f, 0f, .85f);
+            mSign.SetTexture("_EmissionMap", Tex("14_SignEmission", true));
             AssetDatabase.SaveAssets();
+        }
+
+        const string TexDir = Dir + "/Textures";
+
+        /// <summary>A package-45 texture with game import settings: mipmaps, trilinear, anisotropic 8, BC7 (no moire or crawl).</summary>
+        static Texture2D Tex(string name, bool clamp = false)
+        {
+            string path = $"{TexDir}/Hangar_Tex_{name}_v01.png";
+            if (!(AssetImporter.GetAtPath(path) is TextureImporter imp))
+            {
+                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+                imp = AssetImporter.GetAtPath(path) as TextureImporter;
+                if (imp == null) throw new FileNotFoundException("hangar texture missing: " + path);
+            }
+            var wrap = clamp ? TextureWrapMode.Clamp : TextureWrapMode.Repeat;
+            if (imp.textureType != TextureImporterType.Default || !imp.mipmapEnabled || !imp.sRGBTexture || imp.anisoLevel != 8 ||
+                imp.filterMode != FilterMode.Trilinear || imp.wrapMode != wrap || imp.textureCompression != TextureImporterCompression.CompressedHQ ||
+                imp.maxTextureSize != 1024 || imp.alphaSource != TextureImporterAlphaSource.None)
+            {
+                imp.textureType = TextureImporterType.Default;
+                imp.mipmapEnabled = true;
+                imp.sRGBTexture = true;
+                imp.anisoLevel = 8;
+                imp.filterMode = FilterMode.Trilinear;
+                imp.wrapMode = wrap;
+                imp.textureCompression = TextureImporterCompression.CompressedHQ;
+                imp.maxTextureSize = 1024;
+                imp.alphaSource = TextureImporterAlphaSource.None;
+                imp.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        }
+
+        /// <summary>Base map tiled at world scale (one texture = worldW x worldH metres), offset in texture units, grey tint.</summary>
+        static void Textured(Material m, Texture2D t, float worldW, float worldH, float offU, float offV, float tint) =>
+            Textured(m, t, worldW, worldH, offU, offV, new Color(tint, tint, tint, 1f));
+
+        static void Textured(Material m, Texture2D t, float worldW, float worldH, float offU, float offV, Color tint)
+        {
+            var sc = new Vector2(1f / worldW, 1f / worldH);
+            var of = new Vector2(offU - Mathf.Floor(offU), offV - Mathf.Floor(offV));
+            foreach (var p in new[] { "_BaseMap", "_MainTex" })
+            {
+                m.SetTexture(p, t);
+                m.SetTextureScale(p, sc);
+                m.SetTextureOffset(p, of);
+            }
+            var c = new Color(tint.r, tint.g, tint.b, 1f);
+            m.SetColor("_BaseColor", c);
+            m.SetColor("_Color", c);
+            EditorUtility.SetDirty(m);
+        }
+
+        /// <summary>A picture cell of a texture (UV rect, its pixel aspect w / h): a Box face given a Cell shows the centre crop
+        /// of the cell that fits the face's own aspect, so nothing is stretched.</summary>
+        readonly struct Cell
+        {
+            public readonly Rect R;
+            public readonly float Aspect;
+            public Cell(Rect r, float aspect) { R = r; Aspect = aspect; }
+        }
+
+        static int _label;
+
+        /// <summary>The next label of the medical boxes texture: 2 columns x 3 rows (image rows 0-343, 343-683, 683-1024).</summary>
+        static Cell NextMedLabel()
+        {
+            int i = _label++ * 5 % 6, col = i % 2, row = i / 2;
+            float[] y = { 0f, 343f, 683f, 1024f };
+            return new Cell(new Rect(col * .5f, 1f - y[row + 1] / 1024f, .5f, (y[row + 1] - y[row]) / 1024f), 512f / (y[row + 1] - y[row]));
         }
 
         // ------------------------------------------------------------------ stroke font (block capitals, 4 x 6 units)
@@ -467,36 +578,21 @@ namespace OnlyVolunteers.EditorTools
             cv.Line(b, new Vector2(a.x, b.y), w, c); cv.Line(new Vector2(a.x, b.y), a, w, c);
         }
 
-        // sign atlas: one row of 256 px per sign; text white on black (base and emission maps)
-        static readonly string[] Signs = { "VAN UPGRADES", "PHARMACY", "GEAR" };
-        const int AtlasW = 2048, AtlasRow = 256;
-        const float SignTextPx = 150f, SignMarginPx = 70f;
+        // sign atlas (Hangar_Tex_14_SignAtlas): rows of 1024 x 341 px from the top: VAN UPGRADES, PHARMACY, GEAR (3:1 boards)
+        const float SignRowPx = 341f, SignAspect = 1024f / SignRowPx;
 
-        static Texture2D SignAtlas()
-        {
-            var cv = new Canvas(AtlasW, AtlasRow * Signs.Length, p => p, 1f);
-            for (int i = 0; i < Signs.Length; i++)
-            {
-                float w = TextWidth(Signs[i]) * SignTextPx / 6f;
-                cv.Text(Signs[i], new Vector2(AtlasW * .5f - w * .5f, i * AtlasRow + (AtlasRow - SignTextPx) * .5f), SignTextPx, Color.white);
-            }
-            for (int i = 0; i < cv.Px.Length; i++) { var c = cv.Px[i]; float v = c.a; cv.Px[i] = new Color(v, v, v, 1f); }
-            return cv.Save(Dir + "/Hangar_SignAtlas_v01.png", false);
-        }
-
-        /// <summary>A sign board in front of a wall face (facing -z, the hall), centred at x, its text row 'row'.</summary>
+        /// <summary>A sign board in front of a wall face (facing -z, the hall), centred at x, the atlas row 'row'.</summary>
         static void Sign(float xc, float yc, float zFace, int row, float height)
         {
-            float textPx = TextWidth(Signs[row]) * SignTextPx / 6f + 2 * SignMarginPx;
-            float w = height * textPx / AtlasRow;
-            float u0 = (AtlasW * .5f - textPx * .5f) / AtlasW, u1 = (AtlasW * .5f + textPx * .5f) / AtlasW;
-            float v0 = (float)row / Signs.Length, v1 = (float)(row + 1) / Signs.Length;
+            float w = height * SignAspect;
+            float u0 = .5f / 1024f, u1 = 1f - .5f / 1024f;
+            float v1 = 1f - (row * SignRowPx + .5f) / 1024f, v0 = 1f - ((row + 1) * SignRowPx - .5f) / 1024f;
             var a = A("Signs", mSign, MBoth);
             float zf = zFace - 0.13f, zb = zFace - 0.01f, x0 = xc - w * .5f, x1 = xc + w * .5f, y0 = yc - height * .5f, y1 = yc + height * .5f;
             Quad(a, new Vector3(x0, y0, zf), new Vector3(x1, y0, zf), new Vector3(x1, y1, zf), new Vector3(x0, y1, zf), Vector3.back,
                 new[] { new Vector2(u0, v0), new Vector2(u1, v0), new Vector2(u1, v1), new Vector2(u0, v1) });
-            // edges and back: a dark texel of the atlas (its corner)
-            var dark = new[] { new Vector2(.001f, .001f), new Vector2(.002f, .001f), new Vector2(.002f, .002f), new Vector2(.001f, .002f) };
+            // edges: a dark texel of the atlas (the PHARMACY board left of its lettering)
+            var dark = new[] { new Vector2(.02f, .645f), new Vector2(.025f, .645f), new Vector2(.025f, .65f), new Vector2(.02f, .65f) };
             Quad(a, new Vector3(x0, y1, zf), new Vector3(x1, y1, zf), new Vector3(x1, y1, zb), new Vector3(x0, y1, zb), Vector3.up, dark);
             Quad(a, new Vector3(x0, y0, zf), new Vector3(x0, y0, zb), new Vector3(x1, y0, zb), new Vector3(x1, y0, zf), Vector3.down, dark);
             Quad(a, new Vector3(x0, y0, zf), new Vector3(x0, y1, zf), new Vector3(x0, y1, zb), new Vector3(x0, y0, zb), Vector3.left, dark);
@@ -512,6 +608,7 @@ namespace OnlyVolunteers.EditorTools
             _log = new StringBuilder();
             _acc = new Dictionary<(string, Material, uint), Acc>();
             _colCount = 0;
+            _label = 0;
             if (File.Exists(Dst)) AssetDatabase.DeleteAsset(Dst);
             if (!AssetDatabase.CopyAsset(Src, Dst)) throw new IOException("copy failed: " + Src);
             var scene = EditorSceneManager.OpenScene(Dst);
@@ -622,10 +719,10 @@ namespace OnlyVolunteers.EditorTools
             var stF = A("Wall_Front", mSteel, MHall);
             for (float x = -20f; x <= 20.01f; x += 5f)
             {
-                bool inBay = x < -8f, inRoom = (x > -5f && x < 3f) || (x > 6f && x < 17f);
-                if (!inBay && !inRoom) Solid(st, "col_b" + x, new Vector3(x - .18f, 0, HZ - .36f), new Vector3(x + .18f, Eave, HZ - .06f));
+                bool inBay = x < -8f, inRoom = (x >= -5.2f && x <= 3.2f) || (x >= 5.8f && x <= 17.2f); // a column on a room wall stays above the room
+                if (!inBay && !inRoom) Column(st, A("Steel", mYellow, MHall), "col_b" + x, new Vector3(x - .18f, 0, HZ - .36f), new Vector3(x + .18f, Eave, HZ - .06f));
                 else BoxMM(st, new Vector3(x - .18f, inBay ? 6.2f : 4.4f, HZ - .36f), new Vector3(x + .18f, Eave, HZ - .06f));
-                Solid(stF, "col_f" + x, new Vector3(x - .18f, 0, -HZ + .06f), new Vector3(x + .18f, Eave, -HZ + .36f));
+                Column(stF, A("Wall_Front", mYellow, MHall), "col_f" + x, new Vector3(x - .18f, 0, -HZ + .06f), new Vector3(x + .18f, Eave, -HZ + .36f));
             }
             foreach (float sx in new[] { -1f, 1f })
                 foreach (float sz in new[] { -1f, 1f })
@@ -644,8 +741,9 @@ namespace OnlyVolunteers.EditorTools
                 Vector3 mn = new(HX - .15f, 0, Mathf.Min(z0, z1)), mx = new(HX + T + .1f, GateH, Mathf.Max(z0, z1));
                 Solid(A("Steel", mSteel, MBoth | Sun), "gate_jamb", new Vector3(mn.x, 1.6f, mn.z), mx);
                 Solid(A("Steel", mYellow, MBoth | Sun), "gate_jamb_foot", mn, new Vector3(mx.x, 1.6f, mx.z));
-                Vector3 lmn = new(HX + T + .15f, -.03f, s > 0 ? GateHalf + .1f : -GateHalf - .1f - 7.4f);
-                Solid(A("Gate", mGate, MSun), "gate_leaf", lmn, new Vector3(HX + T + .4f, GateH + .3f, lmn.z + 7.4f));
+                Vector3 lmn = new(HX + T + .15f, -.03f, s > 0 ? GateHalf + .1f : -GateHalf - .1f - 7.4f), lmx = new(HX + T + .4f, GateH + .3f, lmn.z + 7.4f);
+                GateLeaf(lmn, lmx);
+                ColMM("gate_leaf", lmn, lmx);
             }
             Solid(A("Steel", mSteel, MBoth | Sun), "gate_header", new Vector3(HX - .15f, GateH, -GateHalf - .45f), new Vector3(HX + T + .1f, GateH + .6f, GateHalf + .45f));
             BoxMM(A("Gate", mSteel, MSun), new Vector3(HX + T + .12f, GateH + .3f, -HZ), new Vector3(HX + T + .45f, GateH + .5f, HZ));
@@ -668,6 +766,15 @@ namespace OnlyVolunteers.EditorTools
                     Quad(rout, a0, a1, a1 + up, a0 + up, new Vector3(sx, 0, 0));
                 }
             }
+        }
+
+        /// <summary>A steel column with a hazard-striped foot (0 .. 1.2 m); the joint faces are left out (nothing coplanar).</summary>
+        static void Column(Acc steel, Acc foot, string name, Vector3 min, Vector3 max)
+        {
+            const float Foot = 1.2f;
+            BoxMM(foot, min, new Vector3(max.x, Foot, max.z), All & ~PY);
+            BoxMM(steel, new Vector3(min.x, Foot, min.z), max, All & ~NY);
+            ColMM(name, min, max);
         }
 
         static void Trusses()
@@ -705,8 +812,210 @@ namespace OnlyVolunteers.EditorTools
                 }
         }
 
+        // ------------------------------------------------------------------ modelled detail (Vadim 30.10 "details are 3D, not painted";
+        // ArtDirection §2: chunky parts, three levels of detail, flat faces, one bevel segment of 1-4 cm). Textures only colour.
+
+        /// <summary>A box in a local frame (o, r): local min / max.</summary>
+        static void LBox(Acc a, Vector3 o, Quaternion r, Vector3 min, Vector3 max, int faces = All, Cell? cell = null) =>
+            Box(a, o + r * ((min + max) * .5f), max - min, r, faces, cell);
+
+        /// <summary>A box with every edge chamfered (one flat segment b wide) in the frame (o, r), local min / max. Main faces get
+        /// metric UVs like Box, chamfers and corners planar ones. faces: which main faces to emit (chamfers always).</summary>
+        static void Chamfer(Acc a, Vector3 o, Quaternion r, Vector3 min, Vector3 max, float b, int faces = All)
+        {
+            Vector3 c = (min + max) * .5f, h = (max - min) * .5f;
+            b = Mathf.Min(b, Mathf.Min(h.x, Mathf.Min(h.y, h.z)) * .8f);
+            Vector3 W(Vector3 l) => o + r * (c + l);
+            Vector3 E(int i) => i == 0 ? Vector3.right : i == 1 ? Vector3.up : Vector3.forward;
+            int[] bits = { PX, NX, PY, NY, PZ, NZ };
+            for (int ax = 0; ax < 3; ax++)
+                foreach (int s in new[] { 1, -1 })
+                {
+                    if ((faces & bits[ax * 2 + (s > 0 ? 0 : 1)]) == 0) continue;
+                    Vector3 ln = E(ax) * s, lu = ax == 1 ? Vector3.forward : Vector3.up, lr = Vector3.Cross(ln, lu);
+                    float hw = Mathf.Abs(Vector3.Dot(lr, h)) - b, hh = Mathf.Abs(Vector3.Dot(lu, h)) - b, hd = Mathf.Abs(Vector3.Dot(ln, h));
+                    Vector3 fc = ln * hd, rd = r * lr, ud = r * lu;
+                    Vector3[] p = { W(fc - lr * hw - lu * hh), W(fc + lr * hw - lu * hh), W(fc + lr * hw + lu * hh), W(fc - lr * hw + lu * hh) };
+                    Quad(a, p[0], p[1], p[2], p[3], r * ln, p.Select(q => new Vector2(Vector3.Dot(q, rd), Vector3.Dot(q, ud))).ToArray());
+                }
+            for (int i = 0; i < 3; i++)
+                for (int j = i + 1; j < 3; j++)
+                {
+                    int t = 3 - i - j;
+                    foreach (int si in new[] { 1, -1 })
+                        foreach (int sj in new[] { 1, -1 })
+                        {
+                            Vector3 P(float ti, float tj, float tt) => E(i) * ti + E(j) * tj + E(t) * tt;
+                            Quad(a, W(P(si * h[i], sj * (h[j] - b), -(h[t] - b))), W(P(si * h[i], sj * (h[j] - b), h[t] - b)),
+                                W(P(si * (h[i] - b), sj * h[j], h[t] - b)), W(P(si * (h[i] - b), sj * h[j], -(h[t] - b))), r * (E(i) * si + E(j) * sj).normalized);
+                        }
+                }
+            foreach (int sx in new[] { 1, -1 })
+                foreach (int sy in new[] { 1, -1 })
+                    foreach (int sz in new[] { 1, -1 })
+                        Tri(a, W(new Vector3(sx * h.x, sy * (h.y - b), sz * (h.z - b))), W(new Vector3(sx * (h.x - b), sy * h.y, sz * (h.z - b))),
+                            W(new Vector3(sx * (h.x - b), sy * (h.y - b), sz * h.z)), r * new Vector3(sx, sy, sz).normalized);
+        }
+
+        /// <summary>Wood cladding boards on a face: local frame (origin, rot), u along the face, v up, the boards standing proud
+        /// toward the viewer (local -z). Boards 0.175 m = texture 07's boards (its dark gaps sit in the real grooves), 1.2 cm
+        /// grooves, 2.0-2.6 cm proud with small per-board offsets; the face behind shows in the grooves. Ends capped.</summary>
+        static void Cladding(Acc a, Vector3 origin, Quaternion rot, float u0, float u1, float v0, float v1, bool capV0 = true)
+        {
+            const float P = .175f, G = .012f;
+            Vector3 W(float u, float v, float d) => origin + rot * new Vector3(u, v, -d);
+            for (int k = Mathf.FloorToInt(u0 / P); k * P < u1; k++)
+            {
+                float ua = Mathf.Max(k * P + G * .5f, u0), ub = Mathf.Min((k + 1) * P - G * .5f, u1);
+                if (ub - ua < .005f) continue;
+                float d = .02f + (((k * 7919) % 5 + 5) % 5) * .0015f;
+                Quad(a, W(ua, v0, d), W(ub, v0, d), W(ub, v1, d), W(ua, v1, d), rot * Vector3.back,
+                    new[] { new Vector2(ua, v0), new Vector2(ub, v0), new Vector2(ub, v1), new Vector2(ua, v1) });
+                Quad(a, W(ua, v0, 0), W(ua, v0, d), W(ua, v1, d), W(ua, v1, 0), rot * Vector3.left,
+                    new[] { new Vector2(ua - d, v0), new Vector2(ua, v0), new Vector2(ua, v1), new Vector2(ua - d, v1) });
+                Quad(a, W(ub, v0, 0), W(ub, v1, 0), W(ub, v1, d), W(ub, v0, d), rot * Vector3.right,
+                    new[] { new Vector2(ub + d, v0), new Vector2(ub + d, v1), new Vector2(ub, v1), new Vector2(ub, v0) });
+                Quad(a, W(ua, v1, 0), W(ub, v1, 0), W(ub, v1, d), W(ua, v1, d), rot * Vector3.up,
+                    new[] { new Vector2(ua, v1 + d), new Vector2(ub, v1 + d), new Vector2(ub, v1), new Vector2(ua, v1) });
+                if (capV0) Quad(a, W(ua, v0, 0), W(ua, v0, d), W(ub, v0, d), W(ub, v0, 0), rot * Vector3.down,
+                    new[] { new Vector2(ua, v0 - d), new Vector2(ua, v0), new Vector2(ub, v0), new Vector2(ub, v0 - d) });
+            }
+        }
+
+        /// <summary>Roller-door slats on a face: local frame (origin, rot), u along the face, v up; slats 0.1 m = texture 05's
+        /// slats (aligned), each a raised band 1.4 cm proud with sloped edges toward the viewer (local -z). Ends capped.</summary>
+        static void Slats(Acc a, Vector3 origin, Quaternion rot, float u0, float u1, float v0, float v1)
+        {
+            const float P = .1f, D = .014f;
+            float[] o = { 0f, .015f, .085f, .1f };
+            float[] dd = { 0f, D, D, 0f };
+            Vector3 W(float u, float v, float d) => origin + rot * new Vector3(u, v, -d);
+            float Dep(float v)
+            {
+                float f = v - Mathf.Floor(v / P) * P;
+                for (int i = 0; i < 3; i++) if (f <= o[i + 1]) return Mathf.Lerp(dd[i], dd[i + 1], (f - o[i]) / (o[i + 1] - o[i]));
+                return 0f;
+            }
+            for (int k = Mathf.FloorToInt(v0 / P); k * P < v1; k++)
+                for (int i = 0; i < 3; i++)
+                {
+                    float va = k * P + o[i], vb = k * P + o[i + 1];
+                    float ca = Mathf.Max(va, v0), cb = Mathf.Min(vb, v1);
+                    if (cb - ca < 1e-4f) continue;
+                    float da = Mathf.Lerp(dd[i], dd[i + 1], (ca - va) / (vb - va)), db = Mathf.Lerp(dd[i], dd[i + 1], (cb - va) / (vb - va));
+                    Quad(a, W(u0, ca, da), W(u1, ca, da), W(u1, cb, db), W(u0, cb, db), rot * new Vector3(0, -(db - da), -(cb - ca)).normalized,
+                        new[] { new Vector2(u0, ca), new Vector2(u1, ca), new Vector2(u1, cb), new Vector2(u0, cb) });
+                    if (da > 1e-4f || db > 1e-4f)
+                        foreach (var (u, s) in new[] { (u0, -1f), (u1, 1f) })
+                            Quad(a, W(u, ca, 0), W(u, cb, 0), W(u, cb, db), W(u, ca, da), rot * new Vector3(s, 0, 0),
+                                new[] { new Vector2(0, ca), new Vector2(0, cb), new Vector2(db, cb), new Vector2(da, ca) });
+                }
+            foreach (var (v, s) in new[] { (v0, -1f), (v1, 1f) })
+            {
+                float d = Dep(v);
+                if (d > 1e-4f) Quad(a, W(u0, v, 0), W(u1, v, 0), W(u1, v, d), W(u0, v, d), rot * new Vector3(0, s, 0),
+                    new[] { new Vector2(u0, 0), new Vector2(u1, 0), new Vector2(u1, d), new Vector2(u0, d) });
+            }
+        }
+
+        // light wood texture 12 (Textures/): its 7 boards between the gap rows; a plank shows one whole board (Cell, not stretched)
+        static readonly float[] WoodGaps = { 2f, 145f, 290f, 434f, 585f, 732f, 879f, 1021f };
+
+        static Cell Plank(int k)
+        {
+            int j = (k % 7 + 7) % 7;
+            float r0 = WoodGaps[j] + 10f, r1 = WoodGaps[j + 1] - 10f;
+            return new Cell(new Rect(0f, 1f - r1 / 1024f, 1f, (r1 - r0) / 1024f), 1.305f / ((r1 - r0) / 1024f * 1.05f));
+        }
+
+        /// <summary>n planks running along the local x, side by side along z with gaps, small height offsets.</summary>
+        static void Planks(Acc a, Vector3 o, Quaternion r, Vector3 min, Vector3 max, int n, float gap, int seed, int faces = All)
+        {
+            float wz = (max.z - min.z - gap * (n - 1)) / n;
+            for (int i = 0; i < n; i++)
+            {
+                float z0 = min.z + i * (wz + gap), dy = (((seed + i * 2) % 3 + 3) % 3) * .003f;
+                LBox(a, o, r, new Vector3(min.x, min.y, z0), new Vector3(max.x, max.y - dy, z0 + wz), faces, Plank(seed + i));
+            }
+        }
+
+        /// <summary>Chunky pallet 1.2 x 0.17 x 1.0 (o = bottom centre): 3 bottom boards, 9 blocks, 3 stringers, 5 top boards with gaps.</summary>
+        static void Pallet(Vector3 o, Quaternion r, int seed)
+        {
+            var wood = A("Props", mPallet, MBoth);
+            foreach (float z in new[] { -.43f, 0f, .43f }) LBox(wood, o, r, new Vector3(-.6f, 0f, z - .07f), new Vector3(.6f, .03f, z + .07f), All & ~NY, Plank(seed++));
+            foreach (float x in new[] { -.52f, 0f, .52f })
+                foreach (float z in new[] { -.43f, 0f, .43f })
+                    LBox(wood, o, r, new Vector3(x - .07f, .03f, z - .065f), new Vector3(x + .07f, .1f, z + .065f), All & ~NY & ~PY);
+            Quaternion rz = r * Quaternion.Euler(0, 90, 0);
+            foreach (float x in new[] { -.52f, 0f, .52f })
+                LBox(wood, o + r * new Vector3(x, 0, 0), rz, new Vector3(-.5f, .1f, -.07f), new Vector3(.5f, .13f, .07f), All, Plank(seed++));
+            Planks(wood, o, r, new Vector3(-.6f, .13f, -.5f), new Vector3(.6f, .17f, .5f), 5, .07f, seed);
+        }
+
+        /// <summary>Military crate (olive metal, graphite hardware): inset body, chamfered lid with a real seam step, bottom band and
+        /// corner posts standing proud, corner caps, two chunky latches on the latch sides (1 = local -z, 2 = +z, 3 = both), bar
+        /// handles on the ends. o = bottom centre, s = size (x = the long side), r = rotation.</summary>
+        static void Crate(Vector3 o, Vector3 s, Quaternion r, int latch, string group = "Props", uint mask = MBoth)
+        {
+            var body = A(group, mCrate, mask);
+            var metal = A(group, mSteel, mask);
+            float w = s.x * .5f, h = s.y, d = s.z * .5f, mn = Mathf.Min(s.x, s.z);
+            float e = Mathf.Clamp(.05f * mn, .012f, .025f), bev = Mathf.Clamp(.06f * mn, .012f, .03f);
+            float lid = Mathf.Clamp(.22f * h, .06f, .13f), band = Mathf.Clamp(.12f * h, .04f, .07f), post = Mathf.Clamp(.14f * mn, .045f, .08f);
+            LBox(body, o, r, new Vector3(-w + e, band - .01f, -d + e), new Vector3(w - e, h - lid + .01f, d - e), All & ~PY & ~NY);
+            Chamfer(body, o, r, new Vector3(-w, h - lid, -d), new Vector3(w, h, d), bev);
+            Chamfer(body, o, r, new Vector3(-w, 0f, -d), new Vector3(w, band, d), bev, All & ~NY);
+            foreach (float sx in new[] { -1f, 1f })
+                foreach (float sz in new[] { -1f, 1f })
+                    Chamfer(body, o, r, new Vector3(sx > 0 ? w - post : -w, band, sz > 0 ? d - post : -d),
+                        new Vector3(sx > 0 ? w : -w + post, h - lid, sz > 0 ? d : -d + post), bev * .6f, All & ~PY & ~NY);
+            // small crates (shelf goods, under 0.6 m): no corner caps, one latch per side (three levels of detail, nothing fiddly)
+            bool small = s.x < .6f;
+            float cs = post + .012f, p = .006f;
+            if (!small)
+            foreach (float sx in new[] { -1f, 1f })
+                foreach (float sz in new[] { -1f, 1f })
+                    foreach (bool top in new[] { false, true })
+                        LBox(metal, o, r, new Vector3(sx > 0 ? w - cs : -w - p, top ? h - cs : 0f, sz > 0 ? d - cs : -d - p),
+                            new Vector3(sx > 0 ? w + p : -w + cs, top ? h + p : cs, sz > 0 ? d + p : -d + cs), top ? All : All & ~NY);
+            float lw = Mathf.Clamp(.16f * s.x, .06f, .12f), ys = h - lid;
+            foreach (float sz in new[] { -1f, 1f })
+            {
+                if ((latch & (sz < 0 ? 1 : 2)) == 0) continue;
+                float zi = sz * (d - e - .003f), zo = sz * (d + .02f), zo2 = sz * (d + .034f);
+                foreach (float lx in small ? new[] { 0f } : new[] { -.28f * s.x, .28f * s.x })
+                {
+                    LBox(metal, o, r, new Vector3(lx - lw * .5f, ys - .55f * lid, Mathf.Min(zi, zo)), new Vector3(lx + lw * .5f, ys + .5f * lid, Mathf.Max(zi, zo)));
+                    LBox(metal, o, r, new Vector3(lx - lw * .22f, ys - .35f * lid, Mathf.Min(zi, zo2)), new Vector3(lx + lw * .22f, ys + .25f * lid, Mathf.Max(zi, zo2)));
+                }
+            }
+            float hy = (band + h - lid) * .5f + .02f, hz = Mathf.Min(.14f, .3f * s.z);
+            foreach (float sx in new[] { -1f, 1f })
+            {
+                float xi = sx * (w - e - .003f), xo = sx * (w + .05f), xb0 = sx * (w + .03f), xb1 = sx * (w + .062f);
+                foreach (float zc in new[] { -hz, hz })
+                    LBox(metal, o, r, new Vector3(Mathf.Min(xi, xo), hy - .025f, zc - .02f), new Vector3(Mathf.Max(xi, xo), hy + .025f, zc + .02f));
+                LBox(metal, o, r, new Vector3(Mathf.Min(xb0, xb1), hy - .018f, -hz - .03f), new Vector3(Mathf.Max(xb0, xb1), hy + .018f, hz + .03f));
+            }
+        }
+
+        /// <summary>A sliding gate leaf: roller-door slats on both faces in a chunky graphite frame (stiles, top and bottom rails).</summary>
+        static void GateLeaf(Vector3 mn, Vector3 mx)
+        {
+            var leaf = A("Gate", mGate, MSun);
+            var fr = A("Gate", mSteel, MSun);
+            Slats(leaf, new Vector3(mx.x - .03f, 0, 0), Quaternion.Euler(0, -90, 0), mn.z, mx.z, mn.y, mx.y);
+            Slats(leaf, new Vector3(mn.x + .03f, 0, 0), Quaternion.Euler(0, 90, 0), -mx.z, -mn.z, mn.y, mx.y);
+            const float F = .14f;
+            Chamfer(fr, Vector3.zero, Quaternion.identity, new Vector3(mn.x - .01f, mn.y, mn.z), new Vector3(mx.x + .01f, mx.y, mn.z + F), .03f, All & ~NY);
+            Chamfer(fr, Vector3.zero, Quaternion.identity, new Vector3(mn.x - .01f, mn.y, mx.z - F), new Vector3(mx.x + .01f, mx.y, mx.z), .03f, All & ~NY);
+            Chamfer(fr, Vector3.zero, Quaternion.identity, new Vector3(mn.x - .005f, mx.y - F, mn.z + F - .02f), new Vector3(mx.x + .005f, mx.y - .01f, mx.z - F + .02f), .03f);
+            Chamfer(fr, Vector3.zero, Quaternion.identity, new Vector3(mn.x - .005f, mn.y, mn.z + F - .02f), new Vector3(mx.x + .005f, mn.y + F, mx.z - F + .02f), .03f, All & ~NY);
+        }
+
         /// <summary>A room front wall from x0 to x1 at z (0.2 thick), height h, with openings (x0, x1, y0, y1). The hall side
-        /// and the reveals are hall-lit, the inner side room-lit; colliders per solid piece.</summary>
+        /// and the reveals are hall-lit, the inner side room-lit; real cladding boards on both sides; colliders per solid piece.</summary>
         static void FrontWall(string name, float x0, float x1, float z, float h, (float x0, float x1, float y0, float y1)[] holes)
         {
             var hall = A("Rooms", mWood, MHall);
@@ -727,6 +1036,8 @@ namespace OnlyVolunteers.EditorTools
                     Vector3 mn = new(a, y0, z - .1f), mx = new(b, y1, z + .1f);
                     BoxMM(hall, mn, mx, All & ~PZ);
                     BoxMM(room, mn, mx, PZ);
+                    Cladding(hall, new Vector3(0, 0, z - .1f), Quaternion.identity, a, b, y0, y1, y0 > .001f);
+                    Cladding(room, new Vector3(0, 0, z + .1f), Quaternion.Euler(0, 180, 0), -b, -a, y0, y1, y0 > .001f);
                     ColMM(name + "_wall", mn, mx);
                 }
             }
@@ -735,7 +1046,10 @@ namespace OnlyVolunteers.EditorTools
         static void SideWall(string name, float x, float z0, float h)
         {
             Vector3 mn = new(x - .1f, 0, z0 + .1f), mx = new(x + .1f, h, HZ);
-            BoxMM(A("Rooms", mWood, MBoth), mn, mx, All & ~NZ);
+            var acc = A("Rooms", mWood, MBoth);
+            BoxMM(acc, mn, mx, All & ~NZ);
+            Cladding(acc, new Vector3(x + .1f, 0, 0), Quaternion.Euler(0, -90, 0), z0 + .1f, HZ - .04f, 0f, h, false);
+            Cladding(acc, new Vector3(x - .1f, 0, 0), Quaternion.Euler(0, 90, 0), -(HZ - .04f), -(z0 + .1f), 0f, h, false);
             ColMM(name + "_side", mn, mx);
         }
 
@@ -744,24 +1058,36 @@ namespace OnlyVolunteers.EditorTools
             Vector3 mn = new(x0 - .25f, h, z0 - .25f), mx = new(x1 + .25f, h + .2f, HZ - .06f);
             BoxMM(A("Rooms", mWood, MHall), mn, mx, All & ~NY);
             BoxMM(A("Rooms", mWood, MRoom), mn, mx, NY);
+            // the ceiling inside: boards along the room depth (u = -x, v = z, proud downward)
+            Cladding(A("Rooms", mWood, MRoom), new Vector3(0, h, 0), Quaternion.LookRotation(Vector3.up, Vector3.forward), -(x1 - .1f), -(x0 + .1f), z0 + .1f, HZ - .08f);
             ColMM("room_roof", mn, mx);
         }
 
         static void Door(float xa, float xb, float z)
         {
-            // the leaf stands open into the room, against the inner side of the wall
-            Vector3 mn = new(xa + .02f, .01f, z + .12f), mx = new(xa + .07f, 2.25f, z + .12f + (xb - xa) - .05f);
-            BoxMM(A("Rooms", mPallet, MBoth), mn, mx);
-            ColMM("door_leaf", mn, mx);
+            // the leaf stands open into the room, against the inner side of the wall: 6 cm horizontal planks with grooves, two battens
+            var a = A("Rooms", mPallet, MBoth);
+            float z0 = z + .12f, z1 = z + .12f + (xb - xa) - .05f;
+            int k = 0;
+            for (float y = .01f; y < 2.24f; y += .15f, k++)
+            {
+                float d = (k % 2) * .004f;
+                BoxMM(a, new Vector3(xa + .02f + d, y, z0), new Vector3(xa + .08f - d, Mathf.Min(y + .142f, 2.25f), z1), All, Plank(k + (int)(xa * 3)));
+            }
+            foreach (float y in new[] { .35f, 1.8f })
+                BoxMM(a, new Vector3(xa + .08f - .002f, y, z0 + .06f), new Vector3(xa + .12f, y + .12f, z1 - .06f), All & ~NX, Plank(k++));
+            ColMM("door_leaf", new Vector3(xa + .02f, .01f, z0), new Vector3(xa + .12f, 2.25f, z1));
         }
 
         static void WindowCounter(float xa, float xb, float z)
         {
             var hall = A("Rooms", mWood, MBoth);
-            BoxMM(A("Rooms", mPallet, MBoth), new Vector3(xa - .1f, 1.0f, z - .45f), new Vector3(xb + .1f, 1.07f, z + .7f));
+            Planks(A("Rooms", mPallet, MBoth), Vector3.zero, Quaternion.identity, new Vector3(xa - .1f, 1.0f, z - .45f), new Vector3(xb + .1f, 1.07f, z + .7f), 8, .008f, (int)(xa * 10));
             ColMM("counter_shelf", new Vector3(xa - .1f, 1.0f, z - .45f), new Vector3(xb + .1f, 1.07f, z + .7f));
-            // the counter cabinet behind the window, inside
-            Solid(A("Rooms", mWood, MRoom), "counter_cabinet", new Vector3(xa, 0, z + .1f), new Vector3(xb, 1.0f, z + .65f), All & ~NY & ~PY);
+            // the counter cabinet behind the window, inside (cladding boards on its front)
+            var cab = A("Rooms", mWood, MRoom);
+            Solid(cab, "counter_cabinet", new Vector3(xa, 0, z + .1f), new Vector3(xb, 1.0f, z + .65f), All & ~NY & ~PY);
+            Cladding(cab, new Vector3(0, 0, z + .65f), Quaternion.Euler(0, 180, 0), -xb, -xa, 0f, 1.0f, false);
             // glass with a 0.18 m pass slot above the shelf; its collider closes the window (the glass is visible)
             BoxMM(A("Glass", mGlass, MBoth), new Vector3(xa, 1.25f, z - .01f), new Vector3(xb, 2.15f, z + .01f), PZ | NZ);
             ColMM("window_glass", new Vector3(xa, 1.07f, z - .02f), new Vector3(xb, 2.15f, z + .02f));
@@ -770,25 +1096,57 @@ namespace OnlyVolunteers.EditorTools
 
         static void Rooms()
         {
+            var id = Quaternion.identity;
             // VAN UPGRADES bay: x -25..-8, front z 7, 6 m high, roller door 8 m x 4.4 m (open, rolled up)
             FrontWall("bay", -HX, -7.9f, 7f, 6f, new[] { (-20.5f, -12.5f, 0f, 4.4f) });
             SideWall("bay", -8f, 7f, 6f);
             RoomRoof(-HX + .05f, -8f, 7f, 6f);
+            // roller door: graphite drum housing, steel rails, the curtain rolled down 0.45 m under the drum (real slats both sides)
+            Chamfer(A("Rooms", mSteel, MBoth), Vector3.zero, id, new Vector3(-20.9f, 4.4f, 6.59f), new Vector3(-12.1f, 5.0f, 6.89f), .04f);
+            ColMM("roller_drum", new Vector3(-20.9f, 4.4f, 6.59f), new Vector3(-12.1f, 5.0f, 6.89f));
+            foreach (float x in new[] { -20.75f, -12.45f }) Solid(A("Rooms", mSteel, MBoth), "roller_rail", new Vector3(x, 0, 6.7f), new Vector3(x + .2f, 4.4f, 6.89f));
             var roller = A("Rooms", mRoller, MBoth);
-            Solid(roller, "roller_drum", new Vector3(-20.9f, 4.4f, 6.35f), new Vector3(-12.1f, 5.0f, 6.89f));
-            foreach (float x in new[] { -20.75f, -12.45f }) Solid(roller, "roller_rail", new Vector3(x, 0, 6.7f), new Vector3(x + .2f, 4.4f, 6.89f));
-            Sign(-16.5f, 5.48f, 6.9f, 0, .72f);
+            Slats(roller, new Vector3(0, 0, 6.755f), id, -20.6f, -12.4f, 3.97f, 4.42f);
+            Slats(roller, new Vector3(0, 0, 6.785f), Quaternion.Euler(0, 180, 0), 12.4f, 20.6f, 3.97f, 4.42f);
+            Chamfer(A("Rooms", mSteel, MBoth), Vector3.zero, id, new Vector3(-20.6f, 3.9f, 6.72f), new Vector3(-12.4f, 3.97f, 6.82f), .015f);
+            Sign(-16.5f, 5.49f, 6.9f, 0, .78f);
             // lift: two yellow posts and the top beam, the van drives in between
             var y = A("Bay", mYellow, MRoom | Hall);
             foreach (float x in new[] { -18.65f, -14.35f }) Solid(y, "lift_post", new Vector3(x - .18f, 0, 12.3f), new Vector3(x + .18f, 3.6f, 12.9f));
             Solid(A("Bay", mSteel, MRoom | Hall), "lift_beam", new Vector3(-18.83f, 3.6f, 12.45f), new Vector3(-14.17f, 3.85f, 12.75f));
-            // workbench, tool board, red tool cabinets, tyres
+            // workbench (plank top and lower shelf on a red frame), tool board, red tool cabinet with drawers, trolley, tyres
             var wood = A("Bay", mPallet, MRoom | Hall);
-            Solid(wood, "workbench", new Vector3(-24.6f, 0, 15.9f), new Vector3(-21.0f, .92f, 16.85f));
-            BoxMM(A("Bay", mPeg, MRoom | Hall), new Vector3(-24.4f, 1.3f, 16.84f), new Vector3(-21.2f, 2.5f, 16.92f));
             var red = A("Bay", mRed, MRoom | Hall);
+            var hw = A("Bay", mSteel, MRoom | Hall);
+            Planks(wood, Vector3.zero, id, new Vector3(-24.6f, .86f, 15.9f), new Vector3(-21.0f, .92f, 16.85f), 6, .008f, 11);
+            foreach (float x in new[] { -24.5f, -21.18f })
+                foreach (float z in new[] { 15.98f, 16.7f })
+                    Chamfer(red, Vector3.zero, id, new Vector3(x, 0, z), new Vector3(x + .08f, .86f, z + .08f), .015f, All & ~NY & ~PY);
+            Planks(wood, Vector3.zero, id, new Vector3(-24.46f, .2f, 16.02f), new Vector3(-21.14f, .26f, 16.74f), 5, .01f, 17);
+            ColMM("workbench", new Vector3(-24.6f, 0, 15.9f), new Vector3(-21.0f, .92f, 16.85f));
+            Chamfer(A("Bay", mPeg, MRoom | Hall), Vector3.zero, id, new Vector3(-24.4f, 1.3f, 16.82f), new Vector3(-21.2f, 2.5f, 16.92f), .02f);
+            PegTools(-24.4f, 16.82f);
             Solid(red, "tool_cabinet", new Vector3(-12.2f, 0, 16.1f), new Vector3(-9.2f, 1.1f, 16.85f));
-            Solid(red, "tool_trolley", new Vector3(-21.6f, .05f, 9.6f), new Vector3(-20.8f, 1.0f, 10.2f));
+            Chamfer(hw, Vector3.zero, id, new Vector3(-12.25f, 1.1f, 16.05f), new Vector3(-9.15f, 1.16f, 16.87f), .02f);
+            for (int i = 0; i < 4; i++)
+            {
+                float y0 = .08f + i * .25f, y1 = y0 + .22f;
+                foreach (float x0 in new[] { -12.12f, -10.66f })
+                {
+                    Chamfer(red, Vector3.zero, id, new Vector3(x0, y0, 16.075f), new Vector3(x0 + 1.38f, y1, 16.105f), .01f);
+                    BoxMM(hw, new Vector3(x0 + .45f, y1 - .08f, 16.035f), new Vector3(x0 + .93f, y1 - .04f, 16.08f));
+                }
+            }
+            Solid(red, "tool_trolley", new Vector3(-21.6f, .08f, 9.6f), new Vector3(-20.8f, 1.0f, 10.2f));
+            for (int i = 0; i < 3; i++)
+            {
+                float y0 = .14f + i * .28f;
+                Chamfer(red, Vector3.zero, id, new Vector3(-20.805f, y0, 9.65f), new Vector3(-20.775f, y0 + .24f, 10.15f), .01f);
+                BoxMM(hw, new Vector3(-20.78f, y0 + .16f, 9.75f), new Vector3(-20.74f, y0 + .2f, 10.05f));
+            }
+            foreach (float x in new[] { -21.55f, -20.93f })
+                foreach (float z in new[] { 9.65f, 10.07f })
+                    BoxMM(A("Bay", mTire, MRoom | Hall), new Vector3(x, 0, z), new Vector3(x + .08f, .08f, z + .08f), All & ~NY);
             var tyre = A("Bay", mTire, MRoom | Hall);
             for (int i = 0; i < 4; i++) Cyl(tyre, new Vector3(-9.2f, i * .25f, 8.4f), .38f, .38f, .24f, 14, i == 3, false);
             ColMM("tyres", new Vector3(-9.6f, 0, 8.0f), new Vector3(-8.8f, 1.0f, 8.8f));
@@ -804,7 +1162,7 @@ namespace OnlyVolunteers.EditorTools
             RoomRoof(-5f, 3f, 11f, 4.2f);
             Door(-4.4f, -3.2f, 11f);
             WindowCounter(-2.2f, 2.2f, 11f);
-            Sign(-.6f, 3.55f, 10.9f, 1, .62f);
+            Sign(-.6f, 3.6f, 10.9f, 1, .7f);
             Shelf(-4.6f, -2.6f, 16.85f, mWhite);
             Shelf(-.2f, 2.6f, 16.85f, mWhite);
 
@@ -815,43 +1173,92 @@ namespace OnlyVolunteers.EditorTools
             RoomRoof(6f, 17f, 11f, 4.2f);
             Door(6.6f, 7.8f, 11f);
             WindowCounter(9.0f, 15.0f, 11f);
-            Sign(12f, 3.55f, 10.9f, 2, .62f);
+            Sign(12f, 3.6f, 10.9f, 2, .7f);
             var cloth = A("Gear", mCloth, MRoom | Hall);
             var steel = A("Gear", mSteel, MRoom | Hall);
-            Beam(steel, new Vector3(9.6f, 1.85f, 16.4f), new Vector3(12.6f, 1.85f, 16.4f), .05f, .05f);
+            Beam(steel, new Vector3(9.6f, 1.85f, 16.4f), new Vector3(12.6f, 1.85f, 16.4f), .06f, .06f);
             for (int i = 0; i < 5; i++)
             {
                 float x = 9.9f + i * .6f;
-                BoxMM(cloth, new Vector3(x - .22f, .95f, 16.33f), new Vector3(x + .22f, 1.8f, 16.47f));
+                Chamfer(cloth, Vector3.zero, id, new Vector3(x - .22f, .95f, 16.32f), new Vector3(x + .22f, 1.8f, 16.48f), .03f);
             }
             ColMM("uniform_rack", new Vector3(9.5f, 0, 16.2f), new Vector3(12.7f, 1.9f, 16.9f));
             Shelf(6.3f, 8.9f, 16.85f, mCloth, helmets: true);
-            BoxMM(steel, new Vector3(13.0f, 1.0f, 16.82f), new Vector3(16.5f, 2.3f, 16.9f));
+            Chamfer(steel, Vector3.zero, id, new Vector3(13.0f, 1.0f, 16.8f), new Vector3(16.5f, 2.3f, 16.9f), .02f);
             for (int i = 0; i < 7; i++)
             {
                 float x = 13.35f + i * .45f;
-                BoxMM(A("Gear", mTire, MRoom | Hall), new Vector3(x - .04f, 1.1f, 16.7f), new Vector3(x + .04f, 2.15f, 16.81f));
+                BoxMM(A("Gear", mTire, MRoom | Hall), new Vector3(x - .04f, 1.1f, 16.68f), new Vector3(x + .04f, 2.15f, 16.8f));
             }
-            Solid(A("Gear", mCrate, MRoom | Hall), "gear_crate", new Vector3(13.2f, 0, 15.9f), new Vector3(14.6f, .6f, 16.6f));
+            Crate(new Vector3(13.9f, 0, 16.25f), new Vector3(1.4f, .6f, .7f), id, 1, "Gear", MRoom | Hall);
+            ColMM("gear_crate", new Vector3(13.2f, 0, 15.9f), new Vector3(14.6f, .6f, 16.6f));
+        }
+
+        /// <summary>Chunky tools on the bay pegboard (board face at z, from x0, 3.2 x 1.2 m from y 1.3): hammers, wrenches,
+        /// screwdrivers and a saw, each a few boxes standing proud of the board (accents of 0.2-0.4 m).</summary>
+        static void PegTools(float x0, float z)
+        {
+            var metal = A("Bay", mSteel, MRoom | Hall);
+            var red = A("Bay", mRed, MRoom | Hall);
+            var wood = A("Bay", mPallet, MRoom | Hall);
+            var id = Quaternion.identity;
+            Vector3 P(float x, float y, float d) => new(x0 + x, y, z - d);
+            void B(Acc a, float xa, float ya, float xb, float yb, float d0, float d1, Cell? c = null) =>
+                BoxMM(a, P(xa, ya, d1), P(xb, yb, d0), All & ~PZ, c);
+            // two hammers: wooden handle, graphite head
+            foreach (float x in new[] { .35f, .75f })
+            {
+                B(wood, x - .02f, 1.55f, x + .02f, 1.95f, 0f, .04f, Plank((int)(x * 10)));
+                B(metal, x - .08f, 1.95f, x + .08f, 2.02f, 0f, .06f);
+            }
+            // three wrenches (bar + open head), graded sizes
+            for (int i = 0; i < 3; i++)
+            {
+                float x = 1.2f + i * .22f, len = .3f - i * .04f;
+                B(metal, x - .018f, 1.6f, x + .018f, 1.6f + len, 0f, .025f);
+                B(metal, x - .05f, 1.6f + len, x + .05f, 1.67f + len, 0f, .025f);
+            }
+            // four screwdrivers: red handle, graphite shaft
+            for (int i = 0; i < 4; i++)
+            {
+                float x = 2.0f + i * .14f;
+                B(metal, x - .008f, 1.6f, x + .008f, 1.78f, 0f, .03f);
+                B(red, x - .025f, 1.78f, x + .025f, 1.92f, 0f, .05f);
+            }
+            // a saw: graphite blade with a red handle
+            B(metal, 2.62f, 1.62f, 3.0f, 1.76f, 0f, .015f);
+            B(red, 2.98f, 1.6f, 3.1f, 1.8f, 0f, .04f);
+            // a shelf strip with three tins along the bottom
+            B(metal, .2f, 1.38f, 3.0f, 1.42f, 0f, .12f);
+            foreach (float x in new[] { .5f, 1.4f, 2.3f })
+                Cyl(A("Bay", mRed, MRoom | Hall), P(x, 1.42f, .06f), .045f, .045f, .12f, 8, true, false);
         }
 
         static void Shelf(float x0, float x1, float zBack, Material goods, bool helmets = false)
         {
+            // olive metal shelf: 6 cm posts, 5 cm boards with a chunky front lip
             var steel = A("Props", mShelf, MBoth);
+            var id = Quaternion.identity;
             float z0 = zBack - .55f;
-            foreach (float x in new[] { x0, x1 - .05f })
-                foreach (float z in new[] { z0, zBack - .05f })
-                    BoxMM(steel, new Vector3(x, 0, z), new Vector3(x + .05f, 2.2f, z + .05f));
+            foreach (float x in new[] { x0, x1 - .06f })
+                foreach (float z in new[] { z0, zBack - .06f })
+                    Chamfer(steel, Vector3.zero, id, new Vector3(x, 0, z), new Vector3(x + .06f, 2.2f, z + .06f), .012f, All & ~NY);
             int n = Mathf.Max(1, Mathf.FloorToInt((x1 - x0 - .2f) / .5f));
             foreach (float y in new[] { .35f, 1.0f, 1.65f })
             {
-                BoxMM(steel, new Vector3(x0, y - .04f, z0), new Vector3(x1, y, zBack));
+                BoxMM(steel, new Vector3(x0 + .01f, y - .05f, z0 + .005f), new Vector3(x1 - .01f, y, zBack - .005f));
+                Chamfer(steel, Vector3.zero, id, new Vector3(x0 - .008f, y - .09f, z0 - .015f), new Vector3(x1 + .008f, y + .02f, z0 + .04f), .012f);
                 var g = A("Props", goods, MBoth);
                 for (int i = 0; i < n; i++)
                 {
                     float cx = x0 + .25f + i * (x1 - x0 - .3f) / n + .1f;
-                    if (helmets) Cyl(g, new Vector3(cx, y, zBack - .28f), .17f, .1f, .16f, 10, true, false);
-                    else BoxMM(g, new Vector3(cx - .17f, y, zBack - .42f), new Vector3(cx + .17f, y + .26f + (i % 2) * .08f, zBack - .1f));
+                    if (helmets)
+                    {
+                        Cyl(g, new Vector3(cx, y + .03f, zBack - .28f), .17f, .1f, .16f, 10, true, false);
+                        Cyl(g, new Vector3(cx, y, zBack - .28f), .2f, .19f, .03f, 10, true, false);
+                    }
+                    else if (goods == mWhite) BoxMM(g, new Vector3(cx - .18f, y, zBack - .42f), new Vector3(cx + .18f, y + .24f, zBack - .1f), All, NextMedLabel());
+                    else Crate(new Vector3(cx, y, zBack - .27f), new Vector3(.34f, .26f + (i % 2) * .06f, .32f), id, 1);
                 }
             }
             ColMM("shelf", new Vector3(x0, 0, z0), new Vector3(x1, 2.2f, zBack));
@@ -859,45 +1266,67 @@ namespace OnlyVolunteers.EditorTools
 
         static void Crates(string name, float x, float z, float rotY, int levels, bool pallet = true)
         {
-            var c = A("Props", mCrate, MBoth);
             Quaternion r = Quaternion.Euler(0, rotY, 0);
             Vector3 o = new(x, 0, z);
             float y = 0f;
             if (pallet)
             {
-                Box(A("Props", mPallet, MBoth), o + Vector3.up * .07f, new Vector3(1.2f, .14f, 1.0f), r);
-                y = .14f;
+                Pallet(o, r, name.Sum(ch => ch));
+                y = .17f;
             }
             for (int l = 0; l < levels; l++)
             {
+                // two long crates side by side per layer, latches on their outer long sides
                 foreach (float dz in new[] { -.25f, .25f })
-                    Box(c, o + r * new Vector3(0, y + .3f, dz), new Vector3(1.15f, .6f, .48f), r);
-                y += .6f;
+                    Crate(o + r * new Vector3(0, y, dz), new Vector3(1.15f, .58f, .48f), r, dz < 0 ? 1 : 2);
+                y += .58f + .006f;
             }
             Col(name, o + Vector3.up * y * .5f, new Vector3(1.2f, y, 1.0f), r);
         }
 
         static void Barrel(float x, float z)
         {
-            Cyl(A("Props", mShelf, MBoth), new Vector3(x, 0, z), .3f, .3f, .9f, 12, true, false);
-            Col("barrel", new Vector3(x, .45f, z), new Vector3(.6f, .9f, .6f), Quaternion.identity);
+            // olive drum: body, two rolling hoops, top and bottom chimes, the lid recessed inside the top chime
+            var m = A("Props", mShelf, MBoth);
+            Vector3 b = new(x, 0, z);
+            Cyl(m, b, .3f, .3f, .87f, 12, true, false);
+            Cyl(m, b, .31f, .31f, .05f, 12, false, false);
+            Cyl(m, b + Vector3.up * .84f, .312f, .312f, .07f, 12, false, false, inner: true);
+            Cyl(m, b + Vector3.up * .865f, .312f, .312f, .005f, 12, true, false);
+            foreach (float y in new[] { .27f, .58f }) Cyl(m, b + Vector3.up * y, .316f, .316f, .05f, 12, true, true);
+            Col("barrel", new Vector3(x, .455f, z), new Vector3(.63f, .91f, .63f), Quaternion.identity);
         }
 
         static void Props()
         {
-            // lounge, front-left corner: rug, sofa against the left wall, armchair, low table, floor lamp
+            var id = Quaternion.identity;
+            // lounge, front-left corner: rug, sofa against the left wall (chamfered base, back, arms, separate cushions),
+            // armchair, low plank table on graphite legs, floor lamp
             BoxMM(A("Props", mRug, MHall), new Vector3(-23.7f, 0, -16.2f), new Vector3(-19.5f, .03f, -12.4f), All & ~NY);
             var sofa = A("Props", mSofa, MBoth);
-            Solid(sofa, "sofa", new Vector3(-24.75f, 0, -15.9f), new Vector3(-23.8f, .45f, -13.3f));
-            BoxMM(sofa, new Vector3(-24.75f, .45f, -15.9f), new Vector3(-24.5f, .95f, -13.3f));
-            BoxMM(sofa, new Vector3(-24.5f, .45f, -15.9f), new Vector3(-23.8f, .65f, -15.7f));
-            BoxMM(sofa, new Vector3(-24.5f, .45f, -13.5f), new Vector3(-23.8f, .65f, -13.3f));
+            Chamfer(sofa, Vector3.zero, id, new Vector3(-24.75f, 0, -15.9f), new Vector3(-23.8f, .4f, -13.3f), .03f, All & ~NY);
+            ColMM("sofa", new Vector3(-24.75f, 0, -15.9f), new Vector3(-23.8f, .45f, -13.3f));
+            Chamfer(sofa, Vector3.zero, id, new Vector3(-24.75f, .4f, -15.9f), new Vector3(-24.5f, .95f, -13.3f), .04f);
+            foreach (float z in new[] { -15.9f, -13.52f })
+                Chamfer(sofa, Vector3.zero, id, new Vector3(-24.52f, .38f, z), new Vector3(-23.78f, .68f, z + .22f), .04f);
+            foreach (var (za, zb) in new[] { (-15.66f, -14.63f), (-14.59f, -13.56f) })
+            {
+                Chamfer(sofa, Vector3.zero, id, new Vector3(-24.48f, .4f, za), new Vector3(-23.82f, .53f, zb), .04f);
+                Chamfer(sofa, Vector3.zero, id, new Vector3(-24.5f, .53f, za + .02f), new Vector3(-24.32f, .88f, zb - .02f), .05f);
+            }
             ColMM("sofa_back", new Vector3(-24.75f, .45f, -15.9f), new Vector3(-24.5f, .95f, -13.3f));
-            Solid(sofa, "armchair", new Vector3(-21.4f, 0, -16.85f), new Vector3(-20.4f, .45f, -15.95f));
-            BoxMM(sofa, new Vector3(-21.4f, .45f, -16.85f), new Vector3(-20.4f, .95f, -16.6f));
+            Chamfer(sofa, Vector3.zero, id, new Vector3(-21.4f, 0, -16.85f), new Vector3(-20.4f, .4f, -15.95f), .03f, All & ~NY);
+            Chamfer(sofa, Vector3.zero, id, new Vector3(-21.4f, .4f, -16.85f), new Vector3(-20.4f, .95f, -16.6f), .04f);
+            Chamfer(sofa, Vector3.zero, id, new Vector3(-21.36f, .4f, -16.58f), new Vector3(-20.44f, .53f, -15.98f), .04f);
+            ColMM("armchair", new Vector3(-21.4f, 0, -16.85f), new Vector3(-20.4f, .45f, -15.95f));
             ColMM("armchair_back", new Vector3(-21.4f, .45f, -16.85f), new Vector3(-20.4f, .95f, -16.6f));
-            Solid(A("Props", mPallet, MBoth), "low_table", new Vector3(-22.7f, 0, -15.0f), new Vector3(-21.5f, .42f, -13.9f));
+            Planks(A("Props", mPallet, MBoth), Vector3.zero, id, new Vector3(-22.7f, .36f, -15.0f), new Vector3(-21.5f, .42f, -13.9f), 6, .01f, 5);
+            foreach (float x in new[] { -22.64f, -21.63f })
+                foreach (float z in new[] { -14.94f, -14.03f })
+                    BoxMM(A("Props", mSteel, MBoth), new Vector3(x, 0, z), new Vector3(x + .07f, .36f, z + .07f), All & ~NY & ~PY);
+            ColMM("low_table", new Vector3(-22.7f, 0, -15.0f), new Vector3(-21.5f, .42f, -13.9f));
             Cyl(A("Props", mSteel, MBoth), new Vector3(-24.35f, 0, -16.45f), .04f, .04f, 1.5f, 8, false, false);
+            Cyl(A("Props", mSteel, MBoth), new Vector3(-24.35f, 0, -16.45f), .18f, .16f, .05f, 10, true, false);
             Cyl(A("Props", mLampPanel, MBoth), new Vector3(-24.35f, 1.4f, -16.45f), .26f, .18f, .32f, 12, true, true);
             ColMM("floor_lamp", new Vector3(-24.6f, 0, -16.7f), new Vector3(-24.1f, 1.7f, -16.2f));
 
@@ -910,7 +1339,7 @@ namespace OnlyVolunteers.EditorTools
             // along the front wall
             ShelfFront(-9f, -6.4f);
             Crates("crates_f1", -2.5f, -16.2f, 0, 2);
-            Solid(A("Props", mShelf, MBoth), "cabinet_f", new Vector3(1.0f, 0, -16.85f), new Vector3(2.3f, 2.0f, -16.25f));
+            Locker(1.0f, 2.3f);
             ShelfFront(6f, 8.6f);
             Crates("crates_f2", 13f, -16.2f, 0, 1);
             Crates("crates_f3", 14.4f, -16.2f, 0, 2);
@@ -953,20 +1382,41 @@ namespace OnlyVolunteers.EditorTools
             String(new Vector3(24.75f, 3.2f, 7.8f), new Vector3(24.75f, 3.2f, 16.3f));
         }
 
+        /// <summary>Olive two-door locker against the front wall (x0..x1, its front at z -16.25): proud door panels, graphite
+        /// handles, a vent panel on each door, kick plate, chamfered top.</summary>
+        static void Locker(float x0, float x1)
+        {
+            var lk = A("Props", mShelf, MBoth);
+            var hw = A("Props", mSteel, MBoth);
+            var id = Quaternion.identity;
+            Solid(lk, "cabinet_f", new Vector3(x0, 0, -16.85f), new Vector3(x1, 1.95f, -16.25f), All & ~PY);
+            Chamfer(lk, Vector3.zero, id, new Vector3(x0 - .02f, 1.95f, -16.87f), new Vector3(x1 + .02f, 2.02f, -16.23f), .02f);
+            float mid = (x0 + x1) * .5f;
+            foreach (var (a, b, left) in new[] { (x0 + .04f, mid - .02f, true), (mid + .02f, x1 - .04f, false) })
+            {
+                Chamfer(lk, Vector3.zero, id, new Vector3(a, .14f, -16.27f), new Vector3(b, 1.9f, -16.232f), .012f);
+                float hx = left ? b - .09f : a + .06f;
+                BoxMM(hw, new Vector3(hx, .9f, -16.24f), new Vector3(hx + .03f, 1.2f, -16.2f));
+                BoxMM(hw, new Vector3(a + .12f, 1.58f, -16.24f), new Vector3(b - .12f, 1.78f, -16.222f));
+            }
+            BoxMM(hw, new Vector3(x0 + .02f, 0, -16.27f), new Vector3(x1 - .02f, .1f, -16.24f), All & ~NY);
+        }
+
         static void ShelfFront(float x0, float x1)
         {
-            // a shelf against the front wall (mirrored Shelf): built with Shelf in a rotated frame is overkill; boxes here
+            // a shelf against the front wall (mirrored Shelf): 6 cm posts, boards, chunky front lip, small crates
             var steel = A("Props", mShelf, MBoth);
+            var id = Quaternion.identity;
             float zf = -16.9f, zb = zf + .55f;
-            foreach (float x in new[] { x0, x1 - .05f })
-                foreach (float z in new[] { zf, zb - .05f })
-                    BoxMM(steel, new Vector3(x, 0, z), new Vector3(x + .05f, 2.2f, z + .05f));
-            var g = A("Props", mCrate, MBoth);
+            foreach (float x in new[] { x0, x1 - .06f })
+                foreach (float z in new[] { zf, zb - .06f })
+                    Chamfer(steel, Vector3.zero, id, new Vector3(x, 0, z), new Vector3(x + .06f, 2.2f, z + .06f), .012f, All & ~NY);
             foreach (float y in new[] { .35f, 1.0f, 1.65f })
             {
-                BoxMM(steel, new Vector3(x0, y - .04f, zf), new Vector3(x1, y, zb));
+                BoxMM(steel, new Vector3(x0 + .01f, y - .05f, zf + .005f), new Vector3(x1 - .01f, y, zb - .005f));
+                Chamfer(steel, Vector3.zero, id, new Vector3(x0 - .008f, y - .09f, zb - .04f), new Vector3(x1 + .008f, y + .02f, zb + .015f), .012f);
                 for (float cx = x0 + .35f; cx < x1 - .3f; cx += .6f)
-                    BoxMM(g, new Vector3(cx - .2f, y, zf + .1f), new Vector3(cx + .2f, y + .3f, zb - .1f));
+                    Crate(new Vector3(cx, y, zf + .27f), new Vector3(.4f, .3f, .33f), id, 2);
             }
             ColMM("shelf_front", new Vector3(x0, 0, zf), new Vector3(x1, 2.2f, zb));
         }
@@ -1229,6 +1679,11 @@ namespace OnlyVolunteers.EditorTools
                 ("g01_spawn_to_van", -15f, -12.5f, 0f, 1f, -2f), ("g02_hall_to_rooms", 0f, -14f, 0f, 2.5f, 17f), ("g03_bay_inside", -16.5f, 8.2f, -16.5f, 1.5f, 17f),
                 ("g04_pharmacy_inside", 1.8f, 16.2f, -1f, 1.2f, 11f), ("g05_gear_inside", 11.5f, 11.8f, 11.5f, 1.5f, 17f), ("g06_lounge", -15.5f, -9.5f, -22f, .8f, -14.5f),
                 ("g07_gate_from_inside", 6f, -1f, 25f, 2f, 0f), ("g08_trusses_up", 0f, -6f, 0f, 9f, 2f), ("g09_corner_diagonal", -23f, -15f, 25f, 1.5f, 17f),
+                // close-ups of the modelled detail (crates, pallet, cladding, shelf, gate leaf, locker, wall ribs)
+                ("g10_crates_close", -21.6f, -8.2f, -24.2f, .6f, -9.4f), ("g11_pallet_close", -22.7f, 1.0f, -24.0f, .15f, 2.5f),
+                ("g12_cladding_close", -1.6f, 9.4f, -3.4f, 1.4f, 10.9f), ("g13_shelf_crates", -7.7f, -14.7f, -7.7f, 1.0f, -16.9f),
+                ("g14_gate_leaf_out", 31.5f, -17f, 25.6f, 3f, -10.5f), ("g15_locker_crates", 0f, -14.4f, .4f, 1f, -16.6f),
+                ("g16_wall_ribs", 10f, -15.2f, 15f, 2.2f, -17f),
             })
             {
                 go.transform.position = root.TransformPoint(new Vector3(x, 1.7f, z));
