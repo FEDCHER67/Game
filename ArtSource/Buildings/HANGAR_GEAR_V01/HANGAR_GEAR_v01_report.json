@@ -1,0 +1,271 @@
+{
+  "name": "HANGAR_GEAR_v01",
+  "axes": "Blender Z up, hall side -Y; Unity (x,y,z) = (-bx, bz, -by)",
+  "objects": {
+    "GEAR_Shell_Hall": {
+      "triangles": 1702,
+      "materials": [
+        "GEAR_Wall_Outside",
+        "GEAR_Graphite",
+        "GEAR_Khaki",
+        "GEAR_LampWarm",
+        "GEAR_Hazard"
+      ],
+      "bounds_min": [
+        -5.7,
+        -3.43,
+        0.0
+      ],
+      "bounds_max": [
+        5.7,
+        3.1,
+        4.2
+      ]
+    },
+    "GEAR_Shell_Room": {
+      "triangles": 536,
+      "materials": [
+        "GEAR_Wall_Inside",
+        "GEAR_Graphite",
+        "GEAR_DarkTan"
+      ],
+      "bounds_min": [
+        -5.43,
+        -2.93,
+        0.0
+      ],
+      "bounds_max": [
+        5.43,
+        2.9,
+        4.2
+      ]
+    },
+    "GEAR_BackWall_Room": {
+      "triangles": 168,
+      "materials": [
+        "GEAR_Wall_Inside",
+        "GEAR_DarkTan",
+        "GEAR_Graphite"
+      ],
+      "bounds_min": [
+        -5.4,
+        2.86,
+        0.0
+      ],
+      "bounds_max": [
+        5.4,
+        3.1,
+        4.2
+      ]
+    },
+    "GEAR_Shell_Both": {
+      "triangles": 1100,
+      "materials": [
+        "GEAR_Graphite",
+        "GEAR_OffWhite"
+      ],
+      "bounds_min": [
+        -5.68,
+        -3.18,
+        0.0
+      ],
+      "bounds_max": [
+        5.68,
+        3.08,
+        4.2
+      ]
+    },
+    "GEAR_Ceiling_Room": {
+      "triangles": 250,
+      "materials": [
+        "GEAR_Graphite",
+        "GEAR_LampWarm"
+      ],
+      "bounds_min": [
+        -5.75,
+        -3.25,
+        3.6
+      ],
+      "bounds_max": [
+        5.75,
+        3.1,
+        4.21
+      ]
+    },
+    "GEAR_Ceiling_Hall": {
+      "triangles": 134,
+      "materials": [
+        "GEAR_Graphite"
+      ],
+      "bounds_min": [
+        -5.81,
+        -3.31,
+        4.14
+      ],
+      "bounds_max": [
+        5.81,
+        3.1,
+        4.46
+      ]
+    },
+    "GEAR_Props_Hall": {
+      "triangles": 970,
+      "materials": [
+        "GEAR_LightWood",
+        "GEAR_Graphite",
+        "GEAR_DarkTan",
+        "GEAR_Hazard",
+        "GEAR_OliveMetal"
+      ],
+      "bounds_min": [
+        -1.27,
+        -3.6,
+        0.0
+      ],
+      "bounds_max": [
+        4.41,
+        -3.06,
+        1.245
+      ]
+    },
+    "GEAR_Props_Both": {
+      "triangles": 88,
+      "materials": [
+        "GEAR_LightWood"
+      ],
+      "bounds_min": [
+        -1.25,
+        -3.15,
+        0.95
+      ],
+      "bounds_max": [
+        2.25,
+        -2.85,
+        1.05
+      ]
+    },
+    "GEAR_Props_Room": {
+      "triangles": 15110,
+      "materials": [
+        "GEAR_LightWood",
+        "GEAR_Graphite",
+        "GEAR_Khaki",
+        "GEAR_Camo",
+        "GEAR_LampWarm",
+        "GEAR_OliveMetal",
+        "GEAR_DarkTan",
+        "GEAR_ToyOrange",
+        "GEAR_Crate"
+      ],
+      "bounds_min": [
+        -5.25,
+        -2.93,
+        0.0
+      ],
+      "bounds_max": [
+        5.33,
+        2.93,
+        2.76
+      ]
+    },
+    "GEAR_Floor_Room": {
+      "triangles": 2,
+      "materials": [
+        "GEAR_Floor_Concrete"
+      ],
+      "bounds_min": [
+        -5.6,
+        -3.1,
+        0.0
+      ],
+      "bounds_max": [
+        5.6,
+        3.1,
+        0.0
+      ]
+    }
+  },
+  "colliders": [
+    "COL_wall_front_0",
+    "COL_wall_front_1",
+    "COL_wall_front_2",
+    "COL_wall_front_3",
+    "COL_wall_front_4",
+    "COL_wall_front_5",
+    "COL_wall_side_L",
+    "COL_wall_side_R",
+    "COL_wall_back",
+    "COL_door_guard",
+    "COL_door_guard",
+    "COL_roof",
+    "COL_window_grille",
+    "COL_counter_out",
+    "COL_counter_in",
+    "COL_gun_wall",
+    "COL_gun_cage_open_leaf",
+    "COL_lockers",
+    "COL_shelf_helmets",
+    "COL_shelf_vests",
+    "COL_rail_wall",
+    "COL_rail_free",
+    "COL_pallet_stack",
+    "COL_crate_floor",
+    "COL_stool",
+    "COL_sandbags",
+    "COL_sandbag_barricade",
+    "COL_door_leaf"
+  ],
+  "total_triangles": 20060,
+  "triangles_by_category_before_export": {
+    "walls + facade": 2846,
+    "ceiling + lamps": 384,
+    "counter + grille + sign": 2126,
+    "gun wall + guns + cage": 4152,
+    "lockers": 814,
+    "shelves + helmets + vests + folded + shelf crates": 3760,
+    "clothes rails + jackets": 3448,
+    "pallet + crates": 1148,
+    "stool": 232,
+    "sandbags": 720,
+    "door leaf": 428,
+    "floor (standalone)": 2
+  },
+  "total_triangles_without_standalone_floor": 20058,
+  "resting_check": {
+    "items": 45,
+    "off_support": []
+  },
+  "overall_size_m": [
+    11.62,
+    6.7,
+    4.46
+  ],
+  "unity_lights": [
+    {
+      "name": "Lamp L",
+      "unity_pos": [
+        2.75,
+        3.5,
+        0.0
+      ],
+      "color_srgb": [
+        1.0,
+        0.706,
+        0.42
+      ]
+    },
+    {
+      "name": "Lamp R",
+      "unity_pos": [
+        -2.75,
+        3.5,
+        0.0
+      ],
+      "color_srgb": [
+        1.0,
+        0.706,
+        0.42
+      ]
+    }
+  ]
+}

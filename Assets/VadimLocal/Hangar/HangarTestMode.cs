@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using OnlyVolunteers.Capture;
 using OnlyVolunteers.Map;
@@ -64,11 +65,13 @@ public sealed class HangarTestMode : MonoBehaviour
         yield return new WaitForSecondsRealtime(3f);
         var rp = UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline as UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset;
         if (rp) Line($"render scale {rp.renderScale:F2}, MSAA {rp.msaaSampleCount}, shadow distance {rp.shadowDistance}");
+        Line($"offscreen {Offscreen} (3840x2160 RenderTexture), camera vertical fov {(Camera.main ? Camera.main.fieldOfView : -1f):F1}");
         Line($"start: pawn {Local(_pawn.Position)}, van {Local(_van.transform.position)} yaw {_van.transform.eulerAngles.y:F0}");
         if (mode == "shots" || mode == "all") yield return Shots();
         if (mode == "drive" || mode == "all") yield return Drive();
         if (mode == "fps" || mode == "all") yield return Fps();
         if (mode == "cargo" || mode == "all") yield return CargoDoors();
+        if (mode == "shimmer") yield return Shimmer();
         Done();
     }
 
@@ -101,12 +104,53 @@ public sealed class HangarTestMode : MonoBehaviour
         _lockPitch = pitch;
     }
 
+    // offscreen (Vadim 30.10: tests must not open a window): started with -batchmode the player has no window; the main
+    // camera is rendered into a 3840 x 2160 RenderTexture (MSAA 2) and read back. FPS in this mode is offscreen and
+    // conservative (each frame waits for the GPU through a 1-pixel read-back).
+    private static bool Offscreen => Application.isBatchMode;
+    private RenderTexture _rt;
+    private Texture2D _px;
+
+    private RenderTexture Rt()
+    {
+        if (_rt == null) { _rt = new RenderTexture(3840, 2160, 24, RenderTextureFormat.ARGB32) { antiAliasing = 2 }; _rt.Create(); }
+        return _rt;
+    }
+
+    private void RenderOffscreen(Camera cam)
+    {
+        var prev = cam.targetTexture;
+        cam.targetTexture = Rt();
+        cam.aspect = 16f / 9f;
+        cam.Render();
+        cam.targetTexture = prev;
+        cam.ResetAspect();
+    }
+
     private IEnumerator Shot(string name, float wait = 1.2f)
     {
         yield return new WaitForSecondsRealtime(wait);
         string f = Path.Combine(_out, name + ".png");
-        ScreenCapture.CaptureScreenshot(f);
-        yield return new WaitForSecondsRealtime(0.5f);
+        if (Offscreen)
+        {
+            yield return null;
+            var cam = Camera.main;
+            if (cam == null) { Line("no camera for " + name); yield break; }
+            RenderOffscreen(cam);
+            var active = RenderTexture.active;
+            RenderTexture.active = _rt;
+            var tex = new Texture2D(_rt.width, _rt.height, TextureFormat.RGB24, false);
+            tex.ReadPixels(new Rect(0, 0, _rt.width, _rt.height), 0, 0);
+            tex.Apply();
+            RenderTexture.active = active;
+            File.WriteAllBytes(f, tex.EncodeToPNG());
+            Destroy(tex);
+        }
+        else
+        {
+            ScreenCapture.CaptureScreenshot(f);
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
         Line("shot " + f);
     }
 
@@ -169,16 +213,81 @@ public sealed class HangarTestMode : MonoBehaviour
         ("23_gate_leaf_outside", 33f, -15f, 25.6f, -9f, 2f),
         ("24_pharmacy_shelves", -1f, 13.2f, -1f, 17f, 8f),
         ("25_crate_close", -22.4f, -8.6f, -24.2f, -9.5f, 28f),
+        // Vadim's review 30.10: wall close-up (~1 m, the wall fills the screen), wall at 5 m and 15 m, cladding close-up,
+        // floor markings close and at eye height
+        ("26_wall_close_1m", -12.5f, -16f, -12.5f, -17f, 0f),
+        ("27_wall_5m", -12.5f, -12f, -12.5f, -17f, 0f),
+        ("28_wall_15m", -12.5f, -2f, -12.5f, -17f, 0f),
+        ("29_cladding_close", -10f, 6f, -10f, 7f, 0f),
+        ("30_spawn_close", -15f, -10.2f, -15f, -12.7f, 40f),
+        ("31_arrow_close", -3f, -6.6f, -3f, -8.5f, 45f),
+        ("32_markings_eye", -8f, -4f, -15f, -12.5f, 10f),
     };
+
+    // the room prefabs (30.10): views from the hall and inside at eye height, found from their walls at run time
+    private (string name, float x, float z, float lx, float lz, float pitch)[] RoomViews()
+    {
+        var list = new System.Collections.Generic.List<(string, float, float, float, float, float)>();
+        foreach (var n in new[] { "Workshop", "Pharmacy", "Gear" })
+        {
+            var b = RoomBounds(n, out _);
+            if (b.size == Vector3.zero) { Line("room " + n + " not found"); continue; }
+            float cx = b.center.x, f = b.min.z, w = b.size.x;
+            list.Add(($"40_{n}_from_hall", cx, f - (n == "Workshop" ? 11f : 8f), cx, f + 2f, n == "Workshop" ? 6f : 4f));
+            list.Add(($"41_{n}_inside", cx + w * .32f, f + .9f, cx - w * .25f, b.max.z - .4f, 8f));
+            list.Add(($"42_{n}_inside_back", cx - w * .3f, b.max.z - 1.2f, cx + w * .2f, f + .5f, 6f));
+        }
+        return list.ToArray();
+    }
+
+    private Bounds RoomBounds(string n, out Transform room)
+    {
+        room = _hangar.Find("Room_" + n);
+        var b = new Bounds();
+        if (room == null) return b;
+        bool any = false;
+        foreach (var r in room.GetComponentsInChildren<Renderer>())
+        {
+            if (r.bounds.size.y <= 2.5f) continue;
+            var lb = new Bounds(Local(r.bounds.center), r.bounds.size); // the hangar is not rotated in the scene (yaw 0)
+            if (!any) { b = lb; any = true; } else b.Encapsulate(lb);
+        }
+        return b;
+    }
 
     private IEnumerator Shots()
     {
         _lockYaw = float.NaN;
         yield return Shot("00_start_view", 0.5f);
-        foreach (var v in Views)
+        foreach (var v in Views.Concat(RoomViews()))
         {
             Stand(v.x, v.z, v.lx, v.lz, v.pitch);
             yield return Shot(v.name);
+        }
+        // the van on the workshop lift: put it on the carriages (as if driven in), shoot, put it back
+        var wb = RoomBounds("Workshop", out var ws);
+        if (ws != null)
+        {
+            var lift = ws.GetComponentsInChildren<Renderer>().Where(r => r.name.Contains("Lift_Carriage")).Select(r => r.bounds).ToList();
+            var rb = _van.GetComponent<Rigidbody>();
+            Vector3 p0 = _van.transform.position; Quaternion q0 = _van.transform.rotation;
+            Vector3 c = lift.Count > 0 ? lift.Aggregate((a, x) => { a.Encapsulate(x); return a; }).center : _hangar.TransformPoint(wb.center);
+            float top = lift.Count > 0 ? lift.Max(x => x.max.y) : _hangar.position.y;
+            Line($"lift carriages {lift.Count}, centre {Local(c)}, top {top - _hangar.position.y:F2}");
+            rb.linearVelocity = Vector3.zero; rb.angularVelocity = Vector3.zero;
+            rb.position = new Vector3(c.x, top + .6f, c.z); rb.rotation = _hangar.rotation;
+            _van.transform.SetPositionAndRotation(rb.position, rb.rotation);
+            yield return new WaitForSecondsRealtime(2.5f);
+            Line($"van on the lift: {Local(_van.transform.position)}, up {_van.transform.up.y:F3}");
+            float cx = wb.center.x, f = wb.min.z;
+            Stand(cx - 3.5f, f - 6f, cx, f + 4f, 6f);
+            yield return Shot("43_van_on_lift_from_hall");
+            Stand(cx + wb.size.x * .38f, f + 1.2f, cx, f + 5f, 10f);
+            yield return Shot("44_van_on_lift_inside");
+            rb.linearVelocity = Vector3.zero; rb.angularVelocity = Vector3.zero;
+            rb.position = p0; rb.rotation = q0;
+            _van.transform.SetPositionAndRotation(p0, q0);
+            yield return new WaitForSecondsRealtime(1f);
         }
         _lockYaw = float.NaN;
     }
@@ -271,10 +380,33 @@ public sealed class HangarTestMode : MonoBehaviour
         }
     }
 
+    // ------------------------------------------------------------------ shimmer: the camera strafes 2 cm per frame in front of a
+    // wall / the gate leaf (3, 8, 15 m); consecutive frames are compared offline for crawling or flickering rib lines
+    private static readonly (string name, float x, float z, float lx, float lz, float dx, float dz)[] Strafes =
+    {
+        ("wall_03m", -14f, -14f, -14f, -17f, .02f, 0f),
+        ("wall_08m", -14f, -9f, -14f, -17f, .02f, 0f),
+        ("wall_15m", -14f, -2f, -14f, -17f, .02f, 0f),
+        ("gate_03m", 28.8f, -10.8f, 25.8f, -10.8f, 0f, .02f),
+        ("gate_08m", 33.8f, -10.8f, 25.8f, -10.8f, 0f, .02f),
+        ("gate_15m", 40.8f, -10.8f, 25.8f, -10.8f, 0f, .02f),
+    };
+
+    private IEnumerator Shimmer()
+    {
+        foreach (var s in Strafes)
+            for (int i = 0; i < 7; i++)
+            {
+                Stand(s.x + s.dx * i, s.z + s.dz * i, s.lx + s.dx * i, s.lz + s.dz * i, 2f);
+                yield return Shot($"sh_{s.name}_{i}", i == 0 ? 1.2f : .4f);
+            }
+        _lockYaw = float.NaN;
+    }
+
     // ------------------------------------------------------------------ fps
     private IEnumerator Fps()
     {
-        foreach (var v in Views)
+        foreach (var v in Views.Concat(RoomViews()))
         {
             Stand(v.x, v.z, v.lx, v.lz, v.pitch);
             yield return new WaitForSecondsRealtime(1.0f);
@@ -291,11 +423,20 @@ public sealed class HangarTestMode : MonoBehaviour
         while (Time.realtimeSinceStartup - t0 < 2.5f)
         {
             yield return null;
+            if (Offscreen && Camera.main != null)
+            {
+                RenderOffscreen(Camera.main);
+                if (_px == null) _px = new Texture2D(1, 1, TextureFormat.RGB24, false);
+                var active = RenderTexture.active;
+                RenderTexture.active = _rt;
+                _px.ReadPixels(new Rect(0, 0, 1, 1), 0, 0);
+                RenderTexture.active = active;
+            }
             frames++;
             double dt = Time.unscaledDeltaTime * 1000.0;
             sum += dt;
             if (dt > max) max = dt;
         }
-        Line($"  fps [{label}] {frames / 2.5f:F0} fps, frame avg {sum / frames:F2} ms, worst {max:F1} ms");
+        Line($"  fps{(Offscreen ? " (offscreen 4K)" : "")} [{label}] {frames / 2.5f:F0} fps, frame avg {sum / frames:F2} ms, worst {max:F1} ms");
     }
 }

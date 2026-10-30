@@ -184,7 +184,7 @@ namespace OnlyVolunteers.EditorTools
         static void Sheet(Acc a, Vector3 origin, Quaternion rot, float u0, float u1, float y0, Func<Vector3, float> yTop)
         {
             const float P = .1875f, D = .03f;
-            float[] o = { 0f, .0625f, .09375f, .15625f, .1875f };
+            float[] o = { 0f, .075f, .0975f, .165f, .1875f }; // v1 workshop corr_bps: valley 0.40 p, slopes 0.12 p, peak 0.36 p
             float[] dd = { 0f, 0f, D, D, 0f };
             Vector3 W(float u, float y, float d) => origin + rot * new Vector3(u, y, -d);
             for (int k = Mathf.FloorToInt(u0 / P) - 1; k <= Mathf.CeilToInt(u1 / P); k++)
@@ -246,6 +246,7 @@ namespace OnlyVolunteers.EditorTools
             return m;
         }
 
+        static Material mMarkY, mMarkK;
         static Material mFloor, mMark, mWall, mSteel, mRoofIn, mRoofOut, mWood, mRoller, mGate, mCrate, mPallet, mRug, mSofa, mSign,
             mBulb, mGlass, mYellow, mRed, mCloth, mWhite, mTire, mLampPanel, mPeg, mShelf;
 
@@ -259,16 +260,21 @@ namespace OnlyVolunteers.EditorTools
             // cropped to whole plates / ribs / slats / boards, hazard repainted tileable, medical crosses recoloured green).
             // World-scale tiling (the meshes carry 1 UV = 1 m); a grey tint keeps each surface as bright as its old flat colour.
             mFloor = Mat("01_Floor_Concrete", new Color(.46f, .44f, .41f), .15f);
-            Textured(mFloor, Tex("01_Concrete"), 6f, 6f, 1f / 6f, 1f / 6f, .75f); // 3 x 3 plates of 2 m, joints on the walls (x 25, z 17)
+            Textured(mFloor, Tex("01_Concrete"), 6f, 6f, 1f / 6f, 1f / 6f, .69f); // a small step darker (Vadim 30.10) // 3 x 3 plates of 2 m, joints on the walls (x 25, z 17)
             mWall = Mat("03_Wall_Corrugated", new Color(.42f, .38f, .33f), .2f, .1f);
-            Textured(mWall, Tex("03_Corrugated"), 1.3125f, 1.5f, -.171875f / 1.3125f, 0f, .68f); // its 7 ribs = 7 mesh ribs of 0.1875 m
+            // walls: the v1 workshop texture (T7 metal trapez albedo, nearly uniform) as a subtle surface on the real mesh ribs,
+            // tinted one even dark warm graphite (Vadim 30.10: no stripes, the hall stays dark). Its normal map is left out:
+            // its ribs are irregular and would draw extra lines beside the mesh ribs.
+            Textured(mWall, Tex("03_WallTrapezT7_albedo", false, "v02"), 1.5f, 1.5f, 0f, 0f, new Color(.40f, .38f, .35f));
+            mWall.SetFloat("_Smoothness", .1f);
+            mWall.SetFloat("_Metallic", .1f);
             mSteel = Mat("04_Truss_Graphite", new Color(.17f, .17f, .17f), .25f, .3f);
             Textured(mSteel, Tex("04_Graphite"), 2f, 2f, 0f, 0f, .71f);
             mRoofIn = Mat("04_Roof_Inside", new Color(.26f, .24f, .22f), .12f);
             Textured(mRoofIn, Tex("04_Graphite"), 3f, 3f, 0f, 0f, 1f);
             mRoofOut = Mat("Roof_Outside", new Color(.36f, .35f, .34f), .2f, .1f);
             mRoller = Mat("05_RollerDoor_Gate", new Color(.42f, .42f, .40f), .25f, .2f);
-            Textured(mRoller, Tex("05_Roller"), 1.036f, 1f, 0f, 0f, .95f); // 10 slats of 10 cm
+            Textured(mRoller, Tex("05_Roller", false, "v02"), 1.036f, 1f, 0f, 0f, .95f); // slats are mesh; v02 has no baked stripes
             mGate = mRoller;
             mYellow = Mat("06_Hazard_Stripe", new Color(.86f, .62f, .12f), .25f);
             Textured(mYellow, Tex("06_Hazard"), 1f, 1f, 0f, 0f, 1f); // stripes 12.5 cm
@@ -296,6 +302,10 @@ namespace OnlyVolunteers.EditorTools
             mBulb = Emissive("Bulb_Warm", new Color(1f, .85f, .6f), new Color(1f, .72f, .42f) * 4.0f);
             mLampPanel = Emissive("LampPanel_Warm", new Color(1f, .9f, .75f), new Color(1f, .82f, .6f) * 3.0f);
             mGlass = Transparent("Glass", new Color(.55f, .65f, .7f, .22f), .8f);
+            // floor markings are mesh shapes (crisp at any distance), opaque lemon signal yellow that reads yellow under the
+            // 3000 K lamps (no emission); the threshold stripes black
+            mMarkY = Mat("02_Marking_Yellow", new Color(.95f, .93f, .02f), .3f); // renders about 50 deg hue under the warm lamps
+            mMarkK = Mat("02_Marking_Black", new Color(.07f, .07f, .07f), .25f);
             mMark = Transparent("02_Marking_Decals", Color.white, .25f);
             mMark.SetTexture("_BaseMap", MarkingTexture());
             // signs: GPT boards 14a-c cropped 3:1 and stacked in one atlas; only the lettering glows (emission mask), warm and dim
@@ -309,9 +319,9 @@ namespace OnlyVolunteers.EditorTools
         const string TexDir = Dir + "/Textures";
 
         /// <summary>A package-45 texture with game import settings: mipmaps, trilinear, anisotropic 8, BC7 (no moire or crawl).</summary>
-        static Texture2D Tex(string name, bool clamp = false)
+        static Texture2D Tex(string name, bool clamp = false, string ver = "v01")
         {
-            string path = $"{TexDir}/Hangar_Tex_{name}_v01.png";
+            string path = $"{TexDir}/Hangar_Tex_{name}_{ver}.png";
             if (!(AssetImporter.GetAtPath(path) is TextureImporter imp))
             {
                 AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
@@ -626,6 +636,7 @@ namespace OnlyVolunteers.EditorTools
             _cols = new GameObject("Colliders").transform;
             _cols.SetParent(root, false);
 
+            PlaceRooms(root);
             Shell();
             Trusses();
             Rooms();
@@ -647,13 +658,13 @@ namespace OnlyVolunteers.EditorTools
         {
             // floor slab: the top split into cells along every room boundary (no T-junctions), hall cells lit by the hall
             // lamps, room cells by the room lamps; 4 cm above the grey outside floor, a 1.2 m ramp at the gate
-            float[] xs = { -HX, -8f, -5f, 3f, 6f, 17f, HX };
-            float[] zs = { -HZ, 7f, 11f, HZ };
+            float[] xs = new[] { -HX, HX }.Concat(RoomRects.SelectMany(q => new[] { q.r.xMin, q.r.xMax })).Select(v => Mathf.Clamp(v, -HX, HX)).Distinct().OrderBy(v => v).ToArray();
+            float[] zs = new[] { -HZ, HZ }.Concat(RoomRects.Select(q => q.front)).Select(v => Mathf.Clamp(v, -HZ, HZ)).Distinct().OrderBy(v => v).ToArray();
             for (int i = 0; i + 1 < xs.Length; i++)
                 for (int j = 0; j + 1 < zs.Length; j++)
                 {
                     float cx = (xs[i] + xs[i + 1]) * .5f, cz = (zs[j] + zs[j + 1]) * .5f;
-                    bool room = (cx < -8f && cz > 7f) || (cx > -5f && cx < 3f && cz > 11f) || (cx > 6f && cx < 17f && cz > 11f);
+                    bool room = RoomRects.Any(q => q.r.Contains(new Vector2(cx, cz)));
                     BoxMM(A("Floor", mFloor, room ? MRoom : MHall), new Vector3(xs[i], -.3f, zs[j]), new Vector3(xs[i + 1], 0f, zs[j + 1]), PY);
                 }
             BoxMM(A("Floor", mFloor, MBoth | Sun), new Vector3(HX, -.3f, -GateHalf), new Vector3(HX + T, 0f, GateHalf), PY);
@@ -719,7 +730,8 @@ namespace OnlyVolunteers.EditorTools
             var stF = A("Wall_Front", mSteel, MHall);
             for (float x = -20f; x <= 20.01f; x += 5f)
             {
-                bool inBay = x < -8f, inRoom = (x >= -5.2f && x <= 3.2f) || (x >= 5.8f && x <= 17.2f); // a column on a room wall stays above the room
+                bool inBay = RoomRects.Any(q => q.name == "Workshop" && x + .25f > q.r.xMin && x - .25f < q.r.xMax),
+                    inRoom = RoomRects.Any(q => x + .25f > q.r.xMin && x - .25f < q.r.xMax); // a column at a room stays above it
                 if (!inBay && !inRoom) Column(st, A("Steel", mYellow, MHall), "col_b" + x, new Vector3(x - .18f, 0, HZ - .36f), new Vector3(x + .18f, Eave, HZ - .06f));
                 else BoxMM(st, new Vector3(x - .18f, inBay ? 6.2f : 4.4f, HZ - .36f), new Vector3(x + .18f, Eave, HZ - .06f));
                 Column(stF, A("Wall_Front", mYellow, MHall), "col_f" + x, new Vector3(x - .18f, 0, -HZ + .06f), new Vector3(x + .18f, Eave, -HZ + .36f));
@@ -1094,104 +1106,98 @@ namespace OnlyVolunteers.EditorTools
             BoxMM(hall, new Vector3(xa, 1.22f, z - .03f), new Vector3(xb, 1.25f, z + .03f));
         }
 
+        // ------------------------------------------------------------------ rooms (30.10): prefabs by the room workers replace the
+        // greybox rooms. Root = floor centre, hall side +Z: turned 180 deg (the hall is -z here), placed from their measured
+        // wall bounds with the back walls at z 16.9 (the hangar's ribs reach 16.97).
+        const string RoomDir = "Assets/VadimLocal/Hangar/Rooms";
+        static readonly List<(string name, UnityEngine.Rect r, float front)> RoomRects = new(); // hangar-local x / z of the walls, facade z
+
+        static Bounds LocalBounds(Transform root, IEnumerable<Renderer> rs)
+        {
+            bool any = false;
+            var b = new Bounds();
+            foreach (var r in rs)
+            {
+                if (!r.enabled || !r.gameObject.activeInHierarchy) continue;
+                var w = r.bounds;
+                w.center -= root.position;
+                if (!any) { b = w; any = true; } else b.Encapsulate(w);
+            }
+            return b;
+        }
+
+        static void PlaceRooms(Transform root)
+        {
+            RoomRects.Clear();
+            PlaceRoom(root, "Workshop", RoomDir + "/Workshop/WorkshopRoom_v01.prefab", w => -24.93f - w.min.x);
+            PlaceRoom(root, "Pharmacy", RoomDir + "/Pharmacy/PharmacyRoom_v01.prefab", w => -1.4f - w.center.x);
+            PlaceRoom(root, "Gear", RoomDir + "/Gear/HANGAR_GEAR_v01.prefab", w => 5.6f - w.min.x);
+        }
+
+        static void PlaceRoom(Transform root, string name, string path, Func<Bounds, float> dx)
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (asset == null) throw new FileNotFoundException("room prefab missing: " + path);
+            var go = (GameObject)PrefabUtility.InstantiatePrefab(asset);
+            go.name = "Room_" + name;
+            go.transform.SetParent(root, false);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            // one sign style: the generator's hall signs stay, the prefab's own sign is off; GEAR's own floor is off
+            foreach (var tr in go.GetComponentsInChildren<Transform>(true))
+                if (tr.name.StartsWith("Sign") || tr.name.StartsWith("C_Sign") || tr.name == "GEAR_Floor_Room") tr.gameObject.SetActive(false);
+            var rs = go.GetComponentsInChildren<Renderer>(true);
+            var walls = rs.Where(r => r.gameObject.activeInHierarchy && r.bounds.size.y > 2.5f).ToList();
+            var wb = LocalBounds(root, walls);
+            go.transform.localPosition = new Vector3(dx(wb), 0f, 16.9f - wb.max.z);
+            wb = LocalBounds(root, walls);
+            if (name == "Gear")
+            {
+                // its back wall must not clash with the hangar wall (ribs to 16.97)
+                var bw = go.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GEAR_BackWall_Room");
+                var bwr = bw ? bw.GetComponent<Renderer>() : null;
+                if (bwr && bwr.bounds.max.z - root.position.z > 16.95f) { bw.gameObject.SetActive(false); _log.AppendLine("GEAR_BackWall_Room off (clash)"); }
+            }
+            float front = wb.min.z;
+            var rect = UnityEngine.Rect.MinMaxRect(wb.min.x, front, wb.max.x, wb.max.z);
+            RoomRects.Add((name, rect, front));
+            // floor-level pieces rise 8 mm: never coplanar with the hangar slab (top y 0)
+            int raised = 0;
+            foreach (var r in rs)
+                if (r.gameObject.activeInHierarchy && r.bounds.max.y - root.position.y < .05f) { r.transform.position += Vector3.up * .008f; raised++; }
+            // rendering layers: *_Hall / *_Room / *_Both by name, else inside the room = room-lit, the rest both
+            foreach (var r in rs)
+            {
+                string n = r.name;
+                uint mask = n.EndsWith("_Hall") ? MHall : n.EndsWith("_Room") ? MRoom : n.EndsWith("_Both") ? MBoth : 0u;
+                if (mask == 0u)
+                {
+                    var b = r.bounds;
+                    b.center -= root.position;
+                    bool inside = b.min.x > rect.xMin + .3f && b.max.x < rect.xMax - .3f && b.min.z > front + .3f;
+                    mask = inside ? MRoom : MBoth;
+                }
+                r.renderingLayerMask = mask;
+            }
+            var lights = go.GetComponentsInChildren<Light>(true);
+            foreach (var l in lights)
+            {
+                var ld = l.GetUniversalAdditionalLightData();
+                ld.renderingLayers = Hall | Room;
+                l.lightmapBakeType = LightmapBakeType.Realtime;
+                l.shadows = LightShadows.None; // FPS: only the two hall pendants cast shadows
+            }
+            _log.AppendLine($"room {name}: walls x {rect.xMin:F2}..{rect.xMax:F2}, z {front:F2}..{rect.yMax:F2}, height {wb.max.y:F2}; renderers {rs.Length}, raised {raised}, lights {lights.Length}");
+        }
+
         static void Rooms()
         {
-            var id = Quaternion.identity;
-            // VAN UPGRADES bay: x -25..-8, front z 7, 6 m high, roller door 8 m x 4.4 m (open, rolled up)
-            FrontWall("bay", -HX, -7.9f, 7f, 6f, new[] { (-20.5f, -12.5f, 0f, 4.4f) });
-            SideWall("bay", -8f, 7f, 6f);
-            RoomRoof(-HX + .05f, -8f, 7f, 6f);
-            // roller door: graphite drum housing, steel rails, the curtain rolled down 0.45 m under the drum (real slats both sides)
-            Chamfer(A("Rooms", mSteel, MBoth), Vector3.zero, id, new Vector3(-20.9f, 4.4f, 6.59f), new Vector3(-12.1f, 5.0f, 6.89f), .04f);
-            ColMM("roller_drum", new Vector3(-20.9f, 4.4f, 6.59f), new Vector3(-12.1f, 5.0f, 6.89f));
-            foreach (float x in new[] { -20.75f, -12.45f }) Solid(A("Rooms", mSteel, MBoth), "roller_rail", new Vector3(x, 0, 6.7f), new Vector3(x + .2f, 4.4f, 6.89f));
-            var roller = A("Rooms", mRoller, MBoth);
-            Slats(roller, new Vector3(0, 0, 6.755f), id, -20.6f, -12.4f, 3.97f, 4.42f);
-            Slats(roller, new Vector3(0, 0, 6.785f), Quaternion.Euler(0, 180, 0), 12.4f, 20.6f, 3.97f, 4.42f);
-            Chamfer(A("Rooms", mSteel, MBoth), Vector3.zero, id, new Vector3(-20.6f, 3.9f, 6.72f), new Vector3(-12.4f, 3.97f, 6.82f), .015f);
-            Sign(-16.5f, 5.49f, 6.9f, 0, .78f);
-            // lift: two yellow posts and the top beam, the van drives in between
-            var y = A("Bay", mYellow, MRoom | Hall);
-            foreach (float x in new[] { -18.65f, -14.35f }) Solid(y, "lift_post", new Vector3(x - .18f, 0, 12.3f), new Vector3(x + .18f, 3.6f, 12.9f));
-            Solid(A("Bay", mSteel, MRoom | Hall), "lift_beam", new Vector3(-18.83f, 3.6f, 12.45f), new Vector3(-14.17f, 3.85f, 12.75f));
-            // workbench (plank top and lower shelf on a red frame), tool board, red tool cabinet with drawers, trolley, tyres
-            var wood = A("Bay", mPallet, MRoom | Hall);
-            var red = A("Bay", mRed, MRoom | Hall);
-            var hw = A("Bay", mSteel, MRoom | Hall);
-            Planks(wood, Vector3.zero, id, new Vector3(-24.6f, .86f, 15.9f), new Vector3(-21.0f, .92f, 16.85f), 6, .008f, 11);
-            foreach (float x in new[] { -24.5f, -21.18f })
-                foreach (float z in new[] { 15.98f, 16.7f })
-                    Chamfer(red, Vector3.zero, id, new Vector3(x, 0, z), new Vector3(x + .08f, .86f, z + .08f), .015f, All & ~NY & ~PY);
-            Planks(wood, Vector3.zero, id, new Vector3(-24.46f, .2f, 16.02f), new Vector3(-21.14f, .26f, 16.74f), 5, .01f, 17);
-            ColMM("workbench", new Vector3(-24.6f, 0, 15.9f), new Vector3(-21.0f, .92f, 16.85f));
-            Chamfer(A("Bay", mPeg, MRoom | Hall), Vector3.zero, id, new Vector3(-24.4f, 1.3f, 16.82f), new Vector3(-21.2f, 2.5f, 16.92f), .02f);
-            PegTools(-24.4f, 16.82f);
-            Solid(red, "tool_cabinet", new Vector3(-12.2f, 0, 16.1f), new Vector3(-9.2f, 1.1f, 16.85f));
-            Chamfer(hw, Vector3.zero, id, new Vector3(-12.25f, 1.1f, 16.05f), new Vector3(-9.15f, 1.16f, 16.87f), .02f);
-            for (int i = 0; i < 4; i++)
+            // the hall signs (one style, texture 14) on the room facades, their backs 3 cm in front of the facade plane
+            foreach (var (name, r, front) in RoomRects)
             {
-                float y0 = .08f + i * .25f, y1 = y0 + .22f;
-                foreach (float x0 in new[] { -12.12f, -10.66f })
-                {
-                    Chamfer(red, Vector3.zero, id, new Vector3(x0, y0, 16.075f), new Vector3(x0 + 1.38f, y1, 16.105f), .01f);
-                    BoxMM(hw, new Vector3(x0 + .45f, y1 - .08f, 16.035f), new Vector3(x0 + .93f, y1 - .04f, 16.08f));
-                }
+                int row = name == "Workshop" ? 0 : name == "Pharmacy" ? 1 : 2;
+                Sign(r.center.x, row == 0 ? 5.47f : 3.75f, front - .02f, row, row == 0 ? .78f : .7f);
             }
-            Solid(red, "tool_trolley", new Vector3(-21.6f, .08f, 9.6f), new Vector3(-20.8f, 1.0f, 10.2f));
-            for (int i = 0; i < 3; i++)
-            {
-                float y0 = .14f + i * .28f;
-                Chamfer(red, Vector3.zero, id, new Vector3(-20.805f, y0, 9.65f), new Vector3(-20.775f, y0 + .24f, 10.15f), .01f);
-                BoxMM(hw, new Vector3(-20.78f, y0 + .16f, 9.75f), new Vector3(-20.74f, y0 + .2f, 10.05f));
-            }
-            foreach (float x in new[] { -21.55f, -20.93f })
-                foreach (float z in new[] { 9.65f, 10.07f })
-                    BoxMM(A("Bay", mTire, MRoom | Hall), new Vector3(x, 0, z), new Vector3(x + .08f, .08f, z + .08f), All & ~NY);
-            var tyre = A("Bay", mTire, MRoom | Hall);
-            for (int i = 0; i < 4; i++) Cyl(tyre, new Vector3(-9.2f, i * .25f, 8.4f), .38f, .38f, .24f, 14, i == 3, false);
-            ColMM("tyres", new Vector3(-9.6f, 0, 8.0f), new Vector3(-8.8f, 1.0f, 8.8f));
-            // ceiling light bars
-            foreach (float x in new[] { -21.5f, -16.5f, -11.5f })
-                foreach (float z in new[] { 10f, 14f })
-                    BoxMM(A("Lamps", mLampPanel, MRoom), new Vector3(x - .7f, 5.86f, z - .12f), new Vector3(x + .7f, 5.96f, z + .12f));
-
-            // PHARMACY: x -5..3, front z 11, 4.2 m; door and window counter
-            FrontWall("pharmacy", -5.1f, 3.1f, 11f, 4.2f, new[] { (-4.4f, -3.2f, 0f, 2.3f), (-2.2f, 2.2f, 1.05f, 2.15f) });
-            SideWall("pharmacy", -5f, 11f, 4.2f);
-            SideWall("pharmacy", 3f, 11f, 4.2f);
-            RoomRoof(-5f, 3f, 11f, 4.2f);
-            Door(-4.4f, -3.2f, 11f);
-            WindowCounter(-2.2f, 2.2f, 11f);
-            Sign(-.6f, 3.6f, 10.9f, 1, .7f);
-            Shelf(-4.6f, -2.6f, 16.85f, mWhite);
-            Shelf(-.2f, 2.6f, 16.85f, mWhite);
-
-            // GEAR: x 6..17, front z 11, 4.2 m; door, window counter, uniforms, helmets, rifle rack
-            FrontWall("gear", 5.9f, 17.1f, 11f, 4.2f, new[] { (6.6f, 7.8f, 0f, 2.3f), (9.0f, 15.0f, 1.05f, 2.15f) });
-            SideWall("gear", 6f, 11f, 4.2f);
-            SideWall("gear", 17f, 11f, 4.2f);
-            RoomRoof(6f, 17f, 11f, 4.2f);
-            Door(6.6f, 7.8f, 11f);
-            WindowCounter(9.0f, 15.0f, 11f);
-            Sign(12f, 3.6f, 10.9f, 2, .7f);
-            var cloth = A("Gear", mCloth, MRoom | Hall);
-            var steel = A("Gear", mSteel, MRoom | Hall);
-            Beam(steel, new Vector3(9.6f, 1.85f, 16.4f), new Vector3(12.6f, 1.85f, 16.4f), .06f, .06f);
-            for (int i = 0; i < 5; i++)
-            {
-                float x = 9.9f + i * .6f;
-                Chamfer(cloth, Vector3.zero, id, new Vector3(x - .22f, .95f, 16.32f), new Vector3(x + .22f, 1.8f, 16.48f), .03f);
-            }
-            ColMM("uniform_rack", new Vector3(9.5f, 0, 16.2f), new Vector3(12.7f, 1.9f, 16.9f));
-            Shelf(6.3f, 8.9f, 16.85f, mCloth, helmets: true);
-            Chamfer(steel, Vector3.zero, id, new Vector3(13.0f, 1.0f, 16.8f), new Vector3(16.5f, 2.3f, 16.9f), .02f);
-            for (int i = 0; i < 7; i++)
-            {
-                float x = 13.35f + i * .45f;
-                BoxMM(A("Gear", mTire, MRoom | Hall), new Vector3(x - .04f, 1.1f, 16.68f), new Vector3(x + .04f, 2.15f, 16.8f));
-            }
-            Crate(new Vector3(13.9f, 0, 16.25f), new Vector3(1.4f, .6f, .7f), id, 1, "Gear", MRoom | Hall);
-            ColMM("gear_crate", new Vector3(13.2f, 0, 15.9f), new Vector3(14.6f, .6f, 16.6f));
         }
 
         /// <summary>Chunky tools on the bay pegboard (board face at z, from x0, 3.2 x 1.2 m from y 1.3): hammers, wrenches,
@@ -1351,8 +1357,7 @@ namespace OnlyVolunteers.EditorTools
             Crates("crates_r4", 22.8f, 16.2f, 0, 3);
             Crates("crates_r5", 21.4f, 16.2f, 0, 1);
             Shelf(17.6f, 20.2f, 16.85f, mCrate);
-            Barrel(-6.6f, 16.4f); Barrel(-6.0f, 16.1f);
-            Crates("crates_b1", 4.5f, 16.2f, 0, 2);
+            // (the barrels and crates between the rooms went: the room prefabs are wider than the greybox)
 
             // string lights: bulbs on a sagging cable along the front and left walls, 3.2 m high, a hook every 3.6 m
             var bulbs = A("StringLights", mBulb, MHall);
@@ -1421,12 +1426,126 @@ namespace OnlyVolunteers.EditorTools
             ColMM("shelf_front", new Vector3(x0, 0, zf), new Vector3(x1, 2.2f, zb));
         }
 
+        /// <summary>Floor marking shapes as flat mesh 1.5 cm above the floor (hangar x, z in metres): lines with square caps,
+        /// convex polygons, stroke-font text. Mesh edges stay sharp at any distance (MSAA), unlike a texture.</summary>
+        sealed class MarkMesh
+        {
+            readonly Acc _a;
+            const float Y = .015f;
+            public MarkMesh(Acc a) { _a = a; }
+            static Vector3 P(Vector2 p) => new(p.x, Y, p.y);
+
+            public void Line(Vector2 a, Vector2 b, float w, bool caps = true)
+            {
+                Vector2 d = b - a;
+                float len = d.magnitude;
+                if (len < 1e-5f) return;
+                d /= len;
+                if (caps) { a -= d * w * .5f; b += d * w * .5f; }
+                Vector2 s = new Vector2(-d.y, d.x) * w * .5f;
+                Quad(_a, P(a - s), P(b - s), P(b + s), P(a + s), Vector3.up);
+            }
+
+            public void Poly(Vector2[] pts)
+            {
+                float area = 0; for (int i = 0; i < pts.Length; i++) { var q = pts[(i + 1) % pts.Length]; area += pts[i].x * q.y - q.x * pts[i].y; }
+                if (Mathf.Abs(area) < 1e-5f) return;
+                for (int i = 1; i + 1 < pts.Length; i++) Tri(_a, P(pts[0]), P(pts[i]), P(pts[i + 1]), Vector3.up);
+            }
+
+            /// <summary>Stroke text; rotated 180 deg about 'pivot' when flip (to read from the other side). Round (octagon) joints.</summary>
+            public void Text(string s, Vector2 origin, float height, bool flip = false, Vector2 pivot = default)
+            {
+                float k = height / 6f, w = Stroke * k;
+                Vector2 F(Vector2 p) => flip ? pivot * 2f - p : p;
+                foreach (var (a, b) in TextSegments(s))
+                {
+                    Vector2 pa = F(origin + a * k), pb = F(origin + b * k);
+                    Line(pa, pb, w, false);
+                    Dot(pa, w * .5f); Dot(pb, w * .5f);
+                }
+            }
+
+            public void Dot(Vector2 c, float r)
+            {
+                var pts = new Vector2[8];
+                for (int i = 0; i < 8; i++) { float a = (i + .5f) * Mathf.PI / 4f; pts[i] = c + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * r / Mathf.Cos(Mathf.PI / 8f); }
+                Poly(pts);
+            }
+
+            public void Dashed(List<Vector2> path, float on, float off, float width)
+            {
+                float period = on + off, s0 = 0f;
+                for (int i = 0; i + 1 < path.Count; i++)
+                {
+                    Vector2 a = path[i], b = path[i + 1];
+                    float len = (b - a).magnitude, s1 = s0 + len;
+                    if (len < 1e-5f) continue;
+                    for (int k = Mathf.FloorToInt(s0 / period); k * period < s1; k++)
+                    {
+                        float d0 = Mathf.Max(k * period, s0), d1 = Mathf.Min(k * period + on, s1);
+                        if (d1 - d0 > 1e-4f) Line(a + (b - a) * ((d0 - s0) / len), a + (b - a) * ((d1 - s0) / len), width, false);
+                    }
+                    // a bend inside a dash: fill the wedge between the two pieces (octagon with its corners on the edges)
+                    float f = s1 - Mathf.Floor(s1 / period) * period;
+                    if (i + 2 < path.Count && f > 1e-3f && f < on - 1e-3f) Dot(b, width * .5f * Mathf.Cos(Mathf.PI / 8f));
+                    s0 = s1;
+                }
+            }
+
+            public void Arrow(Vector2 at, Vector2 dir)
+            {
+                Vector2 side = new(-dir.y, dir.x);
+                Line(at - dir * 1.3f, at + dir * .25f, .32f, false);
+                Poly(new[] { at + dir * 1.1f, at + side * .6f, at - side * .6f });
+            }
+
+            public void Rect(Vector2 a, Vector2 b, float w)
+            {
+                Line(a, new Vector2(b.x, a.y), w); Line(new Vector2(b.x, a.y), b, w);
+                Line(b, new Vector2(a.x, b.y), w); Line(new Vector2(a.x, b.y), a, w);
+            }
+        }
+
         static void Markings()
         {
-            var a = A("Markings", mMark, MBoth);
-            const float y = .015f;
-            Quad(a, new Vector3(-HX, y, -HZ), new Vector3(HX, y, -HZ), new Vector3(HX, y, HZ), new Vector3(-HX, y, HZ), Vector3.up,
-                new[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) });
+            // the same layout as before (MarkingTexture), now as mesh: lane loop, arrows, exit lane, parking box, SPAWN, bay apron,
+            // walkway line, gate threshold stripes
+            var m = new MarkMesh(A("Markings", mMarkY, MBoth));
+            var path = new List<Vector2>();
+            Vector2 c0 = new(0, -2); float hx = 13f, hz = 6.5f, rr = 3.5f;
+            void Arc(Vector2 cc, float a0, float a1) { for (int i = 0; i <= 12; i++) { float a = Mathf.Lerp(a0, a1, i / 12f) * Mathf.Deg2Rad; path.Add(cc + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * rr); } }
+            Arc(c0 + new Vector2(hx - rr, -hz + rr), -90, 0);
+            Arc(c0 + new Vector2(hx - rr, hz - rr), 0, 90);
+            Arc(c0 + new Vector2(-hx + rr, hz - rr), 90, 180);
+            Arc(c0 + new Vector2(-hx + rr, -hz + rr), 180, 270);
+            path.Add(path[0]);
+            m.Dashed(path, 1.1f, .7f, .22f);
+            m.Arrow(new Vector2(-3, -8.5f), Vector2.right);
+            m.Arrow(new Vector2(4, 4.5f), Vector2.left);
+            m.Arrow(new Vector2(-13, -1), Vector2.down);
+            m.Dashed(new List<Vector2> { new(13.3f, 0), new(23.2f, 0) }, 1.1f, .7f, .22f);
+            m.Arrow(new Vector2(16.5f, -2.2f), Vector2.right);
+            m.Arrow(new Vector2(16.5f, 2.2f), Vector2.left);
+            m.Rect(new Vector2(-3.8f, -3.8f), new Vector2(3.8f, -.2f), .16f);
+            m.Rect(new Vector2(-17.6f, -14.3f), new Vector2(-12.4f, -10.7f), .22f);
+            float tw = TextWidth("SPAWN") * (.9f / 6f);
+            // read from the hall side (north), where the player walks up to it
+            m.Text("SPAWN", new Vector2(-15f - tw * .5f, -12.95f), .9f, true, new Vector2(-15f, -12.5f));
+            // bay apron in front of the workshop opening; the walkway line outside the pharmacy canopy (0.86 m) and gear counter
+            var wsr = RoomRects.First(q => q.name == "Workshop");
+            m.Rect(new Vector2(wsr.r.center.x - 4.8f, 2.6f), new Vector2(wsr.r.center.x + 4.8f, wsr.front - .15f), .16f);
+            float walk = RoomRects.Where(q => q.name != "Workshop").Min(q => q.front) - 1.1f;
+            m.Line(new Vector2(wsr.r.xMax + .4f, walk), new Vector2(24.4f, walk), .16f);
+            var k = new MarkMesh(A("Markings", mMarkK, MBoth));
+            for (int i = 0; ; i++)
+            {
+                float s = -10f + i * .45f;
+                if (s >= 10f) break;
+                var poly = new[] { new Vector2(23.6f, s), new Vector2(23.6f, s + .45f), new Vector2(24.95f, s + .45f + 1.35f), new Vector2(24.95f, s + 1.35f) }
+                    .Select(p => new Vector2(p.x, Mathf.Clamp(p.y, -GateHalf, GateHalf))).ToArray();
+                (i % 2 == 0 ? m : k).Poly(poly);
+            }
         }
 
         static int Lights(Transform root)
@@ -1470,18 +1589,16 @@ namespace OnlyVolunteers.EditorTools
                     Make($"Pendant {x},{z}", LightType.Spot, new Vector3(x, 7.0f, z), warm, 55f, 14f, Hall, 100f, sh);
                 }
             // rooms
-            foreach (float x in new[] { -21.5f, -16.5f, -11.5f }) Make("Bay " + x, LightType.Spot, new Vector3(x, 5.75f, 12f), white, 22f, 9f, Hall | Room, 120f);
-            Make("Pharmacy", LightType.Point, new Vector3(-1f, 3.6f, 14f), white, 5f, 7.5f, Hall | Room);
-            Make("Gear A", LightType.Point, new Vector3(8.8f, 3.6f, 14f), white, 4.5f, 7f, Hall | Room);
-            Make("Gear B", LightType.Point, new Vector3(14.2f, 3.6f, 14f), white, 4.5f, 7f, Hall | Room);
+            // rooms: their own lamps come with the prefabs (layers set in PlaceRoom)
+            _ = white;
             // string-light glow along the walls, the lounge lamp, the signs
             for (float x = -21f; x <= 21.1f; x += 7f) Make("String front " + x, LightType.Point, new Vector3(x, 2.9f, -16.3f), string_, 1.6f, 4.5f, Hall);
             for (float z = -9f; z <= 5.1f; z += 7f) Make("String left " + z, LightType.Point, new Vector3(-24.3f, 2.9f, z), string_, 1.6f, 4.5f, Hall);
             Make("String right a", LightType.Point, new Vector3(24.3f, 2.9f, -12f), string_, 1.6f, 4.5f, Hall);
             Make("String right b", LightType.Point, new Vector3(24.3f, 2.9f, 12f), string_, 1.6f, 4.5f, Hall);
             Make("Lounge lamp", LightType.Point, new Vector3(-24.1f, 1.5f, -16.2f), string_, 2.5f, 5.5f, Hall);
-            foreach (var (x, y, z) in new[] { (-16.5f, 5.0f, 6.0f), (-.6f, 3.0f, 10.2f), (12f, 3.0f, 10.2f) })
-                Make("Sign glow", LightType.Point, new Vector3(x, y, z), warm, 1.2f, 3.5f, Hall);
+            foreach (var q in RoomRects)
+                Make("Sign glow " + q.name, LightType.Point, new Vector3(q.r.center.x, q.name == "Workshop" ? 5.0f : 3.3f, q.front - .7f), warm, 1.2f, 3.5f, Hall);
             return n;
         }
 
@@ -1510,7 +1627,7 @@ namespace OnlyVolunteers.EditorTools
                 var r = go.AddComponent<MeshRenderer>();
                 r.sharedMaterial = m;
                 r.renderingLayerMask = mask;
-                r.shadowCastingMode = m == mMark || m == mGlass ? ShadowCastingMode.Off : ShadowCastingMode.On;
+                r.shadowCastingMode = m == mMark || m == mGlass || m == mMarkY || m == mMarkK ? ShadowCastingMode.Off : ShadowCastingMode.On;
                 r.receiveShadows = true;
                 GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccluderStatic | StaticEditorFlags.OccludeeStatic);
                 tris += a.T.Count / 3;
@@ -1620,10 +1737,17 @@ namespace OnlyVolunteers.EditorTools
                 _log.AppendLine($"npc spot {x}: " + (Physics.CheckCapsule(p + Vector3.up * .4f, p + Vector3.up * 1.4f, .3f, mask, QueryTriggerInteraction.Ignore) ? "BLOCKED" : "free"));
             }
             // doorways: a 0.35 m capsule passes each room door (walk through the middle of the opening)
-            foreach (var (nm, x, z) in new[] { ("pharmacy door", -3.8f, 11f), ("gear door", 7.2f, 11f), ("bay door", -16.5f, 7f) })
+            // the van path into the workshop: a 2.5 x 2.4 m box from 4 m before the facade, 7 m in
+            var ws = RoomRects.FirstOrDefault(q => q.name == "Workshop");
+            Vector3 vs = root.TransformPoint(new Vector3(ws.r.center.x, 1.45f, ws.front - 4f));
+            bool vb = Physics.BoxCast(vs, new Vector3(1.25f, 1.2f, .5f), root.forward, out RaycastHit vh, root.rotation, 7f, mask, QueryTriggerInteraction.Ignore);
+            _log.AppendLine("van into the workshop: " + (vb && !vanCols.Contains(vh.collider) ? $"HIT {vh.collider.name} at {vh.distance:F1} m" : "clear"));
+            // rooms against the hall: anything of theirs inside the van's parking box or over the lane loop?
+            foreach (var q in RoomRects)
             {
-                Vector3 p = root.TransformPoint(new Vector3(x, .06f, z));
-                _log.AppendLine($"{nm}: " + (Physics.CheckCapsule(p + Vector3.up * .4f, p + Vector3.up * 1.5f, .34f, mask, QueryTriggerInteraction.Ignore) ? "BLOCKED" : "passable"));
+                var c = Physics.OverlapBox(root.TransformPoint(new Vector3(q.r.center.x, 1.2f, q.front - .9f)), new Vector3(q.r.width * .5f, 1f, .2f), root.rotation, mask, QueryTriggerInteraction.Ignore)
+                    .Where(h => !vanCols.Contains(h)).Select(h => h.name).Distinct().ToList();
+                _log.AppendLine($"0.7-1.1 m in front of {q.name}: " + (c.Count == 0 ? "free" : string.Join(", ", c)));
             }
         }
 
