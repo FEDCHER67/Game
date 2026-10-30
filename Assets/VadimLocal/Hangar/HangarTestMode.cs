@@ -15,7 +15,7 @@ using UnityEngine.LowLevel;
 /// gate and back, writes screenshots and a log to <c>-hangarTestOut &lt;folder&gt;</c> and done.txt at the end (the caller
 /// stops the process; no Quit, so no settings are saved). Modes: shots, fps, drive, all. Positions are hangar-local.</summary>
 [DefaultExecutionOrder(32000)]
-public sealed class HangarTestMode : MonoBehaviour
+public sealed partial class HangarTestMode : MonoBehaviour
 {
     private string _out;
     private readonly StringBuilder _log = new();
@@ -72,6 +72,7 @@ public sealed class HangarTestMode : MonoBehaviour
         if (mode == "fps" || mode == "all") yield return Fps();
         if (mode == "cargo" || mode == "all") yield return CargoDoors();
         if (mode == "shimmer") yield return Shimmer();
+        if (mode == "capture") yield return CaptureTest();
         Done();
     }
 

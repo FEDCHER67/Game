@@ -31,6 +31,16 @@ namespace OnlyVolunteers.Map
     // into the driver's seat.
     public sealed class GreyboxInteractor : MonoBehaviour
     {
+        /// <summary>V2 capture (Capture/V2/CaptureV2Hands): while it owns them, Q (the slap) and E (the throw into the
+        /// van) are its, not the fist's or the cargo door's here.</summary>
+        public interface IHandsOverride
+        {
+            bool OwnsQ { get; }
+            bool OwnsE { get; }
+        }
+
+        public static IHandsOverride HandsOverride;
+
         public GreyboxPawn Pawn;
         public GreyboxVanSeat Seat;
         public GreyboxVanCargo Cargo;
@@ -79,8 +89,12 @@ namespace OnlyVolunteers.Map
             if (Pawn == null || OnlyVolunteers.UI.OvMenuGate.Blocking) return; // W86 pause menu owns Q/E
 
             WeaponStun weapon = CurrentWeapon;
-            _canHit = FindHit(weapon, out GreyboxNpc target, out HitZone zone, out Vector3 point);
-            if (Input.GetKeyDown(KeyCode.Q) && _swingGate.TryAccept(_swingGate.NextRequestId(), Time.time, weapon.Cooldown))
+            bool ownsQ = HandsOverride != null && HandsOverride.OwnsQ;
+            GreyboxNpc target = null;
+            HitZone zone = default;
+            Vector3 point = default;
+            _canHit = !ownsQ && FindHit(weapon, out target, out zone, out point);
+            if (!ownsQ && Input.GetKeyDown(KeyCode.Q) && _swingGate.TryAccept(_swingGate.NextRequestId(), Time.time, weapon.Cooldown))
             {
                 float strength = 0f;
                 if (_canHit)
@@ -98,6 +112,11 @@ namespace OnlyVolunteers.Map
             if (Input.GetKeyDown(KeyCode.F10)) ToggleBodyMode();
 
             (_act, _label) = Resolve();
+            if (HandsOverride != null && HandsOverride.OwnsE)
+            {
+                _act = Act.None; // the V2 throw offer owns E
+                _label = null;
+            }
             if (Input.GetKeyDown(KeyCode.E) && GreyboxInput.EFree) Do(_act);
         }
 

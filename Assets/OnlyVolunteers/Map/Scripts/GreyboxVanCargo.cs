@@ -425,7 +425,7 @@ namespace OnlyVolunteers.Map
                 else Unload(npc);
                 return;
             }
-            bool strapped = _straps.IsStrapped(npc);
+            bool strapped = _straps.IsStrapped(npc) || npc.SeatBelted; // V2 capture: a belted seat holds him too
             if (npc.Phase == StunPhase.Groggy && body.HolderCount == 0 && CargoContainmentRules.CanTryEscape(strapped))
             {
                 if (TickEscape(npc, t, com, now) && t.Running && KeepGoing(npc, main.linearVelocity, t, com, now, -1f))
@@ -465,7 +465,7 @@ namespace OnlyVolunteers.Map
             Vector3 com = rb.worldCenterOfMass;
             Tracked t = Track(npc, rb.rotation);
             Vector3 vanVelocity = _space.PointVelocity(com);
-            bool strapped = _straps.IsStrapped(npc);
+            bool strapped = _straps.IsStrapped(npc) || npc.SeatBelted; // V2 capture: a belted seat holds him too
             if (npc.State == NpcState.Escaping && strapped)
             {
                 StopEscape(npc, t, now); // containment I: the strap holds him (an escape begun before it was fastened)

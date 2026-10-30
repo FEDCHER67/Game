@@ -151,6 +151,12 @@ namespace OnlyVolunteers.Map
         [System.NonSerialized] public OnlyVolunteers.Capture.FistResistanceV01 Fist;
         // The recovery time of the weapon that last advanced the sequence (the fist's 8 s).
         [System.NonSerialized] public float FistRecoverySeconds = OnlyVolunteers.Capture.FistResistanceRulesV01.DefaultRecoverySeconds;
+        // V2 capture (Capture/V2, 31.10): held in place for the slap's wind-up (UpdateFree only blinks); the brain's face
+        // writes after the state's each frame (out cold, "huh?", the landing faces); buckled into a van seat
+        // (GreyboxVanCargo treats a belted sitter as strapped: no escape through an open door).
+        [System.NonSerialized] public bool HeldInPlace;
+        [System.NonSerialized] public System.Action<GreyboxFace> FaceOverride;
+        [System.NonSerialized] public bool SeatBelted;
 
         public static readonly List<GreyboxNpc> All = new();
         // Raised when a free NPC goes down (before its body switches on) and when it becomes loaded in a cargo bay.
@@ -416,6 +422,7 @@ namespace OnlyVolunteers.Map
         private void LateUpdate()
         {
             if (_visualBlend > 0f) BlendVisual();
+            if (FaceOverride != null) FaceOverride(Face);
             _face?.Apply();
         }
 
@@ -427,6 +434,12 @@ namespace OnlyVolunteers.Map
             {
                 if (LegacyVanKnock) KnockOver(VanPush());
                 else KnockOver(_vanBody);
+                return;
+            }
+            if (HeldInPlace)
+            {
+                if (_animDriver != null) _animDriver.SetMove(0f);
+                Face.TickBlink();
                 return;
             }
             if (Scared(out Vector3 from))
@@ -1105,6 +1118,33 @@ namespace OnlyVolunteers.Map
             NpcRagdollProfile p = _ragdoll.Profile;
             if (_animDriver != null) _animDriver.PlayGetUp(GetUpKind.SitUp, p.SitUp.State);
             _nextKnock = Time.time + p.SitUp.Seconds + Random.Range(p.KnockInterval.x, p.KnockInterval.y);
+        }
+
+        /// <summary>V2 capture (Capture/V2): a thrown ragdoll lands sitting at 'root' (the seated capsule's feet) in 'bay',
+        /// facing 'rotation': holds end, the ragdoll blends into the sit idle, CargoSeated. False unless he is a lying ragdoll.</summary>
+        public bool SeatV2(VanCargoSpace bay, Vector3 root, Quaternion rotation)
+        {
+            if (bay == null || State != NpcState.Down || !Ragdolled || _body == null) return false;
+            Down.RevokeAll();
+            if (_struggle != null) _struggle.Stop();
+            StunLeft = 0f;
+            InCargo = true;
+            Carrier = bay;
+            Vector3 velocity = bay.PointVelocity(root);
+            _ragdoll.Deactivate();
+            _body.ActivateSeated(root, rotation, velocity);
+            bool clips = _getUp != null && _getUp.CanSitUp;
+            Seated(clips);
+            NpcRagdollProfile p = _ragdoll.Profile;
+            if (clips && p != null)
+            {
+                SeatPose(out Vector3 position, out Quaternion visual);
+                VisualPose(position, visual, 0f);
+                if (_animDriver != null) _animDriver.PlayGetUp(GetUpKind.SitUp, p.SitIdle.State);
+                _nextKnock = Time.time + Random.Range(p.KnockInterval.x, p.KnockInterval.y);
+            }
+            else VisualPose(_visualHome + Vector3.down * SeatedVisualDrop, _visualHomeRotation, 0f);
+            return true;
         }
 
         // Sitting in the bay now (CargoSeated, awake, not grabbable); clips: the sit clips play (else the sunk Idle).

@@ -4,7 +4,7 @@ Core rule: this action repeats all game long, so it must never get boring. Keep 
 
 ## 1. Slap (agreed)
 
-- One slap on Q (also LMB with empty hands). Wide wind-up about 0.5 s, a loud smack, hit-stop 0.08 s, small camera shake.
+- Slap on **LMB** (Vadim 31.10, not Q). **Hold LMB to wind up harder**: the arm draws back further and the camera leans, up to about 1 s of charge; release to slap. A quick click is a normal slap; a full charge is a huge smack (bigger hit-stop and shake, he spins further and flies a little before dropping, out a bit longer). A loud smack, hit-stop 0.08 s (more when charged), camera shake.
 - The NPC spins half a turn with a shocked face, then drops into a full ragdoll **like a sack**.
 - Later options, not now: a double slap (second press), a kick in the butt.
 
@@ -18,15 +18,17 @@ Core rule: this action repeats all game long, so it must never get boring. Keep 
 
 One player holds ONE point: the **head**, the **collar (shirt scruff)**, **one arm** (left or right), or **one leg** (left or right). Nobody holds two legs alone. Each point has its own carry animation, its own resistance animation and its own throw (left/right mirrored).
 
-| Grab | Carry | How he resists once awake |
-| --- | --- | --- |
-| Head | dragged by the head, body trailing | grabs your wrist, kicks, digs heels |
-| Collar | dragged on his back, heels scraping | digs heels in, kicks the air, grabs your hand |
-| Arm | pulled along, knee-shuffling | yanks the arm back, tries to bite, other hand clings |
-| Leg | dragged face down, head bonking on bumps | claws the ground, clings to everything, kicks with the other leg |
-| Two players (e.g. arm + leg) | "hammock", full speed | only squirms, cannot cling; escape meter fills at half speed |
+Balance rule (Vadim 31.10): no grab is the best answer. **The part you hold is the part he resists with; the rest of his body hits and catches on things.** His head hitting things keeps him out longer; his free hands clinging stop you hard.
 
-Speeds: the collar and head are fastest, about 85 %; the arm is medium; the leg is slowest, about 65 %; a two-player carry is 100 %. Tune them in play.
+| Grab | Speed | He resists with the held part | The rest of the body | Best when |
+| --- | --- | --- | --- | --- |
+| Head | fastest, easiest | **bites**: a readable "teeth" wind-up, you snap your hand away (quick mouse flick back) or get bitten (you drop him, shake the hand) | trails behind, feet snag weakly (a couple of flicks free them); his head never hits, so he wakes soonest; bites start even when groggy | short way, you have the reflexes |
+| Collar | medium | **grabs your wrist with both hands** and twists; once awake he wriggles free fastest | dragged on his back, heels dig in and brake; his hands are busy with you, so he **never clings** to the world and cannot bite | short way through clutter, while he is still out |
+| Arm | medium (a bit faster than the leg) | **legs**: feet shuffle and scrape along the ground, a constant brake | **one free hand** sometimes clings, less often and weaker (one hand, easy yank); holds best once he is awake; strongest throw | he is awake and kicking |
+| Leg | slowest | kicks with the held leg | face down, **head bonks** every bump (keeps him out longest); **both hands free**, clings very often and hard, you must keep tearing him off | the van is far |
+| Two players (e.g. arm + leg) | full | only squirms | cannot cling; escape meter at half speed | always, if you have a mate |
+
+Clothes slipping off (shirt from the collar, shoe/trousers from the leg): later, Vadim "потом подумаем".
 
 ## 4. Cling and yank (agreed, direction option A)
 
@@ -34,9 +36,8 @@ Speeds: the collar and head are fastest, about 85 %; the arm is medium; the leg 
 - The mouse turns **heavy**, like pulling an aircraft yoke on take-off: the camera barely turns. An arrow shows where to pull, always away from what he holds (post on the right means pull left). So the direction changes every time.
 - You need fast, strong mouse flicks along the arrow. A strength bar grows with flick speed and drains when you stop; slow dragging does nothing.
 - Bar full: a loud "POP", he tears off, you both stumble back, his face says "nooo!", and sometimes a piece of the fence stays in his hand.
-- **The key feel (Vadim 31.10):** the mouse actively fights back. While he clings, a counter-force keeps pulling your view and your hold toward what he holds; if you stop or move slowly, the camera is dragged back toward him. Only fast, strong flicks away from the anchor overpower it and tear him off. It should feel like physically wrenching him off the thing.
 - With two players, both players' flicks add up.
-- Alternative: slap him (Q) on the hands. He lets go at once, but each slap knocks him out for less time (2.5 → 1.5 → 0.7 s).
+- Alternative: slap him (LMB) on the hands. He lets go at once, but each slap knocks him out for less time (2.5 → 1.5 → 0.7 s).
 
 ## 5. Throw into the van: only at the door, on E (agreed)
 
