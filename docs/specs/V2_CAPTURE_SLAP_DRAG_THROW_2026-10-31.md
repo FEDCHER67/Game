@@ -34,6 +34,7 @@ Speeds: the collar and head are fastest, about 85 %; the arm is medium; the leg 
 - The mouse turns **heavy**, like pulling an aircraft yoke on take-off: the camera barely turns. An arrow shows where to pull, always away from what he holds (post on the right means pull left). So the direction changes every time.
 - You need fast, strong mouse flicks along the arrow. A strength bar grows with flick speed and drains when you stop; slow dragging does nothing.
 - Bar full: a loud "POP", he tears off, you both stumble back, his face says "nooo!", and sometimes a piece of the fence stays in his hand.
+- **The key feel (Vadim 31.10):** the mouse actively fights back. While he clings, a counter-force keeps pulling your view and your hold toward what he holds; if you stop or move slowly, the camera is dragged back toward him. Only fast, strong flicks away from the anchor overpower it and tear him off. It should feel like physically wrenching him off the thing.
 - With two players, both players' flicks add up.
 - Alternative: slap him (Q) on the hands. He lets go at once, but each slap knocks him out for less time (2.5 → 1.5 → 0.7 s).
 
