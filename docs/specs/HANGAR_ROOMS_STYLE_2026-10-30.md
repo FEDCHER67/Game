@@ -51,3 +51,10 @@ Vadim, looking at the hangar crates: a box with handles, latches and rims painte
 - Textures then only add colour, wear and fine variation on top of the 3D shapes (texture set 45 stays as the colour source), never fake the shapes.
 - Still low-poly: chunky bevels, no tiny bolts; keep the budget per room (about 15-20 k triangles) and use LOD or merged meshes so FPS stays >= 144 at 4K.
 - Shape language = the One-Armed Robber (OAR) rules we used for the v1 downtown (stairs, balconies, frames modelled): docs/ArtDirection.md §2 "Shape language" — chunky (visible thickness >= 0.06 m on parts < 1 m, >= 0.10 m on longer ones), three levels only (mass -> secondary forms -> accents >= 0.2 m, no bolts or scratches), one-segment bevels 2-4 cm on props, 6-10 cm on large props, two segments + weighted normals on props the player stands next to, flat faces on hard surfaces, no outline/toon shader.
+
+## 5. Even surfaces, crisp markings (Vadim 30.10, night)
+
+- Walls and boards are one even colour: no baked dark/light stripes, no alternating light and dark boards. Shading comes only from the real 3D ribs and grooves.
+- Hall walls use the v1 workshop wall texture he likes (WS86_corrugated_grey_v01: T7_metal_trapez albedo + normal), tinted to the hall's cozy-dark grey.
+- Floor markings, lettering and arrows are crisp at eye height and read as clear yellow under the warm light (hue about 45-55°, not orange).
+- Each room is told apart at a glance by its own surfaces and accent colour.
