@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace OnlyVolunteers.Session.Tests
 {
     /// <summary>Menu for V2 (Fedya 31.10): the V1 menu keeps the W86 map, its old save as slot 1 and the prologue; the V2 menu
-    /// launches VanOnly with five own slot files and never runs the prologue.</summary>
+    /// launches the base hangar (HangarLab_v01, 31.10; VanOnly before) with five own slot files and never runs the prologue.</summary>
     public sealed class WorldLaunchTargetTests
     {
         [Test]
@@ -18,11 +18,11 @@ namespace OnlyVolunteers.Session.Tests
         }
 
         [Test]
-        public void V2_target_is_vanonly_and_the_v2_menu_without_prologue()
+        public void V2_target_is_the_hangar_base_and_the_v2_menu_without_prologue()
         {
             var t = WorldLaunchTargetV01.V2;
             Assert.AreEqual(GameEditionV01.V2, t.Edition);
-            Assert.AreEqual("Assets/OnlyVolunteers/Scenes/Dev/VanOnly_v01.unity", t.GameScene);
+            Assert.AreEqual("Assets/OnlyVolunteers/Scenes/Dev/HangarLab_v01.unity", t.GameScene, "Fedya 31.10: Играть starts in the base");
             Assert.AreEqual("Assets/OnlyVolunteers/Scenes/Menu/MainMenu_V2_v01.unity", t.MenuScene);
             Assert.False(t.PrologueAllowed);
         }

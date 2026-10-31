@@ -84,6 +84,8 @@ namespace OnlyVolunteers.Capture.V2
         private CaptureV2Tuning T => Rig != null ? Rig.Tuning : CaptureV2Rig.Instance != null ? CaptureV2Rig.Instance.Tuning : new CaptureV2Tuning();
 
         public bool OwnsQ => isActiveAndEnabled;
+        /// <summary>V2 shop gear (Fedya 31.10, Base/V2 CaptureV2BatonV01): asked first on LMB; true = it took the press.</summary>
+        public static System.Func<CaptureV2Hands, bool> AltStrike;
         public bool OwnsE => isActiveAndEnabled && (_throwOffer >= 0 || _throwNpc != null);
 
         private void Awake()
@@ -208,6 +210,7 @@ namespace OnlyVolunteers.Capture.V2
         private void PressLmb()
         {
             if (_throwNpc != null || View == null || _chargeStart >= 0f || _strikeAt > 0f || Time.time < _cooldownUntil) return;
+            if (AltStrike != null && AltStrike(this)) return; // the drawn baton (V2 shop, Fedya 31.10)
             if (_held != null)
             {
                 BeginCharge(_held, HitZone.Head);

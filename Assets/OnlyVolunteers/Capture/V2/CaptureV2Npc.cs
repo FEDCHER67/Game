@@ -206,6 +206,21 @@ namespace OnlyVolunteers.Capture.V2
             return true;
         }
 
+        /// <summary>V2 shop baton (Fedya 31.10, Base/V2 CaptureV2BatonV01): an overhead bonk, no spin and no handprint: down
+        /// where he stands (again, if rising) and out cold for 'seconds' (its own time, not the slap ladder). False: nothing to hit.</summary>
+        public bool Bonk(object who, Vector3 from, Vector3 point, float seconds)
+        {
+            if (Busy || Current == Mode.Seated || Current == Mode.Spinning) return false;
+            if (Current == Mode.Clinging) EndCling();
+            Npc.HeldInPlace = false;
+            _charge = 0f;
+            LearnFace();
+            LastSmackTime = Time.time;
+            KnockOut(from, point, HitZone.Head, true);
+            if (Npc.IsDown && seconds > 0f) { Npc.StunTotal = Npc.StunLeft = LastKnockOut = seconds; }
+            return Npc.IsDown;
+        }
+
         /// <summary>LMB on him while he gets up and is still low: down again as the ragdoll, out cold for the next step of
         /// the ladder, so the hands can take him at once. False when he is not getting up.</summary>
         public bool Redrop(object who, Vector3 from, Vector3 swipe)

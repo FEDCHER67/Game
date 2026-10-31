@@ -9,7 +9,7 @@ namespace OnlyVolunteers.Session
     /// Where a start menu sends its worlds (Fedya 31.10, menu for V2), pure: the game scene Play loads, the menu scene the
     /// pause menu returns to, the save files of the five world slots, and whether the v1 prologue may run at all.
     /// V1 (the default, MainMenu_v01) is exactly the old behaviour: the W86 map, slot 1 = the existing map save,
-    /// ov_world_N for 2–5, the prologue at the wagon for a new world. V2 (MainMenu_V2_v01): VanOnly_v01, five new empty
+    /// ov_world_N for 2–5, the prologue at the wagon for a new world. V2 (MainMenu_V2_v01): HangarLab_v01 (the base, 31.10; was VanOnly_v01), five new empty
     /// slots in their own files (ov_v2_world_N), never the v1 map save, and the prologue never runs (explicit flag, not
     /// only a scene path). The runtime (WorldLaunchV01) holds the target the menu set on Awake.
     /// </summary>
@@ -17,7 +17,9 @@ namespace OnlyVolunteers.Session
     {
         public const string V1MapScene = "Assets/OnlyVolunteers/Scenes/Map/Map_W85_Play_v02.unity";
         public const string V1MenuScene = "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity";
-        public const string V2GameScene = "Assets/OnlyVolunteers/Scenes/Dev/VanOnly_v01.unity";
+        /// <summary>V2 start location (Fedya 31.10): the base hangar. VanOnly_v01 stays in the V2 build as a test floor.</summary>
+        public const string V2GameScene = "Assets/OnlyVolunteers/Scenes/Dev/HangarLab_v01.unity";
+        public const string V2VanOnlyScene = "Assets/OnlyVolunteers/Scenes/Dev/VanOnly_v01.unity";
         public const string V2MenuScene = "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_V2_v01.unity";
 
         /// <summary>v1 slot 1 = the existing map save (the play scene's own file names), never renamed.</summary>

@@ -53,7 +53,8 @@ namespace OnlyVolunteers.EditorTools
             Debug.Log("[VadimBuilds] pipeline " + (rp ? rp.name : "null") + ", quality " + QualitySettings.names[QualitySettings.GetQualityLevel()] + ", " + PlayerSettings.fullScreenMode);
             var opt = new BuildPlayerOptions
             {
-                scenes = full ? new[] { "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity", copy } : new[] { copy },
+                // V2 (Fedya 31.10): Hangar and VanOnly start with the V2 menu, which plays build scene 1 (WorldLaunchV01)
+                scenes = full ? new[] { "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity", copy } : name == "Hangar" || name == "VanOnly" ? new[] { "Assets/OnlyVolunteers/Scenes/Menu/MainMenu_V2_v01.unity", copy } : new[] { copy },
                 // OV_BUILD_DIR: another folder under VolunteersBuilds (e.g. Hangar_next while Vadim plays the Hangar exe)
                 locationPathName = Root + (System.Environment.GetEnvironmentVariable("OV_BUILD_DIR") ?? name) + @"\VolunteersOnly_" + name + ".exe",
                 target = BuildTarget.StandaloneWindows64,

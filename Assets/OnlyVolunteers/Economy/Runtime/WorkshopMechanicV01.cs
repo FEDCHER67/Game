@@ -44,6 +44,8 @@ namespace OnlyVolunteers.Economy
         public GameObject ModelPrefab;
         [Tooltip("Crowd template preference (visual / name contains), first match wins; CONSTR is the M06 rival's look, so last.")]
         public string[] PreferTemplates = { "MUZHIK", "FOREMAN", "PROM_", "WORKER", "CONSTR" };
+        [Tooltip("Off in the V2 base (Fedya 31.10): no v1 E conversation (M06 options); Base/V2 WorkshopDockV2 runs the service.")]
+        public bool TalkEnabled = true;
 
         private GameObject body;
         private float nextSpawnTry;
@@ -261,6 +263,7 @@ namespace OnlyVolunteers.Economy
         {
             Spawn();
             prompt = "";
+            if (!TalkEnabled) { if (mode != Mode.Closed) Close(false); return; }
             WorkshopServiceV01 lift = WorkshopServiceV01.Instance;
             bool hasPlayer = LocalPlayer(out Vector3 feet, out Transform eye, out bool mapPawn);
             Vector3? me = hasPlayer ? feet : (Vector3?)null;

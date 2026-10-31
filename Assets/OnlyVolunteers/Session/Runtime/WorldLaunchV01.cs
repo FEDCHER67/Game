@@ -209,6 +209,14 @@ namespace OnlyVolunteers.Session
         {
             error = "";
             string scene = GameScenePath;
+            // V2 builds made from scene copies (VadimBuilds: the V2 menu + Build_Hangar / Build_VanOnly, 31.10): the build's
+            // game scene is index 1 when the configured path is not in the build
+            if (!Application.CanStreamedLevelBeLoaded(scene) && Target.Edition == GameEditionV01.V2 && SceneManager.sceneCountInBuildSettings > 1)
+            {
+                Debug.Log($"[OV World] {scene} is not in this build: loading build scene 1 instead");
+                SceneManager.LoadScene(1, LoadSceneMode.Single);
+                return true;
+            }
             if (!Application.CanStreamedLevelBeLoaded(scene))
             {
                 error = Target.Edition == GameEditionV01.V2 ? "Сцена игры не добавлена в сборку (Build Settings)." : "Сцена карты не добавлена в сборку (Build Settings).";

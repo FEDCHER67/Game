@@ -647,6 +647,7 @@ namespace OnlyVolunteers.EditorTools
             _log.AppendLine($"hangar root {root.position}; colliders {_colCount}; lights {lights}");
 
             Actors(scene, root, van, floor);
+            OnlyVolunteers.BaseV2.EditorTools.BaseV2BuilderV01.Apply(scene, root, van); // Fedya's V2 base P1 (shop, workshop dock): kept on every rebuild
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             _log.AppendLine("saved " + Dst);

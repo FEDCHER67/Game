@@ -18,9 +18,10 @@ Read only what your task needs, then search the relevant subtree. Do not read al
 | Area | Path |
 | --- | --- |
 | Runtime code and assets | Assets/OnlyVolunteers/<area> (Vehicles/Van, Capture, Player, Characters, Network, Session, UI, Economy, Audio) |
-| V2 test scene | Assets/OnlyVolunteers/Scenes/Dev/VanOnly_v01.unity |
-| Main menu | Assets/OnlyVolunteers/Scenes/Menu/MainMenu_v01.unity |
-| Builds | Assets/Editor/VadimBuilds.cs (targets), Assets/Editor/VadimVanLab.cs (VanOnly scene) |
+| Base (start scene) | Assets/OnlyVolunteers/Scenes/Dev/HangarLab_v01.unity (built by Assets/Editor/VadimHangarLab.cs; Fedya's parts in Assets/OnlyVolunteers/Base/V2) |
+| Van test scene | Assets/OnlyVolunteers/Scenes/Dev/VanOnly_v01.unity |
+| Main menu V2 | Assets/OnlyVolunteers/Scenes/Menu/MainMenu_V2_v01.unity (v1: MainMenu_v01) |
+| Builds | Assets/Editor/VadimBuilds.cs (targets), Assets/OnlyVolunteers/UI/MainMenu/Editor/FedyaV2BuildV01.cs (menu + hangar + VanOnly) |
 | Editable art sources | ArtSource/<family> (van: ArtSource/Props/VAN-TIER0-ASTRA-001) |
 | V2 references and planning (mostly local, not in Git) | V2_НОВАЯ_ИГРА/ (see its ПРОЧТИ.md) |
 | Van layout reference | Working/Reviews/VanRedesign_2026-10-29/ |

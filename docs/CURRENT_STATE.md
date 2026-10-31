@@ -7,14 +7,16 @@ The game pivoted to V2 on 30.10.2026 (canon: docs/PRODUCT.md): base hangar → m
 - **Van:** `Assets/OnlyVolunteers/Vehicles/Van` — prefab `Van_v05` (our v02 design stretched to 6.15 × 2.16 × 2.60 m, olive, two front seats, bulkhead), WheelCollider driving, doors, cargo bay, seats (GreyboxVanSeat), upgrade tiers 0–III and cargo upgrades from v1. Test scene `Scenes/Dev/VanOnly_v01.unity` (grey floor, sky, van, player; Vadim's VadimVanLab.RunVanOnly / build target VanOnly).
 - **Player:** first-person KCC sausage, customisable look (`Characters/PlayerSausage_W86`), visible stretchy hands with one/two-hand visibility, Q punch with stars, fist cooldown and diminishing stun (`Player/Hands`, `Capture/Core/FistRulesV01.cs`).
 - **Catching:** v1 physical grab, carry and van loading of NPCs (`Capture`, `Map/Scripts/Greybox*`); 48 NPC types and their rig/animations (`Characters`).
-- **Menu and settings:** `Scenes/Menu/MainMenu_v01.unity` (worlds ×5, solo/co-op, lobby port 7791, look customisation), pause menu with graphics (default preset Low) and sound (`Audio/Mixer/OV_Main_v01.mixer`). It still launches the v1 map W86; carrying it to V2 is the next Fedya task.
+- **Menu and settings:** `Scenes/Menu/MainMenu_V2_v01.unity` launches the base `Scenes/Dev/HangarLab_v01.unity` (5 V2 slots, solo/co-op lobby, look customisation); `MainMenu_v01` still launches the v1 map W86. Pause menu with graphics (default Low: MSAA 4x, 100 %) and sound.
+- **Base hangar (Vadim):** `HangarLab_v01`, built by `Assets/Editor/VadimHangarLab.cs` — hall, workshop with lift, pharmacy, GEAR armoury. Fedya's P1 on top (`Assets/OnlyVolunteers/Base/V2`): GEAR sells the rubber baton (aim → outline → E), workshop docking → mechanic → engine tier. F8 = temporary test money. Host/solo only.
+- **Capture V2 (Vadim):** `Capture/V2` — charged LMB slap, sack ragdoll, grab points, E throw into the van; spec docs/specs/V2_CAPTURE_SLAP_DRAG_THROW_2026-10-31.md.
 - **Economy:** shared team fund, XP, save guard (`Economy`).
 - **Workshop:** lift and mechanic B with the big wrench (v1 map, north of Stroyka).
 - **Look:** global gloss −67 % (`Art/Gloss`), SSAO off (no-shimmer rule in CLAUDE.md).
 
 ## Not built yet (V2)
 
-Busification (seat → 10 s → soldier pops out), our soldiers and the enemy clone army, waves and win/lose, van health/repair and breakdowns, roof turret, rubber pistol, the base hangar, mission locations, V2 upgrade list and prices, special characters.
+Busification (seat → 10 s → soldier pops out), our soldiers and the enemy clone army, waves and win/lose, van health/repair and breakdowns, roof turret, rubber pistol, health and pharmacy goods, mission locations, V2 upgrade list and prices, special characters.
 
 ## Still in Assets from v1 (cleanup after the canon is approved)
 

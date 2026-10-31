@@ -121,6 +121,9 @@ namespace OnlyVolunteers.Economy
         public bool firstBloodGranted;
         public List<string> firstKinds = new List<string>();
         public List<SkillRankView> skills = new List<SkillRankView>();
+        /// <summary>V2 base shop items the team owns (GearCatalogV2 ids; display only).</summary>
+        public List<string> gear = new List<string>();
+        public bool OwnsGear(string id) => gear != null && gear.Contains(id);
         /// <summary>The derived story journal and retained story messages (late join gets it with the first snapshot).</summary>
         public StoryJournalView journal = new StoryJournalView();
 

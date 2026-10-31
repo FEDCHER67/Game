@@ -307,6 +307,7 @@ namespace OnlyVolunteers.Capture.V2
         public static bool Slap(CaptureV2Npc npc, object who, Vector3 from, Vector3 point, HitZone zone, float charge, Vector3 swipe = default) =>
             npc != null && npc.Smack(who, from, point, zone, charge, swipe);
         public static bool Redrop(CaptureV2Npc npc, object who, Vector3 from, Vector3 swipe) => npc != null && npc.Redrop(who, from, swipe);
+        public static bool Bonk(CaptureV2Npc npc, object who, Vector3 from, Vector3 point, float seconds) => npc != null && npc.Bonk(who, from, point, seconds); // V2 shop baton (Fedya 31.10)
         public static void Grabbed(CaptureV2Npc npc, object who, GrabPointV2 point, int part) => npc?.OnGrabbed(who, point, part);
         public static void Released(CaptureV2Npc npc, object who) => npc?.OnReleased(who);
         public static bool Throw(CaptureV2Npc npc, CaptureV2Hands who, CaptureV2Van van, int door) => npc != null && van != null && npc.BeginThrow(who, van, door);

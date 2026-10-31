@@ -108,6 +108,17 @@ namespace OnlyVolunteers.Map
 
         public bool CanEnter => !Driving && NearDoor();
 
+        /// <summary>The V2 workshop dock (Base/V2 WorkshopDockV2, Fedya 31.10): the driver steps out at a free spot the dock
+        /// chose (clear of the van and the lift) instead of the door point. False when nobody drives.</summary>
+        public bool ExitTo(Vector3 feet, float yaw)
+        {
+            if (Pawn == null || !Driving) return false;
+            Pawn.Teleport(feet, yaw);
+            SetDriving(false);
+            StartCoroutine(SwingDriverDoor());
+            return true;
+        }
+
         public void Enter()
         {
             if (!CanEnter) return;

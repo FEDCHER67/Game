@@ -638,6 +638,7 @@ namespace OnlyVolunteers.Economy
                 if (!seen.Contains(e.participant)) { seen.Add(e.participant); s.xp.Add(new XpTotal { participant = e.participant, total = XpOf(e.participant) }); }
             SnapshotProgress(s);
             SnapshotVanCargo(s);
+            SnapshotGear(s);
             return s;
         }
 

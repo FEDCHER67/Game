@@ -15,7 +15,7 @@ Historical archives are outside the default task scope. They are: the external a
 - Preserve Unity .meta identities. Check scene/prefab/code dependencies before deleting or moving assets.
 - Movement tuning changes and subjective physics/visual acceptance require actual playtesting. Compilation is not proof of fun or network quality.
 - Do not create backups, duplicate projects, or speculative subsystem scaffolding during cleanup.
-- v1 rule (Vadim 2026-10-16), superseded in V2: the van started at its maximum characteristics (VanUpgrades.StartAtMax). The V2 canon (docs/PRODUCT.md, «Прокачка бусика») starts with the poorest junk van and upgrades it between missions. The code still has StartAtMax; changing it is a V2 task for Vadim/Fedya, not a cleanup side effect.
+- v1 rule (Vadim 2026-10-16), superseded in V2: the van started at its maximum characteristics (VanUpgrades.StartAtMax). V2: off on Van_v05 since 31.10 (Van_v05.prefab, VanOnly_v01, HangarLab_v01): the V2 canon (docs/PRODUCT.md, «Прокачка бусика») starts with the poorest junk van; the engine tiers are bought from the mechanic in the base workshop. The flag stays in the code for the v1 map and old saves.
 - Graphics: the shipped DEFAULT preset is Low (W86GraphicsSettingsV01.Preset(0) + fallbacks in W86LookV01; Vadim 27.10, Fedya confirmed 2026-10-28); players raise it in the Escape menu. Never switch the default back to High/max; visual work is still built and checked at max.
 - Do not modify unrelated user changes. Do not commit or push without the user's request. Model routing and delegation follow "AI team" below.
 

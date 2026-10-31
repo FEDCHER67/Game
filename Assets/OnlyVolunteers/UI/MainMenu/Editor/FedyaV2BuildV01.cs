@@ -10,12 +10,13 @@ using UnityEngine;
 namespace OnlyVolunteers.UI.MainMenu.EditorTools
 {
     /// <summary>
-    /// Fedya's V2 build (31.10): the V2 start menu (MainMenu_V2_v01) + the V2 game scene (VanOnly_v01) as one Windows x64
+    /// Fedya's V2 build (31.10): the V2 start menu (MainMenu_V2_v01) + the V2 base (HangarLab_v01, the start location since
+    /// 31.10 evening) + VanOnly_v01 (the bare van test floor) as one Windows x64
     /// player in C:\Dev\GameBuilds\V2_Menu. MakeMenuScene copies MainMenu_v01 once (AssetDatabase.CopyAsset, never over an
-    /// existing file) and sets the copy's menu to the V2 edition (VanOnly, no backdrop shot, no version label); MainMenu_v01
+    /// existing file) and sets the copy's menu to the V2 edition (HangarLab, no backdrop shot, no version label); MainMenu_v01
     /// itself is never opened for writing. Build applies the same player safeguards as VadimBuilds.Build (PC_RPAsset as the
     /// pipeline, the PC quality level, borderless fullscreen at native resolution) and only checks the scenes (missing
-    /// scripts, cameras saved off): nothing is saved into VanOnly_v01.
+    /// scripts, cameras saved off): nothing is saved into the game scenes.
     /// Batch: Unity.exe -batchmode -nographics -projectPath C:/Dev/Game -buildTarget Win64
     ///   -executeMethod OnlyVolunteers.UI.MainMenu.EditorTools.FedyaV2BuildV01.SetupBatch   (scene + Build Settings)
     ///   -executeMethod OnlyVolunteers.UI.MainMenu.EditorTools.FedyaV2BuildV01.BuildBatch   (the player)
@@ -25,6 +26,7 @@ namespace OnlyVolunteers.UI.MainMenu.EditorTools
         public const string MenuV1 = WorldLaunchTargetV01.V1MenuScene;
         public const string MenuV2 = WorldLaunchTargetV01.V2MenuScene;
         public const string GameV2 = WorldLaunchTargetV01.V2GameScene;
+        public const string VanOnlyV2 = WorldLaunchTargetV01.V2VanOnlyScene;
         public const string ExePath = @"C:\Dev\GameBuilds\V2_Menu\VolunteersOnly_V2.exe";
         const string Pipeline = "Assets/Settings/PC_RPAsset.asset";
         const string Tag = "[FedyaV2Build] ";
@@ -36,7 +38,7 @@ namespace OnlyVolunteers.UI.MainMenu.EditorTools
             EditorUtility.DisplayDialog("V2 menu", ok ? "MainMenu_V2_v01 is ready and in Build Settings." : "Failed: see the Console.", "OK");
         }
 
-        [MenuItem("OnlyVolunteers/Build/Fedya V2 (menu V2 + VanOnly)")]
+        [MenuItem("OnlyVolunteers/Build/Fedya V2 (menu V2 + Hangar base + VanOnly)")]
         public static void BuildMenuItem()
         {
             bool ok = Build(out string summary);
@@ -88,12 +90,12 @@ namespace OnlyVolunteers.UI.MainMenu.EditorTools
             return true;
         }
 
-        /// <summary>Appends MainMenu_V2_v01 and VanOnly_v01 to Build Settings (existing entries kept as they are, in order).</summary>
+        /// <summary>Appends MainMenu_V2_v01, HangarLab_v01 and VanOnly_v01 to Build Settings (existing entries kept as they are, in order).</summary>
         public static bool AddToBuildSettings()
         {
             var list = EditorBuildSettings.scenes.ToList();
             int before = list.Count;
-            foreach (var path in new[] { MenuV2, GameV2 })
+            foreach (var path in new[] { MenuV2, GameV2, VanOnlyV2 })
             {
                 if (AssetDatabase.LoadAssetAtPath<SceneAsset>(path) == null) { Debug.LogError(Tag + "missing scene " + path); return false; }
                 if (!list.Any(s => s.path == path)) list.Add(new EditorBuildSettingsScene(path, true));
@@ -107,14 +109,16 @@ namespace OnlyVolunteers.UI.MainMenu.EditorTools
             return true;
         }
 
-        /// <summary>The player: [MainMenu_V2_v01, VanOnly_v01], Windows x64, borderless fullscreen, PC_RPAsset.</summary>
+        /// <summary>The player: [MainMenu_V2_v01, HangarLab_v01, VanOnly_v01], Windows x64, borderless fullscreen, PC_RPAsset.</summary>
         public static bool Build(out string summary)
         {
             summary = "";
-            foreach (var path in new[] { MenuV2, GameV2 })
+            foreach (var path in new[] { MenuV2, GameV2, VanOnlyV2 })
                 if (AssetDatabase.LoadAssetAtPath<SceneAsset>(path) == null) { summary = "missing scene " + path + " (run the V2 menu setup first)"; Debug.LogError(Tag + summary); return false; }
+            if (!MakeMenuScene()) { summary = "the V2 menu scene could not be (re)configured"; return false; } // Играть -> HangarLab (31.10)
             CheckScene(MenuV2);
             CheckScene(GameV2);
+            CheckScene(VanOnlyV2);
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single); // nothing of the checks stays open (never saved)
             // the same player safeguards as VadimBuilds.Build: other sessions may leave the fog capture pipeline or a windowed
             // mode behind; the game always ships with PC_RPAsset and borderless fullscreen at native resolution
@@ -129,7 +133,7 @@ namespace OnlyVolunteers.UI.MainMenu.EditorTools
             Directory.CreateDirectory(Path.GetDirectoryName(ExePath));
             var opt = new BuildPlayerOptions
             {
-                scenes = new[] { MenuV2, GameV2 },
+                scenes = new[] { MenuV2, GameV2, VanOnlyV2 },
                 locationPathName = ExePath,
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.None,
